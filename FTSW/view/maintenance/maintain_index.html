@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>养护管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			.marker {width:0; height:0;}
+			
+			.marker span {
+			  display:flex;
+			  justify-content:center;
+			  align-items:center;
+			  box-sizing:border-box;
+			  width: 30px;
+			  height: 30px;
+			  color:#fff;
+			  background: #693;
+			  border:solid 2px;
+			  border-radius: 0 70% 70%;
+			  box-shadow:0 0 2px #000;
+			  cursor: pointer;
+			  transform-origin:0 0;
+			  transform: rotateZ(-135deg);
+			}
+			
+			.marker b {transform: rotateZ(135deg)}
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right{
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-slider{
+				height: 100vh;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+		   .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+		        transform: rotate(90deg);
+		        margin-left: 5px;
+		      }
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+				border-bottom: 0;
+				font-weight: 500;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active +.titleleft{
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;				
+			}
+			.mui-table-view-cell:after{
+				left:1px;
+				background-color: #F4F4F4;
+				height: 10px;
+			}
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 50px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #347CFC;
+				color: #347CFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 14px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: #FF5656;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: #29CC85;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: #FF7800;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+			.task-item_status{
+				position: absolute;
+				top: 8px;
+				right: 5px;
+			}
+
+			.bottom-item {
+				background: #FFFFFF;
+				position: absolute;
+				/* height: 300px; */
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				text-align: left;
+			}
+
+			.bottom-item-btn-list {
+				/* height: 200px; */
+				width: 98%;
+				position: absolute;
+			}
+			.fanwei{
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+			.bottom-item-btn-list .bottom-item-btn-list-top{
+				width: 100%;
+
+			}
+			.item1{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 0px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item2{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 0px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item3{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 64px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				/* border: 1px solid #337BFC; */
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.mui-navigate-left:after
+			{
+			    content: '\e472';
+				left: 5px;
+				bottom: 50px;
+			}
+			.object{
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+			.li-item{
+				background-color:white;
+			}
+			.li-item-pull{
+				background-color: #F4F4F4 !important;
+			}
+			.li-margin{
+				margin-bottom: 13px;
+				border-bottom: 1px solid #EDEDED;
+				padding-bottom: 0px;
+				font-size: 13px;
+				padding-bottom: 10px;
+			}
+			.in-obj{
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+			}
+			.obj-title{
+				color: #444444;
+			}
+			.bgc-white{
+				background-color: white;
+			}
+			.bgc-grey{
+				background-color: #F4F4F4;
+			}
+			.mui-navigate-r{
+				background: #fff;
+			}
+			.icon-css{
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+			.task_title{
+				display: inline-block;
+				padding: 8px 0;
+				color: #191515;
+				font-size: 15px;
+				font-weight: 500;
+				width: 50%;
+				word-break: break-all;
+				white-space: pre-wrap;
+			}
+			.sec-line{
+				color: #878787;
+				font-size: 14px;
+			}
+			/* 	.arrow_right{
+				transform: rotate(90deg);
+			} */
+			.ul-mar-bottom{
+				margin-bottom: -18px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn){
+				margin: 0;
+				padding:0;
+			}
+			.mui-table-view-cell.mui-active{
+				background: #fff;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+				    border-top: 7px solid #F4F4F4
+			}
+			.color888{
+				color: #888888;
+			}
+			.ibh{
+				display: inline-block;
+				line-height: 28px;
+			}
+			.no-data {
+				position: absolute;
+				top: 10rem;
+				left: 50%;
+				top: 50px;
+				display: inline-block;
+				font-size: 20px;
+				color: #999;
+				transform: translateX(-50%);
+			}
+			.showMore{
+				display: inline-block;
+			}
+			.emptyDiv{
+				display: inline-block;
+				font-size: 16px;
+				color: #999;
+				height:60px;
+				/* vertical-align: middle; */
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="slider" class="mui-slider">
+							<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+							 style="padding: 0 68px;color: #888888;">
+								<!-- 	<a id="item1" class="mui-control-item " href="#selectItem1">
+									<span class="lb">列表</span>
+								</a>
+								<a id="item2" class="mui-control-item mui-active" href="#selectItem2">
+									<span class="dt">地图</span>
+								</a>
+							</div> -->
+								<a id="item1" class="mui-control-item  mui-active" href="#selectItem1" style="padding-right: 30%;">
+									列表
+								</a>
+								<a id="item2" class="mui-control-item" href="#selectItem2" style="padding-left: 30%;">
+									地图
+								</a>
+							</div>
+							<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #337BFC;height: 2px;background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%,
+								 rgba(0, 0, 0, 0) 39.9%, #337BFC 40%, #337BFC 50%, #337BFC 59.9%, 
+								rgba(0, 0, 0, 0) 60%,  rgba(0, 0, 0, 0) 100%);"></div>
+							<div class="mui-slider-group">
+								<div id="selectItem1" style="padding-top: 10px;" class="mui-slider-item mui-control-content mui-active">
+									<div id="scroll1" class="mui-scroll-wrapper" style="height: 100vh;background: #F4F4F4;padding-bottom:50px">
+										<ul class="mui-table-view" id="selectItem1_ul">
+										</ul>
+									</div>
+								</div>
+								<div id="selectItem2" class="mui-slider-item mui-control-content">
+									<div id="scroll2" class="mui-scroll-wrapper" style="height: 100vh;">
+										<div id="map" class="mapboxgl-map" style="position: absolute;left: 0;top: 0; z-index: 99;height: 50vh;width: 100%;">
+										</div>
+										<div id="contentList" class="bottom-item mui-scroll-wrapper" style="position: absolute;height: 50vh;top: 50vh;padding-bottom:50px">
+											<ul class="mui-table-view" id="selectItem2_ul">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+	</body>
+
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/maintain.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		var datalist = []
+		var guid = ''
+		var self1;
+		var paramStatus = {
+			pageSize: 100,
+			type: 1,
+			status: 1
+		}
+
+		var Selectcolumn;
+		//
+		var objStat = '';
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options: {
+				minZoom: 10
+			},
+			style: 'color'
+		});
+
+		$("body").delegate("li[name=li]", "tap", function(e) {
+			var param = $(this).attr("guid")
+			var i = $(this).attr("id").replace("li", "");
+			var id = $(this).attr("id").replace("li", "u");
+			// console.log("status="+$(this).attr("status"))
+			// console.log("guid:"+param)
+
+			//查询养护内容
+			getContent(param, i, id, $(this).attr("endTime"), $(this).attr("status"));
+		});
+		//点击对象显示地图点
+		$("body").delegate("a[name=mapIndex]", "tap", function(e) {
+			// e.stopPropagation()
+
+			var data = mergeObj(datalist[$(this).attr('mapIndex')].objList)
+			console.log(JSON.stringify(data))
+			var keyPoints = []
+			if (data && data.length > 0) {
+				for (let i = 0; i < data.length; i++) {
+					var c = '#337BFC'
+					if (data[i].status == 1) c = '#F84848';
+					var item = {
+						color: c,
+						position: [data[i].smx, data[i].smy]
+					}
+
+					keyPoints.push(item);
+				}
+			}
+			console.log(keyPoints)
+			if ($(this).parent().attr("class").indexOf('mui-active') == -1){
+				if(keyPoints.length == 0) app.toast("暂无养护对象")
+				mobileContainer.showPoints(keyPoints, true);
+			} else mobileContainer.showPoints(0);
+			
+		})
+
+		$("body").delegate("div[name=status_start]", "tap", function(e) {
+			e.stopPropagation()
+			var param = {}
+			param.guid = $(this).attr('dataGuid')
+			param.status = 1
+			// var date = new Date();
+			// var nowDate = Date.parse(date.toLocaleDateString());
+			// var endDate = Date.parse($(this).attr('endTime').replace(/-/g,"\/"));
+			// 	if($(this).attr('endTime').replace(/-/g,"\/") =='无' || nowDate <= endDate){
+
+			paramStatus.status = 1;
+			var btnArray = ['取消', '确定'];
+			mui.confirm('点击确认将开始养护任务。', btnArray, function(e) {
+				if (e.index == 0) {
+					StatusStart(param, function(data) {
+						if (data.success) {
+							app.toast("任务开始")
+							paramStatus.status = 1,
+								statusTitle = "执行中\ue8b6"
+							self1.setStyle({
+								titleNView: {
+									buttons: [{
+										"color": "white",
+										"colorPressed": "gray",
+										"float": "left",
+										"fontWeight": "400",
+										"fontSize": "18px",
+										"fontSrc": "../../fonts/iconfont.ttf",
+										"text": statusTitle,
+										"onclick": Selectcolumn,
+										"width": "300px",
+									}]
+								},
+							});
+							getList();
+							getMapList();
+						} else {
+							app.toast("数据异常")
+						}
+					});
+				}
+			})
+			// }else{
+			// 	app.toast("该工作包截止日期为"+$(this).attr('endTime')+",不可开始任务")
+			// }
+		});
+
+		//点击定位点
+		mobileContainer.on('showInfo', data => {
+			//设置点位时把任务中对象的guid写入，使用guid获取打开页面的数据
+			// data:self.data,
+			// 				guid:self.data.guid,
+			// 				objList:self.data.objList,
+
+			// console.log(JSON.stringify(data.info))
+			var extras = {
+				"data": eval("(" + data.info.data + ")"),
+				"guid": eval("(" + data.info.data + ")").guid,
+				"objList": eval("(" + data.info.data + ")").objList,
+				"objguid": data.info.objguid,
+				"objdata": eval("(" + data.info.data + ")").objList[data.info.index],
+				"endTime": eval("(" + data.info.data + ")").endTime,
+				"index": data.info.index,
+			}
+			app.openPage("maintain_info.html", {
+				titleNView: {
+					titleText: '养护信息',
+					autoBackButton: true,
+				}
+			}, extras);
+
+		});
+
+		// var str2 = ''
+		var keyPoints = []
+		var keyPointsList = []
+		const routePoints = []
+		var objList = []
+
+		mui.init({
+			swipeBack: false
+		});
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var pickerpxtop = null;
+		mui.plusReady(function() { //禁止选项卡自带滑动
+
+			mui('.mui-slider').slider().stopped = true;
+			//监听区域滑动
+			document.getElementById('selectItem1').addEventListener("swipeleft", function() {
+				$('#item1').removeClass("mui-active")
+				$('#item2').addClass("mui-active")
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(1);
+			});
+			document.getElementById('contentList').addEventListener("swiperight", function() {
+				$('#item1').addClass("mui-active")
+				$('#item2').removeClass("mui-active")
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(0);
+			});
+			var OpenBottom = true;
+			pickerpxtop = new mui.PopPicker({
+				buttons: ['取消', '确定']
+			}); //
+			self1 = plus.webview.currentWebview();
+			Selectcolumn = function() {
+				if (OpenBottom) {
+					OpenBottom = false;
+					pickerpxtop.setData([{
+						value: 0,
+						text: '待执行'
+					}, {
+						value: 1,
+						text: '执行中'
+					}, {
+						value: 2,
+						text: '已完成'
+					}]);
+					pickerpxtop.show(pickercolumn)
+				} else {
+					pickerpxtop.hide()
+					OpenBottom = true;
+					// pickerpxtop.hide()
+				}
+			}
+
+			function pickercolumn(selectItems) { //选择确定按钮
+				paramStatus.status = selectItems[0].value;
+				// console.log('SelectedItem' + JSON.stringify(selectItems[0].value));
+				mui('#scroll1').scroll().scrollTo(0, 0, 0);
+				mui('#contentList').scroll().scrollTo(0, 0, 0);
+				statusTitle = selectItems[0].text + "\ue8b6"
+				self1.setStyle({
+					titleNView: {
+						// backgroundImage:"../../img/bgTop.png",
+						// backgroundRepeat:'no-repeat',
+						buttons: [{
+							"color": "white",
+							"colorPressed": "gray",
+							"float": "left",
+							"fontWeight": "400",
+							"fontSize": "18px",
+							"fontSrc": "../../fonts/iconfont.ttf",
+							"text": statusTitle,
+							"onclick": Selectcolumn,
+							"width": "300px",
+						}]
+					},
+				});
+				getMapList();
+				getList();
+			}
+
+
+			statusTitle = "执行中\ue8b6"
+			self1.setStyle({
+				titleNView: {
+					// backgroundImage:"../../img/bgTop.png",
+					// backgroundRepeat:'no-repeat',
+					buttons: [{
+						"color": "white",
+						"colorPressed": "gray",
+						"float": "left",
+						"fontWeight": "200",
+						"fontSize": "18px",
+						"fontSrc": "../../fonts/iconfont.ttf",
+						"text": statusTitle,
+						"onclick": Selectcolumn,
+						"width": "300px",
+					}]
+				}
+			});
+
+			// console.log(JSON.stringify(paramStatus))
+			getMapList();
+			getList();
+		});
+
+		$("body").delegate("div[class=More]", "tap", function(e) {
+			e.stopPropagation(); //  阻止事件冒泡
+			var that = this;
+			var id = $(this).attr("id").replace("m", "l");
+			var cid = $(this).attr("id").replace("m", "c");
+			console.log(cid)
+			if (!$("#" + cid).is(":visible")) {
+				$(this).css("transform", "rotate(180deg)");
+			}else{
+				$(this).css("transform", "rotate(0deg)");
+			}
+			$("#" + cid).slideToggle();
+		});
+
+		//提交养护任务
+		$("body").delegate(".toEdit", "tap", function(e) {
+			var stat = $(this).attr('stat');
+			var listIndex = $(this).attr('listIndex');
+			if (stat == 0 || stat == null || stat == undefined) {
+				app.toast("该任务还未开始，请先开始任务！")
+				return;
+			}
+			 
+			var workPackageName = $(this).parent().attr("workPackageName") 
+			var index = $(this).attr("data-index")
+			var key = $(this).attr("key")
+			//测试数据
+			//1、所有的养护内容列表
+			var contentList = objList[index].objList;
+			// console.log("contentList:" + JSON.stringify(contentList))
+
+			//2.待养护的内容
+			contentList = contentList.filter(item => {
+				return item.status == "0";
+			})
+
+			//3、养护对象
+			var maintainObj = key;
+			//4、截止时间
+			var endTime = $(this).attr('endTime');
+			var objStat = $(this).parent().attr('objStat');
+			var mainObj = $(this).parent().attr('guid');
+
+			var extras = {
+				'workPackageName':workPackageName,
+				'contentList': contentList,
+				'currentContent': contentList[0],
+				'maintainObj': maintainObj,
+				'endTime': endTime,
+				'index': index,
+				'objStat': objStat,
+				'mainObj': mainObj,
+				'listData': datalist[listIndex].objList
+			}
+			if (stat == 2 || contentList.length == 0) {
+				extras.contentList = objList[index].objList;
+				extras.currentContent = extras.contentList[0]
+				app.openPage("maintain_info.html", {
+					titleNView: {
+						titleText: workPackageName,
+						autoBackButton: true,
+					}
+				}, extras);
+				return;
+			} else {
+				// console.log(JSON.stringify(extras))
+				app.toast("该对象有" + contentList.length + "个养护内容待完成！")
+				app.openPage("maintain_edit.html", {
+					titleNView: {
+						titleText: workPackageName,
+						autoBackButton: true,
+					}
+				}, extras);
+			}
+		});
+
+		function getList() {
+			getMaintainTaskList(paramStatus, function(data) {
+				$("#selectItem1_ul").html('')
+				datalist = data.result.records
+				var len = data.result.records.length;
+				console.log(len)
+				var str1 = '';
+				if (len && len > 0) {
+					for (let i = 0; i < len; i++) {
+						//任务状态
+						var task_status = "";
+						var object_end = 0
+						// keyPointsList[i] = []
+						// routePoints[i] = []
+						var text = ''
+						var objJson = data.result.records[i].objList;
+
+						var endTime = ''
+						if (data.result.records[i].endTime) {
+							endTime = data.result.records[i].endTime.split(' ')[0]
+						} else {
+							endTime = '无'
+						}
+						if (data.result.records[i].status == null || data.result.records[i].status == 0) {
+							task_status =
+								`<div class="item1" name="status_start" endTime=${endTime} planWorkId=${data.result.records[i].planWorkId} dataGuid=${data.result.records[i].guid}>
+									<div style="color: #337BFC;">开始</div>
+								</div>`;
+						} else if (1 == data.result.records[i].status) {
+							task_status = '<div class="task-item-running task-item_status"><span>执行中</span></div>';
+						} else if (2 == data.result.records[i].status) {
+							task_status = '<div class="task-item-finished task-item_status"><span>已完成</span></div>';
+						}
+						var miantainType = data.result.records[i].maintTypeDetail_dictText == null ? '——' : data.result.records[i].maintTypeDetail_dictText;
+
+						str1 +=
+							`<li class="mui-table-view-cell mui-collapse" style="padding-top: -10px;!important" index=${i} name="li" endTime=${endTime} guid=${data.result.records[i].guid} status=${data.result.records[i].status} id="li` +
+							i +
+							`">
+									<a class="mui-navigate-r" href="#" name='liindex'>
+									<div style="position: relative;"  id="inspection_start" dataindex=${i} dataGuid=${data.result.records[i].guid} name='task-title'>
+									<div style="text-align: left;">
+									<span class="icon-css"><img src="../../img/commom/xl.png" class="arrow_right" style="width: 7px;" alt=""></span>
+									<span class="task_title">${data.result.records[i].workPackageName}</span>
+									</div>
+									${task_status}
+									</div>
+									<div class="sec-line" style="margin-top: 10px;display: flex;justify-content: space-between;margin-bottom: 10px;">
+									<div>${miantainType}</div><div style="color:#EDEDED">|</div>
+									<div><span style="color:#878787;font-weight:400">${mergeObj(objJson).length}</span>个养护对象</div><div style="color:#EDEDED">|</div>
+									<div style="padding:0 5px;">截止时间：<span style="color:#878787;font-weight:400">${endTime}<span></div>
+									</div>
+									</a>`;
+
+						var lens = objJson.length;
+						if (lens >= 0) {
+							str1 +=
+								`<div class="mui-collapse-content" style="background-color: #f4f4f4;">
+									<ul class="ul-mar-bottom" workPackageName=${data.result.records[i].workPackageName} id="u` +
+								i +
+								`" objStat="" guid=${data.result.records[i].guid}>
+									<div style="height:50px;width:100%;text-align:center;font-size: 14px;line-height:50px;color: #999;">加载中</div>`;
+							str1 += `</ul>
+										</div>
+									</li>`
+						} else {
+							str1 += '</li>'
+						}
+					}
+				} else {
+					str1 = '<div class="no-data">暂无数据</div>'
+				}				
+				$("#selectItem1_ul").html(str1)
+				// mui('#selectItem1_ul').scroll().scrollTo(0, 0, 0);
+			});
+		}
+
+		function getMapList() {
+			getMaintainTaskQueryList(paramStatus, function(data) {
+				$("#selectItem2_ul").html('')
+				var len = data.result.records.length;
+				// console.log(len)
+				str2 = ''
+				if (len <= 0) {
+					str2 = '<div class="no-data">暂无数据</div>';
+				} else {
+					for (let i = 0; i < len; i++) {
+						//任务状态
+						var task_status = "";
+						var object_end = 0
+						keyPointsList[i] = []
+						routePoints[i] = []
+						var text = ''
+						var c = ''
+						var objJson = data.result.records[i].objList
+						// console.log(JSON.stringify(objJson))
+						var endTime = ''
+						if (data.result.records[i].endTime) {
+							endTime = data.result.records[i].endTime.split(' ')[0]
+						} else {
+							endTime = '无'
+						}
+						if (data.result.records[i].status == null || data.result.records[i].status == 0) {
+							task_status =
+								`<div class="item1" name="status_start" endTime=${endTime} planWorkId=${data.result.records[i].planWorkId} dataGuid=${data.result.records[i].guid}>
+									<div style="color: #337BFC;">开始</div>
+								</div>`;
+						} else if (1 == data.result.records[i].status) {
+							task_status = '<div class="task-item-running task-item_status"><span>执行中</span></div>';
+						} else if (2 == data.result.records[i].status) {
+							task_status = '<div class="task-item-finished task-item_status"><span>已完成</span></div>';
+						}
+						var miantainType = data.result.records[i].maintTypeDetail_dictText == null ? '——' : data.result.records[i].maintTypeDetail_dictText;
+						str2 +=
+							`<li class="mui-table-view-cell mui-collapse" style="padding-top:10px" index=${i} >
+										<a class="mui-navigate-r" href="#" name='mapIndex' mapIndex=${i}>
+										<div style="position: relative;"  id="inspection_start" dataindex=${i} dataGuid=${data.result.records[i].guid} name='task-title'>
+										<div style="text-align: left;">
+										<span class="icon-css"><img src="../../img/commom/xl.png" class="arrow_right" style="width: 7px;" alt=""></span>
+										<span class="task_title">${data.result.records[i].workPackageName}</span>
+										</div>
+										${task_status}
+										</div>
+										<div class="sec-line" style="margin-top: 10px;display: flex;justify-content: space-between;margin-bottom: 10px;">
+										<div>${miantainType}</div><div style="color:#EDEDED">|</div>
+										<div><span style="color:#878787;font-weight:400">${mergeObj(objJson).length}</span>个养护对象</div><div style="color:#EDEDED">|</div>
+										<div style="padding:0 5px;">截止时间：<span style="color:#878787;font-weight:400">${endTime}<span></div>
+										</div>
+										</a>
+										<div class="mui-collapse-content" style="background-color: #f4f4f4;">
+											<div class="mui-row">
+												<div><span class="mui-col-sm-6  ibh obj-title" style="width: 60%;"><div class="color888" style="display:inline-block;vertical-align:top;">记录编号：</div><div style="width:60%;display:inline-block;word-break:break-all">${data.result.records[i].logNo}</div></span>
+												<span class="mui-col-sm-6  ibh obj-title" style="vertical-align:top;"><span class="color888">负责人：</span>${data.result.records[i].personInChargeName||'无'}</span></div>
+												<span class="mui-col-sm-6  ibh obj-title"><span class="color888">服务范畴：</span>${data.result.records[i].serviceCategory_dictText || '无'}</span></div>
+												<div><span class="mui-col-sm-6  ibh obj-title"><span class="color888">养护单位：</span>${data.result.records[i].maintDepartmentName||'无'}</span>
+												<div><span class="mui-col-sm-6  ibh obj-title" style="width: 55%;"><span class="color888">开始时间：</span>${data.result.records[i].createTime.substring(0,10)||'无'}</span>
+												<span class="mui-col-sm-6  ibh obj-title" ><span class="color888">结束时间：</span>${data.result.records[i].endTime.substring(0,10)||'无'}</span></div>
+											</div>
+										</div>
+									</li>`
+					}
+				}
+				$("#selectItem2_ul").html(str2)
+				mui('#scroll1').scroll().scrollTo(0, 0, 0);
+				mui('#contentList').scroll().scrollTo(0, 0, 0);
+			});
+		}
+
+		function getContent(param, i, id, endTime, status) {
+			var str1 = '';
+			objList = mergeObj(datalist[i].objList)
+			// console.log(JSON.stringify(objList))
+			if (objList.length && objList.length > 0) {
+				for (var j = 0; j < objList.length; j++) {
+					var state = '';
+					objStat += objList[j].status + ",";
+					if (objList[j].status == 0) {
+						state = '<img src="../../img/commom/dzx.png" class="width:90px;height:34px"/>';
+					} else {
+						state = '<img src="../../img/commom/ywc.png" class="width:90px;height:34px"/>';
+					}
+					str1 +=
+						`<li class="li-margin toEdit" data-index=${j} key=${objList[j].maintainObj} endTime=${endTime} stat=${status} listIndex=${i}>
+								<div style="display:inline-block;width:100%;text-align:left;font-weight: bold;color: #191515;line-height: 14px;">
+									<div style="display:inline-block;width:50%;float:left"><span>${objList[j].maintainObj}</span></div>
+									<div style="display:inline-block;width:30%"><span>` +
+						objList[j].objList.length +
+						`项养护内容</span></div>
+									<div style="display:inline-block;width: 45px;height: 17px;float:right">${state}</div>
+								</div>`;
+					str1 += `<div style="margin-top:10px;width:100%;padding:0px;margin-left:0px">`;
+
+					for (let z = 0; z < objList[j].objList.length; z++) {
+						if (z == 0) {
+							if (objList[j].objList.length == 1) {
+								str1 +=
+									`<div style="width:100%;text-align:left;display:inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; ">
+											<span style="font-weight: 400;color: #888888;line-height: 14px;">养护内容` +
+									(z + 1) +
+									`:</span>
+											<span style="margin-left:5px;font-weight: 400;color: #444444;line-height: 14px;">` +
+									objList[j].objList[z].maintainContent + `</span>
+										</div>
+										<div id="c` + i + `_` + j +
+									`_` + z + `" style="display:none">`
+							} else {
+								str1 +=
+									`<div style="width:45%;text-align:left;display:inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; ">
+											<span style="font-weight: 400;color: #888888;line-height: 14px;">养护内容` +
+									(z + 1) +
+									`:</span>
+											<span style="margin-left:5px;font-weight: 400;color: #444444;line-height: 14px;">` +
+									objList[j].objList[z].maintainContent + `</span>
+										</div>`
+							}
+						} else if (z == 1) {
+							str1 +=
+								`<div style="width:45%;text-align:left;display:inline-block;overflow: hidden;text-overflow: ellipsis; white-space: nowrap; ">
+										<span style="font-weight: 400;color: #888888;line-height: 14px;">养护内容` +
+								(z + 1) +
+								`:</span>
+										<span style="margin-left:5px;font-weight: 400;color: #444444;line-height: 14px;">` +
+								objList[j].objList[z].maintainContent +
+								`</span>
+									</div>`
+							if (objList[j].objList.length > 2) {
+								str1 += `<div style="width:9%;display:inline-block;vertical-align: top;" class="More" id="m` +
+									i + `_` + j + `_` + z +
+									`">
+										<span class="mui-icon mui-icon-arrowdown" style="font-size:18px;font-weight:bold;color:#337BFC"></span>
+									</div>`
+							} else {
+								str1 += `<div style="width:9%;display:inline-block;"></div>`
+							}
+							str1 += `<div id="c` + i + `_` + j + `_` + z + `" style="display:none">`;
+						} else if (z % 2 == 0) {
+							if (z == objList[j].objList.length - 1) {
+								str1 +=
+									`<div style="width:45%;text-align:left;display:inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; ">
+											<span style="font-weight: 400;color: #888888;line-height: 14px;">养护内容` +
+									(z + 1) +
+									`:</span>
+											<span style="margin-left:5px;font-weight: 400;color: #444444;line-height: 14px;">` +
+									objList[j].objList[z].maintainContent +
+									`</span>
+										</div>
+										<div style="width:53%;display:inline-block;" ></div>`
+							} else {
+								str1 +=
+									`<div style="width:45%;text-align:left;display:inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; ">
+										<span style="font-weight: 400;color: #888888;line-height: 14px;">养护内容` +
+									(z + 1) +
+									`:</span>
+										<span style="margin-left:5px;font-weight: 400;color: #444444;line-height: 14px;">` +
+									objList[j].objList[z].maintainContent + `</span>
+									</div>`
+							}
+						} else {
+							str1 +=
+								`<div  style="width:45%;text-align:left;display:inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; ">
+										<span style="font-weight: 400;color: #888888;line-height: 14px;">养护内容` +
+								(z + 1) +
+								`:</span>
+										<span style="margin-left:5px;font-weight: 400;color: #444444;line-height: 14px;">` +
+								objList[j].objList[z].maintainContent +
+								`</span>
+									</div>
+									<div style="width:8%;display:inline-block;"></div>`
+						}
+					}
+					str1 += `</div></div>
+										</li>`;
+				}
+			} else {
+				str1 =`<div class="mui-collapse-content" style="background-color: #f4f4f4;">
+									<ul class="ul-mar-bottom">
+									<div class="emptyDiv">暂无数据</div>
+									</ul>
+							</div>`
+			}
+			objStat = objStat.substring(0, objStat.length - 1)
+			$("#" + id).attr("objStat", objStat)		
+			$("#" + id).html(str1)
+		}
+
+		window.addEventListener('backInspection', function(e) { //执行刷新
+			// location.reload();
+			getList();
+			getMapList();
+			mui('#scroll1').scroll().scrollTo(0, 0, 0);
+			mui('#contentList').scroll().scrollTo(0, 0, 0);
+		});
+
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
+		})(mui);
+
+		function mergeObj(arr) {
+			// console.log(JSON.stringify(arr))
+			let map = new Map();
+			let res = [];
+			var objNo = 0;
+			var margeObjNo = 0;
+			for (const item of arr) {
+				objNo++;
+				if (map.has(item.maintainObj)) {
+					let temp = map.get(item.maintainObj);
+					temp.maintainObj = item.maintainObj;
+					if (temp.status == 1) {
+						temp.status = item.status;
+					}
+					temp.objList.push({
+						'objNo': objNo,
+						'attachment': item.attachment,
+						'corpCode': item.corpCode,
+						'createBy': item.createBy,
+						'createTime': item.createTime,
+						'delFlag': item.delFlag,
+						'deviceType': item.deviceType,
+						'guid': item.guid,
+						'inputeName': item.inputeName,
+						'inputeTime': item.inputeTime,
+						'maintFrequency': item.maintFrequency,
+						'maintainContent': item.maintainContent,
+						'maintainObj': item.maintainObj,
+						'maintainObjId': item.maintainObjId,
+						'masterId': item.masterId,
+						'prjCode': item.prjCode,
+						'remark': item.remark,
+						'status': item.status,
+						'strAttachment': item.strAttachment,
+						'updateBy': item.updateBy,
+						'updateTime': item.updateTime,
+						'workPackageId': item.workPackageId,
+						'smx': item.smx,
+						'smy': item.smy
+					});
+					map.set(item.maintainObj, temp);
+				} else {
+					margeObjNo++;
+					const obj = {
+						"maintainObj": item.maintainObj,
+						"maintainObj": item.maintainObj,
+						"margeObjNo": margeObjNo,
+						"status": item.status,
+						"smx": item.smx,
+						"smy": item.smy,
+						"objList": [{
+							'objNo': objNo,
+							'attachment': item.attachment,
+							'corpCode': item.corpCode,
+							'createBy': item.createBy,
+							'createTime': item.createTime,
+							'delFlag': item.delFlag,
+							'deviceType': item.deviceType,
+							'guid': item.guid,
+							'inputeName': item.inputeName,
+							'inputeTime': item.inputeTime,
+							'maintFrequency': item.maintFrequency,
+							'maintainContent': item.maintainContent,
+							'maintainObj': item.maintainObj,
+							'maintainObjId': item.maintainObjId,
+							'masterId': item.masterId,
+							'prjCode': item.prjCode,
+							'remark': item.remark,
+							'status': item.status,
+							'strAttachment': item.strAttachment,
+							'updateBy': item.updateBy,
+							'updateTime': item.updateTime,
+							'workPackageId': item.workPackageId,
+							'smx': item.smx,
+							'smy': item.smy
+						}],
+					};
+					map.set(item.maintainObj, obj);
+				}
+			}
+			map.forEach(item => {
+				res.push(item)
+			});
+			// console.log(JSON.stringify(res))
+			return res;
+		}
+
+
+		window.addEventListener('backList', function(e) { //执行刷新
+			paramStatus.status = 2,
+				statusTitle = "已完成\ue8b6"
+			self1.setStyle({
+				titleNView: {
+					buttons: [{
+						"color": "white",
+						"colorPressed": "gray",
+						"float": "left",
+						"fontWeight": "200",
+						"fontSize": "18px",
+						"fontSrc": "../../fonts/iconfont.ttf",
+						"text": statusTitle,
+						"onclick": Selectcolumn,
+						"width": "300px",
+					}]
+				}
+			});
+			getList();
+			getMapList();
+		});
+	</script>
+
+</html>

@@ -1,0 +1,846 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>发起工单</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	    <link href="../../css/common.css" rel="stylesheet" />
+	    <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+	    <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<style type="text/css">
+			body {
+				background: #fff;
+				width: 100%;
+			}
+			
+			.header {
+				color: #fff;
+				background: #354052;
+			}
+			
+			.header a,
+			.header h1 {
+				color: #fff;
+			}
+			
+			.input_wk {
+				width: 100% !important;
+				height: 57px !important;
+				display: flex;
+				justify-content: space-between;
+				font-size: 14px;
+				align-items: center;
+			}
+			
+			.input_wk p {
+				color: #c4c4c4 !important;
+				margin-top: 10px;
+				margin-right: 10px;
+			}
+			
+			.label {
+				width: 40px;
+				position: relative;
+				padding-left: 33.5px !important;
+				white-space: nowrap;
+			}
+			
+			.label2 {
+				padding-left: 33.5px !important;
+			}
+			
+			input,
+			.input-right {
+				float: right;
+				text-align: right;
+				color: #888 !important;
+			}
+			.mui-input-group .mui-input-row:after {
+				background-color: #EDEDED;
+			}
+			
+			.input-right::-webkit-input-placeholder {
+				/* 修改字体颜色 */
+				color: #c4c4c4;
+			}
+			
+			input {
+				font-size: 14px;
+			}
+			
+			.biao {
+				color: #DB2828;
+				font-size: 25px;
+				position: absolute;
+				top: 26%;
+				left: 20px;
+			}
+			
+			.mui-icon-arrowright {
+				font-size: 16px;
+			}
+			
+			.text {
+				height: 138px;
+			}
+			
+			.input-left {
+				text-align: left;
+				height: 138px !important;
+				line-height: none;
+			}
+			
+			.label2 {
+				width: 50% !important;
+			}
+			
+			textarea {
+				padding-left: 20px;
+				font-size: 14px;
+			}
+			
+			.label3 {
+				padding: 12px 0 !important;
+				width: 62px !important;
+				margin-left: 45px !important;
+				float: right !important;
+			}
+			
+			.pick {
+				border: none !important;
+				color: #c4c4c4;
+				width: 35% !important;
+				font-size: 14px;
+				margin-top: 5px;
+			}
+			
+			.ui-alert {
+				margin-left: 10px;
+			}
+			
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				color: #0493F3;
+				font-size: 22px;
+			}
+			
+			.radio-item {
+				width: 50%;
+			}
+			
+			.radio_inline label {
+				/*width: 20%;*/
+				/*padding-left: 40px;*/
+				/*padding-right: 20px;*/
+				padding: 10px;
+				width: 55px;
+				height: 22px;
+				margin-left: 20px;
+				font-size: 16px;
+			}
+			
+			.radio_inline input[type=radio] {
+				width: 15%;
+				right: auto;
+			}
+			/*//换个样式*/
+			
+			.change {
+				display: flex;
+				align-items: center;
+			}
+			
+			.change .mui-radio input[type='radio']:checked:before {
+				content: '\e442';
+				color: #0493F3;
+				font-size: 22px;
+			}
+			
+			.mui-radio input[type=radio] {
+				top: 8px;
+				width: 20px;
+			}
+			.sd{
+				pointer-events: none;
+			}
+			.uplode{
+				display: flex;
+			}
+			#tp{
+				display: flex;
+				align-items: center;
+				padding-right: 12px;
+			}
+			.imgs{
+				padding-right: 12px;
+				width: 100%;
+				height: 100%;
+			}
+			.html_img{
+				position: relative;
+			}
+			.myImgClose{
+			            position: absolute;
+			            right: 0px;
+			        }
+		</style>
+	</head>
+	<!-- <header class="mui-bar mui-bar-nav header">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">发起工单</h1>
+	</header> -->
+	<div class="mui-content">
+		<form class="mui-input-group">
+			<div class="mui-input-row input_wk">
+				<label class="label"><span class="biao">*</span>工单名称：</label>
+				<input type="text" class="input-right formName" placeholder="请输入工单名称" required="required">
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">工单编号：</label>
+				<input  type="text" class="sd" placeholder="提交表单后自动填写">
+			</div>
+			
+			<div class="mui-input-row input_wk">
+				<label class="label" ><span class="biao">*</span>问题类型：</label>
+				<!-- <button id='showUserPicker4' class="mui-btn mui-btn-block pick" type='button'>请选择相关工单<span class="mui-icon mui-icon-arrowright "></span></button> -->
+				<input type="text" class="input-right problemTypes" placeholder="请选择问题类型" required="required">
+			</div>
+			
+			<div class="mui-input-row input_wk">
+				<label class="label" ><span class="biao">*</span>工单来源：</label>
+				<!-- <button id='showUserPicker4' class="mui-btn mui-btn-block pick" type='button'>请选择相关工单<span class="mui-icon mui-icon-arrowright "></span></button> -->
+				<input type="text" class="input-right formSource" placeholder="请选择工单来源" required="required">
+			</div>
+			
+			<div class="mui-input-row input_wk">
+
+				<label class="label2">问题等级：</label>
+				<div class="item-checkbox" style="">
+					<div class="mui-input-row change">
+						<div class="radio_inline mui-radio" style="display: flex;">
+							<div class="radio-item">
+								<input name="initialDesign" type="radio" id="initialDesignOne" value="0">
+								<label for="initialDesignOne" style="margin-right: 10px;text-align: right">一般</label>
+							</div>
+							<div class="radio-item">
+								<input name="initialDesign" type="radio" id="initialDesignTwo" value="1">
+								<label for="initialDesignTwo" style="text-align: right">紧急</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">相关工单：</label>
+				<input id='showUserPicker2' type="text" class="input-right" placeholder="请选择相关工单" required="required">
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label" ><span class="biao">*</span>设施类型：</label>
+				<!-- <button id='showUserPicker4' class="mui-btn mui-btn-block pick" type='button'>请选择相关工单<span class="mui-icon mui-icon-arrowright "></span></button> -->
+				<input type="text" class="input-right objType" placeholder="请选择设施类型" required="required">
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">发现地点：</label>
+				
+				<span id="discoveryAddr"style="padding-right:11.25px;color: gray;">请选择发现地点</span>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label"><span class="biao">*</span>问题描述：</label>
+			</div>
+			<textarea name="" class="input-left  problemDesc" rows="" cols="" placeholder="请输入问题描述（不超过500字）" required="required"></textarea>
+			<!--<input type="" class="input-left" placeholder="请输入问题描述（不超过500字）">-->
+
+			<div class="mui-input-row input_wk" style="height: 180px !important;">
+				<label class="label">问题照片：</label>
+				<div class="uplode">
+					<!-- qua_img_list img_item -->
+					<div id="tp" class="qua_img_list img_item">
+						 <!-- <img src="file:///storage/emulated/0/DCIM/captured_image/1622948964233.jpg" style="width: 40px;height: 40px;"/> -->
+					</div>
+					<div id="qs_photo" class="img_item" style="display: flex;flex-direction: column;padding: 10px; position: relative;border: 1px solid #007AFF;margin: 10px 20px 0px 0px ;">
+						<img src="../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto" class="img_src">
+						<span style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="mui-input-row input_wk">
+				<label class="label"><span class="biao">*</span>受理人：</label>
+				<p id='showUserPicker4'><span id="approverFullname" class="acceptorName">请选择受理人员</span><span class="mui-icon mui-icon-arrowright "></span></p>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">受理部门：</label>
+				<input type="text" class="accepteDepartName sd" placeholder="自动填入">
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label" style="width: 40% ;">要求完成时间：</label>
+					<div id="result" class="ui-alert rili rilitime" style="color: #c4c4c4;padding-right:11.25px">请在选择时间</div>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label"><span class="biao">*</span>补充要求：</label>
+			</div>
+			<textarea name="" class="input-left suppleRequire" rows="" cols="" placeholder="请输入补充描述（500字以内）"></textarea>
+			<div class="mui-input-row input_wk">
+				<label class="label">派单人：</label>
+				<p class="personName"style="padding-right:11.25px">无</p>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">联系方式：</label>
+				<p class="personMobilePhone"style="padding-right:11.25px"></p>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">派单部门：</label>
+				<p class="companyName">无</p>
+			</div>
+			<div class="mui-input-row input_wk">
+				<label class="label">填写日期：</label>
+				<p class="txTime"style="padding-right:11.25px">无</p>
+			</div>
+	<div class="mui-input-row input_wk">
+		<label class="label2" style="margin-top: 5px;">新任务通知方式：</label>
+		<div class="item-checkbox" style="">
+			<div class="mui-input-row change"style="border: none;">
+				<div class="radio_inline mui-radio" style="display: flex;">
+					<div class="radio-item">
+						<input name="z" type="radio" id="znxx" checked>
+						<label for="initialDesignOne" style="margin-right: 0px;width: 90px;">站内消息</label>
+					</div>
+					<div class="radio-item">
+						<input name="s" type="radio" id="sjdx">
+						<label for="initialDesignTwo" style="width: 90px;padding-right:11.25px;">手机短信</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+			<div class="mui-input-row input_wk">
+				<label class="label"><span class="biao">*</span>结果复核：</label>
+				<p class="resAuditorName" style="padding-right:11.25px">请选择人员</p>
+			</div>
+			<div class="mui-input-row input_wk" style="display: flex; justify-content: space-around;">
+				<!-- <button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="width: 160px; height: 40px;"></button> -->
+				<button type="button" class="mui-btn mui-btn-primary btn-agree tijiao" style="width: 167.5px; height: 40px;">提交</button>
+			</div>
+
+	</div>
+	</form>
+	</div>
+
+	<body>
+		<script src="../../js/vconsole.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.view.js"></script>
+		<script src="../../js/mui.locker.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.picker.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/helper.js"></script>
+		<script src="../../js/uploadimage.js"></script>
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/bscroll.js"></script>
+		<script src="../../js/workSpace/addNormalFormItem.js"></script>
+		<script src="../../js/workorder/workorder.js"></script>
+		<script src="../../js/qualityControl/qualityControl.js"></script>
+		
+		<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+		<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+		<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+		
+		<script type="text/javascript">
+			mui.plusReady(function(){
+				var a = []
+				self = plus.webview.currentWebview()
+				console.log(self.gdnames)
+				for(var i = 0;i<self.gdnames.length;i++){
+					a.push({value:i,text:self.gdnames[i]})
+				}
+				console.log(JSON.stringify(a))
+				//相关工单
+				$("#showUserPicker2").on("tap",function(){
+					var picker=new mui.PopPicker();
+					picker.setData(a);
+					picker.show(function(selectItems){
+						$("#showUserPicker2").val(selectItems[0].text)
+						CheckTypeIndex=selectItems[0].value
+					})
+				})
+				
+			})
+			//问题等级
+			var checkNum = 0
+			            $(`input[name="initialDesign"]`).each(function(){
+			                        $(this).on('click',function(){
+			                            if($(this).prop('checked')){
+			                                checkNum = $(this).val()
+			                            }else{
+			                                checkNum = 0
+			                            }
+			                        })
+			                         
+			                })
+			//日历
+			$('.rili').on('tap', function () {
+			        console.log('111')
+			        var dtPicker = new mui.DtPicker({ type: 'date' });
+			        dtPicker.show(function (selectItems) {
+			            var y = selectItems.y.text;  //获取选择的年
+			            var m = selectItems.m.text;  //获取选择的月
+			            var d = selectItems.d.text;  //获取选择的日
+			            var date = y + "-" + m + "-" + d;
+			            console.log(date)
+			            $(".rili").text(date)
+			        })
+			    })
+			
+			//问题类型
+			$(".problemTypes").on("tap",function(){
+				var picker=new mui.PopPicker();
+				picker.setData([
+					{value:'1',text:'设备检修'},
+					{value:'2',text:'隐患巡检'},
+					{value:'3',text:'水质报警'},
+					{value:'4',text:'投诉处理'},
+					{value:'5',text:'水务调度'},
+					
+				]);
+				picker.show(function(selectItems){
+					$(".problemTypes").val(selectItems[0].text)
+					CheckTypeIndex=selectItems[0].value
+				})
+			})
+			
+			//工单来源
+			$(".formSource").on("tap",function(){
+				var picker=new mui.PopPicker();
+				picker.setData([
+					{value:'1',text:'监测预警'},
+					{value:'2',text:'市民投诉'},
+					{value:'3',text:'排水巡检'},
+					{value:'4',text:'事件'},
+					{value:'5',text:'父工单派生'},
+					
+				]);
+				picker.show(function(selectItems){
+					$(".formSource").val(selectItems[0].text)
+					CheckTypeIndex=selectItems[0].value
+				})
+			})
+			
+			//设施类型
+			$(".objType").on("tap",function(){
+				var picker=new mui.PopPicker();
+				picker.setData([
+					{value:'1',text:'检查井'},
+					{value:'2',text:'截流井'},
+					{value:'3',text:'雨水口'},
+					{value:'4',text:'排放口'},
+					{value:'5',text:'泵站'},
+					{value:'6',text:'化粪池'},
+					{value:'7',text:'隔油池'},
+					{value:'8',text:'沉淀池'},
+					{value:'9',text:'管渠'},
+					{value:'10',text:'断面'},
+					{value:'11',text:'水闸'},
+					{value:'12',text:'水库'},
+					{value:'13',text:'湖泊'},
+					{value:'14',text:'大坝'}
+					
+				]);
+				picker.show(function(selectItems){
+					$(".objType").val(selectItems[0].text)
+					CheckTypeIndex=selectItems[0].value
+				})
+			})
+			//上传图片
+			var strAttachment = [{
+			            groupId:'',
+			            fileTokens:'',
+			            fieldName:"handlePhoto",
+			            tableName:"form_base_new"}]
+			$("#qs_photo").on("tap", function() {
+			            plusSelectImage(function(data, path) {
+			                console.log(JSON.stringify(data))
+			                if (data.success) {
+			                    strAttachment[0].groupId = data.result.uploadFile.id
+			                    strAttachment[0].fileTokens += data.result.fileTokens + ',';
+			
+			//                     var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+			//                     '" class="img_item">' +
+			//                     '       <img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style="width:80px;height:80px;"  />' +
+			//                     '<span class=" myImgClose mui-icon mui-icon-closeempty" style="    font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+			//                     '   </div>';
+			                       var html=`<div class="html_img">
+								   <img class="imgs" src="${path}" style="width: 72px;height: 72px;"/>
+								   <span class="myImgClose mui-icon mui-icon-closeempty" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>
+								   </div>
+								   `
+								   
+			                     $("#tp").append(html);
+			                     console.log(html)
+			     
+			                    var count = $("#tp").children(".img_item").length;
+			                    if (count == 3) { //处理上传的数量
+			                        $("#qs_photo").hide();
+			                    }                    
+			                    $(".myImgClose").each(function(){
+			                        $(this).on('tap',function(e){
+			                        $(this).parent().hide()
+			                        if(count == 2){
+			                            $("#qs_photo").show()
+			                        }
+			                    })
+			                    
+			        })
+			                } else app.toast(data.message)
+			            });
+			        });
+			
+			
+			// // 选择地点
+			// function initMap() {
+			// 	// 地图开启==================================================================================================================================================================================
+			// 	// 初始化地图容器
+			// 	const MobileContainer = window['mobile-lib'].MobileContainer;
+			// 	const mobileContainer = new MobileContainer({
+			// 		serverUrl: config.urls.serverDomain,
+			// 		options: { minZoom: 10 },
+			// 		style: 'color',
+			// 		initCallback: () => {
+			// 			console.log("地图初始化完成")
+			// 		}
+			// 	});
+			// 	const layerSelections = window['mobile-lib'].layerSelections;
+			// 	const mapData = window['mobile-lib'].MapData({
+			// 		serverUrl: config.urls.serverDomain,
+			// 		style: 'color'
+			// 	});
+			// 	mobileContainer.on('load', () => {
+			// 		getCurrentPosition();
+			// 		// mobileContainer.enableCenterAddress(true);
+			// 		// mobileContainer.setQuery({NAME: 'ps_dischargeWr'});//加载排水户
+			// 		// mobileContainer.showAnnotation(true);
+			// 	});
+			 
+			// 	var getCurrentPosition = function () {
+			// 		plus.geolocation.getCurrentPosition(function (position) {
+			// 			//坐标修正
+			// 			var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+			// 			var Lon = point[0]; //获取经度
+			// 			var Lat = point[1]; //获取纬度
+			 
+			// 			console.log("latlng:" + Lat + "," + Lon);
+			// 			mobileContainer.flyTo([Lon, Lat], {
+			// 				zoom: 12
+			// 			});
+			// 		})
+			// 	}
+			 
+			// 	//点击地图 定位
+			// 	mobileContainer.on('click', data => {
+			// 		if (data) {
+			// 			// flag = true;
+			// 			console.log('点击地图:click')
+			// 			// clearGlobalItem();
+			// 			mobileContainer.enableCenterAddress(true);
+			// 			mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+			// 			mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+			// 		} else {
+			// 			// flag = false;
+			// 			// clearGlobalItem();
+			// 			app.toast('当前选择不在可选范围内，请重新选择');
+			// 		}
+			// 	});
+			 
+			// 	//地图取消
+			// 	$("#map_cancel").on('tap', function () {
+			// 		console.log("取消");
+			// 		maskClose();
+			// 	})
+			 
+			// 	//地图确认
+			// 	$('#map_confirm').on('tap', function () {
+			// 		var address = $("#discoveryAddr").text();
+			// 		$("#discoveryAddr").text(address)
+			// 		maskClose()
+			// 	})
+			 
+			// 	function maskClose() {
+			// 		mask.clickClose = true;
+			// 		mask.close();
+			// 	}
+			// 	//显示地图信息
+			// 	mobileContainer.on('showAddress', data => {
+			// 		console.log("showAddress" + JSON.stringify(data.addressComponent));
+			// 		var point = {
+			// 			'lng': data.location.lon,
+			// 			'lat': data.location.lat
+			// 		};
+			// 		Point = point;
+			// 		// globalSetItem(GlobalKey.point, JSON.stringify(point));//选中地图点
+			 
+			// 		var city = data.addressComponent.city ? (data.addressComponent.city) : '';
+			// 		var county = data.addressComponent.county ? (data.addressComponent.county) : '';
+			// 		var road = data.addressComponent.road ? data.addressComponent.road : '';
+			// 		var poi = data.addressComponent.poi ? data.addressComponent.poi : '';
+			// 		var address = city + county + road + poi;
+			// 		$("#discoveryAddr").text(address);
+			// 		$("#discoveryAddr").show();
+			// 		// maskClose();
+			// 		// globalSetItem(GlobalKey.address, address);//保存选中的地址
+			// 	});
+			// 	// 地图结束==================================================================================================================================================================================
+			// }
+			 
+			// //关闭遮罩层
+			// function closeMask() {
+			// 	console.log('关闭遮罩层' + sharew.id);
+			// 	//避免出现特殊情况，确保分享页面在初始化时关闭
+			// 	if (!sharew) {
+			// 		sharew = plus.webview.getWebviewById("goods/add_to_cart.html");
+			// 		console.log(sharew.id);
+			// 	}
+			// 	if (sharew) {
+			// 		sharew.hide('slide-out-bottom', 300);
+			// 		//sharew = null;
+			// 	}
+			// 	var ws = plus.webview.currentWebview();
+			// 	console.log('关闭遮罩层' + ws.id);
+			// 	ws.setStyle({ mask: "none" });
+			// }
+			 
+			// // mask.clickClose = false;
+			 
+			 
+			// var mask = mui.createMask(function () {
+			// 	return mask.clickClose;
+			// });
+			// $('#discoveryAddr').on('tap', function () {
+			// 	console.log("选择地图");
+			// 	maskShow();
+			// 	console.log("1")
+			// 	addMapSelector();
+			// 	console.log("2")
+			// 	// initMap();
+			// })
+			// function maskShow() {
+			// 	mask.clickClose = false;
+			// 	mask.show();
+			// }
+			 
+			// // 弹出地图
+			// var addMapSelector = function () {
+			// 	// 先清空
+			// 	$(".mui-backdrop").empty();
+			// 	var map = '<div id="map" class="mapboxgl-map" style="z-index: 7;position:absolute;left:0px;top:0px;right:0px;width:80%;height:78vh;margin: 10% 10%">' +
+			// 		'<!--搜索-->' +
+			// 		'<div id="searchBar" class="mui-input-row" style="position: fixed;z-index: 6;width: 90%;margin: 10%;height: 40px; ">' +
+			// 		// '<img src="../../../img/commom/search1@2x.png" alt="" id="search_icon" style="width: 16px;position: fixed;top: 31px;left: 31px;">' +
+			// 		'<input readonly style="margin: 0;border: none;background-color: white;padding: 10px;font-size: 16px;text-align: center;display: none" id="searchInput"></div>' +
+			// 		'</div>' +
+			// 		'<div style="bottom: 8%;margin-left: 10%;width: 80%;display: flex;position: absolute;background-color: white;height: 35px;">' +
+			// 		'<span style="flex: 1;text-align: center;line-height: 35px;border-right: 1px solid #eee" id="map_confirm">确认</span>' +
+			// 		'<span style="flex: 1;text-align: center;line-height: 35px;" id="map_cancel">取消</span>' +
+			// 		'</div>';
+			// 	$(".mui-backdrop").append(map);
+			// }
+		
+			
+			//受理人选择
+			var extras={}
+			$('#showUserPicker4').on('tap',function () {
+				// $(".accepteDepartName").val("人事部")//自动填入受理部门
+			  app.openPage("../commom/organ.html", {
+			    titleNView: {
+			      titleText: '选择人员',
+			      autoBackButton: true
+			    }
+			  }, extras);
+			
+			  var checkPersonBack = function (data) {
+				  	console.log(JSON.stringify(data.detail))
+			    if (data.detail[0] != undefined) {
+			      console.log(JSON.stringify(data.detail[0]));
+			      $("#approverFullname").text(data.detail[0].realname);
+				  // $(".resAuditorName").text(data.detail[0].realname);//复核人
+				   // $(".accepteDepartName").val(data.detail[0].accepteDepartName)//受理部门
+			      // submitParam.resAuditorName = data.detail[0].realname
+			      // submitParam.resAuditorUsername = data.detail[0].username
+			    }
+			    //移除
+			    window.removeEventListener('returnSelect', checkPersonBack, false);
+			  }
+			
+			  //移除
+			  window.removeEventListener('returnSelect', checkPersonBack, false);
+			  // 赋值
+			  window.addEventListener('returnSelect', checkPersonBack, false);
+			})
+			//结果复核
+			$('.resAuditorName').on('tap',function () {
+			  app.openPage("../commom/organ.html", {
+			    titleNView: {
+			      titleText: '选择人员',
+			      autoBackButton: true
+			    }
+			  }, extras);
+			  var checkPersonBack = function (data) {
+				  	console.log(JSON.stringify(data.detail))
+			    if (data.detail[0] != undefined) {
+			      console.log(JSON.stringify(data.detail[0]));
+			      // $("#approverFullname").text(data.detail[0].realname);
+				   $(".resAuditorName").text(data.detail[0].realname);//复核人
+			      // submitParam.resAuditorName = data.detail[0].realname
+			      // submitParam.resAuditorUsername = data.detail[0].username
+			    }
+			    //移除
+			    window.removeEventListener('returnSelect', checkPersonBack, false);
+			  }
+			
+			  //移除
+			  window.removeEventListener('returnSelect', checkPersonBack, false);
+			  // 赋值
+			  window.addEventListener('returnSelect', checkPersonBack, false);
+			})
+			//派单人，联系方式，派单部门 部门名称
+			 var loginUser=localStorage.getItem('$state')
+			 // console.log(JSON.parse(loginUser).userInfo)
+			 var obj=JSON.parse(loginUser).userInfo
+			 console.log(JSON.stringify(obj))
+			 var personName=obj.personName//派单人
+			 $(".personName").text(personName)
+			 var companyName=obj.companyName//派单部门
+			 $(".companyName").text(companyName)
+			 var personMobilePhone=obj.personMobilePhone//联系方式
+			 $(".personMobilePhone").text(personMobilePhone)
+			 var departName=obj.departName//部门名称
+			 var username=obj.username
+			 //findIndex
+			 //获取当前时间，格式YYYY-MM-DD
+			     function getNowFormatDate() {
+			         var date = new Date();
+			         var seperator1 = "-";
+			         var year = date.getFullYear();
+			         var month = date.getMonth() + 1;
+			         var strDate = date.getDate();
+			         if (month >= 1 && month <= 9) {
+			             month = "0" + month;
+			         }
+			         if (strDate >= 0 && strDate <= 9) {
+			             strDate = "0" + strDate;
+			         }
+			         var currentdate = year + seperator1 + month + seperator1 + strDate;
+			         return currentdate;
+			     }
+			 var txTime=getNowFormatDate()//填写时间
+				$(".txTime").text(txTime)
+			//提交
+				$(".tijiao").on("tap",function(){
+					//问题类型
+					 var pts=["设备检修","隐患巡检","水质报警","投诉处理","水务调度"]
+					let pnum=pts.findIndex(item=>item==$(".problemTypes").val())
+					//设施类型
+					var facTypes=["检查井","截流井","雨水口","排放口","泵站","化粪池","隔油池","沉淀池","管渠","断面","水闸","水库","湖泊","大坝"]//设施类型
+					let snum=facTypes.findIndex(item=>item==$(".objType").val())
+					//工单来源
+					var gdly=["监测预警","市民投诉","排水巡检","事件","1","2","父工单派生"]
+					let gnum=gdly.findIndex(item=>item==$(".formSource").val())
+					var strFlowData={"api":"/process/startAndSubmit","processDefinitionKey":"FormBaseNew"}
+					var nowDate = new Date();
+					// console.log(format(nowDate));//获取创建时间
+					var strFormData={
+					    formName:$(".formName").val(),//工单名称
+					    problemType:pnum,//问题类型
+					    formSource:gnum,//工单来源
+					    problemLevel:checkNum,//问题等级
+						objType:snum,//设施类型
+					    problemDesc:$('.problemDesc').val(),//问题描述
+						foundAddr:$("#discoveryAddr").text(),//发现地点
+						suppleRequire:$('.suppleRequire').val(),//补充要求
+					    acceptorUsername:username,
+					    accepteDepartName:departName,//部门名称
+					    deadline:$(".rili").text(),//要求完成时间
+					    createdBy:personName,
+					    phoneNum:personMobilePhone,//联系方式
+					    inputeDepartName:companyName,//派单部门
+					    createTime:format(nowDate),//创建时间
+						acceptorName:$(".acceptorName").text(),//受理人1
+					    notifymethod:[
+					        "massage"
+					    ],
+					    resAuditorUsername:"sun_wt",
+					    acceptorName:$('#showUserPicker4').text(),//受理人
+					    resAuditorName:$(".resAuditorName").text(),//复核人
+					    // problemPhoto:"e83423546f9a474383d66d652d473ea9",
+					    // handlePhoto:"5755eb91292642e889195d93e463f28e"
+						  problemPhoto:strAttachment[0].groupId,//图片
+						  relatedOrder:$("#showUserPicker2").val()//相关工单
+					}
+					//必填
+					 if($(".formName").val() == ''){
+					                    app.toast('工单名称不能为空')
+					                    return
+					                }
+					                if($(".problemTypes").val() == ''){
+					                    app.toast('请选择问题类型')
+					                    return
+					                }
+					                if($(".formSource").val() == ''){
+					                    app.toast('请选择工单来源')
+					                    return
+					                }
+					                if($(".objType").val() == ''){
+					                    app.toast('请选择设施类型')
+					                    return
+					                }
+					                if($('.problemDesc').val() == ''){
+					                    app.toast('请输入问题描述')
+					                    return
+					                }
+					                if($('#showUserPicker4').text() == ''){
+					                    app.toast('请选择受理人')
+					                    return
+					                }
+					                if($('.suppleRequire').val() == ''){
+					                    app.toast('请填写补充要求')
+					                    return
+					                }
+					                if($(".resAuditorName").text() == '请选择人员'){
+					                    app.toast('请选择复核人')
+					                    return
+					                }
+					              if($(".rilitime").text() == '请在选择时间'){
+					                    app.toast('请选择要求完成时间')
+					                    return
+					                }
+					                                  
+					
+					
+				  
+				  addTest(strFlowData,strFormData,strAttachment,function(data){
+					  console.log(JSON.stringify(data))
+				  })
+				  
+				 
+					
+					
+				})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>新增安全检查</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+	.img_item{
+		text-align: left;
+		width: 72px;
+		height: 100px;
+		float: left;
+		margin-right: 20px;
+	}
+	.img_item img{
+		width: 72px;
+		height: 72px;
+	}
+/* 	.img_item .img_close {
+		display: inline-block;
+		background-color: #1da1f2;
+		color: #FFF;
+	} */
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 50%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		textarea::-webkit-input-placeholder{
+		    color:#B1B1B1;
+			font-size: 16px;
+			font-weight: 400;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item" id="hold">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">返回</div>
+			</div>
+			<div class="item" id="submit">
+				<div style="background: #337BFC;color: #fff">提交</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">排水户登记</h1>
+    </header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper" style="margin-bottom: 100px;">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="padding-bottom: 20px;">
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										抽检名称<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+									<!-- 	<input id="projectId" required="true" readonly="true" type="text" class="inputCss" value="" placeholder="请输入项目id"
+										 maxlength="100" style="display: none;"> -->
+										<input id="name" required="true" type="text" class="inputCss" value="" placeholder="请输入抽检名称"
+										 maxlength="100">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										对象数量<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="num"  required="true" readonly="true" type="text" class="inputCss" value="" placeholder="请输入对象数量" maxlength="500">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										抽检类型
+										<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="inspectType" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="inspectType_text" readonly="readonly" required="true" type="text" value="" placeholder="请选择抽检类型" class="inputCss"
+										 style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										抽检单位<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="inspectDepart" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="inspectDepartName" required="true" readonly="true" type="text" value=""
+										 placeholder="请选择抽检单位" class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										抽检人<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="inspectPerson" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="inspectPersonRealName" required="true" readonly="true" type="text" class="inputCss" value=""
+										 placeholder="请选择抽检人" maxlength="50"style="width:90%">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										抽检日期
+										<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inspectStartTime" class="inputCss" required="true" readonly="readonly" type="text" class="mui-input-clear"
+										 placeholder="请选择抽检日期" style="width: 90%;">
+										<img src="../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">
+									</div>
+								</div>
+							</div>
+							<div class="info-bar-content-item" style="height: 120px;border:none">
+								<div class="item-title">
+									整体评价<span style="color: red;margin-left: 3px;">*</span>
+								</div>
+								<div class="mui-input-row item-input">
+									<textarea id="evaluation" type="text" maxlength="100" required="true" rows="2" onkeyup="format_textarea(this)" placeholder="请输入本次检查的整体检查情况"
+									 style="border:none;padding-left: 0;width: calc(100% - 25px);"></textarea>
+									<span class="mui-icon mui-icon-closeempty" id="clear" style="position: relative;top: -50px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+								</div>
+							</div>
+							<div class="bar-title">
+								对象信息
+							</div>
+								<div class="fileContent" style="padding-bottom: 0;min-height:280px;border:none" id="object">
+<!-- 									<div class="cItem" id="row_1" style="margin-top:20px">
+										<div class="item-title" style="text-align: left;margin-left: 20px;">
+											对象1
+										</div>
+										<div class="info-bar-content">
+											<div class="info-bar-content-item" id = "row_1">
+												<div class="item-title">
+													抽检对象
+												</div>
+												<div class="mui-input-row item-input">
+													<input class="objectId" id="objectId_1" style="display: none;" />
+													<input class="objectName" id="objectName_1" readonly="true" type="text" class="inputCss" value=""
+													 placeholder="自动填写" maxlength="100" >
+												</div>
+											</div>
+											<div class="info-bar-content-item">
+												<div class="item-title">
+													抽检内容
+												</div>
+												<div class="mui-input-row item-input">
+													<input class="contentId" id="contentId_1" style="display: none;" />
+													<input class="contentName" id="contentName_1" readonly="true" type="text" class="inputCss" value=""
+													 placeholder="自动填写" maxlength="1000" >
+												</div>
+											</div>
+											<div class="info-bar-content-item">
+												<div class="item-title">
+													抽查概况
+												</div>
+												<div class="mui-input-row item-input">
+													<input class="resultContent" id="resultContent_1" onkeyup="format_input(this)"  type="text" class="inputCss mui-input-clear" value=""
+													 placeholder="请输入抽查概况" maxlength="25" >
+												</div>
+											</div>
+											<div class="info-bar-content-item" style="height: 150px;border:none">
+												<div class="item-title" style="margin-bottom: 10px;">
+													附件
+												</div>
+												<input class="problemPhoto" style="display: none;" photoId="" />
+												<div class="img_list" id="attachment_1">
+												</div>
+												<div class="psh_photo img_item">
+													<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+												</div>
+											</div>
+										</div>
+									</div> -->
+									<!-- <div style="height: 5px;background: #F4F4F4;" class="splitDiv"></div> -->
+<!-- 									<div class="cItem" id="row_1" style="margin-top:20px">
+										<div class="item-title" style="text-align: left;margin-left: 20px;">
+											对象1
+										</div>
+										<div class="info-bar-content">
+											<div class="info-bar-content-item" id = "row_1">
+												<div class="item-title">
+													抽检对象
+												</div>
+												<div class="mui-input-row item-input">
+													<input class="objectId" id="objectId_1" style="display: none;" />
+													<input class="objectName" id="objectName_1" readonly="true" type="text" class="inputCss" value=""
+													 placeholder="自动填写" maxlength="100" >
+												</div>
+											</div>
+											<div class="info-bar-content-item">
+												<div class="item-title">
+													抽检内容
+												</div>
+												<div class="mui-input-row item-input">
+													<input class="contentId" id="contentId_1" style="display: none;" />
+													<input class="contentName" id="contentName_1" readonly="true" type="text" class="inputCss" value=""
+													 placeholder="自动填写" maxlength="1000" >
+												</div>
+											</div>
+											<div class="info-bar-content-item">
+												<div class="item-title">
+													抽查概况
+												</div>
+												<div class="mui-input-row item-input">
+													<input class="resultContent" id="resultContent_1" onkeyup="format_input(this)"  type="text" class="inputCss mui-input-clear" value=""
+													 placeholder="请输入抽查概况" maxlength="25" >
+												</div>
+											</div>
+											<div class="info-bar-content-item" style="height: 150px;border:none">
+												<div class="item-title" style="margin-bottom: 10px;">
+													附件
+												</div>
+												<input class="problemPhoto" style="display: none;" photoId="" />
+												<div class="img_list" id="attachment_2">
+												</div>
+												<div class="psh_photo img_item">
+													<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+												</div>
+											</div>
+										</div>
+									</div>	 -->
+								</div>
+							<div id="" style="background-color:#F4F4F4;height: 5px;border: none;">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputFullname" type="text" class="inputCss" readonly="true" value="" placeholder="请输入检查人">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										联系方式
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputPhone" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写部门
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDepartmentFullname" readonly="true" type="text" class="inputCss" value="" placeholder="请输入填写部门">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border: none;">
+									<div class="item-title">
+										填写日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDate" class="inputCss" type="text" readonly="true" placeholder="请选择填写时间" style="width: 90%;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/qs.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/supervision.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<script src="../../js/common.js"></script>
+
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+
+		mui.init({swipeBack: false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var self;
+		var taskData = '';
+		var objDetail = '';
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+
+			initView()
+			// 点击事件
+			initDownSelect();
+			//获取暂存信息
+			// showData()
+
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					// plus.webview.currentWebview().setStyle({
+					// 	height: originalHeight + 75
+					// });
+					$("#scroll-content").css("margin","0")
+					$("#bottom-item-btn").hide()
+				}else{
+					$("#scroll-content").css("margin-bottom","100px")
+					$("#bottom-item-btn").show()
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+			self = plus.webview.currentWebview();
+			taskData = JSON.parse(globalGetItem(GlobalKey.taskData));
+			taskData = taskData[self.index];
+			getInspectInspectDetailQueryList({
+				taskId: taskData.guid,
+				pageNo: 1,
+				pageSize: 1000
+			}, function(data) {
+				if(data.success){
+					objDetail = data.result.records;
+					var str = '';
+					for(let i = 0;i<objDetail.length;i++){
+						var item = objDetail[i]
+						if(i != 0) str +=`<div style="height: 5px;background: #F4F4F4;" class="splitDiv"></div>`
+						str +=`<div class="cItem" id="row_`+i+`" style="margin-top:20px">
+								<div class="item-title" style="text-align: left;margin-left: 20px;">
+									对象`+(i+1)+`
+								</div>
+								<div class="info-bar-content">
+									<div class="info-bar-content-item" >
+										<div class="item-title">
+											抽检对象
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="objectId" id="objectId_`+i+`" style="display: none;" value="`+item.objectGuid+`"/>
+											<input class="objectName" id="objectName_`+i+`" readonly="true" type="text" class="inputCss" value="`+item.objectName+`"
+											 placeholder="自动填写" maxlength="100" >
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											抽检内容
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="contentId" id="contentId_`+i+`" style="display: none;" value="`+item.contentId+`"/>
+											<input class="contentName" id="contentName_`+i+`" readonly="true" type="text" class="inputCss" value="`+item.contentName+`"
+											 placeholder="自动填写" maxlength="1000" >
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											抽查概况
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="resultContent" id="resultContent_`+i+`" onkeyup="format_input(this)"  type="text" class="inputCss mui-input-clear" value=""
+											 placeholder="请输入抽查概况" maxlength="25" >
+										</div>
+									</div>
+									<div class="info-bar-content-item" style="height: 140px;border:none">
+										<div class="item-title" style="margin-bottom: 10px;">
+											附件
+										</div>
+										<input class="problemPhoto" style="display: none;" photoId="" />
+										<div class="img_list" id="attachment_`+i+`">
+										</div>
+										<div class="psh_photo img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+										</div>
+									</div>
+								</div>
+							</div>`
+					}
+					$("#object").append(str)
+				}
+			});
+			// console.log(JSON.stringify(taskData[self.index]))
+			var date = new Date();
+			var now = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate()
+
+			$("#name").val(taskData.name);
+			$("#num").val(taskData.num);
+			getDicTextByIdAndKey(taskData.inspectType, "ZHSW.INSPECT.TYPE", function(data) {
+				$("#inspectType").val(taskData.inspectType)
+				$("#inspectType_text").val(data)
+			})
+			$("#inspectPerson").val(taskData.inspectPerson);
+			$("#inspectPersonRealName").val(taskData.inspectPersonRealName== null ?taskData.createRealName:taskData.inspectPersonRealName);
+			$("#inspectStartTime").val(taskData.inspectStartTime);
+			$("#inputDate").val(now);
+			$("#inputFullname").val(isEmp(app.userInfo().realname));
+			$("#inputPhone").val(isEmp(app.userInfo().personMobilePhone));
+			$("#inputDepartmentFullname").val(isEmp(app.userInfo().departName));
+
+			//日期选择
+			$("#inspectStartTime").on("tap", function() {
+				var that = $(this);
+				plusDate(function(data) {
+					if(data != ''){
+						that.val(data);
+					}
+				});
+			})
+
+		}
+		//拍照
+		 $(document).on("tap", ".psh_photo", function() {
+			var that = $(this)
+			plusSelectImage(function(data, path) {
+				console.log(JSON.stringify(data))
+				if (data.success) {
+					var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+						'" class="img_item">' +
+						'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style=""  />' +
+						'		<span class="img_close mui-icon mui-icon-closeempty"  name=""' +
+							'" style="width: 16px;height: 16px;position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+							'	</div>';
+					$(that).prev().append(html);
+
+					var count = $(that).prev().children(".img_item").length;
+					if (count >= 3) { //处理上传的数量
+					    // console.log($(that).attr("class"))
+						$(that).hide();
+					}
+				} else app.toast(data.message)
+			});
+		});
+		//删除图
+		$(document).on("tap", ".img_close", function() {
+			var that = $(this)
+			mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+				if (parseInt(result.index) == 0) {
+					// console.log($(that).parent().parent().attr("class"))
+					var count = $(that).parent().parent().children(".img_item").length;
+
+					if (count <= 3) {
+						// console.log($(that).parent().parent().next().attr("class"))
+						$(that).parent().parent().next().show()
+					}
+					that.parent().remove();
+				}
+			})
+		});
+
+		//图片预览
+		$(document).on('tap', '.img_src', function() {
+		    mui.previewImage();
+		});
+
+
+		// 点击事件
+		var initDownSelect = function() {
+			//抽检类型
+			$("#inspectType_text").on("tap", function() {
+				var that = $(this);
+				getDictItems('ZHSW.INSPECT.TYPE', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#inspectType").val(items[0].value);
+							$("#inspectType_text").val(items[0].text);
+						});
+					}
+				})
+			})
+
+			//选择抽检单位
+				$("#inspectDepartName").on("tap", function() {
+					var extras = {
+						multiSelect: false
+					}
+					app.openPage("../commom/unit.html", {
+						titleNView: {
+							titleText: '选择抽检单位',
+							autoBackButton: true
+						}
+					}, extras);
+					//移除
+					window.removeEventListener('returnSelect', inspectDepartBack, false);
+					// 赋值
+					window.addEventListener('returnSelect', inspectDepartBack, false);
+
+				})
+
+				//选择抽检单位
+				var inspectDepartBack = function(data) {
+					if(data.detail[0] != undefined){
+						$("#inspectDepartName").val(data.detail[0].title)
+						$("#inspectDepart").val(data.detail[0].value)
+					}
+					//移除
+					window.removeEventListener('returnSelect', inspectDepartBack, false);
+				}
+
+				// 抽检人员
+				$("#inspectPersonRealName").on("tap", function() {
+					var extras = {
+						multiSelect: false
+					}
+					app.openPage("../commom/organ.html", {
+						titleNView: {
+							titleText: '选择抽检人员',
+							autoBackButton: true
+						}
+					}, extras);
+					//移除
+					window.removeEventListener('returnSelect', inspectPersonBack, false);
+					// 赋值
+					window.addEventListener('returnSelect', inspectPersonBack, false);
+
+				})
+
+				//质检人员回调
+				var inspectPersonBack = function(data) {
+					if(data.detail[0] != undefined){
+						console.log(JSON.stringify(data.detail[0]))
+						$("#inspectPersonRealName").val(data.detail[0].realname)
+						$("#inspectPerson").val(data.detail[0].username)
+					}
+					//移除
+					window.removeEventListener('returnSelect', inspectPersonBack, false);
+				}
+		}
+
+		//清空textarea
+		$("#clear").on("tap", function(event) {
+			$("#problems").val("");
+			$(this).hide()
+		});
+
+		//暂存
+		$("#hold").on("tap", function(event) {
+			mui.back()
+			// app.toast("暂存成功")
+			// mui.fire(plus.webview.currentWebview().opener(), 'reload1');
+			// app.openPage("../submitted.html", {
+			// 	titleNView: {
+			// 		titleText: '暂存安全检查成功',
+			// 		autoBackButton: true,
+			// 	}
+			// });
+		});
+
+
+		//提交
+		$("#submit").on("tap", function(event) {
+			// var data2 ={
+			// 	data:'[{"guid":"670d2628a7c9afbf3154416959f81348","taskRecordId":"2fc708d37f014e9f027020f09b5593f1","resultContentType":0,"objectName":"驻港部队小区","relateObjectId":"re_area_212","bugId":null,"createBug":"0","result":null,"objectId":"396b08b16fb243588ecdc6d909724559","contentId":"d9821a8d6c6f417b90348308e648af84","contentName":"小区运维抽查设施","standard":null,"method":"0","insType":"1","maxValue":"","minValue":"","defaultValue":"","resultContent":"","resultId":null,"resultName":null,"attachment":"9e3d4a5754e34ed9874afccd1f1fc5d8","isObjectFinish":1,"codeX":114.04149835655363,"codeY":22.522487314818534,"isPhoto":null,"objectType":"22","commuId":null,"commuName":null,"localDesc":"新洲路、福强路西北侧","resultEnums":null,"selfGenerateNum":1,"selfGenerateGroupId":"9e3d4a5754e34ed9874afccd1f1fc5d8","strAttachMent":[{"groupId":"9e3d4a5754e34ed9874afccd1f1fc5d8","fileTokens":"","fieldName":"attment","tableName":"log"}]}]'		
+			// }
+			// saveInspectDetailBatch(data2, function(data) {
+			// 	// saveInspectDetailBatch(data2, function(data) {
+			
+			// });
+			// return;
+			
+			if (validateRequiredFields()) {
+				taskData.inspectType = $("#inspectType").val();
+
+				taskData.name = $("#name").val();
+				taskData.inspectPersonRealName = $("#inspectPersonRealName").val();
+				taskData.inspectDepart = $("#inspectDepart").val();
+				taskData.inspectDepartName = $("#inspectDepartName").val();
+				taskData.inspectStartTime = (new Date($("#inspectStartTime").val())).Format("yyyy-MM-dd hh:mm:ss");
+				taskData.evaluation = $("#evaluation").val();
+				taskData.filler = $("#inputFullname").val();
+				taskData.contactInfo = $("#inputPhone").val();
+				taskData.department = $("#inputDepartmentFullname").val();
+				taskData.fillTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
+
+				for(let o = 0;o<objDetail.length;o++){
+						objDetail[o].resultContentType = 0;
+						objDetail[o].isObjectFinish = 1;
+						objDetail[o].resultContent = $("#resultContent_"+o).val();
+						objDetail[o].attachment = getGroupId();
+						objDetail[o].selfGenerateNum =  1;
+						objDetail[o].selfGenerateGroupId = objDetail[o].attachment;
+
+						var tokens = ''
+						$("#attachment_"+o).children().each(function() {
+							var token = $(this).attr("data-token")
+							if(token != ''){
+								tokens = tokens + "," + token
+							}
+						});
+						if (tokens != '') tokens=tokens.substring(1,tokens.length);
+						objDetail[o].strAttachMent = [{
+							groupId: objDetail[o].attachment,
+							fileTokens: tokens,
+							fieldName: "attment",
+							tableName: "log"
+						}]
+				}
+
+				// console.log(JSON.stringify(taskData))
+				// console.log(JSON.stringify(objDetail))
+				// {"data":"[{\"guid\":\"5895ae31c001556fd3023a97ca1d9ae1\"}
+				// var data2 ={
+				// 	data:[
+				// 		{guid:"5895ae31c001556fd3023a97ca1d9ae1"}
+				// 	]	
+				// }
+				saveInspectDetailBatch(objDetail, function(data) {
+
+				});
+				inspectionEnd(taskData, function(data) {
+					if (data.success) {
+						app.toast("处理成功");
+						var list = plus.webview.currentWebview().opener();
+						mui.fire(list, 'backList');
+						mui.back()
+					} else app.toast("处理失败");
+				});
+
+			}
+		});
+		//重新加载
+		var reloadAddress = function(data) {
+			window.location.reload();
+		}
+
+
+		//生成groupId
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+		// 对Date的扩展，将 Date 转化为指定格式的String
+		// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+		// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+		// 例子：
+		// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+		// (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+		function format_textarea(obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length > 0) {
+				$("#clear").show();
+				if (obj.value.length >= 100) {
+					obj.value = obj.value.slice(0, 100);
+					app.toast("整体评价不可大于100个字！")
+				}
+			} else $("#clear").hide();
+		}
+		function format_input(obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+
+			if (obj.value.length >= 25) {
+				obj.value = obj.value.slice(0, 25);
+				app.toast("抽查概况不可大于25个字！")
+			}
+
+		}
+	</script>
+
+</html>

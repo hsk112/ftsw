@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<style>
+			body{
+				background: url(img/commom/bg@2x.png) #FFFFFF no-repeat bottom;
+				background-size: 100%;
+			}
+
+			.mui-page{
+				background: none;
+				height: 100%;
+				width: 100%;
+			}
+
+			.login-box{
+				height: 500px;
+				width: 100%;
+				/* margin: 0px auto; */
+				margin-top: 80px;
+				vertical-align: middle;
+			}
+
+			.login-logo img{
+				width: 80px;height: 80px;border-radius: 100px;margin: 0 auto;
+				position: relative;
+				top: 50%; /*偏移*/
+				transform: translateY(-50%);
+			}
+
+			.login-logo .l1{
+				margin: 0 auto;
+				width: 130px;
+				height: 130px;
+				line-height: 130px;
+				border-radius: 130px;
+				border: 1px solid rgba(51,123,252,0.7);
+				position: relative;
+			}
+
+			.login-logo .l2{
+				margin: 0 auto;
+				width: 105px;
+				height: 105px;
+				line-height: 105px;
+				border-radius: 105px;
+				border: 1px solid rgba(51,123,252,0.7);
+				position: relative;
+				top: 50%; /*偏移*/
+				transform: translateY(-50%);
+			}
+
+
+			.login-btn{
+				width: 80%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				margin: 11px auto;
+			}
+			.login-btn div {
+				background: #337BFC;
+				color: #FFFFFF;
+				/* padding: 10px 107px; */
+				border-radius: 20px;
+				font-weight:bold;
+			}
+
+
+			.login-bar{
+				width: 100%;
+				height: 52px;
+				line-height: 52px;
+				/* background: #F4F4F4; */
+			}
+
+			.login-icon {
+				width: 20%;
+				height: 40px;
+				line-height: 40px;
+				float: left;
+			}
+
+			.login-icon img{
+				width: 19px;
+				position: relative;
+				top: 7%;
+			}
+
+			.login-input-box {
+				width:100%;
+				height: 150px;
+				line-height: 150px;
+				margin-top: 30px;
+			}
+
+			.login-item{
+				/* background: #FFFFFF; */
+				height: 42px;
+				width: 80%;
+				border-radius: 100px;
+				margin: 0 auto;
+				position: relative;
+				top: 20%;
+				border: 1px solid #DDDDDD;
+			}
+
+			.login-item-code {
+				height: 42px;
+				width: 50%;
+				border-radius: 100px;
+				margin: 0 0 0 10%;
+				padding-left: 5%;
+				position: relative;
+				top: 20%;
+				border: 1px solid #DDDDDD;
+			}
+
+			.login-input {
+				width: 70%;
+				height: 40px;
+				line-height: 40px;
+				float: left;
+			}
+
+			.login-item-code .login-input {
+				width: 100%;
+			}
+
+			.login-input input{
+				line-height: 40px;
+				width: 100%;
+				height: 40px;
+				padding: 10px 34px 10px 3px;
+				-webkit-user-select: text;
+				border-radius: 3px;
+				outline: 0;
+				background-color: transparent;
+				-webkit-appearance: none;
+				border: none;
+				margin-bottom:0
+			}
+
+			.login-input .mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech {
+				font-size: 17px;
+				top: 13px;
+				width: 40px;
+				height: 40px;
+			}
+
+			.code-img {
+				width: 56%;
+				height: 100%;
+				position: absolute;
+				right: -60%;
+				top: 0;
+				z-index: 10;
+			}
+
+			.no-code {
+				display: none;
+				width: 56%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				position: absolute;
+				right: -60%;
+				top: 0;
+				z-index: 8;
+				text-align: center;
+				border: 1px solid #DDDDDD;
+				border-radius: 50px;
+				color: #999;
+			}
+
+			.login-forpwd{
+				font-size:12px;
+				color:rgba(177,177,177,1);
+				margin-top: 20px;
+			}
+
+			.white_content {
+				display: none;
+				position: absolute;
+				top:25%;
+				left: 10%;
+				width: 80%;
+				height: 60%;
+				padding: 12px;
+				border: 1px solid #337BFB;
+				background-color: white;
+				z-index:1002;
+				overflow: auto;
+				border-radius:10px;
+			}
+
+			.black_overlay{
+				/*遮罩*/
+				display: none;
+				position: absolute;
+				top: 0%;
+				left: 0%;
+				width: 100%;
+				height: 100%;
+				background-color: black;
+				z-index:1001;
+				-moz-opacity: 0.8;
+				opacity:.60;/*透明度*/
+				filter: alpha(opacity=88);
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面主内容区开始-->
+			<div class="login-box">
+				<div class="login-logo">
+					<div class="l1">
+						<div class="l2">
+							<img src="img/commom/logo@2x.png" />
+						</div>
+					</div>
+				</div>
+				<div class="login-input-box">
+					<div class="login-bar">
+						<div class="login-item">
+							<div class="login-icon">
+								<img src="./img/commom/user.png" />
+							</div>
+							<div class="login-input">
+								<div class="mui-input-row">
+									<input id="accountInput" type="text" class="mui-input-clear" placeholder="请输入用户名">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="login-bar">
+						<div class="login-item">
+							<div class="login-icon">
+								<img src="./img/commom/pwd.png" />
+							</div>
+							<div class="login-input">
+								<div class="mui-input-row">
+									<input id="passwordInput" type="password" class="mui-input-clear" placeholder="请输入密码">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="login-bar" id="code" style="display: none">
+						<div class="login-item-code">
+							<div class="login-input">
+								<div class="mui-input-row">
+									<input id="codeInput" type="text" class="mui-input-clear" placeholder="请输入验证码">
+								</div>
+							</div>
+							<img id="codeImg" class="code-img" src="" alt="">
+							<div id="noCode" class="no-code">点击获取</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="login-btn" id="login-btn">
+					<div>登录</div>
+				</div>
+
+				<!-- <div class="login-forpwd" id="">
+					忘记密码
+				</div> -->
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+		<!--弹窗-->
+		<div id="light" class="white_content">
+			<div style="padding-top:15px;padding-bottom:15px;width:100%;text-align: center;font-weight: bolder">个人隐私保护指引</div>
+			<!--分隔-->
+			<div style="background-color:#EDEDED;height:2px;margin: 0 10px;"></div>
+			<div style="margin-top: 10px;width: 100%;padding-bottom: 10px;">
+				<textarea id="tipArea" style="width: 100%;height: 310px;border: none;" readonly="true" >
+
+				</textarea>
+			</div>
+
+
+			<div class="mui-button-row" style="bottom: 20px;text-align: center;width: 100%;float: left">
+				<input id="out" type="button" style="width: 45%" value="不同意">
+				<button type="button" style="width: 45%;" class="mui-btn mui-btn-primary" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">同意</button>
+			</div>
+		</div>
+		<!--遮罩层-->
+		<div id="fade" class="black_overlay"></div>
+
+	</body>
+	<script src="js/mui.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.view.js"></script>
+	<script src="js/mui.locker.js"></script>
+
+	<script src="js/app.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/update.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/crypto-js.js"></script>
+	<script src="js/aes.js"></script>
+	<script src="js/sm2.js"></script>
+	<script src="js/s4.js"></script>
+	<script src="js/smutils.js"></script>
+	<script src="js/byte&string.js"></script>
+	<script src="js/vconsole.min.js"></script>
+	<script type="text/javascript">
+		// var vConsole = new VConsole();
+		var codeId = '';
+		var tipContent = appTip().tipContent;//隐私文案
+
+        mui.back = function() {
+            var btn = ["确定", "取消"];
+            mui.confirm('是否确认退出当前程序？', '', btn, function(e) {
+                if(e.index == 0) {
+                    plus.runtime.quit();
+                }
+            });
+        }
+
+
+        mui.init({swipeBack:false});
+		mui.ready(function() {
+
+			$('body').height($('body')[0].clientHeight);
+
+			var account = localStorage.getItem("account");
+			var password = localStorage.getItem("password");
+			if(account == null){
+                console.log("account:"+null)
+				$("#tipArea").html(tipContent);//设置文案
+				//弹出用户隐私
+				$("#light").css("display","block");
+				$("#fade").css("display","block");
+
+			}
+			// else{
+			//     console.log("account:"+account)
+			// }
+
+			$("#accountInput").val(account);
+			$("#passwordInput").val(password);
+		});
+
+		mui.plusReady(function() {
+			// checkUpdating(false);
+			isNeedCode()
+
+		})
+
+		// 验证码KYE
+		function uuid() {
+			var s = []
+			var hexDigits = '0123456789abcdef'
+			for (var i = 0; i < 36; i++) {
+				s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1)
+			}
+			s[14] = '4' // bits 12-15 of the time_hi_and_version field to 0010
+			s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1) // bits 6-7 of the clock_seq_hi_and_reserved to 01
+			// s[8] = s[13] = s[18] = s[23] = "-";
+			s[8] = s[13] = s[18] = s[23] = ''
+			var uuid = s.join('')
+			return uuid
+		}
+
+		/**
+		 * 登录
+		 */
+		$("#login-btn").on("click", function() {
+			// var loginButton = $("#login-btn");
+			var accountBox = $("#accountInput");
+			var passwordBox = $("#passwordInput");
+			var codeBox = $("#codeInput");
+			var loginInfo;
+
+			if(codeBox.val()) {
+				loginInfo = {
+					account: accountBox.val(),
+					password: passwordBox.val(),
+					imageCode: codeBox.val(),
+					key: codeId
+				};
+			} else {
+				loginInfo = {
+					account: accountBox.val(),
+					password: passwordBox.val()
+				};
+			}
+
+			// 、、、、、、
+			app.login(loginInfo, function(err) {
+				if (err) {
+					app.toast(err);
+					isNeedCode()
+					// $("#code").css('display', 'block');
+					// $(".login-input-box").css('height', '168px');
+					// let dom = $("#codeImg")[0];
+					// codeId = uuid();
+					// app.getCode(dom, codeId, function (error) {
+					// 	$("#noCode").css('display', 'inline-block');
+					// 	app.toast(error);
+					// });
+					// return;
+				}else{
+					localStorage.setItem("account", accountBox.val());
+					localStorage.setItem("password", passwordBox.val());
+
+					//打开首页，并关闭侧滑
+					app.openPage("main.html", {
+						titleNView: {
+							// titleText: '福田水务',
+							// autoBackButton: false,
+							// buttons: [{
+							// 	"color": "white",
+							// 	"colorPressed": "gray",
+							// 	"float": "left",
+							// 	"fontWeight": "400",
+							// 	"fontSize": "24px",
+							// 	"fontSrc": "fonts/iconfont.ttf",
+							// 	"text": "\ue8b5",
+							// 	"onclick": 'javascript:app.openPage("view/commom/barcode_scan.html", {})'
+							// }]
+						},
+						// 'popGesture': 'none'
+					});
+				}
+			});
+		});
+
+		$("#out").on('tap',function(){
+		    mui.back();
+		})
+
+		$("#codeImg").on("click", function(){
+			let dom = $("#codeImg")[0];
+			codeId = uuid();
+			app.getCode(dom, codeId, function (error) {
+				$("#noCode").css('display', 'inline-block');
+				app.toast(error);
+			});
+		});
+
+		$("#noCode").on("click", function(){
+			let dom = $("#codeImg")[0];
+			codeId = uuid();
+			app.getCode(dom, codeId, function (error) {
+				app.toast(error);
+			});
+		});
+
+		function isNeedCode(){
+			var param = {
+				username: $("#accountInput").val()
+			}
+			needImage(param, function(data) {
+				if(data.success){
+					if(data.result){
+						$("#code").css('display', 'block');
+						$(".login-input-box").css('height', '168px');
+						let dom = $("#codeImg")[0];
+						codeId = uuid();
+						app.getCode(dom, codeId, function (error) {
+							app.toast(error);
+						});
+					}else{
+						$("#code").css('display', 'none');
+					}
+				}
+			});
+		}
+
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+
+		//搜索框
+		$("#accountInput").on('input', debounce((e) => {
+			isNeedCode()
+		}, 600))
+	</script>
+
+</html>

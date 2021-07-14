@@ -1,0 +1,1164 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>安全教育</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+	</head>
+		<style>
+			.home-item {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				height: 200px;
+				background: #FFFFFF
+			}
+
+			.home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+
+			.home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+
+
+			.home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+
+			.home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+
+			}
+
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			.mui-icon-forward:before {
+				content: '';
+			}
+
+			.mui-icon-forward::after {
+				content: '\e470';
+				font-size: 15px;
+			}
+			.mui-backdrop {
+			    position: fixed;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			    z-index: 998;
+			    background-color: rgba(0,0,0,0.2);
+			}
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear{
+			    font-size: 17px;
+			    top: 7px;
+			    width: 30px;
+			    height: 30px;
+			}
+			.mui-slider-indicator.mui-segmented-control {
+			    position: relative;
+			    top: 8px;
+			    height: 50px;
+			    background: #FFFFFF;
+			    font-size: 16px;
+			    font-weight: 400;
+			    color: #888888;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			    color: #337BFC;
+			    border-bottom: 2px solid #337BFC;
+			    background: 0 0;
+			    font-size: 16px;
+			    font-weight: bold;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+			    border: 0;
+			    font-size: 16px;
+			    font-weight: 400;
+			    color: #888888;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+			    border-top: 1px solid #dedede;
+			    border-bottom: none;
+			}
+			.projectName{
+				font-size: 16px;
+				font-weight: bold;
+				color: #191515;
+				line-height: 24px;
+				word-break: break-all;
+				text-align: left;
+				width: 98%;             
+				overflow: hidden;      
+				text-overflow: ellipsis;  
+				white-space: nowrap; 
+			}
+/* 			.bzdw{
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+				line-height: 14px;
+				margin-top: 16px;
+				text-align: left;
+			} */
+			.bzdw_span{
+				margin-top: 16px;
+				font-size: 14px;
+				font-weight: 400;
+				color: #888888;
+				line-height: 14px;
+				word-break: break-all;
+				text-align: left;
+				width: 98%;             
+				overflow: hidden;      
+				text-overflow: ellipsis;  
+				white-space: nowrap; 
+			}
+			.div3{
+				font-size: 14px;
+				font-weight: 400;
+				color: #888888;
+				line-height: 14px;
+				padding-top:20px;
+				width: 100%
+			}
+			.mui-table-view-cell {
+			    position: relative;
+			    overflow: hidden;
+			    padding: 20px;
+			    border-bottom: 5px solid #F4F4F4;
+			}
+			.mui-table-view-cell:last-child{
+			    border-bottom: none;
+			}
+			.bottom-item-btn {
+				height: 100px;
+				position: fixed;
+				z-index: 99;
+				width: 100%;
+				background: #f2f2f2;
+				bottom: 0px;
+				padding-top: 30px;
+				padding-left: 5%;
+			}
+			
+			.bottom-item-btn .item {
+				width: 90%;
+				text-align: center;
+				padding: 0 14px;
+			
+			}
+			
+			.bottom-item-btn .item div {
+				margin-left: 5%;
+				border: 1px solid #337BFB;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+			.empty{
+				line-height:200px;
+				width:100%;
+				text-align: center;
+				font-size: 16px;
+				color: #BBBBBB;
+				background: rgb(242, 242, 242)
+			}
+			.mui-table-view-cell:after {
+			    position: absolute;
+			    right: 0;
+			    bottom: 0;
+			    left: 15px;
+			    height: 0px;
+			    content: '';
+			    -webkit-transform: scaleY(.5);
+			    /* transform: scaleY(.5); */
+			    background-color: #c8c7cc;
+			}
+			.methodCss{
+				height: 40px;
+				width:40%;
+				display: inline-block;
+				text-align: left;
+				padding-left:10px
+			}
+			.inputUser{
+				height: 40px;
+				width:22%;
+				display: inline-block;
+				text-align: center;
+			}
+			.inputDate{
+				height: 40px;
+				width:36%;
+				display: inline-block;
+				text-align: right;
+				padding-right:15px
+			}
+			.delUser{
+				width:12px !important;
+				height:12px  !important;
+				
+			}
+			.parentFlex{
+				display: flex;
+
+				width: 100% ;
+			}
+			.textOver{
+				 overflow: hidden;
+				
+				 text-overflow: ellipsis;
+				
+				 white-space: nowrap;
+			}
+		</style>
+	<body style="background: #F4F4F4;">
+			<!--页面主结构开始-->
+			<div id="app" class="mui-views">
+				<div class="mui-view">
+					<!-- 			<div class="mui-navbar">
+					</div> -->
+					<div class="mui-pages">
+					</div>
+				</div>
+			</div>
+			<div class="home-item" style="display: none;" id="home-item"> 
+				<div class="home-item-list" id="business_item">
+					<div class="item" id="overview">
+						<img src="../../../img/commom/overview-icon.png">
+						<span>项目概览</span>
+					</div>
+					<div class="item" id="quality">
+						<img src="../../../img/commom/quality-icon.png">
+						<span>质量检查</span>
+					</div>
+					<div class="item" id="security">
+						<img src="../../../img/commom/security-icon.png">
+						<span>安全检查</span>
+					</div>
+					<div class="item" id="attendance">
+						<img src="../../../img/commom/attendance-icon.png">
+						<span>考勤统计</span>
+					</div>
+					<div class="item" id="meeting">
+						<img src="../../../img/commom/meeting.png">
+						<span>项目会议</span>
+					</div>
+					
+				</div>
+			</div>	
+			<div class="bottom-item-btn" id="bottom-item-btn">
+				<div class="item">
+					<div id="addBtn" style="background: #337BFC;color: #fff;">新增</div>
+				</div>
+			</div>
+			<!--页面主结构结束-->
+			<!--单页面开始-->
+			<div id="mui-content" class="mui-page" >
+				<!--底部导航栏-->
+				<!--页面主内容区开始-->
+				<div class="mui-page-content">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div class="view-content">
+								<div class="info-bar-content">
+									<div class="search-bar">
+										<div class="search-item">
+											<div class="search-icon">
+												<img src="../../../img/commom/search1@2x.png" />
+											</div>
+											<div class="search-input">
+												<div class="mui-input-row" style="text-align: left">
+													<input id="search_input" value="" type="text" style="width: 90%;" placeholder="请输入安全培训计划名称" class="mui-input-clear">
+													<!-- <span class="mui-icon mui-icon-close delete-icon1" onclick="deleteDate('search_input')"></span> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="view-content-item" style="display: flex;line-height: 53.5px;">
+									<div class="mui-slider" id="slider">
+										<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+											<a class="mui-control-item mui-active" href="#item1">日常教育计划</a>
+											<a class="mui-control-item" href="#item2">专项教育计划</a>
+										</div>										
+										<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #337BFC;height: 2px;background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, 
+										 rgba(0, 0, 0, 0) 39.9%, #337BFC 40%, #337BFC 50%, #337BFC 59.9%, 
+										rgba(0, 0, 0, 0) 60%,  rgba(0, 0, 0, 0) 100%);
+										transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div>								
+										<div class="mui-slider-group" id=="mui-slider-group" style="background: #f2f2f2;">
+											<div id="item1" class="mui-slider-item mui-control-content mui-active" style="overflow-y: auto;border-top: none;border-top: 5px solid #f4f4f4;">
+												<div class='parentFlex' style="line-height: 40px;background: #F9F9F9;border-bottom:1px solid #EDEDED;font-size: 14px;font-weight: 400;color: #888888;position: fixed;z-index: 998;width: 100%;padding-left: 10px;">
+													<div class="methodCss" id="method"><span id="trainingMethod">培训方式</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span></div>
+													<div class="inputUser textOver" id="InputPerson"><span id="realName">填写人</span>
+													<!-- <img src="../../../img/commom/del.png" class="delUser" id="delUser1" style="display: none;"/> -->
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span></div>
+													<div class="inputDate"><span id="inputDate">填写日期</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span></div>
+												</div>	
+												<ul class="mui-table-view" style="margin-bottom: 20px;margin-top: 40px;" id="dailyplan_list">
+													<!-- <div class='empty'>暂无数据</div> -->
+													<!-- <li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>
+													<li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>
+													<li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>	
+													<li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>			 -->																																			
+												</ul>
+											</div>
+											<div id="item2" class="mui-slider-item mui-control-content"style="overflow-y: auto;border-top: none;border-top: 5px solid #f4f4f4;background: #f2f2f2;">
+												<div class='parentFlex' style="line-height: 40px;background: #F9F9F9;border-bottom:1px solid #EDEDED;font-size: 14px;font-weight: 400;color: #888888;position: fixed;z-index: 998;width: 100%;padding-left: 10px;">
+													<div class="methodCss" id="method2"><span id="trainingMethod2">培训类型</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span></div>
+													<div class="inputUser textOver" id="InputPerson2"><span id="realName2">填写人</span>
+													<!-- <img src="../../../img/commom/del.png" class="delUser" id="delUser2" style="display: none;"/> -->
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span></div>
+													<div class="inputDate"><span id="inputDate2">填写日期</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span></div>
+												</div>	
+												<ul class="mui-table-view" style="margin-top: 40px;margin-bottom: 20px;" id="specialplan_list">
+													<!-- <div class='empty'>暂无数据</div> -->
+													<!-- <li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>
+													<li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>
+													<li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>	
+													<li class="mui-table-view-cell">
+														<div class="projectName">福田区智慧三防监测指挥平台建设项目</div>
+														<div class="bzdw">编制单位:<span class="bzdw_span">福田区智慧三防监测指挥平台建设项目</span></div>
+														<div class="div3">
+															<div style="width: 25%;display: inline-block;text-align: left;">上课/讲座</div>
+															<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+															<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+														</div>
+													</li>			 -->																																			
+												</ul>
+											</div>
+										</div>
+									</div>								
+								</div>															
+							</div>							
+						</div>
+					</div>
+				</div>
+				<!--页面主内容区结束-->
+			</div>
+			
+		</body>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/education.js"></script>
+	<script src="../../../js/update.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var mask = mui.createMask();
+		var isShow = true;
+		var userPicker = new mui.PopPicker();
+		var dailyParams = {
+			projectName: '',
+			trainType: '',
+			minCreateTime: '',
+			maxCreateTime: '',
+			inputFullname: '',
+			trainPlanName: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,trainPlanName,trainType_dictText,projectName,projectLeaderFullname,trainContent,inputFullname,inputDate,action',
+			pageNo: 1,
+			pageSize: 100
+		}
+		var specialParams ={
+			projectName: '',
+			educationName: '',
+			inputFullname: '',
+			trainType: '',
+			inputFullname: '',
+			minCreateTime: '',
+			maxCreateTime: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,educationName,trainType_dictText,projectName,projectLeaderFullname,inputFullname,inputDate,action',
+			pageNo: 1,
+			pageSize: 100
+		}
+		mui.init({
+			// var sliderEl = document.getElementById("slider");
+			// sliderEl.classList.add('mui-slider');//页面代码先不加mui-slider保证mui不自动初始化，然后再手动加上mui-slider。接着自己手动初始化
+			// mui(sliderEl).slider({
+			// bounce: false
+			// });
+		})
+		var param={pageCount:1}
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			if(self.pageCount!=undefined){
+				param.pageCount=self.pageCount+1;
+			}
+			var winHeight = window.screen.height;
+			// console.log(winHeight)
+			$("#item1").height(winHeight - 260);
+			$("#item2").height(winHeight - 260);
+			// plus.webview.currentWebview().setStyle({
+			// 	softinputMode: "adjustResize" // 弹出软键盘时自动改变webview的高度
+			// });
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					// plus.webview.currentWebview().setStyle({
+					// 	height: originalHeight + 75
+					// });
+					$("#scroll-content").css("margin","0")
+					$("#bottom-item-btn").hide()
+				}else{
+					$("#scroll-content").css("margin-bottom","100px")
+					$("#bottom-item-btn").show()
+				}
+			
+			}
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/bgTop.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							if(isShow){
+								isShow = false;
+								$("#home-item").show();
+								mask.show()
+							}else{	
+								isShow = true;
+								$('#home-item').hide();
+								mask.close();	
+							}
+						}
+					}],
+				}
+			});	
+			getDailyList();
+			getSpecialList();
+		});
+		
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+		
+		//搜索框
+		$("#search_input").on('input', debounce((e) => {
+			if($("#item1").hasClass('mui-active')){
+				dailyParams.trainPlanName = $("#search_input").val();
+				getDailyList();
+				console.log(JSON.stringify(dailyParams))
+			}else{
+				specialParams.educationName = $("#search_input").val();
+				getSpecialList();
+			}
+		}, 600))
+				
+		mui("body").on("tap", ".mui-icon-clear", function() {
+			dailyParams.trainPlanName = $("#search_input").val();
+			getDailyList();
+			specialParams.educationName = $("#search_input").val();
+			getSpecialList();
+		 })
+		// 项目概览
+		$("#overview").on('tap', function() {
+			app.openPage("../overview/overviewOne.html", {
+				titleNView: {
+					titleText: '项目概览',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+
+		// 质量检查
+		$("#quality").on('tap', function() {
+			app.openPage("../quality/index.html", {
+				titleNView: {
+					titleText: '质量检查',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+				
+		// 安全检查
+		$("#security").on('tap', function() {
+			app.openPage("../security/index.html", {
+				titleNView: {
+					titleText: '安全检查',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+		// 考勤统计
+		$("#attendance").on('tap', function() {
+			app.openPage("../attendance/month.html", {
+				titleNView: {
+					titleText: '考勤统计',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});	
+		
+		// 项目会议
+		$("#meeting").on('tap', function() {
+			app.openPage("../meeting/index.html", {
+				titleNView: {
+					titleText: '会议签到',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});	
+
+		$("#addBtn").on('tap', function() {
+			var projectInfo = JSON.parse(localStorage.getItem("projectInfo"))
+			var extras = {
+					projectId: projectInfo.prjId,
+					projectName: projectInfo.prjName,
+					projectNo: projectInfo.prjNo,
+					prjCode: projectInfo.prjCode
+				}
+			if($("#item1").hasClass('mui-active')){	
+				app.openPage("./addDailyPlan.html", {
+					titleNView: {
+						titleText: '新增日常教育计划',
+						autoBackButton: true,
+					},
+				},extras);
+			}else{
+				app.openPage("./addSpecialPlan.html", {
+					titleNView: {
+						titleText: '新增专项教育计划',
+						autoBackButton: true,
+					},
+				},extras);
+			}
+
+		});
+				
+		// 培训方式
+		$("#method").on('tap', function() {
+			getDictItems('SAFE_EDUCATION_TYPE', function(data) {
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					return;
+				}
+				var resultJSON = [{text:'全部',value: 0}];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#trainingMethod").css("color","#888888")
+							$("#trainingMethod").text('培训方式');
+							dailyParams.trainType = '';
+						}else{
+							$("#trainingMethod").css("color","#337BFC")
+							$("#trainingMethod").text(items[0].text);
+							dailyParams.trainType = items[0].value;							
+						}
+						getDailyList();
+					});
+				}
+			})
+		});
+		
+		
+		// $("#delUser1").on("tap", function(e) {
+		// 	e.stopPropagation()
+		// 	$("#realName").css("color","#888888")
+		// 	$("#realName").text('填写人')
+		// 	dailyParams.inputFullname = '';
+		// 	$("#delUser1").hide();
+		// 	getDailyList();
+		//  })
+		 
+		//  $("#delUser2").on("tap", function(e) {
+		//  	e.stopPropagation()
+		//  	$("#realName2").css("color","#888888")
+		//  	$("#realName2").text('填写人');
+		//  	specialParams.inputFullname = '';
+		//  	getSpecialList();
+		//  	$("#delUser2").hide();
+		//   })
+		  
+		//填写人
+		$("#InputPerson").on("tap", function() {
+			var extras = {
+				multiSelect: false,
+				unSelect: true
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择填写人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack, false);
+			// 赋值
+			window.addEventListener('returnSelect', inputPersonBack, false);
+		
+		})
+		
+		//填写人回调
+		var inputPersonBack = function(data) {
+			if(data.detail[0] == undefined){
+				$("#realName").css("color","#888888")
+				$("#realName").text('填写人')
+				dailyParams.inputFullname = '';
+				// $("#delUser1").hide();
+			}else{
+				$("#realName").css("color","#337BFC")
+				$("#realName").text(data.detail[0].realname);
+				dailyParams.inputFullname = data.detail[0].realname;
+				// $("#delUser1").show();
+			}
+			getDailyList();
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack, false);
+		}
+		
+		// 填写日期
+		$("#inputDate").on('tap', function() {
+				var resultJSON = [{text:'全部',value: 0},{text:'近7日',value: 1},{text:'近30日',value: 2},{text:'自定义区间',value: 3}];
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#inputDate").css("color","#888888")
+							$("#inputDate").text('填写日期');
+							dailyParams.minCreateTime= '';
+							dailyParams.maxCreateTime= '';
+							getDailyList();
+						}else if(items[0].value == 3){
+							//日期选择
+								var that = $("#inputDate");	
+								var start = '';
+								var end = '';
+								plusDate(function(data1) {	
+									if(data1 != ''){
+										plusDate(function(data2) {
+											if(data2 != ''){
+												if(data1 >= data2){
+													dailyParams.minCreateTime = data2+' 00:00';
+													dailyParams.maxCreateTime = data1+ ' 23:59';
+													start = data2.substring(5,data1.length).replace("-","/")
+													end = data1.substring(5,data1.length).replace("-","/")
+												}else{
+													dailyParams.minCreateTime = data1+' 00:00';
+													dailyParams.maxCreateTime = data2+ ' 23:59';
+													start = data1.substring(5,data1.length).replace("-","/")
+													end = data2.substring(5,data1.length).replace("-","/")	
+												}										
+												$("#inputDate").css("color","#337BFC")
+												$("#inputDate").text(start+'-'+end);												
+												getDailyList();
+											}
+										});										
+									}
+								});
+						}else{
+								var time = getDate(items[0].value);
+								dailyParams.minCreateTime = time.sdate;
+								dailyParams.maxCreateTime = time.edate;
+								console.log(JSON.stringify(dailyParams))
+								$("#inputDate").css("color","#337BFC")
+								$("#inputDate").text(items[0].text);
+								getDailyList();
+						}
+					});
+				}
+		});	
+			
+		// 培训类型
+		$("#method2").on('tap', function() {
+			getDictItems('SAFE_TRAIN_TYPE', function(data) {
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					return;
+				}
+				var resultJSON = [{text:'全部',value: 0}];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#trainingMethod2").css("color","#888888")
+							$("#trainingMethod2").text('培训类型');
+							specialParams.trainType = '';
+						}else{
+							$("#trainingMethod2").css("color","#337BFC")
+							$("#trainingMethod2").text(items[0].text);
+							specialParams.trainType = items[0].value;
+						}
+						getSpecialList();
+					});
+				}
+			})
+		});
+		
+		//专项填写人
+		$("#InputPerson2").on("tap", function() {
+			var extras = {
+				multiSelect: false,
+				unSelect: true
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择填写人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack2, false);
+			// 赋值
+			window.addEventListener('returnSelect', inputPersonBack2, false);
+		
+		})
+		
+		//填写人回调
+		var inputPersonBack2 = function(data) {
+			if(data.detail[0] == undefined){
+				$("#realName2").css("color","#888888")
+				$("#realName2").text('填写人');
+				specialParams.inputFullname = '';
+				// $("#delUser2").hide();
+			}else{
+				$("#realName2").css("color","#337BFC");
+				$("#realName2").text(data.detail[0].realname);
+				specialParams.inputFullname = data.detail[0].realname;
+				// $("#delUser2").show();
+			}
+			getSpecialList();
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack2, false);
+		}
+		
+		// 专项填写日期
+		$("#inputDate2").on('tap', function() {
+				var resultJSON = [{text:'全部',value: 0},{text:'近7日',value: 1},{text:'近30日',value: 2},{text:'自定义区间',value: 3}];
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#inputDate2").css("color","#888888")
+							$("#inputDate2").text('填写日期');
+							specialParams.minCreateTime= '';
+							specialParams.maxCreateTime= '';
+							getSpecialList();
+						}else if(items[0].value == 3){
+							//日期选择
+								var that = $("#inputDate2");	
+								var start = '';
+								var end = '';
+								plusDate(function(data1) {	
+									if(data1 != ''){
+										plusDate(function(data2) {
+											if(data2 != ''){
+												if(data1 >= data2){
+													specialParams.minCreateTime = data2+' 00:00';
+													specialParams.maxCreateTime = data1+ ' 23:59';
+													start = data2.substring(5,data1.length).replace("-","/")
+													end = data1.substring(5,data1.length).replace("-","/")
+												}else{
+													specialParams.minCreateTime = data1+' 00:00';
+													specialParams.maxCreateTime = data2+ ' 23:59';
+													start = data1.substring(5,data1.length).replace("-","/")
+													end = data2.substring(5,data1.length).replace("-","/")	
+												}										
+												$("#inputDate2").css("color","#337BFC")
+												$("#inputDate2").text(start+'-'+end);
+												getSpecialList();
+											}
+										});
+									}
+								});
+						}else{
+								var time = getDate(items[0].value);
+								specialParams.minCreateTime = time.sdate;
+								specialParams.maxCreateTime = time.edate;
+								$("#inputDate2").css("color","#337BFC")
+								$("#inputDate2").text(items[0].text);
+								getSpecialList();
+						}						
+					});
+				}
+		});			
+		
+		//关闭遮罩层	
+		$(document).on("click", ".mui-backdrop", function () {
+			isShow = true;
+			$('#home-item').hide();
+			mask.close();
+		})
+		
+		function scrollTop() {
+			var myDiv1 = document.getElementById('item1');
+			var myDiv2 = document.getElementById('item2');
+			myDiv1.scrollTop = 0;
+			myDiv2.scrollTop = 0;
+			
+			setTimeout(function(){
+				if($("#item1").hasClass('mui-active')){
+					$("#search_input").attr("placeholder","请输入安全培训计划名称")
+				}else{
+					$("#search_input").attr("placeholder","请输入安全教育名称")
+				}
+			},600)
+		}
+		
+		function clearSearch(){
+			if($("#search_input").val() != ''){
+				$("#search_input").val('')
+				$("#search_input").blur();
+				// $(".mui-icon-clear").hide();
+				// console.log($(".mui-icon-clear"))
+				dailyParams.trainPlanName = '';
+				getDailyList();
+				specialParams.educationName = '';
+				getSpecialList();
+			}
+		}
+		
+		mui("#slider").on('tap', '.mui-slider-indicator', function() {
+			clearSearch()
+			scrollTop();
+		});
+		mui(".mui-slider-group").on('swipeleft','.mui-slider-item',function(){
+			clearSearch()
+			scrollTop();										
+		})
+		
+		mui(".mui-slider-group").on('swiperight','.mui-slider-item',function(){
+			clearSearch()
+			scrollTop();
+		})
+		
+		//查看日常教育计划
+		$("#dailyplan_list").on('tap', 'li', function(e) {
+			e.stopPropagation()
+			var extras = {
+				planId: $(this).attr("planId"),
+				projectName: $(this).attr("projectName"),
+				projectNo: $(this).attr("projectNo")
+			}
+			app.openPage("showDailyPlan.html", {
+				titleNView: {
+					titleText: '查看日常教育计划',
+					autoBackButton: true,
+				}
+			},extras);
+		})
+		
+		//查看专项教育计划
+		$("#specialplan_list").on('tap', 'li', function(e) {
+			e.stopPropagation()
+			var extras = {
+				planId: $(this).attr("planId"),
+				projectName: $(this).attr("projectName"),
+				projectNo: $(this).attr("projectNo")
+			}
+			app.openPage("showSpecialPlan.html", {
+				titleNView: {
+					titleText: '查看专项教育计划',
+					autoBackButton: true,
+				}
+			},extras);
+		})
+		
+		function getDailyList(){
+			if($("#search_input").val() == "") dailyParams.projectName = JSON.parse(localStorage.getItem("projectInfo")).prjName;
+			queryDailyEdu(dailyParams, function(data) {
+				if (data.success) {
+					addDailyData(data.result.records);
+				} else {
+			        app.toast("日常教育计划查询失败")
+				}		
+			});
+		}
+		
+		function addDailyData(items){
+			// console.log(JSON.stringify(items))
+			$('#dailyplan_list').html('')
+			var str = '';
+			if(items.length > 0){
+				for(let i = 0; i< items.length;i++){
+					// console.log(JSON.stringify(items[i]))
+					str += `<li class="mui-table-view-cell" planId=${items[i].guid} projectName=${items[i].projectName} projectNo=${items[i].projectNo}>
+								<div class="projectName">${isEmp(items[i].trainPlanName)}</div>
+								<div class="bzdw_span">${isEmp(items[i].trainContent)}</div>
+								<div class="div3">
+									<div style="width: 25%;display: inline-block;text-align: left;">${isEmp(items[i].trainType_dictText)}</div>
+									<div style="width: 30%;display: inline-block;    text-align: right;
+								position: relative;
+								right: .5%">${isEmp(items[i].inputFullname)}</div>
+									<div style="width: 40%;display: inline-block;text-align: right">${isEmp(items[i].inputDate).substring(0,10)}</div>
+								</div>
+							</li>`
+				}
+			}else{
+				str += `<div class='empty'>暂无数据</div>`;
+			}
+			$('#dailyplan_list').append(str)
+		}
+		
+		function getSpecialList(){
+			if($("#search_input").val() == "") specialParams.projectName = JSON.parse(localStorage.getItem("projectInfo")).prjName;
+			querySpecialEdu(specialParams, function(data) {
+				if (data.success) {
+					addSpecialData(data.result.records);
+				} else {
+			        app.toast("专项教育计划查询失败")
+				}		
+			});
+		}
+		
+		function addSpecialData(items){
+			// console.log(JSON.stringify(items))
+			$('#specialplan_list').html('')
+			var str = '';
+			if(items.length > 0){
+				for(let i = 0; i< items.length;i++){
+					str += `<li class="mui-table-view-cell" planId=${items[i].guid} projectName=${items[i].projectName} projectNo=${items[i].projectNo}>
+								<div class="projectName">${isEmp(items[i].educationName)}</div>
+								<div class="bzdw_span">${isEmp(items[i].trainContent)}</div>
+								<div class="div3">
+									<div style="width: 40%;display: inline-block;text-align: left;">${isEmp(items[i].trainType_dictText)}</div>
+									<div style="width: 15%;display: inline-block;text-align: right;
+									position: relative;
+									right: .5%">${isEmp(items[i].inputFullname)}</div>
+									<div style="width: 40%;display: inline-block;text-align: right">${isEmp(items[i].inputDate).substring(0,10)}</div>
+								</div>
+							</li>`
+				}
+			}else{
+				str += `<div class='empty'>暂无数据</div>`;
+			}
+			$('#specialplan_list').append(str)
+		}
+		
+		function  getDate(type) { //获取日期
+            var date = new Date();
+            date = date.getTime();
+            date = new Date(date)
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            if (month >= 1 && month <= 9) {
+                month = '0' + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = '0' + strDate;
+            }
+            var day = '';
+            if(type == 1){
+                day = 6;
+            }else day = 29;
+            console.log(day)
+            var startdate = new Date(date.setDate(date.getDate() - day));  
+            var smonth = startdate.getMonth() + 1;
+            var sstrDate = startdate.getDate();
+            var shour = startdate.getHours();
+            var sminute = startdate.getMinutes();
+            if (smonth >= 1 && smonth <= 9) {
+                emonth = '0' + smonth;
+            }
+            if (sstrDate >= 0 && sstrDate <= 9) {
+                sstrDate = '0' + sstrDate;
+            }
+
+            var sdate = startdate.getFullYear() + '-' + smonth + '-' + sstrDate+ ' 00:00';
+            var edate = new Date().getFullYear() + '-' + month + '-' + strDate+ ' 23:59'      
+
+            var param = { sdate: sdate, edate: edate };
+            return param;
+        }
+		
+		window.addEventListener('reload1', function(e) { //执行刷新
+			getDailyList();
+			getSpecialList();
+		});
+		
+		mui.back=function(){
+			plus.webview.currentWebview().close('none')
+			/*2021/6/2
+			var extras={
+				target:"../education/index.html",
+				targetName:"安全教育",
+				pageCount:param.pageCount
+			}
+			app.openPage("../overview/projectList.html", {
+				titleNView: {
+					titleText: '项目概览',
+					autoBackButton: true,
+					closePage:true
+				},
+			},extras);
+
+			 */
+		}
+</script>
+
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>工程管理</title>
+	</head>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	<link href="../../css/common.css"  rel="stylesheet" />
+	<style type="text/css">
+		#riverStatistics {
+			height: 280px;
+			background-color: white;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+		#riverStatistics1{
+			height: 349px;
+			background-color: white;
+			background-color: white;
+		}
+		
+		.drainageNum_h {
+			display: flex;
+			justify-content: space-between;
+		}
+		.drainageNum_hl {
+			width: 160px;
+			height: 17px;
+			font-size: 18px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #262626;
+			margin-left: 19px;
+			margin-top: 17.5px;
+			white-space: nowrap;
+		}
+		#main4{
+			height: 310px;
+			width: 100%;
+		}
+	</style>
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 河湖统计情况开始 -->
+						<!-- <div id="riverStatistics">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>河湖统计情况</span></div>
+							</div>
+							<div id="main1" style="width: 350px;height:200px;"></div>
+						</div> -->
+						<!-- 河湖统计情况结束 -->
+						<!-- 质量整改开始 -->
+						<div id="riverStatistics">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>质量整改</span></div>
+							</div>
+							<div id="main2" style="width:100%;height:180px;"></div>
+						</div>
+						<!-- 质量整改结束 -->
+						<!-- 安全整改开始 -->
+						<div id="riverStatistics">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>安全整改</span></div>
+							</div>
+							<div id="main3" style="width:100%;height:180px;"></div>
+						</div>
+						<!-- 安全整改结束 -->
+						
+						<!-- 工程项目数量情况开始 -->
+						<div id="riverStatistics1">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>工程项目数量情况</span></div>
+							</div>
+							<div id="main4"></div>
+						</div>
+						<!-- 工程项目数量情况结束 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/kpi/drainage.js"></script>
+	<script src="../../js/kpi/index.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/echarts.min.js"></script>
+	<script src="./echarts-module/flow-chart.js"></script>
+	<script type="text/javascript">
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var url2=config.urls.baseUrl+"ft-prjManage/projectqualityrectify/projectQualityRectify/getProjectQualityResult"//质量问题整改统计
+		var url3=config.urls.baseUrl+"ft-prjManage/safetyrectify/safetyRectify/getSafetyQualityResult"//安全问题整改
+		var url4=config.urls.baseUrl+"ft-prjManage/prjInformation/getProjectStageCount"//工程项目数量情况
+		// 质量整改开始
+		var parmas2
+		getDrainage(url2, parmas2, function(data) {
+			console.log(JSON.stringify(data))
+		var option2 = {
+			 // legend: {
+			 //        data: ['已更正', '未解决'],
+			 //        left: '10%',
+			 //    },
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b}: {c} ({d}%)"
+			},
+			color: ["#3aa1ff", "#fbb937"],
+			title: {
+				text: data.result.allRectifyResultCount,
+				left: "center",
+				top: "36%",
+				textStyle: {
+					textAlign: "center",
+					fill: "#333",
+					fontSize: 26,
+					fontWeight: 400,
+				}
+			},
+			graphic: {
+				type: "text",
+				left: "center",
+				top: "54%",
+				style: {
+					text: "合计/个",
+					textAlign: "center",
+					fill: "#333",
+					fontSize: 10,
+				}
+			},
+			series: [{
+				 name: ' ',
+				type: 'pie',
+				radius: ['60%', '90%'],
+				avoidLabelOverlap: false,
+				// hoverAnimation: false,
+				label: {
+					normal: {
+						show: false,
+						position: 'center'
+					},
+		
+				},
+		
+				data: [{
+						value: data.result.rectifiedResultCount,
+						name: '已更正',
+					},
+					{
+						value: data.result.unRectifyResultCount,
+						name: '未解决'
+					},
+		
+				]
+			}]
+		};
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		myChart2.setOption(option2);
+		})
+		// 质量整改结束
+		//安全整改开始
+		var parmas3
+		getDrainage(url3, parmas3, function(data) {
+			console.log(JSON.stringify(data))
+			var option3 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b}: {c} ({d}%)"
+				},
+				// legend: {
+				//      top: '95%',
+				//      left: 'center'
+				//  },
+				color: ["#3aa1ff", "#fbb937"],
+				title: {
+					text: data.result.allSafetyRectifyResultCount,
+					left: "center",
+					top: "36%",
+					textStyle: {
+						textAlign: "center",
+						fill: "#333",
+						fontSize: 26,
+						fontWeight: 400,
+					}
+				},
+				graphic: {
+					type: "text",
+					left: "center",
+					top: "54%",
+					style: {
+						text: "合计/个",
+						textAlign: "center",
+						fill: "#333",
+						fontSize: 10,
+					}
+				},
+				series: [{
+					 name: ' ',
+					type: 'pie',
+					radius: ['60%', '90%'],
+					avoidLabelOverlap: false,
+					// hoverAnimation: false,
+					label: {
+						normal: {
+							show: false,
+							position: 'center'
+						},
+			
+					},
+			
+					data: [{
+							value: data.result.safetyRectifiedResultCount,
+							name: '已更正',
+						},
+						{
+							value: data.result.unSafetyRectifyResultCount,
+							name: '未解决'
+						},
+			
+					]
+				}]
+			};
+			var myChart3 = echarts.init(document.getElementById('main3'));
+			myChart3.setOption(option3);
+			})
+		//安全整改结束
+		//工程项目数量情况开始
+		
+		var parmas4
+		getDrainage(url4, parmas4, function(data){
+			console.log(JSON.stringify(data.result))
+			var projectStageCountList=data.result.projectStageCountList
+		option4 = {
+		    tooltip: {
+		        trigger: 'item',
+		        formatter: '{a} <br/>{b}: {c} ({d}%)'
+		    },
+		    legend: {
+		        top: 'bottom',
+		        // data: ['直达', '营销广告', '搜索引擎', '邮件营销', '联盟广告']
+		    },
+		    series: [
+		        {
+		            name: '访问来源',
+		            type: 'pie',                 //设为饼图
+		            radius: ['60%','35%'],      //可调整大小
+		            clockWise:true,　　　　　　　　//默认逆时针
+		            hoverAnimation: false,　　　　//移入放大
+		            // avoidLabelOverlap: true,　　　//避免标注重叠
+		            // label: {
+		            //     formatter: '{b|{b}：}{c}  ({d}%) ',
+		            //     rich: {
+		            //         a: {
+		            //             color: '#999',
+		            //             lineHeight: 22,
+		            //             align: 'center'
+		            //         },
+		            //         b: {
+		            //             fontSize: 16,
+		            //             lineHeight: 33
+		            //         },
+		            //     }
+		            // },
+		            data: [
+						{value:projectStageCountList[0].projectSum, name:  projectStageCountList[0].stageDictText},
+						 {value: projectStageCountList[1].projectSum, name:  projectStageCountList[1].stageDictText},
+						 {value: projectStageCountList[2].projectSum, name:  projectStageCountList[2].stageDictText},
+						  {value: projectStageCountList[3].projectSum, name:  projectStageCountList[3].stageDictText},
+						  {value: projectStageCountList[4].projectSum, name:  projectStageCountList[4].stageDictText},
+						   {value: projectStageCountList[5].projectSum, name:  projectStageCountList[5].stageDictText}
+		            ]
+		        }
+		    ]
+		};
+		var myChart4 = echarts.init(document.getElementById('main4'));
+		myChart4.setOption(option4);
+		//工程项目数量情况结束
+		
+		})
+	</script>
+
+
+</html>

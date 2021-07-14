@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>值班计划</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <style>
+    .dateStyle {
+      width: fit-content;
+      background-color: #F4F4F4;
+      border-radius: 5px;
+      border: 1px solid #F4F4F4;
+      padding: 10px 20px;
+      font-size: 12px;
+      line-height: 16px;
+      color: #888888;
+    }
+
+    .itemStyle {
+      width: 85%;
+      margin: 10px auto;
+      padding: 15px;
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      border: 1px solid #FFFFFF;
+      font-size: 12px;
+      color: #888888;
+    }
+
+    .spanItemType {
+      background-color: #FFF7F0;
+      border-radius: 5px;
+      border: 1px solid #FFAB61;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div id="scroll-wrapper" class="" style="height: calc(100vh - 65px);">
+      <div style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+        <div align="center" style="margin-top: 20px;padding-top: 10px">
+          <div class="dateStyle">
+            <input id="dateSelect" type="text" readonly="readonly" required="true"
+                   style="background: transparent;border: 0;width: 100px;outline: none;" value=""/>
+            <img src="../../img/black_arrow_down@2x.png" style="width: 10px"/>
+          </div>
+        </div>
+        <div style="background-color: #F4F4F4;height: 1px;margin-top: 20px"></div>
+        <div style="padding-top: 20px;padding-left: 30px;height: 60px">
+          <div style="float: left">
+            <img src="../../img/leader_icon@2x.png" style="width: 13px"/>
+          </div>
+          <div style="float: left;margin-left: 10px">
+          <span id="schedulingLeaderName"
+                style="color: black;font-weight: bold;font-size: medium;font-family: PingFang-SC-Regular">值班领导：</span><br/>
+            <span id="schedulingLeaderPhone"
+                  style="color: #888888;font-weight: bold;font-size: small;font-family: PingFang-SC-Regular">联系电话：</span>
+          </div>
+        </div>
+        <div id="schedulingList" style="background-color: #F4F4F4;height: 100%;width: 100%;padding: 1px 0">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+<script src="../../js/jquery.min.js"></script>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/schedulingManage/schedulingPlan.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script>
+    mui.init({
+        swipeBack: false
+    });
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        curr.close('slide-out-right');
+    }
+    mui.plusReady(function () {
+        var self = plus.webview.currentWebview();
+        console.log("plusReady")
+
+        self.setStyle({
+            titleNView: {
+                backgroundImage: "../../img/bgTop.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '135',
+                    fontSize: '14',
+                    text: '我的值班',
+                    onclick: function () {
+                        app.openPage("myScheduling.html",{
+                            titleNView: {
+                                titleText:'我的值班',
+                                autoBackButton:true,
+                            }
+                        })
+                    }
+                }],
+            }
+        });
+        initDate();
+        //禁止选项卡自带滑动
+        cBScroll.on('pullingUp', () => {
+            console.log("pullingUp-上拉加载更多" + allSchedulingDataLoad);
+            if (!allSchedulingDataLoad) {
+                upLoadMore();
+            }
+
+        })
+    });
+
+    var allSchedulingDataLoad = false; // 根据数量判断是否已加载完
+    var rankBox = document.getElementById("scroll-wrapper"); // slider
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        pullUpLoad: true
+    });
+    let param = {
+        planDate_begin: "",
+        planDate_end: "",
+        pageNo: 1,
+        pageSize: 20,
+    }
+    var items = null;
+    // //下拉刷新
+    function pulldownRefresh() {
+        $("#schedulingList").empty();
+        param.pageNo = 1;
+        console.log("下拉刷新")
+        getPlanData(false);
+    }
+
+    // //上拉加载
+    function upLoadMore() {
+        //console.log("上拉加载")
+        console.log("pageSize" + param.pageSize);
+        console.log("pageNo" + param.pageNo);
+        getPlanData(true);
+    }
+
+
+
+    var initDate = function () {
+        var nowDate = new Date();
+        var week = "";
+        switch (nowDate.getDay()) {
+            case 1:
+                week = '周一';
+                break;
+            case 2:
+                week = '周二';
+                break;
+            case 3:
+                week = '周三';
+                break;
+            case 4:
+                week = '周四';
+                break;
+            case 5:
+                week = '周五';
+                break;
+            case 6:
+                week = '周六';
+                break;
+            case 0:
+                week = '周日';
+                break;
+        }
+        var dateStr = nowDate.getFullYear() + "-" + preZero(nowDate.getMonth() + 1,2) + "-" + preZero(nowDate.getDate(),2)+ "  " + week;
+        var currentData = nowDate.getFullYear() + "-" + preZero(nowDate.getMonth() + 1,2) + "-" + preZero(nowDate.getDate(),2);
+        param.planDate_begin = currentData;
+        param.planDate_end = currentData;
+        console.log("请求参数：" + JSON.stringify(param));
+
+        $('#dateSelect').val(dateStr);
+
+        $('#dateSelect').on("tap", function () {
+            var that = $(this);
+            plusDateWithDate(function (data) {
+                var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+                var week = "";
+                switch (data.getDay()) {
+                    case 1:
+                        week = '周一';
+                        break;
+                    case 2:
+                        week = '周二';
+                        break;
+                    case 3:
+                        week = '周三';
+                        break;
+                    case 4:
+                        week = '周四';
+                        break;
+                    case 5:
+                        week = '周五';
+                        break;
+                    case 6:
+                        week = '周六';
+                        break;
+                    case 0:
+                        week = '周日';
+                        break;
+                }
+                that.val(now + " " + week);
+
+                param.planDate_begin = now;
+                param.planDate_end = now;
+                param.pageNo = 1;
+                getPlanData(false);
+            });
+        })
+        getPlanData(false);
+    }
+
+    function getSchedulingPlanData(callback) {
+        getSchedulingPlan(param, function (data) {
+            if (data.success == true) {
+                callback(data.result)
+            } else {
+                mui.toast("查询失败")
+            }
+        })
+    }
+
+    var getPlanData = function (append) {
+        getSchedulingPlanData(function (data) {
+            if (data.total<=param.pageNo){
+                allSchedulingDataLoad = true; // 根据数量判断是否已加载完
+            } else {
+                allSchedulingDataLoad = false;
+            }
+            if (append){
+                items.add(data.records);
+            } else {
+                items = data.records;
+            }
+            console.log("值班计划数据：" + JSON.stringify(data))
+            if (items[0]!=null){
+                $('#schedulingLeaderName').text('值班领导：' + items[0].dutyLeaderName);
+                $('#schedulingLeaderPhone').text('联系电话：' + items[0].phone);
+            }
+            var item = '';
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].commonDutyDept == 1) {
+                    // 常设部门
+                    <!--item1-->
+                    item += '<div class="itemStyle">' +
+                        '<span style="font-size: medium;color: #262626;padding: 0 15px">' + (i + 1) + '&nbsp&nbsp&nbsp&nbsp' + items[i].dutyDepartment_dictText + '</span><span class="spanItemType" style="color: #FF7800;">常设值班部门</span>' +
+                        '<br/>' +
+                        '<div style="background-color: #F4F4F4;height: 1px;margin-top: 20px"></div>' +
+                        '<br/>' +
+                        '<span style="color:#888888;padding-left: 15px;font-size: small">科室负责人：</span><span style="color: #262626;font-size: small">' + items[i].departmentHeadName + '</span>' +
+                        '<span style="color: #262626;font-size: small;float: right;padding-right: 15px">' + items[i].headerPhone + '</span><span style="color:#888888;padding-left: 15px;font-size: small;float: right">电话：</span>' +
+                        '<br/>' +
+                        '<br/>' +
+                        '<span style="color:#888888;padding-left: 15px;font-size: small;">科室值班员：</span><span style="color: #262626;font-size: small">' + items[i].watchmanName + '</span>' +
+                        '<span style="color: #262626;font-size: small;float: right;padding-right: 15px">' + items[i].watchmanPhone + '</span>' +
+                        '<span style="color:#888888;padding-left: 15px;font-size: small;float: right">电话：</span>' +
+                        '<br/>' +
+                        '<br/>' +
+                        '</div>'
+                } else {
+                    <!--item2-->
+                    item += '<div class="itemStyle">' +
+                        '<span style="font-size: medium;color: #262626;padding: 0 15px">' + (i + 1) + '&nbsp&nbsp&nbsp&nbsp' + items[i].dutyDepartment_dictText + '</span><span class="spanItemType" style="color: #FF7800;display: none">常设值班部门</span>' +
+                        '<br/>' +
+                        '<div style="background-color: #F4F4F4;height: 1px;margin-top: 20px"></div>' +
+                        '<br/>' +
+                        '<span style="color:#888888;padding-left: 15px;font-size: small">科室负责人：</span><span style="color: #262626;font-size: small">' + items[i].departmentHeadName + '</span>' +
+                        '<span style="color: #262626;font-size: small;float: right;padding-right: 15px">' + items[i].headerPhone + '</span><span style="color:#888888;padding-left: 15px;font-size: small;float: right">电话：</span>' +
+                        '<br/>' +
+                        '<br/>' +
+                        '<span style="color:#888888;padding-left: 15px;font-size: small;">科室值班员：</span><span style="color: #262626;font-size: small">' + items[i].watchmanName + '</span>' +
+                        '<span style="color: #262626;font-size: small;float: right;padding-right: 15px">' + items[i].watchmanPhone + '</span><span style="color:#888888;padding-left: 15px;font-size: small;float: right">电话：</span>' +
+                        '<br/>' +
+                        '<br/>' +
+                        '</div>'
+                }
+            }
+            param.pageNo++;
+            if (append) {
+                $("#schedulingList").append(item);
+            } else {
+                $("#schedulingList").html(item);
+            }
+            cBScroll.refresh()
+            cBScroll.finishPullUp()
+        });
+    }
+    // 测试区域
+
+</script>
+</html>

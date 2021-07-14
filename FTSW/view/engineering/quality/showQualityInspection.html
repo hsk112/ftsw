@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>查看质量检查</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+	.img_item{
+		text-align: left;
+		width: 72px;
+		height: 72px;
+		float: left;
+		margin-right: 20px;
+	}
+	.img_item img{
+		width: 72px;
+		height: 72px;
+	}
+	.img_item .img_close {
+		display: inline-block;
+		background-color: #1da1f2;
+		color: #FFF;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 50%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		textarea::-webkit-input-placeholder{
+		    color:#B1B1B1;			
+			font-size: 16px;
+			font-weight: 400;
+		}
+		.empty{
+			line-height:40px;
+			width:100%;
+			text-align: left;
+			font-size: 16px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">排水户登记</h1>
+    </header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="padding-bottom: 20px;">
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目名称
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="projectId" required="true"  readonly="true" type="text" class="inputCss" value=""
+										 placeholder="请输入项目id" maxlength="100" style="display: none;">
+										<input id="projectName" required="true"  readonly="true" type="text" class="inputCss" value=""
+										 placeholder="请输入项目名称" maxlength="100" >
+									</div>
+								</div>	
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="projectNo" readonly="true" type="text" class="inputCss" value=""
+										 placeholder="自动填充" maxlength="500">
+									</div>
+								</div>	
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										检查项
+									</div>
+									<input id="checkItem" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="checkItemName" readonly="readonly" required="true" type="text"  value=""
+										 placeholder="请选择检查项" class="inputCss">	
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										检查日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="checkTime" class="inputCss" required="true" readonly="readonly" type="text" class="mui-input-clear"
+										 placeholder="请选择检查日期" style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">
+									</div>
+								</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 120px;border:none">
+									<div class="item-title">
+										问题描述
+									</div>
+									<div class="mui-input-row item-input">
+										 <textarea id="problems" type="text"  readonly="readonly" maxlength="2000" rows="2" onkeyup="format_textarea(this)"
+										  placeholder="请输入问题描述,不超过2000字" style="border:none;padding-left: 0;width: calc(100% - 25px);"></textarea>
+									</div>
+								</div>	
+								
+								<div id="" style="background-color:#F4F4F4;height: 5px;border: none;">
+								
+								<div class="info-bar-content-item" style="height: 100px;" id="fileDiv">
+									<div class="item-title" style="margin-bottom: 20px;">
+										检查照片							
+									</div>
+									<div id="img_list" >
+										<div class="empty" id="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检查人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputFullname" type="text" class="inputCss" readonly="true"  value=""
+										 placeholder="请输入检查人">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										联系方式
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputPhone" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写部门
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDepartmentFullname" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>																
+								<div class="info-bar-content-item" style="border: none;">
+									<div class="item-title">
+										填写日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDate" class="inputCss" type="text" readonly="true" 
+										 placeholder="请选择填写日期" style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/quality/quality.js"></script>
+	<script src="../../../js/conservation.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/uploadimage.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/mui.previewimage.js"></script>
+
+	<script src="../../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+
+		mui.init({
+			swipeBack:false
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+
+			initView()
+		});
+
+		//界面元素控制
+		var initView = function() {	
+			var self = plus.webview.currentWebview();
+			queryQualityCheck(self.guid, function(data) {
+				console.log(JSON.stringify(data))
+				if (data.success) {
+					var item = data.result;
+					$("#projectName").val(isEmp(self.projectName))
+					$("#projectNo").val(isEmp(JSON.parse(localStorage.getItem("projectInfo")).prjNo));
+					$("#checkItemName").val(isEmp(item.checkItemName))
+					$("#checkTime").val(isEmp(item.checkTime).substring(0,10))	
+					$("#problems").val(isEmp(item.problems))	
+					$("#checkContent").val(isEmp(item.checkContent))
+					$("#inputFullname").val(isEmp(item.inputFullname))	
+					$("#inputPhone").val(isEmp(item.inputPhone))	
+					$("#inputDepartmentFullname").val(isEmp(item.inputDepartmentFullname))	
+					$("#inputDate").val(isEmp(item.inputDate).substring(0,10))	
+					if (item.checkPhoto != null && item.checkPhoto != undefined && item.checkPhoto != "") {
+						findFilesByGroupId({
+							groupId: item.checkPhoto
+						}, function(data) {					
+							if(data.success){	
+								if(data.result.length> 0){
+									var str = '';										
+										str = "<img class='imgCss img_item' data-preview-src='' data-preview-group='1' src='" + config.urls.baseUrl +
+											"sys/common/view/" +
+											data.result[0].uploadFile.savePath + "'>";
+										$("#fileDiv").css("height","150px");
+										$("#img_list").html(str);
+								}
+							}else app.toast("检查照片查询失败")
+						});
+					}
+				} else app.toast('查询安全检查信息失败')
+			});
+		//图片预览
+		$(document).on('tap', '.imgCss', function() {
+		    mui.previewImage();
+		});
+		}
+
+	</script>
+
+</html>

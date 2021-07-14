@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-input-row {
+				position: relative;
+				float: left;
+				width: 100%;
+				text-align: left;
+				clear: none;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				font-size: 25px;
+			}
+
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-left: 50px;
+				font-size: 16px;
+			}
+
+			.info-bar-title {
+				height: 40px;
+				background: #f6f4f7;
+				font-size: 15px;
+				text-align: left;
+				color: #8e8e8e;
+				line-height: 40px;
+				padding: 0 18px;
+			}
+
+			.info-bar-content {
+				height: 470px;
+			}
+
+			.info-bar-content-item {
+				height: 370px;
+				margin: 0px 18px;
+				border-bottom: 1px solid #eee;
+			}
+
+			.info-bar-content-item .item-title {
+				text-align: left;
+				padding: 20px 0px 0px;
+				font-size: 14px;
+			}
+
+
+
+
+			.btn-item {
+				width: 80%;
+				margin-left: 10%;
+			}
+
+			.btn-item-2 {
+				width: 50%;
+				float: left;
+			}
+
+			.btn-item div,
+			.btn-item-2 div {
+				margin: 0 auto;
+				border: 1px solid #337BFC;
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 50px;
+			}
+
+			/*
+			.mui-scroll-wrapper {
+			} */
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+				color: #444444;
+			}
+
+			.mui-checkbox.mui-left label {
+				padding-left: 0;
+			}
+
+			.mui-backdrop {
+				background: rgba(0, 0, 0, 0.1);
+			}
+
+			.img_item {
+				float: left;
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				margin-right: 20px;
+			}
+
+			.img_item::after {
+				clear: both;
+				content: '';
+				display: block;
+				width: 0;
+				height: 0;
+				visibility: hidden;
+			}
+
+			.img_item img {
+				width: 72px;
+				height: 72px;
+			}
+
+
+			.info-bar-content-item {
+				border: 0;
+			}
+
+			.btn-item {
+				width: 85%;
+				margin: 0 7%;
+			}
+
+			.img_close {
+				position: relative;
+				top: -84px;
+				left: 64px;
+			}
+
+			.btn-item div {
+				margin: 0 auto;
+				border: 1px solid #337BFC;
+				width: 85%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 50px;
+			}
+
+			.in-obj {
+				color: #888;
+				font-size: 13px;
+			}
+
+			input[type="radio"] {
+				opacity: 0;
+				/* display: inline-block; */
+				position: relative;
+				z-index: 5;
+				width: 20px;
+				height: 20px;
+			}
+
+			span[new] {
+				display: inline-block;
+				position: relative;
+				left: -20px;
+				top: 5px;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid #E3E3E3;
+				margin-right: -10px;
+			}
+
+			input:checked+span[new] {
+				background-color: #337bfc;
+				border: 1px solid #337bfc;
+			}
+
+			input:checked+span[new]::after {
+				position: absolute;
+				content: "";
+				width: 5px;
+				height: 10px;
+				top: 3px;
+				left: 6px;
+				border: 2px solid #fff;
+				border-top: none;
+				border-left: none;
+				transform: rotate(45deg)
+			}
+
+			#title-content {
+				font-size: 22px;
+				font-family: PingFang SC;
+				/* font-weight: bold; */
+				color: #000000;
+				margin-bottom: 60px;
+			}
+		</style>
+	</head>
+
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="" style="background: #ffffff;">
+							<div style="height: 100%;padding-bottom: 10px;background: #F4F4F4;">
+								<div id="texthtml" class="scroll-li" style="width: 100%;background: #F4F4F4;position: fixed;bottom: 50px;z-index: 99;">
+									<img src="../../img/maintain_finish_icon.png" style="margin-bottom: 30px;">
+									<div id="title-content">
+										提交完成
+									</div>
+									<div class="bottom-btn" style="background: #F4F4F4;width: 100%;padding: 20px 0;">
+										<div class="btn-item" style="background: #F4F4F4;">
+											<div id="toNext" style="color: #337BFC;width: 80%;margin-left: 10%;margin-bottom:30px;line-height: 40px;">下一个</div>
+											<div id="toFinish" style="background: #337BFC;color: #fff;width: 80%;margin-left: 10%;line-height: 40px;">完成</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--页面主内容区结束-->
+
+		</div>
+
+
+	</body>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/maintain.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+
+	<script>
+		var self;
+		mui.init({
+			beforeback: function() {
+
+				var list = plus.webview.currentWebview().opener();
+				//refresh是A页面自定义事件
+				mui.fire(list, 'return1');
+				//返回true,继续页面关闭逻辑
+				return true;
+			},
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			console.log(self.mainObj);
+			var objStats = self.objStat.split(",");
+			//判断是否有下一个养护内容
+			if (self.contentList.length == 0) {
+				$("#toNext").hide();
+				// $("#title-content").html("养护完成")
+			}
+			
+			if(self.isEnd) $("#title-content").html("养护完成")
+			var flag = true;
+			self.datalist.forEach(item =>{
+				if(item.status == 0){
+					flag = false;
+				}
+			})
+			
+			console.log(flag)
+			if(self.isEnd && flag){
+				mui.fire(plus.webview.getWebviewById("view/maintenance/maintain_index.html"), 'backList');
+			}
+			
+			$("#toNext").on("tap", function() {
+				if (self.contentList.length == 0) {
+					app.toast("已经完成所有养护内容可养护了！");
+					return;
+				}
+				var view = plus.webview.getWebviewById("maintain_edit.html");
+				mui.fire(view, 'return1');
+				plus.webview.currentWebview().close('none'); //关闭
+			});
+			$("#toFinish").on("tap", function() {
+				if (self.contentList.length != 0) {
+					var btnArray = ['继续', '退出']; //注意这里的顺序是先否再是
+					mui.confirm("还有养护内容可继续提交，是否退出？", '提示', btnArray, function(e) {
+						if (e.index == 0) { //继续
+							var view = plus.webview.getWebviewById("maintain_edit.html");
+							mui.fire(view, 'return1');
+							plus.webview.currentWebview().close('none'); //关闭
+						} else if (e.index == 1) { //退出
+							var view = plus.webview.getWebviewById("maintain_edit.html");
+							mui.fire(view, 'close');
+							plus.webview.currentWebview().close('none'); //关闭
+						}
+					})
+					return;
+				}
+				var view = plus.webview.getWebviewById("maintain_edit.html");
+				mui.fire(view, 'close');
+				// let url = "maintain_index.html";
+				// popToTarget(url);
+				plus.webview.currentWebview().close('none'); //关闭
+			});
+			mui.back = function() {
+				if (self.contentList.length != 0) {
+					var btnArray = ['继续', '我再想想']; //注意这里的顺序是先否再是
+					mui.confirm("返回将默认进入下一养护内容，是否继续？", '提示', btnArray, function(e) {
+						if (e.index == 0) { //继续
+							var view = plus.webview.getWebviewById("maintain_edit.html");
+							mui.fire(view, 'return1');
+							plus.webview.currentWebview().close('none'); //关闭
+						} else if (e.index == 1) { //退出
+							return;
+						}
+					})
+				} else {
+					var view = plus.webview.getWebviewById("maintain_edit.html");
+					mui.fire(view, 'close');
+					plus.webview.currentWebview().close('none'); //关闭
+				}
+			}
+		})
+	</script>
+
+</html>

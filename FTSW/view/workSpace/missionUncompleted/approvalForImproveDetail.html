@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>任务详情</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <style>
+    .mui-col-xs-6 {
+      text-align: left;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-control-content .mui-loading {
+      margin-top: 50px;
+    }
+
+    .mui-slider {
+      height: 100vh;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 2px solid #337BFC;
+      color: #337BFC;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+      border-bottom: 0;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 0;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active + .titleleft {
+      border-bottom: solid 2px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-segmented-control .mui-control-item {
+      line-height: 43px;
+    }
+
+    .mui-scroll {
+      background: #FFFFFF;
+    }
+
+    .task-ul {
+      padding: 0;
+    }
+
+    .task-li {
+      border-bottom: 5px solid #F4F4F4;
+      height: 110px;
+      padding: 0 20px;
+    }
+
+    .task-item {
+      /* height: 50px; */
+      line-height: 50px;
+      /* padding: 0 5px; */
+    }
+
+    .task-item-btn {
+      width: 50%;
+      float: left;
+      text-align: right;
+      white-space: nowrap;
+      padding: 0 0 0 5px;
+    }
+
+    .task-item-btn span {
+      padding: 5px 15px;
+      border: 1px solid #347CFC;
+      color: #347CFC;
+      border-radius: 21px;
+      font-size: 12px;
+    }
+
+    .task-item-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .task-item-title span {
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .task-item-tip {
+      color: #989898;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .task-item-running {
+      color: #FF5656;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item-finished {
+      color: #29CC85;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item-ischange {
+      color: #FF7800;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item_status {
+      position: absolute;
+      top: 8px;
+      right: 5px;
+    }
+
+    .bottom-item {
+      background: #FFFFFF;
+      position: absolute;
+      /* height: 300px; */
+      width: 100%;
+      bottom: 0;
+      z-index: 100;
+      text-align: left;
+    }
+
+    .bottom-item-btn-list {
+      /* height: 200px; */
+      width: 98%;
+      position: absolute;
+    }
+
+    .fanwei {
+      white-space: nowrap;
+      display: inline-block;
+      width: 280px;
+      margin-left: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left
+    }
+
+    .bottom-item-btn-list .bottom-item-btn-list-top {
+      width: 100%;
+
+    }
+
+    .item1 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 0px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      border: 1px solid #337BFC;
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .item2 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 0px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      border: 1px solid #337BFC;
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .item3 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 64px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      /* border: 1px solid #337BFC; */
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .mui-navigate-left:after {
+      content: '\e472';
+      left: 5px;
+      bottom: 50px;
+    }
+
+    .object {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .li-item {
+      background-color: white;
+    }
+
+    .li-item-pull {
+      background-color: #F4F4F4 !important;
+    }
+
+    .li-margin {
+      margin-bottom: 13px;
+      border-bottom: 1px solid #EDEDED;
+      padding-bottom: 0px;
+      font-size: 13px;
+      padding-bottom: 10px;
+    }
+
+    .in-obj {
+      font-weight: 400;
+      color: #888888;
+      margin-right: 7px;
+    }
+
+    .obj-title {
+      color: #444444;
+    }
+
+    .bgc-white {
+      background-color: white;
+    }
+
+    .bgc-grey {
+      background-color: #F4F4F4;
+    }
+
+    .mui-navigate-r {
+      background: #fff;
+    }
+
+    .icon-css {
+      display: inline-block;
+      padding: 8px 0 0;
+      vertical-align: top;
+    }
+
+    .task_title {
+      display: inline-block;
+      padding: 8px 0;
+      color: #191515;
+      font-size: 15px;
+      font-weight: 500;
+      width: 50%;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    .sec-line {
+      color: #878787;
+      font-size: 14px;
+    }
+
+    /* 	.arrow_right{
+      transform: rotate(90deg);
+    } */
+    .ul-mar-bottom {
+      margin-bottom: -18px;
+    }
+
+    .mui-table-view-cell > a:not(.mui-btn) {
+      margin: 0;
+      padding: 0;
+    }
+
+    .mui-table-view-cell.mui-active {
+      background: #fff;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+      border-top: 7px solid #F4F4F4
+    }
+
+    .color888 {
+      color: #888888;
+    }
+
+    .ibh {
+      display: inline-block;
+      line-height: 28px;
+    }
+
+    .no-data {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      display: inline-block;
+      font-size: 20px;
+      color: #999;
+      transform: translateX(-50%);
+    }
+
+    .showMore {
+      display: inline-block;
+    }
+
+    #listTitle span {
+      padding: 0;
+      color: #888888;
+    }
+
+    #listTitle {
+      width: 100%;
+      height: 40px;
+      padding-left: 20px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view-cell {
+      padding: 10px;
+      /*padding: 0!important;*/
+    }
+
+
+    #selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+    #selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span {
+      padding: 0;
+    }
+
+    /*.mui-table-view-cell:after{*/
+    /*  left: 4%;*/
+    /*  height: 2px;*/
+    /*  width: 92%;*/
+    /*}*/
+    .mui-table-view-cell:after {
+      left: 1px;
+      background-color: #F4F4F4;
+      height: 10px;
+    }
+
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 300px;
+      background: #FFFFFF
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mui-btn.mui-active:enabled {
+      background: #337BFC;
+    }
+
+    .spanItemType {
+      background-color: #FFF7F0;
+      border-radius: 5px;
+      border: 1px solid #FFAB61;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+
+    #highest {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #leader {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #details {
+      margin: 0 20px;
+    }
+
+    * {
+      touch-action: none;
+    }
+
+    /*
+    自定义的样式
+     */
+    .list-title {
+      color: #191515;
+      font-size: 19px;
+      clear: both;
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    .select-query-list-title {
+      height: 22px;
+      color: #888888;
+      font-size: 14px;
+    }
+
+    .mui-table-view-cell > .mui-slider-right {
+      height: 98%;
+    }
+
+    /* 滚动指示器 */
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 1px solid #FFFFFF;
+    }
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+      /*color: #007aff;*/
+      border-bottom: 2px solid #007aff;
+      background: 0 0;
+      content: '';
+      width: 24px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .mask-item-cell {
+      display: flex;
+      padding: 20px;
+      border-bottom: 1px solid #EDEDED;
+      position: relative;
+    }
+
+
+    .mask-item-cell-name {
+      width: 100px;
+      text-align: left;
+      color: #444444;
+      font-size: 16px;
+    }
+
+    .mask-item-cell-value {
+      flex: 1;
+      text-align: right;
+      color: #191515;
+      font-size: 14px;
+      border: none;
+    }
+
+    .mask-item-cell-button {
+      text-align: center;
+      border-color: #0493F3;
+      font-size: 16px;
+      color: #0493F3;
+      width: 48%;
+      height: 40px;
+      border-radius: 7px;
+    }
+
+    .mask-item-cell-input-button {
+      position: absolute;
+      width: 200px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: transparent;
+      border: none;
+    }
+
+    /* 表单详情 */
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      border-bottom: none;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .content-row {
+      border-top: 5px solid #F4F4F4;
+    }
+
+    .content-row-title {
+      border-bottom: 1px solid #EDEDED;
+      padding: 20px 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #161515;
+    }
+
+    .arrow-right-img {
+      width: 7px;
+      height: 10px;
+    }
+
+    .arrow-down-img {
+      width: 10px;
+      height: 7px;
+    }
+
+    .problem-img {
+      width: 78px;
+      height: 78px;
+    }
+
+    .incomplete-status {
+      color: red;
+    }
+
+    .hide-content {
+      display: none;
+    }
+
+    .show-content {
+      display: block;
+    }
+
+    /* 审批流程 */
+
+    .approval-item {
+      color: #444444;
+      font-size: 14px;
+    }
+
+    .approval-circle {
+      width: 7px;
+      height: 7px;
+      /*margin-left: -3px;*/
+      margin-right: 10px;
+      /*z-index: 3;*/
+    }
+
+    .approval-user-header {
+      width: 44px;
+      height: 44px;
+      margin-right: 10px;
+    }
+
+    .approval-username {
+      margin-right: 10px;
+    }
+
+    .approval-status {
+      color: #29CC85;
+      margin-right: 10px;
+    }
+
+    .approval-date {
+
+    }
+
+    .approval-remark {
+      text-align: left;
+      margin: 10px 0 10px 30px;
+      color: #999999;
+      font-size: 12px;
+    }
+
+    .mui-table-cell {
+      display: block;
+      overflow: hidden;
+    }
+
+    /* 左侧线 ，分上、下两部分 */
+    .left-line-top-white {
+      border-left: 1px solid white;
+      height: 18px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 0;
+    }
+
+    .left-line-top-gray {
+      border-left: 1px solid #EEEEEE;
+      height: 18px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 0;
+    }
+
+    .left-line-top-blue {
+      border-left: 1px solid #0493F3;
+      height: 18px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 0;
+    }
+
+    .left-line-bottom-white {
+      border-left: 1px solid white;
+      height: 1000px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 21px;
+    }
+
+    .left-line-bottom-gray {
+      border-left: 1px solid #EEEEEE;
+      height: 1000px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 21px;
+    }
+
+    .left-line-bottom-blue {
+      border-left: 1px solid #0493F3;
+      height: 1000px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 21px;
+    }
+
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<div class="home-item" style="display: none;" id="home-item">
+  <div class="home-item-list" id="business_item">
+    <div class="item" id="missionUncompleted">
+      <img src="../../../img/missionUncompleted.png">
+      <span>待办任务</span>
+    </div>
+    <div class="item" id="notification">
+      <img src="../../../img/notification.png">
+      <span>通知公告</span>
+    </div>
+    <div class="item" id="directory">
+      <img src="../../../img/directory.png">
+      <span>通讯录</span>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="swiper-no-swiping">
+
+      <div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted"
+           style="color: #888888;z-index: 100;background-color: #FFFFFF;">
+        <a id="item1" class="mui-control-item mui-active" href="#selectItem1" style="text-align: center;">
+          基本信息
+        </a>
+        <a id="item2" class="mui-control-item" href="#selectItem2" style="text-align: center;;">
+          审批流程
+        </a>
+      </div>
+
+      <div id="content" class="" style="height: calc(100vh - 65px);">
+        <!--          <div  class="mui-slider-group" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">-->
+        <div class="" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+          <!-- selectItem1 start -->
+          <div id="selectItem1" style="padding-top: 0px;" class=" mui-control-content mui-active">
+            <ul id="tab1-content-ul" class="mui-table-view" style="background: #FFFFFF;">
+              <li>
+                <div class="content-row">
+                  <div style="padding: 0 20px;text-align: left;">
+                    <div class="content-row-title">表单详情</div>
+                  </div>
+                  <div class="content">
+                    <div class="info-bar-content">
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>项目名称：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="projectName" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>项目编号：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="projectNo" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>监理单位：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="superviceUnit" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>施工单位：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="buildUnit" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>检查日期：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="checkData" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>检查组成员：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="checkingMembetextr" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                    </div>
+                  </div>
+                </div>
+                <div class="content-row">
+                  <div style="padding: 0 20px;text-align: left;">
+                    <!--检查类型-->
+                    <div id="missionType" class="content-row-title"></div>
+                  </div>
+                  <div id="checkList"></div>
+
+                  <!-- 检查项目单独一个 ，方便展示\隐藏问题内容 -->
+                </div>
+              </li>
+
+            </ul>
+          </div>
+          <!-- selectItem1 end -->
+          <!-- selectItem2 start -->
+          <div id="selectItem2" style="padding-top: 0px;" class="mui-control-content">
+            <div style="background-color: #FFFFFF;margin-top: 5px;text-align: left;padding: 20px;">
+              审批人（依次审批）
+            </div>
+            <div style="background-color: #ffffff;">
+              <ul id="tab2-content-ul" class="mui-table-view"
+                  style="background: #FFFFFF;margin: 0 20px;">
+
+              </ul>
+            </div>
+          </div>
+          <!-- selectItem2 end -->
+
+
+        </div>
+
+      </div>
+      <!-- slider end -->
+
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+</body>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/maintain.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<!-- <script src="../../js/timer.js"></script> -->
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script src="../../../js/workSpace/approvalForImproveDetail.js"></script>
+<!-- 分页1 -->
+<script src="../../../js/bscroll.js"></script>
+
+<script>
+    mui.init({
+        // pullRefresh: {
+        //     container: '#slider', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+        //     //下拉刷新
+        //     down: {
+        //         style: 'circle',
+        //         height: 50, //可选,默认50.触发下拉刷新拖动距离,
+        //         offset:'0px', //可选 默认0px,下拉刷新控件的起始位置
+        //         auto: true,
+        //         contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+        //         contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+        //         contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+        //
+        //         callback: function () {
+        //             console.log("触发刷新")
+        //             param.pageNo = 1;
+        //             pulldownRefresh();
+        //           mui("#slider").pullRefresh().endPulldownToRefresh();//结束动画
+        //         }
+        //     },
+        //     //上拉加载
+        //     up: {
+        //         // auto: true, // 可选,默认false.自动上拉加载一次
+        //         height: 300, //触发上拉加载拖动距离
+        //         contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+        //         contentnomore: '暂无更多数据', //可选，请求完毕若没有更多数据时显示的提醒内容；
+        //         callback: function () {
+        //           upLoadMore();
+        //         } //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+        //     }
+        //
+        // },
+        swipeBack: false
+    });
+
+    // //下拉刷新
+    function pulldownRefresh() {
+        $("#tab1-content-ul").empty();
+        param.pageNo = 1;
+        console.log("下拉刷新")
+    }
+
+    // //上拉加载
+    function upLoadMore() {
+    }
+
+    // var vConsole = new VConsole();
+
+    let param = {
+        projectId: '',
+    }
+    let checkParam = {
+        guid: '',
+    }
+    let processParam = {
+        businessKey: '',
+        processDefinitionKey: '',
+        processDefinitionId: '',
+        processInstanceId: '',
+        taskId: '',
+    }
+    let allCheckNameParam = {
+        order: 'desc',
+        pageNo: 1,
+        pageSize: 20,
+    }
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        // var wvs = plus.webview.all();
+        // for (var i = 0, len = wvs.length - 1; i < len; i++) {
+        //     let theurl = wvs[i].getURL() + '';
+        //     if (!(theurl.search('login.html') != -1 ||
+        //         theurl.search('www/main.html') != -1 ||
+        //         theurl.search('www/index.html') != -1 ||
+        //         theurl.search('/searchInfo/index.html') != -1)) {
+        //         wvs[i].close('none');
+        //     }
+        // }
+        curr.close('slide-out-right');
+    }
+
+    var riverData = [];
+    var lakeData = [];
+    var isOpen = false;
+    var isLakeOpen = false;
+    var isShow = true;
+    var riverPageNo = '1';
+    var riverPageSize = '100';
+    var lakePageNo = '1';
+    var lakePageSize = '100';
+    var userPicker = new mui.PopPicker();
+    var searchRiver = [];
+    var searchLake = [];
+    var riverList = [];
+    var lakeList = [];
+    var riverResultJSON = [];
+    var lakeResultJSON = [];
+
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+    mask.clickClose = false;
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    // mui('.mui-scroll-wrapper').scroll();
+    var pickerpxtop = null;
+
+    var extras = {
+        openNum: 0
+    }
+
+    var input1 = document.getElementById("search_input1");
+    var input2 = document.getElementById("search_input2");
+    var input3 = document.getElementById("search_input3");
+
+    // var rankBox = document.getElementById("rank-box"); // slider
+    var rankBox = document.getElementById("scroll-wrapper"); // slider
+    // var cBScroll = new BScroll(rankBox, {
+    //     click: true, // 主要控制非button元素的点击事件
+    // });
+
+    function maskClose() {
+        mask.clickClose = true;
+        mask.close();
+    }
+
+    function maskShow() {
+        mask.clickClose = false;
+        mask.show();
+    }
+
+    // 分页
+    var allDataLoad = false; // 根据数量判断是否已加载完
+    var rankBox = document.getElementById("content"); // slider
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        // pullUpLoad: true
+    });
+
+    mui.plusReady(function () {
+
+        // initSelected();
+        // 先不调用
+
+        // 初始化数据列表（河流数据）
+        // getDirectories('river',riverPageNo,riverPageSize);
+        // console.log("cBScroll : " + cBScroll);
+        //禁止选项卡自带滑动
+        // cBScroll.on('pullingUp', () => {
+        //     console.log("pullingUp-上拉加载更多");
+        //     var allDataLoad = true; // 根据数量判断是否已加载完
+        //     if (!allDataLoad) {
+        //         upLoadMore();
+        //     }
+        //
+        // })
+
+        // mui('.mui-slider').slider().stopped = true;
+        // mui('#slider').slider().stopped = true;
+        //$('#slider').slider().gotoItem(0,0);
+        var self = plus.webview.currentWebview();
+        processParam.businessKey = self.businessKey;
+        processParam.processDefinitionKey = self.processDefinitionKey;
+        processParam.processDefinitionId = self.processDefinitionId;
+        processParam.processInstanceId = self.processInstanceId;
+        processParam.taskId = self.taskId;
+        console.log('taskId' + processParam.taskId);
+        getMissionData();
+        self.setStyle({
+            titleNView: {
+                backgroundImage: "../../../img/bgTopClear.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '70',
+                    fontSize: '17',
+                    text: '',
+                }],
+            }
+        });
+        // 点击关闭遮罩层
+        self.addEventListener("maskClick", closeMask, true);
+
+        // BScroll
+        /*
+
+                //监听区域滑动
+                document.getElementById('selectItem1').addEventListener("swipeleft", function() {
+                    input1.blur();
+                    $("#del_icon1").hide();
+                    $("#del_icon2").hide();
+                    $("#del_icon3").hide();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').addClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('lake',lakePageNo,lakePageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(1);
+                });
+
+                document.getElementById('selectItem2').addEventListener("swipeleft", function() {
+                    input2.blur();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').removeClass("mui-active")
+                    $('#item3').addClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(2);
+                });
+                document.getElementById('selectItem2').addEventListener("swiperight", function() {
+                    input2.blur();
+                    $('#item1').addClass("mui-active")
+                    $('#item2').removeClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(0);
+                });
+                document.getElementById('selectItem3').addEventListener("swiperight", function() {
+                    input3.blur();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').addClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(1);
+                });
+                */
+    });
+
+    // 展示或隐藏检查项目
+    // 点击检查项目
+    mui("#selectItem1").on('tap', '.checkItemBtn', function (event) {
+        event.stopPropagation();
+        console.log("点击检查项目" + JSON.stringify(event));
+        var index = $(this).attr('data-status');
+        console.log("点击的item：" + index);
+
+        var imgObj = event.target.nextElementSibling;//previousElementSibling;
+        if (event.target.nodeName == "IMG") {
+            imgObj = event.target;
+        }
+        //console.log(imgObj);
+        if (imgObj != null) {
+            if (imgObj.alt == 1) {
+                imgObj.alt = 0;
+            } else {
+                imgObj.alt = 1;
+            }
+            // var detailObj = $("#problem-detail")
+            // console.log(detailObj);
+            if (imgObj.alt == 1) {
+                // imgObj.className = "arrow-down-img";
+                imgObj.src = "../../../img/arrowDownBlue.png"
+                if ($("#checkContent" + index) != null) {
+                    $('#checkContent' + index).removeClass("hide-content");
+                }
+
+            } else {
+                // imgObj.className = "arrow-right-img";
+                imgObj.src = "../../../img/arrowUpBlue.png"
+                if ($("#checkContent" + index) != null) {
+                    $('#checkContent' + index).addClass("hide-content");
+                }
+            }
+        }
+
+    })
+
+    //关闭遮罩层
+    function closeMask() {
+        console.log('关闭遮罩层' + sharew.id);
+        //避免出现特殊情况，确保分享页面在初始化时关闭
+        if (!sharew) {
+            sharew = plus.webview.getWebviewById("goods/add_to_cart.html");
+            console.log(sharew.id);
+        }
+        if (sharew) {
+            sharew.hide('slide-out-bottom', 300);
+            //sharew = null;
+        }
+        var ws = plus.webview.currentWebview();
+        console.log('关闭遮罩层' + ws.id);
+        ws.setStyle({mask: "none"});
+    }
+
+    var getMissionData = function () {
+        console.log("===========================getMissionData===========================");
+        getMissionProcess(function (data) {
+            if (data != null) {
+                console.log('missionData'+JSON.stringify(data));
+                param.projectId = data.formData.projectId;
+                getMission(function (processData) {
+                    // 接口返回数据
+                    if (processData != null) {
+                        addMissionData(data, processData);
+                        checkParam.guid = data.formData.guid;
+                        // checkParam.guid = '072116fcaeb9488c8182a38cf55be6ca';
+                        // 获取审批流程
+                        getApprovalProcess(function (approvalDatas) {
+                            console.log("==========================================审批流程====================================================")
+                            console.log("approvalDatas:" + JSON.stringify(approvalDatas));
+                            addApprovalProcessData(approvalDatas);
+                        })
+
+
+                        // 安全整改
+                        if (processParam.processDefinitionKey.search("safety") != -1) {
+                            // 获取安全整改的检查项
+                            console.log("==========================================安全整改====================================================")
+                            getSafetyCheck(function (safetyCheckDatas) {
+                                console.log(JSON.stringify(safetyCheckDatas));
+                                addCheckData(safetyCheckDatas);
+                            })
+                        } else if (processParam.processDefinitionKey.search("quality") != -1) {
+                            // 获取质量整改的检查项
+                            console.log("==========================================质量整改====================================================")
+                            getQualityCheck(function (qalityCheckData) {
+                                console.log(JSON.stringify(qalityCheckData));
+                                addCheckData(qalityCheckData);
+                                // imgParam.groupId = qalityCheckData.problemPhoto;
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+    // methods
+    var initDestoryData = function (data, callback) {
+        for (let key in data) {
+            if (data[key] == '' || data[key] == null) {
+                data[key] = '暂无'
+            }
+        }
+        callback(data);
+    }
+
+
+    //关闭遮罩层
+    // $(document).on("click", ".mui-backdrop", function() {
+    //     isShow = true;
+    //     $('#home-item').hide();
+    //     mask.close();
+    // })
+
+    window.addEventListener('backInspection', function (e) { //执行刷新
+        // location.reload();
+        // getDirectories('river',riverPageNo,riverPageSize);
+        mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        mui('#contentList').scroll().scrollTo(0, 0, 0);
+    });
+
+    (function ($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+    })(mui);
+
+    function getMissionProcess(callback) {
+        console.log("getMissionProcess:" + JSON.stringify(processParam));
+        getMissionProcessDetail(processParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败")
+            }
+        })
+    }
+
+    function getMission(callback) {
+        console.log("getMission:" + JSON.stringify(param))
+        getMissionDetail(param, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败")
+            }
+            // cBScroll.finishPullUp()
+            // cBScroll.refresh()
+        })
+    }
+
+    function getApprovalProcess(callback) {
+        getMissionApprovalProcess(checkParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getSafetyCheck(callback) {
+        getMissionSafetyCheckItem(checkParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getQualityCheck(callback) {
+        console.log("getQualityCheck:" + JSON.stringify(checkParam))
+        getMissionQualityCheckItem(checkParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getAllSafetyCheckName(callback) {
+        getAllSafetyCheckItem(allCheckNameParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getAllQualityCheckName(callback) {
+        getAllQualityCheckItem(allCheckNameParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getImg(Id, callback) {
+        findFilesByGroupId({groupId: Id}, function (data) {
+            console.log("imgInfo:" + JSON.stringify(data))
+            if (data.result.length > 0) {
+                callback(data.result);
+                // dredgeRunfileToken = data.result[0].fileToken
+                // var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+                //     '" class="img_item">' +
+                //     '		<img  data-preview-src="" data-preview-group="1" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+                //     data.result[0].uploadFile.savePath + '" style=""  />' +
+                //     '	</div>';
+                // $(".yy_qs_img_list").append(html);
+                //
+                // var count = $(".yy_qs_img_list").children(".img_item").length;
+                // if (count >= 1) { //处理上传的数量
+                //     $("#yy_qs_photo").hide();
+                // }
+            }
+        });
+    }
+
+
+    function addMissionData(data, processData) {
+        var date = new Date(data.formData.checkTime);
+        var dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+        console.log("明细类型：" + processParam.processDefinitionKey);
+        if (processParam.processDefinitionKey.search("quality") != -1) {
+            // 质量审批
+            $('#missionType').text('质量整改明细');
+        } else if (processParam.processDefinitionKey.search("safety") != -1) {
+            // 安全审批
+            $('#missionType').text('安全整改明细');
+        } else {
+            $('#missionType').text('');
+        }
+
+        $("#projectName").text(data.formData.projectName);
+        $("#projectNo").text(processData.prjNo);
+        $("#superviceUnit").text(data.formData.superviceUnitFullname);
+        $("#buildUnit").text(data.formData.buildUnitFullname);
+        $("#checkData").text(dateStr);
+        $("#checkingMembetextr").text(data.formData.checkTeamFullname);
+
+    }
+
+    function addCheckData(checkDatas) {
+        var itemStr = '';
+        var status = '';
+        for (let i = 0; i < checkDatas.length; i++) {
+            switch (checkDatas) {
+                case 0:
+                    status = '未整改';
+                    break;
+                case 1:
+                    status = '已整改';
+                    break;
+                case 2:
+                    status = '整改不合格';
+                    break;
+                default:
+                    status = '';
+            }
+            itemStr = itemStr + '<div class="content">' +
+                '<div class="info-bar-content">' +
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title" style="color: #0493F3">' +
+                '检查项目：' +
+                '</div>' +
+                '<div class="mui-input-row item-input checkItemBtn" data-status="' + i + '">' +
+                '<span id="project-name' + i + '" class="" style="color: #0493F3">' + '' + '</span>' +
+                '<img class="arrow-down-img" alt="1" src="../../../img/arrowDownBlue.png">' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                '</div>' +
+                '</div>' +
+                '<div id="problem-detail" class="content">' +
+                '<div class="info-bar-content">' +
+                <!-- 一个item start -->
+                '<div id="checkContent' + i + '"><div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '问题描述：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="">' + checkDatas[i].problems + '</span>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '问题图片：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<img id="problemImg' + i + '" class="problem-img" src="" alt="">' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改要求：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="">' + checkDatas[i].rectifyRequest + '</span>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改后：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<img id="rectifyImg' + i + '" class="problem-img" src="" alt="">' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改状态：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="incomplete-status">未完工</span>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改说明：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="">' + checkDatas[i].rectifyComment + '</span>' +
+                '</div>' +
+                '</div></div>'
+
+            if (checkDatas[i].problemPhoto != null) {
+                getImg(checkDatas[i].problemPhoto, function (datas) {
+                    // 获取问题图片
+                    $("#problemImg" + i).attr('src', config.urls.baseUrl + 'sys/common/view/' + datas[0].uploadFile.savePath);
+                })
+            }
+            if (checkDatas[i].rectifyPhoto != null) {
+                getImg(checkDatas[i].rectifyPhoto, function (datas) {
+                    // 获取问题图片
+                    $("#rectifyImg" + i).attr('src', config.urls.baseUrl + 'sys/common/view/' + datas[0].uploadFile.savePath);
+                })
+            }
+        }
+        $("#checkList").append(itemStr);
+        if (processParam.processDefinitionKey.search("quality") != -1) {
+            // 质量审批
+            for (let i = 0; i < checkDatas.length; i++) {
+                var totalPage = 2;
+                var haveItem = false;
+                do {
+                    getAllQualityCheckName(function (allCheckNames) {
+                        if (allCheckNames != null) {
+                            // console.log("checknames:"+JSON.stringify(allCheckNames));
+                            totalPage = allCheckNames.pages;
+                            for (let j = 0; j < allCheckNames.records.length; j++) {
+                                console.log("==================================================寻找对应检查项========================================================")
+                                if (checkDatas[i].checkItemId == allCheckNames.records[j].guid) {
+                                    // 找到了对应的检查项
+                                    haveItem = true;
+                                    $('#project-name' + i).text(allCheckNames.records[j].checkItemName + ' ');
+                                    break;
+                                }
+                            }
+                            if (!haveItem) {
+                                allCheckNameParam.pageNo++;
+                            }
+                        }
+                    })
+                } while ((allCheckNameParam.pageNo <= totalPage) && !haveItem);
+            }
+        } else if (processParam.processDefinitionKey.search("safety") != -1) {
+            // 安全审批
+            for (let i = 0; i < checkDatas.length; i++) {
+                var totalPage = 2;
+                var haveItem = false;
+                do {
+                    getAllSafetyCheckName(function (allCheckNames) {
+                        if (allCheckNames != null) {
+                            // console.log("checknames:"+JSON.stringify(allCheckNames));
+                            totalPage = allCheckNames.pages;
+                            for (let j = 0; j < allCheckNames.records.length; j++) {
+                                console.log("==================================================寻找对应检查项========================================================")
+                                if (checkDatas[i].checkItemId == allCheckNames.records[j].guid) {
+                                    // 找到了对应的检查项
+                                    haveItem = true;
+                                    $('#project-name' + i).text(allCheckNames.records[j].checkItemName + ' ');
+                                    break;
+                                }
+                            }
+                            if (!haveItem) {
+                                allCheckNameParam.pageNo++;
+                            }
+                        }
+                    })
+                } while ((allCheckNameParam.pageNo <= totalPage) && !haveItem);
+            }
+        }
+    }
+
+    function addApprovalProcessData(approvalDatas) {
+        if (approvalDatas != null) {
+            var approvalStr = '';
+            var endList = approvalDatas.taskListEnd;
+            var ingList = approvalDatas.taskListIng;
+            var unLastEnd = '<div class="left-line-bottom-blue"></div>';
+            var lastEnd = '<div class="left-line-bottom-gray"></div>';
+            for (let i = 0; i < endList.length; i++) {
+                approvalStr +=
+                    '<li class="mui-table-cell">' +
+                    '<div class="left-line-top-white" style="display: none"></div>' +
+                    (i == endList.length - 1 ? lastEnd : unLastEnd) +
+                    '<div class="approval-item">' +
+                    '<div style="display: flex;align-items: center;">' +
+                    '<img class="approval-circle" src="../../../img/approval-circle.png" alt="">' +
+                    '<span class="approval-username">' + endList[i].assigneeFullname + '</span>' +
+                    '<span class="approval-status">' + endList[i].handleType + '</span>' +
+                    '<span class="approval-date">' + endList[i].endTime + '</span>' +
+                    '</div>' +
+                    '<div class="approval-remark">' +
+                    (endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment) +
+                    '</div>' +
+                    '</div>' +
+                    '</li>'
+            }
+            for (let i = 0; i < ingList.length; i++) {
+                approvalStr +=
+                    '<li class="mui-table-cell">' +
+                    '<div class="left-line-top-gray" style="display: none"></div>' +
+                    '<div class="left-line-bottom-white"></div>' +
+                    '<div class="approval-item">' +
+                    '<div style="display: flex;align-items: center;">' +
+                    '<img class="approval-circle" src="../../../img/approval-gray-circle.png" alt="">' +
+                    '<span class="approval-username">' + ingList[i].assigneeName + '</span>' +
+                    '<span class="approval-status" style="color: #AEAEAE">' + ingList[i].handleType + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</li>'
+            }
+        }
+        $("#tab2-content-ul").append(approvalStr);
+    }
+
+    // 测试区 ======================
+    // maskShow();
+    // addProxyCoverView();
+    // Html测试
+    // cBScroll.on('pullingUp', () => {
+    //   console.log("上拉加载更多-test");
+    //   addDataTmp();
+    // })
+    // addDataTmp();
+
+    // $('#slider').slider().stopped = true;
+
+    // function addDataTmp() {
+    //     approvalDatas = {
+    //         "businessKey": "072116fcaeb9488c8182a38cf55be6ca",
+    //         "taskListEnd": [
+    //             {
+    //                 "nodeName": "填写表单",
+    //                 "assigneeFullname": "ceshi",
+    //                 "handleType": "已提交",
+    //                 "assigneeName": "cwh01",
+    //                 "taskComment": "",
+    //                 "handleCode": "submit",
+    //                 "startTime": "2020-12-16 09:14:19",
+    //                 "endTime": "2020-12-16 09:14:20",
+    //                 "nodeId": "UserTask_0"
+    //             },
+    //             {
+    //                 "nodeName": "施工、监理确认",
+    //                 "assigneeFullname": "黄艺文",
+    //                 "handleType": "已通过",
+    //                 "assigneeName": "huang_yiwen",
+    //                 "taskComment": "12对d",
+    //                 "handleCode": "agree",
+    //                 "startTime": "2020-12-16 09:14:20",
+    //                 "endTime": "2020-12-16 10:52:21",
+    //                 "nodeId": "UserTask_1"
+    //             }
+    //         ],
+    //         "taskListIng": [
+    //             {
+    //                 "nodeName": "整改负责人审批",
+    //                 "assigneeFullname": "ceshi",
+    //                 "handleType": "处理中",
+    //                 "assigneeName": "cwh01",
+    //                 "startTime": "2020-12-16 10:52:21",
+    //                 "nodeId": "UserTask_2"
+    //             }
+    //         ]
+    //     }
+    //     if (approvalDatas != null) {
+    //         var approvalStr = '';
+    //         var endList = approvalDatas.taskListEnd;
+    //         var ingList = approvalDatas.taskListIng;
+    //         var unLastEnd = '<div class="left-line-bottom-blue"></div>';
+    //         var lastEnd = '<div class="left-line-bottom-gray"></div>';
+    //         for (let i = 0; i < endList.length; i++) {
+    //             approvalStr +=
+    //                 '<li class="mui-table-cell">' +
+    //                 '<div class="left-line-top-white" style="display: none"></div>' +
+    //                 (i == endList.length - 1 ? lastEnd : unLastEnd) +
+    //                 '<div class="approval-item">' +
+    //                 '<div style="display: flex;align-items: center;">' +
+    //                 '<img class="approval-circle" src="../../../img/approval-circle.png" alt="">' +
+    //                 '<span class="approval-username">' + endList[i].assigneeFullname + '</span>' +
+    //                 '<span class="approval-status">' + endList[i].handleType + '</span>' +
+    //                 '<span class="approval-date">' + endList[i].endTime + '</span>' +
+    //                 '</div>' +
+    //                 '<div class="approval-remark">' +
+    //                 (endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment) +
+    //                 '</div>' +
+    //                 '</div>' +
+    //                 '</li>'
+    //         }
+    //         for (let i = 0; i < ingList.length; i++) {
+    //             approvalStr +=
+    //                 '<li class="mui-table-cell">' +
+    //                 '<div class="left-line-top-gray" style="display: none"></div>' +
+    //                 '<div class="left-line-bottom-white"></div>' +
+    //                 '<div class="approval-item">' +
+    //                 '<div style="display: flex;align-items: center;">' +
+    //                 '<img class="approval-circle" src="../../../img/approval-gray-circle.png" alt="">' +
+    //                 '<span class="approval-username">' + ingList[i].assigneeName + '</span>' +
+    //                 '<span class="approval-status" style="color: #AEAEAE">' + ingList[i].handleType + '</span>' +
+    //                 '</div>' +
+    //                 '</div>' +
+    //                 '</li>'
+    //         }
+    //     }
+    //     $("#tab2-content-ul").append(approvalStr);
+    // }
+
+</script>
+
+</html>

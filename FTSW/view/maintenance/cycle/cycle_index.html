@@ -1,0 +1,586 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>周期养护-首页</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+    <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+    <link href="../../../css/common.css" rel="stylesheet" />
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+    <style>
+        .to__data__list {
+            position: absolute;
+            width: 100%;
+            height: 60vh;
+            bottom: 0;
+            z-index: 11;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            overflow: hidden;
+            background-color: rgba(244, 244, 244, 1);
+        }
+
+        .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            color: #0493F3;
+            font-weight: bold;
+        }
+
+        .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active+.titleleft {
+            border-bottom: solid 2px #337BFC;
+            display: inline-block;
+        }
+
+        .mui-segmented-control .mui-control-item {
+            line-height: 43px;
+        }
+
+        .mui-scroll {
+            background: #FFFFFF;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+            /*color: #007aff;*/
+            border-bottom: 2px solid #007aff;
+            background: 0 0;
+            content: '';
+            width: 24px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .to__click__bar {
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+        }
+
+        .to__tab__select {
+            background-color: #fff;
+        }
+
+        .to__click__bar>p {
+            width: 50px;
+            height: 6px;
+            background-color: rgba(204, 204, 204, 1);
+            border-radius: 10px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .to__list {
+            padding: 10px 20px;
+            margin: auto;
+            margin-bottom: 4px;
+            background-color: #fff;
+        }
+
+        .to__list span {
+            color: rgba(136, 136, 136, 1);
+        }
+
+        .to__list__flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .to__list__head {
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .to__list__head p {
+            font-size: 18px;
+            color: rgba(38, 38, 38, 1);
+            margin: 0;
+            padding: 0;
+        }
+
+        .to__list__head button {
+            height: 32px;
+            background-color: rgba(4, 147, 243, 1);
+            color: rgba(255, 255, 255, 1);
+            border-radius: 8px;
+            border: 0;
+        }
+
+        .to__list__date>img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .to__list__date p {
+            color: rgba(38, 38, 38, 1);
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+            margin-left: 10px;
+        }
+
+        .to__list__o {
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .to__list__cb {
+            color: rgba(38, 38, 38, 1);
+            text-align: left;
+        }
+
+        .to__no__more {
+            padding: 0 43px;
+            margin: auto;
+            margin-top: 5px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+        }
+
+        .to__no__more p {
+            color: rgba(136, 136, 136, 1);
+            font-size: 16px;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .to__no__more p::after {
+            position: absolute;
+            content: "";
+            top: 10px;
+            left: -120px;
+            width: 100px;
+            height: 1px;
+            background-color: rgba(244, 244, 244, 1);
+        }
+
+        .to__no__more p::before {
+            position: absolute;
+            content: "";
+            top: 10px;
+            right: -120px;
+            width: 100px;
+            height: 1px;
+            background-color: rgba(244, 244, 244, 1);
+        }
+
+        .to__list__ing {
+            background-color: rgba(244, 244, 244, 1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .to__ing__head p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .to__icon {
+            width: 3px;
+            height: 14px;
+            border-radius: 10px;
+            background-color: rgba(255, 86, 86, 1);
+            margin-right: 5px !important;
+        }
+
+        .to__ing__p {
+            color: rgba(38, 38, 38, 1);
+            margin: 0;
+            margin-left: 10px !important;
+        }
+
+        .to__detail {
+            margin-left: auto;
+        }
+
+        .to__detail img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .to__btn__group {
+            margin-left: auto;
+            display: flex;
+            margin-top: 5px;
+        }
+
+        .to__btn__group button {
+            width: 75px;
+            height: 32px;
+            text-align: center;
+            border-radius: 8px;
+            margin-left: auto;
+        }
+
+        .to__btn__group button:first-child {
+            border: 1px solid rgba(4, 147, 243, 1);
+            color: rgba(4, 147, 243, 1);
+            font-size: 16px;
+        }
+
+        .to__btn__group button:last-child {
+            border: 0;
+            background-color: rgba(4, 147, 243, 1);
+            color: #fff;
+            box-sizing: border-box;
+            margin-left: 10px;
+        }
+
+        .to__c__r {
+            color: rgba(255, 86, 86, 1);
+        }
+
+        .to__ing__bom p {
+            margin: 0;
+        }
+
+        .to__pop {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .to__pop__main {
+            width: calc(100% - 43px);
+            /* min-height: 160px; */
+            background-color: #fff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .to__pop__main p:nth-child(2) {
+            color: rgba(25, 21, 21, 1) !important;
+            font-size: 18px !important;
+        }
+
+        .to__pop__btn {
+            border-top: 1px solid rgba(237, 237, 237, 1);
+            display: flex;
+            justify-content: center;
+            height: 50px;
+        }
+
+        .to__pop__btn button {
+            border: 0;
+            background-color: #fff;
+            outline: none;
+            color: rgba(4, 147, 243, 1);
+            font-size: 18px;
+            width: 50%;
+            text-align: center;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .to__pop__btn button:nth-child(2) {
+            border-left: 1px solid rgba(237, 237, 237, 1);
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        .to__pop__c {
+            color: rgba(38, 38, 38, 1) !important;
+        }
+
+        .to__pop__area {
+            width: 90%;
+            height: 120px;
+            margin: auto;
+            border: 0;
+            background-color: transparent;
+            border-top: 1px solid rgba(237, 237, 237, 1);
+            font-size: 16px;
+        }
+
+        .to__insert p {
+            text-align: left;
+            font-size: 16px;
+            color: rgba(38, 38, 38, 1) !important;
+            height: 40px;
+            line-height: 40px;
+            width: 90%;
+            margin: auto;
+        }
+
+        .to__complete .to__icon {
+            background-color: rgba(41, 204, 133, 1);
+        }
+
+        .to__complete .to__c__r {
+            color: rgba(41, 204, 133, 1);
+        }
+
+        .run {
+            animation: runs 1s forwards ease-in-out;
+        }
+
+        .back {
+            animation: back 1s forwards ease-out;
+        }
+
+        @keyframes runs {
+            0% {
+                height: 60vh;
+            }
+
+            100% {
+                height: 20vh;
+            }
+        }
+
+        @keyframes back {
+            0% {
+                height: 20vh;
+            }
+
+            100% {
+                height: 60vh;
+            }
+        }
+
+        .hide {
+            display: none;
+        }
+
+        /* 标记点 */
+        .marker {
+            width: 0;
+            height: 0;
+        }
+
+        .marker span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: 42px;
+            height: 72px;
+            color: transparent;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            transform-origin: 0 0;
+            transform: rotateZ(0deg);
+            transform: translate(-10px, -20px);
+            transform: scale(0.5);
+            font-size: 8px;
+        }
+
+        .marker b {
+            transform: rotateZ(135deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+        <!-- 养护管理-主内容 -->
+        <div id="mui-content" class="mui-page hide">
+            <div class="mui-page-content">
+                <!-- 地图start -->
+                <div id="map" class="mapboxgl-map" style="position: absolute;left: 0;top: 0; z-index: 10;width: 100%;"
+                    :style="{height: mapHeight}"></div>
+                <!-- 地图end-->
+                <!-- 列表 -->
+                <div id="to__data__list" class="to__data__list"
+                    :class="isShow ? 'run' : !isShow && !onFirst ? 'back' : ''">
+                    <div class="to__click__bar" @click="openFn()">
+                        <p></p>
+                    </div>
+                    <div class="to__tab__select mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+                        style="color: #888888;border-bottom: 5px solid #F4F4F4;">
+                        <p class="mui-control-item mui-active" style="width:25%;" @click="changeItem(0)">
+                            待执行 <span v-if="planState == 0">{{total}}</span>
+                        </p>
+                        <!-- <a id="item2" class="mui-control-item" style="width:25%;">
+                            执行中 <span v-if="planState == 1">{{total}}</span>
+                        </a> -->
+                        <p class="mui-control-item" style="width:25%;" @click="changeItem(2)">
+                            已完成 <span v-if="planState == 2">{{total}}</span>
+                        </p>
+                    </div>
+                    <div class="mui-slider-group">
+                        <div id="selectItem1" style="padding-top: 10px;"
+                            class="mui-slider-item mui-control-content mui-active">
+                            <div id="scroll1" class="mui-scroll-wrapper"
+                                style="height: 60vh;position: absolute;padding-bottom: 75px;background-color: #F4F4F4;">
+                                <div class="mui-scroll">
+                                    <ul class="mui-table-view" id="selectItem1_ul"
+                                        style="background:rgba(244, 244, 244, 1);">
+                                        <div class="to__list" v-if="planState == 2" v-for="(item, index) in dataList"
+                                            :key="index + '-toy'">
+                                            <div class="to__list__head to__list__flex">
+                                                <p>{{item.workPackageName}}</p>
+                                                <button type="button" @click="checkComplete(item.guid)">查看</button>
+                                            </div>
+                                            <div class="to__list__date to__list__flex">
+                                                <img src="../../../img/cal.png">
+                                                <p>{{ item.startTime }} 至 {{item.endTime}}</p>
+                                            </div>
+                                            <div class="to__list__o to__list__flex">
+                                                <p class="to__list__cb"><span>负责人：</span>{{item.personInChargeName}}</p>
+                                                <p class="to__list__cb">
+                                                    <span>养护类型：</span>{{item.maintTypeDetail_dictText}}
+                                                </p>
+                                            </div>
+                                            <p class="to__list__cb">
+                                                <span>养护单位：</span>{{item.maintDepartmentName}}
+                                            </p>
+                                        </div>
+
+                                        <div v-if="planState == 0" class="to__list" v-for="(item, index) in dataList"
+                                            :key="index + '-only'">
+                                            <div class="to__list__head to__list__flex">
+                                                <p>{{item.workPackageName}}</p>
+                                                <button type="button" @click="takeFn(index, item.take)">
+                                                    {{item.take == 1 ? '开始执行' : '完成'}}
+                                                </button>
+                                            </div>
+                                            <div class="to__list__date to__list__flex">
+                                                <img src="../../../img/cal.png">
+                                                <p>{{ item.startTime }} 至 {{item.endTime}}</p>
+                                            </div>
+                                            <div class="to__list__o to__list__flex">
+                                                <p class="to__list__cb"><span>负责人：</span>{{item.personInChargeName}}</p>
+                                                <p class="to__list__cb">
+                                                    <span>养护类型：</span>{{item.maintTypeDetail_dictText}}
+                                                </p>
+                                            </div>
+                                            <p class="to__list__cb">
+                                                <span>养护单位：</span>{{item.maintDepartmentName}}
+                                            </p>
+                                            <!-- 待执行 -->
+                                            <div class="to__list__ing" v-if="item.take == 2"
+                                                v-for="(items, idx) in item.objList">
+                                                <div class="to__ing__head to__list__flex"
+                                                    :class="items.attachment ? 'to__complete' : ''">
+                                                    <p class="to__icon"></p>
+                                                    <p class="to__c__r">{{items.attachment ? '已处理' : '未处理'}}</p>
+                                                    <p class="to__ing__p">{{items.maintObjName }}</p>
+                                                    <div class="to__detail">
+                                                        <img v-if="items.remark" src="../../../img/ylgl/icon_wen.png"
+                                                            alt="">
+                                                        <img v-if="items.attachment"
+                                                            src="../../../img/ylgl/icon_img.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <p style="text-align: left;margin-top: 10px;">养护内容:
+                                                    {{items.maintContent}}
+                                                </p>
+                                                <div class="to__ing__bom">
+                                                    <p style="text-align: left;">
+                                                        养护频次：{{items.maintFrequency}}
+                                                    </p>
+                                                    <div class="to__btn__group">
+                                                        <button type="button"
+                                                            @click="addRemark(index, idx, items.remark)">备注</button>
+                                                        <button type="button"
+                                                            @click="uploadFn(index, idx)">上传图片</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="to__no__more" v-if="noMore">
+                                            <p>没有更多了</p>
+                                        </div>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 列表 -->
+            </div>
+            <!-- 弹窗 -->
+            <!-- 确定 -->
+            <div class="to__pop" v-if="popId == 1">
+                <div class="to__pop__main">
+                    <div style="height: 30px;"></div>
+                    <p>完成确认</p>
+                    <p>养护对象已全部处理，确定完成该任务？</p>
+                    <div class="to__pop__btn">
+                        <button class="to__pop__c" @click="cancelFn()">取消</button>
+                        <button @click="takeYes()">确定</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 完成失败 -->
+            <div class="to__pop" v-if="popId == 2">
+                <div class="to__pop__main">
+                    <div style="height: 30px;"></div>
+                    <p>完成失败</p>
+                    <p>当前存在尚未处理的对象，请重新检查</p>
+                    <div class="to__pop__btn">
+                        <button @click="cancelFn()">确定</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 备注 -->
+            <div class="to__pop" v-if="popId == 3">
+                <div class="to__pop__main to__insert">
+                    <p>完成确认</p>
+                    <textarea v-model="remarkTxt" placeholder="请输入备注内容（200字以内）" class="to__pop__area"></textarea>
+                    <div class="to__pop__btn">
+                        <button class="to__pop__c" @click="cancelFn()">取消</button>
+                        <button @click="saveRemarkFn()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+    <script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+    <script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/mui.view.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/app.js"></script>
+    <script src="../../../js/config.js"></script>
+    <script src="../../../js/inspect.js"></script>
+    <!-- 上传图片 -->
+    <script src="../../../js/uploadimage.js"></script>
+    <script src="../../../js/vconsole.min.js"></script>
+    <!-- 全局方法 -->
+    <script src="./cycle.js"></script>
+</body>
+
+</html>

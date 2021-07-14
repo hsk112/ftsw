@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>缺陷管理列表v2.0</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+        	.view-content-item{
+        	    height: auto;
+        	    margin: 0px 20px;
+        	    border-bottom: 1px solid #EDEDED;
+        	}
+
+        	.view-content-item .view-title{
+        	    font-size:14px;
+        	    color:#444444;
+        	    text-align: left;
+        	    padding:10px 0px 10px 0;
+
+        	}
+
+
+        	.btn-item2 div{
+        	    margin: 0 auto;
+        	    border: 1px solid #337BFC;
+        	    width: 85%;
+        	    height: 40px;
+        	    line-height: 40px;
+        	    border-radius: 50px;
+        	    margin-top: 30px;
+
+        	}
+
+        	.search-tip {
+        	    display: block;
+        	}
+
+        	.search-tip span{
+        	    font-size:14px;
+        	    color:rgba(51,123,252,1);
+        	}
+
+        	.search-tip img{
+        	    width: 14px;
+        	}
+
+        	.select-query-list{
+        	    border-bottom: 1px solid #eee;
+        	    height: 40px;
+        	    margin-top: 15px;
+        	}
+
+        	.select-query-list-title{
+        	    width: 100%;
+				float: left;
+        	    /*text-align: left;*/
+        	}
+
+        	.select-query-list-img-status{
+        	    width: 30%;float: right;
+        	}
+        	.select-query-list-img-status img{
+        	    width: 50px;
+        	}
+        	.def-font{
+        	    color: #888888;
+        	    font-size: small;
+        	}
+        	.item-title{
+        	    text-align: left;
+        	    padding: 15px 0px 0px 0px;
+        	    font-size: 14px;
+        	    color: #444444;
+        	}
+        	.paish .btn-item{
+        	    width: 100%;
+        	}
+			.radios{
+				float:left;
+				text-align: left;
+				bottom: 7px
+			}
+			.spanLim{
+				text-align: left;
+				display: inline-block;
+				width: 85%;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+
+			}
+        	.spanLim2{
+        	    width: 50%;
+        	    float: left;
+        	    text-align: left;
+        	}
+
+			.spanStatus {
+				display: inline-block;
+				width: 15%;
+				text-align: center;
+				font-size: 12px;
+				vertical-align: top;
+			}
+
+			.delete-icon1 {
+				position: absolute;
+				top: 6px;
+				right: 20px;
+				z-index: 10;
+				display: none;
+				line-height: 16px;
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #FFFFFF;
+				border-radius: 50%;
+				background: #999999;
+			}
+			.delete-icon {
+				position: absolute;
+				top: 12px;
+				right: 10px;
+				z-index: 10;
+				display: none;
+				line-height: 16px;
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #FFFFFF;
+				border-radius: 50%;
+				background: #999999;
+			}
+
+        	/*隐藏底部*/
+        	/*.mui-pull-bottom-pocket {*/
+        	  /*display: none !important;*/
+        	/*}*/
+			.row-title{
+				display: inline-block;
+				width: 20%;
+				font-size: 14px;
+				color: #444444;
+			}
+			.info-bar-content-item{
+				height: 55px !important;
+			}
+			/*遮罩*/
+			.mark{
+				z-index: 9;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				background: rgba(0,0,0,0.5);
+				display: none;
+			}
+			.test{
+				border:1px solid red
+			}
+
+    	</style>
+
+		<script>
+			function deleteDate(a) {
+				$("#"+a).val("");
+				$("#"+a).next().css('display', 'none');
+				if (a === 'street') {
+					$("#comm").val("");
+					$("#comm").next().css('display', 'none');
+					streetId = '';
+				}
+				if (a === 'comm') commId = '';
+				if (a === 'bugSource') sourceId = '';
+				if (a === 'obj_input') {
+					$("#bugType_input").val("");
+					$("#bugType_input").next().css('display', 'none');
+					$("#bugLevel_input").val("");
+					$("#bugLevel_input").next().css('display', 'none');
+					objTypeId = '';
+					bugType = '';
+					levelId = '';
+				}
+				if (a === 'bugType_input') bugType = '';
+				if (a === 'bugLevel_input') levelId = '';
+				if (a === 'bugStatus') statusId = '';
+			}
+		</script>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--侧栏内容-->
+		<div id="leftLan" class="side" style="position:fixed;z-index: 10;width:285px;height: 100%;right:-285px;">
+			<div class="mui-scroll" style="height:100%;background-color: white;color: black;width: 285px;">
+				<!--侧栏具体展示内容-->
+				<p style="padding: 5px 15px;margin-bottom: 5px;"></p>
+				<!--街道-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">所在街道</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="street" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择所在街道">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="streetClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--小区-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">所在片区</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="comm" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择所在片区">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="commClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--缺陷类型-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">缺陷类型</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="bugType_input" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择缺陷类型">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="bugTypeClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--缺陷级别-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">缺陷级别</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="bugLevel_input" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择缺陷级别">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="bugLevelClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--缺陷来源-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">缺陷来源</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="bugSource" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择缺陷来源">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="bugSourceClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--开始时间-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">开始时间</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="startTime" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择日期">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="startTimeClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--结束时间-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">结束时间</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="endTime" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择日期">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="endTimeClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin-bottom: 20px"></div>
+
+
+				<div style="">
+					<p style="padding: 5px 20px;margin-bottom: 20px;">
+						<button id="redo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined mui-btn-block" style="border: 0.5px solid #347CFC; width:48%;float:left;padding: 5px 20px;margin-right: 5px">重 置</button>
+
+						<button id="search" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="width:48%;float:left;padding: 5px 20px;">搜 索</button>
+					</p>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- 遮罩 -->
+		<div class="mark"></div>
+
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">缺陷管理列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="ALL" class="mui-scroll-wrapper" >
+					<div class="mui-scroll" >
+<!--						不要搜索 ，把过滤的按钮放到与缺陷个数同一行的位置 -->
+						<div class="scroll-li" style="display: none;">
+							<div class="info-bar-content">
+								<div class="search-bar">
+									<div class="search-item" style="width: 80%">
+										<div class="search-icon">
+											<img src="../../img/commom/search1@2x.png" />
+										</div>
+										<div class="search-input">
+											<div class="mui-input-row" style="text-align: left">
+												<input id="search_input" value="" type="text" style="width: 90%;" placeholder="请输入缺陷描述">
+
+												<span class="mui-icon mui-icon-closeempty delete-icon1" onclick="deleteDate('search_input')"></span>
+
+											</div>
+										</div>
+										<!--<img id="moreFactor" style="width: 18px;position: fixed;top: 17px;right: 13px;" src="../../img/commom/factor.png" />-->
+
+									</div>
+									<div style="position:absolute;top:2px;right:14px;float: right">
+										<img id="moreFactorOld" style="width: 18px;" src="../../img/commom/sideLan.png" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="scroll-li">
+							<div class="view-content">
+                                <div class="view-content-item" style="display: flex">
+                                    <!--<a id="openFactor"  href="#">-->
+                                        <!--<div class="view-title search-tip">-->
+                                            <!--<img id="ico" src="../../img/add.png" />-->
+                                            <!--<span>更多搜索条件</span>-->
+                                        <!--</div>-->
+                                    <!--</a>-->
+									<!--<a id="toAdd"  href="#" style="margin-left: auto">-->
+										<!--<div class="view-title search-tip">-->
+											<!--<img id="ico2" src="../../img/add.png" />-->
+											<!--<span>新增</span>-->
+										<!--</div>-->
+									<!--</a>-->
+									<div class="view-title search-tip" style="width: 100%">
+										<img id="ico" style="width: 17px" src="../../img/fujin-icon.png" />
+										<span style="color: black;margin-left: 5px">缺陷个数：</span>
+										<span id="qxNum">0</span>
+										<div style="position:absolute;top:12px;right:14px;float: right">
+											<img id="moreFactor" style="width: 18px;" src="../../img/commom/sideLan.png" />
+										</div>
+										<div  style="margin-top: 20px;font-weight: bolder;width: 100%">
+											<!--<span class="test" style="color: black;width: 30%" >设施类型</span>-->
+											<!--<span class="test" style="color: black;width: 30%">缺陷类型</span>-->
+											<!--<span class="test" style="color: black;width: 30%">所在片区</span>-->
+											<div  style="float:left;color: black;width: 26%;margin:0 5px 0 15px" >设施类型</div>
+											<div  style="float:left;color: black;width: 26%;margin:0 5px 0 0">缺陷类型</div>
+											<div  style="float:left;color: black;width: 25%;">所在片区</div>
+											<div  style="float:right;color: black;">操作</div>
+										</div>
+									</div>
+
+                                </div>
+
+
+                                <div id="content" >
+									<ul id="OA_task_1" class="mui-table-view">
+										<!--<li class="mui-table-view-cell" style="line-height: 27px">-->
+											<!--<div class="mui-slider-handle">-->
+												<!--<div  class="select-query-list-title " style="text-align: left;font-size: 15px">-->
+													<!--<span class="spanLim " style="width: 18px">1</span>-->
+													<!--<span class="spanLim " style="width: 25%">雨水检查井</span>-->
+													<!--<span class="spanLim " style="width: 25%">结构性缺陷</span>-->
+													<!--<span class="spanLim " style="width: 25%;color: orangered">全海花园</span>-->
+												<!--</div>-->
+											<!--</div>-->
+											<!--<span class="spanLim" style="position:absolute;right:10px;width: 45px;color:#337BFC">处理></span>-->
+										<!--</li>-->
+										<!--<li class="mui-table-view-cell" style="line-height: 27px">-->
+											<!--<div class="mui-slider-handle">-->
+												<!--<div  class="select-query-list-title " style="text-align: left;font-size: 15px">-->
+													<!--<span class="spanLim " style="width: 18px">2</span>-->
+													<!--<span class="spanLim " style="width: 25%">雨水检查井</span>-->
+													<!--<span class="spanLim " style="width: 25%">结构性缺陷</span>-->
+													<!--<span class="spanLim " style="width: 25%;color: orangered">福民公安小区</span>-->
+												<!--</div>-->
+											<!--</div>-->
+											<!--<span class="spanLim" style="position:absolute;right:10px;width: 45px;color:#337BFC">处理></span>-->
+										<!--</li>-->
+										<!--<li class="mui-table-view-cell" style="line-height: 27px">-->
+											<!--<div class="mui-slider-handle">-->
+												<!--<div  class="select-query-list-title " style="text-align: left;font-size: 15px">-->
+													<!--<span class="spanLim " style="width: 18px">3</span>-->
+													<!--<span class="spanLim " style="width: 25%">雨水检查井</span>-->
+													<!--<span class="spanLim " style="width: 25%">淤积</span>-->
+													<!--<span class="spanLim " style="width: 25%;color: orangered">福保物流</span>-->
+												<!--</div>-->
+											<!--</div>-->
+											<!--<span class="spanLim" style="position:absolute;right:10px;width: 45px;color:#337BFC">处理></span>-->
+										<!--</li>-->
+									</ul>
+
+                                </div>
+
+							</div>
+						</div>
+
+						<!--<div class="bottom-btn">-->
+							<!--<div  class="btn-item2">-->
+								<!--<div id="delQx"  style="color: #337BFC;">删除</div>-->
+							<!--</div>-->
+							<!--<div class="btn-item2">-->
+								<!--<div id="editQx" style="color: #337BFC;">修改</div>-->
+							<!--</div>-->
+							<!--<div class="btn-item2">-->
+								<!--<div id="addMag" style="background: #337BFC;color: #fff;">新增</div>-->
+							<!--</div>-->
+						<!--</div>-->
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/qx.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script type="text/javascript">
+	// var vConsole = new VConsole();
+
+	var isTest = false // true; // false;
+
+        var pages = 1;//页码
+		var sum = 1; //总数
+	// 设施类型 ，如检查井 、雨水口等
+	var deviceTypeDictIdForName = {};
+	var bugInfoTmp = [];
+	var qxTypeObject = null;//  传给明细
+	var qxDeviceObject = null;// 传给明细
+
+		//获取缺陷列表之前 ，先获取设施类型
+		function getDeviceType() {
+			var params = {
+				deviceTypeId: 1
+			}
+			getQxDeviceType(params, function(retData){
+				qxDeviceObject = retData;
+				// console.log('getQxDeviceType - start')
+				// console.log(JSON.stringify(retData))
+				// console.log('getQxDeviceType - end')
+				if(retData.result && retData.result.records) {
+					let data = retData.result.records
+					for (var i = 0; i < data.length; i++) {
+						var item = data[i];
+						deviceTypeDictIdForName[item.deviceType] = item.deviceTypeName
+					}
+				}
+				if(bugInfoTmp.length > 0) {
+					addDataWhenGetDeviceType(bugInfoTmp)
+				}
+				getSources();
+			});
+		}
+		if(!isTest) {
+			mui.init({
+				//0818 上拉加载
+				pullRefresh: {
+					container: '#ALL', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+					//下拉刷新
+					down: {
+
+						style:'circle',
+						callback: function(){
+							console.log("触发刷新")
+							pages = 1;
+							pulldownRefresh()
+						}
+					},
+					//上拉加载
+					up: {
+						auto: true, // 可选,默认false.自动上拉加载一次
+						height: 50,  //触发上拉加载拖动距离
+						contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore:'暂无更多数据',//可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: function() {
+							console.log("触发上拉")
+							searchByParams()
+						} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+
+				}
+
+			});
+		}
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+        //注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+
+        var sourceId = "";//缺陷来源Id
+        var levelId = ""; //缺陷等级id
+        var statusId = "";//缺陷状态id
+        var belongId = "";//负责单位
+        var objTypeId ="";//设施类型
+		var streetId = "";//街道id
+		var commId = "";//小区id
+		var bugType ='';//缺陷类型
+
+        var objList =[];    //存放设施json
+        var sourceList = [];//存储所有缺陷来源
+		var bugTypeList = [];   //存储缺陷类型
+	var bugTypeDictValueForTitle = {} //  缺陷类型新接口，返回放在字典中
+
+		mui.plusReady(function() {
+            var curr = plus.webview.currentWebview();
+            curr.setStyle({
+                titleNView: {
+                    buttons: [{
+                        float: 'right',
+                        width: '60',
+                        fontSize: '25',
+                        text: '＋',
+                        onclick: function() {
+                            let extras={ type:"add"}
+                            app.openPage("qx_manage.html", {
+                                titleNView: {
+                                    titleText: '新增缺陷',
+                                    autoBackButton: true,
+                                }
+                            },extras);
+                        }
+                    }]
+                }
+            });
+
+            // 缺陷类型会返回不相关的乱码 ，根据value显示name
+			getBugType(); // 返回后再调用 getDeviceType
+			// getDeviceType();
+
+           //  getSources();//获取所有缺陷来源 , 在getDeviceType调用完成后调用
+
+           // getObjList();//获取所有设施 - 不用
+           // getBugType();//获取所有缺陷类型 - 修改
+
+
+            //其他页面回来时进行刷新
+            window.addEventListener('refresh',function(e){
+                // location.reload();
+				pulldownRefresh()
+            })
+
+			$("#moreFactor").on('tap',function(){
+				console.log('leftlan--')
+			    // app.toast("leftlan")
+                $('.mark').fadeIn();
+                $('.side').css('right',0);
+			})
+            // 点击页面遮罩和侧栏消失
+            $('.mark').click(function(){
+                $('.mark').fadeOut();
+                $('.side').css('right',-285);
+            })
+
+			$("#openFactor").on("tap", function() {
+                // mui('#ALL').pullRefresh().endPullupToRefresh(true); //禁止上拉加载
+                mui('#ALL').pullRefresh().disablePullupToRefresh();
+
+			    //隐藏内容
+                var content = $("#content").css("display");
+
+			    var show = $("#moreContent").css('display');
+			    if(show == 'block'){
+			        // $("#ico").attr('src','../../img/add.png');
+
+			        $("#moreContent").css('display','none');
+                    $("#content").css('display','block');
+
+			    }
+			    if(show == 'none'){
+			        // $("#ico").attr('src','../../img/cut.png');
+			        $("#moreContent").css('display','block');
+                    $("#content").css('display','none');
+			    }
+			});
+			//跳转新增页面
+			$("#addMag").on("tap", function() {
+				var extras = {}
+				app.openPage("qx_manage.html", {
+					titleNView: {
+						titleText: '缺陷管理',
+						autoBackButton: true,
+					}
+				},extras);
+			});
+            $("#toAdd").on("tap", function() {
+                var extras = {}
+                app.openPage("qx_manage.html", {
+                    titleNView: {
+                        titleText: '缺陷管理',
+                        autoBackButton: true,
+                    }
+                },extras);
+            });
+
+			//编辑
+			$(document).on('tap', '.editQx', function () {
+            // $(".editQx").on("tap", function() {
+            //     var guid = $('input[name="guid"]:checked').attr('id')//获取id
+                var guid  = $(this).parent().parent().attr('id');
+                var Status  = $(this).attr('data-status');
+
+                if(guid ==""||guid ==null){
+                    app.toast("无法获取guid");
+                 	return;
+				}
+                var extras = {
+                    idd:guid,
+                    btnStatus:Status
+                }
+                app.openPage("qx_edit.html", {
+                    titleNView: {
+                        titleText: '缺陷编辑',
+                        autoBackButton: true
+                    }
+                }, extras);
+            });
+
+			//查看
+			$(document).on('tap', '.queryQx', function () {
+				// var guid  = $(this).parent().parent().attr('id');
+				var guid  = $(this).attr('data-guid');
+				var Status  = $(this).attr('data-status');
+				if(guid ==""||guid ==null){
+					app.toast("无法获取guid");
+					return;
+				}
+				var extras = {
+					idd: guid,
+					btnStatus: Status
+				}
+				app.openPage("qx_query.html", {
+					titleNView: {
+						titleText: '缺陷查看',
+						autoBackButton: true
+					}
+				}, extras);
+			});
+
+            //删除
+            $(document).on('tap', '.delQx', function () {
+				console.log(111111111111)
+            // $(".delQx").on("tap", function() {
+            //     var guid = $('input[name="guid"]:checked').attr('id')//获取id
+                var Status  = $(this).attr('data-status');
+                if(Status == 'false'){
+                    app.toast('已处理数据无法删除')
+					return;
+				}
+                var guid  = $(this).parent().parent().attr('id');
+                var  btnArray=['确定','取消'];    //注意这里的顺序是先否再是
+                mui.confirm("是否确定删除该缺陷信息",'',btnArray, function(e) {
+                    if (e.index == 0) {     //索引是1的就是选择的是
+                        qxDel(guid,function(data){
+                            //console.log(data)
+                            if(data.success) {
+                                mui.toast("删除成功")
+                                // window.location.reload();
+								pulldownRefresh()
+                            }else{
+                                mui.toast("删除失败")
+                            }
+                        })
+                    }
+                })
+            });
+
+            //处理2.0
+            $(document).on('tap', '.handQx', function () {
+                // var guid  = $(this).parent().parent().attr('id');
+				console.log('点击了列表中的处理')
+                var guid  = $(this).attr('data-guid');
+                var Status  = $(this).attr('data-status');
+                var bugStatus = $(this).attr('data-sta');
+				//var title = '处理缺陷情况'
+
+				if(Status == 'true') {
+					//title = '处理缺陷';
+					if(guid ==""||guid ==null){
+						app.toast("无法获取guid");
+						return;
+					}
+					var extras = {
+						idd:guid,
+						btnStatus:Status,
+						qxTypeObject: qxTypeObject,
+						qxDeviceObject: qxDeviceObject,
+						qxDeviceType: $(this).attr("data-device-type")
+					}
+
+					app.openPage("qx_handle.html", {
+						titleNView: {
+							titleText: '处理缺陷',
+							autoBackButton: true
+						}
+					}, extras);
+				}else{ // 跳转到详情
+					//跳转到编辑 + 处理页面
+					var extras = {
+						idd: guid, //$(this).parent().attr("id"),
+						btnStatus: false,
+						sta: $(this).attr("data-sta"),
+						qxTypeObject: qxTypeObject,
+						qxDeviceObject: qxDeviceObject,
+						qxDeviceType: $(this).attr("data-device-type")
+
+					}
+					app.openPage("qx_detail_v2.html", {
+						titleNView: {
+							titleText: '缺陷详情',
+							autoBackButton: true
+						}
+					}, extras);
+
+				}
+
+
+            });
+            //点击缺陷列表
+            $("#OA_task_1").on('tap', ".clickContent", function() {
+                // app.toast($(this).attr("id"));
+                // app.toast($(this).parent().attr("id"));
+                //跳转到编辑 + 处理页面
+                var extras = {
+                    idd: $(this).parent().attr("id"),
+                    btnStatus: false,
+					sta: $(this).attr("data-sta"),
+					qxTypeObject: qxTypeObject,
+					qxDeviceObject: qxDeviceObject,
+					qxDeviceType: $(this).attr("data-device-type")
+                }
+                app.openPage("qx_detail_v2.html", {
+                    titleNView: {
+                        titleText: '缺陷详情',
+                        autoBackButton: true
+                    }
+                }, extras);
+
+			})
+
+			//进入详情
+			$(document).on('tap', '.enterQx', function () {
+				var guid  = $(this).parent().attr('id');
+				var status  = $(this).attr('data-status');
+				if(guid ==""||guid == null){
+					app.toast("无法获取guid");
+					return;
+				}
+				var extras = { idd: guid, btnStatus: 'true' };
+				let url;
+				let title;
+				if (status == 1) {
+					url = 'qx_edit.html';
+					title = "修改缺陷"
+				}else {
+					url = 'qx_query.html';
+					title = '查看缺陷'}
+				app.openPage(url, {
+					titleNView: {
+						titleText: title,
+						autoBackButton: true
+					}
+				}, extras);
+			});
+
+            //获取街道
+			$("#street").on("tap",function(){
+			    getJD(function (data) {
+                    if (200 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.adName,//街道名
+                            value: item.guid //guid
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#street").val(items[0].text);
+						streetId = items[0].value;
+
+						$("#street").next().css('display', 'block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+                })
+			})
+
+			//获取小区ByStreet
+			$("#comm").on("tap",function () {
+			   // console.log("streetId:"+streetId)
+				// 可以不选所在街道
+				//if (streetId) {
+					var param = streetId;
+				if (!streetId){
+					param = ''
+				}
+					getXqByStreet(param,function (data) {
+						if (200 != parseInt(data.code)) {
+							app.toast(data.message);
+							console.log(data.message)
+							return;
+						}
+						var resultJSON =[];
+						for (var i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+
+							resultJSON.push({
+								text: item.reName,//小区名
+								value: item.guid //小区guid
+							})
+						}
+						var extras = {
+							dataList: resultJSON,//内容
+							multiSelect:false,
+							module: 'com'
+						}
+						app.openPage("../commom/select.html", {
+							titleNView: {
+								titleText: '小区过滤街道',
+								autoBackButton: true
+							}
+						}, extras);
+						//移除
+						window.removeEventListener('returnSelect',setComm,false);
+						// 赋值
+						window.addEventListener('returnSelect',setComm,false);
+					})
+				// } else {
+				// 	app.toast("请先选择所在街道")
+				// }
+            })
+            var setComm = function(data){
+                $("#comm").val(data.detail[0].text);
+                // $("#approverUsername").val(data.detail[0].value);
+                commId = data.detail[0].value; //小区guid
+                // commName = data.detail[0].text;
+                //console.log(commId);
+				$("#comm").next().css('display', 'block');
+            }
+
+            //获取缺陷来源
+            $("#bugSource").on("tap", function() {
+                getDictItems('ZHSW.DEVICE.BUG_SOURCE',function (data) {
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugSource").val(items[0].text);
+                        sourceId = items[0].value;
+
+						$("#bugSource").next().css('display', 'block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+
+                })
+            });
+
+            //获取设施类型 - 这个是旧接口 ，要用新接口 ，参考新增缺陷 qx_manage.html
+			var newObj;
+			var oldBoj = $("#obj_input").val();
+            $("#obj_input").on("tap", function() {
+                getDictItems("ZHSW.DEVICE.BUG_OBJECT_TYPE",function(data){
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+						$("#obj_input").val(items[0].text);
+                        newObj = items[0].text;
+                        objTypeId = items[0].value;
+						$("#obj_input").next().css('display', 'inline-block');
+
+                        if (oldBoj != newObj) {
+                            //设施类型变，缺陷类型清除
+							deleteDate('bugType_input')
+                        }
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+				})
+			});
+
+            //*获取缺陷等级√
+            $("#bugLevel_input").on("tap", function() {
+            	let deviceData = $("#obj_input").val();
+				// if(deviceData.indexOf('管渠') == -1 && deviceData.indexOf('灌渠') == -1) {
+				// 	app.toast("请先选择管渠类或者灌渠类设施才能选择等级");
+				// 	return;
+				// }
+                getDictItems('ZHSW.DEVICE.BUG_LEVEL',function (data) {
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugLevel_input").val(items[0].text);
+                        levelId = items[0].value;
+
+						$("#bugLevel_input").next().css('display', 'block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+
+                })
+            });
+
+            //*获取缺陷状态
+            $("#bugStatus").on("tap", function() {
+                getDictItems('ZHSW.DEVICE.BUG_STATE',function (data) {
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugStatus").val(items[0].text);
+                        statusId = items[0].value;
+
+						$("#bugStatus").next().css('display', 'inline-block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+
+                })
+            });
+
+            //*获取缺陷类型 - 新接口
+            $("#bugType_input").on("tap", function(e) {
+				e.stopPropagation() //阻止事件冒泡
+
+                // var param = objTypeId;
+                // var resultJSON =[];
+                //
+                // if(param == ""||param ==null){
+                //     app.toast("请先选择设施");
+                //     return;
+                // }
+                // var param = objTypeId;
+				if(!isEmptyDictObj(bugTypeDictValueForTitle))  {
+					showBugTypePicker();
+					return;
+				}
+
+                // 缺陷类型新接口
+				getQx_Type('', function(data) {
+					// console.log('缺陷类型返回 start')
+					// console.log(JSON.stringify(data))
+					// console.log('缺陷类型返回 end')
+					if (200 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					if(data && data.result && data.result.length) {
+						for(var i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+							if(item.children && item.children.length) {
+								for(var j = 0; j < item.children.length; j++) {
+									if(item.children[j]) {
+										bugTypeDictValueForTitle[item.children[j].value] = item.children[j].title
+									}
+
+								}
+							}
+							//bugTypeDictCodeForChildrenObj[item.code] = item.children
+						}
+
+					}
+					showBugTypePicker();
+
+				})
+               // getDictItems('ZHSW.DEVICE.BUG_TYPE',function (data) {
+
+
+                //})
+            }); // 获取缺陷类型 - END
+
+
+
+            //点击搜索（条件）
+            $("#search").on("tap",function (data){
+                var start = $("#startTime").val().replace("-","");
+                var end = $("#endTime").val().replace("-","");
+                if(end < start){
+                    app.toast("时间不合理！请重新选择")
+                    return;
+                }
+
+                var content = $("#content").css("display");
+                var show = $("#moreContent").css('display');
+                if(show == 'block'){
+                    // $("#ico").attr('src','../../img/add.png');
+
+                    $("#moreContent").css('display','none');
+                    $("#content").css('display','block');
+
+                }
+                if(show == 'none'){
+                    // $("#ico").attr('src','../../img/cut.png');
+                    $("#moreContent").css('display','block');
+                    $("#content").css('display','none');
+                }
+				console.log('过滤条件搜索1')
+                //让其回到头部
+                // mui('#ALL').scroll().scrollTo(0,0,100);
+
+				// 这个报错1 ？？
+               // mui('#ALL').pullRefresh().scrollTo(0, 0, 100);
+                // mui('#ALL').pullRefresh().endPullupToRefresh(false); //允许上拉加载
+
+				// 这个报错2 ？？
+                // mui('#ALL').pullRefresh().enablePullupToRefresh();
+                $("#OA_task_1").empty();//清空
+                pages = 1;//回到第一页
+				sum = 1;
+				console.log('过滤条件搜索2')
+                searchByParams();
+            });
+
+            //监听搜索（缺陷标题）
+            document.getElementById("search_input").addEventListener('input', onSearch);
+		})
+
+
+		// 显示缺陷类型选择
+		function showBugTypePicker() {
+			// mui("#pullrefresh").pullRefresh().setStopped(true/false)
+			// for (var i = 0; i < data.result.length; i++) {
+			// 	var item = data.result[i];
+			// 	//console.log(item.problemType_dictText)
+			// 	resultJSON.push({
+			// 		text: item.text,
+			// 		value: item.value
+			// 	})
+			// }
+			if(isEmptyDictObj(bugTypeDictValueForTitle)) return;
+			var resultJSON =[];
+			for(var key in bugTypeDictValueForTitle) {
+				resultJSON.push({
+					text: bugTypeDictValueForTitle[key],
+					value: key
+				})
+			}
+
+			console.log(JSON.stringify(resultJSON))
+
+			var userPicker = new mui.PopPicker();
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			}
+			userPicker.setData(resultJSON);
+
+			//var select = document.getElementById('bugType_input');
+			//select.addEventListener('tap', function(event) {
+				// mui('#ALL').pullRefresh().disablePullupToRefresh();  //禁用上拉加载
+				userPicker.show(function(items) {
+					$("#bugType_input").val(items[0].text);
+					bugType = items[0].value;
+
+					$("#bugType_input").next().css('display', 'block');
+					//返回 false 可以阻止选择框的关闭
+					// return false;
+				});
+			// },false);
+		}
+
+		function isEmptyDictObj(obj) {
+			for (var key in obj) {
+				return false;
+			}
+			return true;
+		}
+		//搜索查询
+		function onSearch() {
+			let seachVal = $('#search_input').val();
+			if (seachVal == ''||seachVal == null||seachVal == undefined) {
+				$("#bugType_input").next().css('display', 'none');
+				pulldownRefresh();
+			} else {
+				$("#search_input").next().css('display', 'inline-block');
+				$("#OA_task_1").empty();
+				mui('#ALL').pullRefresh().enablePullupToRefresh();
+				sum = 1;
+				pages = 1;
+				let params = getParamsData()
+				BugSearch(params, function(result){
+					if (result.length < 10){
+						//不再执行上拉
+						console.log("暂无更多数据")
+						mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					} else {
+						console.log("有数据")
+						mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+					}
+				});
+			}
+		}
+
+	// var html = document.querySelector('html');
+	// html.addEventListener('tap', function(event) {
+	// 	mui('#ALL').pullRefresh().enablePullupToRefresh(); //启用上拉加载
+	// 	mui('#ALL').pullRefresh().refresh(true);
+	// },true);
+
+        //下拉刷新
+        function pulldownRefresh() {
+			$("#moreContent").css('display','none');
+			// $("#ico").attr('src','../../img/add.png');
+
+			$("#moreContent").css('display','none');
+			$("#content").css('display','block');
+            $("#OA_task_1").empty();
+            //激活上拉
+            // mui('#ALL').pullRefresh().refresh(true);
+            mui('#ALL').pullRefresh().enablePullupToRefresh();
+		    sum = 1;//重置总数
+			pages = 1;
+			let params = getParamsData()
+            BugSearch(params,function(result){
+                if (10>result.length){
+                    //不再执行上拉
+                    console.log("无更多数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+                    // mui('#ALL').pullRefresh().disablePullupToRefresh();
+                } else {
+                    console.log("有数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+                }
+
+            });
+			// pages++;
+        }
+
+        //时间
+        $("#startTime").on("tap", function() {
+            var that = $(this);
+            plusDate(function(data){
+                that.val(data)
+            },1);
+        })
+
+        $("#endTime").on("tap", function() {
+            var that = $(this);
+            plusDate(function(data){
+                    that.val(data)
+            },1);
+        })
+
+		//编辑搜索条件
+		function getParamsData(){
+			if (!$('#street').val()) streetId =''
+			if (!$('#comm').val()) commId =''
+			if (!$('#bugSource').val()) sourceId =''
+			if (!$('#obj_input').val()) objTypeId =''
+			if (!$('#bugType_input').val()) bugType =''
+			if (!$('#bugLevel_input').val()) levelId =''
+			if (!$('#bugStatus').val()) statusId =''
+			// 缺陷描述
+			var searchVal = $('#search_input').val();
+			if (searchVal == ''||searchVal == null||searchVal == undefined) searchVal = '';
+			//开始时间
+			var startTime = $("#startTime").val()
+			if (startTime) startTime = startTime + ' 00:00:00'
+			else startTime = ''
+			//结束时间
+			var endTime = $("#endTime").val()
+			if (endTime) endTime = endTime + ' 23:59:59'
+			else endTime = ''
+			let params = {
+				pageNo:pages,     //页码 上拉自增
+				streetId:streetId,//街道
+				commId:commId,//小区         （深圳青年少活动中心）
+				bugSource:sourceId,//缺陷来源
+				objectType:objTypeId,//设施类型
+				bugType:bugType ,//缺陷类型
+				bugLevel:levelId,//缺陷等级
+				bugStatus:statusId,//状态
+				problemContent:searchVal,//缺陷描述
+				startTime:startTime,//处理开始时间
+				endTime:endTime//处理结束时间
+			}
+			return params
+		}
+
+        //根据参数查询
+        function searchByParams(){
+			console.log('过滤条件搜索3')
+            let params = getParamsData()
+			console.log('searchByParams:' + JSON.stringify(params))
+			BugSearch(params, function(result){
+				// console.log('result - start')
+				// console.log(JSON.stringify(result))
+				// console.log('result - end')
+                if (10>result.length){
+                    //不再执行上拉
+                    console.log("暂无更多数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+                    // mui('#ALL').pullRefresh().disablePullupToRefresh();
+                } else {
+                    console.log("有数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+                }
+            });
+            $('.mark').fadeOut();
+            $('.side').css('right',-285);
+        }
+        //查询
+		function BugSearch(params,callback){
+			console.log('BugSearch==')
+			let obj = {};
+			for(let key in params){
+				if(params[key]) obj[key] = params[key];
+			}
+			searchBug(obj,function (data) {
+				// console.log('searchBug(obj,function (data) start')
+				// console.log(JSON.stringify(data));
+				// console.log('searchBug(obj,function (data) end')
+				var num = 0;
+                if (data.success) {
+					console.log('searchBug success==')
+                   //查询数据返回前端
+					addData(data.result.records);
+                    num = data.result.total;
+                    $("#qxNum").html(num);
+                    if (callback){
+                        //返回当前数据个数
+                        callback(data.result.records);
+                    }
+                } else {
+                    mui.toast("查询失败")
+                }
+            })
+		}
+		//获取所有缺陷来源
+        function getSources(){
+            getDictItems('ZHSW.DEVICE.BUG_SOURCE',function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+                    sourceList.push({
+                        text: item.text,
+                        value: item.value
+                    })
+                }
+            })
+        }
+
+		//获取设施对象集合
+        function getObjList(){
+            getDictItems("ZHSW.DEVICE.BUG_OBJECT_TYPE",function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    console.log(data.message)
+                    return;
+                }
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+                    objList.push({
+                        text: item.text,
+                        value: item.value
+                    })
+                }
+            })
+        }
+
+		//获取缺陷类型 -- 缺陷类型名称会返回不相关的状态 ，根据value找name
+		function getBugType(){
+			// 缺陷类型新接口
+			getQx_Type('', function(data) {
+				qxTypeObject = data;
+				if(data && data.result && data.result.length) {
+					for(var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						if(item.children && item.children.length) {
+							for(var j = 0; j < item.children.length; j++) {
+								if(item.children[j]) {
+									bugTypeDictValueForTitle[item.children[j].value] = item.children[j].title
+								}
+
+							}
+						}
+						//bugTypeDictCodeForChildrenObj[item.code] = item.children
+					}
+
+				}
+				getDeviceType();
+
+			})
+			// getDictItems("ZHSW.DEVICE.BUG_TYPE",function (data) {
+			// 	if (206 != parseInt(data.code)) {
+			// 		app.toast(data.message);
+			// 		console.log(data.message)
+			// 		return;
+			// 	}
+			// 	for (var i = 0; i < data.result.length; i++) {
+			// 		var item = data.result[i];
+			// 		bugTypeList.push({
+			// 			text: item.text,
+			// 			value: item.value
+			// 		})
+			// 	}
+			// })
+		}
+
+        //遍历List
+        function getListI(list,sid){
+            if(isEmpty(sid)){
+                return '无'
+            }
+			for(var i in list){
+                if(sid == parseInt(list[i].value)){
+                    return list[i].text;
+                }
+            }
+        }
+
+		function addData(data){
+
+
+			var ke = 0;
+			for(key in deviceTypeDictIdForName) {
+				ke = ke + 1;
+			}
+			console.log('key:' + ke)
+			if(!isTest) {
+				if(ke < 1) {
+					bugInfoTmp = data;
+					//获取缺陷列表之前 ，先获取设施类型
+					getDeviceType();
+				}else{
+					addDataWhenGetDeviceType(data);
+				}
+			}else{
+				addDataWhenGetDeviceType(data);
+			}
+
+
+        }
+
+		function addDataWhenGetDeviceType(paramData){
+			bugInfoTmp = [];
+			var data = paramData;
+			console.log('data start')
+			console.log(JSON.stringify(data))
+			console.log('data end')
+			console.log("deviceTypeDictIdForName:" +JSON.stringify(deviceTypeDictIdForName))
+
+			var ss = '';
+			var obj='';
+			var li = "";
+			for (var i = 0; i < data.length; i++) {
+				var item = data[i];
+				var status = item.bugStatus;//处理状态
+				var status_text;
+				let comm = item.commName == null?'无':item.commName;
+
+				var objType = '未知' //getListI(objList,item.objectType);
+
+				if(deviceTypeDictIdForName[item.objectType]) {
+					objType = deviceTypeDictIdForName[item.objectType]
+				}
+
+				let bugType= '未知' //item.bugTypeName; //getListI(bugTypeList,item.bugType);
+				if(!isEmptyDictObj(bugTypeDictValueForTitle))  {
+					if(bugTypeDictValueForTitle[item.bugType]){
+						bugType = bugTypeDictValueForTitle[item.bugType]
+					}else{
+						bugType=" "
+					}
+				}
+				// if(!bugType)
+				// {
+				// 	bugType = ''
+				// }
+
+				// comm old color: orangered
+				li += `<li id="${item.guid}" class="mui-table-view-cell" style="line-height: 27px">
+								<div class="mui-slider-handle clickContent" data-device-type="${item.objectType}" data-sta="${status}">
+									<div  class="select-query-list-title " style="text-align: left;font-size: 15px">
+										<span class="spanLim " style="width: 18px">${(i + sum)}</span>
+										<span class="spanLim " style="width: 25%">${objType}</span>
+										<span class="spanLim " style="width: 25%">${bugType}</span>
+										<span class="spanLim " style="width: 25%;">${comm}</span>
+									</div>
+								</div>`
+				if(item.bugStatus == 1){
+					// 337BFC
+					li += `<span data-guid="${item.guid}" data-device-type="${item.objectType}" data-sta="${status}" data-status="true" class="spanLim handQx" style="position:absolute;right:10px;width: 50px; height: 75%; color:#337BFC">处理></span>`
+
+				}else if(item.bugStatus == 2){
+					li += `<span data-guid="${item.guid}" data-device-type="${item.objectType}" data-sta="${status}" data-status="false" class="spanLim handQx" style="position:absolute;right:10px;width: 50px; height: 75%;color:#3CB371">已处理</span>`
+
+				}else if(item.bugStatus == 3){
+					li += `<span data-guid="${item.guid}" data-device-type="${item.objectType}" data-sta="${status}" data-status="false" class="spanLim handQx" style="position:absolute;right:10px;width: 50px; height: 75%;color:#F5A623;">已审核</span>`
+				}else{
+					li += `<span data-guid="${item.guid}" data-device-type="${item.objectType}" data-sta="${status}" data-status="false" class="spanLim handQx" style="position:absolute;right:10px;width: 50px; height: 75%;color:red;">审核中</span>`
+				}
+				li += `</li>`
+
+			}
+			pages++;//换下一页
+			sum += data.length ;
+
+			$("#OA_task_1").append(li);
+			if(!isTest) {
+				//加载完数据，结束转雪花进度条的“正在刷新...”过程
+				mui('#ALL').pullRefresh().endPulldown();
+				//加载完数据，结束转雪花进度条的“正在加载...”过程
+				mui('#ALL').pullRefresh().endPullupToRefresh();
+			}
+
+		}
+
+        //重置
+        $("#redo").on('tap',function(){
+            $('#street').val("")
+            $('#comm').val("")
+            $('#bugSource').val("")
+            $('#bugType_input').val("")
+            $('#bugLevel_input').val("")
+			$("#startTime").val("")
+			$("#endTime").val("")
+            streetId ='';
+            commId ='';
+            sourceId ='';
+            bugType ='';
+            levelId ='';
+            $(".itemClear").css("display","none");
+		})
+
+		//清除按钮
+		$(".itemClear").on('tap',function(){
+		    var a = $(this);
+		    a.prev().val("");
+		    a.css("display","none");
+		})
+
+
+
+		// 测试区
+		function testQxData() {
+			var dataStr = `
+{"success":true,"message":"查询成功","code":200,"result":{"records":[{"guid":"c013d0f2d0b5148da20751ef0980296f","createBy":"hrz_dev","createTime":"2021-06-17 16:15:56","updateBy":"hrz_dev","updateTime":"2021-06-17 16:18:06","corpCode":"A01","prjCode":"","delFlag":0,"objType":"","indexOrder":"","xCode":"","yCode":"","startDeviceCode":"","startXCode":"","startYCode":"","endDeviceCode":"","endXCode":"","endYCode":"","fixLength":"","gugCode":"","bugTitle":"","bugSource":"6","sourceGuid":"","objectType":"3","objectDesc":"","objectId":"point_info_sz_new_622619","problemType":"","problemContent":"抽检测试","bugTypeId":null,"bugTypeDesc":null,"bugType":"439e4ed11c5735b83154c22915d52744","bugTypeName":"排水异常","bugLevel":"","doneMeasures":"","findTime":"2021-06-17","findBy":"侯润哲","findByName":null,"bugAllImage":"ef1df2fcb5404b458f7dfbcbb92956a3","bugAllImagePath":"","bugPartImage":"9c9f05a4ca784de28d2c118a6de0d0b1","bugPartImagePath":"","bugKeyImage":"2767c45c74d741588782705ed6e6d438","bugKeyImagePath":"","beginTime":"2021-06-17","endTime":null,"locationContent":"深圳市福田区桃花路3号南侧顺通安厂房东南约78米","donePerson":"","donePersonName":null,"bugStatus":"1","belongId":"","belongName":null,"belongManager":"杨慕","belongManagerPhone":"17865923230","recordTime":null,"supervisorId":"","trueTime":null,"managerId":"","confirmTime":null,"monDep":"","checkTime":null,"solveImage":"adab18a3735842f189263f3a7b728577","solveImagePath":"","solveAllImage":"d9b19a02140e4782a91de1993593eaf9","solveAllImagePath":"","solvePartImage":"400be8cade044a57852d5c8e82b0c376","solvePartImagePath":"","commId":"re_area_2","commName":"富宝物流","streetName":"福保街道","errorMessage":null,"streetId":"440304010","taskRecordId":"afad212051072861bd3ddc7453e31835","samplingId":"04e3708ad7424b07a2443a1ec20c1a22","completionTime":"2021-06-25","inspectDic":"","auditPerson":"","auditPersonName":null,"isTimeout":"是","timeOutDays":7},{"guid":"05b6d2ceda3d0dc63edc90c924b28c80","createBy":"lin_yr","createTime":"2021-06-16 17:33:20","updateBy":"lin_yr","updateTime":"2021-06-16 17:33:20","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"3","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":"point_info_sz_new_3777","problemType":null,"problemContent":"tt","bugTypeId":null,"bugTypeDesc":null,"bugType":"844f475234a2b5f4cc0e773ac0d37763","bugTypeName":"井室病害","bugLevel":"","doneMeasures":null,"findTime":"2021-06-16","findBy":"林燕如","findByName":null,"bugAllImage":"8ebf03ed4b7f4d1db29af728f30a3bf9","bugAllImagePath":"","bugPartImage":"7828400c7c3a45fb83bebae931558662","bugPartImagePath":"","bugKeyImage":"f9688f61f7634691a32f66e1c82b2931","bugKeyImagePath":"","beginTime":"2021-06-16","endTime":null,"locationContent":"深圳市福田区保税区桃花路9号伟光国际贸易有限公司","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"颜福","belongManagerPhone":null,"recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"f7e5eecbbb454cc7b37104f767eddfab","solveImagePath":"","solveAllImage":"40e431fae13149d794d82a9d2837f060","solveAllImagePath":null,"solvePartImage":null,"solvePartImagePath":null,"commId":"re_area_1","commName":"万乘简易仓","streetName":"福保街道","errorMessage":null,"streetId":"440304010","taskRecordId":null,"samplingId":null,"completionTime":null,"inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null},{"guid":"12b60b49ff2e1fc4a5b492e2cac28355","createBy":"lin_yr","createTime":"2021-06-16 17:10:11","updateBy":"lin_yr","updateTime":"2021-06-16 17:10:11","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"3","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":"point_info_sz_new_27822","problemType":null,"problemContent":"wwq","bugTypeId":null,"bugTypeDesc":null,"bugType":"e6918e76c216a794c039f1330d63d095","bugTypeName":"井盖异常","bugLevel":"","doneMeasures":null,"findTime":"2021-06-16","findBy":"林燕如","findByName":null,"bugAllImage":"50f9acf8e5e14d1ab43993f1712ee971","bugAllImagePath":"","bugPartImage":"2d2ce07a24ce45da9a7b5516552a2e2e","bugPartImagePath":"","bugKeyImage":"53c6ecb875954137919a67482b124518","bugKeyImagePath":"","beginTime":"2021-06-16","endTime":null,"locationContent":"深圳市福田区保税区桃花路9号伟光国际贸易有限公司","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"韩欢","belongManagerPhone":null,"recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"909deb78172646798c606f744bc6e82f","solveImagePath":"","solveAllImage":"0103774e7e5a4f8e838c1a389bf7a284","solveAllImagePath":null,"solvePartImage":null,"solvePartImagePath":null,"commId":"re_area_1","commName":"万乘简易仓","streetName":"福保街道","errorMessage":null,"streetId":"440304010","taskRecordId":null,"samplingId":null,"completionTime":null,"inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null},{"guid":"79031f273e709160314fa14d6c0bbe54","createBy":"lin_yr","createTime":"2021-06-16 16:54:07","updateBy":"lin_yr","updateTime":"2021-06-16 16:54:07","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"3","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":null,"problemType":null,"problemContent":"111","bugTypeId":null,"bugTypeDesc":null,"bugType":null,"bugTypeName":null,"bugLevel":null,"doneMeasures":null,"findTime":"2021-06-16","findBy":"林燕如","findByName":null,"bugAllImage":"908bddce511d46b886771898a0cca702","bugAllImagePath":null,"bugPartImage":"b665d19ddd8d46ea973636f63007fffe","bugPartImagePath":null,"bugKeyImage":"0b43c7d7c4334b80876a4971e7bf2897","bugKeyImagePath":null,"beginTime":"2021-06-16","endTime":null,"locationContent":null,"donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"林燕如","belongManagerPhone":"","recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"6f88813d3f1e4ab0b16eed40f853dee9","solveImagePath":null,"solveAllImage":"a11e10ce60bb4db8a19ad04db1773f1d","solveAllImagePath":null,"solvePartImage":"56295a7c3110482c8bc91ce7bbd9c02c","solvePartImagePath":null,"commId":"re_area_1","commName":"万乘简易仓","streetName":"福保街道","errorMessage":null,"streetId":"440304010","taskRecordId":"269b61492de7ff4b5f8c30e202199574","samplingId":"0cb5b6ad2e2d4fce91e57d7e849a3693","completionTime":"2021-06-17","inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":-1},{"guid":"7cb6b7d37d81d82d2b1d7a72967905d8","createBy":"hrz_dev","createTime":"2021-06-09 17:06:21","updateBy":"hrz_dev","updateTime":"2021-06-09 17:06:21","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"3","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":"76E6E3F66D5A4D54B8B759DD8FBE506F","problemType":null,"problemContent":"井盖标识不清晰","bugTypeId":null,"bugTypeDesc":null,"bugType":"9eaadacf11d78074493cdbde1796a55a","bugTypeName":"标识异常","bugLevel":null,"doneMeasures":null,"findTime":"2021-06-09","findBy":"侯润哲","findByName":null,"bugAllImage":"2a40ee49e887426c8514f9ebc1e3ed54","bugAllImagePath":"ecidi/b082c79344924f0f93a458f8ec73df1d.jpg","bugPartImage":"92919242eaaa402aa355f1d04d5893d3","bugPartImagePath":null,"bugKeyImage":"64cb6702c4aa4ff28eb393457cbc4ebf","bugKeyImagePath":null,"beginTime":"2021-06-09","endTime":null,"locationContent":"","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"侯润哲","belongManagerPhone":null,"recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":null,"solveImagePath":null,"solveAllImage":null,"solveAllImagePath":null,"solvePartImage":null,"solvePartImagePath":null,"commId":"","commName":null,"streetName":null,"errorMessage":null,"streetId":null,"taskRecordId":"4a3f328ff0687dee95a5f1e39e5883c0","samplingId":null,"completionTime":null,"inspectDic":"fd6350e28b1314af5c2bb88e8ebc2127","auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null},{"guid":"274e249cb91e780e88ce872348fe7e6f","createBy":"hrz_dev","createTime":"2021-06-09 15:51:19","updateBy":"hrz_dev","updateTime":"2021-06-10 10:05:23","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"3","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":"9DE7485AB5C048329B793B1FE6B0E2B1","problemType":null,"problemContent":"缺失,变形","bugTypeId":null,"bugTypeDesc":null,"bugType":"e6918e76c216a794c039f1330d63d095","bugTypeName":"井盖异常","bugLevel":null,"doneMeasures":null,"findTime":"2021-06-10","findBy":"杨慕","findByName":null,"bugAllImage":"92897a2f657f4a038783421538311f73","bugAllImagePath":"ecidi/31ed73df9c184efdaac52b85347dce85.jpg","bugPartImage":"9b97e8f58a954eeba7f000ee0b813dd1","bugPartImagePath":null,"bugKeyImage":"ee15cefbd88b46118f458bfc94a16394","bugKeyImagePath":null,"beginTime":"2021-06-10","endTime":null,"locationContent":"","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"杨慕","belongManagerPhone":null,"recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":null,"solveImagePath":null,"solveAllImage":null,"solveAllImagePath":null,"solvePartImage":null,"solvePartImagePath":null,"commId":"","commName":null,"streetName":null,"errorMessage":null,"streetId":null,"taskRecordId":"582554884fea4de97a346dfab17a25e1","samplingId":null,"completionTime":null,"inspectDic":"dd84b030aa1e4defd3555806d8dd1b95,58a970d55969100c87593109788fbd47","auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null},{"guid":"3b041ecb1ac2a4c04cadf3faecc3c653","createBy":"yang_m","createTime":"2021-06-09 15:36:02","updateBy":"yang_m","updateTime":"2021-06-09 15:36:02","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"4","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":null,"problemType":null,"problemContent":"123123","bugTypeId":null,"bugTypeDesc":null,"bugType":"70550415494f74efc583b008f8ad378f","bugTypeName":"爬梯缺陷","bugLevel":null,"doneMeasures":null,"findTime":"2021-06-09","findBy":"杨慕","findByName":null,"bugAllImage":"2cbc96b91bf141c3a00afbce00a8a8e9","bugAllImagePath":null,"bugPartImage":"16e8447b389d4680b5636af98be56677","bugPartImagePath":null,"bugKeyImage":"97c5da12d57744ea804e071e97d3c0c8","bugKeyImagePath":null,"beginTime":"2021-06-09","endTime":null,"locationContent":"嗯嗯嗯","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"陈道强测试","belongManagerPhone":null,"recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"a43af831f3af47ec953e078a4946c52e","solveImagePath":null,"solveAllImage":"bb9919a7532c4f8284cf99d868a33ea7","solveAllImagePath":null,"solvePartImage":"0f0cd7cbc08f4b3ab74ed468ec3000c3","solvePartImagePath":null,"commId":"","commName":null,"streetName":null,"errorMessage":null,"streetId":null,"taskRecordId":null,"samplingId":null,"completionTime":"2021-06-10","inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":-8},{"guid":"8c2b1585ef35a81102a68a1ae5bcc4ce","createBy":"hrz_dev","createTime":"2021-06-09 15:27:06","updateBy":"hrz_dev","updateTime":"2021-06-09 15:27:06","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"4","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":null,"problemType":null,"problemContent":"123131312232","bugTypeId":null,"bugTypeDesc":null,"bugType":"e6918e76c216a794c039f1330d63d095","bugTypeName":"井盖异常","bugLevel":null,"doneMeasures":null,"findTime":"2021-06-09","findBy":"杨慕","findByName":null,"bugAllImage":"98ecb70f88d5486986e0855de0373d36","bugAllImagePath":null,"bugPartImage":"00b63ce99f3547218d5117a2c40ed3ad","bugPartImagePath":null,"bugKeyImage":"ec68ec7c589d4473b926b2fdb19ad68c","bugKeyImagePath":null,"beginTime":"2021-06-09","endTime":null,"locationContent":"123131312232","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"陈道强测试","belongManagerPhone":"13697852878","recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"ba9338d1752c48268a6a407800fbbc9a","solveImagePath":null,"solveAllImage":"c6b3e2c88d1445f18fc300e576429210","solveAllImagePath":null,"solvePartImage":"8959d09058ac4a82a71f36f6fee715d1","solvePartImagePath":null,"commId":"","commName":null,"streetName":null,"errorMessage":null,"streetId":null,"taskRecordId":null,"samplingId":null,"completionTime":null,"inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null},{"guid":"b52d259103e33b060f00eb7ba7f911a0","createBy":"chendaoqiang","createTime":"2021-06-08 15:48:24","updateBy":"chendaoqiang","updateTime":"2021-06-08 15:49:10","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"6","sourceGuid":null,"objectType":"1","objectDesc":null,"objectId":"point_info_ys_60075","problemType":null,"problemContent":"测试","bugTypeId":null,"bugTypeDesc":null,"bugType":"4","bugTypeName":null,"bugLevel":"","doneMeasures":"","findTime":"2021-06-08","findBy":"陈道强","findByName":null,"bugAllImage":"6499cfa01d01481e9fe1be530cb418bc","bugAllImagePath":"","bugPartImage":"2e2fbabb4fa44f51a7ebb6d9f3c7249c","bugPartImagePath":"","bugKeyImage":"7ffd2f6eb13e481d98b62454cd9cc754","bugKeyImagePath":"","beginTime":"2021-06-08","endTime":null,"locationContent":"深圳市福田区福田保税区凤凰路二号万利工业大厦","donePerson":"","donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"杨慕","belongManagerPhone":"17865923230","recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"6ba4d06f98b349d58a4e55780eb3d44d","solveImagePath":"","solveAllImage":"e9057098e1064e2c82d8f1b96050550f","solveAllImagePath":"","solvePartImage":null,"solvePartImagePath":null,"commId":"re_area_22","commName":"奥兰若科技","streetName":"福保街道","errorMessage":null,"streetId":"440304010","taskRecordId":null,"samplingId":null,"completionTime":null,"inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null},{"guid":"fa141858a3a180010c6cbce6d1e8bab1","createBy":"chendaoqiang","createTime":"2021-06-08 15:45:34","updateBy":"chendaoqiang","updateTime":"2021-06-08 15:45:34","corpCode":"A01","prjCode":null,"delFlag":0,"objType":null,"indexOrder":null,"xCode":null,"yCode":null,"startDeviceCode":null,"startXCode":null,"startYCode":null,"endDeviceCode":null,"endXCode":null,"endYCode":null,"fixLength":null,"gugCode":null,"bugTitle":null,"bugSource":"4","sourceGuid":null,"objectType":"","objectDesc":null,"objectId":"","problemType":null,"problemContent":"测试","bugTypeId":null,"bugTypeDesc":null,"bugType":"","bugTypeName":null,"bugLevel":"","doneMeasures":null,"findTime":"2021-06-08","findBy":"陈道强","findByName":null,"bugAllImage":"6911f6d06d884d58b3f40f011a0c8956","bugAllImagePath":"","bugPartImage":"3d806eb13e9d4b60b55938361752bcce","bugPartImagePath":"","bugKeyImage":"bb7f0c0b5df146d286a3a6c3b28704e9","bugKeyImagePath":"","beginTime":"2021-06-08","endTime":null,"locationContent":"","donePerson":null,"donePersonName":null,"bugStatus":"1","belongId":null,"belongName":null,"belongManager":"杨慕","belongManagerPhone":"17865923230","recordTime":null,"supervisorId":null,"trueTime":null,"managerId":null,"confirmTime":null,"monDep":null,"checkTime":null,"solveImage":"a326b58a6dfb40cf994cfb66ed7e7188","solveImagePath":"","solveAllImage":"12e29067984a49458948f59699970ead","solveAllImagePath":null,"solvePartImage":null,"solvePartImagePath":null,"commId":"","commName":null,"streetName":null,"errorMessage":null,"streetId":null,"taskRecordId":null,"samplingId":null,"completionTime":null,"inspectDic":null,"auditPerson":null,"auditPersonName":null,"isTimeout":"否","timeOutDays":null}],"total":16},"timestamp":1623996279490}
+			`;
+			var data = JSON.parse(dataStr)
+
+				var num = 0;
+				if (data.success) {
+					//查询数据返回前端
+					addData(data.result.records);
+					num = data.result.total;
+					$("#qxNum").html(num);
+					// if (callback){
+					// 	//返回当前数据个数
+					// 	callback(data.result.records);
+					// }
+					// if (data.result.records.length < 10){
+					// 	//不再执行上拉
+					// 	console.log("暂无更多数据")
+					// 	mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					// } else {
+					// 	console.log("有数据")
+					// 	mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+					// }
+				} else {
+					mui.toast("查询失败")
+				}
+
+		}
+		if(isTest) {
+			testQxData();
+		}
+	</script>
+
+</html>

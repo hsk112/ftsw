@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>待办任务</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <style>
+    .mui-col-xs-6 {
+      text-align: left;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-control-content .mui-loading {
+      margin-top: 50px;
+    }
+
+    .mui-slider {
+      height: 100vh;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 2px solid #337BFC;
+      color: #337BFC;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+      border-bottom: 0;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 0;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active + .titleleft {
+      border-bottom: solid 2px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-segmented-control .mui-control-item {
+      line-height: 43px;
+    }
+
+    .mui-scroll {
+      background: #FFFFFF;
+    }
+
+    .task-ul {
+      padding: 0;
+    }
+
+    .task-li {
+      border-bottom: 5px solid #F4F4F4;
+      height: 110px;
+      padding: 0 20px;
+    }
+
+    .task-item {
+      /* height: 50px; */
+      line-height: 50px;
+      /* padding: 0 5px; */
+    }
+
+    .task-item-btn {
+      width: 50%;
+      float: left;
+      text-align: right;
+      white-space: nowrap;
+      padding: 0 0 0 5px;
+    }
+
+    .task-item-btn span {
+      padding: 5px 15px;
+      border: 1px solid #347CFC;
+      color: #347CFC;
+      border-radius: 21px;
+      font-size: 12px;
+    }
+
+    .task-item-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .task-item-title span {
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .task-item-tip {
+      color: #989898;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .task-item-running {
+      color: #FF5656;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item-finished {
+      color: #29CC85;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item-ischange {
+      color: #FF7800;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item_status {
+      position: absolute;
+      top: 8px;
+      right: 5px;
+    }
+
+    .bottom-item {
+      background: #FFFFFF;
+      position: absolute;
+      /* height: 300px; */
+      width: 100%;
+      bottom: 0;
+      z-index: 100;
+      text-align: left;
+    }
+
+    .bottom-item-btn-list {
+      /* height: 200px; */
+      width: 98%;
+      position: absolute;
+    }
+
+    .fanwei {
+      white-space: nowrap;
+      display: inline-block;
+      width: 280px;
+      margin-left: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left
+    }
+
+    .bottom-item-btn-list .bottom-item-btn-list-top {
+      width: 100%;
+
+    }
+
+    .item1 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 0px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      border: 1px solid #337BFC;
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .item2 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 0px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      border: 1px solid #337BFC;
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .item3 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 64px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      /* border: 1px solid #337BFC; */
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .mui-navigate-left:after {
+      content: '\e472';
+      left: 5px;
+      bottom: 50px;
+    }
+
+    .object {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .li-item {
+      background-color: white;
+    }
+
+    .li-item-pull {
+      background-color: #F4F4F4 !important;
+    }
+
+    .li-margin {
+      margin-bottom: 13px;
+      border-bottom: 1px solid #EDEDED;
+      padding-bottom: 0px;
+      font-size: 13px;
+      padding-bottom: 10px;
+    }
+
+    .in-obj {
+      font-weight: 400;
+      color: #888888;
+      margin-right: 7px;
+    }
+
+    .obj-title {
+      color: #444444;
+    }
+
+    .bgc-white {
+      background-color: white;
+    }
+
+    .bgc-grey {
+      background-color: #F4F4F4;
+    }
+
+    .mui-navigate-r {
+      background: #fff;
+    }
+
+    .icon-css {
+      display: inline-block;
+      padding: 8px 0 0;
+      vertical-align: top;
+    }
+
+    .task_title {
+      display: inline-block;
+      padding: 8px 0;
+      color: #191515;
+      font-size: 15px;
+      font-weight: 500;
+      width: 50%;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    .sec-line {
+      color: #878787;
+      font-size: 14px;
+    }
+
+    /* 	.arrow_right{
+      transform: rotate(90deg);
+    } */
+    .ul-mar-bottom {
+      margin-bottom: -18px;
+    }
+
+    .mui-table-view-cell > a:not(.mui-btn) {
+      margin: 0;
+      padding: 0;
+    }
+
+    .mui-table-view-cell.mui-active {
+      background: #fff;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+      border-top: 7px solid #F4F4F4
+    }
+
+    .color888 {
+      color: #888888;
+    }
+
+    .ibh {
+      display: inline-block;
+      line-height: 28px;
+    }
+
+    .no-data {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      display: inline-block;
+      font-size: 20px;
+      color: #999;
+      transform: translateX(-50%);
+    }
+
+    .showMore {
+      display: inline-block;
+    }
+
+    #listTitle span {
+      padding: 0;
+      color: #888888;
+    }
+
+    #listTitle {
+      width: 100%;
+      height: 40px;
+      padding-left: 20px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view-cell {
+      padding: 10px;
+      /*padding: 0!important;*/
+    }
+
+
+    #selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+    #selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span {
+      padding: 0;
+    }
+
+    /*.mui-table-view-cell:after{*/
+    /*  left: 4%;*/
+    /*  height: 2px;*/
+    /*  width: 92%;*/
+    /*}*/
+    .mui-table-view-cell:after {
+      left: 1px;
+      background-color: #F4F4F4;
+      height: 10px;
+    }
+
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 300px;
+      background: #FFFFFF
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #search_input1, #search_input2, #search_input3 {
+      margin: 0;
+      width: 90%;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      padding-left: 35px;
+    }
+
+    .search {
+      padding: 10px 0;
+      background: #F4F4F4;
+      /*border-bottom: 7px solid #F4F4F4;*/
+      position: relative;
+    }
+
+
+    .search_icon img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      left: 9%;
+      top: 35%;
+    }
+
+    #del_icon1 img, #del_icon2 img, #del_icon3 img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 9%;
+      top: 33%;
+    }
+
+    .btn-outlined {
+      border: 1px solid #337BFC;
+      color: #337BFC;
+    }
+
+    .mui-btn.mui-active:enabled {
+      background: #337BFC;
+    }
+
+    .spanItemType {
+      background-color: #FFF7F0;
+      border-radius: 5px;
+      border: 1px solid #FFAB61;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    #foldTitle {
+      height: 40px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    /*#whichRiver{*/
+    /*  padding-left: 20px;*/
+    /*  background-color: #FFFFFF;*/
+    /*  height: 40px;*/
+    /*  line-height: 40px;*/
+    /*  color: #191515;*/
+    /*  display: none;*/
+    /*}*/
+
+    /*#whichRiver span{*/
+    /*  padding: 0;*/
+    /*}*/
+
+    /*#whichLake{*/
+    /*  padding-left: 20px;*/
+    /*  background-color: #FFFFFF;*/
+    /*  height: 40px;*/
+    /*  line-height: 40px;*/
+    /*  color: #191515;*/
+    /*  display: none;*/
+    /*}*/
+
+    /*#whichLake span{*/
+    /*  padding: 0;*/
+    /*}*/
+
+    #highest {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #leader {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #details {
+      margin: 0 20px;
+    }
+
+    #viewMore {
+      border-top: 5px solid #F4F4F4;
+      display: flex;
+      align-items: center;
+      color: #337BFC;
+      height: 40px;
+      padding-left: 20px;
+    }
+
+    /*#viewLakeMore{*/
+    /*  border-top: 5px solid #F4F4F4;*/
+    /*  display: flex;*/
+    /*  align-items: center;*/
+    /*  color: #337BFC;*/
+    /*  height: 40px;*/
+    /*  padding-left: 20px;*/
+    /*}*/
+
+    * {
+      touch-action: none;
+    }
+
+    /*
+    自定义的样式
+     */
+    .list-title {
+      color: #191515;
+      font-size: 19px;
+      clear: both;
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    .select-query-list-title {
+      height: 22px;
+      color: #888888;
+      font-size: 14px;
+    }
+
+    .mui-table-view-cell > .mui-slider-right {
+      height: 98%;
+    }
+
+    /* 滚动指示器 */
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 1px solid #FFFFFF;
+    }
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+      /*color: #007aff;*/
+      border-bottom: 2px solid #007aff;
+      background: 0 0;
+      content: '';
+      width: 24px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .mask-item-cell {
+      display: flex;
+      padding: 20px;
+      border-bottom: 1px solid #EDEDED;
+      position: relative;
+    }
+
+
+    .mask-item-cell-name {
+      width: 100px;
+      text-align: left;
+      color: #444444;
+      font-size: 16px;
+    }
+
+    .mask-item-cell-value {
+      flex: 1;
+      text-align: right;
+      color: #191515;
+      font-size: 14px;
+      border: none;
+    }
+
+    .mask-item-cell-button {
+      text-align: center;
+      border-color: #0493F3;
+      font-size: 16px;
+      color: #0493F3;
+      width: 48%;
+      height: 40px;
+      border-radius: 7px;
+    }
+
+    .mask-item-cell-input-button {
+      position: absolute;
+      width: 200px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: transparent;
+      border: none;
+    }
+
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<div class="home-item" style="display: none;" id="home-item">
+  <div class="home-item-list" id="business_item">
+    <div class="item" id="missionUncompleted">
+      <img src="../../../img/missionUncompleted.png">
+      <span>待办任务</span>
+    </div>
+    <div class="item" id="notification">
+      <img src="../../../img/notification.png">
+      <span>通知公告</span>
+    </div>
+    <div class="item" id="directory">
+      <img src="../../../img/directory.png">
+      <span>通讯录</span>
+    </div>
+
+  </div>
+</div>
+
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="swiper-no-swiping">
+      <div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted"
+           style="color: #888888;z-index: 100;background-color: #FFFFFF;">
+        <a id="item1" class="mui-control-item mui-active" href="#selectItem1" style="text-align: center;">
+          任务待办
+        </a>
+        <a id="item2" class="mui-control-item " href="#selectItem2" style="text-align: center;;">
+          流程跟踪
+        </a>
+        <a id="item3" class="mui-control-item " href="#selectItem3" style="text-align: center;;">
+          表单查询
+        </a>
+      </div>
+      <!-- slider start -->
+      <div id="scroll-wrapper" class="" style="height: calc(100vh - 65px);">
+        <!--          <div  class="mui-slider-group" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">-->
+        <div class="mui-content-padded" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+          <!-- selectItem1 start -->
+          <div id="selectItem1" style="padding-top: 0px;" class=" mui-control-content mui-active">
+            <div class="listNav">
+              <div class="search">
+                <div class="search_icon"><img style="width: 14px;" src="../../../img/commom/search1@2x.png"></div>
+                <div id="del_icon1"><img src="../../../img/commom/del.png"></div>
+                <input type="text" id="search_input1" value="" placeholder="请输入名称、发起人"/>
+              </div>
+            </div>
+            <ul id="tab1-content-ul" class="mui-table-view" style="background: #FFFFFF;"></ul>
+          </div>
+          <!-- selectItem1 end -->
+          <!-- selectItem2 start -->
+          <div id="selectItem2" style="padding-top: 0px;" class=" mui-control-content ">
+            <div class="listNav">
+              <div class="search">
+                <div class="search_icon"><img style="width: 14px;" src="../../../img/commom/search1@2x.png"></div>
+                <div id="del_icon2"><img src="../../../img/commom/del.png"></div>
+                <input type="text" id="search_input2" value="" placeholder="请输入名称、发起人"/>
+              </div>
+            </div>
+            <ul id="tab2-content-ul" class="mui-table-view" style="background: #FFFFFF;"></ul>
+          </div>
+          <!-- selectItem2 end -->
+          <!-- selectItem3 start -->
+          <div id="selectItem3" style="padding-top: 0px;" class=" mui-control-content ">
+            <div class="listNav">
+              <div class="search">
+                <div class="search_icon"><img style="width: 14px;" src="../../../img/commom/search1@2x.png"></div>
+                <div id="del_icon3"><img src="../../../img/commom/del.png"></div>
+                <input type="text" id="search_input3" value="" placeholder="请输入名称、发起人"/>
+              </div>
+            </div>
+            <ul id="tab3-content-ul" class="mui-table-view" style="background: #FFFFFF;"></ul>
+          </div>
+          <!-- selectItem3 end -->
+        </div>
+
+      </div>
+      <!-- slider end -->
+
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+</body>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/maintain.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<!-- <script src="../../js/timer.js"></script> -->
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script src="../../../js/workSpace/missionUncompleted.js"></script>
+<script src="../../../js/bscroll.js"></script>
+
+<script>
+    mui.init({
+        // pullRefresh: {
+        //     container: '#slider', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+        //     //下拉刷新
+        //     down: {
+        //         style: 'circle',
+        //         height: 50, //可选,默认50.触发下拉刷新拖动距离,
+        //         offset:'0px', //可选 默认0px,下拉刷新控件的起始位置
+        //         auto: true,
+        //         contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+        //         contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+        //         contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+        //
+        //         callback: function () {
+        //             console.log("触发刷新")
+        //             param.pageNo = 1;
+        //             pulldownRefresh();
+        //           mui("#slider").pullRefresh().endPulldownToRefresh();//结束动画
+        //         }
+        //     },
+        //     //上拉加载
+        //     up: {
+        //         // auto: true, // 可选,默认false.自动上拉加载一次
+        //         height: 300, //触发上拉加载拖动距离
+        //         contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+        //         contentnomore: '暂无更多数据', //可选，请求完毕若没有更多数据时显示的提醒内容；
+        //         callback: function () {
+        //           upLoadMore();
+        //         } //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+        //     }
+        //
+        // },
+        swipeBack: false
+    });
+
+    // //下拉刷新
+    function pulldownRefresh() {
+        $("#tab1-content-ul").empty();
+        param.pageNo = 1;
+        console.log("下拉刷新")
+        // getCount()
+
+        switch (currentItem) {
+            case 1:
+                getMissionList(false, function (data) {
+                    if (data.total < param.pageNo) {
+                        //不再执行上拉
+                        console.log("暂无更多数据");
+                        app.toast("已加载完所有项目");
+                        allMissionDataLoad = true;
+                    } else {
+                        console.log("有数据");
+                        allMissionDataLoad = false;
+                    }
+                })
+                break;
+            case 2:
+                getProcessTraceList(false, function (data) {
+                    if (data.length < param.pageSize) {
+                        //不再执行上拉
+                        console.log("===暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+            case 3:
+                getSearchFormList(false, function (data) {
+                    if (data.length < param.pageSize) {
+                        console.log("暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                });
+                break;
+        }
+
+
+    }
+
+    // //上拉加载
+    function upLoadMore() {
+        //console.log("上拉加载")
+        console.log("pageSize" + param.pageSize);
+        console.log("pageNo" + param.pageNo);
+        switch (currentItem) {
+            case 1:
+                getMissionList(true, function (data) {
+                    console.log("totalPage:" + data.totalPage);
+                    if (data.total < param.pageNo) {
+                        //不再执行上拉
+                        console.log("===暂无更多数据");
+                        app.toast("已加载完所有项目");
+                        allMissionDataLoad = true;
+                    } else {
+                        console.log("有数据");
+                        allMissionDataLoad = false;
+                    }
+                });
+                break;
+            case 2:
+                getProcessTraceList(true, function (data) {
+                    if (data.length < param.pageSize) {
+                        //不再执行上拉
+                        console.log("===暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+            case 3:
+                getSearchFormList(true, function (data) {
+                    if (data.length < param.pageSize) {
+                        console.log("暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                });
+                break;
+        }
+    }
+
+    // var vConsole = new VConsole();
+
+    let param = {
+        order: 'desc',
+        userName: app.userInfo().name,
+        pageNo: 1,
+        pageSize: 10,
+        combineCondition: '',
+    }
+    let currentItem = 1;
+
+    let delegationParam = {
+        assignee: 'cwh01',
+        taskId: 'c0ec0998-5dff-11eb-b829-0242ac120004',
+    }
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        var wvs = plus.webview.all();
+        for (var i = 0, len = wvs.length - 1; i < len; i++) {
+            let theurl = wvs[i].getURL() + '';
+            if (!(theurl.search('login.html') != -1 ||
+                theurl.search('www/main.html') != -1 ||
+                theurl.search('www/index.html') != -1 ||
+                theurl.search('/searchInfo/index.html') != -1)) {
+                wvs[i].close('none');
+            }
+        }
+        curr.close('slide-out-right');
+    }
+
+    var isOpen = false;
+    var isShow = true;
+    var userPicker = new mui.PopPicker();
+    var allMissionDataLoad = false; // 根据数量判断是否已加载完
+
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+    mask.clickClose = false;
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    // mui('.mui-scroll-wrapper').scroll();
+    var pickerpxtop = null;
+
+    var extras = {
+        openNum: 0
+    }
+
+    var input1 = document.getElementById("search_input1");
+    var input2 = document.getElementById("search_input2");
+    var input3 = document.getElementById("search_input3");
+
+    // var rankBox = document.getElementById("rank-box"); // slider
+    var rankBox = document.getElementById("scroll-wrapper"); // slider
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        pullUpLoad: true
+    });
+
+    function maskClose() {
+        mask.clickClose = true;
+        mask.close();
+    }
+
+    function maskShow() {
+        mask.clickClose = false;
+        mask.show();
+    }
+
+    mui.plusReady(function () {
+
+        $("#del_icon1").hide();
+        $("#del_icon2").hide();
+        $("#del_icon3").hide();
+        plus.navigator.setStatusBarStyle("dark");
+        // initSelected();
+        // 先不调用
+        getMissionData();
+
+        //禁止选项卡自带滑动
+        cBScroll.on('pullingUp', () => {
+            console.log("pullingUp-上拉加载更多" + allMissionDataLoad);
+            if (!allMissionDataLoad) {
+                upLoadMore();
+            }
+
+        })
+
+        var statusBarHeight = plus.navigator.getStatusbarHeight();
+        $("#segmentedControl").css("padding-top",statusBarHeight);
+
+        mui('.mui-slider').slider().stopped = true;
+        mui('#slider').slider().stopped = true;
+        //$('#slider').slider().gotoItem(0,0);
+        var self = plus.webview.currentWebview();
+        extras.openNum = self.openNum + 1; //初始化打开页面数量
+
+        self.setStyle({
+            titleNView: {
+                backgroundImage: "../../../img/bgTop.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '70',
+                    fontSize: '17',
+                    text: '',
+                    onclick: function () {
+                        if (isShow) {
+                            isShow = false;
+                            $("#home-item").show();
+                            // mask.show()
+                            maskShow();
+                        } else {
+                            isShow = true;
+                            $('#home-item').hide();
+                            // mask.close();
+                            maskClose();
+                        }
+                    }
+                }],
+            }
+        });
+        // 点击关闭遮罩层
+        self.addEventListener("maskClick", closeMask, true);
+
+        // BScroll
+        /*
+
+                //监听区域滑动
+                document.getElementById('selectItem1').addEventListener("swipeleft", function() {
+                    input1.blur();
+                    $("#del_icon1").hide();
+                    $("#del_icon2").hide();
+                    $("#del_icon3").hide();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').addClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('lake',lakePageNo,lakePageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(1);
+                });
+
+                document.getElementById('selectItem2').addEventListener("swipeleft", function() {
+                    input2.blur();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').removeClass("mui-active")
+                    $('#item3').addClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(2);
+                });
+                document.getElementById('selectItem2').addEventListener("swiperight", function() {
+                    input2.blur();
+                    $('#item1').addClass("mui-active")
+                    $('#item2').removeClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(0);
+                });
+                document.getElementById('selectItem3').addEventListener("swiperight", function() {
+                    input3.blur();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').addClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(1);
+                });
+                */
+    });
+
+    //关闭遮罩层
+    function closeMask() {
+        console.log('关闭遮罩层' + sharew.id);
+        //避免出现特殊情况，确保分享页面在初始化时关闭
+        if (!sharew) {
+            sharew = plus.webview.getWebviewById("goods/add_to_cart.html");
+            console.log(sharew.id);
+        }
+        if (sharew) {
+            sharew.hide('slide-out-bottom', 300);
+            //sharew = null;
+        }
+        var ws = plus.webview.currentWebview();
+        console.log('关闭遮罩层' + ws.id);
+        ws.setStyle({mask: "none"});
+    }
+
+    var getMissionData = function () {
+        console.log("===getMissionData===")
+        getMissionList(false, function (data) {
+
+            console.log("totalPage" + data.totalPage)
+            if (data.total < param.pageNo) {
+                //不再执行上拉
+                console.log("===暂无更多数据");
+                app.toast("已加载完所有项目");
+                allMissionDataLoad = true;
+                // mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+                // mui('#ALL').pullRefresh().disablePullupToRefresh();
+
+
+            } else {
+                console.log("有数据");
+                allMissionDataLoad = false;
+                // mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+            }
+            cBScroll.finishPullUp()
+            cBScroll.refresh()
+        });
+    }
+
+    var getProcessData = function () {
+        console.log('===getProcessData===');
+        getProcessTraceList(false, function (data) {
+            if (data.length < param.pageSize) {
+                //不再执行上拉
+                console.log("===暂无更多数据")
+                app.toast("已加载完所有项目")
+            } else {
+                console.log("有数据")
+            }
+            cBScroll.finishPullUp()
+            cBScroll.refresh()
+        });
+    }
+    // methods
+    var initDestoryData = function (data, callback) {
+        for (let key in data) {
+            if (data[key] == '' || data[key] == null) {
+                data[key] = '暂无'
+            }
+        }
+        callback(data);
+    }
+
+
+    // JQ
+    $('#search_input1').change(function () {
+        if ($('#search_input1').val() != '') {
+            $("#del_icon1").show();
+            param.combineCondition = $("#search_input1").val();
+            getMissionList(false, function (data) {
+                if (data.total < param.pageNo) {
+                    console.log("暂无更多数据")
+                    app.toast("已加载完所有项目")
+                    allMissionDataLoad = true;
+                } else {
+                    console.log("有数据")
+                    allMissionDataLoad = false;
+                }
+            });
+        } else {
+            app.toast("检索内容为空！")
+            $('#del_icon1').hide();
+        }
+    })
+
+    $('#search_input2').change(function () {
+        if ($('#search_input2').val() != '') {
+            $("#del_icon2").show();
+            param.combineCondition = $("#search_input1").val();
+            getProcessTraceList(false, function (data) {
+                if (data.length < param.pageSize) {
+                    //不再执行上拉
+                    console.log("===暂无更多数据")
+                    app.toast("已加载完所有项目")
+                } else {
+                    console.log("有数据")
+                }
+                cBScroll.finishPullUp()
+                cBScroll.refresh()
+            });
+        } else {
+            app.toast("检索内容为空！")
+            $('#del_icon2').hide();
+        }
+    })
+
+    $('#search_input3').change(function () {
+        if ($('#search_input3').val() != '') {
+            $("#del_icon3").show();
+            param.combineCondition = $("#search_input1").val();
+            getSearchFormList(false, function (data) {
+                if (data.length < param.pageSize) {
+                    console.log("暂无更多数据")
+                    app.toast("已加载完所有项目")
+                } else {
+                    console.log("有数据")
+                }
+            })
+        } else {
+            app.toast("检索内容为空！")
+            $('#del_icon3').hide();
+        }
+    })
+
+    $('#search_input1').on('input', function () {
+        param.combineCondition = '';
+        if ($("#search_input1").val() != '') {
+            $("#del_icon1").show();
+        } else {
+            $("#del_icon1").hide();
+        }
+    })
+
+    $('#search_input2').on('input', function () {
+        param.combineCondition = '';
+        if ($("#search_input2").val() != '') {
+            $("#del_icon2").show();
+        } else {
+            $("#del_icon2").hide();
+        }
+    })
+
+    $('#search_input3').on('input', function () {
+        param.combineCondition = '';
+        if ($("#search_input3").val() != '') {
+            $("#del_icon3").show();
+        } else {
+            $("#del_icon3").hide();
+        }
+    })
+
+    $("#del_icon1").on('tap', function () {
+        $('#search_input1').val('');
+        $("#del_icon1").hide();
+        app.toast("检索内容为空！")
+    })
+
+    $("#del_icon2").on('tap', function () {
+        $('#search_input2').val('');
+        $("#del_icon2").hide();
+        app.toast("检索内容为空！")
+    })
+
+    $("#del_icon3").on('tap', function () {
+        $('#search_input3').val('');
+        $("#del_icon3").hide();
+        app.toast("检索内容为空！")
+    })
+
+    var globalItem = null
+    $('#item1').on('tap', function () {
+        // input2.blur();
+        // input3.blur();
+        console.log("点击了item1");
+      globalItem = 'item1'
+        currentItem = 1;
+        getMissionList(false, function (data) {
+            if (data.total < param.pageNo) {
+                console.log("暂无更多数据")
+                app.toast("已加载完所有项目")
+                allMissionDataLoad = true;
+            } else {
+                console.log("有数据")
+                allMissionDataLoad = false;
+            }
+        });
+        // $('#item1').addClass("mui-active")
+        // $('#item2').removeClass("mui-active")
+        // $('#item3').removeClass("mui-active")
+    })
+
+    $('#item2').on('tap', function () {
+        // input1.blur();
+        // input3.blur();
+        console.log("点击了item2")
+      globalItem = 'item2'
+        currentItem = 2;
+        getProcessTraceList(false, function (data) {
+            if (data.length < param.pageSize) {
+                console.log("暂无更多数据")
+                app.toast("已加载完所有项目")
+            } else {
+                console.log("有数据")
+            }
+        })
+        // $('#item1').removeClass("mui-active")
+        // $('#item2').addClass("mui-active")
+        // $('#item3').removeClass("mui-active")
+    })
+    $('#item3').on('tap', function () {
+        // input1.blur();
+        // input2.blur();
+        console.log("点击了item3")
+      globalItem = 'item3'
+        currentItem = 3;
+        getSearchFormList(false, function (data) {
+            if (data.length < param.pageSize) {
+                console.log("暂无更多数据")
+                app.toast("已加载完所有项目")
+            } else {
+                console.log("有数据")
+            }
+        })
+        // $('#item1').removeClass("mui-active")
+        // $('#item2').removeClass("mui-active")
+        // $('#item3').addClass("mui-active")
+    })
+
+
+    $('#viewMore').on('tap', function () {
+        isOpen = !isOpen;
+        if (isOpen) {
+            $('#tab1-content-ul').show();
+            $('#viewMoreText').text("收起")
+            $('#river_arrow_down').css("transform", "rotate(180deg)")
+        } else {
+            $('#tab1-content-ul').hide();
+            $('#viewMoreText').text("查看更多")
+            $('#river_arrow_down').css("transform", "rotate(0)")
+        }
+    })
+
+    // $('#viewLakeMore').on('tap', function() {
+    //     isLakeOpen = !isLakeOpen;
+    //     if (isLakeOpen) {
+    //         // $('#streetLakeDetail').show();
+    //         $('#viewLakeMoreText').text("收起")
+    //         $('#lake_arrow_down').css("transform","rotate(180deg)")
+    //     } else {
+    //         // $('#streetLakeDetail').hide();
+    //         $('#viewLakeMoreText').text("查看更多")
+    //         $('#lake_arrow_down').css("transform","rotate(0)")
+    //     }
+    // })
+
+    $("#missionUncompleted").on('tap', function () {
+        isShow = true;
+        $('#home-item').hide();
+        mask.close();
+    })
+
+    $("#notification").on('tap', function () {
+        app.openPage('', {
+            titleNView: {
+                titleText: '通知公告',
+                autoBackButton: true
+            }
+        }, extras);
+    })
+
+    $("#directory").on('tap', function () {
+        app.openPage('', {
+            titleNView: {
+                titleText: '通讯录',
+                autoBackButton: true
+            }
+        }, extras);
+    })
+
+
+    //关闭遮罩层
+    // $(document).on("click", ".mui-backdrop", function() {
+    //     isShow = true;
+    //     $('#home-item').hide();
+    //     mask.close();
+    // })
+
+    window.addEventListener('backInspection', function (e) { //执行刷新
+        // location.reload();
+        mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        mui('#contentList').scroll().scrollTo(0, 0, 0);
+    });
+
+    (function ($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+    })(mui);
+
+    // 获取任务待办列表
+    function getMissionList(append, callback) {
+        console.log("token:"+app.sessionId());
+        getProjectListByRole(param, function (data) {
+            console.log(JSON.stringify(data))
+            if (data.success == true) {
+                addData(data.result.dataList, append);
+                callback(data.result);
+            } else {
+                mui.toast("列表查询失败")
+            }
+            cBScroll.finishPullUp()
+            cBScroll.refresh()
+        })
+    }
+
+    function addData(data, append) {
+        console.log(JSON.stringify(data));
+        var li = "";
+        // 表单查询 的流程中字段 display:block
+        for (let i = 0; i < data.length; i++) {
+            var item = data[i];
+            var itemData = item.taskSubject + '|' + item.nodeName + '|' + item.assigneeFullname +
+                    '|' + item.taskId + '|' + item.businessKey + '|' + item.processDefinitionKey +
+                    '|' + item.processDefinitionId + '|' + item.processInstanceId+ '|' + item.nodeId;
+
+            li = li + '<li id="' + item.guid + '" class="mui-table-view-cell" data-status="' + itemData + '" style="line-height: 22px;">'
+                + '<div class="mui-slider-right mui-disabled">'
+                + '<a class="mui-btn mui-btn-blue handQx" data-status="' + itemData + '" style="width: 70px;padding-left:20px;text-align:center;">委托</a>'
+                + '</div>'
+                + '<div class="mui-slider-handle enterQx" style="padding: 5px 10px;" data-status="' + status + '">'
+                + '<div class="select-query-list-title">'
+                + '<span id="taskCategory" class="spanItemType" style="color: #FF7800;float:left;">' + item.taskCategory + '</span>'
+                + '<span id="nodeName" style="float: right;color: #888888;">' + '环节:' + item.nodeName + '</span>'
+                + '</div>'
+                + '<div class="list-title">'
+                + '<span>' + item.taskSubject + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title ">'
+                + '<span class="def-font spanLim2" style="float:left;">发起人：' + item.startUserFullname + '</span>'
+                + '<span id="assigneeFullname" class="def-font spanLim2" style="float:right;display: none">执行人：' + item.assigneeFullname + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title" style="margin:10px 0;">'
+                + '<span class="def-font spanLim2" style="float:left;margin:10px 0;">创建日期：' + item.startTime + '</span>'
+                + '<span class="def-font spanLim2" style="display: none;float:right;color:#FF7800;">流转中</span>'
+                + '</div>'
+                + '</div>'
+                + '</li>';
+        }
+        param.pageNo++;//换下一页
+        if (append) {
+            $("#tab1-content-ul").append(li);
+        } else {
+            $("#tab1-content-ul").html(li);
+        }
+    }
+
+    // 获取流程跟踪列表
+    function getProcessTraceList(append, callback) {
+        getProjectProcessByRole(param, function (data) {
+            if (data.success == true) {
+                addProcessData(data.result.dataList, append);
+                callback(data.result.dataList);
+            } else {
+                mui.toast("列表查询失败")
+            }
+            cBScroll.finishPullUp()
+            cBScroll.refresh()
+        })
+    }
+
+    function addProcessData(data, append) {
+        console.log(JSON.stringify(data));
+        var li = "";
+        // 表单查询 的流程中字段 display:block
+        for (let i = 0; i < data.length; i++) {
+            var item = data[i];
+            var itemData = item.taskSubject + '|' + item.nodeName + '|' + item.assigneeFullname +
+                    '|' + item.taskId + '|' + item.businessKey + '|' + item.processDefinitionKey +
+                    '|' + item.processDefinitionId + '|' + item.processInstanceId;
+
+            li = li + '<li id="' + item.guid + '" class="mui-table-view-cell" data-status="' + itemData + '" style="line-height: 22px;">'
+                + '<div class="mui-slider-right mui-disabled">'
+                + '<a class="mui-btn mui-btn-blue handQx" data-status="' + item.taskId + '" style="width: 70px;padding-left:20px;text-align:center;display: none;">委托</a>'
+                + '</div>'
+                + '<div class="mui-slider-handle enterQx" style="padding: 5px 10px;" data-status="' + status + '">'
+                + '<div class="select-query-list-title">'
+                + '<span class="spanItemType" style="color: #FF7800;float:left;">' + item.taskCategory + '</span>'
+                + '<span style="float: right;color: #888888;">' + '环节:' + item.nodeName + '</span>'
+                + '</div>'
+                + '<div class="list-title">'
+                + '<span>' + item.taskSubject + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title ">'
+                + '<span class="def-font spanLim2" style="float:left;display: none">发起人：' + item.startUserFullname + '</span>'
+                + '<span class="def-font spanLim2" style="float:right">执行人：' + item.assigneeFullname + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title" style="margin:10px 0;">'
+                + '<span class="def-font spanLim2" style="float:left;margin:10px 0;">创建日期：' + item.startTime + '</span>'
+                + '<span class="def-font spanLim2" style="display: none;float:right;color:#FF7800;">流转中</span>'
+                + '</div>'
+                + '</div>'
+                + '</li>';
+        }
+        param.pageNo++;//换下一页
+        if (append) {
+            $("#tab2-content-ul").append(li);
+        } else {
+            $("#tab2-content-ul").html(li);
+        }
+    }
+
+    // 获取表单查询列表
+    function getSearchFormList(append, callback) {
+        getProjectFormByRole(param, function (data) {
+            if (data.success == true) {
+                addFormData(data.result.dataList, append);
+                callback(data.result.dataList);
+            } else {
+                mui.toast("列表查询失败")
+            }
+            cBScroll.finishPullUp()
+            cBScroll.refresh()
+        })
+    }
+
+    function addFormData(data, append) {
+        console.log(JSON.stringify(data));
+        var li = "";
+        // 表单查询 的流程中字段 display:block
+        for (let i = 0; i < data.length; i++) {
+            var item = data[i];
+            var itemData = item.taskSubject + '|' + item.nodeName + '|' + item.assigneeFullname +
+                    '|' + item.taskId + '|' + item.businessKey + '|' + item.processDefinitionKey +
+                    '|' + item.processDefinitionId + '|' + item.processInstanceId + '|' + item.nodeId;
+
+            li = li + '<li id="' + item.guid + '" class="mui-table-view-cell" data-status="' + itemData + '" style="line-height: 22px;">'
+                + '<div class="mui-slider-right mui-disabled">'
+                + '<a class="mui-btn mui-btn-blue handQx" data-status="' + item.taskId + '" style="width: 70px;padding-left:20px;text-align:center;display: none;">委托</a>'
+                + '</div>'
+                + '<div class="mui-slider-handle enterQx" style="padding: 5px 10px;" data-status="' + status + '">'
+                + '<div class="select-query-list-title">'
+                + '<span class="spanItemType" style="color: #FF7800;float:left;">' + item.taskCategory + '</span>'
+                + '<span style="float: right;color: #888888;display: none;">' + '环节:' + item.nodeName + '</span>'
+                + '</div>'
+                + '<div class="list-title">'
+                + '<span>' + item.taskSubject + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title ">'
+                + '<span class="def-font spanLim2" style="float:left;">发起人：' + item.startUserFullname + '</span>'
+                + '<span class="def-font spanLim2" style="float:right;display: none;">执行人：' + item.assigneeFullname + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title" style="margin:10px 0;">'
+                + '<span class="def-font spanLim2" style="float:left;margin:10px 0;">创建日期：' + item.startTime + '</span>'
+                + '<span class="def-font spanLim2" style="float:right;color:#FF7800;">' + item.state + '</span>'
+                + '</div>'
+                + '</div>'
+                + '</li>';
+        }
+        param.pageNo++;//换下一页
+        if (append) {
+            $("#tab3-content-ul").append(li);
+        } else {
+            $("#tab3-content-ul").html(li);
+        }
+    }
+
+    function addDataTmp() {
+        $("#tab1-content-ul").empty();
+        var li = "";
+        for (let i = 0; i < 10; i++) {
+            li = li + '<li id="' + i + '" class="mui-table-view-cell" style="line-height: 22px;">'
+                + '<div class="mui-slider-right mui-disabled">'
+                + '<a class="mui-btn mui-btn-blue handQx" data-status="' + "item.taskId" + '" style="width: 70px;padding-left:20px;text-align:center;">委托</a>'
+                + '</div>'
+                + '<div class="mui-slider-handle enterQx" style="padding: 5px 10px;" data-status="' + "status" + '">'
+                + '<div class="select-query-list-title">'
+                + '<span class="spanItemType" style="color: #FF7800;float:left;">' + '通用表单' + '</span>'
+                + '<span style="float: right;color: #888888;">' + '环节:' + "item.nodeName" + '</span>'
+                + '</div>'
+                + '<div class="list-title">'
+                + '<span>' + "item.taskCategory" + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title ">'
+                + '<span class="def-font spanLim2" style="float:left;">发起人：' + "item.startUserFullname" + '</span>'
+                + '<span class="def-font spanLim2" style="float:right">执行人：' + "item.assigneeFullname" + '</span>'
+                + '</div>'
+                + '<div class="select-query-list-title" style="margin:10px 0;">'
+                + '<span class="def-font spanLim2" style="float:left;">创建日期：' + "item.startTime" + '</span>'
+                + '<span class="def-font spanLim2" style="display: block;float:right;color:#FF7800;">流转中</span>'
+                + '</div>'
+                + '</div>'
+                + '</li>';
+        }
+        // param.pageNo++;//换下一页
+        // 修改 伪类 after的height
+        //动态获取 after 的 top 属性
+        //var cellSeparatorHeight = window.getComputedStyle($('.mui-table-view-cell'), "after").getPropertyValue('height');
+        // console.log("cellSeparatorHeight:" + cellSeparatorHeight);
+        $("#tab1-content-ul").append(li);
+
+    }
+
+    // function handle(item){
+    //     console.log(JSON.stringify(item))
+    // }
+
+    // 委托点击
+    mui("#tab1-content-ul,#tab2-content-ul,#tab3-content-ul").on('tap', '.handQx', function (event) {
+        event.stopPropagation();
+        console.log(JSON.stringify(event))
+        var index = $(this).attr('data-status');
+        console.log("委托点击index" + index);
+        var datas = index.split('|');
+        delegationParam.taskId = datas[3];
+        $("#id").val()
+
+        // mask.show();
+        maskShow();
+        addProxyCoverView(datas);
+    })
+
+    mui('#tab1-content-ul,#tab2-content-ul,#tab3-content-ul').on('tap', '.mui-table-view-cell', function (event) {
+        var dataStr = $(this).attr('data-status');
+        var datas = dataStr.split('|');
+        // 去详情
+        console.log('qu'+JSON.stringify(datas))
+
+
+        var extra = {
+            businessKey: datas[4],
+            // businessKey: '',
+            nodeId:datas[8],
+            nodeName:datas[1],
+            processDefinitionKey: datas[5],
+            processDefinitionId: datas[6],
+            processInstanceId: datas[7],
+            taskId: datas[3],
+            globalItem:globalItem
+        };
+        console.log('datas[5] : ' + datas[5])
+        //===================================临时注释start=====================================
+        if (datas[5]=="safety_rectify") {
+          // safety_rectify安全和质量project_quality_rectify的跳转已完成，在增加一个通用工单的就行
+            app.openPage("safetyFormDetail.html", {
+                titleNView: {
+                    titleText: '安全整改',
+                    autoBackButton: true
+                }
+            }, extra);
+        } else if ( datas[5]=="project_quality_rectify"){
+            app.openPage("qualityFormDetail.html", {
+                titleNView: {
+                    titleText: '质量整改',
+                    autoBackButton: true
+                }
+            }, extra);
+        } else if (datas[5]=="FormBaseNew") { // FormBaseNew , old: work_order
+        //===================================临时注释end=====================================
+          app.openPage("normalForm.html", {
+              titleNView: {
+                  titleText: '任务详情',
+                  autoBackButton: true
+              }
+          }, extra);
+        }else{
+          app.toast('该类型表单暂未配置移动端')
+        }
+    })
+
+    function maskItemCellCancelBtnOCL() {
+        console.log("委托弹窗的取消按钮点击 0");
+        maskClose()
+    }
+
+    function maskItemCellSubmitBtnOCL() {
+        console.log("委托弹窗的提交按钮点击 1");
+        missionDelegation(function (data) {
+            if (data.success) {
+                app.toast('委托成功');
+                maskClose();
+            }
+        })
+    }
+
+    // 任务委托
+    function missionDelegation(callback) {
+        console.log(JSON.stringify(delegationParam));
+        setMissionDelegation(delegationParam, function (data) {
+            console.log(JSON.stringify(data))
+            if (data.success == true) {
+                callback(data);
+            } else {
+                mui.toast("列表查询失败")
+            }
+            // cBScroll.finishPullUp()
+            // cBScroll.refresh()
+        })
+    }
+
+    function maskItemCellInputButtonOCL() {
+        console.log("委托弹窗的输入框点击 1");
+        app.openPage("../../commom/organ.html", {
+            titleNView: {
+                titleText: '选择人员',
+                autoBackButton: true
+            }
+        }, extras);
+
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+        // 赋值
+        window.addEventListener('returnSelect', checkPersonBack, false);
+    }
+
+    //新委托人回调
+    var checkPersonBack = function (data) {
+        if (data.detail[0] != undefined) {
+            console.log(JSON.stringify(data.detail[0]));
+            $("#checkPersonFullName").val(data.detail[0].realname);
+            delegationParam.assignee = data.detail[0].username;
+            // $("#checkPerson").val(data.detail[0].username)
+            // strFormData.host = data.detail[0].username;
+
+            console.log("新委托人", JSON.stringify(data.detail)); //data.detail[0].realname
+        }
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+    }
+    // 委托弹窗
+    var addProxyCoverView = function (datas) {
+        // 先清空
+        $(".mui-backdrop").empty();
+
+        var html = '<div style="margin: 40% 5%;">' +
+            '<div class="mui-table-view" style="border-radius: 7px;">' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name">任务名称</div>' +
+            '<input name="taskName" readonly class="mask-item-cell-value" value="' + datas[0] + '" />' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name">' + '环节名称' + '</div>' +
+            '<input name="nodeName" readonly class="mask-item-cell-value" value="' + datas[1] + '" />' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name">' + '原执行人' + '</div>' +
+            '<input name="oldExecutor" readonly class="mask-item-cell-value" value="' + datas[2] + '" />' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name">' + '新执行人' + '</div>' +
+            '<input id="checkPersonFullName" name="newExecutor" class="mask-item-cell-value" readonly placeholder="请选择人员" />' +
+            '<button class="mask-item-cell-input-button" onclick="maskItemCellInputButtonOCL()"></button>' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<button onclick="maskItemCellCancelBtnOCL()" class="mask-item-cell-name mask-item-cell-button" data-status="0">' + '取消' + '</button>' +
+            '<button onclick="maskItemCellSubmitBtnOCL()" class="mask-item-cell-value mask-item-cell-button" data-status="1" style="background-color: #0493F3;color: white;margin-left: 10px;">' + '提交' + '</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+        $(".mui-backdrop").append(html);
+    }
+
+    // 测试区 ======================
+    // maskShow();
+    // addProxyCoverView();
+    // Html测试
+    // cBScroll.on('pullingUp', () => {
+    //   console.log("上拉加载更多-test");
+    //   addDataTmp();
+    // })
+    // addDataTmp();
+    // $('#slider').slider().stopped = true;
+
+</script>
+
+</html>

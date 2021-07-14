@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>项目概览列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+
+
+			.mui-table-view-cell::-webkit-scrollbar {
+				display: none;
+			}
+
+			.mui-scroll {
+				/*padding: 0 20px;*/
+				background: #f6f4f7;
+   			 }
+
+
+			/* 向下图标 */
+			.mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after {
+				font-family: Muiicons;
+				font-size: inherit;
+				line-height: 1;
+				position: absolute;
+				top: 50%;
+				display: inline-block;
+				-webkit-transform: translateY(-50%);
+				transform: translateY(-50%);
+				text-decoration: none;
+				color: #84cbf4;
+				-webkit-font-smoothing: antialiased;
+				margin-right: -16px;
+			}
+			
+
+			.icon-img{
+				width: 15px;
+				height: 15px;
+				margin-top: 6px;
+				margin-left: 10px;
+				float: left;
+			}
+			.text-word{
+				flex-grow: 5;
+				line-height: 25px;
+				text-align: left;
+			}
+
+			.mui-table-view-chevron .mui-table-view-cell {
+				padding-right: 20px;
+			}
+
+			.mui-new-css{
+				padding-right: 20px;
+			}
+
+			.text-css{
+				text-align: left;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 搜索栏 -->
+						<!-- <div class="aa"></div> -->
+						<div id="searchBar" class="mui-input-row"
+							 style="position: relative; z-index: 6;height: 40px; width: 355px;border-radius: 5px ;margin:20px auto;">
+							<img src="../../img/commom/search1@2x.png" alt="" id="search_icon"
+								 style="width: 14px;height: 14px; position: absolute;top: 12px;left: 41.5px;">
+							<input
+									style="border: none;width: 90%;margin-left:5%;float: left;border-radius: 10px; height: 40px; text-indent: 41.5px; line-height: 40px; font-size: 14px;"
+									class="mui-input-clear" type="text" placeholder="请输入项目编号\项目名称" name="" id="searchInput" value="" />
+						</div>
+
+						<div class="">
+									<ul id="list" class="mui-table-view mui-table-view-chevron">
+										<li class="mui-table-view-cell mui-collapse mui-new-css" id="prj1">
+											<div><img class="icon-img"  src="../../img/project_supervise/prj1.png" ></div>
+										<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="cb-t">
+											筹备阶段(0)
+										</a>
+										<ul class="mui-table-view mui-table-view-chevron" id="cb">
+										</ul>
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj6">
+											<img class="icon-img"  src="../../img/project_supervise/prj6.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="lx-t" >
+												立项阶段(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="lx">
+											</ul>
+
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj5">
+											<img class="icon-img"  src="../../img/project_supervise/prj5.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="ky-t" >
+												科研阶段(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="ky">
+											</ul>
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj2">
+											<img class="icon-img"  src="../../img/project_supervise/prj2.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="cs-t">
+												初设阶段(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="cs">
+
+											</ul>
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj9">
+											<img class="icon-img"  src="../../img/project_supervise/prj9.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="xs-t">
+												详设阶段(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="xs">
+
+											</ul>
+
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj7">
+											<img class="icon-img"  src="../../img/project_supervise/prj7.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="sg-t">
+												施工阶段(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="sg">
+
+											</ul>
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj8">
+											<img class="icon-img"  src="../../img/project_supervise/prj8.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="ys-t">
+												验收阶段(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="ys">
+
+											</ul>
+
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj4">
+											<img class="icon-img"  src="../../img/project_supervise/prj4.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="yjg-t">
+												已竣工(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="yjg">
+
+											</ul>
+
+
+										</li>
+										<li class="mui-table-view-cell mui-collapse" id="prj3">
+											<img class="icon-img"  src="../../img/project_supervise/prj3.png" >
+											<a class="mui-navigate-right text-word" style="	margin-left: 0px;" id="yjs-t">
+												已结算(0)
+											</a>
+											<ul class="mui-table-view mui-table-view-chevron" id="yjs">
+
+											</ul>
+
+
+										</li>
+									</ul>
+
+								</div>
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+
+
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/overview.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/projectManage/newProjectList.js"></script>
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+
+		var self;
+		mui.init({
+			swipeBack:false
+		});
+
+
+
+		(function ($) {
+			$(".mui-scroll-wrapper").scroll({});
+		})(mui);
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		//注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+
+		let params ={
+			projectName:''
+		}
+
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			getProjectMapMain(params);
+
+		});
+		
+		
+		function getProjectMapMain(param) {
+			getProjectMap(param,function (data) {
+				console.log(JSON.stringify(data.result))
+				addData(data.result)
+			})
+		}
+
+
+		var text = document.querySelector("#searchInput");
+		text.addEventListener('input', function () {
+			var projectName = this.value
+			params.projectName = projectName
+			getProjectMapMain(params);
+		})
+
+
+
+		//选择项目
+		function selectProject(param, callback) {
+			var url = config.urls.baseUrl + config.actions.selectProject;
+
+			app.showLoader();
+			$.ajax(url, {
+				data:param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'GET', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					var res = xhr.responseText;
+					res = JSON.parse(res)
+					mui.alert(res.message)
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+
+		function exitProject(param, callback) {
+			console.log(JSON.stringify(param))
+			var url = config.urls.baseUrl + config.actions.exitProject;
+			// app.showLoader();
+			$.ajax(url, {
+				data:'',
+				dataType: 'json', //服务器返回json格式数据
+				type: 'GET', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					// app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					// var res = xhr.responseText;
+					// res = JSON.parse(res)
+					// mui.alert(res.message)
+					dealingWithErrorRequest(errorThrown);
+					// app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+		mui.back=function(){
+			exitProject('', (res) => {
+				console.log(res)
+				plus.webview.currentWebview().close('none')
+			})
+		}
+		function selProject(){
+			if(!isEmpty(projectInfo)){
+				projectInfo=JSON.parse(localStorage.getItem("projectInfo"))
+				console.log(JSON.stringify(projectInfo))
+				selectProject({'prjCode':'prj228'},(res)=>{
+					console.log(JSON.stringify(res))
+				})
+			}
+		}
+
+		var projectInfo = {
+			prjId: "",
+			prjName: "",
+			prjCode: ""
+		}
+		$('.mui-table-view-cell').on('tap','.text-css',function () {
+			var idNum = $(this).attr('id').substring(6,$(this).attr('id').length)
+			// alert(idNum)
+			var guid = $("#pro-input"+idNum+'').val()
+			var proCode = $("#pro-code"+idNum+'').val()
+			console.log(guid)
+			console.log('dgad'+$(this).attr('guid'))
+			projectInfo.prjId = $(this).attr('guid');
+			projectInfo.prjName = $(this).attr('prjName');
+			projectInfo.prjCode = $(this).attr('prjCode');
+			// alert(guid)
+			// let extras = {
+			// 	guid:guid,
+			// 	proCode:proCode
+			// }
+			//
+			// selectProject({'prjCode':proCode},(res)=>{
+			// 	// console.log(JSON.stringify(res))
+			// })
+			//
+			// app.openPage("projectDetail.html", {
+			// 	titleNView: {
+			// 		titleText: '项目概览',
+			// 		autoBackButton: true,
+			// 	}
+			// }, extras);
+
+
+			localStorage.setItem("projectInfo", JSON.stringify(projectInfo))
+
+			console.log("====targetPage:" + self.target + ",targetName:" + self.targetName);
+
+			app.openPage("overview/project_index.html", {
+				titleNView: {
+					titleText: $(this).attr('prjName'),
+					autoBackButton: true,
+				}
+			}, projectInfo);
+
+
+		})
+
+
+
+
+		function addData(data) {
+
+			var num = 1
+			for (let i = 0; i <data.length; i++) {
+
+				switch (data[i].projectName) {
+					case '筹备阶段':
+						var children = data[i].childen
+						$('#cb-t').text('筹备阶段('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#cb').html(html)
+						break;
+					case '立项阶段':
+						var children = data[i].childen
+						$('#lx-t').text('立项阶段('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+
+						$('#lx').html(html)
+						break;
+					case '可研阶段':
+						var children = data[i].childen
+						$('#ky-t').text('可研阶段('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#ky').html(html)
+						break;
+					case '初设阶段':
+						var children = data[i].childen
+						$('#cs-t').text('初设阶段('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#cs').html(html)
+						break;
+					case '详设阶段':
+						var children = data[i].childen
+						$('#ys-t').text('详设阶段('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#ys').html(html)
+						break;
+					case '施工阶段':
+						var children = data[i].childen
+						$('#sg-t').text('施工阶段('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#sg').html(html)
+						break;
+					case '验收结算':
+						var children = data[i].childen
+						$('#ys-t').text('验收结算('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#ys').html(html)
+						break;
+					case '已竣工':
+						var children = data[i].childen
+						$('#yjg-t').text('已竣工('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#yjg').html(html)
+						break;
+					case '已决算':
+						var children = data[i].childen
+						$('#yjs-t').text('已决算('+data[i].projectCount+')');
+						var html = ''
+						for (let j = 0; j <children.length ; j++) {
+							html +='<li class="mui-table-view-cell">\n' +
+									'      <a id="pro-id'+num+'" class="mui-navigate-right text-css" guid="'+children[j].guid+'" prjName="'+children[j].prjName+'" prjCode="'+children[j].prjCode+'">\n' +
+									children[j].projectName +
+									'      </a>\n' +
+									'<input id="pro-input'+num+'" value="'+children[j].guid+'" style="display: none">' +
+									'<input id="pro-code'+num+'" value="'+children[j].prjCode+'" style="display: none">' +
+									'    </li>\n'
+							num++
+						}
+						$('#yjs').html(html)
+						break;
+					default:
+						;
+				}
+
+			}
+
+		}
+
+		var dataTest = '[\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":18,\n' +
+				'"totalInvestment":657942.58,\n' +
+				'"projectName":"筹备阶段",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":1483,\n' +
+				'"projectCount":31,\n' +
+				'"totalInvestment":16586197,\n' +
+				'"projectName":"立项阶段",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":343,\n' +
+				'"yearPlanAmount":165.5,\n' +
+				'"projectCount":17,\n' +
+				'"totalInvestment":187386,\n' +
+				'"projectName":"可研阶段",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":128,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":1,\n' +
+				'"totalInvestment":123,\n' +
+				'"projectName":"初设阶段",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":6,\n' +
+				'"totalInvestment":213285,\n' +
+				'"projectName":"详设阶段",\n' +
+				'"constructBudget":14,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":4,\n' +
+				'"totalInvestment":0,\n' +
+				'"projectName":"施工阶段",\n' +
+				'"constructBudget":1000,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":0,\n' +
+				'"totalInvestment":0,\n' +
+				'"projectName":"验收结算",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":0,\n' +
+				'"totalInvestment":0,\n' +
+				'"projectName":"已竣工",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'},\n' +
+				'{\n' +
+				'"totalPayedAmount":0,\n' +
+				'"yearPlanAmount":0,\n' +
+				'"projectCount":0,\n' +
+				'"totalInvestment":0,\n' +
+				'"projectName":"已决算",\n' +
+				'"constructBudget":0,\n' +
+				'"lastYearPayedAmount":0,\n' +
+				'"childen":[]\n' +
+				'}\n' +
+				']'
+
+
+	</script>
+
+</html>

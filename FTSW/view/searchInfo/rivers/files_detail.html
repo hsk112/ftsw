@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>河湖档案详情</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="../../../css/common.css" rel="stylesheet" /> -->
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+    <style>
+        .info-bar-content-item-x {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 20px;
+            padding: 5px 0;
+            border-bottom: 1px solid #EDEDED;
+        }
+
+        .info-bar-content-item-x .item-title {
+            text-align: left;
+            padding: 10px 0;
+            color: #444444;
+            display: inline-block;
+            vertical-align: top;
+            font-size: 14px;
+            /* line-height: 20px; */
+        }
+
+        .info-bar-content-item-x .item-title:first-child {
+            width: 40%;
+        }
+
+        .info-bar-content-item-x .item-title:last-child {
+            margin-left: auto;
+        }
+
+        .info-bar-content-item-x .item-title span {
+            color: rgba(219, 40, 40, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--单页面开始-->
+    <div id="files-detail" class="mui-page">
+        <div class="mui-page-content">
+            <div class="mui-scroll-wrapper" id="scroll">
+                <div class="mui-scroll">
+                    <div class="scroll-li" style="background: #fff;">
+                        <div class="info-bar-content" v-if="!isLake">
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>河流(段)名称
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.riverName}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>河段编号：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.riverCode}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    上一级河流名称：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.upRiverName}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    上一级河流编号：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.upRiverCode}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>河流编号：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.riverCodeFt}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>所在水系：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.belongSatweSystem}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>河流(段)起点位置(x,y)：
+                                </div>
+                                <div class="item-title">
+                                    ({{detailJson.slat}}, {{detailJson.slong}})
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>河流(段)终点位置(x,y)：
+                                </div>
+                                <div class="item-title">
+                                    ({{detailJson.elat}}, {{detailJson.elong}})
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>河流(段)长度：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.riverLen}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    与行政区域位置关系：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.locationTypeName}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    流域(汇水)面积(k㎡)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.rivArea}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    多年平均径流量(m³)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.rivRain}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    多年平均枯水期流量(m³/s)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.rivRainDry}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    水文站(个)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.hydroStationNu}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    右岸支流数量(条)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.rightTributaryNu}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    右岸支流数量(条)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.leftTributaryNu}}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 湖泊（水库）详情 -->
+                        <div class="info-bar-content" v-if="isLake">
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>湖泊(水库)名称：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.lkName}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>湖泊(水库)编码：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.lkCode}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    流域：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.upRiverName}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>所在水系：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.belongSatweSystem}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>是否跨行政区域：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.ispassRegin}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>所跨行政区域：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.regionType | toTypeStr}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>常年水面面积 (k㎡)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.area}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>流域面积(k㎡)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.basinArea}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>平均水深(m)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.meaAnnWatDept}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    蓄水量(10⁴m³)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.volume}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    出/入湖(库)河流名称：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.rivArea}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    出/入湖(库)河流编码：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.rivRain}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    <span>*</span>交汇位置(x,y)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.xy}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    类型：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.lakeCategory == 1 ? '天然湖泊' : detailJson.lakeCategory == 2 ? '人工水塘' : '其他'}}
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item-x">
+                                <div class="item-title">
+                                    多年平均入/出湖水量(万m³)：
+                                </div>
+                                <div class="item-title">
+                                    {{detailJson.outWaterEnterWater}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/app.js"></script>
+    <script src="../../../js/config.js"></script>
+    <!-- 全局方法 -->
+    <script>
+        var detailVue = new Vue({
+            el: '#files-detail',
+            data: function () {
+                return {
+                    detailJson: {}, //数据详情
+                    guid: 'A0800000001', //请求id
+                    isLake: false,
+                }
+            },
+            filters: {
+                toTypeStr: function(code) {
+                    if(code == 1) {
+                        return '跨国';
+                    }else if(code == 2){
+                        return '跨省';
+                    }else if(code == 3) {
+                        return '跨地';
+                    }else if(code == 4){
+                        return '跨县';
+                    }else {
+                        return '';
+                    }
+                }
+            },
+            methods: {
+                getDataFn: function () {
+                    app.showLoader();
+                    var requestApi = 'ft-emergency/devicePsRiver/queryById';
+                    if(this.isLake) {
+                        requestApi = 'ft-emergency/devicePsLakes/findById';
+                    }
+                    var url = config.urls.baseUrl + requestApi;
+                    var param = {
+                        guid: this.guid,
+                        lkCode: this.guid
+                    };
+                    let _that = this;
+                    $.ajax(url, {
+                        data: param,
+                        dataType: 'json', //服务器返回json格式数据
+                        type: 'get', //HTTP请求类型
+                        headers: {
+                            "X-Access-Token": app.sessionId(),
+                        },
+                        timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+                        success: function (data) {
+                            app.hideLoader();
+                            console.log(JSON.stringify(data));
+                            if (data.code == 200 && data.result) {
+                                _that.detailJson = data.result;
+                            }
+                        },
+                        error: function (xhr, type, errorThrown) {
+                            app.hideLoader();
+                            console.log('网络错误' + app.sessionId());
+                        }
+                    });
+                }
+            },
+            created: function () {
+                let _that = this;
+                mui.plusReady(function () {
+                    var self = plus.webview.currentWebview();
+                    _that.guid = self.menuAuth; 
+                    _that.isLake = self.isLake;
+                    _that.getDataFn();
+                });
+            },
+            mounted: function () {
+                mui('.mui-scroll-wrapper').scroll();
+            }
+        });
+        mui.init();
+    </script>
+</body>
+
+</html>

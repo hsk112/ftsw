@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>查看日常巡检任务xxx</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css"/>
+
+
+  <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet"/>
+  <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet"/>
+
+  <style>
+    .mui-icon-arrowright {
+      color: #62666E;
+      font-weight: 100 !important;
+      width: 16px;
+      padding-top: 7px;
+    }
+
+    .content {
+      overflow: hidden;
+      height: calc(100vh - 100px);
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      margin: 0 20px;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+      margin: auto 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+      padding-right: 0;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .page-bottom {
+      display: flex;
+      padding: 0 20px;
+      height: 100px;
+      background-color: white;
+
+    }
+
+    .page-bottom button {
+      flex: 1;
+      margin-top: 30px;
+      border-radius: 5px;
+      border-color: #0493F3;
+      font-size: 16px;
+      height: 40px;
+      border-width: thin;
+    }
+
+    .btn-temp-save {
+      color: #0493F3;
+      background-color: #FFFFFF;
+      margin-right: 15px;
+    }
+
+    .btn-agree {
+      color: #FFFFFF;
+      background-color: #0493F3;
+      border: none;
+    }
+
+    .img-right-arrow {
+      width: 7px;
+      height: 12px;
+      margin-left: 5px;
+    }
+
+    .bor {
+      border: 1px dashed #E0E0E0;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+      padding: 11px 0;
+      width: 35px;
+      text-align: right;
+    }
+
+    .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    /*		单选框*/
+     
+    .radio-item {
+      width: 50%;
+    }
+
+    .radio_inline label {
+      /*width: 20%;*/
+      /*padding-left: 40px;*/
+      /*padding-right: 20px;*/
+      padding: 0;
+      width: 40px;
+      height: 22px;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+
+    .radio_inline input[type=radio] {
+      width: 15%;
+      right: auto;
+    }
+
+    /*//换个样式*/
+    .change {
+      display: flex;
+      align-items: center;
+    }
+
+    .change .mui-radio input[type='radio']:checked:before {
+      content: '\e442';
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    .mui-radio input[type=radio] {
+      top: 0;
+    }
+
+    .clear-red-star {
+      margin-left: 16px;
+    }
+
+
+    .file_item {
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+
+    .mui-btn-blue, .mui-btn-primary, input[type=submit] {
+      color: #007aff;
+      border: 1px solid #fff;
+      background-color: #fff;
+    }
+
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+  <div id="scroll-wrapper-home" style="height: calc(100vh - 65px);">
+    <div class="info-bar-content">
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>项目名称：
+        </div>
+        <div class="mui-input-row item-input">
+          <input id="pjName" required="true"  value="这是一个项目名称" readonly="readonly"/>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查类型：
+        </div>
+        <div id="correlationForm" class="mui-input-row item-input">
+          <span id="inspectType">检查类型</span>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>任务名称：
+        </div>
+        <div class="mui-input-row item-input">
+          <input id="taskName" required="true"  value="任务名称" readonly="readonly"/>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="inspectData">2021-06-19</span>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查人员：
+        </div>
+        <div class="mui-input-row item-input" id="acceptorUsername">
+          <span id="inspectPeopleName">请选择检查人员</span>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>检查情况及发现隐患：
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <textarea  required="true" maxlength="200"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0" id="inspectProblemDesc" disabled>这是检查情况及发现隐患这是检查情况及发现隐患这是检查情况及发现隐患这是检查情况及发现隐患.</textarea>
+      </div>
+
+
+      <div class="info-bar-content-item" style="display: flex;flex-direction: column">
+        <div class="item-title" style="padding: 10px 0px 10px 0px;">
+          <span style="color: white">*</span>整改结果：
+        </div>
+        <div class="item-checkbox" style="">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;width: 100%">
+              <div class="radio-item" style="width: 33.3%">
+                <input name="initialDesign" type="radio" id="initialDesignOne" value="1"  disabled>
+                <label for="initialDesignOne" style="margin-right: 10px;text-align: left;width: 100%;">按期完成</label>
+              </div>
+              <div class="radio-item" style="width: 33.3%">
+                <input name="initialDesign" type="radio" id="initialDesignTwo" value="2" disabled>
+                <label for="initialDesignTwo" style="text-align: left;width: 100%;">延期完成</label>
+              </div>
+              <div class="radio-item" style="width: 33.3%">
+                <input name="initialDesign" type="radio" id="initialDesignThree" value="0" disabled>
+                <label for="initialDesignThree" style="text-align: left;width: 100%;">未完成</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>整改描述：
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <textarea placeholder="整改描述（200字以内）" required="true" maxlength="200"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0" id="problemDesc" disabled>这是整改描述这是整改描述这是整改描述这是 整改描述这是整改描述。</textarea>
+      </div>
+
+      <div class="info-bar-content-item upload-file-box isShow" id="fileUploadBox">
+        <div class="item-title" >
+          <!--													<span class="red-star" id="isRequire">*</span>-->
+          <span class="clear-red-star" ></span>附件
+          <!--												<span style="color: red;margin-left: 3px;" id="isRequire">*</span>-->
+        </div>
+        <input id="programme" type="hidden" value="" />
+        <div id="file3" class="file_item">
+          <button type="button" name="file" id="upload_file" class="file_upload mui-btn mui-btn-primary">上传文件</button>
+          <span class="btn-label" style="display: none;">只能上传.doc .docx .pdf文件!</span>
+          <img src="../../../img/upfile@2x.png" style="width: 16px;height: 16px; margin-left: 5px;" alt="">
+        </div>
+        <div class="" id="fileBoxItem" style="display: none;">
+          <!-- 底下已经控制数据 -->
+          <input type="hidden" name="" id="fileToken" value="" />
+          <div class="file-item-box" style="background: #F4F7FE;text-align: left;margin: 10px 0;border-radius: 5px;">
+            <img id="file_type" src="../../img/commom/doc.png" style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px">
+            <div id="" style="display: inline-block;vertical-align: middle;margin: 12px 0 0 10px;width:70%">
+              <p id="file_name" style="font-weight:500;color: #191515;word-break: break-all;"></p>
+              <p id="file_size" style="font-weight:400;color: #191515;"></p>
+            </div>
+            <img class="file_close" src="../../img/commom/close@2x.png" style="width: 20px;height: 20px; float: right;vertical-align: top;margin: 10px 10px 0 0;">
+          </div>
+        </div>
+      </div>
+      <div id="notificationDetail"></div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写人：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="fill_in">林燕如</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>联系方式：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="contact">15521225554</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写部门：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="dept">XX部门</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="fill_data">2021-02-12</span>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="page-bottom" style="display: none">
+        <button class="btn-agree" >提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script src="../../../js/vconsole.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/bscroll.js"></script>
+<script src="../../../js/inspection/dailyInspection.js"></script>
+<script src="../../../js/workSpace/notification.js"></script>
+
+<script>
+    // var vConsole = new VConsole();
+
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+
+
+    let param = {
+        guid: "",
+        projectId: ''
+    }
+
+    mui.plusReady(function () {
+
+      var curr = plus.webview.currentWebview();
+      console.log(JSON.stringify(curr.guid))
+      param.guid = curr.guid
+      param.projectId =  curr.projectId
+      getDailyInspectionListMain(param)
+
+
+
+    });
+
+    //日常巡检详情
+    function getDailyInspectionListMain(param) {
+      getDailyInspectionList(param,function (data) {
+          var dataDetail = data.result.records[0]
+          console.log(JSON.stringify(dataDetail))
+          $('#pjName').val(dataDetail.projectName)
+          $('#taskName').val(dataDetail.taskName)
+          $('#inspectData').text(dataDetail.cheackTime.substring(0,11))
+          $('#inspectPeopleName').text(dataDetail.checkPersonFullname)
+          $('#inspectProblemDesc').text(dataDetail.checkContent)
+          $('#problemDesc').text(dataDetail.rectificationDescription)
+          $('#fill_in').text(dataDetail.inputFullname)
+          $('#contact').text(dataDetail.inputPhone)
+          $('#dept').text(dataDetail.inputDepartmentFullname)
+          $('#fill_data').text(dataDetail.inputDate.substring(0,11))
+
+          var inspectType = null;
+          switch (dataDetail.cheackType) {
+            case '1':
+              inspectType ='安全检查'
+              break;
+            case '2':
+              inspectType ='安全周检'
+              break;
+            case '3':
+              inspectType ='安全月检'
+              break;
+            case '0':
+              inspectType ='其他'
+              break;
+            default:
+            ;
+          }
+          $('#inspectType').text(inspectType)
+
+        var Type = null;
+        switch (dataDetail.rectificationResult) {
+          case '1':
+            $('#initialDesignOne').prop('checked','true')
+            break;
+          case '2':
+            $('#initialDesignTwo').prop('checked','true')
+            break;
+          case '0':
+            $('#initialDesignThree').prop('checked','true')
+            break;
+          default:
+            ;
+
+        }
+        getPhotoFile(dataDetail.attachment)
+
+      })
+    }
+
+    //添加附件
+
+    function getPhotoFile(groupId) {
+      console.log('进入：'+groupId)
+      let attachementParam = {
+        groupId: groupId,
+      }
+      getNotificationAttachment(attachementParam, function (caseAttachementData) {
+        if (caseAttachementData.success) {
+          console.log(caseAttachementData.result)
+          if (groupId!=''){
+            addData('', caseAttachementData.result);
+          }
+        } else {
+          app.toast("附件查询失败")
+        }
+      })
+    }
+
+
+    // 附件点击
+    $(document).on('click','.attachementItem',function () {
+      var id = this.getAttribute("id");
+      console.log("id:" + id)
+      var fileType = $("#fileType"+id).val();
+      console.log("fileType:" + fileType);
+      var filePath = $("#filePath"+id).val();
+      console.log("filePath:" + filePath);
+      var fileId = $("#fileId"+id).val();
+      console.log("fileId:" + fileId);
+
+      var fileName = $("#fileName"+id).val();
+      console.log("fileName:" + fileName);
+
+      if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc" )
+      {
+        var extras = {
+          filePath: filePath,
+          fileId: fileId
+        };
+        // console.log(JSON.stringify(extras));
+        // view/conservation/showReform.html
+        // ./preview.html
+        app.openPage("../../conservation/preview.html", {
+          titleNView: {
+            titleText: '文档预览',
+            autoBackButton: true
+          }
+        }, extras);
+      } else if (fileType == '.jpg' || fileType == '.jpeg' || fileType == '.png') {
+        var extras = {
+          filePath: filePath,
+          fileId: fileId
+        };
+        // console.log(JSON.stringify(extras));
+        // ../../conservation/preview.html
+        // ./preImg.html
+        app.openPage("../../mixed/preImg.html", {
+          titleNView: {
+            titleText: '图片预览',
+            autoBackButton: true
+          }
+        }, extras);
+      } else {
+        app.toast("此类型文件不支持预览");
+      }
+
+      //  console.log("点击附件item ：" + id.substr(id.lastIndexOf(".")));
+      // var url = config.urls.baseUrl + "sys/common/view/" +id.substr(0,id.indexOf("|"));
+      // console.log("点击附件url ：" + url);
+
+      // createDownloadTask(url,id);
+      // app.openPage("attachementPreview.html",{
+      //     titleNView: {
+      //         titleText: '附件预览',
+      //         autoBackButton: true,
+      //     }
+      // })
+    })
+
+
+    function addData(data, caseAttachements) {
+
+      var content = '';
+
+      if (caseAttachements.length > 0) {
+        content = content +
+                '<div style="margin-top: 20px;">' +
+                '<div class="mui-table-view attachement" style="width: 90%;margin-left: 5%;border: 1px solid #EDEDED;border-radius: 10px;">'
+
+        for (let i = 0; i < caseAttachements.length; i++) {
+          var caseItem = caseAttachements[i];
+          var fileSize = caseAttachements[i].uploadFile.fileSize;
+          var fileSizeText = '';
+          if (fileSize>1024){
+            fileSize = fileSize/1024;
+            fileSizeText = fileSize.toFixed(2)+'KB';
+          }
+          // 如果经过上面的if之后filesize还是大于1024，继续提升计量单位
+          if (fileSize>1024){
+            fileSize = fileSize/1024;
+            fileSizeText = fileSize.toFixed(2)+'MB';
+          }
+
+
+          var hideInputs = '<input id="fileType'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.fileType+'" style="display:none"> ' +
+                  '<input id="filePath'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.savePath+'" style="display:none">' +
+                  '<input id="fileId'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.id+'" style="display:none">' +
+                  '<input id="fileName'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.fileName+'" style="display:none">';
+
+
+          var fileContent = '<div class="mui-media-body">'+
+                  caseAttachements[i].uploadFile.fileName+
+                  '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+                  '</div>' + hideInputs +
+                  '</div>';
+
+          switch (caseAttachements[i].uploadFile.fileType) {
+            case ".pdf":
+              // pdf
+              <!-- 一个view -->
+              // content = content+'<div id="'+caseAttachements[i].uploadFile.savePath+'|'+caseAttachements[i].uploadFile.fileName+'" class="mui-table-view-cell mui-media attachementItem">'+
+              //     '<img src="../../../img/pptIcon.png" class="mui-media-object mui-pull-left" />'+
+              //     '<div class="mui-media-body">'+
+              //     caseAttachements[i].uploadFile.fileName+
+              //     '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+              //     '</div>'+
+              //     '</div>'
+
+              content = content+'<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media attachementItem">'+
+                      '<img src="../../../img/pptIcon.png" class="mui-media-object mui-pull-left" />'
+                      + fileContent
+              // '<div class="mui-media-body">'+
+              // caseAttachements[i].uploadFile.fileName+
+              // '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+              // '</div>'+ hideInputs +
+              // '</div>'
+
+              break;
+            case ".doc":
+            case ".docx":
+              // word
+              //       <!-- 一个view -->
+              content = content+'<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media attachementItem">'+
+                      '<img src="../../../img/wordIcon.png" class="mui-media-object mui-pull-left" />'
+                      + fileContent
+              // '<div class="mui-media-body">'+
+              // caseAttachements[i].uploadFile.fileName+
+              // '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+              // '</div>' + hideInputs +
+              // '</div>'
+              break;
+                  // case ".xls":
+                  // case ".xlsx":
+                  //     //excel
+                  //     <!-- 一个view -->
+                  //     content = content + '<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media attachementItem">'+
+                  //         '<img src="../../../img/excelIcon.png" class="mui-media-object mui-pull-left" />'
+                  //             + fileContent
+                  //     break;
+            case ".jpg":
+            case ".png":
+            case ".JPG":
+            case ".jpeg":
+              //excel
+              <!-- 一个view -->
+              content = content + '<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media  attachementItem">'+
+                      '<img src="../../../img/imageIcon.png" class="mui-media-object mui-pull-left" />'
+                      + fileContent
+              // '<div class="mui-media-body">'+
+              // caseAttachements[i].uploadFile.fileName+
+              // '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+              // '</div>' + hideInputs +
+              // '</div>'
+              break;
+          }
+
+
+        }// for end
+
+
+        content = content +
+                '</div>' +
+                '</div>'
+      }
+      content = content +
+              <!-- 附件结束 -->
+              '</div>';
+      $("#notificationDetail").html(content);
+    }
+
+
+    //测试区
+    var isTest = false
+    function getDataTmp() {
+      //var dataStr = `{"guid":"e850b149c7ec5f0d98be2393af8daa24","createBy":"liu_qw","createTime":"2021-03-26 17:38:53","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"isEmphasis":0,"imageAttachment":"8362baace91642e1857a4ed1e5a90055","caseTitle":"辽宁发布7号令！应急响应从一级调整为三级，传递重要信号发现","caseSource":"发现新闻网","caseContent":"<p><span style=\\"color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\">辽宁省医管局委网址2月22日发布《辽宁省新式狗狗细小病毒感柒的肺炎病疫情防治总指挥部令第7号》，公布将辽宁省</span><a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\" title=\\"查看更多关于 新冠肺炎 的文章\\" href=\\"https://www.fxda.com/tags/6207.html\\" target=\\"_blank\\" rel=\\"noopener\\">新冠肺炎</a><span style=\\"color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\">一级</span><a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\" title=\\"查看更多关于 应急响应 的文章\\" href=\\"https://www.fxda.com/tags/234.html\\" target=\\"_blank\\" rel=\\"noopener\\">应急响应</a><span style=\\"color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\">调节为省部级三级应急响应。</span></p>\\n<p><img src=\\"https://www.fxda.com/zb_users/upload/2020/02/202002221582372050100992.png\\" alt=\\"辽宁发布7号令！应急响应从一级调整为三级，传递重要信号  中心 应急响应 肺炎 病例 新冠 辽宁省 第1张\\" /></p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">下列为总指挥部令全篇：</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">各<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 市委市政府 的文章\\" href=\\"https://www.fxda.com/tags/5392.html\\" target=\\"_blank\\" rel=\\"noopener\\">市委市政府</a>、市人民政府，<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 沈抚新区 的文章\\" href=\\"https://www.fxda.com/tags/8564.html\\" target=\\"_blank\\" rel=\\"noopener\\">沈抚新区</a>管委，省总指挥部各<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 领导小组 的文章\\" href=\\"https://www.fxda.com/tags/3589.html\\" target=\\"_blank\\" rel=\\"noopener\\">领导小组</a>，省（中）直各企业：</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">由省新冠肺炎病疫情防治总指挥部科学研究决策，下发指令以下：</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">依据相关法律法规相关法律法规要求和辽宁省新冠肺炎病疫情发展趋势局势，自<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 2020年 的文章\\" href=\\"https://www.fxda.com/tags/6313.html\\" target=\\"_blank\\" rel=\\"noopener\\">2020年</a>2月22日9时起，将我国新冠肺炎病疫情防治应急响应级別由一级应急响应调节为省部级三级应急响应。</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\"><img src=\\"https://www.fxda.com/zb_users/upload/2020/02/202002221582372051496646.png\\" alt=\\"辽宁发布7号令！应急响应从一级调整为三级，传递重要信号  中心 应急响应 肺炎 病例 新冠 辽宁省 第3张\\" /></p>","caseReleaseTime":"2021-03-26 05:39","caseAttachment":"8640ccd581dd40bbbf9de6b54231ca99","attachmentStr":null,"caseType":1,"planType":null,"policyLawType":null,"policyLawLevel":null,"caseStatus":0,"isFavorites":0,"caseIndex":1,"createByModel":{"guid":"fb2581f1960a7d6cc92fa20847227959","username":"liu_qw","realname":"刘庆伟","corpName":"深圳市水务(集团)有限公司 ","deptName":null,"mobilePhone":"17333287625"}}`;
+      var dataStr = `{"guid":"cd8758e974886ec929bf8df8c0ce7b66","createBy":"qian_b","createTime":"2021-05-26 10:54:08","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"isEmphasis":1,"imageAttachment":"48fbcbd38c9442868af0884e09b65d97","caseTitle":"测试公告","caseSource":"政府网","caseContent":"<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\"><span style=\\"color: #731717 !important;\\"><span style=\\"font-weight: 800 !important;\\">人民支持是胜利之源</span></span></p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　<span style=\\"color: #731717 !important;\\"><span style=\\"font-weight: 800 !important;\\">【精神坐标】</span></span></p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　逶迤八百里沂蒙，巍巍七十二崮。沂蒙革命老区为中国革命胜利作出了重要贡献。当时沂蒙根据地420万人口，其中120多万人拥军支前，10万多名英烈血洒疆场。</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<div class=\\"img_wrapper\\" style=\\"margin: 0px; padding: 0px; text-align: center; color: #4d4f53; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; font-size: 18px; letter-spacing: 1px; background-color: #ffffff;\\"><img id=\\"1\\" style=\\"margin: 0px auto; padding: 0px; border: 0px none; vertical-align: top; display: block; max-width: 640px;\\" src=\\"https://n.sinaimg.cn/sinakd2021525s/106/w683h1023/20210525/a4b7-kqpyffz5597596.jpg\\" alt=\\"这是4月13日在华东革命烈士陵园拍摄的革命烈士纪念塔。新华社记者王凯摄\\" /><span class=\\"img_descr\\" style=\\"margin: 5px auto; padding: 6px 0px; line-height: 20px; font-size: 16px; display: inline-block; zoom: 1; text-align: left; font-weight: bold;\\"><span style=\\"font-size: 18px; color: #171773 !important; text-align: center !important;\\"><span style=\\"\\"><span style=\\"\\"><span style=\\"\\">这是4月13日在华东革命烈士陵园拍摄的革命烈士纪念塔。</span><span style=\\"\\">新华社记者王凯摄</span></span></span></span></span></div>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　<span style=\\"color: #731717 !important;\\"><span style=\\"font-weight: 800 !important;\\">【力量之源】</span></span></p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei','\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　&ldquo;生活大变样了！&rdquo;91岁的王克昌感慨。战争硝烟早已散去，朱村旧貌换新颜：白墙黑瓦，松柏常青，一栋栋二层小楼在林中掩映。</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '\\\\微软雅黑', SimSun, '\\\\宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　</p>","caseReleaseTime":"2021-05-26 10:50","caseAttachment":"cbbc988508db44babf939cce9665a72b","attachmentStr":null,"caseType":1,"planType":null,"policyLawType":null,"policyLawLevel":null,"caseStatus":0,"isFavorites":1,"caseIndex":1,"createByModel":{"guid":"740a1c02ad715d2b1c75861140427078","username":"qian_b","realname":"钱斌","corpName":"中国电建集团华东勘测设计研究院有限公司","deptName":"开发团队","mobilePhone":"13777352934"}}`;
+      var data = JSON.parse(dataStr);
+
+      var attachmentStr = `[{"fileToken":"fe0810c5f40517731a5c2557694c6a4a","uploadFile":{"fileName":"2020年度全国勘察设计注册工程师执业资格考试报考须知.docx","inRecycleBin":null,"updateTime":null,"readOnly":null,"collected":null,"uploadTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"uploadUser":"刘庆伟","createBy":"liu_qw","fileSize":24699,"createTime":"2021-03-26 17:37:33","updateBy":null,"savePath":"ecidi/b5c86aa38dc7434cac785e2e8c89608d.docx","downloadTimes":0,"fileUsage":"0","id":"fe0810c5f40517731a5c2557694c6a4a","fileType":".docx","md5":""}}]`;
+      var attachment = JSON.parse(attachmentStr);
+
+      addData(data, attachment);
+
+    }
+    if(isTest) {
+      getDataTmp();
+    }
+
+</script>
+</html>

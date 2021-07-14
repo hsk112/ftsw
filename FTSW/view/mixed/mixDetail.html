@@ -1,0 +1,1024 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接点管理-混接点信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style type="text/css">
+			.mui-segmented-control {
+				background: #FFFFFF;
+				font-size: 16px;
+				font-weight: 400;
+				height: 50px;
+				/* border: none; */
+			}
+
+			.mui-active {
+				font-size: 16px;
+				font-weight: bold;
+				color: #337BFC !important;
+				border-bottom: 2px solid #337BFC !important;
+			}
+
+			.tabItem {
+				background: #FFFFFF;
+				color: #888888;
+				line-height: 50px;
+				/* border: none; */
+			}
+
+			.mixNoSpan {
+				padding: 20px 0;
+				display: inline-block;
+				width: 55px;
+				font-size: 18px;
+				font-weight: bold;
+				color: #161616;
+				vertical-align: top;
+			}
+
+			.mixNo {
+				padding: 20px 20px 20px 0;
+				display: inline-block;
+				width: calc(77% - 80px);
+				font-size: 18px;
+				font-weight: bold;
+				color: #161616;
+				word-break: break-all;
+				overflow-x: auto;      
+				/* text-overflow: ellipsis; */
+				white-space: nowrap;
+			}
+
+			.stat {
+				display: inline-block;
+				float: right;
+				font-size: 14px;
+				font-weight: 500;
+				color: #FF5656;
+				line-height: 62px;
+			}
+
+			.mainPage {
+				width: 100%;
+				background: #FFFFFF;
+				/* margin-top: 3.5px; */
+			}
+
+			.contentRow {
+				margin-bottom: 15px;
+			}
+
+			.contentRow:last-child {
+				margin-bottom: 10px;
+			}
+
+			.emptyCss {
+				font-size: 14px;
+				font-weight: 500;
+				color: #888888;
+				height: 100%;
+				margin-top: 220px;
+				text-align: center;
+			}
+
+			.labelCss {
+				width: 35%;
+				display: inline-block;
+				font-size: 14px;
+				font-weight: 500 !important;
+				color: #888888;
+				vertical-align: top;
+			}
+
+			.loadCss {
+				font-size: 14px;
+				font-weight: 500 !important;
+				color: #161616;
+			}
+
+			.contentCss {
+				width: 63%;
+				display: inline-block;
+				font-size: 14px;
+				font-weight: 500 !important;
+				color: #161616;
+				word-break: break-all;
+			}
+
+			.imgCss {
+				width: 78px !important;
+				height: 78px !important;
+				margin-right: 7px;
+				margin-top: 15px;
+				display: inline-block;
+			}
+
+			.hisWorkNum {
+				font-size: 14px;
+				font-weight: 400 !important;
+				color: #888888;
+				line-height: 40px;
+				padding-left: 20.5px;
+			}
+
+			.hwPage-cell {
+				width: 100%;
+				margin-top: 3.5px;
+				background: #FFFFFF;
+				padding: 19.5px 20.5px 10px 20.5px;
+			}
+
+			.contentTitle {
+				font-size: 16px;
+				font-weight: bold;
+				color: #337BFB;
+				line-height: 24px;
+				margin-bottom: 19px;
+			}
+
+			.bottom-item-btn {
+				height: 100px;
+				position: fixed;
+				z-index: 99;
+				width: 100%;
+				background: #f2f2f2;
+				bottom: 0px;
+				padding-top: 30px;
+			}
+
+			.bottom-item-btn .item {
+				width: 50%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+
+			}
+
+			.bottom-item-btn .item div {
+				border: 1px solid #337BFB;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+
+			#barBorder {
+				position: fixed;
+				top: 47px;
+				z-index: 99;
+				width: 30px;
+				height: 3px;
+				background-color: #337BFB;
+				margin-left: 12%;
+			}
+
+			.fileCss {
+				width: 100%;
+				/* 	border: 1px solid #DEDEDE;
+				border-radius: 3px; */
+				min-height: 20px;
+				/* padding: 0 10px; */
+				margin-bottom: 10px;
+			}
+
+			.fileCss:last-child {
+				margin-bottom: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+	
+		<div id="mui-content" class="mui-page" style="height: calc(100% - 100px);overflow: auto;">
+			<!-- <div class="mui-segmented-control" style="position: fixed;z-index: 99;"> -->
+			<div class="mui-slider" id="slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="position: fixed;z-index: 99;">
+					<a class="mui-control-item mui-active" id="page1" href="#basDet" style="background: #FFFFFF;color: #888888;line-height: 50px;">基础信息</a>
+					<a class="mui-control-item" id="page2" href="#waterQ" style="background: #FFFFFF;color: #888888;line-height: 50px;">检测信息</a>
+					<a class="mui-control-item" id="page3" href="#hisWork" style="background: #FFFFFF;color: #888888;line-height: 50px;">历史工单</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"
+							style="color: #337BFC; height: 2px; position: fixed;z-index: 100;top: 50px;
+							background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 39%,
+							 rgb(51, 123, 252) 40%, rgb(51, 123, 252) 50%, rgb(51, 123, 252) 60%, rgba(0, 0, 0, 0) 61%,
+							 rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);"></div>
+				<!-- <div id="barBorder"></div> -->
+				<div style="position: fixed;top: 50px;z-index: 99;width:100%;height: 3.5px;background-color: #f2f2f2;"></div>
+				<div class="mui-slider-group">
+					<div id="basDet" class="mui-slider-item mui-control-content mui-active" style="border-bottom: none!important;">
+						<div style="height:53.5px" tabindex="0" id="top"></div>
+						<div id="detail1" style="overflow-y: auto;">
+							<div class="mainPage">
+								<div style="border-bottom: 1px solid #EDEDED;;padding-left: 10px;padding-right: 10px">
+									<img id="mixIcon" src="../../img/icon4.png" style="margin-top:20px;width:20px;height:24px;vertical-align: top;" />
+									<div class="mixNoSpan">编号:</div>
+									<div class="mixNo" id="mixNo">加载中</div>
+									<div class="stat" id="mixStat">加载中</div>
+								</div>
+								<div style="margin-top: 16px;padding-bottom: 10px;padding-left: 20.5px;padding-right: 20.5px">
+									<div class="contentRow">
+										<label class="labelCss">混接类型: </label>
+										<div class="contentCss" id="mixType">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">调查日期: </label>
+										<div class="contentCss" id="surveyTime">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">调查人员: </label>
+										<div class="contentCss" id="surveyByName">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接地点: </label>
+										<div class="contentCss" id="address">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">检查井编号: </label>
+										<div class="contentCss" id="expNo">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">上游井编号: </label>
+										<div class="contentCss" id="upNode">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接点位置: </label>
+										<div class="contentCss" id="mixPosition">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">改造状态: </label>
+										<div class="contentCss" id="reformState">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">改造方案: </label>
+										<div id="ideaFileId" class="contentCss">
+											加载中
+										</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">改造图纸: </label>
+										<div class="contentCss" id="drawingFileId">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">竣工图纸: </label>
+										<div class="contentCss" id="overFileId">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">所属流域: </label>
+										<div class="contentCss" id="inBasin">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">所属街道:</label>
+										<div class="contentCss" id="streetName">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">所属小区: </label>
+										<div class="contentCss" id="commName">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接管管径(mm): </label>
+										<div class="contentCss" id="mixDiameter">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接管埋深(m):</label>
+										<div class="contentCss" id="mixDepth">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接管管材:</label>
+										<div class="contentCss" id="pipes">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接程度:</label>
+										<div class="contentCss" id="dischargerType">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接水来源:</label>
+										<div class="contentCss" id="mixSource">加载中</div>
+									</div>
+						<!-- 			<div class="contentRow">
+										<label class="labelCss">有无连续水流出: </label>
+										<div class="contentCss" id="isFlow">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">流水是否清澈: </label>
+										<div class="contentCss" id="flowType">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">有无明显异味:</label>
+										<div class="contentCss" id="isSmell">加载中</div>
+									</div> -->
+									<div class="contentRow">
+										<label class="labelCss">问题描述字段:</label>
+										<div class="contentCss" id="problemDescription">
+											加载中
+										</div>
+									</div>									
+									<div class="contentRow">
+										<label class="labelCss">备注:</label>
+										<div class="contentCss" id="remark">
+											加载中
+										</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">位置照片: </label>
+										<div id="mixImg" class="loadCss">
+											加载中
+										</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">混接情况照片: </label>
+										<div id="mixSourceImg" class="loadCss">
+											加载中
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="bottom-item-btn" id="bottom-item-btn">
+							<!--<div class="item">-->
+								<!--<div class="delBtn" style="color: #337BFC;">删除</div>-->
+							<!--</div>-->
+							<div class="item" style="width:100%;padding: 0 30px">
+								<div class="editBtn" style="background: #337BFC;color: #fff;">修改信息</div>
+							</div>
+						</div>
+					</div>
+					<div id="waterQ" class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+						<div style="height:53.5px"></div>
+						<div id="detail2" style="overflow-y: auto;">
+							<div class="mainPage">
+								<div style="border-bottom: 1px solid #EDEDED;;padding-left: 10px;padding-right: 10px">
+									<img id="mixIcon1" src="../../img/icon4.png" style="margin-top:20px;width:20px;height:24px;vertical-align: top;" />
+									<div class="mixNoSpan">编号：</div>
+									<div class="mixNo" id="mixNo1">加载中</div>
+									<div class="stat" id="mixStat1">加载中</div>
+								</div>
+								<div style="margin-top: 16px;padding-bottom: 10px;padding-left: 20.5px;padding-right: 20.5px">
+									<div class="contentRow">
+										<label class="labelCss">取样日期: </label>
+										<div class="contentCss" id="samplingDate">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">检测日期: </label>
+										<div class="contentCss" id="testDate">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">检测时间: </label>
+										<div class="contentCss" id="testTime">加载中 </div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">天气: </label>
+										<div class="contentCss" id="weather">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss"> 取样人员: </label>
+										<div class="contentCss" id="samplingByName">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">检测人员: </label>
+										<div class="contentCss" id="testByName">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">电导率(μs/cm): </label>
+										<div class="contentCss" id="conductivity">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">COD(mg/L): </label>
+										<div class="contentCss" id="cod">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">NH3-N(mg/L):</label>
+										<div class="contentCss" id="nh3N">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">水量(m³/d): </label>
+										<div class="contentCss" id="flowRe">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">备注:</label>
+										<div class="contentCss" id="remarkMonitor">
+											加载中
+										</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">填写人: </label>
+										<div class="contentCss" id="inputByName">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">联系方式: </label>
+										<div class="contentCss" id="inputByPhone">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">填写部门:</label>
+										<div class="contentCss" id="inputByDepart">加载中</div>
+									</div>
+									<div class="contentRow">
+										<label class="labelCss">填写日期: </label>
+										<div class="contentCss" id="createTime">加载中</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="bottom-item-btn" id="bottom-item-btn">
+							<!--<div class="item">-->
+								<!--<div class="delBtn" style="color: #337BFC;">删除</div>-->
+							<!--</div>-->
+							<div class="item" style="width:100% ;padding: 0 30px">
+								<div class="editBtn" style="background: #337BFC;color: #fff;">修改信息</div>
+							</div>
+						</div>
+					</div>
+					<div id="hisWork" class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+						<div style="height:53.5px"></div>
+						<div id="detail3" style="overflow-y: auto;">
+							<div class="mainPage" style="border-bottom: 1px solid #EDEDED;;padding-left: 10px;padding-right: 10px">
+								<img id="mixIcon2" src="../../img/icon4.png" style="margin-top:20px;width:20px;height:24px;vertical-align: top;" />
+								<div class="mixNoSpan">编号：</div>
+								<div class="mixNo" id="mixNo2">加载中</div>
+								<div class="stat" id="mixStat2">加载中</div>
+							</div>
+							<div class="hisWorkNum" id="total"></div>
+							<div class="hwPage" id="hwPage">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+		<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+		<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.view.js"></script>
+		<script src="../../js/mui.locker.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+		<script src="../../js/uploadimage.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/mixed.js"></script>
+		<script src="../../js/helper.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
+		<!-- <script src="../../js/vconsole.min.js"></script> -->
+		<script type="text/javascript">
+			// var vConsole = new VConsole();
+			//初始化单页view
+			var viewApi = mui('#app').view({
+				defaultPage: '#mui-content'
+			});
+			mui.init({
+				beforeback: function() {
+					//获得父页面的webview
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'refresh1');
+					//返回true,继续页面关闭逻辑
+					return true;
+				},
+				gestureConfig: {
+					swipe: true, //默认为true
+				}
+			});
+			
+			var sliderEl = document.getElementById("slider");
+			sliderEl.classList.add('mui-slider');//页面代码先不加mui-slider保证mui不自动初始化，然后再手动加上mui-slider。接着自己手动初始化
+			mui(sliderEl).slider({
+			bounce: false
+			});
+			
+			var page = 1;
+			var pageSize = 10;
+			var guid; //主键
+			var oldstate;
+			const mapData = window['mobile-lib'].MapData({
+				serverUrl: config.urls.serverDomain,
+				style: 'color'
+			});
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var qid = self.idd;
+				var winHeight = window.screen.height;
+				console.log(winHeight)
+				$("#detail1").height(winHeight - 230);
+				$("#detail2").height(winHeight - 230);
+				$("#detail3").height(winHeight - 125);
+				searchMixById(qid, function(data) {
+					if (200 != parseInt(data.code)) {
+						// app.toast(data);
+						// alert(data.code);
+						app.showLoader();
+						setTimeout(function() {
+							app.hideLoader();
+							mui.back(); //返回
+						}, 1000);
+						return;
+					}
+					// alert(JSON.stringify(data.result.records[0]))
+					getData(data.result);
+				});
+				getHT(page, pageSize, self.idd, function(data) {
+					// console.log(self.idd);
+					if (200 != parseInt(data.code)) {
+						app.toast(data);
+						return;
+					}
+					getListData(data);
+				});
+
+			});
+
+			function getData(item) {
+				console.log("item------------->", item)
+				// var item = data.result;
+				// console.log(JSON.stringify(data.result))
+				var mixNo = document.getElementById("mixNo"); //混接点编号
+				var mixStat = document.getElementById("mixStat"); //状态
+				var mixStat1 = document.getElementById("mixStat1");
+				var mixNo1 = document.getElementById("mixNo1"); //混接点编号
+				var address = document.getElementById("address"); //混接地点
+				var mixType = document.getElementById("mixType"); //混接类型
+				var surveyTime = document.getElementById("surveyTime"); //调查日期
+				var surveyByName = document.getElementById("surveyByName"); //调查人员
+				var expNo = document.getElementById("expNo"); //检查井编号
+				var upNode = document.getElementById("upNode"); //上游井编号
+				var mixPosition = document.getElementById("mixPosition"); //混接点位置
+				var inBasin = document.getElementById("inBasin"); //所属流域
+				var reformState = document.getElementById("reformState"); //改造状态
+				var ideaFileId = document.getElementById("ideaFileId"); //改造方案
+				var drawingFileId = document.getElementById("drawingFileId"); //改造图纸
+				var overFileId = document.getElementById("overFileId"); //竣工图纸
+				var mixDiameter = document.getElementById("mixDiameter"); //混接管管径
+				var mixDepth = document.getElementById("mixDepth"); //混接管埋深
+				var pipes = document.getElementById("pipes"); //混接管管材
+				var dischargerType = document.getElementById("dischargerType"); //混接程度
+				var mixSource = document.getElementById("mixSource"); //混接水来源
+				// var isFlow = document.getElementById("isFlow"); //有无连续水流出
+				// var flowType = document.getElementById("flowType"); //流水是否清澈
+				// var isSmell = document.getElementById("isSmell"); //有无明显异味
+				var problemDescription = document.getElementById("problemDescription"); //问题描述字段
+				var remark = document.getElementById("remark"); //备注
+
+				var samplingDate = document.getElementById("samplingDate"); //取样日期
+				var testDate = document.getElementById("testDate"); //检测日期
+				var testTime = document.getElementById("testTime"); //检测时间
+				var weather = document.getElementById("weather"); //天气
+				var samplingByName = document.getElementById("samplingByName"); //取样人员
+				var testByName = document.getElementById("testByName"); //检测人员
+				var conductivity = document.getElementById("conductivity"); //电导率
+				var cod = document.getElementById("cod"); //COD
+				var nh3N = document.getElementById("nh3N"); //NH3
+				var flowRe = document.getElementById("flowRe"); //水量
+				var remarkMonitor = document.getElementById("remarkMonitor"); //备注-水质指标
+				var inputByName = document.getElementById("inputByName"); //填写人
+				var inputByPhone = document.getElementById("inputByPhone"); //联系方式
+				var inputByDepart = document.getElementById("inputByDepart"); //填写部门
+				var createTime = document.getElementById("createTime"); //填写日期
+
+				guid = item.guid;
+				oldstate = item.reformState;
+				if (item.mixCode == undefined || item.mixCode == "" || item.mixCode == null) {
+					item.mixCode = "——";
+				} else if (item.mixCode.length > 8) {
+					item.mixCode = item.mixCode;
+				}
+				document.getElementById("mixIcon").setAttribute("src", mixLevel(item.reformState, item.dischargerType));
+				document.getElementById("mixIcon1").setAttribute("src", mixLevel(item.reformState, item.dischargerType));
+				document.getElementById("mixIcon2").setAttribute("src", mixLevel(item.reformState, item.dischargerType));
+				mixNo.innerText = item.mixCode;
+				mixNo1.innerText = item.mixCode;
+				mixNo2.innerText = item.mixCode;
+				getReformState(item.reformState, function(data) {
+                    for(var i=0;i<stateColor.length;i++){
+                        if(data == stateColor[i].status){
+                            $("#mixStat").css('color',stateColor[i].color)
+                            $("#mixStat1").css('color',stateColor[i].color)
+                            $("#mixStat2popToTarget").css('color',stateColor[i].color)
+                            break;
+                        }
+                    }
+					mixStat.innerText = data;
+					mixStat1.innerText = data;
+					mixStat2.innerText = data;
+					reformState.innerText = data;
+				})
+				var fileStr = ""
+				if (item.ideaFileId == "" || item.ideaFileId == null || item.ideaFileId == undefined) {
+					// document.getElementById('ideaFile').setAttribute('class', 'contentCss');
+					document.getElementById('ideaFileId').innerText = "无";
+				} else {
+					findFilesByGroupId({
+						groupId: item.ideaFileId
+					}, function(data) {
+						console.log(JSON.stringify(data))
+						if (data.result.length == 0) {
+							document.getElementById('ideaFileId').innerText = "无";
+						} else {
+							for (var i = 0; i < data.result.length; i++) {
+								fileStr += '<div id="' + data.result[i].uploadFile.id + '" name="' + data.result[i].uploadFile.savePath +
+									'" class="fileCss">' +
+									'<a style="line-height: 20px;">' + data.result[i].uploadFile.fileName + '</a>' +
+									'</div>';
+							}
+							$("#ideaFileId").html(fileStr);
+						}
+					});
+				}
+
+				var drawFileStr = ""
+				if (item.drawingFileId == "" || item.drawingFileId == null || item.drawingFileId == undefined) {
+					// document.getElementById('ideaFile').setAttribute('class', 'contentCss');
+					document.getElementById('drawingFileId').innerText = "无";
+				} else {
+					findFilesByGroupId({
+						groupId: item.drawingFileId
+					}, function(data) {
+						// console.log(JSON.stringify(data))
+						if (data.result.length == 0) {
+							document.getElementById('drawingFileId').innerText = "无";
+						} else {
+							for (var i = 0; i < data.result.length; i++) {
+								drawFileStr += '<div id="' + data.result[i].uploadFile.id + '" name="' + data.result[i].uploadFile.savePath +
+									'" class="fileCss">' +
+									'<a style="line-height: 20px;">' + data.result[i].uploadFile.fileName + '</a>' +
+									'</div>';
+							}
+							$("#drawingFileId").html(drawFileStr);
+						}
+					});
+				}
+
+				var overFileStr = ""
+				if (item.overFileId == "" || item.overFileId == null || item.overFileId == undefined) {
+					// document.getElementById('ideaFile').setAttribute('class', 'contentCss');
+					document.getElementById('overFileId').innerText = "无";
+				} else {
+					findFilesByGroupId({
+						groupId: item.overFileId
+					}, function(data) {
+						if (data.result.length == 0) {
+							document.getElementById('overFileId').innerText = "无";
+						} else {
+							for (var i = 0; i < data.result.length; i++) {
+								overFileStr += '<div id="' + data.result[i].uploadFile.id + '" name="' + data.result[i].uploadFile.savePath +
+									'" class="fileCss">' +
+									'<a style="line-height: 20px;">' + data.result[i].uploadFile.fileName + '</a>' +
+									'</div>';
+							}
+							$("#overFileId").html(overFileStr);
+						}
+					});
+				}
+				getMixType(item.mixType, function(data) {
+					mixType.innerText = data;
+				})
+				address.innerText = isEmp(item.address);
+				surveyTime.innerText = isEmp(item.surveyTime).substring(0, 10);
+				surveyByName.innerText = isEmp(item.surveyByRealName);
+				expNo.innerText = isEmp(item.expNo);
+				// reformState.innerText= getReformState(item.reformState);
+				upNode.innerText = isEmp(item.upNode);
+				getMixPosition(item.mixPosition, function(data) {
+					mixPosition.innerText = data;
+				})
+				inBasin.innerText = isEmp(item.inBasin);
+				streetName.innerText = isEmp(item.streetName);
+				commName.innerText = isEmp(item.commName);
+
+				mixDiameter.innerText = isEmp(item.mixDiameter);
+				mixDepth.innerText = isEmp(item.mixDepth);
+				pipes.innerText = isEmp(item.pipes);
+				getMixDischargerType(item.dischargerType, function(data) {
+					dischargerType.innerText = data;
+				})
+				// getMixSource(item.mixSource, function(data) {
+				// 	mixSource.innerText = data;
+				// })
+				mixSource.innerText = isEmp(item.mixSource);
+				// getFlowState(item.isFlow, function(data) {
+				// 	isFlow.innerText = data;
+				// })
+				// getflowType(item.flowType, function(data) {
+				// 	flowType.innerText = data;
+				// })
+				// getSmell(item.isSmell, function(data) {
+				// 	isSmell.innerText = data;
+				// })
+				problemDescription.innerText = isEmp(item.problemDescription);
+				remark.innerText = isEmp(item.remark);
+				// console.log(item.reformState)
+				// console.log(item.appOldState)
+				samplingDate.innerText = isEmp(item.samplingDate);
+				testDate.innerText = isEmp(item.testDate);
+				testTime.innerText = isEmp(item.testTime);
+				weather.innerText = isEmp(item.weather);
+				samplingByName.innerText = isEmp(item.samplingByRealName);
+				testByName.innerText = isEmp(item.testByRealName);
+				conductivity.innerText = isEmp(item.conductivity);
+				cod.innerText = isEmp(item.cod);
+				nh3N.innerText = isEmp(item.nh3N);
+				flowRe.innerText = isEmp(item.flowRe);
+				remarkMonitor.innerText = isEmp(item.remarkMonitor);
+				inputByName.innerText = isEmp(item.inputByRealName);
+				inputByPhone.innerText = isEmp(item.inputByPhone);
+				inputByDepart.innerText = isEmp(item.inputByDepart);
+				createTime.innerText = isEmp(item.createTime).substring(0, 10);
+				var picStr = ""
+				if (item.fileId == "" || item.fileId == null || item.fileId == undefined) {
+					document.getElementById('mixImg').setAttribute('class', 'contentCss');
+					document.getElementById('mixImg').innerText = "无";
+				} else {
+					findFilesByGroupId({
+						groupId: item.fileId
+					}, function(data) {
+						if (data.result.length == 0) {
+							document.getElementById('mixImg').setAttribute('class', 'contentCss');
+							document.getElementById('mixImg').innerText = "无";
+						} else {
+							console.log(JSON.stringify(data))
+							for (var i = 0; i < data.result.length; i++) {
+								picStr += "<img class='imgCss' data-preview-src='' data-preview-group='1' src='" + config.urls.baseUrl +
+									"sys/common/view/" +
+									data.result[i].uploadFile.savePath + "'>";
+							}
+							$("#mixImg").html(picStr);
+						}
+					});
+					// for (let i = 0; i < item.fileIdPaths.length; i++) {
+					// 	picStr += "<img class='imgCss' src='" + config.urls.baseUrl + "sys/common/view/" + item.fileIdPaths[i] +
+					// 		"'>";
+					// }
+					// $("#mixImg").html(picStr);
+				}
+
+				var picStr2 = ""
+				if (item.fileMixId == "" || item.fileMixId == null || item.fileMixId == undefined) {
+					document.getElementById('mixSourceImg').setAttribute('class', 'contentCss');
+					document.getElementById('mixSourceImg').innerText = "无";
+				} else {
+					findFilesByGroupId({
+						groupId: item.fileMixId
+					}, function(data) {
+						if (data.result.length == 0) {
+							document.getElementById('mixSourceImg').setAttribute('class', 'contentCss');
+							document.getElementById('mixSourceImg').innerText = "无";
+						} else {
+							for (var i = 0; i < data.result.length; i++) {
+								picStr2 += "<img class='imgCss' data-preview-src='' data-preview-group='2' src='" + config.urls.baseUrl +
+									"sys/common/view/" + data.result[i].uploadFile
+									.savePath + "'>";
+							}
+							$("#mixSourceImg").html(picStr2);
+						}
+					});
+					// for (let i = 0; i < item.fileMixIdPaths.length; i++) {
+					// 	picStr2 += "<img class='imgCss' src='" + config.urls.baseUrl + "sys/common/view/" + item.fileMixIdPaths[i] +
+					// 		"'>";
+					// }
+					// $("#mixSourceImg").html(picStr2);
+				}
+			}
+
+			function getListData(data) {
+				var HT = data.result;
+				var hwStr = "";
+				document.getElementById("hwPage").innerHTML = hwStr;
+				if (HT.total == 0 || HT.total == null || HT.total == undefined) {
+					hwStr += "<div class='emptyCss'>暂无数据</div>";
+				} else {
+					document.getElementById("total").innerText = "工单记录（" + HT.total + "）";
+					for (let i = 0; i < HT.records.length; i++) {
+						hwStr += "<div class='hwPage-cell' id='" + HT.records[i].guid + "'>" +
+							"<div class='contentTitle'>工单编号：" + isEmp(HT.records[i].formId) + "</div>" +
+							"<div class='contentRow'>" +
+							"<label class='labelCss'>工单名称: </label>" +
+							"<div class='contentCss'> " + isEmp(HT.records[i].formName) + "</div>" +
+							"</div>" +
+							"<div class='contentRow'>" +
+							"<label class='labelCss'>问题描述: </label>" +
+							"<div class='contentCss'>" + isEmp(HT.records[i].probDesc) + " </div>" +
+							"</div>" +
+							"<div class='contentRow'>" +
+							"	<label class='labelCss'>完成时间: </label>" +
+							"<div class='contentCss'> " + isEmp(HT.records[i].deadline) + "</div>" +
+							"</div>" +
+							"</div>"
+					}
+				}
+				document.getElementById("hwPage").innerHTML = hwStr;
+			}
+			mui(".item").on('tap', '.delBtn', function() {
+				var Status = $(this).attr('data-status');
+				if (Status == 'false') {
+					app.toast('已处理数据无法删除')
+					return;
+				}
+				var btnArray = ['确定', '取消']; //注意这里的顺序是先否再是
+				mui.confirm("是否确定删除该混接点信息", '提示', btnArray, function(e) {
+					if (e.index == 0) { //索引是1的就是选择的是
+						if (oldstate == 5) {
+							mui.toast("请勿重复提交删除申请");
+						} else {
+							mixDel(guid, oldstate, function(data) {
+								if (data.success) {
+									mui.toast("提交删除申请成功");
+									mapData.editPoint(
+										globalGetItem(GlobalKey.Lat), globalGetItem(GlobalKey.Lng),
+										'DEVICE_POINT_INFO', {
+											DISCHARGER_TYPE: 0,
+											SMID: globalGetItem(GlobalKey.SMID)
+										},
+									).then(function(data) {
+										console.log(data);
+									});
+									var view = plus.webview.currentWebview().opener();
+									mui.fire(view, 'return');
+									plus.webview.currentWebview().close('none'); //关闭
+									// mui.back();
+								} else {
+									mui.toast("删除失败");
+								}
+							})
+						}
+					}
+				})
+			});
+
+			window.addEventListener('return', function() {
+				window.location.reload();
+				window.scrollTo(0, 0);
+			}, false);
+
+			mui(".item").on('tap', '.editBtn', function() {
+
+				if (oldstate == 2) {
+					//打开编辑页面
+					var cur = plus.webview.currentWebview();
+					var extras = {
+						type: 'edit',
+						guid: cur.idd
+					}
+					// var url='addMix.html'
+					var url='addMix2.html'
+					app.openPage(url, {
+						titleNView: {
+							titleText: '修改混接点',
+							autoBackButton: true,
+						}
+					}, extras);
+				} else if (oldstate == 3 || oldstate == 4 || oldstate == 5) {
+					getReformState(oldstate, function(data) {
+						mui.toast(data + "的混接点不可改造登记,请等待审核确认！");
+					});
+				} else {
+					getReformState(oldstate, function(data) {
+						mui.toast(data + "状态的混接点不可改造登记！");
+					});
+				}
+
+			});
+
+			// $("#page1").on("tap", function() {
+			// 	// document.getElementById("barBorder").style.marginLeft = "12%";
+			// 	document.getElementById("bottom-item-btn").style.display = 'inherit';
+			// });
+			// $("#page2").on("tap", function() {
+			// 	// document.getElementById("barBorder").style.marginLeft = "46%";
+			// 	document.getElementById("bottom-item-btn").style.display = 'inherit';
+			// });
+			// $("#page3").on("tap", function() {
+			// 	// document.getElementById("barBorder").style.marginLeft = "80%";
+			// 	document.getElementById("bottom-item-btn").style.display = 'none';
+			// });
+
+			mui(".mui-slider-group").on('swipeleft','.mui-slider-item',function(){
+				scrollTop();										
+			})
+
+			mui(".mui-slider-group").on('swiperight','.mui-slider-item',function(){
+				scrollTop();
+			})
+
+			//回到顶部
+
+			function scrollTop() {
+				var myDiv1 = document.getElementById('detail1');
+				var myDiv2 = document.getElementById('detail2');
+				var myDiv3 = document.getElementById('detail3');
+				myDiv1.scrollTop = 0;
+				myDiv2.scrollTop = 0;
+				myDiv3.scrollTop = 0;
+			}
+			mui(".mui-segmented-control").on('tap', '.mui-control-item', function() {
+				scrollTop();
+			});
+			mui(".hwPage").on('tap', '.hwPage-cell', function() {
+				var htId = $(this).attr('id');
+				// var htId="b03c880512b14e078ec28d1d46696f54";
+				var Status = $(this).attr('data-status');
+				if (htId == "" || htId == null) {
+					app.toast("无法获取guid");
+					return;
+				}
+				var extras = {
+					htId: htId,
+				}
+				//打开工单详情
+				app.openPage("workDet.html", {
+					titleNView: {
+						titleText: '工单详情',
+						autoBackButton: true,
+					}
+				}, extras);
+			});
+
+			mui(".contentCss").on('tap', '.fileCss', function() {
+				var fileId = $(this).attr('id');
+				var filePath = $(this).attr('name');
+				var fileType = filePath.substring(filePath.lastIndexOf('.') + 1, filePath.length).toLowerCase();
+				var url = config.urls.baseUrl + "sys/common/view/" + filePath;
+				var btnArray = ['下载', '取消', '预览'];
+				mui.confirm('请选择对文件的操作', '提示', btnArray, function(e) {
+					if (e.index == 2) {
+						if (fileType == "pdf") {
+							var extras = {
+								filePath: filePath,
+								fileId: fileId
+							};
+							// console.log(JSON.stringify(extras));
+							app.openPage("./preview.html", {
+								titleNView: {
+									titleText: '文档预览',
+									autoBackButton: true
+								}
+							}, extras);
+						} else if (fileType == 'jpg' || fileType == 'png') {
+							var extras = {
+								filePath: filePath,
+								fileId: fileId
+							};
+							// console.log(JSON.stringify(extras));
+							app.openPage("./preImg.html", {
+								titleNView: {
+									titleText: '图片预览',
+									autoBackButton: true
+								}
+							}, extras);
+						} else {
+							app.toast("此类型文件不支持预览");
+						}
+					} else if (e.index == 0) {
+						createDownloadTask(filePath);
+					}
+				});
+			});
+			// var dtask = null;
+
+			function createDownloadTask(filePath) {
+				// if (dtask) {
+				app.toast("正在下载");
+				// 	return;
+				// }
+				var url = config.urls.baseUrl + "sys/common/view/" + filePath; // 下载文件地址
+				// console.log(url)
+				dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+					// console.log(JSON.stringify(d))
+					if (status == 200) { // 下载成功
+						var fileSaveUrl = plus.io.convertLocalFileSystemURL(d.filename);
+						mui.alert("文件保存路径:" + fileSaveUrl.replace("/storage/emulated/0/", ''), "下载成功");
+						// console.log(d.fullPath)
+					} else { //下载失败
+						plus.downloader.clear();
+						app.toast("下载失败");
+					}
+				});
+				dtask.start();
+			}
+
+			mui(".loadCss").on('tap', '.imgCss', function() {
+				// $('#bottom-item-btn').hide();
+				mui.previewImage();
+			});
+		</script>
+	</body>
+
+</html>

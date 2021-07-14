@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>节点列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.view.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/underscore-min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/qrcode.js"></script>
+		<script src="../../js/uploadimage.js"></script>
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/archives.js"></script>
+		<!-- <script src="../../js/vconsole.min.js"></script> -->
+		<style>		
+			.header_search{
+				display: flex;
+				background-color: #F4F4F4;
+				justify-content: space-between;
+				width: 90%;
+				z-index: 99;
+				margin-top:15px;
+				margin-left:5%;	
+			}
+			.mui-search{
+				width: 100%;
+			}
+			.mui-search .mui-placeholder{
+				line-height: 52px;
+			}
+			.mui-search.mui-active:before{
+				left: 30px;
+				line-height: 35px;
+			}
+			.mui-input-row.mui-search .mui-icon-clear{
+				top: 5px;
+				right: 20px;
+			}
+			.mui-search .mui-placeholder{
+				text-align: left;
+				padding-left: 30px;
+			}
+			.mui-table-view-cell:after {
+				position: absolute;
+				right: 20px;
+				bottom: 0;
+				left: 0px;
+				height: 1px;
+				content: '';
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #c8c7cc;
+			}	
+			.nodeNo{
+				width: 30px;
+				display: inline-block;
+				vertical-align: super;
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+			}
+			.spanLim{				
+				font-size: 16px;
+				font-weight: 500;
+				color: #191515;
+				width: 98%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.empty{
+				line-height:200px;
+				width:100%;
+				text-align: center;
+				font-size: 16px;
+				color: #BBBBBB;
+				background: #f4f4f4;
+			}
+			.mui-table-view:after{
+				height:0px
+			}
+		</style>
+	</head>
+
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<!-- <div class="mui-navbar">
+				</div> -->
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page" >
+			<!--底部导航栏-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="view-content">
+							<div class="info-bar-content">
+								<div class="header_search">
+									<div class="mui-input-row mui-search" style="text-align: left">
+										<img src="../../img/commom/search1@2x.png" style="width: 20px;height:20px;position: absolute;top:5px;left:15px"/>
+										<input id="keyinput" type="text" style="width: 100%;;border-radius: 50px;border:none;padding:5px 40px;height:30px" class="mui-input-clear" placeholder="请输入节点名称进行搜索">
+									</div>
+								</div>
+							</div>
+							<div class="view-content-item" style="display: flex;line-height: 53.5px;">
+								<div id="content" style="width: 100%;overflow-y: scroll;height:500px;">
+									<ul id="OA_task_1" class="mui-table-view">
+										<div class='empty'>暂无数据</div>
+									<!-- 	<li class="mui-table-view-cell" style="margin-left: 20px;line-height: 20px;padding-top: 12px;background-color: #FFFFFF;">
+											<div class="mui-slider-right mui-disabled">
+												<a class="mui-btn mui-btn-green editQx">修改</a>
+												<a class="mui-btn mui-btn-red delQx">删除</a>
+											</div>
+											<div class="mui-slider-handle">
+												<div class="nodeNo">1</div>
+												<div  class="select-query-list-title" style="width: 80%; display: inline-block;">
+													<div class="spanLim">多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</div>
+												</div>
+											</div>
+										</li>	 -->									
+									</ul>
+								
+								</div>
+						</div>
+					</div>		
+				</div>	
+			</div>		
+	</body>
+	<script>			
+		mui.init({
+			swipeBack:false
+		});
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var items = '';
+		var self;
+		var params = {
+			archId: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,reCode,reName,stationName,streetName,checkCount,dredgCount,bugCount,doc,action',
+			pageNo: 1,
+			pageSize: 20
+		}
+		mui.plusReady(function () {
+			self = plus.webview.currentWebview();
+		    self.setStyle({
+		    	titleNView: {
+		    		buttons: [
+		    		{
+		    			"color": "white",
+		    			"colorPressed": "gray",
+		    			"float": "right",
+		    			"fontWeight": "500",
+		    			"fontSize": "25px",
+		    			"fontSrc": "../../fonts/iconfont.ttf",
+		    			"text": "＋",
+		    			"onclick":function() {
+		    				app.openPage("addNode.html", {
+		    						titleNView: {
+		    							titleText: '新增节点',
+		    							autoBackButton: true,
+		    						}
+		    					});
+		    				},
+		    			"width": "50px",
+		    		}]
+		    	}
+		    });
+			
+			var winHeight = window.screen.height-135;			
+			$("#content").css("height",winHeight+"px");			
+			getSelecttree(function(data){
+				if(data.success){
+					var html =''
+					items = data.result
+					if(items && items.length>0){
+						for(i = 0;i<items.length;i++){
+							
+							html += `<li class="mui-table-view-cell" style="margin-left: 20px;line-height: 20px;padding-top: 12px;background-color: #FFFFFF;">
+								<div class="mui-slider-right mui-disabled">
+									<a class="mui-btn mui-btn-green editNode" dataIndex=${i}>修改</a>
+									<a class="mui-btn mui-btn-red delNode" archid=${items[i].value}>删除</a>
+								</div>
+								<div class="mui-slider-handle">
+									<div class="nodeNo">${i+1}</div>
+									<div  class="select-query-list-title" style="width: 80%; display: inline-block;">
+										<div class="spanLim">${items[i].text}</div>
+									</div>
+								</div>
+							</li>`
+						}
+					}else{
+						html +=`<div class='empty'>暂无数据</div>`;
+					}
+					$("#OA_task_1").html(html);
+				}
+			});
+			
+
+			
+			//搜索框
+			$("#keyinput").on('input', debounce((e) => {
+				var html ='';
+				if($("#keyinput").val() == ''){
+					if(items && items.length>0){
+						for(i = 0;i<items.length;i++){
+							
+							html += `<li class="mui-table-view-cell" style="margin-left: 20px;line-height: 20px;padding-top: 12px;background-color: #FFFFFF;">
+								<div class="mui-slider-right mui-disabled">
+									<a class="mui-btn mui-btn-green editNode" dataIndex=${i}>修改</a>
+									<a class="mui-btn mui-btn-red delNode" archid=${items[i].value}>删除</a>
+								</div>
+								<div class="mui-slider-handle">
+									<div class="nodeNo">${i+1}</div>
+									<div  class="select-query-list-title" style="width: 80%; display: inline-block;">
+										<div class="spanLim">${items[i].text}</div>
+									</div>
+								</div>
+							</li>`
+						}
+					}else{
+						html +=`<div class='empty'>暂无数据</div>`;
+					}
+					$("#OA_task_1").html(html);	
+				}else {
+					var count = 0;
+					if(items && items.length>0){
+						for(i = 0;i<items.length;i++){	
+							if(items[i].text.indexOf($("#keyinput").val()) != -1){
+								count ++;
+								html += `<li class="mui-table-view-cell" style="margin-left: 20px;line-height: 20px;padding-top: 12px;background-color: #FFFFFF;">
+									<div class="mui-slider-right mui-disabled">
+										<a class="mui-btn mui-btn-green editNode" dataIndex=${i}>修改</a>
+										<a class="mui-btn mui-btn-red delNode" archid=${items[i].value}>删除</a>
+									</div>
+									<div class="mui-slider-handle">
+										<div class="nodeNo">${count}</div>
+										<div  class="select-query-list-title" style="width: 80%; display: inline-block;">
+											<div class="spanLim">${items[i].text}</div>
+										</div>
+									</div>
+								</li>`
+							}
+						}
+					}						
+					if(html == '')	html +=`<div class='empty'>暂无数据</div>`;										
+					$("#OA_task_1").html(html);	
+				}
+			}, 600));
+			
+			function debounce(fn, delay) {
+				// 定时器，用来 setTimeout
+				var timer
+				// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+				return function() {
+					// 保存函数调用时的上下文和参数，传递给 fn
+					var context = this
+					var args = arguments
+					// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+					clearTimeout(timer)
+					// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+					// 再过 delay 毫秒就执行 fn
+					timer = setTimeout(function() {
+						fn.apply(context, args)
+					}, delay)
+				}
+			}
+			
+			mui("body").on("tap", ".mui-icon-clear", function() {
+				var html ='';
+				if(items && items.length>0){
+					for(i = 0;i<items.length;i++){					
+						html += `<li class="mui-table-view-cell" style="margin-left: 20px;line-height: 20px;padding-top: 12px;background-color: #FFFFFF;">
+							<div class="mui-slider-right mui-disabled">
+								<a class="mui-btn mui-btn-green editNode" dataIndex=${i}>修改</a>
+								<a class="mui-btn mui-btn-red delNode" archid=${items[i].value}>删除</a>
+							</div>
+							<div class="mui-slider-handle">
+								<div class="nodeNo">${i+1}</div>
+								<div  class="select-query-list-title" style="width: 80%; display: inline-block;">
+									<div class="spanLim">${items[i].text}</div>
+								</div>
+							</div>
+						</li>`
+					}
+				}else{
+					html +=`<div class='empty'>暂无数据</div>`;
+				}
+				$("#OA_task_1").html(html);	
+			 })
+			
+			//编辑
+			$(document).on('tap', '.editNode', function () {	
+				var index = $(this).attr("dataIndex")
+				app.openPage("addNode.html", {
+						titleNView: {
+							titleText: '修改节点',
+							autoBackButton: true,
+						}
+					},items[index]);
+			});
+			
+			//删除
+			$(document).on('tap', '.delNode', function () {	
+				
+				params.archId = $(this).attr("archid");	
+				mui.confirm("确定删除当前选中数据吗??", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						getlist(params,function(data){
+							if(data.success){
+								console.log(JSON.stringify(data.result.records.length))
+								if(data.result.records.length != []){
+									app.toast('该节点下存在档案数据，不可删除！');
+								}else{
+									var param = {guid: params.archId}
+									delNode(param,function(data){
+										if(data.success){
+											app.toast('删除成功');
+											self.reload()
+										}else app.toast('删除失败');
+									})
+								}
+							}
+						})						
+					}
+				})
+			});
+		})		
+		
+	</script>
+</html>

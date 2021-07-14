@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>Hello MUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            background-color: #efeff4;
+        }
+        p {
+            text-indent: 22px;
+        }
+        span.mui-icon {
+            font-size: 14px;
+            color: #007aff;
+            margin-left: -15px;
+            padding-right: 10px;
+        }
+        .mui-off-canvas-right {
+            color: #fff;
+        }
+        .title {
+            margin: 35px 15px 10px;
+        }
+        .title+.content {
+            margin: 10px 15px 35px;
+            color: #bbb;
+            text-indent: 1em;
+            font-size: 14px;
+            line-height: 24px;
+        }
+        input {
+            color: #000;
+        }
+        .mui-btn-blue, .mui-btn-primary, input{
+            border: 0px;
+        }
+        /*按钮置灰*/
+        .grey{
+            background-color: #F7F8FB;
+            color:#AEAEAF
+        }
+    </style>
+</head>
+
+<body class="mui-fullscreen">
+<!-- 侧滑导航页根容器 -->
+<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+    <!-- 菜单容器 -->
+    <aside id="offCanvasSide" class="mui-off-canvas-right">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll" style="height:100%;background-color: white;color: black">
+                 <!--菜单具体展示内容-->
+                <p style="padding: 5px 20px;margin-bottom: 5px;"></p>
+                <div  style="">
+                    <div style="padding-left: 10px;font-weight: bold;margin: 10px">混接点类型</div>
+                    <div style="padding:10px 10px;height:105px">
+                        <button  type="button" class="mui-btn mui-btn-primary hjType" style="padding: 5px ;margin:5px;width: 140px;" data-va="1">雨水接入污水</button>
+                        <button  type="button" class="mui-btn grey hjType" style="padding: 5px ;margin:5px;width: 140px; " data-va="2">污水接入雨水</button>
+                    </div>
+                </div>
+                <!--分隔-->
+                <div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+
+                <div style="margin-bottom: 10px;height: 200px;margin-top: 10px;">
+                    <div style="padding-left: 10px;text-align: left;width:50%;font-weight: bold;margin: 10px">改造状态</div>
+                    <div style="padding:10px 10px;height:50px;">
+                        <button name="gzState" type="radio" class="mui-btn mui-btn-primary gzState" style="margin:5px;width: 70px;" data-va="1">改造</button>
+                        <button name="gzState" type="radio" class="mui-btn grey gzState" style="margin:5px;width: 70px;" data-va="2">未改造</button>
+                        <button name="gzState" type="radio" class="mui-btn grey gzState" style="margin:5px;width: 100px;" data-va="3">新增待确认</button>
+                        <button name="gzState" type="radio" class="mui-btn grey gzState" style="margin:5px;width: 100px;" data-va="4">改造待确认</button>
+                        <button name="gzState" type="radio" class="mui-btn grey gzState" style="margin:5px;width: 100px;" data-va="5">删除待确认</button>
+                        <button name="gzState" type="radio" class="mui-btn grey gzState" style="margin:5px;width: 70px;" data-va="6">已删除</button>
+                    </div>
+                </div>
+
+                <!--分隔-->
+                <div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+
+                <div style="margin-bottom: 10px;height: 25vh">
+                    <div style="padding-left: 10px;text-align: left;width:50%;margin: 10px;font-weight: bold">所属小区</div>
+                </div>
+
+                <div style="bottom:10px;">
+                    <p style="padding: 5px 20px;margin-bottom: 20px;">
+                        <button id="offCanvasHide" type="button" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 20px;">搜 索</button>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </aside>
+
+    <!-- 主页面容器 -->
+    <div class="mui-inner-wrap">
+        <!-- 主页面标题 -->
+        <header class="mui-bar mui-bar-nav">
+            <!-- 显示侧边栏按钮 -->
+            <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-right"></a>
+            <h1 class="mui-title">标题</h1>
+        </header>
+
+        <div class="mui-content mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <!-- 主界面具体展示内容 -->
+                <p>这是可拖动式左滑导航示例，主页面和菜单在一个HTML文件中， 优点是支持拖动手势（跟手），缺点是不支持菜单内容在多页面的复用； 当前页面为主界面，你可以在主界面放置任何内容；</p>
+                <p style="padding: 5px 20px;margin-bottom: 5px;">
+                    <button id="offCanvasShow" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="padding: 5px;">显示侧滑菜单</button>
+                </p>
+            </div>
+        </div>
+        <!-- 遮罩层 -->
+        <div class="mui-off-canvas-backdrop"></div>
+    </div>
+</div>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script>
+
+    // 设置全局变量
+    var hjTypeVa =''
+    var gzStateVa =''
+
+
+    // 侧栏显示
+    document.getElementById('offCanvasShow').addEventListener('tap', function() {
+        mui('#offCanvasWrapper').offCanvas('show');
+    });
+    //侧栏关闭
+    document.getElementById('offCanvasHide').addEventListener('tap', function() {
+        mui('#offCanvasWrapper').offCanvas('close');
+    });
+
+
+    mui.init({
+        swipe: false,
+    });
+
+    $(".hjType").on('tap',function(){
+        // 同个组下的都置灰grey,移除mui-btn-primary
+        $(".hjType").addClass("grey");
+        $(".hjType").removeClass("mui-btn-primary")
+        hjTypeVa = $(this)[0].getAttribute('data-va')
+        console.log("hjTypeVa:"+hjTypeVa)
+
+        //点中的移除grey ,加mui-btn-primary
+        $(this).removeClass("grey")
+        $(this).addClass("mui-btn-primary")
+    })
+
+    $(".gzState").on('tap',function(){
+        // 同个组下的都置灰grey,移除mui-btn-primary
+        $(".gzState").addClass("grey");
+        $(".gzState").removeClass("mui-btn-primary")
+
+        gzStateVa = $(this)[0].getAttribute('data-va')
+        console.log("gzStateVa:"+gzStateVa)
+
+        //点中的移除grey ,加mui-btn-primary
+        $(this).removeClass("grey")
+        $(this).addClass("mui-btn-primary")
+    })
+</script>
+
+
+</body></html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>河湖管理</title>
+	</head>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	<link href="../../css/common.css"  rel="stylesheet" />
+	<style type="text/css">
+		#riverStatistics {
+			height: 125px;
+			background-color: white;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		.drainageNum_h {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.drainageNum_b {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.drainageNum_hl {
+			width: 160px;
+			height: 17px;
+			font-size: 18px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #262626;
+			margin-left: 19px;
+			margin-top: 17.5px;
+			white-space: nowrap
+		}
+
+		.xq_suml,
+		.xq_sumr {
+			display: flex;
+			justify-content: space-around;
+			margin-top: 37px;
+			/* background-color: yellow; */
+		}
+
+		.xq_suml1,
+		.xq_sumr1 {
+			margin-top: 29px;
+		}
+
+		.xq_sumr {
+			margin-right: 31px;
+		}
+
+		.xqgwzl,
+		.xqgwqs {
+			width: 120px;
+			height: 14px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #7F7F7F;
+			line-height: 24px;
+			margin-left: 31px;
+		}
+
+		.xqgwzl_num,
+		.xqgwqs_num {
+			width: 13px;
+			height: 18px;
+			font-size: 24px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #0493F3;
+			line-height: 24px;
+			/* margin-right: 30px; */
+		}
+
+
+		#workFinish {
+			height: 320px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		#main1 {
+			/* margin-left: 91px; */
+			margin-top: 45px;
+		}
+
+		#main2 {
+			/* margin-left: 91px; */
+			margin-top: 45px;
+		}
+	</style>
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 河湖统计情况开始 -->
+						<div id="riverStatistics">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>河湖统计情况</span></div>
+							</div>
+							<div class="drainageNum_b">
+								<div class="xq_suml">
+									<span class="xqgwzl">河道清淤(公里)</span>
+									<span class="xqgwzl_num pipeLength">50</span>
+								</div>
+								<div class="xq_sumr">
+									<span class="xqgwqs">碧到建设(公里)</span>
+									<span class="xqgwqs_num objCount">80</span>
+								</div>
+							</div>
+						</div>
+						<!-- 河湖统计情况结束 -->
+						<!-- 工程进展填报完成率开始 -->
+						<div id="workFinish">
+							<div class="drainageNum_h" style="margin-bottom: 10px;">
+								<div class="drainageNum_hl"><span>工作进展填报完成率</span></div>
+								<div class="drainageNum_hr1"><button
+										style="border: none;color:#0493F3;margin-top: 12px;"><span
+											class="finishYear">2021</span></button></div>
+							</div>
+							<div id="main1" style="width: 100%;height:177px;"></div>
+						</div>
+						<!-- 工程进展填报完成率结束 -->
+						<!-- 工程进展填报及时率开始 -->
+						<div id="workFinish">
+							<div class="drainageNum_h" style="margin-bottom: 10px;">
+								<div class="drainageNum_hl"><span>工作进展填报及时率</span></div>
+								<div class="drainageNum_hr1"><button
+										style="border: none;color:#0493F3;margin-top: 12px;"><span
+											class="timelyYear">2021</span></button></div>
+							</div>
+							<div id="main2" style="width: 100%;height:177px;"></div>
+						</div>
+						<!-- 工程进展填报及时率结束 -->
+						<!-- 水质达标率开始 -->
+						<div id="workFinish">
+							<div class="drainageNum_h" style="margin-bottom: 10px;">
+								<div class="drainageNum_hl"><span>水质达标率</span></div>
+								<div class="drainageNum_hr1"><button
+										style="border: none;color:#0493F3;margin-top: 12px;"><span
+											class="rili">2021-05</span></button></div>
+							</div>
+							<div id="main3" style="width: 100%;height:240px;"></div>
+						</div>
+						<!-- 水质达标率结束 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/kpi/drainage.js"></script>
+	<script src="../../js/kpi/index.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/echarts.min.js"></script>
+	<script src="./echarts-module/flow-chart.js"></script>
+	<script src="./echarts-module/flow-vue.js"></script>
+	<script src="./echarts-module/blend-vue.js"></script>
+	<script type="text/javascript">
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var url1 = config.urls.baseUrl+'ft-emergency/statistics/rate/progress_finish' //工作进展填报 参数year
+		var url2 = config.urls.baseUrl+'ft-emergency/statistics/rate/on_time_finish' //工作进展填报及时率 参数year
+		var url3 = config.urls.baseUrl+'ft-emergency/statistics/kpi/flood_protection/waterQualityRate'//水质达标率 参数year month
+		$('.finishYear').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 5; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".finishYear").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+
+		$('.timelyYear').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 5; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".timelyYear").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		
+		//日历
+		var y
+		var m
+		$('.rili').on('tap', function () {
+		        console.log('111')
+		        var dtPicker = new mui.DtPicker({ type: 'date' });
+		        dtPicker.show(function (selectItems) {
+		             y = selectItems.y.text;  //获取选择的年
+		             m = selectItems.m.text;  //获取选择的月
+		            var date = y + "-" + m
+		            console.log(date)
+		            $(".rili").text(date)
+		        })
+		    })
+		// 仪表盘开始
+		function getHalfPro(value, color) {
+			return {
+				title: {
+					text: '完成率',
+					left: 'center',
+					bottom: '20%',
+					textStyle: {
+						fontSize: '200%',
+						fontWeight: 'bold',
+					}
+				},
+				grid: {
+					top: '1%',
+					left: '1%',
+					right: '1%',
+					bottom: '1%',
+					containLabel: true
+				},
+				color: ["rgba(255,255,255,0)", color, "#b6b5b5"],
+				series: [{
+					name: '完成率',
+					type: 'pie',
+					startAngle: 315,
+					radius: ['70%', '95%'],
+					legendHoverLink: false,
+					hoverAnimation: false,
+					avoidLabelOverlap: false,
+					labelLine: {
+						normal: {
+							show: false,
+						}
+					},
+					data: [{
+							value: 33,
+							name: value + '%',
+							label: {
+								position: 'center',
+								color: "#535353",
+								fontSize: '300%'
+							}
+						},
+						{
+							value: value
+						},
+						{
+							value: 100 - value
+						}
+					]
+				}]
+			}
+		}
+		//仪表盘结束
+		// 工作进展填报完成率开始
+		var myChart1 = echarts.init(document.getElementById('main1'));
+		var option1
+		var parmas1 = {
+			year: 2021
+		}
+		getDrainage(url1, parmas1, function(data) {
+			console.log(JSON.stringify(data))
+			if (data.result.total > 0) {
+				var wFinish = (data.result.current / data.result.total) * 100
+			} else {
+				var wFinish = 0
+			}
+			console.log(wFinish)
+			option1 = getHalfPro(wFinish.toFixed(2), "#5fa4f4");
+			myChart1.setOption(option1);
+		})
+		$('.finishYear').on('DOMNodeInserted', function() {
+			// console.log($('.finishYear').text())
+			parmas1 = {
+				year: $('.finishYear').text()
+			}
+			getDrainage(url1, parmas1, function(data) {
+				console.log(JSON.stringify(data))
+				if (data.result.total > 0) {
+					var wFinish = (data.result.current / data.result.total) * 100
+				} else {
+					var wFinish = 0
+				}
+				console.log(wFinish)
+				option1 = getHalfPro(wFinish.toFixed(2), "#5fa4f4");
+				myChart1.setOption(option1);
+			})
+		})
+		// 工作进展填报完成率结束
+
+		//工作进展填报及时率开始
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		var option2
+		var parmas2 = {
+			year: 2021
+		}
+		getDrainage(url2, parmas2, function(data) {
+			console.log(JSON.stringify(data))
+			if (data.result.total > 0) {
+				var wFinish = (data.result.current / data.result.total) * 100
+			} else {
+				var wFinish = 0
+			}
+			console.log(wFinish)
+			option2 = getHalfPro(wFinish.toFixed(2), "#5fa4f4");
+			myChart2.setOption(option2);
+		})
+		$('.timelyYear').on('DOMNodeInserted', function() {
+			// console.log($('.finishYear').text())
+			parmas2 = {
+				year: $('.timelyYear').text()
+			}
+			getDrainage(url2, parmas2, function(data) {
+				console.log(JSON.stringify(data))
+				if (data.result.total > 0) {
+					var wFinish = (data.result.current / data.result.total) * 100
+				} else {
+					var wFinish = 0
+				}
+				console.log(wFinish)
+				option2 = getHalfPro(wFinish.toFixed(2), "#5fa4f4");
+				myChart2.setOption(option2);
+			})
+		})
+		//工作进展填报及时率结束
+		//水质达标率开始
+		$('.rili').on('DOMNodeInserted', function(){
+			parmas3 = {
+				year: y,
+				month: m
+			}
+			console.log("yue",m)
+			getDrainage(url3, parmas3, function(data) {
+				console.log(JSON.stringify(data))
+				serveTBar.setOption(getEcharts3DBar(data.result.riverNameList,data.result.riverRate, '01'));
+			})
+			
+		})
+		
+		var serveTBar = echarts.init(document.getElementById('main3'));
+		var parmas3 = {
+			year: 2021,
+			month: 5
+		}
+		getDrainage(url3, parmas3, function(data) {
+			console.log(JSON.stringify(data))
+			serveTBar.setOption(getEcharts3DBar(data.result.riverNameList,data.result.riverRate, '01'));
+		})
+		//水质达标率结束
+		
+		//立体柱状图
+		function getEcharts3DBar (xAxisData, data, colorType) {
+		    var colorArr = [];
+		    if (colorType == '01') {
+		        colorArr = ["#2886c6", "#50bfda", "#89e3ec"];
+		    } else {
+		        colorArr = ["#28c1c6", "#50dac0", "#87e8c7"];
+		    }
+		    var color = {
+		        type: "linear",
+		        x: 0,
+		        x2: 1,
+		        y: 0,
+		        y2: 0,
+		        colorStops: [
+		            {
+		            offset: 0,
+		            color: colorArr[0],
+		            },
+		            {
+		            offset: 0.5,
+		            color: colorArr[0],
+		            },
+		            {
+		            offset: 0.5,
+		            color: colorArr[1],
+		            },
+		            {
+		            offset: 1,
+		            color: colorArr[1],
+		            },
+		        ],
+		    };
+		    var barWidth = 30;
+		    var constData = [];
+		    var showData = [];
+		    data.filter(function (item) {
+		    if (item) {
+		        constData.push(1);
+		        showData.push(item);
+		    } else {
+		        constData.push(0);
+		        showData.push(
+		         {
+		            value: 1,
+		            itemStyle: {
+		              normal: {
+		                borderColor: "rgba(0,0,0,0)",
+		                borderWidth: 2,
+		                color: "rgba(0,0,0,0)",
+		              },
+		            },
+		         }
+		        );
+		    }
+		    });
+		    return {
+		        tooltip: {
+		            trigger: "axis",
+		            formatter: function (params) {
+		            var str = params[0].axisValue + "：";
+		            params.filter(function (item) {
+		                if (item.componentSubType == "bar") {
+		                str += "<br/>" + item.seriesName + "：" + item.value;
+		                }
+		            });
+		            return str;
+		            },
+		        },
+		        grid: {
+		            left: "3%", //图表距边框的距离
+		            right: "3%",
+		            top: "25%",
+		            bottom: "5%",
+		            containLabel: true,
+		        },
+				title: {
+					subtext: '单位（%）'
+				},
+		        xAxis: {
+		            data: xAxisData,
+		            axisTick: {
+		            show: false,
+		            },
+		        },
+		        yAxis: {
+					type: 'value'
+		        },
+		        series: [
+		            {
+			            z: 1,
+			            name: '数据',
+			            type: "bar",
+			            barWidth: barWidth,
+			            barGap: "0%",
+			            data: data,
+			            itemStyle: {
+			                normal: {
+			                color: color,
+			                },
+			            },
+		            },
+		            {
+			            z: 2,
+			            name: '数据',
+			            type: "pictorialBar",
+			            data: constData,
+			            symbol: "diamond",
+			            symbolOffset: ["0%", "50%"],
+			            symbolSize: [barWidth, 10],
+			            itemStyle: {
+			                normal: {
+			                color: color,
+			                },
+			            },
+			            tooltip: {
+			                show: false,
+			            },
+		            },
+		            {
+			            z: 3,
+			            name: '数据',
+			            type: "pictorialBar",
+			            symbolPosition: "end",
+			            data: showData,
+			            symbol: "diamond",
+			            symbolOffset: ["0%", "-50%"],
+			            symbolSize: [barWidth - 4, (10 * (barWidth - 4)) / barWidth],
+			            itemStyle: {
+			                normal: {
+			                borderColor: colorArr[2],
+			                borderWidth: 2,
+			                color: colorArr[2],
+			                },
+			            },
+			            tooltip: {
+			                show: false,
+			            },
+		            },
+		        ],
+		    };
+		}
+	</script>
+</html>

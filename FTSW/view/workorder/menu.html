@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>子工单1</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+</head>
+<style type="text/css">
+	.mui-segmented-control{
+		margin-bottom: 5px;
+		background: #fff;
+	}
+	body {
+				background: #fff;
+			}
+			
+			.header {
+				color: #fff;
+				background: #354052;
+			}
+			
+			.header a,
+			.header h1 {
+				color: #fff;
+			}
+			
+			.input_wk {
+				width: 375px !important;
+				height: 57px !important;
+				display: flex;
+				justify-content: space-between;
+				font-size: 14px;
+				align-items: center;
+			}
+			
+			.input_wk p {
+				color: #c4c4c4 !important;
+				margin-top: 10px;
+				margin-right: 10px;
+			}
+			
+			.label {
+				width: 40px;
+				position: relative;
+				white-space: nowrap;
+				padding-left: 33.5px !important;
+			}
+			
+			.label2 {
+				padding-left: 33.5px !important;
+			}
+			
+			input,
+			.input-right {
+				float: right;
+				text-align: right;
+				color: #888 !important;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				background-color: #EDEDED;
+			}
+			
+			.input-right::-webkit-input-placeholder {
+				/* 修改字体颜色 */
+				color: #c4c4c4;
+			}
+			
+			input {
+				font-size: 14px;
+			}
+			
+			.biao {
+				color: #DB2828;
+				font-size: 25px;
+				position: absolute;
+				top: 26%;
+				left: 20px;
+			}
+			
+			.mui-icon-arrowright {
+				font-size: 16px;
+			}
+			
+			.text {
+				height: 138px;
+			}
+			
+			.input-left {
+				text-align: left;
+				height: 138px !important;
+				line-height: none;
+			}
+			
+			.label2 {
+				width: 50% !important;
+			}
+			
+			textarea {
+				padding-left: 20px;
+				font-size: 14px;
+			}
+			
+			.label3 {
+				padding: 12px 0 !important;
+				width: 62px !important;
+				margin-left: 45px !important;
+				float: right !important;
+			}
+			
+			.pick {
+				border: none !important;
+				color: #c4c4c4;
+				width: 35% !important;
+				font-size: 14px;
+				margin-top: 5px;
+			}
+			
+			.ui-alert {
+				margin-left: 10px;
+			}
+			
+			.mui-control-content {
+				background-color: white;
+				min-height: 215px;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			* {
+				touch-action: pan-y;
+			}
+			 *{touch-action: none;}
+			html,body,#item1,#item2,#item3,.mui-content{
+				height: 100%;
+			}
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				color: #0493F3;
+				font-size: 22px;
+			}
+			
+			.radio-item {
+				width: 50%;
+				white-space: nowrap;
+			}
+			
+			.radio_inline label {
+				/*width: 20%;*/
+				/*padding-left: 40px;*/
+				/*padding-right: 20px;*/
+				padding: 10px;
+				width: 55px;
+				height: 22px;
+				margin-left: 16px;
+				font-size: 16px;
+			}
+			
+			.radio_inline input[type=radio] {
+				width: 15%;
+				right: auto;
+			}
+			/*//换个样式*/
+			
+			.change {
+				display: flex;
+				align-items: center;
+			}
+			
+			.change .mui-radio input[type='radio']:checked:before {
+				content: '\e442';
+				color: #0493F3;
+				font-size: 22px;
+			}
+			
+			.mui-radio input[type=radio] {
+				top: 8px;
+				width: 20px;
+			}
+			
+			/*  审批流程 */
+			  .approval-flow-container {
+			    display: flex;
+			    flex-direction: row;
+			    overflow: hidden;
+			  }
+			  .approval-flow-first-left-operator {
+			    flex: 3;
+			    padding: 10px;
+			    margin-top: 20px;
+			    color: #999999;
+			    font-size: 14px
+			  }
+			  .approval-flow-first-left-operator-username {
+			    color: black;
+			    font-weight: bold
+			  }
+			  .approval-flow-first-line-top {
+			    background-color: white;
+			    height: 33px;
+			    width: 1px;
+			    margin: 0 auto 0 auto;
+			  }
+			  .approval-flow-first-line-circle {
+			    width: 7px;
+			    height: 7px;
+			    background-color: #0493F3;
+			    border-radius: 3.5px;
+			    margin: 5px auto 5px auto
+			  }
+			  .approval-flow-first-line-bottom {
+			    background-color: #0493F3;
+			    /*height: 80%;*/
+			    height: calc(100% - 40px);
+			    width: 1px;
+			    margin: 0 auto 0 auto;
+			  }
+			  .approval-flow-first-right-container {
+			    padding: 10px;
+			    margin: 10px;
+			    background-color: #FFF;
+			    box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2);
+			    border-radius: 5px;
+			    -moz-border-radius: 25px;
+			    flex: 16
+			  }
+			  .approval-flow-first-right-status-container {
+			    display: flex;
+			    flex: 1;
+			    text-align: left;
+			    align-items: center;
+			  }
+			  .approval-flow-first-right-status-node {
+			    padding: 10px;
+			    flex: 1;
+			    font-size: 14px;
+			    color: black;
+			    font-weight: bold
+			  }
+			  .approval-flow-first-right-status {
+			    text-align: right;
+			    flex: 1;
+			    padding: 10px;
+			    font-size: 14px;
+			    color: #29CC85
+			  }
+			  .approval-flow-first-right-content-container {
+			    text-align: start;flex: 1;padding: 0 10px 10px 10px;color: black;
+			    font-size: 14px;min-height: 75px
+			  }
+			  .approval-flow-first-right-content {
+			    text-align: left;padding-right: 10px;font-size: 14px;color: #999999
+			  }
+			  .approval-flow-first-right-date {
+			    color: black;padding: 5px 10px;font-size: 14px;text-align: left
+			  }
+			  .approval-flow-middle-circle-img {
+			    width: 13px;height: 13px;text-align: center;
+			  }
+			
+			  .empty{
+			    line-height:200px;
+			    width:100%;
+			    text-align: center;
+			    font-size: 16px;
+			    color: #BBBBBB;
+			    /*background: #f4f4f4;*/
+			  }
+			  .problemPhoto{
+				  display: flex;
+			  }
+			  .updateManagePhoto{
+				  width: 40.5px;
+				  height: 40.5px;
+			  }
+			  .updateManagePhoto img{
+				  width: 100%;
+				  height: 100%;
+			  }
+			  .sd{
+				  pointer-events: none;
+			  }
+			  
+			
+</style>
+<body>
+    <header class="mui-bar mui-bar-nav header">
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    	<h1 class="mui-title">子工单</h1>
+    </header>
+    <div class="mui-content" style="padding-bottom: 44px;">
+        <div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+			<a class="mui-control-item mui-active" href="#item1">
+				表单详情
+			</a>
+			<a class="mui-control-item" href="#item2">
+				审批流程
+			</a>
+		</div>
+		<div id="item1" class="mui-control-content mui-active" style="height: 100%;">
+				<div id="scroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<form class="mui-input-group">
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>工单名称：</label>
+								<p class="formName" style="padding-right:11.25px">工单名称</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">工单编号：</label>
+								<p class="formCode" style="padding-right:11.25px">132456897</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>问题类型：</label>
+								<p id='showUserPicker2' class="problemType" style="padding-right:11.25px">一般<span class="mui-icon mui-icon-arrowright "></span></p>
+							</div>
+							<div class="mui-input-row input_wk sd">
+								<label class="label">工单来源：</label>
+								<div id='userResult1' class="ui-alert"></div>
+								<p id='showUserPicker1' class="formSource"style="padding-right:11.25px">xxx来源<span class="mui-icon mui-icon-arrowright "></span></p>
+							</div>
+							
+							
+							<!-- <div class="mui-input-row input_wk sd">
+								<label class="label2">问题等级：</label>
+								<div class=" mui-radio mui-left">
+									<input id="initialDesignOne" name="radio1" type="radio" class="true">
+									<label class="label3">一般</label>
+								</div>
+								<div class=" mui-radio mui-left">
+									<label class="label3">紧急</label>
+									<input id="initialDesignTwo" name="radio1" type="radio" class="true">
+								</div>
+							</div> -->
+							<div class="mui-input-row input_wk sd">
+								<label class="label2">问题等级：</label>
+								<div class="item-checkbox" style="">
+									<div class="mui-input-row change">
+										<div class="radio_inline mui-radio tiao" style="display: flex;">
+											<div class="radio-item">
+												<input name="initialDesign" type="radio" id="initialDesignOne" value="0">
+												<label for="initialDesignOne" style="margin-right: 10px;text-align: right">一般</label>
+											</div>
+											<div class="radio-item">
+												<input name="initialDesign" type="radio" id="initialDesignTwo" value="1">
+												<label for="initialDesignTwo" style="text-align: right">紧急</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							<div class="mui-input-row input_wk">
+								<label class="label">相关工单：</label>
+								<p id='showUserPicker3' class="relatedOrder"style="padding-right:11.25px">自动填入</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">父级工单：</label>
+								<p id='showUserPicker3' class="fatherForm"style="padding-right:11.25px">231</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">设施类型：</label>
+								<div id='userResult' class="ui-alert"></div>
+								<p id='showUserPicker4' class="objType" style="padding-right:11.25px">请选择设施类型</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">发现地点：</label>
+								<p class="foundAddr"style="padding-right:11.25px">无</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>问题描述：</label>
+								<p class="problemDesc" style="padding-right:11.25px">无</p>
+							</div>
+							<!-- <textarea name="" class="input-left" rows="" cols="" placeholder="请输入问题描述（不超过500字）" required="required"></textarea> -->
+							<!--<input type="" class="input-left" placeholder="请输入问题描述（不超过500字）">-->
+
+							<!-- <div class="mui-input-row input_wk" style="height: 180px;">
+								<label class="label">问题照片：</label>
+								<input type="file" name="" id="" value="" />
+							</div> -->
+							<div class="mui-input-row input_wk" style="height: 180px !important;">
+								<label class="label">问题照片：</label>
+								<div class="problemPhoto">
+									<!-- <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px; position: relative;border: 1px solid #007AFF;margin: 10px 20px 0px 0px ;">
+										<img src="../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">
+										<input type="file" name="" id="" value="" style="opacity:0;filter:alpha(opacity=0);height: 95px;width: 100px; position: absolute;top: 0;left: 0;z-index: 9;" />
+										<span style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>
+									</div> -->
+								</div>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>受理人：</label>
+								<p id='showUserPicker5' class="acceptorName"style="padding-right:11.25px">无</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">受理部门：</label>
+								<p type="text" class="accepteDepartName"style="padding-right:11.25px" >无</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">要求完成时间：</label>
+								<p type="text" class="deadline"style="padding-right:11.25px" >无</p>
+							</div>
+							
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>补充要求：</label>
+							</div>
+							<textarea name="" class="input-left suppleRequire sd" rows="" cols="" placeholder="请输入补充描述（500字以内）"></textarea>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>处理结果及建议：</label>
+							</div>
+							<div class="mui-input-row " style="height: 180px !important;">
+							<textarea name="" class="input-left advise sd" rows="" cols="" placeholder="无"></textarea>
+							</div>
+							<div class="mui-input-row input_wk" style="height: 180px !important;">
+								<label class="label">处理照片：</label>
+								<div class="handlePhoto">
+									<!-- <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px; position: relative;border: 1px solid #007AFF;margin: 10px 20px 0px 0px ;">
+										<img src="../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">
+										<input type="file" name="" id="" value="" style="opacity:0;filter:alpha(opacity=0);height: 95px;width: 100px; position: absolute;top: 0;left: 0;z-index: 9;" />
+										<span style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>
+									</div> -->
+								</div>
+								
+							</div>
+							
+							<div class="mui-input-row input_wk">
+								<label class="label">派单人：</label>
+								<p class="inputerfullname"style="padding-right:11.25px">张三</p>
+								
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">联系方式：</label>
+								<p class="phoneNum"style="padding-right:11.25px">12345678910</p>
+								
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">派单部门：</label>
+								<p class="inputeDepartName"style="padding-right:11.25px">深圳水务</p> 
+								</span></button>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">填写日期：</label>
+								<p class="createTime"style="padding-right:11.25px">无</p>
+							</div>
+							
+							<div class="mui-input-row input_wk">
+								<label class="label2" style="margin-top: 5px;">新任务通知方式：</label>
+								<div class="item-checkbox" style="">
+									<div class="mui-input-row change"style="border: none;">
+										<div class="radio_inline mui-radio sd" style="display: flex;">
+											<div class="radio-item">
+												<input name="z" type="radio" id="znxx" checked>
+												<label for="initialDesignOne" style="margin-right: 0px;width: 90px;">站内消息</label>
+											</div>
+											<div class="radio-item">
+												<input name="s" type="radio" id="sjdx">
+												<label for="initialDesignTwo" style="width: 90px;padding-right:11.25px;">手机短信</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						<!-- 	<div class="mui-input-row input_wk sd">
+								<label class="label2">新任务通知方式：</label>
+								<div class="item-checkbox" style="">
+									<div class="mui-input-row change">
+										<div class="radio_inline mui-radio tiao" style="display: flex;">
+											<div class="radio-item znxx">
+												<input  type="radio" id="znxx" value="0"checked>
+												<label for="initialDesignOne" style="margin-right: 10px;text-align: right">站内消息</label>
+											</div>
+											<div class="radio-item sjdx">
+												<input  type="radio" id="sjdx" value="1">
+												<label for="initialDesignTwo">手机短信</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div> -->
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>结果复核：</label>
+								<p id='showUserPicker6' class="resAuditorName"style="padding-right:11.25px"></p>
+							</div>
+							
+
+					
+
+					</form>
+					</div>
+					
+				</div>
+				
+			</div>
+			<!-- 子工单审批流程 -->
+			<div id="item2" class="mui-control-content">
+			<div style="background-color: #ffffff;">
+			  <!-- <div id="taskComment" class="mui-table-view" style="background: #FFFFFF;">
+			    <div class="empty">暂无数据</div>
+			  </div> -->
+			<ul class="mui-table-view">
+				<!-- div1 start -->
+				<div class="approval-flow-container">
+				  <!--处理人 start -->
+				  <div class="approval-flow-first-left-operator">
+				    <span>处理人</span>
+				    <span class="approval-flow-first-left-operator-username">张三丰</span>
+				  </div>
+				  <!--处理人 end -->
+				  <!--线条-->
+				  <div style="flex: 1;">
+				    <div class="approval-flow-first-line-top"></div>
+				    <div class="approval-flow-first-line-circle" style="display: block"></div>
+				    <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+				    <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img" style="display: none"/>
+				    <div class="approval-flow-first-line-bottom"></div>
+				  </div>
+				  <!--详情-->
+				  <div class="approval-flow-first-right-container">
+				    <div class="approval-flow-first-right-status-container">
+				      <span class="approval-flow-first-right-status-node ">填写表单</span>
+				      <span class="approval-flow-first-right-status">已同意</span>
+				    </div>
+				    <div
+				      class="approval-flow-first-right-content-container">
+				      <span class="approval-flow-first-right-content">审批意见:</span>
+				      挺好的，这是审批意见这是审批意见
+				      见这是审批意见这是审审批意见这见
+				      是审审批意见这是审审批意。
+				      是审审批意见这是审审批意。
+				      是审审批意见这是审审批意。
+				      是审审批意见这是审审批意。
+				      是审审批意见这是审审批意。
+				      是审审批意见这是审审批意。
+				      是审审批意见这是审审批意。
+				    </div>
+				    <div class="approval-flow-first-right-date">2021-11-17 15:23:29</div>
+				  </div>
+				</div>
+				<!-- div1 end -->
+				<!-- div2 start -->
+				<div class="approval-flow-container">
+				  <!--处理人-->
+				  <div class="approval-flow-first-left-operator">
+				    <span>处理人</span>
+				    <span class="approval-flow-first-left-operator-username">张小</span>
+				  </div>
+				  <!--线条-->
+				  <div style="flex: 1;text-align: center">
+				    <div class="approval-flow-first-line-circle"></div>
+				    <!-- <div class="approval-flow-first-line-circle" style="display: block"></div> -->
+				
+				    <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+				    <!-- <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img" style="display: inline-block"/> -->
+				    <div class="approval-flow-first-line-bottom" style="background-color: #EEEEEE;"></div>
+				  </div>
+				  <!--详情-->
+				  <div class="approval-flow-first-right-container">
+				    <div class="approval-flow-first-right-status-container">
+				      <span class="approval-flow-first-right-status-node">前期工程审核</span>
+				      <span class="approval-flow-first-right-status">已同意</span>
+				    </div>
+				    <div class="approval-flow-first-right-content-container">
+				      <span class="approval-flow-first-right-content">审批意见:</span>无
+				    </div>
+				    <div class="approval-flow-first-right-date">2021-11-17 15:23:29</div>
+				  </div>
+				</div>
+				<!-- div2 end -->
+				
+				<!-- div3 start -->
+				<div class="approval-flow-container">
+				  <!--处理人-->
+				  <div class="approval-flow-first-left-operator">
+				    <span>处理人</span>
+				    <span class="approval-flow-first-left-operator-username">王刚</span>
+				  </div>
+				  <!--线条-->
+				  <div style="flex: 1;text-align: center">
+				    <div class="approval-flow-first-line-top" style="background-color: #EEEEEE;"></div>
+				    <div class="approval-flow-first-line-circle" style="background-color: #DDEEFA;"></div>
+				    <div class="approval-flow-first-line-bottom" style="background-color: #EEEEEE;display: block;"></div>
+				  </div>
+				  <!--详情-->
+				  <div class="approval-flow-first-right-container">
+				    <div class="approval-flow-first-right-status-container">
+				      <span class="approval-flow-first-right-status-node">审批意见</span>
+				      <span clas="approval-flow-first-right-status" style="color:#999999">待审核</span>
+				    </div>
+				  </div>
+				</div>
+		</div>
+    </div>
+
+    <script src="../../js/mui.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/qualityControl/qualityControl.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    mui.init()
+//  (function($) {
+//				$.init();
+//				var result = $('#result')[0];
+//				var btns = $('.btn');
+//				btns.each(function(i, btn) {
+//					btn.addEventListener('tap', function() {
+//						var optionsJson = this.getAttribute('data-options') || '{}';
+//						var options = JSON.parse(optionsJson);
+//						var id = this.getAttribute('id');
+//						/*
+//						 * 首次显示时实例化组件
+//						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+//						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+//						 */
+//						var picker = new $.DtPicker(options);
+//						picker.show(function(rs) {
+//							/*
+//							 * rs.value 拼合后的 value
+//							 * rs.text 拼合后的 text
+//							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+//							 * rs.m 月，用法同年
+//							 * rs.d 日，用法同年
+//							 * rs.h 时，用法同年
+//							 * rs.i 分（minutes 的第二个字母），用法同年
+//							 */
+//							result.innerText = rs.text;
+//							/* 
+//							 * 返回 false 可以阻止选择框的关闭
+//							 * return false;
+//							 */
+//							/*
+//							 * 释放组件资源，释放后将将不能再操作组件
+//							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+//							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+//							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+//							 */
+//							picker.dispose();
+//						});
+//					}, false);
+//				});
+//			})(mui);
+
+			mui.init()
+			var picker = new mui.PopPicker();
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					/**
+					 * 获取对象属性的值
+					 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+					 * @param {Object} obj 对象
+					 * @param {String} param 属性名
+					 */
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					//普通示例
+					var userPicker = new $.PopPicker();
+					userPicker.setData([{
+						value: 'ywj',
+						text: '111'
+					}, {
+						value: 'aaa',
+						text: '222'
+					}, {
+						value: 'lj',
+						text: '333'
+					}, {
+						value: 'ymt',
+						text: '444'
+					}, {
+						value: 'shq',
+						text: '555'
+					}, {
+						value: 'zhbh',
+						text: '666'
+					}, {
+						value: 'zhy',
+						text: '777'
+					}, {
+						value: 'gyf',
+						text: '888'
+					}, {
+						value: 'zhz',
+						text: '999'
+					}, {
+						value: 'gezh',
+						text: '000'
+					}]);
+					var userPicker2 = new $.PopPicker();
+					userPicker2.setData([{
+						value: 'ywj',
+						text: 'qaz'
+					}, {
+						value: 'aaa',
+						text: 'wsx'
+					}, {
+						value: 'lj',
+						text: 'edc'
+					}, {
+						value: 'ymt',
+						text: '444'
+					}, {
+						value: 'shq',
+						text: '555'
+					}, {
+						value: 'zhbh',
+						text: '666'
+					}, {
+						value: 'zhy',
+						text: '777'
+					}, {
+						value: 'gyf',
+						text: '888'
+					}, {
+						value: 'zhz',
+						text: '999'
+					}, {
+						value: 'gezh',
+						text: '000'
+					}]);
+					var showUserPickerButton = doc.getElementById('showUserPicker1');
+					//					var userResult1 = doc.getElementById('userResult1');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						userPicker.show(function(items) {
+							showUserPickerButton.innerText = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					var showUserPickerButton2 = doc.getElementById('showUserPicker2');
+					//					var userResult1 = doc.getElementById('userResult1');
+					showUserPickerButton2.addEventListener('tap', function(event) {
+						userPicker2.show(function(items) {
+							showUserPickerButton2.innerText = items[0].text;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					//-----------------------------------------
+					//级联示例
+
+				});
+			})(mui, document);
+
+			(function($) {
+				$('#scroll').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var segmentedControl = document.getElementById('segmentedControl');
+				$('.mui-input-group').on('change', 'input', function() {
+					if(this.checked) {
+						var styleEl = document.querySelector('input[name="style"]:checked');
+						var colorEl = document.querySelector('input[name="color"]:checked');
+						if(styleEl && colorEl) {
+							var style = styleEl.value;
+							var color = colorEl.value;
+							segmentedControl.className = 'mui-segmented-control' + (style ? (' mui-segmented-control-' + style) : '') + ' mui-segmented-control-' + color;
+						}
+					}
+				});
+			})(mui);
+    
+	//子工单的渲染
+    mui.plusReady(function(){
+		var problemTypes=["设备检修","隐患巡检","水质报警","投诉处理","","水务调度"]//问题类型
+		var facTypes=["检查井","截流井","雨水口","排放口","泵站","化粪池","隔油池","沉淀池","管渠","断面","水闸","水库","湖泊","大坝"]//设施类型
+		var self = plus.webview.currentWebview();//获取
+		console.log(JSON.stringify(self.name[self.index]))
+		var zgd=self.name[self.index]
+		$(".formName").text(zgd.formName)//子工单名称
+		$(".formCode").text(zgd.formCode)//子工单编号
+		$(".problemType").text(problemTypes[zgd.problemType])//问题类型
+		$(".formSource").text("父工单派生")//工单来源
+		
+		if(zgd.problemLevel == 1){
+			$('#initialDesignOne').attr("checked",false)
+			$('#initialDesignTwo').attr("checked",true)
+		} else {
+			$('#initialDesignOne').attr("checked",true)
+			$('#initialDesignTwo').attr("checked",false)
+		}//问题等级
+		if(zgd.relatedOrder){
+			$('.relatedOrder').text(zgd.relatedOrder)//相关工单
+		}else{
+			$('.relatedOrder').text("无")
+		}
+		$(".fatherForm").text(zgd.fatherForm)//父级工单
+		$('.objType').text(facTypes[zgd.objType])//设施类型
+		if(zgd.foundAddr){
+			$('.foundAddr').text(zgd.foundAddr)//发现地点
+		}else{
+			$('.foundAddr').text("无")//发现地点
+		}
+		
+		$(".problemDesc").text(zgd.problemDesc)//问题描述
+		console.log(zgd.problemPhoto)//问题照片
+		$('.acceptorName').text(zgd.acceptorName)//受理人
+		$('.accepteDepartName').text(zgd.accepteDepartName)//受理部门
+		$(".inputerfullname").text(zgd.inputerfullname)//派单人
+		if(zgd.deadline){
+			$('.deadline').text(zgd.deadline.substring(0,10))//要求完成时间
+		}else{
+			$('.deadline').text("无")//要求完成时间
+		}
+		
+		$(".suppleRequire").text(zgd.suppleRequire)//补充要求
+		$(".advise").text(zgd.advise)//处理结果及意见
+		$(".phoneNum").text(zgd.phoneNum)//联系方式
+		$(".inputeDepartName").text(zgd.inputeDepartName)//派单部门
+		
+		if(zgd.createTime){
+			$(".createTime").text(zgd.createTime.substring(0,10))//填写日期
+		}else{
+			$('.createTime').text("无")//填写日期
+		}
+		$(".resAuditorName").text(zgd.resAuditorName)//结果复核
+		// 图片处理问题图片
+		if(zgd.problemPhoto){
+			queryPhoto(zgd.problemPhoto,function(data){
+				console.log(JSON.stringify(data))
+				if (data.result && data.result.length && data.result[0].uploadFile){
+					for(let i = 0; i < data.result.length; i++){
+						let path = data.result[i].uploadFile.savePath;
+						let url = config.urls.baseUrl + 'sys/common/view/' + path;
+						console.log(url)
+						var imghtml=`
+						<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+							<img src="${url}" style="width: 40.5px;height: 40.5px;">
+						</div>
+						`	
+						$(".problemPhoto").append(imghtml)
+					}
+				}else{
+			var imghtml=`
+			<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+				<p style="padding-right:11.25px">无</p>
+			</div>
+			`	
+			$(".problemPhoto").append(imghtml)
+		}
+			})
+		}
+		
+		
+		// 处理照片
+		if(zgd.handlePhoto){
+			queryPhoto(zgd.handlePhoto,function(data){
+				console.log(JSON.stringify(data))
+				if (data.result && data.result.length && data.result[0].uploadFile){
+					for(let i = 0; i < data.result.length; i++){
+						let path = data.result[i].uploadFile.savePath;
+						let url = config.urls.baseUrl + 'sys/common/view/' + path;
+						console.log(url)
+						var imghtml=`
+						<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+							<img src="${url}" style="width: 40.5px;height: 40.5px;">
+						</div>
+						`	
+						$(".handlePhoto").append(imghtml)
+					}
+				}else{
+			var imghtml=`
+			<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+				<p style="padding-right:11.25px">无</p>
+			</div>
+			`	
+			$(".handlePhoto").append(imghtml)
+		}
+			})
+		}
+		
+	})
+    
+    //图片
+   		// if (self.data.pshPhoto) {
+   		// 		queryPhoto(self.data.pshPhoto, function (data) {
+   		// 			if (data.result && data.result.length && data.result[0].uploadFile) {					
+   		// 				$(".psh_img_list").html('');
+   		// 				for (let i = 0; i < data.result.length; i++) {
+   		// 					let path = data.result[i].uploadFile.savePath;
+   		// 					let url = config.urls.baseUrl + 'sys/common/view/' + path;
+   		// 					var html = '<div class="img_item">' +
+   		// 							'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""/>' +
+   		// 							'	</div>';
+   		// 					$(".psh_img_list").parent().css("height","140px")		
+   		// 					$(".psh_img_list").append(html);
+   		// 				}
+   		// 				$("#psh_photo").hide();
+   		// 			}
+   		// 		})
+   		// 	}
+    
+    
+    </script>
+</body>
+</html>

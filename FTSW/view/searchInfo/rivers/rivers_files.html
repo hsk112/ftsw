@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>河湖档案</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="../../../css/common.css" rel="stylesheet" /> -->
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+    <style>
+        .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            color: #0493F3;
+            font-weight: bold;
+        }
+
+        .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active+.titleleft {
+            border-bottom: solid 2px #337BFC;
+            display: inline-block;
+        }
+
+        .mui-segmented-control .mui-control-item {
+            line-height: 43px;
+        }
+
+        .mui-scroll {
+            background: #FFFFFF;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+            /*color: #007aff;*/
+            border-bottom: 2px solid #007aff;
+            background: 0 0;
+            content: '';
+            width: 24px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .to__rivers__list {
+            background-color: #fff;
+            width: 100%;
+        }
+
+        .to__list__all {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .to__list__all img {
+            width: 17px;
+            height: 19px;
+        }
+
+        .to__list__all p {
+            padding: 0;
+            margin: 0;
+            margin-left: 10px;
+            color: rgba(38, 38, 38, 1);
+        }
+
+        .to__list__all span {
+            font-weight: bold;
+            color: rgba(4, 147, 243, 1);
+        }
+
+        .to__list__main {
+            width: calc(100% - 40px);
+            margin: auto;
+            box-shadow: 0px 0px 10px #d9d9d9;
+            border-radius: 6px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+
+        .to__main__more {
+            display: flex;
+            align-items: center;
+        }
+
+        .to__main__more h5 {
+            font-weight: bold;
+            font-size: 18px;
+            color: rgba(38, 38, 38, 1);
+        }
+
+        .to__main__more p {
+            width: 3px;
+            height: 16px;
+            background: rgba(4, 147, 243, 1);
+            margin: 0;
+            margin-right: 5px;
+        }
+
+        .to__main__more img {
+            width: 8px;
+            height: 12px;
+            margin-left: auto;
+        }
+
+        .to__list__main span {
+            color: rgba(38, 38, 38, 1);
+        }
+
+        .to__main__line {
+            width: 100%;
+            height: 1px;
+            background: rgba(237, 237, 237, 1);
+        }
+
+        .to__main__sum {
+            display: flex;
+            align-items: center;
+        }
+
+        .to__main__sum p:last-child {
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--单页面开始-->
+    <div id="mui-content" class="mui-page">
+        <div class="mui-page-content">
+            <div class="mui-scroll-wrapper" id="scroll1">
+                <div class="mui-scroll">
+                    <div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary"
+                        style="color: #888888;border-bottom: 5px solid #F4F4F4;">
+                        <p class="mui-control-item mui-active" @tap="changeItem(0)">
+                            河流档案
+                        </p>
+                        <p class="mui-control-item" @tap="changeItem(1)">
+                            湖泊(水库)档案
+                        </p>
+                    </div>
+                    <!-- 列表内容 -->
+                    <div class="to__rivers__list">
+                        <div class="to__list__all">
+                            <img src="../../../img/wenjian.png" alt="">
+                            <p>河流清单：<span>{{total}}</span></p>
+                        </div>
+                        <div class="to__list__main" v-for="(item, index) in dataList" v-if="switchId == 0" :key="index" @tap="checkComplete(0, item.guid)">
+                            <div class="to__main__more">
+                                <p></p>
+                                <h5>{{item.riverName}}</h5>
+                                <img src="../../../img/arrow-right-blue@2x.png" alt="">
+                            </div>
+                            <p class="to__main__number">编号：<span>{{item.guid}}</span></p>
+                            <p class="to__main__line"></p>
+                            <div class="to__main__sum">
+                                <p>排污口数量：<span>{{item.sewageNumber}}</span></p>
+                                <p>排水口数量：<span>{{item.outfallNumber}}</span></p>
+                            </div>
+                            <div>
+                                <p>河流(段)长度(km)：<span>{{item.riverLen}}</span></p>
+                            </div>
+                            <div>
+                                <p>河流(段)流域(汇水)面积(k㎡)：<span>{{item.rivArea}}</span></p>
+                            </div>
+                        </div>
+                        <div v-if="switchId == 1" class="to__list__main" v-for="(item2, index2) in dataList2" @tap="checkComplete(1, item2.lkCode)" :key="index2">
+                            <div class="to__main__more">
+                                <p></p>
+                                <h5>{{item2.lkName}}</h5>
+                                <img src="../../../img/arrow-right-blue@2x.png" alt="">
+                            </div>
+                            <p class="to__main__number">湖泊(水库)编号：<span>{{item2.lkCode}}</span></p>
+                            <p class="to__main__line"></p>
+                            <div class="to__main__sum">
+                                <p>常年水面面积(k㎡)：<span>{{item2.area}}</span></p>
+                                <p>平均水深(m)：<span>{{item2.meaAnnWatDept}}</span></p>
+                            </div>
+                            <div>
+                                <p>蓄水量(10⁴m³)：<span>{{item2.volume}}</span></p>
+                                <p>排污口数量：<span>{{item2.outfallNum}}</span></p>  
+                            </div>
+                            <div>
+                                <p>湖泊(水库)堤防长度(km)：<span>{{item2.dikeLen}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/app.js"></script>
+    <script src="../../../js/config.js"></script>
+    <!-- 全局方法 -->
+    <script src="./file-js/files.js"></script>
+</body>
+
+</html>

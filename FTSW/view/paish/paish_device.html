@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-排口信息设备地图</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet">
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet">
+
+		<style>
+			.mui-popover {
+				height: 100px;
+				width: 100px;
+			}
+			.mapboxgl-ctrl.mapboxgl-ctrl-group{
+				bottom: 50%;
+				left: 10px;
+				position: fixed;
+			}
+			
+			
+			.mui-scroll {
+				/*background: url(../img/temp_dt.png) no-repeat center ;*/
+				background-size: 100% 100%;
+				height: 100%;
+				width: 100%;
+			}
+
+		.search-bar {
+			background: none;
+			height: 80px;
+			line-height: 80px;
+		}
+
+		.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+			top: 12px;
+			width: 40px;
+			height: 40px;
+		}
+
+		.search-item {
+			background: #FFFFFF;
+			height: 40px;
+			border-radius: 0;
+
+		}
+
+		.search-input {
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.search-icon img {
+			top: 30%;
+		}
+
+		.add_btn{
+			position: fixed;
+			width: 70px;
+			bottom: 30%;
+			right: 0;
+			z-index: 100;
+			text-align: right;
+		}
+
+		.add_btn img{
+			width: 70px;
+		}
+		
+		.location_btn{
+			position: fixed;
+			width: 50px;
+			height: 50px;
+			bottom: 40%;
+			left: 10px;
+			z-index: 100;
+			text-align: center;
+			border-radius: 10px;
+			background: #FFFFFF;
+		}
+		
+		
+		.location_btn img{
+			width: 30px;
+			margin-top: 10px;
+		}
+		
+		.level_btn{
+			position: fixed;
+			width: 50px;
+			height: 50px;
+			bottom: 50%;
+			right: 10px;
+			z-index: 100;
+			text-align: center;
+			border-radius: 10px;
+			background: #FFFFFF;
+		}
+		
+		.level_btn img{
+			width: 30px;
+			margin-top: 10px;
+		}
+		
+		.popobtn {
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			border-bottom: 1px solid #eee;
+		}
+
+		.bottom-item {
+			padding: 19px;
+			background: #FFFFFF;
+			position: fixed;
+			height: 205px;
+			width: 100%;
+			bottom: 0;
+			z-index: 100;
+			border-top-left-radius: 30px;
+			border-top-right-radius: 30px;
+			text-align: left;
+		}
+
+		.bottom-item-title {
+			font-size:18px;
+			color:rgba(22,21,21,1);
+			font-weight: bold;
+		}
+
+		.bottom-item-info{
+			font-size:14px;
+			color:rgba(25,21,21,1);
+			line-height:21px;
+			height:21px;
+			padding: 18px 10px 18px 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap; 
+		}
+
+		.bottom-item-btn {
+			height: 200px;
+			margin-top: 30px;
+		}
+
+		.bottom-item-btn .item{
+			width: 100%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div{
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+
+		.triangle-down {
+			width: 0;
+			height: 0;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			/*border-top: 10px solid #f02e2e;*/
+			margin-bottom: 10px;
+		}
+
+		.mui_rank {
+			position: absolute;
+			top: 0px;
+			z-index: 1;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+			background: url(../img/commom/tingwei.png) no-repeat center ;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">设施选择</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;"></div>
+						<a class="level_btn" id="level_btn" href="#levelPopover" >
+							<img src="../../img/commom/level.png" />
+						</a>
+						<div class="location_btn" id="location_btn">
+							<img src="../../img/commom/location.png" />
+						</div>
+						<div class="bottom-item" style="display: none;">
+							<div class="bottom-item-title">
+								类型
+							</div>
+							<div style="display: flex;">
+								<div id="EXP_NO" class="bottom-item-info" style="flex: 1;">
+								</div>
+								<div id="item-data" class="bottom-item-info" style="flex: 1;">
+								</div>
+							</div>
+							<div style="display: flex;">
+								<div id="item-data1" class="bottom-item-info " style="flex: 1;">
+
+								</div>
+								<div id="item-data2" class="bottom-item-info " style="flex: 1;">
+
+								</div>
+							</div>
+							<div class="bottom-item-btn">
+								<div class="item">
+									<div id="define" style="background: #337BFC;color: #fff;">确定</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+				
+			<!-- 图层 -->
+			<div id="levelPopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+				<div class="mui-popover-arrow"></div>
+				<div class="popobtn ws_btn" id="">
+					<input type="checkbox" id="ws" class="map_view_type" style="margin: 0 auto;" checked />
+					<span style="display: inline-block;">污水</span>
+				</div>
+				<div class="popobtn ys_btn" id="">
+					<input type="checkbox" id="ys" class="map_view_type" style="margin: 0 auto;"checked />
+					<span style="display: inline-block;">雨水</span>
+				</div>
+			
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/position.js"></script>
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		mui.init({swipeBack:false});
+
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,options:{minZoom:10},style: 'color'
+		});
+		
+		const layerSelections = window['mobile-lib'].layerSelections;
+
+		var guid = ""; //返回的GUID
+		var exp_no = ""; //返回的编号
+
+		var num = "";
+		mui.plusReady(function() {
+			// console.log(1)
+		})
+		mobileContainer.on('load', () => {
+			// console.log(2)
+			mobileContainer.enableCenterAddress(true);
+			mobileContainer.showAnnotation(true);
+
+			var self = plus.webview.currentWebview();
+			num = self.number;
+			
+			// console.log(self.deviceName)
+			// console.log(self.code)
+			// console.log(self.number)
+			
+			if (self.code == '') {
+				mobileContainer.setQuery({
+					NAME: self.deviceName
+				});
+			}
+			if (self.code != '') {
+				mobileContainer.setQuery({
+					NAME: self.deviceName,
+					POINT_CODE: self.code,
+				});
+			} 
+
+			mobileContainer.setSelection([layerSelections.污水管线, layerSelections.污水点类,layerSelections.雨水管线, layerSelections.雨水点类]);
+
+			// getCurrentPosition();//自身定位
+			// 通过选择的小区定位
+
+		});
+
+
+		mobileContainer.on('showInfo', data => {
+			console.log("showInfo:"+JSON.stringify(data.info))
+			console.log("num:"+num)
+			guid = data.info.GUID;
+			if(data.info.EXP_NO !=undefined){
+				if (num == 1) { //构筑物
+					getTreatmentByGuid(guid, function(data) {
+						console.log(guid)
+						console.log(JSON.stringify(data.result.burDepth))
+						if(data.result.records.length > 0){
+						//埋深
+						var burDepth = "埋深(m): " + data.result.burDepth;
+						if (data.result.burDepth == null) {
+							burDepth = "埋深(m): 无";
+						}
+						$("#item-data").html(burDepth);
+						//排水预处理方式
+						var treatmentMethod = "排水预处理方式: " + data.result.treatmentMethod;
+						if (data.result.treatmentMethod == null) {
+							treatmentMethod = "排水预处理方式: 无";
+						}
+						$("#item-data1").html(treatmentMethod);
+						//排水预处理能力
+						var treatmentCapacity = "排水预处理能力: " + data.result.treatmentCapacity;
+						if (data.result.treatmentCapacity == null) {
+							treatmentCapacity = "排水预处理能力: 无"
+						}
+						$("#item-data2").html(treatmentCapacity);
+					}else {
+						app.toast("未查询到设施信息")
+						$(".bottom-item").hide();	
+					}
+					})
+					
+				} else if (num == 2) { //排出管
+				
+					getLineByGuid(guid, function(data) {
+						if(data.result.records.length > 0){
+						//断面尺寸(mm)
+						var spec = "断面尺寸(mm): " + data.result.spec;
+						if (data.result.spec == null) {
+							spec = "断面尺寸(mm): 无"
+						}
+						$("#item-data").html(spec);
+						//终点管线埋深(m)
+						var eDeep = "终点管线埋深(m): " + data.result.eDeep;
+						if (data.result.eDeep == null) {
+							eDeep = "终点管线埋深(m): 无"
+						}
+						$("#item-data1").html(eDeep);
+						//材质
+						var lineMaterial = "材质: " + data.result.lineMaterial;
+						if (data.result.lineMaterial == null) {
+							lineMaterial = "材质: 无"
+						}
+						$("#item-data2").html(lineMaterial);
+						var expNo = "编号: " + data.result.expNo;
+						if (data.result.expNo == null) {
+							expNo = "编号: 无";
+						}
+						$("#EXP_NO").html(expNo);
+					}else {
+						app.toast("未查询到设施信息")
+						$(".bottom-item").hide();	
+					}
+					})
+				
+				} else if (num == 3) { //接驳井
+					/**
+					 * 暂时写死检查井guid
+					 */
+					var manholeGuid = guid//'point_info_13123';
+					// console.log(guid,manholeGuid)
+					
+					getManholesByGuid(manholeGuid, function(data) {
+						// console.log(JSON.stringify(data))
+						var pointSize = '';
+						var pointDepth = '';
+						var pointPipes = '';
+						// console.log(data.result.records.length)
+						// console.log(JSON.stringify(data))
+						if(data.result.records.length > 0){
+							// console.log(111111111111)
+							$(".bottom-item").fadeIn();
+							//井盖尺寸(mm)
+							if (data.result.records[0].pointSize == null) {
+								pointSize = "井盖尺寸(mm): 无";
+							}else pointSize = "井盖尺寸(mm): " + data.result.records[0].pointSize;
+							
+							//井深(m)
+							
+							if (data.result.records[0].pointDepth == null) {
+								pointDepth = "井深(m): 无";
+							}else pointDepth =  "井深(m): " + data.result.records[0].pointDepth
+							
+							//接入管数
+							
+							if (data.result.records[0].pointPipes == null) {
+								pointPipes = "接入管数: 无";
+							}else pointPipes = "接入管数: " + data.result.records[0].pointPipes						
+						}else {
+							// console.log(22222222222222)
+							app.toast("未查询到设施信息")
+							$(".bottom-item").hide();	
+							// pointSize = "井盖尺寸(mm): 无";
+							// pointDepth = "井深(m): 无";
+							// pointPipes = "接入管数: 无";
+						}
+						$("#item-data").html(pointSize);
+						$("#item-data1").html(pointDepth);
+						$("#item-data2").html(pointPipes);
+					})
+				
+				}
+				
+				if (num != 2) {
+					// console.log(JSON.stringify(data))
+					$("#EXP_NO").html("编号:" + data.info.EXP_NO);
+					exp_no = data.info.EXP_NO;
+				}							
+			}else app.toast("未查询到设施信息")
+		});
+		
+		$(".ws_btn,.ys_btn").on('tap',function(){
+			if($(this).find('input[type="checkbox"]:first').is(':checked')){
+				$(this).find('input[type="checkbox"]:first').prop("checked",false)
+			} else {
+				$(this).find('input[type="checkbox"]:first').prop("checked",true)
+			}
+			setViewType();
+		})
+		
+		$('#ws,#ys').change(function() {
+			setViewType();
+		});
+		
+		var setViewType = function(){
+			var array = [];
+			
+			$(".map_view_type").each(function() {
+				var id = $(this).attr("id");
+				if ('ys' ==id && $(this).is(':checked')){
+					array.push(layerSelections.雨水管线)
+					array.push(layerSelections.雨水点类)
+				}
+				
+				if ('ws' ==id && $(this).is(':checked')){
+					array.push(layerSelections.污水管线)
+					array.push(layerSelections.污水点类)
+				}
+				
+			});
+			// console.log(JSON.stringify(array))
+			mobileContainer.setSelection(array);
+		}
+		
+		$("#input").bind('input propertychange', function() {
+			var inputdata = $("input").val();
+			//console.log(inputdata);
+			mobileContainer.showSearchResults(inputdata);
+		})
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.plusReady(function() {
+			$("#define").on('tap', function() {
+				var view = plus.webview.currentWebview().opener();
+				// console.log(guid)
+				// console.log(exp_no)
+				mui.fire(view, 'newsId', {
+					id: guid,
+					exp_no: exp_no,
+				});
+				mui.back();
+			})
+		})
+
+		var getCurrentPosition = function() {
+			//直接获取默认地点
+			var pointStr = globalGetItem(GlobalKey.point)
+			var point = JSON.parse(pointStr);
+			var Lon = point.lng; //获取经度
+			var Lat = point.lat; //获取纬度
+			
+			mobileContainer.flyTo([Lon, Lat], {
+				zoom: 18
+			});
+			mobileContainer.markAddress(Lon, Lat);
+		}
+
+
+		//重新定位
+		$("#location_btn").on("tap", function() {
+			getCurrentPosition();
+		});
+	</script>
+
+</html>

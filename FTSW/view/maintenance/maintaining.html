@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>养护管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right{
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-slider{
+				height: 100vh;
+			}
+			/* .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			} */
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active +.titleleft{
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+				border-bottom: 0;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				height: 36px;
+				/* line-height: 50px; */
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #337BFC;
+				color: #337BFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 10px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: red;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: green;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: orange;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+			.task-item_status{
+				position: absolute;
+				top: 8px;
+				right: 20px;
+			}
+			.bottom-item {
+				/* padding: 19px; */
+				background: #FFFFFF;
+				width: 100%;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+			}
+			
+			.bottom-item-title {
+				
+				font-size:18px;
+				color:rgba(22,21,21,1);
+				font-weight: bold;
+			}
+			
+			.bottom-item-info{
+				font-size:14px;
+				color:rgba(25,21,21,1);
+				line-height:21px;
+				height:21px;
+				padding: 18px 0px;
+			}
+			
+			.bottom-item-btn {
+				height: 50px;
+				margin-top: 20px;
+			}
+			
+			.bottom-item-btn .item{
+				width: 50%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+				
+			}
+			
+			.bottom-item-btn .item div{
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+			
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+			.inspection_dialog{
+				background: rgba(0,0,0,0.3);
+				width: 100vw;
+				height: 100vh;
+				position: fixed;
+				left: 0;
+				top: 0;
+				text-align: left;
+				z-index: 998;
+			}
+			.inspection_dialog_title{
+				text-align: center;
+				margin-bottom: 0px;
+			}
+			.item-title{
+				margin-bottom: 5px;
+			}
+			.info-bar-content{
+				position: fixed;
+				left: 10vw;
+				top: 50%;
+				bottom: 0;
+				margin-top: -280px;
+				width: 80vw;
+				height: 537px;
+				background: #fff;
+				padding: 15px;
+				z-index: 999;
+			}
+			.mui-radio.mui-left{
+				display: inline-block;
+				width: 30%;
+			}
+			
+			.mui-radio.mui-left label{
+				line-height: 8px;
+			}
+			.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]{
+				left: 0;
+			}
+			.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{
+				font-size: 24px;
+			}
+			
+			.mui-radio.mui-left label{
+				padding-left: 20px;
+			}
+			input[type=text]{
+				margin-top: 10px;
+				border-radius: 5px;
+			}
+			.item1{
+				position: absolute;
+				top:8px;
+				right: 95px ;
+				text-align: center;
+				line-height: 26px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+			
+			.item2{
+				position: absolute;
+				top:8px;
+				right: 5px ;
+				text-align: center;
+				line-height: 26px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+			.in-obj{
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+				font-size: 14px;
+			}
+			.obj-title{
+				color: #444444;
+			}
+			.object{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin: 8px 0;
+			}
+			.mui-table-view-cell.mui-active{
+				background: #fff;
+			}
+			.li-item-pull{
+				background:#f4f4f4;
+				margin-bottom: 3px;
+			}
+			.mui-table-view-cell.mui-active .mui-collapse-content.li-item-pull{
+				background: #eee;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.icon-css{
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+			.task_title{
+				display: inline-block;
+				padding:8px 0;
+				color: #191515;
+				font-size: 16px;
+				font-weight: bold;
+				width: 50%;
+				word-break: break-all;
+				white-space: pre-wrap;
+				vertical-align: top;
+			}
+			.sec-line{
+				color: #878787;
+			}
+			.obj-title{
+				color: #444444;
+			}
+			.fanwei{
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+				    border-top: 0
+			}
+			.mui-input-row .mui-input-clear~.mui-icon-clear{
+				top: 20px;
+			}
+			.color888{
+				color: #888888;
+			}
+			.ibh{
+				display: inline-block;
+				line-height: 28px;
+			}
+			
+			
+			input[type="radio"] {
+				opacity: 0;   
+				/* display: inline-block; */
+				position: relative;
+				z-index: 5;
+				width: 20px;
+				height: 20px;
+			}
+			
+			span[new] {
+				display: inline-block;
+				position: relative;
+				left:-20px;
+				top: 5px;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid #E3E3E3;
+				margin-right: -10px;
+			}
+			input:checked+span[new] {
+				background-color: #337bfc;
+				border: 1px solid #337bfc;
+			}
+			
+			input:checked+span[new]::after {
+				position: absolute;
+				content: "";
+				width: 5px;
+				height: 10px;
+				top: 3px;
+				left: 6px;
+				border: 2px solid #fff;
+				border-top: none;
+				border-left: none;
+				transform: rotate(45deg)
+			}
+			
+		</style>
+	</head>
+
+	<bodybackground:F4F4F4；>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">养护管理</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/nfc@2x.png" />
+					<img src="../img/download@2x.png" />
+				</div>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll" style="background: #F4F4F4;">
+						<div id="slider" class="mui-slider">
+							<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+							 style="padding: 0 68px;border-bottom: 5px solid #EDEDED;">
+								<a class="mui-control-item mui-active" href="#selectItem1">
+									<span class="lb">详情</span>
+								</a>
+								<a class="mui-control-item" href="#selectItem2">
+									<span class="dt">地图</span>
+								</a>
+							</div>
+							<div class="mui-slider-group" style="height: 90%">
+								<div id="selectItem1" style="padding-top: 10px;" class=" mui-slider-item mui-control-content mui-active">
+									<div id="scroll1" class="mui-scroll-wrapper"  style="height: 80vh;background:#F4F4F4;">
+										<ul class="mui-table-view " id="xjTask-items" style="background: #E9E9E9;">
+											
+										</ul>
+									
+									</div>
+								
+								</div>
+								
+								<div id="selectItem2" class="mui-slider-item mui-control-content" >
+
+									<div id="scroll2" class="mui-scroll-wrapper" style="height: 100%;background: #F4F4F4;position: relative;z-index:999;">
+
+										<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;">
+											<div class="mui_rank">
+												<div class="triangle-down">
+												</div>
+											</div>
+
+
+											<div class="bottom-item" style="position:absolute;bottom:55px;padding-bottom: 7px;z-index: 999;background: #F4F4F4;">
+												<ul class="mui-table-view" id="selectItem2_ul">
+
+												</ul>
+												
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+		<div class="bottom-item-btn" id="footer_button" style="display:none;position: fixed;z-index: 99;bottom:0px;height:80px;width: 100%;background: #F4F4F4;">
+			<div class="item" name="storage" style="padding: 20px 0;">
+				<div style="color: #337BFC;width: 85%;margin: 0 auto;" id="returnBtn">返回</div>
+			</div>
+			<div class="item" name="inspection_end" style="padding: 20px 0;">
+				<div id="endBtn" style="background: #337BFC;color: #fff;width: 85%;margin: 0 auto;">结束养护</div>
+			</div>
+		</div>
+		
+		<div id="inspection_dialog" class="inspection_dialog"  style="display: none;">  <!-- -->
+				<!-- style="display: none; "-->
+				<div class="info-bar-content">
+					<h5 class="inspection_dialog_title" style="font-size: 18px;font-weight: bold;color: #000000;padding-bottom: 15px;">结束养护</h5>
+					<div style="width: 100%;height: 1px;background: #EDEDED;"></div>
+					<div class="info-bar-content-item" style="padding-top: 15px;">
+						<div class="item-title in-obj">
+							检查结果
+						</div>
+						
+						<div class="item-radio" style="font-size: 16px;">
+							<div class="mui-input-row mui-radio mui-left">
+								<label>
+									<input name="taskStatus" required="true" placeholder="选择检查结果" value="1" type="radio" checked><span new></span>正常
+								</label>
+							</div>
+							<div class="mui-input-row mui-radio mui-left">
+								<label>
+									<input name="taskStatus" required="true" placeholder="选择检查结果" value="0" type="radio"><span new></span>良好
+								</label>
+							</div>
+							<div class="mui-input-row mui-radio mui-left">
+								<label>
+									<input name="taskStatus" required="true" placeholder="选择检查结果" value="2" type="radio"><span new></span>异常
+								</label>
+							</div>
+						</div>
+						<div style="width: 100%;height: 1px;background: #EDEDED;margin-top: 5px;"></div>
+					</div>
+					<div class="info-bar-content-item" style="margin-top:20px;">
+						<div class="item-title in-obj">
+							养护人<span style="color:red;">*</span>
+						</div>
+						<div class="mui-input-row item-input">
+							<input id="inspectPerson" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入养护人">
+						</div>
+						<div style="width: 100%;height: 1px;background: #EDEDED;margin-top: 5px;"></div>
+					</div>
+					<div class="info-bar-content-item" style="margin-top:20px;">
+						<div class="item-title in-obj">
+							当日天气<span style="color:red;">*</span>
+						</div>
+						<div class="mui-input-row item-input">
+							<input id="weather" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入当日天气">
+						</div>
+						<div style="width: 100%;height: 1px;background: #EDEDED;margin-top: 5px;"></div>
+					</div>
+					<div class="info-bar-content-item" style="margin-top:20px;">
+						<div class="item-title in-obj">
+							评价描述<span style="color:red;">*</span>
+						</div>
+						<div class="mui-input-row item-input">
+							<input id="result" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入评价描述">
+						</div>
+						<div style="width: 100%;height: 1px;background: #EDEDED;margin-top: 5px;"></div>
+					</div>
+		
+					<div class="info-bar-content-item" style="">
+						<button id="dialog_hidden" style="width:49%;border-width:0;font-size:18px;">取消</button><span style="display: inline-block;padding-top:7px;vertical-align: middle;color:#EDEDED;line-height: 18px;">|</span><button id="dialog_submit" style="width:49%;border-width:0;font-size:18px;color:#337BFC;font-weight: bold;">提交</button>
+					</div>
+				</div>
+			</div>
+		
+	</body>
+
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/maintain.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+
+	<script>
+		var taskData = {}
+		var guid = ''
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options:{ minZoom:10 },
+			style: 'color'
+		});
+
+		//巡查点
+		// const keyPoints = [{position:[114.089, 22.575], status:'已养护',puid:'123'},{position:[114.088, 22.565], status:'未养护'},{position:[114.087, 22.566], status:'存在异常'},{position:[114.087, 22.567], status:'未养护'}];
+		//巡查路线  
+		// const routePoints = [[114.089, 22.575],[114.088, 22.565],[114.087, 22.566],[114.087, 22.567]];
+		const routePoints = null
+		var keyPoints = []
+		var keyPointsList = []
+		mobileContainer.on('load', () => {
+			mobileContainer.showPatrolRoute(routePoints, keyPoints);
+		});
+
+
+		//点击定位点
+		mobileContainer.on('showInfo', data => {
+			if (taskData.taskStatus == null || taskData.taskStatus == 0) {
+				alert('请点击开始按钮开始执行任务')
+				return
+			}
+			//设置点位时把任务中对象的puid写入，使用puid获取打开页面的数据
+			var extras = {
+				data: taskData,
+				guid: self.guid,
+				objlist: taskData.objectTaskDtos,
+				objguid: taskData.objectTaskDtos[$(this).attr('childindex')].objectGuid,
+				objdata: taskData.objectTaskDtos[$(this).attr('childindex')],
+				endTime: taskData.endTime,
+				index: $(this).attr('childindex'),
+			}
+			if (data.taskStatus == 3 || data.taskStatus == 1) {
+				app.openPage("inspection_end.html", {
+					titleNView: {
+						titleText: taskData.name,
+						autoBackButton: true,
+						"titleSize": "18px",
+					}
+				}, extras);
+			} else {
+					if (taskData.objectTaskDtos[$(this).attr('childindex')].state == 1) {
+						app.openPage("inspection_info.html", {
+							titleNView: {
+								titleText: taskData.name,
+								autoBackButton: true,
+								"titleSize": "18px",
+							}
+						}, extras);
+					} else {
+						if (taskData.objectTaskDtos[$(this).attr('childindex')].isNFC == 1) {
+							var btnArray = ['确定', '取消'];
+							mui.confirm('此养护对象需要进行NFC检测，是否继续', 'NFC检测提示', btnArray, function(e) {
+								if (e.index == 0) {
+									app.openPage("nfc.html", {
+										titleNView: {
+											titleText: 'NFC检测',
+											autoBackButton: true,
+											 "titleSize": "18px",
+										}
+									}, extras);
+								}
+							})
+						} else {
+							app.openPage("maintain_edit.html", {
+								titleNView: {
+									titleText: taskData.name,
+									autoBackButton: true,
+									"titleSize": "18px",
+								}
+							}, extras);
+					}
+
+				}
+			
+			}
+		});
+
+		$("body").delegate("div[name=object]", "tap", function(e) {
+			if (taskData.taskStatus == null || taskData.taskStatus == 0) {
+				alert('请点击开始按钮开始执行任务')
+				return
+			}
+			// alert()
+			var extras = {
+				data: taskData,
+				guid: self.guid,
+				objlist: taskData.objectTaskDtos,
+				objguid: taskData.objectTaskDtos[$(this).attr('childindex')].objectGuid,
+				objdata: taskData.objectTaskDtos[$(this).attr('childindex')],
+				endTime: taskData.endTime,
+				index: $(this).attr('childindex'),
+			}
+			if (taskData.taskStatus == 3 || taskData.taskStatus == 1) {
+				app.openPage("inspection_end.html", {
+					titleNView: {
+						titleText: taskData.name,
+						autoBackButton: true,
+						"titleSize": "18px",
+					}
+				}, extras);
+			} else {
+					if (taskData.objectTaskDtos[$(this).attr('childindex')].state == 1) {
+						app.openPage("maintain_info.html", {
+							titleNView: {
+								titleText: taskData.name,
+								autoBackButton: true,
+								"titleSize": "18px",
+							}
+						}, extras);
+					} else {
+						if (taskData.objectTaskDtos[$(this).attr('childindex')].isNFC == 1) {
+							var btnArray = ['确定', '取消'];
+							mui.confirm('此养护对象需要进行NFC检测，是否继续', 'NFC检测提示', btnArray, function(e) {
+								if (e.index == 0) {
+									app.openPage("nfc.html", {
+										titleNView: {
+											titleText: 'NFC检测',
+											autoBackButton: true,
+											"titleSize": "18px",
+										}
+									}, extras);
+								}
+							})
+						}else{
+							app.openPage("maintain_edit.html", {
+								titleNView: {
+									titleText: taskData.name,
+									autoBackButton: true,
+									"titleSize": "18px",
+								}
+							}, extras);
+						}
+						
+					}
+
+				
+			}
+
+
+		});
+
+		
+		$("#task_relay1").on("tap", function() {
+			var extras = {
+				multiSelect: false
+			}
+			app.openPage("../commom/organ.html", {
+				titleNView: {
+					titleText: '任务转发',
+					autoBackButton: true,
+						"titleSize": "18px",
+				}
+			}, extras);
+
+			//移除
+			window.removeEventListener('returnSelect', setTaskRelay, false);
+			// 赋值
+			window.addEventListener('returnSelect', setTaskRelay, false);
+
+		})
+		$("#task_relay2").on("tap", function() {
+			var extras = {
+				multiSelect: false
+			}
+			app.openPage("../commom/organ.html", {
+				titleNView: {
+					titleText: '任务转发',
+					autoBackButton: true,
+					"titleSize": "18px",
+				}
+			}, extras);
+
+			//移除
+			window.removeEventListener('returnSelect', setTaskRelay, false);
+			// 赋值
+			window.addEventListener('returnSelect', setTaskRelay, false);
+
+		})
+		var setTaskRelay = function(data) {
+			var param = {}
+			param.assignUserId = app.userInfo().perId
+			param.guid = '1'
+			param.perId = data.detail[0].perId
+
+			TaskRelay(param, function(data) {
+				if (data.success) {
+					app.toast("养护结束")
+					//返回上一页
+					mui.back()
+				} else {
+					app.toast("数据异常")
+				}
+
+			});
+		}
+		var TaskRelay = function(param, callback) {
+			var url = config.urls.baseUrl + config.actions.inspectrepeat;
+		
+			app.showLoader();
+			$.ajax(url, {
+				data: param,
+				// data: "",
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token":config.urls.tempToken
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		}
+		$("#status_start1").on("tap", function() {
+			e.stopPropagation()
+			var param = {}
+			param.guid = '1'
+
+			var btnArray = ['确定', '取消'];
+			mui.confirm('点击确认将开始养护任务。', btnArray, function(e) {
+				if (e.index == 0) {
+					StatusStart(param, function(data) {
+						if (data.success) {
+							app.toast("任务开始")
+							localStorage.setItem('guid', param.guid)
+							location.reload()
+						} else {
+							app.toast("数据异常")
+						}
+
+					});
+				}
+			})
+		});
+
+		$("body").delegate("div[name=status_start]", "tap", function(e) {
+			event.stopPropagation();    //  阻止事件冒泡
+			var param = {
+				"guid": $(this).attr("dataguid"),
+			}
+			var btnArray = ['确定', '取消'];
+			mui.confirm('点击确认将开始养护任务。', btnArray, function(e) {
+				if (e.index == 0) {
+					StatusStart(param, function(data) {
+						if (data.success) {
+							app.toast("任务开始")
+							localStorage.setItem('guid', param.guid)
+							location.reload()
+						} else {
+							app.toast("数据异常")
+						}
+
+					});
+				}
+			})
+		});
+
+		$("body").delegate("div[name=task_relay]","tap", function() {
+			guid = $(this).attr('dataGuid')
+			var extras = {
+				multiSelect: false
+			}
+			event.stopPropagation();    //  阻止事件冒泡
+			app.openPage("../commom/organ.html", {
+				titleNView: {
+					titleText: '任务转发',
+					autoBackButton: true
+				}
+			}, extras);
+
+			//移除
+			window.removeEventListener('returnSelect', setTaskRelay, false);
+			// 赋值
+			window.addEventListener('returnSelect', setTaskRelay, false);
+		});
+
+		// $("div[name=status_start]").on("tap",function(){
+
+		// });
+		var StatusStart = function(param, callback) {
+			var url = config.urls.baseUrl + config.actions.inspectstart;
+		
+			app.showLoader();
+			$.ajax(url, {
+				data: param,
+				// data: "",
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token":config.urls.tempToken
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						location.reload();
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		}
+		var setTaskRelay = function(data) {
+			var param = {}
+			param.assignUserId = app.userInfo().perId
+			param.assignUserRealName = app.userInfo().username
+			param.guid = guid
+			param.perId = data.detail[0].perId
+			param.inspectPerson = data.detail[0].username
+			param.inspectPersonRealName = data.detail[0].realname
+
+			console.log(JSON.stringify(param))
+			TaskRelay(param, function(data) {
+				if (data.success) {
+					app.toast("转发成功")
+					//返回上一页
+					location.reload()//调完接口改完状态重新刷新页面
+				} else {
+					app.toast("数据异常")
+				}
+
+			});
+		}
+
+		$("body").delegate("div[name=storage]", "tap", function(e) {
+			var extras = {}
+			app.openPage("maintain_index.html", {
+				titleNView: {
+					titleText: '',
+					autoBackButton: true,
+					"titleSize": "18px",
+				}
+			}, extras);
+		});
+
+		$("#dialog_hidden").on("tap", function() {
+			$('#inspection_dialog').css('display', 'none');
+		});
+		$("#dialog_submit").on("tap", function() {
+			var taskStatus = $('input[name="taskStatus"]:checked').attr('value')
+			var inspectPerson = $("#inspectPerson").val()
+			var weather = $("#weather").val()
+			var result = $("#result").val()
+
+			if (!inspectPerson) {
+				app.toast("请输入养护人")
+				return;
+			}
+
+			if (!weather) {
+				app.toast("请输入当日天气")
+				return;
+			}
+
+			if (!result) {
+				app.toast("请输入评论描述")
+				return;
+			}
+
+			var param = {
+				"guid": self.guid,
+				"taskStatus": taskStatus,
+				"inspectPerson": inspectPerson,
+				"weather": weather,
+				"result": result
+			}
+			inspectionEnd(param, function(data) {
+				console.log(JSON.stringify(data))
+				if (data.success) {
+					app.toast("养护结束")
+					//返回上一页
+					mui.back()
+				} else {
+					app.toast("数据异常")
+				}
+
+			});
+
+		});
+
+		var inspectionEnd = function(param, callback) {
+			var url = config.urls.baseUrl + config.actions.inspectend;
+		
+			app.showLoader();
+			$.ajax(url, {
+				data: param,
+				// data: "",
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				headers: {
+					"Content-Type": "application/json",
+					// "Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token":config.urls.tempToken
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		}
+
+		mui.init({
+			beforeback: function() {
+
+				var list = plus.webview.currentWebview().opener();
+				//refresh是A页面自定义事件
+				mui.fire(list, 'backInspection');
+				//返回true,继续页面关闭逻辑
+				return true;
+			},
+			swipeBack: false
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
+		})(mui);
+
+		//点击结束养护
+		$("#inspection_end").on("tap", function() {
+			
+			var problemContent = $("#problemContent"); //缺陷描述
+			var locationContent = $("#locationContent") //地点
+			var bugAllImage = $("#image_id");
+			var bugAllImagePath = $("#image_path"); //全局图片路径
+			var bugPartImage = $("#image_id2");
+			var bugPartImagePath = $("#image_path2"); //局部图片路径
+			var bugKeyImage = $("#image_id3");
+			var bugKeyImagePath = $("#image_path3"); //关键图片路径
+			var objNo = $("#obj"); //设施编号
+
+			var finder = $("#findBy_input"); //发现人
+			var findTime = $("#findTime"); //*发现时间
+			var handler = $("#handler_input"); //*负责人(noName)
+
+			//必填项集合
+			var paramList = "#bugSource" + "," + "#problemContent" + "," + "#findBy_input" + "," + "#findTime" + "," +
+				"#handler_input";
+			//必填空判断
+			if (judgeParam(paramList)) {
+				return;
+			}
+			// console.log("--------------savePath-S--------------")
+			// console.log(bugAllImagePath.text())
+			// console.log(bugKeyImagePath.text())
+			// console.log(bugPartImagePath.text())
+			// console.log("--------------savePath-E--------------")
+
+			var param = {
+				bugSource: sourceId, //缺陷来源*
+				// bugTitle: bugTitle.val(), //缺陷名称
+				objectType: objTypeId, //设施类型
+				// objectDesc:objName,      //对象
+				objectId: objNo.val(), //设施编号
+				commId: commId, //小区
+				commName: commName, //小区名
+				bugTypeId: bugId, //缺陷
+				bugTypeId: bugTypeId, //缺陷类型Id
+				bugLevel: levelId, //缺陷等级Id*
+				problemContent: problemContent.val(), //缺陷描述*
+				locationContent: locationContent.val(), //地点
+				bugAllImage: bugAllImage.text(), //整体图片*
+				bugAllImagePath: bugAllImagePath.text(),
+				bugKeyImage: bugKeyImage.text(), //关键部位*
+				bugKeyImagePath: bugKeyImagePath.text(),
+				bugPartImage: bugPartImage.text(), //局部图片*
+				bugPartImagePath: bugPartImagePath.text(),
+
+				findBy: finder.val(), //发现人
+				findTime: findTime.val(), //发现时间
+				belongManager: handler.val(), // 负责人
+			};
+
+			qxAdd(param, function(data) {
+				if (data.success) {
+					app.toast("新增成功")
+					// canelTimer();
+					//返回上一页
+					mui.back()
+				} else {
+					app.toast("新增失败")
+				}
+
+			});
+
+		});
+
+		// var keyPointsstatusList = ["未养护", "存在异常", "存在异常", "已养护"]
+
+		var object_end = 0
+
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+
+			var str = ''
+			guid = self.guid;
+			var thisParam = {}
+			thisParam.guid = self.guid
+			// alert(guid)
+			// getInspectTaskQueryGuid(thisParam,function(data) {
+			getInspectTaskQueryGuid({
+				'guid': self.guid
+			}, function(data) {
+				taskData = data
+				// console.log(JSON.stringify(data))
+				str = ''
+				//任务状态
+				var task_status = "";
+				keyPointsList = []
+				var text = ''
+				var childobj = ''
+
+				if (data['objectTaskDtos'] != null) {
+					for (let j = 0; j < data.objectTaskDtos.length; j++) {
+						console.log(JSON.stringify(data.objectTaskDtos[j]))
+						keyPointsList[j] = {}
+
+						if (parseInt(data.objectTaskDtos[j].state) == 1) {
+							object_end++
+							text = '已养护'
+						} else {
+							text = '待养护'
+						}
+						var state = "";
+						if (0 == parseInt(data.objectTaskDtos[j].state)) {
+							state = '<img src="../../img/commom/dxj.png" />';
+						} else if (1 == parseInt(data.objectTaskDtos[j].state)) {
+							state = '<img src="../../img/commom/yxj.png" />';
+						}
+
+						keyPointsList[j] = {
+							position: [data.objectTaskDtos[j].codeX, data.objectTaskDtos[j].codeY],
+							guid: data.objectTaskDtos[j].objectGuid,
+							status: text,
+							childindex: j
+						}
+						keyPoints = keyPointsList
+						mobileContainer.showPatrolRoute(routePoints, keyPoints);
+						childobj +=
+							`<div class="mui-collapse-content li-item-pull" name="object" childindex=${j} style="padding: 8px 15px;width: 100%;margin-bottom:1px;">
+										<div class="object">
+											<div><span class="in-obj"><span class="color888">养护对象：</span></span><span class="obj-title">${data.objectTaskDtos[j].objectName}</span></div>
+											<div class="type-inspection obj-title">${state}</div>
+										</div>
+										<div class="object">
+											<div  class="fanwei">
+												<span class="in-obj"><span class="color888">养护范围：</span></span>
+												<span class="obj-title">${data.objectTaskDtos[j].localDesc||'无'}</span>
+											</div>`
+						if (data.objectTaskDtos[j].isNFC == 1) {
+							childobj +=
+								`<div data-guid=${data.objectTaskDtos[j].objectGuid} name="nfc"><img src="../../img/commom/nfc@3x.png" alt=""></div>`
+						} else {
+							childobj += ''
+						}
+						childobj += `</div>
+									</div>`
+					}
+				}
+
+				if (data.taskStatus == null || data.taskStatus == 0) {
+					task_status =
+						`<div class="item1" name="status_start" dataGuid=${data.guid}>
+											<div style="color: #337BFC;">开始</div>
+										 </div>
+										 <div class="item2" name="task_relay" dataGuid=${data.guid}>
+											<div style="color: #337BFC;">任务转发</div>
+										 </div>`;
+				} else if (1 == data.taskStatus) {
+					task_status = '<div class="task-item-ischange task-item_status"><span>已转发</span></div>';
+				} else if (2 == data.taskStatus) {
+					task_status = '<div class="task-item-running task-item_status"><span>进行中</span></div>';
+				} else if (3 == data.taskStatus) {
+					task_status = '<div class="task-item-finished task-item_status"><span>已完成</span></div>';
+					$("#endBtn").css('display', 'none');
+					$("#returnBtn").parent().css('width', '100%');
+				}
+				$("#footer_button").css('display', 'block');
+				var endTime = ''
+				if (data.endTime) {
+					endTime = data.endTime.split(' ')[0]
+				} else {
+					endTime = '无'
+				}
+				var createTime = ''
+				if (data.createTime) {
+					createTime = data.createTime.split(' ')[0]
+				} else {
+					createTime = '无'
+				}
+				var inspectEndTime = ''
+				if (data.inspectEndTime) {
+					inspectEndTime = data.inspectEndTime.split(' ')[0]
+				} else {
+					inspectEndTime = '无'
+				}
+				var inspectType = ''
+				if(data.inspectType == 1){
+					inspectType = '日常养护';
+				}else if(data.inspectType == 2){
+					inspectType = '专项养护';
+				}else if(data.inspectType == 3){
+					inspectType = '临时养护';
+				}
+				str +=
+					`<li class="mui-table-view-cell mui-collapse" style="border-bottom:5px solid #E9E9E9;background:#fff;" >
+							<a class="mui-navigate-r obj-title" href="#" name='liindex'>
+								<div style="position: relative;margin-top: 10px;" dataGuid=${data.guid} name='task-title'>
+									<div style="text-align: left;">	
+										<span class="icon-css"><img src="../../img/commom/xl.png" class="arrow_right" style="width: 7px;" alt=""></span>
+										<span class="task_title">${data.name}</span>
+									</div>
+									${task_status}
+								</div>
+								<div class="sec-line" style="margin-top: 10px;display: flex;justify-content: space-between;margin-bottom: 10px;">
+									<div >${inspectType}</div><div style="color:#EDEDED">|</div>
+									<div>${data.resultDetailsDtos.length || 0}个养护对象</div><div style="color:#EDEDED">|</div>
+									<div style="padding:0 5px;">截止时间:${endTime}</div>
+								</div>
+							</a>
+							<div class="mui-collapse-content" style="background-color: #f4f4f4;font-size:13px;">
+								<div class="mui-row obj-title">
+									<div><span class="mui-col-sm-6 ibh" style="width: 49%;text-align:left;"><div class="color888" style="display:inline-block;vertical-align:top;">任务名称：</div><div style="width:55%;display:inline-block;">${data.name}</div></span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;vertical-align:top;"><span class="color888" >负责人：</span>${data.principal||'无'}</span></div>
+									<div><span class="mui-col-sm-6 ibh" style="width: 49%;text-align:left;"><span class="color888">养护类型：</span>${inspectType}</span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;"><span class="color888">巡查人：</span>${data.inspectPerson||'无'}</span></div>
+									<div><span class="mui-col-sm-6 ibh" style="width: 49%;text-align:left;"><span class="color888">养护对象总数：</span>${data.resultDetailsDtos.length || 0}处</span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;"><span class="color888">已养护对象数：</span>${object_end}处</span></div>
+									<div><span class="mui-col-sm-6 ibh" style="width: 49%;text-align:left;"><span class="color888">开始时间：</span>${createTime}</span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;"><span class="color888">结束时间：</span>${inspectEndTime}</span></div>
+								</div>
+							</div>
+							</li>
+							
+							${childobj}
+							
+							`
+
+				$("#xjTask-items").html(str)
+
+				//底部两按钮
+				// var str_footer_button = ""
+				// str_footer_button +=
+				// 	`
+				// 			<div class="item" name="storage">
+				// 				<div style="color: #337BFC;" id="">返回</div>
+				// 			</div>
+				// 			<div class="item" name="inspection_end">
+				// 				<div style="background: #337BFC;color: #fff;">结束养护</div>
+				// 			</div>
+				// `
+				// $("#footer_button").html(str_footer_button)
+
+
+				var str2 = ''
+				//任务状态
+				var task_status = "";
+				for (let j = 0; j < data.objectTaskDtos.length; j++) {
+					var text = '待养护'
+					if (parseInt(data.objectTaskDtos[j].state) == 1) {
+						text = '已养护'
+					} else {
+						text = '待养护'
+					}
+				}
+				if (data.taskStatus == 0) {
+					task_status =
+						`<div class="item1" name="status_start" dataGuid=${data.guid}>
+												<div style="color: #337BFC;">开始</div>
+											 </div>
+											 <div class="item2" name="task_relay" dataGuid=${data.guid}>
+												<div style="color: #337BFC;">任务转发</div>
+											 </div>`;
+				} else if (1 == data.taskStatus) {
+					task_status = '<div class="task-item-ischange task-item_status"><span>已转发</span></div>';
+				} else if (2 == data.taskStatus) {
+					task_status = '<div class="task-item-running task-item_status"><span>进行中</span></div>';
+				} else if (3 == data.taskStatus) {
+					task_status = '<div class="task-item-finished task-item_status"><span>已完成</span></div>';
+					$("#endBtn").css('display', 'none');
+					$("#returnBtn").parent().css('width', '100%');
+				}
+				$("#footer_button").css('display', 'block');
+				var inspectType = ''
+				if(data.inspectType == 1){
+					inspectType = '日常养护';
+				}else if(data.inspectType == 2){
+					inspectType = '专项养护';
+				}else if(data.inspectType == 3){
+					inspectType = '临时养护';
+				}
+				str2 +=
+					`<li class="mui-table-view-cell mui-collapse mui-active" style="padding-top: -10px;!important"  >
+							<a class="mui-navigate-r obj-title" href="#" name='liindex'>
+								<div style="position: relative;margin-top: 10px;" dataGuid=${data.guid} name='task-title'>
+									<div style="text-align: left;">	
+										<span class="icon-css"><img src="../../img/commom/xl.png" class="arrow_right" style="width: 7px;" alt=""></span>
+										<span class="task_title">${data.name}</span>
+									</div>
+									${task_status}
+								</div>
+								<div class="sec-line" style="margin-top: 10px;display: flex;justify-content: space-between;margin-bottom: 10px;font-size:14px;">
+									<div >${inspectType}</div><div style="color:#EDEDED">|</div>
+									<div>${data.resultDetailsDtos.length || 0}个养护对象</div><div style="color:#EDEDED">|</div>
+									<div style="padding:0 5px;">截止时间:${endTime}</div>
+								</div>
+							</a>
+							<div class="mui-collapse-content" style="background-color: #f4f4f4;font-size:13px;">
+								<div class="mui-row obj-title">
+									<div><span class="mui-col-sm-6 ibh" style="width: 48%;text-align:left;"><div class="color888" style="display:inline-block;vertical-align:top;">任务名称：</div><div style="width:55%;display:inline-block;">${data.name}</div></span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;vertical-align:top;"><span class="color888" >负责人：</span>${data.principal||'无'}</span></div>
+									<div><span class="mui-col-sm-6 ibh" style="width: 48%;text-align:left;"><span class="color888">养护类型：</span>${inspectType}</span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;"><span class="color888">巡查人：</span>${data.inspectPerson||'无'}</span></div>
+									<div><span class="mui-col-sm-6 ibh" style="width: 48%;text-align:left;"><span class="color888">养护对象总数：</span>${data.resultDetailsDtos.length || 0}处</span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;"><span class="color888">已养护对象数：</span>${object_end}处</span></div>
+									<div><span class="mui-col-sm-6 ibh" style="width: 48%;text-align:left;"><span class="color888">开始时间：</span>${createTime}</span>
+									<span class="mui-col-sm-6 ibh" style="width: 50%;text-align:left;"><span class="color888">结束时间：</span>${inspectEndTime}</span></div>
+								</div>
+							</div>
+							</li>`
+
+
+				$("#selectItem2_ul").html(str2)
+				if (object_end == data.resultDetailsDtos.length) {
+					$("div[name=inspection_end]").on("tap", function() {
+						$('#inspection_dialog').css('display', 'block');
+					});
+				} else {
+					$("div[name=inspection_end]").on("tap", function() {
+						alert('请养护完所有任务对象')
+					});
+				}
+			})
+		})
+
+		window.addEventListener('aaa', function(e) { //执行刷新
+			location.reload();
+		});
+	</script>
+
+
+</html>

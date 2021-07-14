@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-新增现场检查纪录-提交完成</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+
+			.btn-item-2 {
+				width: 50%;
+				float: left;
+			}
+
+			.btn-item div,
+			.btn-item-2 div {
+				margin: 0 auto;
+				border: 1px solid #337BFC;
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 50px;
+			}
+
+
+			.btn-item div {
+				margin: 0 auto;
+				border: 1px solid #0493F3;
+				height: 48px;
+				line-height: 48px;
+				border-radius: 5px;
+				font-size: 18px;
+			}
+
+			#title-content {
+				font-size: 24px;
+				font-family: PingFang SC;
+				/* font-weight: bold; */
+				color: #262626;
+				margin-bottom: 50px;
+			}
+		/* 自定义样式	*/
+			.scroll-li img {
+				width: 96px;
+				height: 96px;
+				margin: 48px 0 26px 0;
+			}
+			#confirm {
+				color: white;
+				background: #0493F3;
+				margin-bottom:12px;
+			}
+			#toPrint {
+				background: white;
+				color: #0493F3;
+			}
+			.bottom-btn {
+				width: 100%;
+				padding: 0 20px;
+			}
+		</style>
+	</head>
+
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper" style="background: white;">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="" style="">
+							<div style="height: 100%;padding-bottom: 10px;">
+								<div id="texthtml" class="scroll-li" >
+<!--									<img src="../../img/maintain_finish_icon.png" style="margin-bottom: 30px;">-->
+									<img src="../../img/submit_success.png" alt="">
+									<div id="title-content">
+										提交完成
+									</div>
+									<div class="bottom-btn">
+										<div class="btn-item">
+											<div id="confirm">确定</div>
+											<div id="toPrint">预览</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--页面主内容区结束-->
+
+		</div>
+
+
+	</body>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/maintain.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+	
+	<script>
+		var self;
+		mui.init({
+			beforeback: function() {
+				popToTarget('proDetail.html');
+			},
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			
+			$("#confirm").on("tap", function() {				
+				popToTarget('proDetail.html');			
+			}); 
+			
+			$("#toPrint").on("tap", function() {
+
+			var extras ={};
+			 if(self.projectId){
+				 extras.projectId = self.projectId;
+				 extras.guid = self.guid;
+			 }else{
+				 extras.filePath=self.filePath;
+				 extras.fileId=self.fileId;
+			}		
+			// console.log(JSON.stringify(extras));
+			app.openPage("./preview.html", {
+				titleNView: {
+					titleText: '文档预览',
+					autoBackButton: true
+				}
+			}, extras);
+				// plus.webview.currentWebview().close('none'); //关闭
+			}); 
+		})
+		
+	</script>
+
+</html>

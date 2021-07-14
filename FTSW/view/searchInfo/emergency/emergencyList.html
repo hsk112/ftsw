@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>应急资源</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right{
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-slider{
+				height: 100vh;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+		   .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+		        transform: rotate(90deg);
+		        margin-left: 5px;
+		      }
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active +.titleleft{
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+			.mui-table-view-cell:after{
+				left:1px;
+				background-color: #F4F4F4;
+				height: 10px;
+			}
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 50px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #347CFC;
+				color: #347CFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 14px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: #FF5656;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: #29CC85;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: #FF7800;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+			.task-item_status{
+				position: absolute;
+				top: 8px;
+				right: 5px;
+			}
+
+			.bottom-item {
+				background: #FFFFFF;
+				position: absolute;
+				/* height: 300px; */
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				text-align: left;
+			}
+
+			.bottom-item-btn-list {
+				/* height: 200px; */
+				width: 98%;
+				position: absolute;
+			}
+			.fanwei{
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+			.bottom-item-btn-list .bottom-item-btn-list-top{
+				width: 100%;
+
+			}
+			.item1{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 0px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item2{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 0px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item3{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 64px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				/* border: 1px solid #337BFC; */
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.mui-navigate-left:after
+			{
+			    content: '\e472';
+				left: 5px;
+				bottom: 50px;
+			}
+			.object{
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+			.li-item{
+				background-color:white;
+			}
+			.li-item-pull{
+				background-color: #F4F4F4 !important;
+			}
+			.li-margin{
+				margin-bottom: 13px;
+				border-bottom: 1px solid #EDEDED;
+				padding-bottom: 0px;
+				font-size: 13px;
+				padding-bottom: 10px;
+			}
+			.in-obj{
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+			}
+			.obj-title{
+				color: #444444;
+			}
+			.bgc-white{
+				background-color: white;
+			}
+			.bgc-grey{
+				background-color: #F4F4F4;
+			}
+			.mui-navigate-r{
+				background: #fff;
+			}
+			.icon-css{
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+			.task_title{
+				display: inline-block;
+				padding: 8px 0;
+				color: #191515;
+				font-size: 15px;
+				font-weight: 500;
+				width: 50%;
+				word-break: break-all;
+				white-space: pre-wrap;
+			}
+			.sec-line{
+				color: #878787;
+				font-size: 14px;
+			}
+			/* 	.arrow_right{
+				transform: rotate(90deg);
+			} */
+			.ul-mar-bottom{
+				margin-bottom: -18px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn){
+				margin: 0;
+				padding:0;
+			}
+			.mui-table-view-cell.mui-active{
+				background: #fff;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider  .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+				    border-top: 7px solid #F4F4F4
+			}
+			
+			.color888{
+				color: #888888;
+			}
+			.ibh{
+				display: inline-block;
+				line-height: 28px;
+			}
+			
+			.showMore{
+				display: inline-block;
+			}
+			
+			#archivesType{
+				border-top: 1px solid #EDEDED;
+				padding: 10px 20px 0;
+				display: flex;
+				justify-content: space-between;
+				background-color: #FFFFFF;
+			}
+			
+			#archivesType button{
+				width: 150px;
+				border-radius: 20px;
+			}
+			
+			#listTitle span{
+				padding: 0;
+				color: #888888;
+			}
+			
+			#listTitle{
+				width: 100%;
+				height: 40px;
+				padding-left: 20px;
+				line-height: 40px;
+				background: #F0F0F0;
+				font-size: 16px;
+			}
+			
+			#searchNav span{
+				padding: 0;
+				color: #888888;
+			}
+			
+			#searchNav{
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				border-bottom: 1px solid #EDEDED;
+			}
+			
+			.mui-table-view-cell{
+				padding: 0!important;
+			}
+			
+			#selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+			#selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span{
+				padding: 0;
+			}
+			
+			.mui-table-view-cell:after{
+				left: 4%;
+				height: 2px;
+				width: 92%;
+			}
+			
+			.home-item {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 100px;
+				left: 100px;
+				height: 300px;
+				background: #FFFFFF
+			}
+			
+			.home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+			
+			.home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+			
+			
+			.home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+			
+			.home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+			
+			}
+			
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+			
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+			
+			#archivesType{
+				padding: 0;
+				border-top: 1px solid #EDEDED;
+				height: 70px;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				background-color: #FFFFFF;
+			}
+						
+			#archivesType button{
+				width: 100px;
+				border-radius: 20px;
+				
+			}
+			
+			#search_input{
+				margin: 0;
+				width: 90%;
+				height: 32px;
+				border-radius: 16px;
+				border: none;
+				padding-left: 35px;
+			}
+			
+			#search{
+				padding: 12px 0 5px 0;
+				background: #F4F4F4;
+				border-bottom: 7px solid #F4F4F4;
+				position: relative;
+			}
+			
+			#del_icon img{
+				width: 14px;
+				height: 14px;
+				position: absolute;
+				right: 9%;
+				top: 43%;
+			}
+			
+			#search_icon img{
+				width: 14px;
+				height: 14px;
+				position: absolute;
+				left: 9%;
+				top: 43%;
+			}
+			
+			.btn-outlined{
+				border:1px solid #337BFC;
+				color: #337BFC;
+			}
+			.mui-btn.mui-active:enabled{
+				background: #337BFC;
+			}
+			
+			#foldTitle{
+				height: 40px;
+				line-height: 40px;
+				background: #F0F0F0;
+			}
+			
+			.navWrapper{
+				line-height: 40px;
+				background: #F9F9F9;
+				border-bottom:1px solid #EDEDED;
+				font-size: 14px;
+				font-weight: 400;
+				color: #888888;
+				position: fixed;
+				z-index: 998;
+				width: 100%;
+				display: flex;
+				justify-content: space-around;
+				background-color: #FFFFFF;
+			}
+			
+			*{
+				touch-action: none;
+			}
+			
+			.no-data {
+				position: absolute;
+				top: 15rem;
+				left: 50%;
+				font-size: 14px;
+				color: #999;
+				transform: translateX(-50%);
+				display: none;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="listNav" style="position: fixed; top: 0; left: 0; z-index: 999; width: 100%;">
+					<div id="search">
+						<div id="search_icon"><img src="../../../img/commom/search1@2x.png"></div>
+						<div id="del_icon"><img src="../../../img/commom/del.png"></div>
+						<input type="text" id="search_input" value="" placeholder="请输入物资名称" />
+					</div>
+					<div id="searchNav">
+						<div class="navWrapper">
+							<div class="belongWarehouse" id="whBelong" style="display: inline-block;"><span id="whBelongTips" style="font-size: 14px;">所属仓库</span>
+								<span class="mui-icon mui-icon-arrowright" style="font-size:14px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+							</div>
+							<div class="belongType" id="materialType" style="display: inline-block;"><span id="typeTips" style="font-size: 14px;">物资类型</span>
+								<span class="mui-icon mui-icon-arrowright" style="font-size:14px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+							</div>
+							<div class="suppliesName" id="materialName" style="display: inline-block;"><span id="nameTips" style="font-size: 14px;">物资名称</span>
+								<span class="mui-icon mui-icon-arrowright" style="font-size:14px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+							</div>
+						</div>
+					</div>
+					<ul class="mui-table-view" id="dailyplan_list"></ul>
+					<div class="view-content-item" style="height: 53px; display: flex; align-items: center; background-color: #FFFFFF;">
+						<div id="openFactor">
+							<div class=" view-title search-tip" style="display: inline-block;">
+								<img src="../../../img/commom/biaodan.png" style="height:14px;margin: 0 5px 0 20px" />
+								<span id="riverLabel" style="font-weight: bold; font-size: 14px;">站点物资列表</span>
+							</div>
+						</div>
+					</div>
+
+					<div id="listTitle">
+						<div id="riverTitle">
+							<div class="mui-row" style="text-align: left; font-size: 14px;">
+								<div class="mui-col-sm-1 mui-col-xs-2">
+									<span class="mui-table-view-cell">序号</span>
+								</div>
+								<div class="mui-col-sm-3 mui-col-xs-3">
+									<span class="mui-table-view-cell">物资名称</span>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">到期/库存数量</span>
+								</div>
+								<div class="mui-col-sm-3 mui-col-xs-3">
+									<span class="mui-table-view-cell">所属仓库</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="mui-slider-group" style="margin-top: 180px;">
+							<div id="selectItem1" style="padding-top: 10px" class="mui-slider-item mui-control-content mui-active">
+								<div id="scroll1" style="min-height: 100vh;background: #FFFFFF;padding-bottom:20px">
+									<div class="mui-table-view">
+										<div class="no-data">暂无数据，点击此处重置！</div>
+										<ul class="mui-table-view" id="emergency_ul" style="font-size: 16px;"></ul>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!--页面主内容区结束-->
+		</div>
+	</body>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/maintain.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script src="../../../js/infoQuery/emList.js"></script>
+
+	<script>
+		// var vConsole = new VConsole();
+
+		mui.init({
+			swipeBack: false,
+		});
+		var emergencyData = [];
+		var searchData = [];
+		var WHList = [];
+		var typeANDnameList = [];
+
+		var pageNo = '1';
+		var pageSize = '1000';
+		var searchPageNo = '1';
+		var searchPageSize = '1000';
+		var isShow = true;
+		var mask = mui.createMask();
+		var userPicker = new mui.PopPicker();
+
+		var whNameJSON = [];
+		var materialTypeJSON = [];
+		var materialNameJSON = [];
+
+		var conditions = [{
+			label: "whId",
+			value: null
+		}, {
+			label: "materialType",
+			value: null
+		}, {
+			label: "materialName",
+			value: null
+		}];
+
+		//初始化单页view	
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var pickerpxtop = null;
+
+		mui.plusReady(function() {
+			initConditions();
+			initTypeAndNameConditions();
+			getList(pageNo, pageSize);
+		});
+
+		function initConditions() {
+			$("#del_icon").hide();
+			getWhCondition(function(data) {
+				WHList = data.result;
+                whNameJSON.push({
+                    text: '全部',
+                    value: 'all'
+                })
+				for (let i = 0; i < WHList.length; i++) {
+					whNameJSON.push({
+						text: WHList[i].whName,
+						value: WHList[i].guid
+					})
+				}
+			})
+		};
+
+		function initTypeAndNameConditions() {
+			getTypeAndNameConditions(function(data) {
+				typeANDnameList = data.result;
+                materialTypeJSON.push({
+                    text: '全部',
+                    value: 'all'
+                })
+				for (let i = 0; i < typeANDnameList.length; i++) {
+					materialTypeJSON.push({
+						text: typeANDnameList[i].title,
+						value: typeANDnameList[i].key
+					})
+				}
+
+			})
+		};
+
+		// methods
+		var getList = function(pageNo, pageSize) {
+			getEmList(pageNo, pageSize, function(data) {
+				listView(data);
+				
+			})
+		}
+
+		var listView = function(data) {
+			$('.no-data').hide();
+			if (data != null) {
+				let str1 = '';
+				if(data.result.total>0){
+					console.log(data.result.total)
+					emergencyData = data.result.records;
+					
+					let index = 0;
+					let textColor;
+					for (let i = 0; i < emergencyData.length; i++) {
+						for (let k = 0; k < emergencyData[i].childList.length; k++) {
+							index++;
+							textColor = parseInt(emergencyData[i].childList[k].expireCoun) / parseInt(emergencyData[i].childList[k].materialCount) <
+								0.2 ? "#FF5656" : "#29CC85";
+
+							if (emergencyData[i].materialName.length > 5) {
+								materialName = emergencyData[i].materialName.substring(0, 5) + '...'
+							} else {
+								materialName = emergencyData[i].materialName;
+							}
+							str1 +=
+								`<li onclick="viewDetails('${emergencyData[i].childList[k].materialId}','${emergencyData[i].childList[k].whId}')" class="mui-table-view-cell" style="padding: 0; height:50px; line-height: 50px; font-size: 13px;">
+									 <div class="mui-row" style="text-align: left;padding-left: 20px;">
+									 
+									 <div class="mui-col-sm-2 mui-col-xs-2">
+									  <span class="mui-table-view-cell">${index}</span>
+									 </div>
+									  <div class="mui-col-sm-3 mui-col-xs-3">
+									   <span class="mui-table-view-cell">${materialName}</span>
+									  </div>
+									  <div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 20px;">
+									   <span class="mui-table-view-cell" style="color: ${textColor}">${emergencyData[i].childList[k].expireCount}</span>/
+									   <span class="mui-table-view-cell">${emergencyData[i].childList[k].materialCount}</span>
+									  </div>
+									  <div class="mui-col-sm-3 mui-col-xs-3">
+									   <span class="mui-table-view-cell">${emergencyData[i].childList[k].whName.substring(0,5)}...</span>
+									  </div>
+									 </div>
+									</li>`
+						}
+					}
+									
+				}else $('.no-data').show();
+				$('#emergency_ul').html(str1)	
+			} else {
+				$('.no-data').show();
+			}
+		}
+
+		var searchList = function(pageNo, pageSize) {
+			$('.no-data').hide();
+			$('#search_input').val('');
+			$("#del_icon").hide();
+			console.log("conditions:"+JSON.stringify(conditions));
+			getListWithConditions(pageNo, pageSize, conditions, function(data) {
+				searchData = data.result.records;
+				let str2 = '';
+				let textColor;
+				let materialName;
+				let whName;
+				if (conditions[0].value != null) {
+					for (let i = 0; i < searchData.length; i++) {
+						textColor = parseInt(searchData[i].expireCoun) / parseInt(searchData[i].materialCount) < 0.2 ? "#FF5656" :
+							"#29CC85";
+						if (searchData[i].materialName.length > 5) {
+							materialName = searchData[i].materialName.substring(0, 5) + '...'
+						} else {
+							materialName = searchData[i].materialName;
+						}
+
+						if (searchData[i].whName.length > 5) {
+							whName = searchData[i].whName.substring(0, 5) + '...'
+						} else {
+							whName = searchData[i].whName;
+						}
+
+						str2 +=
+							`<li onclick="viewDetails('${searchData[i].materialId}','${searchData[i].whId}')" class="mui-table-view-cell" style="padding: 0; height:50px; line-height: 50px; font-size: 13px;">
+										 <div class="mui-row" style="text-align: left;padding-left: 20px;">
+										 
+										 <div class="mui-col-sm-2 mui-col-xs-2">
+										  <span class="mui-table-view-cell">${i+1}</span>
+										 </div>
+										  <div class="mui-col-sm-3 mui-col-xs-3">
+										   <span class="mui-table-view-cell">${materialName}</span>
+										  </div>
+										  <div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 20px;">
+										   <span class="mui-table-view-cell" style="color: ${textColor}">${searchData[i].expireCount}</span>/
+										   <span class="mui-table-view-cell">${searchData[i].materialCount}</span>
+										  </div>
+										  <div class="mui-col-sm-3 mui-col-xs-3">
+										   <span class="mui-table-view-cell">${whName}</span>
+										  </div>
+										 </div>
+										</li>`
+					}
+				} else {
+					for (let i = 0; i < searchData.length; i++) {
+						textColor = parseInt(searchData[i].expireCoun) / parseInt(searchData[i].materialCount) < 0.2 ? "#FF5656" :
+							"#29CC85";
+						for (let n = 0; n < searchData[i].childList.length; n++) {
+							if (searchData[i].materialName.length > 5) {
+								materialName = searchData[i].materialName.substring(0, 5) + '...'
+							} else {
+								materialName = searchData[i].materialName;
+							}
+
+							if (searchData[i].childList[n].whName.length > 5) {
+								whName = searchData[i].childList[n].whName.substring(0, 5) + '...'
+							} else {
+								whName = searchData[i].childList[n].whName;
+							}
+
+							str2 +=
+								`<li onclick="viewDetails('${searchData[i].childList[n].materialId}','${searchData[i].childList[n].whId}')" class="mui-table-view-cell" style="padding: 0; height:50px; line-height: 50px; font-size: 13px;">
+											 <div class="mui-row" style="text-align: left;padding-left: 20px;">
+											 
+											 <div class="mui-col-sm-2 mui-col-xs-2">
+											  <span class="mui-table-view-cell">${i+1}</span>
+											 </div>
+											  <div class="mui-col-sm-3 mui-col-xs-3">
+											   <span class="mui-table-view-cell">${materialName}</span>
+											  </div>
+											  <div class="mui-col-sm-4 mui-col-xs-4" style="padding-left: 20px;">
+											   <span class="mui-table-view-cell" style="color: ${textColor}">${searchData[i].expireCount}</span>/
+											   <span class="mui-table-view-cell">${searchData[i].childList[n].materialCount}</span>
+											  </div>
+											  <div class="mui-col-sm-3 mui-col-xs-3">
+											   <span class="mui-table-view-cell">${whName}</span>
+											  </div>
+											 </div>
+											</li>`
+						}
+					}
+				}
+				$('#emergency_ul').html(str2)
+				if (str2.length == 0) {
+					$('.no-data').show();
+				}
+			})
+		}
+
+		var cleanConditions = function() {
+			for (let i = 0; i < 3; i++) {
+				conditions[i].value = null;
+			}
+
+			$("#whBelongTips").text("所属仓库");
+			$("#whBelongTips").css("color", "#888888")
+
+			$("#typeTips").text("物资类型");
+			$("#typeTips").css("color", "#888888")
+
+			$("#nameTips").text("物资名称");
+			$("#nameTips").css("color", "#888888")
+		}
+
+		$('#whBelong').on('tap', function() {
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				userPicker.setData(whNameJSON);
+				userPicker.show(function(items) {
+					if (items[0].value !== null) {
+						if (items[0].text.length > 4) {
+							$("#whBelongTips").text(items[0].text.substring(0, 4) + '...')
+						} else {
+							$("#whBelongTips").text(items[0].text)
+						}
+
+						$("#typeTips").text("物资类型");
+						$("#typeTips").css("color", "#888888")
+
+						$("#nameTips").text("物资名称");
+						$("#nameTips").css("color", "#888888")
+						conditions[1].value = null;
+						conditions[2].value = null;
+
+						$("#whBelongTips").css("color", "#337BFC")
+						conditions[0].value = items[0].value;
+                        if(items[0].text =='全部'){
+                            conditions[0].value = null;
+                        //     getList(pageNo,pageSize);
+                        //     return;
+                        }
+						searchList();
+					}
+				})
+			}
+
+		})
+
+		$('#materialType').on('tap', function() {
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				userPicker.setData(materialTypeJSON);
+				userPicker.show(function(items) {
+					if (items[0].value !== null) {
+						if (items[0].text.length > 4) {
+							$("#typeTips").text(items[0].text.substring(0, 4) + '...')
+						} else {
+							$("#typeTips").text(items[0].text)
+						}
+
+						$("#nameTips").text("物资名称");
+						$("#nameTips").css("color", "#888888")
+						conditions[2].value = null;
+
+						$("#typeTips").css("color", "#337BFC")
+						conditions[1].value = items[0].value;
+                        if(items[0].text =='全部'){
+                            conditions[1].value = null;
+                            searchList();
+                            return;
+                        }
+						var index = typeANDnameList.findIndex(x => x.key == items[0].value);
+						materialNameJSON = [];
+                        materialNameJSON.push({
+                            text: '全部',
+                            value: 'all'
+                        })
+						for (let n = 0; n < typeANDnameList[index].value.length; n++) {
+							materialNameJSON.push({
+								text: typeANDnameList[index].value[n].materialName,
+								value: typeANDnameList[index].value[n].materialName
+							})
+						}
+                        // if(items[0].text =='全部'){
+                        //     getList(pageNo,pageSize);
+                        //     return;
+                        // }
+						searchList();
+					}
+				})
+			}
+		})
+
+		$('#materialName').on('tap', function() {
+			if (materialNameJSON[0] == null) {
+				app.toast("没有该物资类型，请重新选择！")
+			} else {
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(materialNameJSON);
+					userPicker.show(function(items) {
+						if (items[0].value !== null) {
+							if (items[0].text.length > 4) {
+								$("#nameTips").text(items[0].text.substring(0, 4) + '...')
+							} else {
+								$("#nameTips").text(items[0].text)
+							}
+							$("#nameTips").css("color", "#337BFC")
+							conditions[2].value = items[0].value;
+                            if(items[0].text =='全部'){
+                                // $("#nameTips").text('全部');
+                                conditions[2].value = null;
+                                // getList(pageNo,pageSize);
+                                // return;
+                            }
+							searchList();
+						}
+					})
+
+				}
+			}
+		})
+
+		$('.no-data').on('tap', function() {
+			$('#search_input').val('');
+			$("#del_icon").hide();
+			cleanConditions();
+			getList(pageNo, pageSize);
+		})
+
+		$("#del_icon").on('tap', function() {
+			$('#search_input').val('');
+			getList(pageNo, pageSize);
+			$("#del_icon").hide();
+		})
+
+		$('#search_input').on('input', function() {
+			if ($("#search_input").val() != '') {
+				$("#del_icon").show();
+			} else {
+				$("#del_icon").hide();
+			}
+		})
+
+		$('#search_input').change(function(e) {
+			if ($('#search_input').val() != '') {
+				cleanConditions();
+				fuzzySearch(pageNo, pageSize, $('#search_input').val(), function(data) {
+					listView(data);
+				});
+			} else {
+				console.log("into empty")
+				$("#del_icon").hide();
+				getList(pageNo, pageSize)
+			}
+		})
+
+		function viewDetails(material_id, wh_id) {
+			app.openPage('./emergency_details.html', {
+				titleNView: {
+					titleText: '应急资源详情',
+					autoBackButton: true
+				}
+			}, {
+				materialId: material_id,
+				whId: wh_id
+			})
+		};
+
+		window.addEventListener('backInspection', function(e) { //执行刷新
+			getList(pageNo, pageSize);
+			mui('#scroll1').scroll().scrollTo(0, 0, 0);
+			mui('#contentList').scroll().scrollTo(0, 0, 0);
+		});
+
+
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
+		})(mui);
+	</script>
+
+</html>

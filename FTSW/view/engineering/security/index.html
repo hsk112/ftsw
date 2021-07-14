@@ -1,0 +1,1700 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>安全检查</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+	</head>
+	<style>
+		#home-item {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				height: 200px;
+				background: #FFFFFF
+			}
+			#confirmDialog{
+				position: fixed;
+				width: 90%;
+				z-index:999;
+				top: 35%;
+				left: 5%;
+				height: 180px;
+				border-radius: 20px;
+				background: #FFFFFF;
+				padding:30px;
+			}
+			#confirmDia{
+				position: fixed;
+				width: 100%;
+				z-index:999;
+				top: 0;
+				left: 0;
+				height: 100vh;
+				/* border-radius: 20px; */
+				background-color: rgba(0,0,0,0.2);
+				padding:0;
+			}
+			.home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+
+			.home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+
+
+			.home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+
+			.home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+
+			}
+
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			.mui-icon-forward:before {
+				content: '';
+			}
+
+			.mui-icon-forward::after {
+				content: '\e470';
+				font-size: 15px;
+			}
+			.mui-backdrop {
+			    position: fixed;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			    z-index: 99;
+				/* height: 100vh; */
+			    background-color: rgba(0,0,0,0.2);
+			}
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear{
+			    font-size: 17px;
+			    top: 7px;
+			    width: 30px;
+			    height: 30px;
+			}
+			.mui-slider-indicator.mui-segmented-control {
+			    position: relative;
+			    top: 8px;
+			    height: 50px;
+			    background: #FFFFFF;
+			    font-size: 16px;
+			    font-weight: 400;
+			    color: #888888;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			    color: #337BFC;
+			    border-bottom: 2px solid #337BFC;
+			    background: 0 0;
+			    font-size: 16px;
+			    font-weight: bold;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+			    border: 0;
+			    font-size: 16px;
+			    font-weight: 400;
+			    color: #888888;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+			    border-top: 1px solid #dedede;
+			    border-bottom: none;
+			}
+			.projectName{
+				font-size: 16px;
+				font-weight: bold;
+				color: #191515;
+				line-height: 24px;
+				word-break: break-all;
+				text-align: left;
+				width: 98%;             
+				overflow: hidden;      
+				text-overflow: ellipsis;  
+				white-space: nowrap; 
+			}
+			.bzdw{
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+				line-height: 14px;
+				margin-top: 16px;
+				text-align: left;
+			}
+			.bzdw_span{
+				margin-top: 16px;
+				font-size: 14px;
+				font-weight: 400;
+				color: #888888;
+				line-height: 14px;
+				word-break: break-all;
+				text-align: left;
+				width: 98%;             
+				overflow: hidden;      
+				text-overflow: ellipsis;  
+				white-space: nowrap; 
+			}
+			.div3{
+				font-size: 14px;
+				font-weight: 400;
+				color: #888888;
+				line-height: 14px;
+				padding-top:20px;
+				width: 100%
+			}
+			.mui-table-view-cell {
+			    position: relative;
+			    overflow: hidden;
+			    padding: 20px;
+			    border-bottom: 5px solid #F4F4F4;
+			}
+			.mui-table-view-cell:last-child{
+			    border-bottom: none;
+			}
+			.bottom-item-btn {
+				height: 100px;
+				position: fixed;
+				z-index: 99;
+				width: 100%;
+				background: #f2f2f2;
+				bottom: 0px;
+				padding-top: 30px;
+				padding-left: 5%;
+			}
+			
+			.bottom-item-btn .item {
+				width: 90%;
+				text-align: center;
+				padding: 0 14px;
+			
+			}
+			
+			.bottom-item-btn .item div {
+				margin-left: 5%;
+				border: 1px solid #337BFB;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+			.empty{
+				line-height:200px;
+				width:100%;
+				text-align: center;
+				font-size: 16px;
+				color: #BBBBBB;
+				background: rgb(242, 242, 242)
+			}
+			.mui-table-view-cell:after {
+			    position: absolute;
+			    right: 0;
+			    bottom: 0;
+			    left: 15px;
+			    height: 0px;
+			    content: '';
+			    -webkit-transform: scaleY(.5);
+			    /* transform: scaleY(.5); */
+			    background-color: #c8c7cc;
+			}
+			/*	更改checkbox样式*/	
+			.mui-checkbox input[type=checkbox]:before {
+				content: '\e413';
+			}		
+			.mui-checkbox input[type=checkbox]:checked:before {
+				content: '\e443';
+			}
+			.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+				font-size: 20px;
+			}
+			.checkShow{
+				position: absolute;
+				top: 15%;
+				right:1%;
+				display: none;
+			}
+			.qualityStatus-send{
+				position: absolute;
+				top: 18%;
+				right:5%;
+				color: #FF5656;
+			}
+			.qualityStatus-sended{
+				position: absolute;
+				top: 18%;
+				right:5%;
+				color: #29CC85;
+			}
+			#confirmDialog #title{
+				font-size: 36px;
+				font-weight: 500;
+				color: #191515;
+				
+			}
+			.num{
+				font-family: PingFang SC;
+				font-weight: bold;
+				color: #337BFC;
+				line-height: 14px;
+			}
+			.textOver{
+				 overflow: hidden;
+				
+				 text-overflow: ellipsis;
+				
+				 white-space: nowrap;
+			}
+			.parentFlex{
+				justify-content: space-around;
+				align-items: center;
+				width: 100% ;
+			}
+			.parentFlex div{
+				width:auto !important 
+			}
+			.checkTimeClass{
+				position: relative;
+				    left:1.5%;
+					text-align: right !important;
+			}
+			.checkPersonClass{
+				position: relative;
+				left: 10%;
+			}
+		</style>
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<!-- 			<div class="mui-navbar">
+					</div> -->
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="home-item" style="display: none;" id="home-item">
+			<div class="home-item-list" id="business_item">
+				<div class="item" id="overview">
+					<img src="../../../img/commom/overview-icon.png">
+					<span>项目概览</span>
+				</div>
+					<div class="item" id="quality">
+						<img src="../../../img/commom/quality-icon.png">
+						<span>质量检查</span>
+					</div>
+<!-- 				<div class="item" id="security">
+					<img src="../../../img/commom/security-icon.png">
+					<span>安全检查</span>
+				</div> -->
+				<div class="item" id="education">
+					<img src="../../../img/commom/education-icon.png">
+					<span>安全教育</span>
+				</div>
+				<div class="item" id="attendance">
+					<img src="../../../img/commom/attendance-icon.png">
+					<span>考勤统计</span>
+				</div>
+				<div class="item" id="meeting">
+					<img src="../../../img/commom/meeting.png">
+					<span>项目会议</span>
+				</div>
+			</div>
+		</div>
+		<div id="confirmDia" style="display: none;">
+			<div class="confirmDialog" id="confirmDialog">
+				<div id="titile" style="margin-top: 20px;font-size: 20px;color: #191515;">确定生成安全整改表？</div>
+				<div class="item" style="display: flex;justify-content: space-between;margin-top: 30px;">
+					<div id="cancel" style="color: #337BFC;width: 45%;border: 1px solid #337BFC;height:40px;line-height: 40px;border-radius: 20px;">取消</div>
+					<div id="add" style="background: #337BFC;color: #fff;width: 45%;height:40px;line-height: 40px;border-radius: 20px;">确认</div>
+				</div>
+			</div>			
+		</div>
+
+		
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item">
+				<div id="addBtn" style="background: #337BFC;color: #fff;">新增</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn2" style="display: none;">
+			<div class="item" style="display: flex;justify-content: space-between;">
+				<div id="checkAll" style="color: #337BFC;width: 50%;">全选</div>
+				<div id="uncheckAll" style="color: #337BFC;width: 50%;display: none;">全不选</div>
+				<div id="toadd" style="background: #337BFC;color: #fff;width: 50%;">添加</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--底部导航栏-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="view-content">
+							<div class="info-bar-content">
+								<div class="search-bar">
+									<div class="search-item">
+										<div class="search-icon">
+											<img src="../../../img/commom/search1@2x.png" />
+										</div>
+										<div class="search-input">
+											<div class="mui-input-row" style="text-align: left">
+												<input id="search_input" value="" type="text" style="width: 90%;" placeholder="请输入任务名称" class="mui-input-clear">
+												<!-- <span class="mui-icon mui-icon-close delete-icon1" onclick="deleteDate('search_input')"></span> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="view-content-item" style="display: flex;line-height: 53.5px;">
+								<div class="mui-slider" id="slider" style="background: rgb(242, 242, 242)">
+									<div id="slider-item" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+										<a class="mui-control-item mui-active" href="#item1" opt="1">日常巡检</a>
+										<a class="mui-control-item " href="#item2" id="citem2" opt="2">安全检查</a>
+										<a class="mui-control-item" id="citem3" href="#item3" opt="3">安全整改</a>
+									</div>
+									<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4" style="color: #337BFC;height: 2px;background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, 
+										 rgba(0, 0, 0, 0) 39.9%, #337BFC 40%, #337BFC 50%, #337BFC 59.9%, 
+										rgba(0, 0, 0, 0) 60%,  rgba(0, 0, 0, 0) 100%);
+										transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div>
+									<div class="mui-slider-group" style="background: #f2f2f2;">
+										<div id="item1" class="mui-slider-item mui-control-content mui-active" style="overflow-y: auto;border-top: none;border-top: 5px solid #f4f4f4;">
+											<div class="parentFlex textOver" style="line-height: 40px;border-bottom:1px solid #EDEDED;background: #F9F9F9;font-size: 14px;font-weight: 400;color: #888888;position: fixed;z-index: 998;width: 100%;padding-left:13px ;  display: flex; align-items: center;">
+												<div style="height: 40px;width:20%;display: inline-block;text-align: left;padding-left: ;"><span>名称</span></div>
+												<div id="InputPerson" class='textOver checkPersonClass' style="width: 30%!important;height: 40px;width:30%;display: inline-block;text-align: center;padding-left: ;"><span id="realName">填写人</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+												</div>
+												<div class='checkTimeClass' style="height: 40px;width:30% !important;display: inline-block;text-align: right;padding-right: ;"><span id="checkDate">检查日期</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+												</div>
+											</div>
+											<ul class="mui-table-view" style="margin-bottom: 20px;margin-top: 40px;" id="dailyIns_list">
+											<li class="mui-table-view-cell">
+												<!-- <div class='empty'>暂无数据</div> -->
+<!-- 												<li class="mui-table-view-cell">
+													<div class="projectName">项目质量周检</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">局领导检查</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li> -->
+											</ul>
+										</div>
+										<div id="item2" class="mui-slider-item mui-control-content" style="overflow-y: auto;border-top: none;border-top: 5px solid #f4f4f4;">
+											<div class="parentFlex"  style="line-height: 40px;background: #F9F9F9;border-bottom:1px solid #EDEDED;font-size: 14px;font-weight: 400;color: #888888;position: fixed;z-index: 998;width: 100%;padding-left:13px ;display: flex; align-items: center;">
+												<div style="height: 40px;width:20%;display: inline-block;text-align: left;padding-left: ;"><span>名称</span></div>
+												<div class="textOver checkPersonClass" id="InputPerson2" style="width: 30%!important;height: 40px;width:50%;display: inline-block;text-align: center;padding-left: ;"><span id="realName2">检查人</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+												</div>
+												<div class='checkTimeClass' style="height: 40px;width:30% !important;display: inline-block;text-align: left;padding-right: ;"><span id="checkDate2">检查日期</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+												</div>
+											</div>											
+											<ul class="mui-table-view" style="margin-bottom: 20px;margin-top: 40px;" id="secutityCheck_list">
+												<!-- <div class='empty'>暂无数据</div> -->
+<!-- 												<li class="mui-table-view-cell">
+													<div class="projectName">项目质量周检</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+														<div class="mui-checkbox checkShow" >
+															<input name="checkbox1" value="Item 1" type="checkbox">
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">局领导检查</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+														<div class="mui-checkbox checkShow">
+															<input name="checkbox1" value="Item 2" type="checkbox">
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+														<div class="mui-checkbox checkShow">
+															<input name="checkbox1" value="Item 3" type="checkbox">
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw"><span class="bzdw_span">这里是一段检查情况描述，.比如...</span>
+														<div class="mui-checkbox checkShow">
+															<input name="checkbox1" value="Item 4" type="checkbox">
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li> -->
+											</ul>
+										</div>
+										
+										<div id="item3" class="mui-slider-item mui-control-content" style="overflow-y: auto;border-top: none;border-top: 5px solid #f4f4f4;">
+											<div class="parentFlex "  style="line-height: 40px;border-bottom:1px solid #EDEDED;background: #F9F9F9;font-size: 14px;font-weight: 400;color: #888888;position: fixed;z-index: 998;width: 100%;padding-left:13px ;display: flex; align-items: center;">
+												<div style="height: 40px;width:20%;display: inline-block;text-align: left;padding-left: ;"><span>名称</span></div>
+												<div class="textOver checkPersonClass" id="InputPerson3" style="width: 30%!important;height: 40px;width:50%;display: inline-block;text-align: center;padding-left: ;"><span id="realName3">填写人</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+												</div>
+												<div class='checkTimeClass' style="height: 40px;width:30% !important;display: inline-block;text-align: left;padding-right: ;"><span id="checkDate3">检查日期</span>
+													<span class="mui-icon mui-icon-arrowright" style="font-size:16px;font-weight:900;color: #337BFC;transform: rotate(90deg);"></span>
+												</div>
+											</div>											
+											<ul class="mui-table-view" style="margin-bottom: 20px;margin-top: 40px;" id="reform_list">
+												<!-- <div class='empty'>暂无数据</div> -->
+											<!-- 	<li class="mui-table-view-cell">
+													<div class="projectName">项目质量周检</div>
+													<div class="bzdw">整改检查项:&nbsp;<span class="num">2</span><span class="bzdw_span">（条）</span>
+														<div class="qualityStatus-sended" >
+															已发送
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">局领导检查</div>
+													<div class="bzdw">整改检查项:&nbsp;<span class="num">2</span><span class="bzdw_span">（条）</span>
+														<div class="qualityStatus-send" >
+															未发送
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw">整改检查项:&nbsp;<span class="num">2</span><span class="bzdw_span">（条）</span>
+														<div class="qualityStatus-send" >
+															未发送
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw">整改检查项:&nbsp;<span class="num">2</span><span class="bzdw_span">（条）</span>
+														<div class="qualityStatus-sended" >
+															已发送
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li>
+												<li class="mui-table-view-cell">
+													<div class="projectName">施工单位日常检查</div>
+													<div class="bzdw">整改检查项:&nbsp;<span class="num">2</span><span class="bzdw_span">（条）</span>
+														<div class="qualityStatus-sended" >
+															已发送
+														</div>
+													</div>
+													<div class="div3">
+														<div style="width: 25%;display: inline-block;text-align: left;">日常检查</div>
+														<div style="width: 30%;display: inline-block;text-align: center">彭于晏</div>
+														<div style="width: 42%;display: inline-block;text-align: right">2020-07-02</div>
+													</div>
+												</li> -->
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/security.js"></script>
+	<script src="../../../js/update.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<script src="../../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var userPicker = new mui.PopPicker();
+		//初始化单页的区域滚动
+		//注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+		var cheackType = [];
+		var dailyParams = {
+			taskName: '',
+			inputFullname: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,projectName,taskName,checkContent,checkPersonFullname,cheackTime,inputFullname,action',
+			pageNo: 1,
+			pageSize: 100
+		}
+		
+		var checkParams = {
+			// minCreateTime: '',
+			// maxCreateTime: '',
+			checkItemName: '',
+			inputFullname: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,projectName,checkItemName,problems,checkTime,inputFullname,action',
+			pageNo: 1,
+			pageSize: 100
+		}
+		
+		var reformParams = {
+			projectName: '',
+			inputerfullname: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,projectName,superviceUnitFullname,buildUnitFullname,checkTime,successCheckItem,questionCheckItem,rectificationRate,overdueSituation,state_dictText,inputerfullname,action',
+			pageNo: 1,
+			pageSize: 100
+		}
+		var mask = mui.createMask();
+		var isShow = true;
+		mui.init({
+			swipeBack:false,
+			// var sliderEl = document.getElementById("slider");
+			// sliderEl.classList.add('mui-slider');//页面代码先不加mui-slider保证mui不自动初始化，然后再手动加上mui-slider。接着自己手动初始化
+			// mui(sliderEl).slider({
+			// bounce: false
+			// });
+			gestureConfig:{
+			   longtap: true, //默认为false-------长按事件
+			  }
+		})
+		var itemsId = '';
+		var itemsName = '';
+		var itemsPro = '';
+		var itemsPhoto = '';
+		var param={pageCount:1}
+		mui.plusReady(function() {
+			getDictItems('safety_check_type', function(data) {
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					return;
+				}
+				cheackType = [];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					cheackType.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+			})
+			var self = plus.webview.currentWebview();
+			var projectInfo=JSON.parse(localStorage.getItem("projectInfo"))
+			if(!isEmpty(projectInfo)){
+				console.log(JSON.stringify(projectInfo))
+				selectProject({'prjCode':projectInfo.prjCode},(res)=>{
+					console.log(JSON.stringify(res))
+				})
+			}
+			
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					// plus.webview.currentWebview().setStyle({
+					// 	height: originalHeight + 75
+					// });
+					$("#scroll-content").css("margin","0")
+					$("#bottom-item-btn").hide()
+				}else{
+					$("#scroll-content").css("margin-bottom","100px")
+					$("#bottom-item-btn").show()
+				}
+			}
+			
+			if(self.pageCount!=undefined){
+				param.pageCount=self.pageCount+1;
+			}
+			var winHeight = window.screen.height;
+			// console.log(winHeight)
+			$("#item1").height(winHeight - 260);
+			$("#item2").height(winHeight - 260);
+			$("#item3").height(winHeight - 260);
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/bgTop.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							if (isShow) {
+								isShow = false;
+								$("#home-item").show();
+								mask.show()
+							} else {
+								isShow = true;
+								$('#home-item').hide();
+								mask.close();
+							}
+						}
+					}],
+				}
+			});
+			// $('.checkShow').show() 
+
+			getDailyList();
+			getSecCheckList();
+			getReformList();
+			//长按事件
+			var timeOutEvent = 0;
+			// $("body").delegate("li[class=checkboxLi]", "longtap", function(e) {
+			// 	// e.stopPropagation(); //  阻止事件冒泡
+			// 	console.log(11111)
+			// 	});
+			mui('body').on('longtap', '.checkboxLi', function () {	
+					window.navigator.vibrate(200);
+					$('.checkShow').fadeIn();
+					$('#bottom-item-btn').hide();
+					$('#bottom-item-btn2').show();
+				});
+			// $('#item2 .mui-table-view li').on({
+			// 	touchstart: function(e) {
+			// 		timeOutEvent = setTimeout(function() {
+			// 			//长按事件
+			// 			timeOutEvent = 0;
+			// 			e.currentTarget.getElementsByTagName('input')[0].checked=true;
+			// 			window.navigator.vibrate(200);
+			// 			$('.checkShow').fadeIn(); 
+			// 			$('#bottom-item-btn').hide();
+			// 			$('#bottom-item-btn2').show();
+			// 		}, 800); //长按800ms，可根据需求自行更改
+			// 	},
+			// 	touchmove: function() {
+			// 		clearTimeout(timeOutEvent);
+			// 		timeOutEvent = 0;
+			// 	},
+			// 	touchend: function() {
+			// 		clearTimeout(timeOutEvent);
+			// 	}
+			// })
+			//item2单击事件
+			// $('#item2 .mui-table-view li').on('tap',function(){
+			mui('body').on('tap', '.checkboxLi', function (e) {
+				e.stopPropagation()
+				if($('.checkShow').css('display')=='block'){
+					$(this).find('input[type=checkbox]').prop("checked",!$(this).find('input[type=checkbox]').is(':checked'))
+				}
+			})
+			
+			//阻止复选框事件冒泡
+			$('#item2').on('tap','.checkShow',function(e){
+				e.stopPropagation()
+				if($('.checkShow').css('display')=='block'){
+					$(this).find('input[type=checkbox]').prop("checked",!$(this).find('input[type=checkbox]').is(':checked'))
+				}
+			})
+			
+			//全选
+			$('#checkAll').on('tap',function(){
+				$('input[type=checkbox]').prop("checked",true);
+				$(this).hide();
+				$('#uncheckAll').show();
+			})
+			//全不选
+			$('#uncheckAll').on('tap',function(){
+				$('input[type=checkbox]').prop("checked",false);
+				$(this).hide();
+				$('#checkAll').show();
+			})
+			//添加
+			$('#toadd').on('tap',function(){
+				// $('#confirmDialog').fadeIn()
+				var taskId="";
+				var checkItemName = ''
+				var problems = ''
+				var problemPhoto = ''
+				itemsId = '';
+				itemsName = '';
+				itemsPro = '';
+				itemsPhoto = '';
+				$('input[type=checkbox]:checked').each(function(i){
+					console.log($(this).val())
+					taskId = taskId+$(this).val()+",";
+					checkItemName = checkItemName+$(this).parent().attr("checkItemName")+",";
+					problems = problems+$(this).parent().attr("problems")+",";
+					problemPhoto = problemPhoto+$(this).parent().attr("problemPhoto")+",";
+				})
+				if(taskId.length==0){
+					app.toast("至少选择一个表单项！");
+					return;
+				}
+				taskId=taskId.slice(0,taskId.length-1);
+				checkItemName=checkItemName.slice(0,checkItemName.length-1);
+				problems=problems.slice(0,problems.length-1);
+				problemPhoto=problemPhoto.slice(0,problemPhoto.length-1);
+				itemsId = taskId;
+				itemsName = checkItemName;
+				itemsPro = problems;
+				itemsPhoto = problemPhoto;
+				// var btnArray = ['确定', '取消']; //注意这里的顺序是先否再是
+				// mui.confirm("确定生成质量整改表？", '', btnArray, function(e) {
+				// 	if (e.index == 0) { //索引是1的就是选择的是
+				// 		$('.checkShow').hide();
+				// 		$('#bottom-item-btn').show();
+				// 		$('#bottom-item-btn2').hide();
+				// 		$('input[type=checkbox]').attr("checked",false)
+				// 		$('#item2').removeClass("mui-active")
+				// 		$('#item3').addClass("mui-active")
+				// 		var gallery = mui('.mui-slider');
+				// 		gallery.slider().gotoItem(2);
+						
+				// 	}
+				// })
+				$('#confirmDia').show()
+				// mask.show()				
+			})
+			//确认
+			$('#add').on('tap',function(){
+				$('#confirmDia').hide()
+						$('.checkShow').hide();
+						$('#bottom-item-btn').show();
+						$('#bottom-item-btn2').hide();
+						$('input[type=checkbox]').attr("checked",false)
+						$('#citem2').removeClass("mui-active")
+						$('#citem3').addClass("mui-active")
+						$('#item2').removeClass("mui-active")
+						$('#item3').addClass("mui-active")
+						var gallery = mui('.mui-slider');
+						gallery.slider().gotoItem(2);
+						var projectInfo = JSON.parse(localStorage.getItem("projectInfo"))
+						var extras = {
+								projectId: projectInfo.prjId,
+								projectName: projectInfo.prjName,
+								projectNo: projectInfo.prjNo,
+								prjCode: projectInfo.prjCode,
+								itemsId: itemsId,
+								itemsName: itemsName,
+								itemsPro: itemsPro,
+								itemsPhoto: itemsPhoto
+							}
+							app.openPage("addQualityImprovement.html", {
+								titleNView: {
+									titleText: "新增安全整改",
+									autoBackButton: true,
+								},
+							},extras);
+			})
+			//取消
+			$('#cancel').on('tap',function(){
+				$('#confirmDia').hide()
+				// mask.close()
+				$('.checkShow').hide();
+				$('#bottom-item-btn').show();
+				$('#bottom-item-btn2').hide();
+				$('input[type=checkbox]').attr("checked",false)
+			})
+			//取消
+			$('#confirmDia').on('tap',function(){
+				$('#confirmDia').hide()
+				// mask.close()
+			})
+			//新增
+			$('#addBtn').on('tap',function(){
+				setTimeout(function(){
+					var projectInfo = JSON.parse(localStorage.getItem("projectInfo"))
+					var extras = {
+							projectId: projectInfo.prjId,
+							projectName: projectInfo.prjName,
+							projectNo: projectInfo.prjNo,
+							prjCode: projectInfo.prjCode
+						}
+					let opt=$('#slider-item').find('.mui-active').attr('opt');
+					let targetUrl="addDailyInspection.html";
+					let targetName="新增日常巡检";
+					switch(opt){
+						case "1":
+							targetUrl="addDailyInspection.html";
+							targetName="新增日常巡检";
+							break;
+						case "2":
+							targetUrl="addQualityInspection.html";
+							targetName="新增安全检查";
+							break;
+						case "3":
+							targetUrl="addQualityImprovement.html";
+							targetName="新增安全整改";
+							break;
+					}
+					console.log(targetUrl+","+targetName)
+					app.openPage(targetUrl, {
+						titleNView: {
+							titleText: targetName,
+							autoBackButton: true,
+						},
+					},extras);
+				},500)
+				
+			})
+			
+		});
+		
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+		
+		//搜索框
+		$("#search_input").on('input', debounce((e) => {
+			if($("#item1").hasClass('mui-active')){
+				dailyParams.taskName = "*"+$("#search_input").val()+"*";
+				getDailyList();
+				// console.log(JSON.stringify(dailyParams))
+			}else if($("#item2").hasClass('mui-active')){
+				checkParams.checkItemName = "*"+$("#search_input").val()+"*";
+				getSecCheckList();
+			}else{
+				reformParams.projectName = "*"+$("#search_input").val()+"*"; 
+				getReformList();
+			}
+		}, 600))
+				
+		mui("body").on("tap", ".mui-icon-clear", function() {
+			dailyParams.taskName = $("#search_input").val();
+			getDailyList();
+			checkParams.checkItemName = $("#search_input").val();
+			getSecCheckList();
+			reformParams.projectName = $("#search_input").val();
+			getReformList();
+		 })
+		 
+		//日常巡检填写人
+		$("#InputPerson").on("tap", function() {
+			var extras = {
+				multiSelect: false,
+				unSelect: true
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择填写人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack, false);
+			// 赋值
+			window.addEventListener('returnSelect', inputPersonBack, false);
+		
+		})
+		
+		//日常巡检填写人回调
+		var inputPersonBack = function(data) {
+			if(data.detail[0] == undefined){
+				$("#realName").css("color","#888888");
+				$("#realName").text('填写人');
+				dailyParams.inputFullname = '';
+			}else{
+				$("#realName").css("color","#337BFC");
+				$("#realName").text(data.detail[0].realname);
+				dailyParams.inputFullname = "*"+data.detail[0].realname+"*";
+			}
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack, false);
+			getDailyList();
+		}
+		
+		
+		//安全检查填写人
+		$("#InputPerson2").on("tap", function() {
+			var extras = {
+				multiSelect: false,
+				unSelect: true
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择检查人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack2, false);
+			// 赋值
+			window.addEventListener('returnSelect', inputPersonBack2, false);
+		
+		})
+		
+		//安全检查填写人回调
+		var inputPersonBack2 = function(data) {
+			if(data.detail[0] == undefined){
+				$("#realName2").css("color","#888888")
+				$("#realName2").text('检查人')
+				checkParams.inputFullname = "";
+			}else{
+				$("#realName2").css("color","#337BFC")
+				$("#realName2").text(data.detail[0].realname)
+				checkParams.inputFullname = "*"+data.detail[0].realname+"*";
+			}
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack2, false);
+			getSecCheckList();
+		}
+		
+		//质量整改填写人
+		$("#InputPerson3").on("tap", function() {
+			var extras = {
+				multiSelect: false,
+				unSelect: true
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择填写人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack3, false);
+			// 赋值
+			window.addEventListener('returnSelect', inputPersonBack3, false);
+		
+		})
+		
+		//质量整改回调
+		var inputPersonBack3 = function(data) {
+			if(data.detail[0] == undefined){
+				$("#realName3").css("color","#888888")
+				$("#realName3").text('填写人')
+				reformParams.inputerfullname = '';
+			}else{
+				$("#realName3").css("color","#337BFC")
+				$("#realName3").text(data.detail[0].realname)
+				// console.log(data.detail[0].realname)
+				reformParams.inputerfullname = "*"+data.detail[0].realname+"*";
+			}
+			//移除
+			window.removeEventListener('returnSelect', inputPersonBack3, false);
+			// console.log(JSON.stringify(reformParams))
+			getReformList();
+		}
+		
+		// 日常巡检检查日期
+		$("#checkDate").on('tap', function() {
+				var resultJSON = [{text:'全部',value: 0},{text:'近7日',value: 1},{text:'近30日',value: 2},{text:'自定义区间',value: 3}];
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#checkDate").css("color","#888888")
+							$("#checkDate").text('检查日期');
+							dailyParams.minStartTime= '';
+							dailyParams.maxStartTime= '';
+							getDailyList();
+						}else if(items[0].value == 3){
+							//日期选择
+								var that = $("#checkDate");	
+								var start = '';
+								var end = '';
+								plusDate(function(data1) {	
+									if(data1 != ''){
+										plusDate(function(data2) {
+											if(data2 != ''){
+												if(data1 >= data2){
+													dailyParams.minStartTime = data2+' 00:00';
+													dailyParams.maxStartTime = data1+ ' 23:59';
+													start = data2.substring(5,data1.length).replace("-","/")
+													end = data1.substring(5,data1.length).replace("-","/")
+												}else{
+													dailyParams.minStartTime = data1+' 00:00';
+													dailyParams.maxStartTime = data2+ ' 23:59';
+													start = data1.substring(5,data1.length).replace("-","/")
+													end = data2.substring(5,data1.length).replace("-","/")	
+												}										
+												$("#checkDate").css("color","#337BFC")
+												$("#checkDate").text(start+'-'+end);
+												getDailyList();
+											}
+										}, 1);										
+									}
+								}, 1);
+						}else{
+								var time = getDate(items[0].value);
+								dailyParams.minStartTime = time.sdate;
+								dailyParams.maxStartTime = time.edate;
+								$("#checkDate").css("color","#337BFC")
+								$("#checkDate").text(items[0].text);
+								getDailyList();
+						}
+					});
+				}				
+		});	
+		
+		// 安全检查日期
+		$("#checkDate2").on('tap', function() {
+				var resultJSON = [{text:'全部',value: 0},{text:'近7日',value: 1},{text:'近30日',value: 2},{text:'自定义区间',value: 3}];
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#checkDate2").css("color","#888888")
+							$("#checkDate2").text('检查日期');
+							checkParams.minCreateTime= '';
+							checkParams.maxCreateTime= '';
+							getSecCheckList();
+						}else if(items[0].value == 3){
+							//日期选择
+								var that = $("#checkDate2");	
+								var start = '';
+								var end = '';
+								plusDate(function(data1) {	
+									if(data1 != ''){
+										plusDate(function(data2) {
+											if(data2 != ''){
+												if(data1 >= data2){
+													checkParams.minCreateTime = data2+' 00:00';
+													checkParams.maxCreateTime = data1+ ' 23:59';
+													start = data2.substring(5,data1.length).replace("-","/")
+													end = data1.substring(5,data1.length).replace("-","/")
+												}else{
+													checkParams.minCreateTime = data1+' 00:00';
+													checkParams.maxCreateTime = data2+ ' 23:59';
+													start = data1.substring(5,data1.length).replace("-","/")
+													end = data2.substring(5,data1.length).replace("-","/")	
+												}										
+												$("#checkDate2").css("color","#337BFC")
+												$("#checkDate2").text(start+'-'+end);
+												getSecCheckList();
+											}
+										});										
+									}
+								});
+						}else{
+								var time = getDate(items[0].value);
+								checkParams.minCreateTime = time.sdate;
+								checkParams.maxCreateTime = time.edate;
+								$("#checkDate2").css("color","#337BFC")
+								$("#checkDate2").text(items[0].text);
+								getSecCheckList();
+						}
+					});
+				}		
+		});	
+
+		// 质量整改日期
+		$("#checkDate3").on('tap', function() {
+				var resultJSON = [{text:'全部',value: 0},{text:'近7日',value: 1},{text:'近30日',value: 2},{text:'自定义区间',value: 3}];
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {						
+						if(items[0].value == 0){
+							$("#checkDate3").css("color","#888888")
+							$("#checkDate3").text('检查日期');
+							reformParams.minCreateTime= '';
+							reformParams.maxCreateTime= '';
+							getReformList();
+						}else if(items[0].value == 3){
+							//日期选择
+								var that = $("#checkDate3");	
+								var start = '';
+								var end = '';
+								plusDate(function(data1) {	
+									if(data1 != ''){
+										plusDate(function(data2) {
+											if(data2 != ''){
+												if(data1 >= data2){
+													reformParams.minCreateTime = data2+' 00:00';
+													reformParams.maxCreateTime = data1+ ' 23:59';
+													start = data2.substring(5,data1.length).replace("-","/")
+													end = data1.substring(5,data1.length).replace("-","/")
+												}else{
+													reformParams.minCreateTime = data1+' 00:00';
+													reformParams.maxCreateTime = data2+ ' 23:59';
+													start = data1.substring(5,data1.length).replace("-","/")
+													end = data2.substring(5,data1.length).replace("-","/")	
+												}										
+												$("#checkDate3").css("color","#337BFC")
+												$("#checkDate3").text(start+'-'+end);
+												getReformList();
+											}
+										});										
+									}
+								});
+						}else{
+								var time = getDate(items[0].value);
+								reformParams.minCreateTime = time.sdate;
+								reformParams.maxCreateTime = time.edate;
+								$("#checkDate3").css("color","#337BFC")
+								$("#checkDate3").text(items[0].text);
+								getReformList();
+						}
+					});
+				}	
+		});	
+				
+		// 项目概览
+		$("#overview").on('tap', function() {
+			app.openPage("../overview/overviewOne.html", {
+				titleNView: {
+					titleText: '项目概览',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+
+		// 质量检查
+		$("#quality").on('tap', function() {
+			app.openPage("../quality/index.html", {
+				titleNView: {
+					titleText: '质量检查',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+
+		// 安全检查
+		$("#security").on('tap', function() {
+			app.openPage("../security/index.html", {
+				titleNView: {
+					titleText: '安全检查',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+		// 安全教育
+		$("#education").on('tap', function() {
+			app.openPage("../education/index.html", {
+				titleNView: {
+					titleText: '安全教育',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+		// 考勤统计
+		$("#attendance").on('tap', function() {
+			app.openPage("../attendance/month.html", {
+				titleNView: {
+					titleText: '考勤统计',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+		// 项目会议
+		$("#meeting").on('tap', function() {
+			app.openPage("../meeting/index.html", {
+				titleNView: {
+					titleText: '会议签到',
+					autoBackButton: true,
+					closePage:true,
+				},
+			},param);
+		});
+
+		//关闭遮罩层	
+		$(document).on("click", ".mui-backdrop", function() {
+			isShow = true;
+			$('#home-item').hide();
+			$('#confirmDia').hide();
+			mask.close();
+		})
+
+		function clearSearch(){
+			if($("#search_input").val() != ''){
+				$("#search_input").val('')
+				$("#search_input").blur();
+				dailyParams.taskName = $("#search_input").val();
+				getDailyList();
+				checkParams.checkItemName = $("#search_input").val();
+				getSecCheckList();
+				reformParams.projectName = $("#search_input").val();
+				getReformList();
+			}
+		}
+		
+		function scrollTop() {
+			var myDiv1 = document.getElementById('item1');
+			var myDiv2 = document.getElementById('item2');
+			var myDiv3 = document.getElementById('item3');
+			myDiv1.scrollTop = 0;
+			myDiv2.scrollTop = 0;
+			myDiv3.scrollTop = 0;
+			setTimeout(function(){
+				if($("#item1").hasClass('mui-active')){
+					$("#search_input").attr("placeholder","请输入任务名称")
+				}if($("#item2").hasClass('mui-active')){
+					$("#search_input").attr("placeholder","请输入检查项名称")
+				}else{
+					$("#search_input").attr("placeholder","请输入项目名称")
+				}
+			},600)
+		}
+
+		mui("#slider").on('tap', '.mui-slider-indicator', function() {
+			clearSearch()
+			scrollTop();
+		});
+		mui(".mui-slider-group").on('swipeleft', '.mui-slider-item', function() {
+			clearSearch()
+			scrollTop();
+			$('.checkShow').hide();
+			$('#bottom-item-btn').show();
+			$('#bottom-item-btn2').hide();
+			$('input[type=checkbox]').attr("checked",false)
+		})
+
+		mui(".mui-slider-group").on('swiperight', '.mui-slider-item', function() {
+			clearSearch()
+			scrollTop();
+			$('.checkShow').hide();
+			$('#bottom-item-btn').show();
+			$('#bottom-item-btn2').hide();
+			$('input[type=checkbox]').attr("checked",false)
+		})
+		
+		//查看日常巡检
+		$("#dailyIns_list").on('tap', 'li', function(e) {
+			e.stopPropagation()
+			var extras = {
+				guid: $(this).attr("guid"),
+				projectName: $(this).attr("projectName"),
+			}
+			app.openPage("showDailyInspection.html", {
+				titleNView: {
+					titleText: '查看日常巡检',
+					autoBackButton: true,
+				}
+			},extras);
+		})
+		
+		//查看安全检查
+		$("#secutityCheck_list").on('tap', 'li', function() {
+			// e.stopPropagation()
+			if($('.checkShow').css('display')!='block'){
+				var extras = {
+					guid: $(this).attr("guid"),
+					projectName: $(this).attr("projectName"),
+				}
+				app.openPage("showQualityInspection.html", {
+					titleNView: {
+						titleText: '查看安全检查',
+						autoBackButton: true,
+					}
+				},extras);				
+			}
+		})
+		
+		//查看安全整改
+		$("#reform_list").on('tap', 'li', function(e) {
+			e.stopPropagation()
+			var projectInfo = JSON.parse(localStorage.getItem("projectInfo"))
+
+			var extras = {
+				guid: $(this).attr("guid"),
+				projectName: $(this).attr("projectName"),
+				projectNo: projectInfo.prjNo,
+				prjCode: projectInfo.prjCode,
+				projectId: projectInfo.prjId				
+			}
+			console.log(JSON.stringify(projectInfo))
+			app.openPage("showQualityImprovement.html", {
+				titleNView: {
+					titleText: '查看安全整改',
+					autoBackButton: true,
+				}
+			},extras);
+		})
+		
+		mui.back=function(){
+			plus.webview.currentWebview().close('none')
+			/* 2021/6/2
+			if ($('.checkShow').css('display') == 'block') {
+				$('.checkShow').hide();
+				$('#bottom-item-btn').show();
+				$('#bottom-item-btn2').hide();
+				$('input[type=checkbox]').attr("checked", false)
+				return;
+			} else{
+				var extras={
+					target:"../security/index.html",
+					targetName:"安全检查",
+					pageCount:1
+				}
+				app.openPage("../overview/projectList.html", {
+					titleNView: {
+						titleText: '项目概览',
+						autoBackButton: true,
+						closePage:true
+					},
+				},extras);
+			}
+		}
+		
+		function getDailyList(){
+			var projectInfo = JSON.parse(localStorage.getItem("projectInfo"))
+			dailyParams.treeChosenKey = projectInfo.prjId;
+			dailyParams.parentId = projectInfo.prjType;
+			dailyParams.key = projectInfo.prjId;
+			queryDailyCheck(dailyParams, function(data) {
+				// console.log(JSON.stringify(dailyParams))
+				if (data.success) {
+					addDailyData(data.result.records);
+				} else {
+			        app.toast("日常巡检列表查询失败")
+				}		
+			});
+
+			 */
+		}
+		
+		function addDailyData(items){
+			// console.log(JSON.stringify(items))
+			$('#dailyIns_list').html('')
+			var str = '';
+			if(items.length > 0){
+				for(let i = 0; i< items.length;i++){
+					// console.log(JSON.stringify(items[i]))
+					var type = '';
+					// console.log(JSON.stringify(cheackType))
+					for(let j = 0;j< cheackType.length;j++){
+						if(parseInt(items[i].cheackType) == parseInt(cheackType[j].value)){
+							type = cheackType[j].text;
+							break;
+						}
+					}
+					str += `<li class="mui-table-view-cell" guid=${items[i].guid} projectName=${items[i].projectName}>
+								<div class="projectName">${isEmp(items[i].taskName)}</div>
+								<div class="bzdw"><div class="bzdw_span">${isEmp(items[i].rectificationDescription)}</div>
+								</div>
+								<div class="div3">
+									<div style="width: 25%;display: inline-block;text-align: left;">${isEmp(type)}</div>
+									<div style="width: 30%;display: inline-block;text-align: right;
+										position: relative;
+										right: .5%;">${isEmp(items[i].inputFullname)}</div>
+									<div style="width: 42%;display: inline-block;text-align: right">${isEmp(items[i].cheackTime).substring(0,10)}</div>
+								</div>
+							</li>`
+				}
+			}else{
+				str += `<div class='empty'>暂无数据</div>`;
+			}
+			$('#dailyIns_list').append(str)
+		}
+		
+		function getSecCheckList(){			
+			if($("#search_input").val() == '') checkParams.projectName = "*"+JSON.parse(localStorage.getItem("projectInfo")).prjName+"*";
+			console.log(JSON.stringify(checkParams))
+			querySecCheck(checkParams, function(data) {
+				if (data.success) {
+					addSecCheckData(data.result.records);
+				} else {
+			        app.toast("安全检查列表查询失败")
+				}		
+			});
+		}
+		
+		function addSecCheckData(items){
+			// console.log(JSON.stringify(items))
+			$('#secutityCheck_list').html('')
+			var str = '';
+			if(items.length > 0){
+				for(let i = 0; i< items.length;i++){
+					// console.log(JSON.stringify(items[i].checkPhoto))
+					str += `<li class="mui-table-view-cell checkboxLi" guid=${items[i].guid} projectName=${items[i].projectName} >
+								<div class="projectName">${isEmp(items[i].projectName)}</div>
+								<div class="bzdw"><div class="bzdw_span">${isEmp(items[i].problems)}.</div>
+									<div class="mui-checkbox checkShow" checkItemName="${items[i].checkItemName}"
+										 problems="${items[i].problems}" problemPhoto="${items[i].checkPhoto}">
+										<input name="checkbox1" value="${items[i].guid}"  type="checkbox">
+									</div>
+								</div>
+								<div class="div3">
+									<div class="textOver" style="width: 25%;display: inline-block;text-align: left;">${isEmp(items[i].checkItemName)}</div>
+									<div class="textOver" style="width: 30%;display: inline-block;text-align: right;
+									position: relative;
+									right: .5%;">${isEmp(items[i].inputFullname)}</div>
+									<div style="width: 42%;display: inline-block;text-align: right">${isEmp(items[i].checkTime).substring(0,10)}</div>
+								</div>
+							</li>`
+				}
+			}else{
+				str += `<div class='empty'>暂无数据</div>`;
+			}
+			$('#secutityCheck_list').append(str)
+		}
+
+
+		function getReformList(){
+			if($("#search_input").val() == '') reformParams.projectName = "*"+JSON.parse(localStorage.getItem("projectInfo")).prjName+"*";
+			queryReform(reformParams, function(data) {
+				if (data.success) {
+					addReformData(data.result.records);
+				} else {
+			        app.toast("安全整改列表查询失败")
+				}		
+			});
+		}
+		
+		function addReformData(items){
+			// console.log(JSON.stringify(items))
+			$('#reform_list').html('')
+			var str = '';
+			if(items.length > 0){
+				for(let i = 0; i< items.length;i++){
+					var c = '';
+					switch (items[i].state_dictText) {
+						case '暂存': 
+							c = '#F6994D';
+							break;
+						case '进行中':
+							c = '#FF5656';
+							break;
+						case '已完成':
+							c = '#29CC85';
+							break;				
+					}
+
+					str += `<li class="mui-table-view-cell" guid=${items[i].guid} projectName=${items[i].projectName}>
+								<div class="projectName">${isEmp(items[i].projectName)}</div>
+								<div class="bzdw">整改检查项:&nbsp;<span class="num">${items[i].questionCheckItem}</span><span class="bzdw_span">（条）</span>
+									<div class="qualityStatus-send" style="color:`+c+`">
+										${isEmp(items[i].state_dictText)}
+									</div>
+								</div>
+								<div class="div3">
+									<div style="width: 25%;display: inline-block;text-align: left;">安全整改</div>
+									<div style="width: 30%;display: inline-block;text-align: right;
+    position: relative;
+    right: .5%;"">${isEmp(items[i].inputerfullname)}</div>
+									<div style="width: 42%;display: inline-block;text-align: right">${isEmp(items[i].checkTime).substring(0,10)}</div>
+								</div>
+							</li>`
+				}
+			}else{
+				str += `<div class='empty'>暂无数据</div>`;
+			}
+			$('#reform_list').append(str)
+		}
+				
+		function  getDate(type) { //获取日期
+		    var date = new Date();
+		    date = date.getTime();
+		    date = new Date(date)
+		    var month = date.getMonth() + 1;
+		    var strDate = date.getDate();
+		    var hour = date.getHours();
+		    var minute = date.getMinutes();
+		    if (month >= 1 && month <= 9) {
+		        month = '0' + month;
+		    }
+		    if (strDate >= 0 && strDate <= 9) {
+		        strDate = '0' + strDate;
+		    }
+		    var day = '';
+		    if(type == 1){
+		        day = 6;
+		    }else day = 29;
+		    // console.log(day)
+		    var startdate = new Date(date.setDate(date.getDate() - day));  
+		    var smonth = startdate.getMonth() + 1;
+		    var sstrDate = startdate.getDate();
+		    var shour = startdate.getHours();
+		    var sminute = startdate.getMinutes();
+		    if (smonth >= 1 && smonth <= 9) {
+		        emonth = '0' + smonth;
+		    }
+		    if (sstrDate >= 0 && sstrDate <= 9) {
+		        sstrDate = '0' + sstrDate;
+		    }
+		
+		    var sdate = startdate.getFullYear() + '-' + smonth + '-' + sstrDate+ ' 00:00';
+		    var edate = new Date().getFullYear() + '-' + month + '-' + strDate+ ' 23:59'      
+		
+		    var param = { sdate: sdate, edate: edate };
+		    return param;
+		}
+		
+		function selectProject(param, callback) {
+			var url = config.urls.baseUrl + config.actions.selectProject;
+
+			app.showLoader();
+			$.ajax(url, {
+				data:param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'GET', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					var res = xhr.responseText;
+					res = JSON.parse(res)
+					mui.alert(res.message)
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+		
+		window.addEventListener('reload1', function(e) { //执行刷新
+			getDailyList();
+			getSecCheckList();
+			getReformList();
+		});
+	</script>
+
+</html>

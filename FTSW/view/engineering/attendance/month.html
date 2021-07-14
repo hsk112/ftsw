@@ -1,0 +1,920 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/attendance/reset.css"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/attendance/calendar.css"/>
+  <style type="text/css">
+    div {
+      font-family: PingFang-SC-Regular !important;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0 0;
+      padding: 0 0;
+      background: #fff;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .flexCenter {
+      display: flex;
+      align-items: center;
+    }
+
+    .flexCenterTime {
+      display: flex;
+      align-items: center;
+    }
+
+    .head_top {
+      height: 50px;
+      padding-left: 14.5px;
+      border-bottom: 5px solid #F4F4F4;
+    }
+
+    .head_top .head_img img {
+      width: 37px;
+      height: 37px;
+      float: left;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 8.5px;
+    }
+
+    .head_top .head_name {
+      float: left;
+      font-size: 16px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .tabs {
+      justify-content: space-around;
+      height: 53px;
+      padding: 0 40px;
+      border-bottom: 1px solid #EDEDED;
+      color: #888888;
+      font-size: 16px;
+    }
+
+    .tabs .tab {
+      position: relative;
+      height: 100%;
+      line-height: 53px;
+    }
+
+    .tabs .tab.active {
+      color: #337BFC;
+      font-weight: bold;
+    }
+
+    .tabs .tab.active span:after {
+      content: '';
+      background: #337BFC;
+      width: 24px;
+      height: 3px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0px;
+    }
+
+    .wrap_bottom {
+      height: 69%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .wrap_bottom .circle_wrap {
+      width: 143px;
+      height: 143px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes mymove {
+      0% {
+        transform: scale(1.02);
+        opacity: .85;
+      }
+
+      50% {
+        transform: scale(.9);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1.02);
+        opacity: .85;
+      }
+    }
+
+    .wrap_bottom .active_circle {
+      position: absolute;
+      width: 143px;
+      height: 143px;
+      border-radius: 50%;
+      background: rgba(167, 255, 203, 0.42);
+      animation: mymove 3s infinite ease;
+      -webkit-animation: mymove 3s infinite ease;
+    }
+
+    .wrap_bottom .circle {
+      width: 124px;
+      height: 124px;
+      background: #29CC85;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    .wrap_bottom .btn {
+      text-align: center;
+      width: 230px;
+      height: 40px;
+      border: 1px solid #337BFC;
+      border-radius: 40px;
+      line-height: 40px;
+      color: #337BFC;
+    }
+
+    /* 月报统计 */
+    .clock_wrap {
+      display: flex;
+      padding: 0 14.5px;
+    }
+
+    .clock_wrap .left {
+      /* padding-left: 14.5px; */
+      margin-right: 29.5px;
+      color: #010101;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .clock_wrap .right {
+      font-size: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .clock_wrap .right .clock_text {
+      display: flex;
+      margin-bottom: 14.5px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* 公共切换模块样式 */
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 200px;
+      background: #FFFFFF
+    }
+
+    #confirmDialog {
+      position: fixed;
+      width: 90%;
+      z-index: 999;
+      top: 35%;
+      left: 5%;
+      height: 180px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      padding: 30px;
+    }
+
+    #confirmDia {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      /* border-radius: 20px; */
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 0;
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .nonClock_wrap {
+      display: none;
+    }
+
+    .arrow_left {
+      width: 0;
+      height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-right: 7px solid #337BFC;
+      position: relative;
+      top: 21px;
+      left: 24%;
+      padding-left: 40px;
+    }
+
+    .arrow_right {
+      width: 0;
+      height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 7px solid #337BFC;
+      position: relative;
+      top: -23px;
+      left: 62.5%;
+      padding-right: 40px;
+    }
+  </style>
+</head>
+
+<body>
+<!-- 公共切换模块 -->
+<div class="home-item" style="display: none;" id="home-item">
+  <div class="home-item-list" id="business_item">
+    <div class="item" id="overview">
+      <img src="../../../img/commom/overview-icon.png">
+      <span>项目概览</span>
+    </div>
+    <div class="item" id="quality">
+      <img src="../../../img/commom/quality-icon.png">
+      <span>质量检查</span>
+    </div>
+    <div class="item" id="security">
+      <img src="../../../img/commom/security-icon.png">
+      <span>安全检查</span>
+    </div>
+    <div class="item" id="education">
+      <img src="../../../img/commom/education-icon.png">
+      <span>安全教育</span>
+    </div>
+    <div class="item" id="meeting">
+      <img src="../../../img/commom/meeting.png">
+      <span>项目会议</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap_top">
+  <div class="head_top flexCenter" style="display: none">
+    <!-- 	<div class="head_img">
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607493228526&di=321b65797d0a8a1479ab6594beb52530&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201903%2F15%2F20190315004339_nWjPf.thumb.700_0.jpeg">
+      </div> -->
+    <div class="head_name">
+      加载中
+    </div>
+  </div>
+  <div class='tabs flexCenter'>
+    <div class="tab active" data-index=0>
+					<span class="kaoqin" data-index=0>
+						考勤打卡
+					</span>
+    </div>
+    <div class="tab" data-index=1>
+					<span class="yuebao" data-index=1>
+						考勤记录
+					</span>
+    </div>
+  </div>
+</div>
+
+<div class="tab1" style="flex:1" id="tab1">
+  <div class="wrap_bottom">
+    <div class="flexCenterTime" style="font-size: 14px;font-weight: 500;">
+      <!--					<img id="checkIcon" src="" style="width: 15px;vertical-align: middle;margin-right: 8px;">-->
+      <!--					<img id="refresh" src="../../../img/rfIcon.png" style="display: none;width: 30px;vertical-align: middle;margin-right: 8px;">-->
+      <img id="calendar" src="../../../img/calendar.png"
+           style="display: block;width: 18px;vertical-align: middle;margin-right: 8px;">
+      <span class="now-calendar" style="color: #6d6d72;margin-top: 8px"></span>
+    </div>
+    <div class="circle_wrap">
+      <div class="circle">
+        <div id="signInBtnText" style="padding-bottom: 14.5px;">
+          打卡
+        </div>
+        <div class='realTime' style="font-size: 26px;font-weight: bold;">
+          加载中
+        </div>
+      </div>
+      <div class="active_circle">
+
+      </div>
+    </div>
+    <div class="checkText flexCenter" style="font-size: 14px;font-weight: 500;">
+      <img id="checkIcon" src="" style="width: 15px;vertical-align: middle;margin-right: 8px;">
+      <img id="refresh" src="../../../img/rfIcon.png"
+           style="display: none;width: 30px;vertical-align: middle;margin-right: 8px;">
+      <span>正在获取您的位置。</span>
+    </div>
+    <div class="btn">
+      查看规则
+    </div>
+  </div>
+</div>
+<div class="tab2 hide" id="tab2">
+  <div id="data">
+    <ul id="title" style="height: 28px;">
+      <li>日</li>
+      <li>一</li>
+      <li>二</li>
+      <li>三</li>
+      <li>四</li>
+      <li>五</li>
+      <li>六</li>
+    </ul>
+    <!-- <p>
+      <span id="prev">上一月</span>
+      <span id="nian"></span>
+      <span id="next">下一月</span>
+    </p> -->
+    <div class="arrow_left" id="pre"></div>
+    <div id="yue">加载中</div>
+    <div class="arrow_right" id="next"></div>
+
+    <ul id="date">
+    </ul>
+  </div>
+  <div class="clock_wrap" style="box-sizing: border-box;">
+    <div class="left" id="left_show">
+      加载中
+    </div>
+    <div class="left hide" id="left_hide">
+      加载中
+    </div>
+    <div class="right">
+      <div class="clock_state" style="color:#337BFC;font-weight: bold;margin-bottom: 11.5px;">
+        加载中
+      </div>
+      <div class="clock_text">
+        <img src="../../../img/loc_icon.png" style="width:12.5px;height: 18.5px;margin-right: 10px;">
+        <div class="text_center">
+        </div>
+<!--        <span class="mui-icon mui-icon-forward"></span>-->
+      </div>
+      <!-- <img src="../../../img/address.png" style="width:100%;height: 121px;"> -->
+    </div>
+  </div>
+</div>
+<div id="map" style="display:none ;">
+
+</div>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/vconsole.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/attendance/month.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/position.js"></script>
+<script src="../../../js/helper.js"></script>
+
+<script type="text/javascript">
+    // var vConsole = new VConsole();
+    console.log("进入打卡页面。。。。。。。")
+    console.log(localStorage.getItem("projectInfo"))
+    var myProjectId = {
+        userName: JSON.parse(localStorage.getItem('$state')).account,
+        projectId: JSON.parse(localStorage.getItem("projectInfo")).prjId,
+        projectName: JSON.parse(localStorage.getItem("projectInfo")).prjName
+    };
+
+
+    var ifCanTap = false;//进入页面时不允许立马打卡 需要等请求完成后才可以进行打卡操作
+    var distance; //考勤范围
+    var ifWork = false;//
+    var prjCode = JSON.parse(localStorage.getItem("projectInfo")).prjCode;
+    var isChange = true; //是否改变月报统计里的打卡时间
+    // 进入时直接执行gettime();
+    getTime(); //获取打卡时间
+    getNowTime();//获取当前日期
+    setInterval(() => {
+        getTime()
+    }, 1000)
+
+    function handleCheck(data) {
+        attendanceOne(oneParam, (res) => {
+            console.log("进入handleCheck()方法内 ");
+            console.log(JSON.stringify(res.result.todayRecord))
+            var ar = [];
+            for (var key in res.result.dayList) {
+                ar.push(res.result.dayList[key])
+            };
+            allSignInDate = ar;
+            if (res.result.todayRecord) {
+                isChange = false;
+                let attendanceTime = res.result.todayRecord.attendanceTime;
+                let address = res.result.todayRecord.attendanceAddress;
+                let index = attendanceTime.indexOf(' ');
+                attendanceTime = attendanceTime.slice(index + 1, index + 6);
+                $('.clock_wrap #left_show').text(attendanceTime);
+                $('.clock_wrap .text_center').text(address);
+                isSignIn = true;
+                $('#signInBtnText').text('打卡成功');
+                $('.clock_state').text('已打卡');
+                $('.checkText span').text('您已经成功打卡');
+                $('.clock_state').css("color", "#337BFC")
+                $('.circle').css("background","#256FF6");
+                $('.active_circle').css("background","rgba(177, 205, 254, 0.42)");
+            } else {
+                $('.clock_wrap #left_show').hide();
+                $('.clock_wrap #left_hide').show();
+                $('.clock_wrap .text_center').text(address);
+                isSignIn = false;
+                $('#signInBtnText').text('打卡');
+                $('.clock_state').text('未打卡')
+                $('.clock_state').css("color", "red")
+                $('.circle').css("background","#29CC85");
+                $('.active_circle').css("background","rgba(167, 255, 203, 0.42)");
+            }
+            let arr = [];
+            for (var key in res.result.dayList) {
+                arr.push(res.result.dayList[key])
+            }
+            ;
+            test = arr;
+            add(-1, -1);
+        })
+    };
+    const MobileContainer = window['mobile-lib'].MobileContainer;
+    const mobileContainer = new MobileContainer({
+        serverUrl: config.urls.serverDomain,
+        style: 'color'
+    });
+    const mapData = window['mobile-lib'].MapData({
+        serverUrl: config.urls.serverDomain
+    });
+    let params = {
+        personId: '',
+        personName: '',
+        projectId: '',
+        attendanceAddress: '',
+        Smx: '', //考勤地点经度
+        Smy: '', //考勤地点纬度
+        attendanceTime: '' //考勤时间 projectId=057c73258268451047e98dd318ca140f&personId=chen_k&year=2020&month=12
+    };
+    let oneParam = {
+        projectId: myProjectId.projectId,
+        personId: JSON.parse(localStorage.getItem('$state')).account,
+        // personId:'chen_k',
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1
+    };
+    let allNeedSignInParam = {
+        projectName: myProjectId.projectName,
+    }
+    var isSignIn = false;
+    params.personId = JSON.parse(localStorage.getItem('$state')).account;
+    params.personName = app.userInfo().personName;
+    params.projectId = myProjectId.projectId;
+    params.prjCode = prjCode;
+    console.log(JSON.stringify(params));
+    console.log("oneParam" + JSON.stringify(oneParam));
+    mui.init({
+        swipeBack: false
+    });
+    var mask = mui.createMask();
+    var isShow = true;
+    var self1 = ""
+    var param = {
+        pageCount: 1
+    }
+    mui.plusReady(function () {
+        plus.geolocation.getCurrentPosition(function (position) {
+            $('#refresh').hide();
+            $('#loadErr').hide();
+            console.log('起long：' + position.coords.longitude)
+            console.log('起lat：' + position.coords.latitude)
+            // var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+            var point = [position.coords.longitude, position.coords.latitude];
+            var Lon = point[0]; //获取经度
+            var Lat = point[1]; //获取纬度
+            params.Smx = Lon;
+            params.Smy = Lat;
+            console.log(Lon, Lat);
+            mobileContainer.getAddress(Lon, Lat).then(res => {
+                console.log("//////////////////////////////////////////" + JSON.stringify(res))
+                let addr = res.formatted_address;
+                params.attendanceAddress = addr;
+                // console.log(JSON.stringify(params));
+                getLoc(myProjectId, (myRes) => {
+                    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++" + JSON.stringify(myRes));
+                    var Lon2 = myRes.result.smX;
+                    var Lat2 = myRes.result.smY;
+                    //之前算距离的
+                    // distance = getDistance(Lat, Lon, Lat2, Lon2);
+                    // console.log(distance)
+                    var currentLonLat = new Array();
+                    // 114.03926932765023,22.54292653676373
+                    currentLonLat.push(Lon)
+                    currentLonLat.push(Lat)
+                    console.log(currentLonLat)
+                    console.log(myRes.result[0].attendGeoJson)
+                    var attendGeoJson = myRes.result[0].attendGeoJson
+                    var isExist = getIsExist(currentLonLat, attendGeoJson)
+                    console.log(isExist)
+                    ifOut(isExist,isSignIn)
+                });
+            });
+        }, function (e) {
+            app.hideLoader();
+            $('.checkText span').css("color", "red")
+            $('#refresh').show();
+            $('#loadErr').show();
+            $('.checkText span').text('位置信息获取失败');
+            // $('.clock_state').text('获取位置信息失败').css("color","red")
+            $('.clock_wrap #left_show').hide();
+            $('.clock_wrap #left_hide').show();
+            mui.toast("位置信息获取失败");
+        }, {enableHighAccuracy: true, provider: 'system'});
+
+        attendanceOne(oneParam, (res) => {
+            console.log(JSON.stringify(res))
+            console.log(JSON.stringify(res.result.todayRecord))
+            var ar = [];
+            for (var key in res.result.dayList) {
+                ar.push(res.result.dayList[key])
+            };
+            allSignInDate = ar;
+            if (res.result.todayRecord) {
+                isChange = false;
+                console.log("是否进入attendanceOne ")
+                let attendanceTime = res.result.todayRecord.attendanceTime;
+                let address = res.result.todayRecord.attendanceAddress;
+                let index = attendanceTime.indexOf(' ');
+                attendanceTime = attendanceTime.slice(index + 1, index + 6);
+                $('.clock_wrap #left_show').text(attendanceTime);
+                $('.clock_wrap #left_hide').text(attendanceTime);
+                $('.clock_wrap .text_center').text(address);
+                isSignIn = true;
+                $('#signInBtnText').text('打卡成功');
+                $('.clock_state').text('已打卡');
+                $('.checkText span').text('您已经成功打卡');
+                $('.clock_state').css("color", "#337BFC")
+                $('.circle').css("background","#256FF6");
+                $('.active_circle').css("background","rgba(177, 205, 254, 0.42)");
+            } else {
+                console.log("进入未打卡 ");
+                $('.clock_wrap #left_show').hide();
+                $('.clock_wrap #left_hide').show();
+                $('.clock_wrap .text_center').text(params.attendanceAddress);
+                $('.clock_state').css("color", "red");
+                isSignIn= false;
+                $('#signInBtnText').text('打卡');
+                $('.clock_state').text('未打卡')
+                $('.circle').css("background","#29CC85");
+                $('.active_circle').css("background","rgba(167, 255, 203, 0.42)");
+            }
+            let arr = [];
+            for (var key in res.result.dayList) {
+                arr.push(res.result.dayList[key])
+            }
+            ;
+            test = arr;
+            add(-1, -1);
+        })
+
+        self1 = plus.webview.currentWebview();
+        if (self1.pageCount != undefined) {
+            param.pageCount = self1.pageCount + 1;
+        }
+        self1.setStyle({
+            titleNView: {
+                backgroundImage: "../../../img/bgTop.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '70',
+                    fontSize: '17',
+                    text: '',
+                    onclick: function () {
+                        if (isShow) {
+                            isShow = false;
+                            $("#home-item").show();
+                            mask.show()
+                        } else {
+                            isShow = true;
+                            $('#home-item').hide();
+                            mask.close();
+                        }
+                    }
+                }],
+            }
+        });
+        // setInterval(() => {
+        // 	plus.geolocation.getCurrentPosition(function(position) {
+        // 		var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+        // 		var Lon = point[0]; //获取经度
+        // 		var Lat = point[1]; //获取纬度
+        // 		params.Smx = Lon;
+        // 		params.Smy = Lat;
+        // 		console.log(Lon, Lat);
+        // 		mobileContainer.getAddress(Lon, Lat).then(res => {
+        // 			let addr = res.formatted_address;
+        // 			params.attendanceAddress = addr;
+        // 			console.log(params);
+        // 			getLoc(myProjectId, (myRes) => {
+        // 				console.log(myRes);
+        // 				var Lon2 = myRes.result.smX;
+        // 				var Lat2 = myRes.result.smY;
+        // 				distance = getDistance(Lat, Lon, Lat2, Lon2);
+        // 				ifOut(distance)
+        // 			})
+        // 		});
+
+        // 	})
+        // }, 5000)
+        function exitProject(param, callback) {
+            var url = config.urls.baseUrl + config.actions.exitProject;
+
+            app.showLoader();
+            $.ajax(url, {
+                data: param,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'GET', //HTTP请求类型
+                headers: {
+                    // "Content-Type": "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-Access-Token": app.sessionId(),
+                },
+                timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+                success: function (data) {
+                    app.hideLoader();
+                    if (dealingWithResponseCode(data)) {
+                        callback(data);
+                        // mui.alert(data.message)
+                    } else {
+                        app.toast(data.message);
+                    }
+                },
+                error: function (xhr, type, errorThrown) {
+                    var res = xhr.responseText;
+                    res = JSON.parse(res)
+                    mui.alert(res.message)
+                    dealingWithErrorRequest(errorThrown);
+                    app.hideLoader();
+                    return callback('网络异常,请稍后再试');
+                }
+            });
+        };
+    });
+
+    //重新加载
+    $("#refresh").on("tap", function () {
+        self1.reload()
+    });
+
+    $('.head_name').text(app.userInfo().realname)
+    //打卡
+    $('.circle').on('tap', function () {
+        // if(!ifCanTap){
+        // 	app.toast("未获取到您的位置信息")
+        // 	return false}
+        if (isSignIn){
+            return ;
+        }
+        if (ifWork) {
+            //在距离内 可以打卡
+            var nowTime = formatDateTime();
+            params.attendanceTime = nowTime;
+            getPrjInfoBySysRole({
+                username: JSON.parse(localStorage.getItem('$state')).account
+            }, (res) => {
+
+                // if(res.result.length>0){
+                daka(params, handleCheck);
+                // }else{
+                // 	mui.alert('该账号不需要打卡考勤')
+                // }
+            })
+        } else {
+            //在距离外不允许打卡 测试时不删 没问题后 可以提示不在打卡范围 return false
+
+            app.toast("未进入考勤范围,不可打卡")
+            return false
+
+            var nowTime = formatDateTime();
+            params.attendanceTime = nowTime;
+            // console.log('-=-=-=-=-=打印打卡参数')
+            // console.log(JSON.stringify(params))
+            // daka(params, handleCheck);
+            getPrjInfoBySysRole({
+                username: JSON.parse(localStorage.getItem('$state')).account
+            }, (res) => {
+                console.log(JSON.stringify(res))
+                // if(res.result.length>0){
+                daka(params, handleCheck);
+                // }else{
+                // 	mui.alert('该账号不需要打卡考勤')
+                // }
+            })
+        }
+    })
+    //tab 切换
+    $(".tabs .tab").on('tap', function (e) {
+        var index = $(e.target).attr('data-index')
+        $('.tabs .tab').removeClass('active');
+        $($('.tabs .tab[data-index]')[index]).addClass('active');
+        if (index == 1) {
+            $('.tab1').hide();
+            $('.tab2').show();
+        } else {
+            $('.tab2').hide();
+            $('.tab1').show();
+        }
+    })
+
+    document.getElementById('tab1').addEventListener("swipeleft", function () {
+        $('.tab1').hide();
+        $('.tab2').fadeIn();
+        $('.tabs .tab').removeClass('active');
+        $($('.tabs .tab[data-index]')[1]).addClass('active');
+    });
+    document.getElementById('tab2').addEventListener("swiperight", function () {
+        $('.tab2').hide();
+        $('.tab1').fadeIn();
+        $('.tabs .tab').removeClass('active');
+        $($('.tabs .tab[data-index]')[0]).addClass('active');
+    });
+
+    //跳转考勤统计
+    $(".btn").on('tap', function () {
+        var extras = myProjectId
+        app.openPage("./rule.html", {
+            titleNView: {
+                titleText: '考勤规则',
+                autoBackButton: true,
+            },
+        }, extras);
+    });
+    // $('.clock_text').on('tap', function () {
+    //     app.openPage('./attendancelist.html', {
+    //         titleNView: {
+    //             titleText: '考勤统计',
+    //             autoBackButton: true
+    //         }
+    //     })
+    // })
+
+    //模块跳转处理
+    mui.back = function () {
+
+        plus.webview.currentWebview().close('none')
+        // var extras = {
+        // 	target: "../attendance/month.html",
+        // 	targetName: "考勤统计",
+        // 	pageCount: param.pageCount
+        // }
+        // app.openPage("../overview/projectList.html", {
+        // 	titleNView: {
+        // 		titleText: '项目概览',
+        // 		autoBackButton: true,
+        // 		closePage: true
+        // 	},
+        // }, extras);
+    }
+
+    // 项目概览
+    $("#overview").on('tap', function () {
+        app.openPage("../overview/overviewOne.html", {
+            titleNView: {
+                titleText: '项目概览',
+                autoBackButton: true,
+                closePage: true,
+            },
+        });
+    });
+
+    // 质量检查
+    $("#quality").on('tap', function () {
+        app.openPage("../quality/index.html", {
+            titleNView: {
+                titleText: '质量检查',
+                autoBackButton: true,
+                closePage: true,
+            },
+        });
+    });
+
+    // 安全检查
+    $("#security").on('tap', function () {
+        app.openPage("../security/index.html", {
+            titleNView: {
+                titleText: '安全检查',
+                autoBackButton: true,
+                closePage: true,
+            },
+        });
+    });
+    // 安全教育
+    $("#education").on('tap', function () {
+        plus.webview.currentWebview().hide()
+        app.openPage("../education/index.html", {
+            titleNView: {
+                titleText: '安全教育',
+                autoBackButton: true,
+                closePage: true,
+            },
+        });
+
+    });
+    // 会议签到
+    $("#meeting").on('tap', function () {
+        app.openPage("../meeting/index.html", {
+            titleNView: {
+                titleText: '考勤统计',
+                autoBackButton: true,
+                closePage: true,
+            },
+        });
+    });
+
+    //关闭遮罩层
+    $(document).on("click", ".mui-backdrop", function () {
+        isShow = true;
+        $('#home-item').hide();
+        mask.close();
+    })
+</script>
+</body>
+
+</html>

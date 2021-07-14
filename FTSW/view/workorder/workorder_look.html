@@ -1,0 +1,941 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查看工单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+		<link href="../../css/mui.imageviewer.css"/>
+		<style type="text/css">
+			body {
+				background: #fff;
+			}
+			
+			.header {
+				color: #fff;
+				background: #354052;
+			}
+			
+			.header a,
+			.header h1 {
+				color: #fff;
+			}
+			
+			.input_wk {
+				width: 100% !important;
+				height: 57px !important;
+				display: flex;
+				justify-content: space-between;
+				font-size: 14px;
+				align-items: center;
+			}
+			
+			.input_wk p {
+				color: #c4c4c4 !important;
+				margin-top: 10px;
+				margin-right: 10px;
+			}
+			
+			.label {
+				 width: 40px; 
+				position: relative;
+				padding-left: 33.5px !important;
+				white-space: nowrap;
+				/* pointer-events: none; */
+			}
+			
+			.label2 {
+				padding-left: 33.5px !important;
+				/* pointer-events: none; */
+			}
+			
+			input,
+			.input-right {
+				float: right;
+				text-align: right;
+				color: #888 !important;
+				/* pointer-events: none; */
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				background-color: #EDEDED;
+				/* pointer-events: none; */
+			}
+			
+			.input-right::-webkit-input-placeholder {
+				/* 修改字体颜色 */
+				color: #c4c4c4;
+			}
+			
+			input {
+				font-size: 14px;
+				/* pointer-events: none; */
+			}
+			
+			.biao {
+				color: #DB2828;
+				font-size: 25px;
+				position: absolute;
+				top: 26%;
+				left: 20px;
+				/* pointer-events: none; */
+			}
+			
+			.mui-icon-arrowright {
+				font-size: 16px;
+			}
+			
+			.text {
+				height: 138px;
+				/* pointer-events: none; */
+			}
+			
+			.input-left {
+				text-align: left;
+				/* height: 138px !important; */
+				line-height: none;
+				/* pointer-events: none; */
+			}
+			
+			.label2 {
+				width: 50% !important;
+				/* pointer-events: none; */
+			}
+			
+			textarea {
+				padding-left: 20px;
+				font-size: 14px;
+				/* pointer-events: none; */
+			}
+			
+			.label3 {
+				padding: 12px 0 !important;
+				width: 62px !important;
+				margin-left: 45px !important;
+				float: right !important;
+			}
+			
+			.pick {
+				border: none !important;
+				color: #c4c4c4;
+				width: 35% !important;
+				font-size: 14px;
+				margin-top: 5px;
+			}
+			
+			.ui-alert {
+				margin-left: 75px;
+			}
+			
+			.mui-control-content {
+				background-color: white;
+				min-height: 215px;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			* {
+				touch-action: pan-y;
+			}
+			
+			* {
+				touch-action: none;
+			}
+			
+			html,
+			body,
+			#item1,
+			#item2,
+			#item3,
+			.mui-content {
+				height: 100%;
+			}
+			
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				color: #0493F3;
+				font-size: 22px;
+			}
+			
+			.radio-item {
+				width: 50%;
+				cursor:not-allowed;
+				 pointer-events: none; 
+			}
+			
+			.radio_inline label {
+				/*width: 20%;*/
+				/*padding-left: 40px;*/
+				/*padding-right: 20px;*/
+				padding: 0;
+				width: 40px;
+				height: 22px;
+				margin-left: 20px;
+				font-size: 16px;
+			}
+			
+			.radio_inline input[type=radio] {
+				width: 15%;
+				right: auto;
+			}
+			/*//换个样式*/
+			
+			.change {
+				display: flex;
+				align-items: center;
+			}
+			
+			.change .mui-radio input[type='radio']:checked:before {
+				content: '\e442';
+				color: #0493F3;
+				font-size: 22px;
+				pointer-events: none;
+			}
+			.problemDesc{
+				 pointer-events: none; 
+			}
+			.accepteDepartName{
+				pointer-events: none;
+			}
+			.createTime{
+				pointer-events: none;
+			}
+			.suppleRequire{
+				pointer-events: none;
+			}
+			.tiao{
+				padding-right: 10px;
+			}
+			.mui-radio input[type=radio] {
+				top: 0px;
+				width: 20px;
+				pointer-events: none;
+			}
+			
+			.shadow {
+				width: 100%;
+				background-color: #FFF;
+				box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2);
+				/* 0 阴影水平偏移值(可取正负值)
+         10px 阴影垂直偏移值(可取正负值)
+         10px 阴影模糊值
+         rgba(0,0,0,0.2) 阴影颜色
+      */
+				margin-bottom: 25px;
+				/* 底外边距 */
+				border-radius: 5px;
+				/* 设置圆角 */
+				-moz-border-radius: 25px;
+				/* 老版的Firefox浏览器 */
+				padding: 15px;
+			}
+			/*  审批流程 */
+			  .approval-flow-container {
+			    display: flex;
+			    flex-direction: row;
+			    overflow: hidden;
+			  }
+			  .approval-flow-first-left-operator {
+			    flex: 3;
+			    padding: 10px;
+			    margin-top: 20px;
+			    color: #999999;
+			    font-size: 14px
+			  }
+			  .approval-flow-first-left-operator-username {
+			    color: black;
+			    font-weight: bold
+			  }
+			  .approval-flow-first-line-top {
+			    background-color: white;
+			    height: 33px;
+			    width: 1px;
+			    margin: 0 auto 0 auto;
+			  }
+			  .approval-flow-first-line-circle {
+			    width: 7px;
+			    height: 7px;
+			    background-color: #0493F3;
+			    border-radius: 3.5px;
+			    margin: 5px auto 5px auto
+			  }
+			  .approval-flow-first-line-bottom {
+			    background-color: #0493F3;
+			    /*height: 80%;*/
+			    height: calc(100% - 40px);
+			    width: 1px;
+			    margin: 0 auto 0 auto;
+			  }
+			  .approval-flow-first-right-container {
+			    padding: 10px;
+			    margin: 10px;
+			    background-color: #FFF;
+			    box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2);
+			    border-radius: 5px;
+			    -moz-border-radius: 25px;
+			    flex: 16
+			  }
+			  .approval-flow-first-right-status-container {
+			    display: flex;
+			    flex: 1;
+			    text-align: left;
+			    align-items: center;
+			  }
+			  .approval-flow-first-right-status-node {
+			    padding: 10px;
+			    flex: 1;
+			    font-size: 14px;
+			    color: black;
+			    font-weight: bold
+			  }
+			  .approval-flow-first-right-status {
+			    text-align: right;
+			    flex: 1;
+			    padding: 10px;
+			    font-size: 14px;
+			    color: #29CC85
+			  }
+			  .approval-flow-first-right-content-container {
+			    text-align: start;flex: 1;padding: 0 10px 10px 10px;color: black;
+			    font-size: 14px;min-height: 75px
+			  }
+			  .approval-flow-first-right-content {
+			    text-align: left;padding-right: 10px;font-size: 14px;color: #999999
+			  }
+			  .approval-flow-first-right-date {
+			    color: black;padding: 5px 10px;font-size: 14px;text-align: left
+			  }
+			  .approval-flow-middle-circle-img {
+			    width: 13px;height: 13px;text-align: center;
+			  }
+			
+			  .empty{
+			    line-height:200px;
+			    width:100%;
+			    text-align: center;
+			    font-size: 16px;
+			    color: #BBBBBB;
+			    /*background: #f4f4f4;*/
+			  }
+			  .num{
+				  color: #0493F3;
+			  }
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">查看工单</h1>
+		</header>
+
+		<div class="mui-content" style="padding-bottom: 68px;">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+				<a class="mui-control-item mui-active onclick1" href="#item1">
+					表单详情
+				</a>
+				<a class="mui-control-item" href="#item2">
+					子工单列表
+				</a>
+				<a class="mui-control-item" href="#item3">
+					审批流程
+				</a>
+			</div>
+
+			<div id="item1" class="mui-control-content mui-active" style="height: 100%;">
+				<div id="scroll" class="mui-scroll-wrapper dome">
+					<div class="mui-scroll">
+						<form class="mui-input-group">
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>工单名称：</label>
+								<p class="gdname tiao">工单名称</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">工单编号：</label>
+								<p class="gdnumber tiao">132456897</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>问题类型：</label>
+								<p id='showUserPicker2' class="leix" style="padding-right:11.25px">一般</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">工单来源：</label>
+								<p id='showUserPicker1' class="laiyuan" style="padding-right:11.25px">xxx来源</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label2">问题等级：</label>
+								<div class="item-checkbox" style="">
+									<div class="mui-input-row change">
+										<div class="radio_inline mui-radio tiao" style="display: flex;">
+											<div class="radio-item" style="margin-right:20px">
+												<input name="initialDesign" type="radio" id="initialDesignOne" value="0">
+												<label for="initialDesignOne" style="margin-right: 10px;text-align: right">一般</label>
+											</div>
+											<div class="radio-item"style="margin-right:11.25px" >
+												<input name="initialDesign" type="radio" id="initialDesignTwo" value="1">
+												<label for="initialDesignTwo" style="text-align: right">紧急</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">相关工单：</label>
+								<p id='showUserPicker3' style="padding-right:11.25px">请选择相关工单</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">设施类型：</label>
+								<p id='showUserPicker4' class="objType"style="padding-right:11.25px">请选择设施类型</p>
+							</div>
+							<!-- <div class="mui-input-row input_wk">
+								<label class="label">发现地点：</label>
+								 <input type="text" class="foundAddr tiao" placeholder="自动填入"> 
+							</div> -->
+							<div class="mui-input-row input_wk">
+								<label class="label">发现地点：</label>
+								<p class="foundAddr tiao">自动填入</p> 
+								</span></button>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>问题描述：</label>
+							</div>
+							<div class="mui-input-row " style="height: 180px !important;">
+							<textarea style="height: 180px; overflow-y: scroll;" name="" class="input-left problemDesc" rows="" cols="" placeholder="请输入问题描述（不超过500字）" required="required"></textarea>
+							</div>
+					
+							<div class="mui-input-row input_wk" style="height: 180px !important;">
+								<label class="label">问题照片：</label>
+								<div class="problemPhoto">
+									<!-- <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px; position: relative;border: 1px solid #007AFF;margin: 10px 20px 0px 0px ;">
+										<img src="../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">
+										<input type="file" name="" id="" value="" style="opacity:0;filter:alpha(opacity=0);height: 95px;width: 100px; position: absolute;top: 0;left: 0;z-index: 9;" />
+										<span style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>
+									</div> -->
+								</div>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>受理人：</label>
+								<p id='showUserPicker5' class="createBy"style="padding-right:11.25px">受理人</p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">受理部门：</label>
+								<p class="accepteDepartName"style="padding-right:11.25px" ></p>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label" style="width: 40% ;">要求完成时间：</label>
+					
+								<p class="deadline" style="padding-right:11.25px">
+									<!-- <div id="result" class="deadline" style="color: #c4c4c4;padding-right:11.25px;">请在选择时间</div>
+									<img src="../../img/workorder/time.png" / id="demo1" data-options="{}" class="btn mui-btn mui-btn-block" style="width: 45px; height: 32px;border: none;margin-top:8px ;"> -->
+								</p>
+					
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>补充要求：</label>
+							</div>
+							<div class="mui-input-row " style="height: 180px !important;">
+							<textarea name="" class="input-left suppleRequire" rows="" cols="" placeholder="请输入补充描述（500字以内）"></textarea>
+							</div>
+							
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>处理结果及建议：</label>
+							</div>
+							<div class="mui-input-row " style="height: 180px !important;">
+							<textarea name="" class="input-left suppleRequire" rows="" cols="" placeholder="请输入处理结果及建议..."></textarea>
+							</div>
+							<div class="mui-input-row input_wk" style="height: 180px !important;">
+								<label class="label">处理照片：</label>
+								<div class="handlePhoto">
+									<!-- <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px; position: relative;border: 1px solid #007AFF;margin: 10px 20px 0px 0px ;">
+										<img src="../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">
+										<input type="file" name="" id="" value="" style="opacity:0;filter:alpha(opacity=0);height: 95px;width: 100px; position: absolute;top: 0;left: 0;z-index: 9;" />
+										<span style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>
+									</div> -->
+								</div>
+								
+							</div>
+							
+							<div class="mui-input-row input_wk">
+								<label class="label">派单人：</label>
+								<p class="tiao inputerfullname">z张三</p>
+								
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">联系方式：</label>
+								<p class="phoneNum tiao">12345678910</p>
+								
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">派单部门：</label>
+								<p class="inputeDepartName tiao">深圳水务</p> 
+								</span></button>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">填写日期：</label>
+								<p></p>
+								<input type="text" class="input-right createTime tiao" placeholder="填写时间" style="padding-right:11.25px">
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label2" style="margin-top: 5px;">新任务通知方式：</label>
+								<div class="item-checkbox" style="">
+									<div class="mui-input-row change"style="border: none;">
+										<div class="radio_inline mui-radio sd" style="display: flex;">
+											<div class="radio-item">
+												<input name="z" type="radio" id="znxx"checked>
+												<label for="initialDesignOne" style="margin-right: 0px;width: 90px;">站内消息</label>
+											</div>
+											<div class="radio-item">
+												<input name="s" type="radio" id="sjdx">
+												<label for="initialDesignTwo" style="width: 90px;padding-right:11.25px;">手机短信</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label"><span class="biao">*</span>结果复核：</label>
+								<p id='showUserPicker6' class="resAuditorName"style="padding-right:11.25px">请选择相关工单</p>
+							</div>
+							<!-- <div class="mui-input-row input_wk" style="display: flex; justify-content: space-around;">
+								<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="width: 160px; height: 40px;">蓝色</button>
+								<button type="button" class="mui-btn mui-btn-primary" style="width: 160px; height: 40px;">蓝色</button>
+							</div> -->
+					
+						</form>
+					</div>
+				</div>
+			</div>
+			<div id="item2" class="mui-control-content">
+				<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+				<div style="width: 100%;text-align: left;padding: 10px;display: flex;flex-direction: row">
+					<div id="itemControl" style="flex: 1">
+						<img id="itemCountArrow" src="../../img/workorder/book.png" style="width: 12px;height:12px;flex: 1;margin: 8px 12px -4px 19px" />
+						<span id="itemCount" style="font-size: 14px;flex: 15;">子工单个数: <span class="num">1</span></span>
+					</div>
+					
+				</div>
+				
+				
+				<!-- 子工单列表 -->
+				<div class="zgd">
+					<!-- <div class="shadow" style="width:  calc(100vw - 30px);margin: 15px">
+							<div style="text-align: left;display: flex;width: 100%">
+								<div style=";margin-right: 15px">1</div>
+								<div style="display: flex;flex-direction: column;width: 100%">
+									<div style="text-align: left;width: 100%;padding-bottom: 10px">
+										<span style="font-weight: bold;font-size: 15px;color: black">子工单1</span>
+										<img src="../../img/workorder/right.png" style="width: 7px;float: right;margin: auto 0" />
+									</div>
+									<div style="text-align: left;width: 100%;padding-bottom: 10px;font-size: 14px;color: #888888">受理人:张三</div>
+									<div style="text-align: left;width: 100%">
+										<span style="font-size: 15px;color: #888888">完成时间:/</span>
+										<span style="color: #FF7800;font-size: 15px;float: right">流转中</span>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					</div>
+					</div>
+					
+				</div>
+			<!-- 审批流程 -->
+			<div id="item3" class="mui-control-content mui-active" style="padding: 10px;">
+				<div id="scroll" class="mui-scroll-wrapper dome">
+				<div class="mui-scroll">
+					<div id="lcsp"></div>
+				</div>
+				</div>
+				</div>
+					<!-- div3 end -->
+					</div>
+			</div>
+		</div>
+
+	</body>
+	<!--<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>-->
+<script src="../../js/qualityControl/qualityControl.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/maintain.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<!--<script src="../../js/ajaxhook.min.js"></script>-->
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/timer.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script src="../../js/workorder/gdtj.js"></script>
+	
+	<!-- 查看图片 -->
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<script src="../../js/workSpace/approvalForImproveDetail.js"></script>
+	<script>
+		var  constData = null
+		//初始化单页view
+		// var viewApi = mui('#app').view({
+		//     defaultPage: '#mui-content'
+		// });
+		mui('.mui-scroll-wrapper').scroll();	
+			var url = config.urls.baseUrl + config.actions.getCorrelationForm
+			
+			var params = {
+				formSource:'1'
+			}
+				
+		
+			
+			mui.plusReady(function() {
+				console.log("进入表单详情页面")
+				 var self = plus.webview.currentWebview();//获取上个
+				 // console.log(JSON.stringify(self.name))
+				 // console.log(self.index)
+				 // console.log(self.name[self.index].guid)//工单参数
+		    	 $(".gdname").text(self.name[self.index].formName)//单位名称
+				 $(".gdnumber").text(self.name[self.index].formCode)//工单编号
+				 $(".leix").text(self.name[self.index].problemType_dictText)//问题类型
+				 $(".laiyuan").text(self.name[self.index].formSource_dictText)//工单来源
+				if(self.name[self.index].problemLevel == 1){
+					$('#initialDesignOne').attr("checked",false)
+					$('#initialDesignTwo').attr("checked",true)
+				} else {
+					$('#initialDesignOne').attr("checked",true)
+					$('#initialDesignTwo').attr("checked",false)
+				}//问题等级
+				 $("#showUserPicker3").text(self.name[self.index].relatedOrder)//相关工单
+				  var facTypes=["检查井","截流井","雨水口","排放口","泵站","化粪池","隔油池","沉淀池","管渠","断面","水闸","水库","湖泊","大坝"]//设施类型
+				  if(facTypes[self.name[self.index].objType]){
+					   $(".objType").text(facTypes[self.name[self.index].objType])//设施类型
+				  }else{
+					   $(".objType").text("无")//设施类型
+				  }
+				  if(self.name[self.index].foundAddr){
+					   $(".foundAddr").text(self.name[self.index].foundAddr)//发现地点
+				  }else{
+					   $(".foundAddr").text("无")//发现地点
+				  } 
+				 $(".problemDesc").text(self.name[self.index].problemDesc)//问题描述
+				 $(".acceptorName").text(self.name[self.index].acceptorName)//受理人
+				 $(".accepteDepartName").text(self.name[self.index].accepteDepartName)//受理部门
+				 // $(".deadline").text(self.name[self.index].deadline.substring(0,10))//要求完成时间
+				 var time=self.name[self.index].deadline
+				 var zgd=self.name[self.index]
+				 // 图片处理问题图片
+				 if(zgd.problemPhoto){
+				 	queryPhoto(zgd.problemPhoto,function(data){
+				 		// console.log(JSON.stringify(data))
+				 		if (data.result && data.result.length && data.result[0].uploadFile){
+				 			for(let i = 0; i < data.result.length; i++){
+				 				let path = data.result[i].uploadFile.savePath;
+				 				let url = config.urls.baseUrl + 'sys/common/view/' + path;
+				 				console.log(url)
+				 				var imghtml=`
+				 				<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+				 					<img src="${url}" class="img_src imgCss" data-preview-src="" data-preview-group="1" style="width: 72px;height: 72px;">
+				 				</div>
+				 				`	
+				 				$(".problemPhoto").append(imghtml)
+				 			}
+				 		}else{
+				 	var imghtml=`
+				 	<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+				 		<p style="padding-right:11.25px">无</p>
+				 	</div>
+				 	`	
+				 	$(".problemPhoto").append(imghtml)
+				 }
+				 	})
+				 }
+				 // 处理照片
+				 if(zgd.handlePhoto){
+				 	queryPhoto(zgd.handlePhoto,function(data){
+				 		// console.log(JSON.stringify(data))
+				 		if (data.result && data.result.length && data.result[0].uploadFile){
+				 			for(let i = 0; i < data.result.length; i++){
+				 				let path = data.result[i].uploadFile.savePath;
+				 				let url = config.urls.baseUrl + 'sys/common/view/' + path;
+				 				console.log(url)
+				 				var imghtml=`
+				 				<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+				 					<img src="${url}" style="width: 72px;height: 72px;">
+				 				</div>
+				 				`	
+				 				$(".handlePhoto").append(imghtml)
+				 			}
+				 		}else{
+				 	var imghtml=`
+				 	<div id="updateManagePhoto" style="display: flex;flex-direction: column; position: relative;margin: 10px 20px 0px 0px;">
+				 		<p style="padding-right:11.25px">无</p>
+				 	</div>
+				 	`	
+				 	$(".handlePhoto").append(imghtml)
+				 }
+				 	})
+				 }
+				 
+				 if(time){
+					 $(".deadline").text(time.substring(0,10))
+				 }else{
+					  $(".deadline").text(" ")
+				 }
+				 if(self.name[self.index].suppleRequire){
+					  $(".suppleRequire").text(self.name[self.index].suppleRequire)//补充要求
+				 }else{
+					  $(".suppleRequire").text("无")//补充要求
+				 }
+				 // console.log(JSON.stringify(self.name[self.index]))
+				 // console.log(self.name[self.index].problemPhoto)//#updateManagePhoto//问题图片
+				 // console.log(self.name[self.index].handlePhoto)//#updateManagePhoto //处理照片
+				 $(".createBy").text(self.name[self.index].createBy)// 派单人  
+				 $(".phoneNum").text(self.name[self.index].phoneNum)//联系方式
+				 $('.inputeDepartName').text(self.name[self.index].inputeDepartName)//派单部门
+				 $('.createTime').val(self.name[self.index].createTime.substring(0,10))//填写日期
+				 $(".resAuditorName").text(self.name[self.index].resAuditorName)//结果复核 
+				 $('.inputerfullname').text(self.name[self.index].inputerfullname)//派单人
+				 
+				 // console.log(eval(self.name[self.index].notifymethod))
+				 console.log("==========")
+				 //审批流程开始
+				 console.log(self.guid)
+				 let checkParam = {
+				     guid:self.guid,
+				 }
+				 // 获取审批流程
+				 getApprovalProcess(function (approvalDatas) {
+				     console.log("==========================================审批流程====================================================");
+				     console.log("approvalDatas:" + JSON.stringify(approvalDatas));
+				     addApprovalProcessData(approvalDatas);
+				 })
+				 
+				 function getApprovalProcess(callback) {
+				     getMissionApprovalProcess(checkParam, function (data) {
+				         if (data.success == true) {
+				             callback(data.result);
+				         } else {
+				             mui.toast("查询失败");
+				         }
+				     })
+				 }
+				 
+				function addApprovalProcessData(approvalDatas) {
+				    if (approvalDatas != null) {
+				        var approvalStr = '';
+				        var endList = approvalDatas.taskListEnd;
+				        var ingList = approvalDatas.taskListIng;
+				        var unLastEnd = '<div class="left-line-bottom-blue"></div>';
+				        var lastEnd = '<div class="left-line-bottom-gray"></div>';
+				        // 用于修改线条颜色
+				        var bgMainColorCss = 'style="background-color: #0493F3;"'
+				        var bgEEEColorCss = 'style="background-color: #EEEEEE;"'
+				        var displayBlock = 'style="display: block;"'
+				        var displayInlineBlock = 'style="display: inline-block;"'
+				        var displayNone = 'style="display: none;"'
+				        var endListLen = endList.length;
+				        for (let i = 0; i < endList.length; i++) {
+				            approvalStr +=
+				                `<!-- div1 start -->
+				                <div class="approval-flow-container">
+				                    <!--处理人 start -->
+				                <div class="approval-flow-first-left-operator">
+				                <span>处理人</span>
+				                <span class="approval-flow-first-left-operator-username">${endList[i].assigneeFullname}</span>
+				                </div>
+				                    <!--处理人 end -->
+				                    <!--线条-->
+				                <div style="flex: 1;">
+				                    <!--只有一条数据时 ，是第一个，也是最后一个，顶部线不要画-->
+				                <div class="approval-flow-first-line-top" ${(i == (endListLen - 1)) ? ((endListLen == 1 ? "" : bgMainColorCss)) : ""}></div>
+				                <div class="approval-flow-first-line-circle" ${(i == (endListLen - 1)) ? displayNone : displayBlock}></div>
+				                    <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+				                <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img" ${(i == (endListLen - 1)) ? displayInlineBlock : displayNone} style="display: none"/>
+				                <div class="approval-flow-first-line-bottom" ${(i == (endListLen - 1)) ? bgEEEColorCss : ""}></div>
+				                </div>
+				                    <!--详情-->
+				                <div class="approval-flow-first-right-container">
+				                <div class="approval-flow-first-right-status-container">
+				                <span class="approval-flow-first-right-status-node ">${endList[i].nodeName}</span>
+				                <span class="approval-flow-first-right-status">${endList[i].handleType}</span>
+				                </div>
+				                <div
+				                class="approval-flow-first-right-content-container">
+				                <span class="approval-flow-first-right-content">审批意见:</span>
+				                    ${(endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment)}
+				                </div>
+				                <div class="approval-flow-first-right-date">${endList[i].endTime}</div>
+				                </div>
+				                </div>
+				                    <!-- div1 end -->
+				                `
+				
+				
+				            ;
+				            // approvalStr +=
+				            //     '<li class="mui-table-cell">' +
+				            //     '<div class="left-line-top-white" style="display: none"></div>' +
+				            //     (i == endList.length - 1 ? lastEnd : unLastEnd) +
+				            //     '<div class="approval-item">' +
+				            //     '<div style="display: flex;align-items: center;">' +
+				            //     '<img class="approval-circle" src="../../../img/approval-circle.png" alt="">' +
+				            //     '<span class="approval-username">' + endList[i].assigneeFullname + '</span>' +
+				            //     '<span class="approval-status">' + endList[i].handleType + '</span>' +
+				            //     '<span class="approval-date">' + endList[i].endTime + '</span>' +
+				            //     '</div>' +
+				            //     '<div class="approval-remark">' +
+				            //     (endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment) +
+				            //     '</div>' +
+				            //     '</div>' +
+				            //     '</li>'
+				        }
+				
+				        var ingListLen = ingList.length;
+				        var bgEEEColorDisplayBlock = 'style="background-color: #EEEEEE;display: block;"'
+				        var bgEEEColorDisplayNone = 'style="background-color: #EEEEEE;display: none;"'
+				        for (let i = 0; i < ingList.length; i++) {
+				            approvalStr +=
+				
+				
+				                `<!-- div3 start -->
+				            <div class="approval-flow-container">
+				                <!--处理人-->
+				            <div class="approval-flow-first-left-operator">
+				            <span>处理人</span>
+				            <span class="approval-flow-first-left-operator-username">${ingList[i].assigneeName}</span>
+				            </div>
+				                <!--线条-->
+				            <div style="flex: 1;text-align: center">
+				            <div class="approval-flow-first-line-top" style="background-color: #EEEEEE;"></div>
+				            <div class="approval-flow-first-line-circle" style="background-color: #DDEEFA;"></div>
+				                <!--最后一个隐藏-->
+				            <div class="approval-flow-first-line-bottom" ${(i == (ingListLen - 1)) ? bgEEEColorDisplayNone : bgEEEColorDisplayBlock}></div>
+				            </div>
+				                <!--详情-->
+				            <div class="approval-flow-first-right-container">
+				            <div class="approval-flow-first-right-status-container">
+				            <span class="approval-flow-first-right-status-node">${ingList[i].nodeName}</span>
+				            <span clas="approval-flow-first-right-status" style="color:#999999">${ingList[i].handleType}</span>
+				            </div>
+				            </div>
+				            </div>
+				                <!-- div3 end -->
+				            `
+				
+				
+				            ;
+				            // approvalStr +=
+				            //     '<li class="mui-table-cell">' +
+				            //     '<div class="left-line-top-gray" style="display: none"></div>' +
+				            //     '<div class="left-line-bottom-white"></div>' +
+				            //     '<div class="approval-item">' +
+				            //     '<div style="display: flex;align-items: center;">' +
+				            //     '<img class="approval-circle" src="../../../img/approval-gray-circle.png" alt="">' +
+				            //     '<span class="approval-username">' + ingList[i].assigneeName + '</span>' +
+				            //     '<span class="approval-status" style="color: #AEAEAE">' + ingList[i].handleType + '</span>' +
+				            //     '</div>' +
+				            //     '</div>' +
+				            //     '</li>'
+				        }
+				    }
+				    $("#lcsp").append(approvalStr);
+				}
+				 
+				 //审批流程结束
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 // 子工单
+				 var url = config.urls.baseUrl + config.actions.getMissionNormalFormItem
+				 // console.log(config.actions.getMissionNormalFormItem)
+				 var params = {
+				 		guid:self.name[self.index].guid
+				 	}
+				 	getWork(url,params,function(data){
+				 		// console.log(JSON.stringify(data))
+				 		data=data.result
+				 		constData=data
+				 		// $('.num').text(data.length)
+						if(data.length){
+							$('.num').text(data.length)
+						}else{
+							$('.num').text("0")
+						}
+				 		var zgd=''
+				 		if(data.length>0){
+				 		for(var i=0;i<data.length;i++){
+							var state=["暂存","流转中","已完成","废弃"]
+							var color=["#0493F3","#FF7800","#29CC85","#888888"]
+				 				zgd+=`
+				 				    <div class="shadow" style="width:  calc(100vw - 30px);margin: 15px">
+				 				    		<div style="text-align: left;display: flex;width: 100%">
+				 				    			<div style=";margin-right: 15px">${i+1}</div>
+				 				    			<div style="display: flex;flex-direction: column;width: 100%">
+				 				    				<div style="text-align: left;width: 100%;padding-bottom: 10px">
+				 				    					<span style="font-weight: bold;font-size: 15px;color: black">${data[i].formName}</span>
+				 				    					<img src="../../img/workorder/right.png" style="width: 7px;float: right;margin: auto 0" />
+				 				    				</div>
+				 				    				<div style="text-align: left;width: 100%;padding-bottom: 10px;font-size: 14px;color: #888888">受理人:${data[i].acceptorName}</div>
+				 				    				<div style="text-align: left;width: 100%">
+				 				    					<span style="font-size: 15px;color: #888888">完成时间:${data[i].flowFinishTime}</span>
+				 				    					<span style="color: ${color[data[i].state]};font-size: 15px;float: right">${state[data[i].state]}</span>
+				 				    				</div>
+				 				    			</div>
+				 				    		</div>
+				 				    	</div>
+				 				    </div>
+				 				`
+				 			}
+				 
+				 		}else{
+				 				zgd='<div class="empty">暂无数据</div>'
+				 				}
+				 		$(".zgd").html(zgd)
+				 		
+				 		
+				 	})
+				 	// 子工单	
+			})
+			
+			getWork(url,params,function(data){
+				// console.log('data')
+			})
+			
+			//子工单点击
+			$(".mui-content").on('tap','.shadow',function(){
+				var i=$(this).index()
+				mui.openWindow({
+					url:'./menu.html',
+					extras:{
+						index:i,
+						name:constData
+					}
+				})
+			})
+
+	 //图片预览
+	//         $(document).on('tap', '.img_src', function() {
+	//             mui.previewImage();
+	//         });
+	
+	
+	
+	</script>
+
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>防洪排涝</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	<style type="text/css">
+		.drainageNum {
+			/* height: 219px; */
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		.drainageNum_h {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.drainageNum_b {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.drainageNum_hl {
+			/* width: 112px; */
+			height: 17px;
+			font-size: 18px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #262626;
+			line-height: 24px;
+			margin-left: 19px;
+			margin-top: 17.5px;
+		}
+
+		.drainageNum_hr {
+			/* width: 32.5px; */
+			height: 11px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #0493F3;
+			line-height: 18px;
+			margin-right: 20px;
+			margin-top: 20.5px;
+		}
+
+		.drainageNum_hr1 {
+			/* width: 32.5px; */
+			height: 11px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #0493F3;
+			line-height: 18px;
+			margin-right: 20px;
+			margin-top: 20.5px;
+		}
+
+		.xq_suml,
+		.xq_sumr {
+			display: flex;
+			justify-content: space-around;
+			margin-top: 37px;
+			/* background-color: yellow; */
+		}
+
+		.xq_suml1,
+		.xq_sumr1 {
+			margin-top: 29px;
+		}
+
+		.xq_sumr {
+			margin-right: 31px;
+		}
+
+		.xqgwzl,
+		.xqgwqs {
+			width: 120px;
+			height: 14px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #7F7F7F;
+			line-height: 24px;
+			margin-left: 20px;
+		}
+
+		.xqgwzl_num,
+		.xqgwqs_num {
+			width: 13px;
+			height: 18px;
+			font-size: 24px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #0493F3;
+			line-height: 24px;
+			/* margin-right: 30px; */
+		}
+
+
+
+		#drainHousehold {
+			height: 392px;
+			background-color: white;
+		}
+
+		#mainName {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			/* height: ; */
+		}
+
+		/* 下面是自己写的，上面是黄斯坤的 */
+
+		.onetb {
+			display: flex;
+			justify-content: center;
+		}
+
+		.onetb .onetb-1 {
+			/* background: #000000; */
+			width: 100%;
+			height: 300px;
+		}
+
+		.to__flow__time {
+			display: flex;
+			width: 90px;
+			height: 28px;
+			justify-content: center;
+			align-items: center;
+			margin-top: 17.5px;
+		}
+
+		.to__flow__time p {
+			width: 50%;
+			text-align: center;
+			height: 100%;
+			line-height: 28px;
+			margin: 0;
+			padding: 0;
+			border: 1px solid rgba(238, 238, 238, 1);
+		}
+
+		.to__flow__time .active {
+			background-color: rgba(4, 147, 243, 1);
+			color: #fff;
+			border: 1px solid rgba(4, 147, 243, 1);
+		}
+
+		.to__time__se {
+			display: flex;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-top: 17.5px;
+			align-items: center;
+		}
+
+		.to__time__se p {
+			margin: 0;
+			padding: 0;
+			color: rgba(4, 147, 243, 1);
+		}
+
+		.to__time__se img {
+			width: 12px;
+			height: 7px;
+		}
+	</style>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 内容区域 -->
+						<!-- 汛期降雨开始 -->
+						<div class="drainageNum">
+
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>汛期降雨</span></div>
+								<div class="drainageNum_hr"><span class="timeYear">2020</span><img
+										style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt="">
+								</div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml">
+									<span class="xqgwzl">响应次数(次)</span>
+									<span class="xqgwzl_num pipeLength">0</span>
+								</div>
+								<div class="xq_sumr">
+									<span class="xqgwqs">关注级(km)</span>
+									<span class="xqgwqs_num objCount">0</span>
+								</div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml xq_suml1">
+									<span class="xqgwzl">IV级</span>
+									<span class="xqgwzl_num checkNumber">0</span>
+								</div>
+								<div class="xq_sumr xq_sumr1">
+									<span class="xqgwqs">III级</span>
+									<span class="xqgwqs_num bugTotal">0</span>
+								</div>
+							</div>
+
+							<div class="drainageNum_b" style="margin-bottom: 35px;">
+								<div class="xq_suml xq_suml1">
+									<span class="xqgwzl">II级</span>
+									<span class="xqgwzl_num bugDealWith">0</span>
+								</div>
+								<div class="xq_sumr xq_sumr1">
+									<span class="xqgwqs">I级</span>
+									<span class="xqgwqs_num mixingPoint">0</span>
+								</div>
+							</div>
+
+						</div>
+						<!-- 汛期降雨结束 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<!-- 应急队伍 -->
+						<div class="drainageNum" style="height: 110px;">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>应急队伍</span></div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml">
+									<span class="xqgwzl">应急队伍(支)</span>
+									<span class="xqgwzl_num yjdwz">0</span>
+								</div>
+								<div class="xq_sumr">
+									<span class="xqgwqs">人员配置(人)</span>
+									<span class="xqgwqs_num rypzr">0</span>
+								</div>
+							</div>
+						</div>
+						<!-- 应急处置详情 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<div class="drainageNum">
+
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>应急处置详情</span></div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml">
+									<span class="xqgwzl">出动检查(人/次)</span>
+									<span class="xqgwzl_num cdjcrc">0</span>
+								</div>
+								<div class="xq_sumr">
+									<span class="xqgwqs">检查在建工地(处)</span>
+									<span class="xqgwqs_num jczjgdc">0</span>
+								</div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml xq_suml1">
+									<span class="xqgwzl">水库巡查(次)</span>
+									<span class="xqgwzl_num skxcc">0</span>
+								</div>
+								<div class="xq_sumr xq_sumr1">
+									<span class="xqgwqs">工地防汛停工(次)</span>
+									<span class="xqgwqs_num gdfxtgc">0</span>
+								</div>
+							</div>
+
+							<div class="drainageNum_b" style="margin-bottom: 35px;">
+								<div class="xq_suml xq_suml1">
+									<span class="xqgwzl">泵站巡查(次)</span>
+									<span class="xqgwzl_num bzxcc">0</span>
+								</div>
+							</div>
+
+						</div>
+						<!-- 年度防洪排涝及降雨统计图表 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<div id="warehouse1">
+							<div class="drainageNum_h" style="align-items: center; margin-bottom: 10px;">
+								<div class="drainageNum_hl"
+									style="width: 180px; margin-top: 10px; margin-left: 5px; margin-right: 0px;"><span
+										style="font-size: 15px;">年度防洪排涝及降雨统计</span></div>
+								<div style="display: flex;">
+									<div class="to__flow__time">
+										<p :class="isYear ? 'active' : ''" @click="swicthDate()">年</p>
+										<p :class="isYear ? '' : 'active'" @click="swicthDate()">月</p>
+									</div>
+									<div class="to__time__se" @click="selectTime()">
+										<p>{{timeTxt}}</p>
+										<img src="../../img/arrowDownBlue.png" alt="">
+										<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+									</div>
+								</div>
+							</div>
+							<div id="main" style="width: 100%;height: 400px;">
+							</div>
+						</div>
+						<!-- 仓库物资统计图表 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<div id="warehouse2">
+							<div class="drainageNum_h" style="align-items: center; margin-bottom: 10px;">
+								<div class="drainageNum_hl"><span style="font-size: 17px;">仓库物资统计</span></div>
+								<div style="display: flex;">
+									<div class="to__flow__time">
+										<p :class="isYear ? 'active' : ''" @click="swicthDate()">年</p>
+										<p :class="isYear ? '' : 'active'" @click="swicthDate()">月</p>
+									</div>
+									<div class="to__time__se" @click="selectTime()">
+										<p>{{timeTxt}}</p>
+										<img src="../../img/arrowDownBlue.png" alt="">
+										<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+									</div>
+								</div>
+							</div>
+							<div id="main1" style="width: 100%;height: 480px;">
+							</div>
+						</div>
+						<!-- <div class="onetb">
+							<div id="main1" class="onetb-1" style="height: 500px;"></div>
+						</div> -->
+						<!-- 防汛专家统计图表 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<div>
+							<div class="drainageNum_h" style="margin-bottom: 18px;">
+								<div class="drainageNum_hl"><span>防汛专家统计</span></div>
+								<div class="drainageNum_hr"><span class="fzzjtjtime">2020</span><img
+										style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt="">
+								</div>
+							</div>
+							<div class="onetb">
+								<div id="main2" class="onetb-1"></div>
+							</div>
+						</div>
+						<!-- 河流水库溢流点统计图表 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<div>
+							<div class="drainageNum_h" style="margin-bottom: 18px;">
+								<div class="drainageNum_hl"><span>溢流点统计</span></div>
+								<div class="drainageNum_hr"><span class="yldtime" style="">2020</span><img
+										style="width: 12px; height: 7px; margin-right: 20px;"
+										src="../../img/arrowDownBlue.png" alt=""><span class="yldhl">河流</span><img
+										style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt="">
+								</div>
+							</div>
+							<div class="onetb">
+								<div id="main3" class="onetb-1"></div>
+							</div>
+						</div>
+						<!-- 自营仓库出入库统计 -->
+						<div style="height: 5px; background: #f4f4f4;"></div>
+						<div id="warehouse">
+							<div class="drainageNum_h" style="align-items: center; margin-bottom: 10px;">
+								<div class="drainageNum_hl" style=""><span style="font-size: 17px;">自营仓库出入库统计</span>
+								</div>
+								<div style="display: flex;">
+									<div class="to__flow__time">
+										<p :class="isYear ? 'active' : ''" @click="swicthDate()">年</p>
+										<p :class="isYear ? '' : 'active'" @click="swicthDate()">月</p>
+									</div>
+									<div class="to__time__se" @click="selectTime()">
+										<p>{{timeTxt}}</p>
+										<img src="../../img/arrowDownBlue.png" alt="">
+										<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+									</div>
+								</div>
+							</div>
+							<div id="warehouseChart" style="width: 100%;height: 280px;">
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+
+	<!-- 接口js -->
+	<script src="../../js/kpi/drainage.js"></script>
+	<script src="../../js/kpi/flood.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/echarts.min.js"></script>
+	<script src="../../js/kpi/index.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+
+	<script src="./echarts-module/opp-chart.js"></script>
+	<script src="./echarts-module/ware-vue.js"></script>
+
+	<!-- 自己页面图表js -->
+	<!-- 防洪排涝 -->
+	<script src="./floodjs/tubvue.js"></script>
+	<!-- 仓库物资统计 -->
+	<script src="./floodjs/ckvue.js"></script>
+
+
+
+	<script type="text/javascript">
+		// var arr1=["河流","水库"]
+
+		//$('.fzzjtjtime1').text()这个就是获取该地放的值
+		// var num=arr1.findIndex(item=>item==$('.fzzjtjtime1').text())+1//这个就是返回与arr1对应的下标
+
+
+
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var myDate = new Date();
+		$(".timeYear").text(myDate.getFullYear()); //获取当前年份，汛期降雨
+		$(".fzzjtjtime").text(myDate.getFullYear()); //获取当前年份，防汛专家
+		$(".yldtime").text(myDate.getFullYear()); //获取当前年份，防汛专家
+
+
+		// 防汛专家统计图表
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		var option2 = {
+			tooltip: {
+				trigger: 'item',
+				formatter: function(params) {
+					return params.data.value + '%'
+					// console.log("usshwuo",JSON.stringify(params))
+				}
+			},
+			legend: {
+				// orient: 'vertical',//加了这个上面的条就会可以在左边
+				left: 'center',
+				top: '5%',
+			},
+			series: [{
+				// name: '访问来源',
+				type: 'pie',
+				radius: '50%',
+				data: [{
+						value: '',
+						name: '防洪抢险'
+					},
+					{
+						value: '',
+						name: '防洪调度'
+					},
+					{
+						value: '',
+						name: '市政排水'
+					},
+					{
+						value: '',
+						name: '其它'
+					},
+				],
+				emphasis: {
+					itemStyle: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}]
+		};
+		// 河流水库溢流点统计图表
+		var myChart3 = echarts.init(document.getElementById('main3'));
+		var option3 = {
+			// title: {
+			//     text: '折线图堆叠'
+			// },
+			tooltip: {
+				trigger: 'axis'
+			},
+			legend: {
+				type: 'scroll',
+				itemWidth: 10,
+				itemHeight: 10
+				// data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				y: '14%',
+				containLabel: true
+			},
+			toolbox: {
+				feature: {
+					// saveAsImage: {}
+				}
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				data: [] //x轴日期
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',加了这个柱状图就会有堆叠导制，值和y轴对不上，是所有值累加
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				},
+				{
+					name: '',
+					type: 'line',
+					// stack: '总量',
+					data: []
+				}
+			]
+		};
+		// 溢流点统计接口
+		heliuskjk()
+
+		function heliuskjk() {
+			var gcName = ["河流", "水库"]
+			let gnum = gcName.findIndex(item => item == $(".yldhl").text()) + 1
+			var params = {
+				statisticsType: gnum,
+				year: $('.yldtime').text()
+			}
+			// console.log("kkkk是嗡嗡嗡无法k",JSON.stringify(params))
+			heliusk(params, function(data) {
+				option3.xAxis.data = ["01月", "02月", "03月", "04月", "05月", "06月", "07月", "08月", "09月", "10月", "11月",
+					"12月"
+				]
+				for (let i = 0; i < data.result.data.length; i++) {
+					option3.series[i].name = data.result.data[i].deviceName
+					option3.series[i].data = [
+						data.result.data[i]["01月"],
+						data.result.data[i]["02月"],
+						data.result.data[i]["03月"],
+						data.result.data[i]["04月"],
+						data.result.data[i]["05月"],
+						data.result.data[i]["06月"],
+						data.result.data[i]["07月"],
+						data.result.data[i]["08月"],
+						data.result.data[i]["09月"],
+						data.result.data[i]["10月"],
+						data.result.data[i]["11月"],
+						data.result.data[i]["12月"],
+					]
+				}
+				myChart3.setOption(option3); //调用河流水库溢流点统计图表
+			})
+		}
+
+		// 防汛专家统计图表jk
+		expertjk()
+
+		function expertjk() {
+			// console.log("jjj哦i上帝我")
+			var params = {
+				createTime_begin: $('.fzzjtjtime').text(),
+				createTime_end: $('.fzzjtjtime').text(),
+			}
+			expert(params, function(data) {
+				// console.log("ssssss666", JSON.stringify(data.result.expertType))
+				var zhmum = Number(data.result.expertType.防汛抢险) + Number(data.result.expertType.防洪调度) + Number(data
+					.result.expertType.市政排水) + Number(data.result.expertType.其他)
+				option2.series[0].data[0].value = (Number(data.result.expertType.防汛抢险) / zhmum * 100).toFixed(2)
+				option2.series[0].data[1].value = (Number(data.result.expertType.防洪调度) / zhmum * 100).toFixed(2)
+				option2.series[0].data[2].value = (Number(data.result.expertType.市政排水) / zhmum * 100).toFixed(2)
+				option2.series[0].data[3].value = (Number(data.result.expertType.其他) / zhmum * 100).toFixed(2)
+				myChart2.setOption(option2); //调用仓库资统计图表
+				// console.log("eheyuieuoi就得i",()Number(data.result.expertType.防汛抢险)/zhmum*100.toFixed(2))
+			})
+		}
+		// 汛期降雨接口
+		detailjk()
+
+		function detailjk() {
+			var params = {
+				year: $('.timeYear').text()
+			}
+			detail(params, function(data) {
+				$('.pipeLength').text(data.result.counts.rainCount) //响应次数
+				$('.objCount').text(Object.values(data.result.counts.eventCount[0])[0]) //关注级
+				$('.checkNumber').text(Object.values(data.result.counts.eventCount[1])[0]) //iv级
+				$('.bugTotal').text(Object.values(data.result.counts.eventCount[2])[0]) //III级
+				$('.bugDealWith').text(Object.values(data.result.counts.eventCount[3])[0]) //II级
+				$('.mixingPoint').text(Object.values(data.result.counts.eventCount[4])[0]) //I级
+
+				$('.yjdwz').text(data.result.ranksConfigure.ranksCount) //应急队伍（支）
+				$('.rypzr').text(data.result.ranksConfigure.ranksPersonCount) //人员配置（人）
+
+				$('.cdjcrc').text(data.result.eventResponse.inspector) //出动检查(人/次)
+				$('.jczjgdc').text(data.result.eventResponse.inspectionConstruction) //检查在建工地(处)
+				$('.skxcc').text(data.result.eventResponse.inspectionReservoir) //水库巡查(次)
+				$('.gdfxtgc').text(data.result.eventResponse.stopWork) //工地防汛停工(次)
+				$('.bzxcc').text(data.result.eventResponse.inspectionPump) //泵站巡查(次)
+			})
+		}
+		// 汛期降雨那个年份选者器选择点击触发
+		$('.timeYear').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			// console.log("lllllllllll",JSON.stringify(picker))
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".timeYear").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 汛期降雨页面上的年份数变化时触发
+		$('.timeYear').on('DOMNodeInserted', function() {
+			detailjk()
+		})
+		// 防汛专家统计年份选择器触发的事件
+		$('.fzzjtjtime').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".fzzjtjtime").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 防汛专家统计页面上的年份数变化时触发
+		$('.fzzjtjtime').on('DOMNodeInserted', function() {
+			expertjk()
+		})
+		//溢流点统计的年份数变化时触发年份选择器触发的事件
+		$('.yldtime').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".yldtime").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 溢流点统计的年份数变化时触发
+		$('.yldtime').on('DOMNodeInserted', function() {
+			heliuskjk()
+		})
+		// ----
+		//溢流点统的选择类型变化时触发年份选择器触发的事件
+		$('.yldhl').on('tap', function() {
+			//设置年份的选择
+			var options = [{
+					text: "河流",
+					value: "1",
+				},
+				{
+					text: "水库",
+					value: "2",
+				},
+			];
+			// var myDate = new Date();
+			// var startYear = myDate.getFullYear() - 10; //起始年份
+			// var endYear = myDate.getFullYear(); //结束年份
+			// for (var i = startYear; i <= endYear; i++) {
+			// 	options.push({
+			// 		value: i,
+			// 		value: i
+			// 	})
+			// }
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".yldhl").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 溢流点统计的选择类型数变化时触发
+		$('.yldhl').on('DOMNodeInserted', function() {
+			heliuskjk()
+		})
+	</script>
+
+</html>

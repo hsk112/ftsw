@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>通知公告</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet" />
+  <link href="../../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+  <style>
+    .mui-col-xs-6 {
+      text-align: left;
+    }
+    .mui-table-view-cell.mui-collapse.mui-active .arrow_right{
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+    .mui-control-content .mui-loading {
+      margin-top: 50px;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+
+    .mui-table-view-cell>a:not(.mui-btn){
+      margin: 0;
+      padding:10px;
+    }
+    .mui-table-view-cell div{
+      margin-bottom: 10px;
+    }
+
+    .mui-table-view-cell .item-first {
+      display: flex;
+      font-size: 16px;
+      color: #191515;
+      margin-top: 10px
+    }
+    .mui-page-content {
+      background: #F4F4F4;
+    }
+
+    .fanwei{
+      white-space: nowrap;
+      display: inline-block;
+      width: 280px;
+      margin-left: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left
+    }
+
+
+    .object{
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .in-obj{
+      font-weight: 400;
+      color: #888888;
+      margin-right: 7px;
+    }
+    .obj-title{
+      color: #444444;
+    }
+    .bgc-white{
+      background-color: white;
+    }
+    .bgc-grey{
+      background-color: #F4F4F4;
+    }
+    .mui-navigate-r{
+      background: #fff;
+    }
+    .icon-css{
+      display: inline-block;
+      padding: 8px 0 0;
+      vertical-align: top;
+    }
+    .task_title{
+      display: inline-block;
+      padding: 8px 0;
+      color: #191515;
+      font-size: 15px;
+      font-weight: 500;
+      width: 50%;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+    .sec-line{
+      color: #878787;
+      font-size: 14px;
+    }
+    /* 	.arrow_right{
+      transform: rotate(90deg);
+    } */
+    .ul-mar-bottom{
+      margin-bottom: -18px;
+    }
+
+
+    .color888{
+      color: #888888;
+    }
+    .ibh{
+      display: inline-block;
+      line-height: 28px;
+    }
+    .no-data {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      display: inline-block;
+      font-size: 20px;
+      color: #999;
+      transform: translateX(-50%);
+    }
+    .showMore{
+      display: inline-block;
+    }
+
+    #listTitle span{
+      padding: 0;
+      color: #888888;
+    }
+
+    #listTitle{
+      width: 100%;
+      height: 40px;
+      padding-left: 20px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    #selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+    #selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span{
+      padding: 0;
+    }
+
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 300px;
+      background: #FFFFFF
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #search_input1,#search_input2,#search_input3{
+      margin: 0;
+      width: 90%;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      padding-left: 35px;
+    }
+
+    #search{
+      padding: 10px 0;
+      background: #F4F4F4;
+      /*border-bottom: 7px solid #F4F4F4;*/
+      position: relative;
+    }
+
+
+    #search_icon img{
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      /*left: 9%;*/
+      /*top: 30%;*/
+      left: 31px;
+      top: 19px;
+    }
+
+    #del_icon1 img, #del_icon2 img, #del_icon3 img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 9%;
+      top: 33%;
+    }
+
+    .btn-outlined{
+      border:1px solid #337BFC;
+      color: #337BFC;
+    }
+    .mui-btn.mui-active:enabled{
+      /*background: #337BFC;*/
+    }
+
+    #foldTitle{
+      height: 40px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    #whichRiver{
+      padding-left: 20px;
+      background-color: #FFFFFF;
+      height: 40px;
+      line-height: 40px;
+      color: #191515;
+      display: none;
+    }
+
+    #whichRiver span{
+      padding: 0;
+    }
+
+    #whichLake{
+      padding-left: 20px;
+      background-color: #FFFFFF;
+      height: 40px;
+      line-height: 40px;
+      color: #191515;
+      display: none;
+    }
+
+    #whichLake span{
+      padding: 0;
+    }
+
+    #highest {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #leader {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #details{
+      margin: 0 20px;
+    }
+
+    #viewMore{
+      border-top: 5px solid #F4F4F4;
+      display: flex;
+      align-items: center;
+      color: #337BFC;
+      height: 40px;
+      padding-left: 20px;
+    }
+
+    #viewLakeMore{
+      border-top: 5px solid #F4F4F4;
+      display: flex;
+      align-items: center;
+      color: #337BFC;
+      height: 40px;
+      padding-left: 20px;
+    }
+
+    *{
+      touch-action: none;
+    }
+
+  /* 自定义样式 */
+    .mui-page {
+      background: #F4F4F4;
+    }
+    .mui-table-view {
+      background-color: #FFFFFF;
+      text-align: left;
+    }
+    .mui-table-view-cell.mui-active {
+      background-color: #FFFFFF;
+    }
+    .mui-table-view-cell:after{
+      left: 0;
+      right: 0;
+      background-color: #F4F4F4;
+      height: 10px;
+    }
+    /*.mui-table-view-cell:after{*/
+    /*  left: 4%;*/
+    /*  height: 2px;*/
+    /*  width: 92%;*/
+    /*}*/
+
+    .mui-table-view-cell{
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #888888;
+      padding: 0!important;
+      /*padding: 10px 20px;*/
+    }
+    .list-item {
+      padding: 10px 20px;
+    }
+
+    .mui-backdrop {
+        position: fixed;
+        z-index: 998;
+        top: 40%;
+        right: 20%;
+        bottom: 40%;
+        left: 20%;
+        background-color: rgba(0, 0, 0, 1);
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .empty{
+      line-height:200px;
+      width:100%;
+      text-align: center;
+      font-size: 16px;
+      color: #BBBBBB;
+    }
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+<!--    <div class="mui-navbar">-->
+<!--    </div>-->
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<div class="home-item" style="display: none;" id="home-item">
+  <div class="home-item-list" id="business_item">
+    <div class="item" id="missionUncompleted">
+      <img src="../../../img/missionUncompleted.png">
+      <span>待办任务</span>
+    </div>
+    <div class="item" id="notification">
+      <img src="../../../img/notification.png">
+      <span>通知公告</span>
+    </div>
+    <div class="item" id="directory">
+      <img src="../../../img/directory.png">
+      <span>通讯录</span>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+          <div id="scroll1" class="mui-scroll-wrapper" style="overflow-y: scroll;height: 100vh; padding-bottom:50px">
+              <div id="search" style="z-index: 2;">
+                <div id="search_icon"><img src="../../../img/commom/search1@2x.png"></div>
+                <div id="del_icon1"><img src="../../../img/commom/del.png"></div>
+                <input type="text" id="search_input1" value="" placeholder="请输入公告标题、来源" />
+              </div>
+              <ul class="mui-table-view" id="noti-ul" style="height: calc(100vh - 60px);overflow: hidden;">
+                <div id="notificationItem"></div>
+
+<!--                <li class="mui-table-view-cell" id="22" style="">-->
+<!--&lt;!&ndash;                  <a class="mui-navigate-r" href="#" >&ndash;&gt;-->
+<!--                   <div class="list-item">-->
+<!--                     <div class="item-first">-->
+<!--                       <div style="flex: 1" class="mui-ellipsis">-->
+<!--                         关于变更深规划资源-->
+<!--                       </div>-->
+<!--                       <img class="star-collection" alt="1" src="../../../img/starSelected.png" width="17" height="17">-->
+<!--                     </div>-->
+<!--                     <div class="mui-ellipsis">来源：福田区城市更新和土地整备局</div>-->
+<!--                     <div class="mui-ellipsis">发布时间：2020-12-12  17:50:50</div>-->
+<!--                   </div>-->
+<!--&lt;!&ndash;                  </a>&ndash;&gt;-->
+<!--                </li>-->
+              </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<!--    <div class="" style="width: 30%; height: 20%;position: relative;left: 35%; top: 40%;">-->
+<!--        <img  src="../../../img/starSelected.png"  style="width: 41px;height: 39px;" />-->
+<!--        <div style="font-size: 18px;margin-top: 20px;">已移入收藏夹</div>-->
+<!--    </div>-->
+  <!--页面主内容区结束-->
+</div>
+</body>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/maintain.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<!-- <script src="../../js/timer.js"></script> -->
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script src="../../../js/infoQuery/leaderList.js"></script>
+<script src="../../../js/workSpace/notification.js"></script>
+<!-- 分页1 -->
+<script src="../../../js/bscroll.js"></script>
+
+<script>
+  var isTest = false;
+    mui.init({
+        swipeBack: false
+    });
+    let param = {
+      pageNo: 1,
+      pageSize: 10,
+      caseTitleSource: ""
+    }
+    // var vConsole = new VConsole();
+    mui.back = function() {
+        var curr = plus.webview.currentWebview();
+        // var wvs = plus.webview.all();
+        // for (var i = 0, len = wvs.length-1; i < len; i++) {
+        //     let theurl = wvs[i].getURL() + '';
+        //     if (!(theurl.search('login.html') != -1 ||
+        //         theurl.search('www/main.html') != -1 ||
+        //         theurl.search('www/index.html') != -1 ||
+        //         theurl.search('/searchInfo/index.html') != -1)){
+        //         wvs[i].close('none');
+        //     }
+        // }
+      //refresh是上一页面自定义事件
+      console.log("收藏列表back返回")
+      mui.fire(curr.opener(), 'refreshNotiList');
+        curr.close('slide-out-right');
+    }
+
+    var riverData = [];
+    var lakeData = [];
+    var isOpen = false;
+    var isLakeOpen = false;
+    var isShow = true;
+    var riverPageNo = '1';
+    var riverPageSize = '100';
+    var lakePageNo = '1';
+    var lakePageSize = '100';
+    var userPicker = new mui.PopPicker();
+    var searchRiver = [];
+    var searchLake = [];
+    var riverList = [];
+    var lakeList = [];
+    var riverResultJSON = [];
+    var lakeResultJSON = [];
+
+    var mask = mui.createMask();
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var pickerpxtop = null;
+
+    var extras = {
+        openNum: 0
+    }
+
+    var input1 = document.getElementById("search_input1");
+    var input2 = document.getElementById("search_input2");
+    var input3 = document.getElementById("search_input3");
+
+    <!-- 分页2 -->
+    var allDataLoad = false; // 根据数量判断是否已加载完
+    var rankBox = document.getElementById("noti-ul"); // slider
+    var cBScroll = new BScroll(rankBox, {
+      click: true, // 主要控制非button元素的点击事件
+      probeType: 3,
+      pullUpLoad: true
+    });
+
+    mui.plusReady(function() {
+
+        $("#del_icon1").hide();
+        $("#del_icon2").hide();
+        $("#del_icon3").hide();
+       // initSelected();
+        // 初始化数据列表（河流数据）
+        //禁止选项卡自带滑动
+       // mui('.mui-slider').slider().stopped = true;
+        var self = plus.webview.currentWebview();
+        extras.openNum = self.openNum + 1; //初始化打开页面数量
+
+      <!-- 分页3 -->
+      cBScroll.on('pullingUp', () => {
+        console.log("pullingUp-上拉加载更多");
+
+        if(!allDataLoad) {
+          getFavorites(true);
+        }
+      })
+      getFavorites(false);
+
+        self.setStyle({
+            titleNView: {
+              // favorites-ico , bgTop ， bgTopClear
+                backgroundImage: "../../../img/bgTopClear.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '70',
+                    fontSize: '17',
+                    text: '',
+                    onclick: function() {
+                        // if (isShow) {
+                        //     isShow = false;
+                        //    // $("#home-item").show();
+                        //     mask.show()
+                        // } else {
+                        //     isShow = true;
+                        //    // $('#home-item').hide();
+                        //     mask.close();
+                        // }
+                    }
+                }],
+            }
+        });
+      // backInspection
+      window.addEventListener('refreshNotiCollectionList', function(e) { //执行刷新
+         console.log("明细返回，刷新收藏列表");
+        location.reload();
+        // getDirectories('river',riverPageNo,riverPageSize);
+
+        // mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        // mui('#contentList').scroll().scrollTo(0, 0, 0);
+      });
+    });
+
+    // 点击收藏
+   // mui("#noti-ul").on('tap','.star-collection',function(event){
+
+    //  event.stopPropagation();
+     // favoriteOCL(event);
+
+        // var imgObj = event.target;
+        // if(imgObj.alt == 1) {
+        //     imgObj.alt = 0;
+        // }else{
+        //     imgObj.alt = 1;
+        // }
+        // mask.show();
+        // if(imgObj.alt == 1) {
+        //   imgObj.src = "../../../img/starSelected.png"
+        //   addCoverView("../../../img/star-collected.png", "已移入收藏夹")
+        // }else{
+        //     imgObj.src = "../../../img/starNormal.png"
+        //     addCoverView("../../../img/star-collected-cancel.png", "已移出收藏夹")
+        // }
+        // setTimeout(function() {
+        //     mask.close();
+        // }, 1700);
+    //})
+    // 点击收藏扩大区域 favorite-area
+    mui("#noti-ul").on('tap','.favorite-area',function(event){
+      event.stopPropagation();
+      var guid = this.getAttribute("id");
+      favoriteOCL(event, guid);
+
+    })
+    // 收藏
+    function favoriteOCL(event, guid) {
+      var imgObj = event.target;
+
+      //console.log("点击收藏 ：" + guid);
+
+      // console.log('点击收藏扩大区域');
+      if(imgObj.alt == undefined || imgObj.alt == null) {
+        imgObj = imgObj.nextElementSibling.lastElementChild
+      }
+      if(imgObj != null) {
+        // 是否收藏 ，1 是 ，0否；-- 接口是反的
+        if(imgObj.alt == 1) {
+          // 当前是收藏状态 , 操作是：取消收藏
+          imgObj.alt = 0;
+          let param = {
+            guids: guid, //来源id，也就是对应的通知guid
+          }
+// {"success":true,"message":"删除成功！","result":null,"timestamp":1617869709952,"code":200}
+          console.log("点击取消收藏 ==== ");
+          deleteFavorites(param, 2, function(data) {
+            console.log("deleteFavorites 返回数据 ")
+            console.log(data)
+            if (data.success) {
+              // {"success":true,"message":"添加成功！","result":null,"timestamp":1617867745604,"code":200}
+              //app.toast("通告公告收藏成功")
+              mask.show();
+              if(imgObj.alt == 1) {
+                imgObj.src = "../../../img/starSelected.png"
+                addCoverView("../../../img/star-collected.png", "已移入收藏夹")
+              }else{
+                imgObj.src = "../../../img/starNormal.png"
+                addCoverView("../../../img/star-collected-cancel.png", "已移出收藏夹")
+              }
+              // 重新拉取数据
+              getFavorites(false);
+              setTimeout(function() {
+                mask.close();
+              }, 1700);
+            } else {
+              // app.toast("通告公告收藏失败")
+            }
+          });
+
+
+        }else{
+          // 当前是没有收藏 , 操作是：收藏
+          imgObj.alt = 1;
+          console.log("点击收藏 ==== ");
+          let param = {
+            resourceId: guid, //来源id，也就是对应的通知guid
+            resourceType: 1, // 来源类型，字典GGFW_RESOURCE_TYPE，目前只有【通知公告 = 1】
+            personUsername: app.userInfo().username // 当前登录账户名，英文的那个
+          }
+
+          addNotificationFavorites(param, function(data) {
+            console.log("addNotificationFavorites 返回数据 ")
+            console.log(data)
+            if (data.success) {
+              // {"success":true,"message":"添加成功！","result":null,"timestamp":1617867745604,"code":200}
+              //app.toast("通告公告收藏成功")
+              mask.show();
+              if(imgObj.alt == 1) {
+                imgObj.src = "../../../img/starSelected.png"
+                addCoverView("../../../img/star-collected.png", "已移入收藏夹")
+              }else{
+                imgObj.src = "../../../img/starNormal.png"
+                addCoverView("../../../img/star-collected-cancel.png", "已移出收藏夹")
+              }
+
+              // 重新拉取数据
+              getFavorites(false);
+
+              setTimeout(function() {
+                mask.close();
+              }, 1700);
+            } else {
+              // app.toast("通告公告收藏失败")
+            }
+          });
+        }
+        // 提交服务器
+
+
+
+
+        // let paramTest = {
+        //   resourceId: "31b356b6afb3af0886292bbb4fbf0f40",
+        //   resourceType: 1,
+        //   personUsername: "cwh01"
+        // }
+        // var parStr = JSON.stringify(param);
+        // console.log("收藏参数：" + JSON.parse(parStr));
+
+
+      }
+    }
+
+    var addCoverView = function(collImg, showTip) {
+        // 先清空
+        $(".mui-backdrop").empty();
+        var html = '<div class="" style="color:white">' +
+            '		<img  src="'+ collImg + '"  style="width: 41px;height: 39px;" />' +
+            '		<div style="font-size: 18px;margin-top: 20px;">"'+showTip+'"</div>' +
+            '	</div>';
+        $(".mui-backdrop").append(html);
+    }
+    // 点击跳转到 通知公告详情
+    mui("#noti-ul").on('tap','.mui-table-view-cell',function(){
+      //获取id
+      var id = this.getAttribute("id");
+      console.log("点击item ：" + id);
+      // 跳转详情页
+      var recordInfo = {
+        // opera:"add",
+        nid: id
+      };
+      app.openPage("notificationDetail.html", {
+        titleNView: {
+          titleText: "通知公告详情",
+          autoBackButton: true,
+        }
+      }, recordInfo);
+
+
+     // app.toast("记录新增")
+
+      //传值给详情页面，通知加载新数据
+      // mui.fire(detail,'getDetail',{id:id});
+      // //打开新闻详情
+      // mui.openWindow({
+      //   id:'detail',
+      //   url:'detail.html'
+      // });
+    })
+
+    // methods
+    var initDestoryData = function(data, callback){
+        for(let key in data){
+            if(data[key] == '' || data[key] == null){
+                data[key] = '暂无'
+            }
+        }
+        callback(data);
+    }
+
+    // 通知公告列表
+    function getFavorites(append){
+      if(!append) {
+        param.pageNo = 1;
+      }
+      param.personUsername = app.userInfo().username;
+
+      console.log("进入function getFavorites")
+      getFavoritesList(param, function(data) {
+        //console.log("getFavoritesList 返回数据 ")
+        console.log(data)
+        if (data.success) {
+            addData(data.result.records,append)
+          // <!-- 分页4 -->
+          // 判断数据是否加载完
+         // console.log("data.result.records.length:" + data.result.records.length)
+         // console.log("param.pageSize:" + param.pageSize);
+
+          if(data.result.records.length < param.pageSize) {
+            allDataLoad = true;
+          }else{
+            allDataLoad = false;
+          }
+        } else {
+            app.toast("通告公告列表查询失败")
+        }
+        // <!-- 分页5 -->
+        cBScroll.finishPullUp()
+        cBScroll.refresh()
+
+      });
+        // var projectInfo = JSON.parse(localStorage.getItem("projectInfo"))
+        // dailyParams.treeChosenKey = projectInfo.prjId;
+        // dailyParams.parentId = projectInfo.prjType;
+        // dailyParams.key = projectInfo.prjId;
+        // queryDailyCheck(dailyParams, function(data) {
+        //     // console.log(JSON.stringify(dailyParams))
+        //     if (data.success) {
+        //         addDailyData(data.result.records);
+        //     } else {
+        //         app.toast("日常巡检列表查询失败")
+        //     }
+        // });
+    }
+
+    function addData(data,append){
+        //console.log(JSON.stringify(data));
+      if(data == null || data.length < 1) {
+        $("#notificationItem").html("<div class=\"no-data\">暂无数据</div>");
+        return;
+      }
+        var li = "";
+        for (let i = 0; i < data.length; i++) {
+
+          var item = data[i];
+
+          var imgStr = ''
+          if (item.isFavorites == 1) { // 接口返回是反的，否收藏,0是 ；1否
+            imgStr = '<img class="star-collection" alt="0" src="../../../img/starNormal.png" width="17" height="17">'
+          }else{
+            imgStr = '<img class="star-collection" alt="1" src="../../../img/starSelected.png" width="17" height="17">'
+          }
+          var favoriteArea = '<div id="'+item.guid+'" class="favorite-area" style="width: 44px; height: 44px; position: absolute; right: 5px;top: 5px;background-color: transparent;"></div>'
+
+          li = li+'<li class="mui-table-view-cell" id="'+item.resourceId+'" style="">'+
+                '<div class="list-item">'+ favoriteArea +
+                '<div class="item-first">'+
+                '<div style="flex: 1" class="mui-ellipsis">'+
+                item.caseTitle+
+                '</div>'+ imgStr+ '</div>'+
+                '<div class="mui-ellipsis">'+'来源：'+item.caseSource+
+            '</div>'+
+            '<div class="mui-ellipsis">'+'发布时间：'+item.caseReleaseTime+
+            '</div>'+
+            '</div>'+
+            '</li>'
+        }
+        param.pageNo++;
+        if (append){
+            $("#notificationItem").append(li);
+        } else {
+            $("#notificationItem").html(li);
+        }
+    }
+
+
+    // JQ
+    $('#search_input1').change(function(){
+        if( $('#search_input1').val().trim() != ''){
+            $("#del_icon1").show();
+            param.caseTitleSource = $('#search_input1').val().trim();
+            // fuzzySearch(riverPageNo, riverPageSize, $('#search_input1').val(), 1, function(data) {
+            //     searchRiver = data.result.records;
+            //     initRiver();
+            //     $("#whichRiver").hide();
+            //     $("#streetDetail").hide();
+            //     $("#viewMore").hide();
+            //     $("#riverOption").css("color","#888888")
+            // })
+        }else{
+            // app.toast("检索内容为空！")
+          param.caseTitleSource = "";
+          $('#del_icon1').hide();
+        }
+        getFavorites(false);
+    })
+
+    $('#search_input2').change(function(){
+        if( $('#search_input2').val() != ''){
+            $("#del_icon2").show();
+            fuzzySearch(lakePageNo, lakePageSize, $('#search_input2').val(), 2, function(data) {
+                searchLake = data.result.records;
+                initLake();
+                $("#whichLake").hide();
+                $("#streetLakeDetail").hide();
+                $("#viewLakeMore").hide();
+                $("#lakeOption").css("color","#888888")
+            })
+        }else{
+            app.toast("检索内容为空！")
+            $('#del_icon2').hide();
+        }
+    })
+
+    $('#search_input3').change(function(){
+        if( $('#search_input3').val() != ''){
+            $("#del_icon3").show();
+            fuzzySearch(lakePageNo, lakePageSize, $('#search_input3').val(), 2, function(data) {
+                searchLake = data.result.records;
+                initLake();
+                $("#whichLake").hide();
+                $("#streetLakeDetail").hide();
+                $("#viewLakeMore").hide();
+                $("#lakeOption").css("color","#888888")
+            })
+        }else{
+            app.toast("检索内容为空！")
+            $('#del_icon3').hide();
+        }
+    })
+
+    $('#search_input1').on('input',function(){
+        if($("#search_input1").val().trim() != ''){
+            $("#del_icon1").show();
+        }else{
+            $("#del_icon1").hide();
+        }
+    })
+
+    $('#search_input2').on('input',function(){
+        if($("#search_input2").val() != ''){
+            $("#del_icon2").show();
+        }else{
+            $("#del_icon2").hide();
+        }
+    })
+
+    $('#search_input3').on('input',function(){
+        if($("#search_input3").val() != ''){
+            $("#del_icon3").show();
+        }else{
+            $("#del_icon3").hide();
+        }
+    })
+
+    $("#del_icon1").on('tap', function(){
+        $('#search_input1').val('');
+        $("#del_icon1").hide();
+        // app.toast("检索内容为空！")
+      param.caseTitleSource = ""
+      getFavorites(false);
+    })
+
+    $("#del_icon2").on('tap', function(){
+        $('#search_input2').val('');
+        $("#del_icon2").hide();
+        app.toast("检索内容为空！")
+    })
+
+    $("#del_icon3").on('tap', function(){
+        $('#search_input3').val('');
+        $("#del_icon3").hide();
+        app.toast("检索内容为空！")
+    })
+
+    $('#item1').on('tap', function() {
+        // getDirectories('river',riverPageNo,riverPageSize);
+        input2.blur();
+        input3.blur();
+    })
+
+    $('#item2').on('tap', function() {
+        // getDirectories('lake',lakePageNo,lakePageSize);
+        input1.blur();
+        input3.blur();
+    })
+    $('#item3').on('tap', function() {
+        // getDirectories('lake',lakePageNo,lakePageSize);
+        input1.blur();
+        input2.blur();
+    })
+
+
+    $('#viewMore').on('tap', function() {
+        isOpen = !isOpen;
+        if (isOpen) {
+            $('#streetDetail').show();
+            $('#viewMoreText').text("收起")
+            $('#river_arrow_down').css("transform","rotate(180deg)")
+        } else {
+            $('#streetDetail').hide();
+            $('#viewMoreText').text("查看更多")
+            $('#river_arrow_down').css("transform","rotate(0)")
+        }
+    })
+
+    $('#viewLakeMore').on('tap', function() {
+        isLakeOpen = !isLakeOpen;
+        if (isLakeOpen) {
+            $('#streetLakeDetail').show();
+            $('#viewLakeMoreText').text("收起")
+            $('#lake_arrow_down').css("transform","rotate(180deg)")
+        } else {
+            $('#streetLakeDetail').hide();
+            $('#viewLakeMoreText').text("查看更多")
+            $('#lake_arrow_down').css("transform","rotate(0)")
+        }
+    })
+
+    $("#missionUncompleted").on('tap', function() {
+        isShow = true;
+        $('#home-item').hide();
+        mask.close();
+    })
+
+    $("#notification").on('tap', function() {
+        app.openPage('', {
+            titleNView: {
+                titleText: '通知公告',
+                autoBackButton: true
+            }
+        },extras);
+    })
+
+    $("#paishui").on('tap', function() {
+        app.openPage('', {
+            titleNView: {
+                titleText: '通讯录',
+                autoBackButton: true
+            }
+        },extras);
+    })
+
+    $('#riverSelect').on('tap', function(){
+
+        if($(".mui-poppicker").hasClass("mui-active")){
+            userPicker.hide();
+            return false;
+        }else{
+            userPicker.setData(riverResultJSON);
+            userPicker.show(function(items) {
+                if(items[0].value !== null){
+                    // getRiver(items[0].value);
+                    $('#loadTips1').hide();
+                    $('#whichRiver').show();
+                }
+            })
+        }
+
+
+    })
+
+    $('#lakeSelect').on('tap', function(){
+        if($(".mui-poppicker").hasClass("mui-active")){
+            userPicker.hide();
+            return false;
+        }else{
+            userPicker.setData(lakeResultJSON);
+            userPicker.show(function(items) {
+                if(items[0].value !== null){
+                    console.log(items[0].value)
+                    // getLake(items[0].value);
+                    $('#loadTips2').hide();
+                    $('#whichLake').show();
+                }
+            })
+        }
+    })
+
+    //关闭遮罩层
+    $(document).on("click", ".mui-backdrop", function() {
+        isShow = true;
+        $('#home-item').hide();
+        mask.close();
+    })
+
+    window.addEventListener('backInspection', function(e) { //执行刷新
+        // location.reload();
+        // getDirectories('river',riverPageNo,riverPageSize);
+        mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        mui('#contentList').scroll().scrollTo(0, 0, 0);
+    });
+
+    (function($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+    })(mui);
+    // $('.mui-scroll-wrapper').scroll( function(ev){
+    // 	var oEvent = ev || event;
+    // 	oEvent.stopImmediatePropagation();
+    // });
+
+  // 测试区域
+    function addDataTmp(){
+      var li = "";
+      for (let i = 0; i < 10; i++) {
+        //var item = data[i];
+        var imgStr = '<img class="star-collection" alt="0" src="../../../img/starNormal.png" width="17" height="17">'
+        if (i % 2 == 1) {
+          imgStr = '<img class="star-collection" alt="1" src="../../../img/starSelected.png" width="17" height="17">'
+        }
+        //扩大收藏图片的点击范围 ，图片的点击事件不处理
+        var favoriteArea = '<div id="'+i+'" class="favorite-area" style="width: 44px; height: 44px; position: absolute; right: 5px;top: 5px;background-color: transparent;"></div>'
+        li = li+'<li class="mui-table-view-cell" id="'+"item.resourceId"+'" style="">'+
+                '<div class="list-item">'+ favoriteArea +
+                '<div class="item-first">'+
+                '<div style="flex: 1" class="mui-ellipsis">'+
+                "item.caseTitle"+
+                '</div>'+ imgStr+ '</div>'+
+                '<div class="mui-ellipsis">'+'来源：'+"item.caseSource"+
+                '</div>'+
+                '<div class="mui-ellipsis">'+'发布时间：'+"item.caseReleaseTime"+
+                '</div>'+
+                '</div>'+
+                '</li>'
+      }
+
+      $("#notificationItem").append(li);
+
+    }
+
+    if(isTest) {
+      addDataTmp();
+    }
+   //
+
+</script>
+
+</html>

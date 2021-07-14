@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-新增现场检查纪录-整改落实情况</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 90%;
+			margin-left: 5%;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<!-- <div class="item" id="hold">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">暂存</div>
+			</div> -->
+			<div class="item" id="submit">
+				<div style="background: #337BFC;color: #fff">提交</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<div style="position:fixed;top:0;left:0;z-index: 99;width:100%;background: #ffffff;">
+				<ol class="steps">
+					<li class="step-active">
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">项目基本...</div>
+						</div>
+					</li>
+					<li class="step-active">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">水土保持措...</div>
+						</div>
+					</li>
+					<li class="step-active">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">整改情况...</div>
+						</div>
+					</li>
+				</ol>
+				<div style="height: 5px;background: #F4F4F4;"></div>
+			</div>
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper" style="margin-top: 90px;margin-bottom: 100px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title">
+								整改落实情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										上次检查整改要求
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="lastCheckRequired"  type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="不超过200字" maxlength="201" onkeyup="format_input('上次检查整改要求',200,this)"  style="width:90%">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border: none;">
+									<div class="item-title">
+										整改落实情况
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="rectifySituation"  type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="不超过300字" maxlength="301" onkeyup="format_input('整改落实情况',300,this)" style="width:90%">
+									</div>
+								</div>																																							
+							</div>
+						</div>
+						<div class="scroll-li">
+							<div class="bar-title">
+								其他情况
+							</div>
+							<div class="info-bar-content">							
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否存在深填高挖边坡
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有</label>
+											<input name="isExistDfhcs" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无</label>
+											<input name="isExistDfhcs" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="display: none;"  id="detail">
+									<div class="item-title">
+										深填高挖边坡具体情况
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="deepFillHighCutSlope" type="text" class="mui-input-clear inputCss" value="" style="width: 90%;"
+										 placeholder="请输入深填高挖边坡具体情况"  maxlength="31" onkeyup="format_input('深填高挖边坡具体情况',30,this)" >
+									</div>
+								</div>										
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否告知建设单位
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">是</label>
+											<input name="isToldDfhcs" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">否</label>
+											<input name="isToldDfhcs" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>									
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否存在堆土
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有</label>
+											<input name="isExistSoil" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无</label>
+											<input name="isExistSoil" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="display: none;"  id="detail2">
+									<div class="item-title">
+										堆土具体情况
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="soilSituation"  type="text" class="mui-input-clear inputCss" value="" style="width: 90%;"
+										 placeholder="请输入堆土具体情况"  maxlength="31" onkeyup="format_input('堆土具体情况',30,this)" >
+									</div>
+								</div>		
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否告知建设单位
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">是</label>
+											<input name="isToldSoil" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">否</label>
+											<input name="isToldSoil" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>																											
+								<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水土流失隐患等级<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="soilErosionLevel" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="soilErosionLevel_text" readonly="true" required="true" type="text" value=""
+										 placeholder="请选择水土流失隐患等级" class="inputCss" style="width:90%">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水土流失隐患风险等级<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="soilErosionRiskLevel" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="soilErosionRiskLevel_text" type="text" required="true" maxlength="10" readonly="true" class="inputCss"
+										 placeholder="请选择水土流失隐患风险等级" style="width:90%">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水土流失隐患及危害具体评价
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="soilErosionHarm"  type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="不超过500字" maxlength="500" onkeyup="format_input('水土流失隐患及危害具体评价',500,this)" style="width:90%">
+									</div>
+								</div>		
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										整改要求<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="rectifyRequired" required="true" type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请输入整改要求" maxlength="200" onkeyup="format_input('整改要求',200,this)" style="width:90%">
+									</div>
+								</div>	
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										当前状态
+									</div>
+									<input id="conservationStatus" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="conservationStatus_text" name="conservationStatus_text" readonly type="text" class="inputCss"
+										 placeholder="请选择当前状态" style="width:90%">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="display: none;" id="selComDate">
+									<div class="item-title">
+										要求完成日期<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="comDate" class="inputCss" readonly="true" required="true" type="text" class="mui-input-clear"
+										 placeholder="请选择要求完成日期" style="width: 90%;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>		
+							</div>
+						</div>
+					</div>						
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/mixed.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var self;
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var opt = "add"; //操作类型
+		var id = "";
+		var flag = false;
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			//界面元素控制
+			initView();
+			initDownSelect();
+			// 初始化选项框状态
+			initCheckBox();
+
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { ;
+					$("#scroll-content").css("margin", "0")
+					$("#bottom-item-btn").hide()
+				} else {
+					$("#scroll-content").css("margin-bottom", "100px")
+					$("#bottom-item-btn").show()
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			self = plus.webview.currentWebview();
+
+			$("#conservationStatus").val('1');
+			$("#conservationStatus_text").val('整改中');
+			//控制input显示，只有选择存在深填高挖边坡时才显示具体情况
+			$("input[name='isExistDfhcs']").change(function() {
+				var value = $(this).val();
+				if ((value == 1) && $(this).is(':checked')) {
+					$("#detail").show();
+				} else {
+					$("#detail").hide();
+				}
+			});
+			
+			//控制input显示，只有选择是否存在堆土时才显示具体情况
+			$("input[name='isExistSoil']").change(function() {
+				var value = $(this).val();
+				if ((value == 1) && $(this).is(':checked')) {
+					$("#detail2").show();
+				} else {
+					$("#detail2").hide();
+				}
+			});			
+
+
+			//默认填写
+			$("#surveyPerson_text").val(app.userInfo().realname);
+
+			//日期选择
+			$("#surveyDate").on("tap", function() {
+				var that = $(this);
+
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					that.val(d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2))
+				}, function(e) {
+					that.val("");
+				}, {
+					title: "请选择日期"
+				});
+				plusDate(function(data) {
+					that.val(data)
+				}, 1);
+			})
+			
+			//日期选择
+			$("#comDate").on("tap", function() {
+				var that = $(this);
+				plusDate(function(data) {
+					that.val(data);
+				}, 2);
+			})
+		}
+
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".info-bar-content-item").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if ($(this).is(':checked')) {
+						$(this).parent().siblings().find(":checkbox").each(function() {
+							$(this).prop("checked",false)
+						});
+					}
+				});
+			});
+		}
+		function showData(){
+			var sceneDataStr = JSON.parse(localStorage.getItem("sceneData"));
+			if (sceneDataStr != null) {
+			$('#lastCheckRequired').val(sceneDataStr.lastCheckRequired);//上次检查整改要求
+			$('#rectifySituation').val(sceneDataStr.rectifySituation);//整改落实情况
+			if (sceneDataStr.isExistDfhcs == '1') {
+				$("input[name='isExistDfhcs'][value=1]").prop("checked", true); //截排水沟是否存在淤积或损毁
+				$("input[name='isExistDfhcs'][value=0]").prop("checked", false);
+				$("#detail").show();
+				$('#deepFillHighCutSlope').val(sceneDataStr.deepFillHighCutSlope);//深填高挖边坡具体情况
+			}else if(sceneDataStr.isExistDfhcs == '0') {
+				$("input[name='isExistDfhcs'][value=1]").prop("checked", false); //截排水沟是否存在淤积或损毁
+				$("input[name='isExistDfhcs'][value=0]").prop("checked", true);
+				$("#detail").hide();
+			}
+			if (sceneDataStr.isToldDfhcs == '1') {
+				$("input[name='isToldDfhcs'][value=1]").prop("checked", true); //是否告知建设单位（深填高挖边坡）
+				$("input[name='isToldDfhcs'][value=0]").prop("checked", false);
+			}else if (sceneDataStr.isToldDfhcs == '0') {
+				$("input[name='isToldDfhcs'][value=1]").prop("checked", false); //是否告知建设单位（深填高挖边坡）
+				$("input[name='isToldDfhcs'][value=0]").prop("checked", true);
+			}
+			
+			if (sceneDataStr.isExistSoil == '1') {
+				$("input[name='isExistSoil'][value=1]").prop("checked", true);//是否存在堆土
+				$("input[name='isExistSoil'][value=0]").prop("checked", false);
+				$("#detail2").show();
+				$('#soilSituation').val(sceneDataStr.soilSituation);//存在堆土具体情况		
+			}else if (sceneDataStr.isExistSoil == '0') {
+				$("input[name='isExistSoil'][value=1]").prop("checked", false);//是否存在堆土
+				$("input[name='isExistSoil'][value=0]").prop("checked", true);
+				$("#detail2").hide();
+			}
+			if (sceneDataStr.isToldSoil == '1') {
+				$("input[name='isToldSoil'][value=1]").prop("checked", true); //是否告知建设单位（堆土）
+				$("input[name='isToldSoil'][value=0]").prop("checked", false);
+			}else if (sceneDataStr.isToldSoil == '0') {
+				$("input[name='isToldSoil'][value=1]").prop("checked", false); //是否告知建设单位（堆土）
+				$("input[name='isToldSoil'][value=0]").prop("checked", true);
+			}					
+			}
+		}
+	
+	// 点击事件
+	var initDownSelect = function() {
+	
+		//水土流失隐患等级
+		$("#soilErosionLevel_text").on("tap", function() {
+			var that = $(this);
+			// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+			getDictItems('soil_erosion_level', function(data) {
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					return;
+				}
+				var resultJSON = [];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+				//普通示例
+				// var userPicker = new mui.PopPicker();
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {
+						$("#soilErosionLevel").val(items[0].value);
+						$("#soilErosionLevel_text").val(items[0].text);
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}
+			})
+		})
+	
+		//水土流失隐患风险等级
+		$("#soilErosionRiskLevel_text").on("tap", function() {
+			var that = $(this);
+			// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+			getDictItems('soil_erosion_risk_level', function(data) {
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					return;
+				}
+				var resultJSON = [];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+				//普通示例
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {
+						$("#soilErosionRiskLevel").val(items[0].value);
+						$("#soilErosionRiskLevel_text").val(items[0].text);
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}
+			})
+		})
+	
+		//当前状态
+		$("#conservationStatus_text").on("tap", function() {
+			var that = $(this);
+			// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+			getDictItems('conservation_status_min', function(data) {
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					return;
+				}
+				var resultJSON = [];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+				//普通示例
+				// var userPicker = new mui.PopPicker();
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {
+						$("#conservationStatus").val(items[0].value);
+						$("#conservationStatus_text").val(items[0].text);
+						if(items[0].value == 1){
+							$("#selComDate").show();
+						}else{
+							$("#comDate").val('');
+							$("#selComDate").hide();
+						}
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}
+			})
+		})
+	}
+	
+		
+		//暂存
+		$("#hold").on("tap", function(event) {
+			saveScene();
+			app.toast("暂存成功")
+			mui.fire( plus.webview.getWebviewById('proDetail.html') ,'reload1');
+			popToTarget('proDetail.html');	
+		});
+		//下一步
+		$("#submit").on("tap", function(event) {
+			if (validateRequiredFields()) {
+					saveScene();
+					var sceneData = JSON.parse(localStorage.getItem("sceneData"));
+					var sceneAttachment = JSON.parse(localStorage.getItem("sceneAttachment"));
+			
+					addScene(sceneData, sceneAttachment, function(data) {						
+						app.toast("新增成功");
+						clearGlobalItem();
+						localStorage.removeItem("sceneData")
+						localStorage.removeItem("sceneAttachment")
+						console.log(plus.webview.getWebviewById('proDetail.html'))
+						mui.fire( plus.webview.getWebviewById('proDetail.html') ,'reload1');
+						// popToTarget('proDetail.html');	
+						// console.log(JSON.stringify(data))
+						app.openPage("./submitted.html", {
+							titleNView: {
+								titleText: '新增现场检查纪录',
+								autoBackButton: true
+							}
+						},{projectId: self.projectId,
+							guid: data.result.guid});											
+					});
+			}				
+		});
+
+		//组装表单
+		function saveScene() {
+			var sceneDataStr = JSON.parse(localStorage.getItem("sceneData"));
+			var groupId = getGroupId();
+			var sceneAttachmentStr = [{
+				groupId: groupId,
+				fileTokens: '',
+				fieldName: "signatureReturn",
+				tableName: "ws_conservation_supervise"
+			}]
+			sceneDataStr.soilErosionLevel =  $('#soilErosionLevel').val();//水土流失隐患等级
+			sceneDataStr.soilErosionRiskLevel =  $('#soilErosionRiskLevel').val();//水土流失隐患风险等级
+			sceneDataStr.soilErosionHarm =  $('#soilErosionHarm').val();//水土流失隐患及危害具体评价
+			sceneDataStr.conservationStatus =  $('#conservationStatus').val();//当前状态
+			sceneDataStr.rectifyRequired =  $('#rectifyRequired').val();//整改要求	
+			sceneDataStr.comDate =  $('#comDate').val();//要求完成日期
+			sceneDataStr.create_by =  $('#create_by').val();//填写人
+			sceneDataStr.phonenum =  $('#phonenum').val();//联系方式
+			sceneDataStr.inputDepart =  $('#inputDepart').val();//填写部门
+			sceneDataStr.createTime =  $('#createTime').val();//填写时间
+			sceneDataStr.signatureReturn = groupId,//现场检查记录文件groupId	
+			
+			sceneDataStr.lastCheckRequired = $('#lastCheckRequired').val();//上次检查整改要求
+			sceneDataStr.rectifySituation = $('#rectifySituation').val();//整改落实情况
+			sceneDataStr.isExistDfhcs = $("input[name='isExistDfhcs']:checked").val();//是否存在深填高挖边坡
+			sceneDataStr.deepFillHighCutSlope = $('#deepFillHighCutSlope').val();////深填高挖边坡具体情况
+			sceneDataStr.isToldDfhcs = $("input[name='isToldDfhcs']:checked").val();//是否告知建设单位（深填高挖边坡）
+			sceneDataStr.isExistSoil = $("input[name='isExistSoil']:checked").val();//是否存在堆土
+			sceneDataStr.isToldSoil = $("input[name='isToldSoil']:checked").val();//是否告知建设单位（堆土）
+			sceneDataStr.soilSituation = $('#soilSituation').val();//存在堆土具体情况				
+		
+			localStorage.setItem("sceneAttachment", JSON.stringify(sceneAttachmentStr));
+			localStorage.setItem("sceneData", JSON.stringify(sceneDataStr));
+			console.log(JSON.stringify(localStorage.getItem("sceneData")));
+			return true;
+		}
+
+		//生成groupId
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+		
+		// 对Date的扩展，将 Date 转化为指定格式的String
+		// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+		// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+		// 例子：
+		// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+		// (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+		function format_input(type,num,obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+
+			if (obj.value.length >= num) {
+				obj.value = obj.value.slice(0,num);
+				// obj.focus();				
+				app.toast(type + "不可大于"+num+"个字！")
+			}
+		}
+	</script>
+
+</html>

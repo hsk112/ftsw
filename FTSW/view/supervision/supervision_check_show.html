@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>抽查</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+		.mui-icon-arrowright{
+			color:#62666E;
+			font-weight: 100 !important;
+		}
+		.inputCss{
+			font-size: 16px;
+			font-weight: 400;
+			color: #1A1616;
+			height: 30px;
+		}
+		.checkBoxCss{
+			font-size: 16px;
+			font-weight: 400;
+			color: #000000;
+		}
+		.img_item{
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			float: left;
+			margin-right: 20px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+		}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 95%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+	
+		.in-obj {
+			color: #888;
+			font-weight: 400;
+		}
+		
+		.obj-title {
+			font-weight: 400;
+			color: #444444;
+		}
+		.object {
+			display: flex;
+			justify-content: space-between;
+			margin: 8px 0;
+			color: #444444;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item" id="prev" style="width: 50%;">
+				<div style="color:#337BFC ;border:1px solid #337BFC;" >返回</div>
+			</div>
+			<div class="item" id="next" style="width: 50%;">
+				<div style="background: #337BFC;color: #fff">下一个</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div id="mui-scroll" class="mui-scroll">
+						<div class="scroll-li" style="padding-bottom: 20px;">
+							<div style="background: #F4F4F4;">
+								<div class="mui-collapse-content li-item-pull" id="object">
+									<div>
+										<div id="objHeader" style="padding: 0 18px;background: #ffffff;border-bottom: 5px solid #F4F4F4;">
+											<div class="object" id="toTop" tabindex="1">
+												<div><span class="in-obj">巡检对象：</span><span class="obj-title" id="objName">加载中</span></div>
+												<div class="type-inspection"><img id="objState" src="../../img/commom/ywc.png" alt=""></div>
+											</div>
+											<div class="object" style="text-align:left;">
+												<div style="width:100%;">
+													<span class="in-obj">巡检设施：</span>
+													<div class="obj-title" style="width:70%;display:inline-block;vertical-align:top;" id="obj">污水检查井</div>
+												</div>
+											</div>
+											<div class="object">
+												<div>
+													<span class="in-obj">截止时间：</span>
+													<span class="obj-title" style="text-align:left;" id="endDate">加载中</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="info-bar-content">
+								<div class="info-bar-content-item isShow" id="checkBoxShow2">
+									<div class="item-title">
+										有无缺陷
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无缺陷</label>
+											<input name="isHaveDefects" value="0" type="checkbox" disabled="disabled">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有缺陷</label>
+											<input name="isHaveDefects" value="1" type="checkbox" disabled="disabled">
+										</div>
+									</div>
+								</div>
+								<!-- 								<div class="info-bar-content-item isShow hasBug">
+									<div class="item-title">
+										缺陷来源
+									</div>
+									<input id="bugSource" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="bugSource_text" readonly="readonly" required="true" type="text" class="mui-input-clear" value=""
+										 placeholder="请选择缺陷来源" class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div> -->
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										设施类型
+									</div>
+									<input id="objType" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="objectType_text" readonly="readonly" required="true" type="text"  value=""
+										 placeholder="请选择设施类型" class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										所在片区
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="objectName_text" readonly="readonly" required="true" type="text" value="福田街道办" placeholder="请选择所在片区"
+										 class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										设施编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="deviceNo" readonly="readonly" required="true" type="text" value="31225522" placeholder="请选择设施编号"
+										 class="inputCss" style="width:90%;">						
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										所在地点
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="address" type="text" required="true" value="" placeholder="请输入所在地点" class="inputCss">							
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow hasBug" style="height: 150px;">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										<span>抽查情况</span>								
+										<span id="error9" class="err-show" style="color: red;float: right;display:none">已经是最大长度</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<textarea id="checkResult" rows="3" class="mui-input-clear inputCss" style="height: 80px;" placeholder="请输入抽查情况"
+										  maxlength="200"></textarea>
+									</div>
+								</div>
+								<div class="info-bar-content-item noBug" id="showPhoto" style="height: 100px;">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										整体图片									
+									</div>
+									<input id="inputAllImage" type="hidden" value="" />
+									<div class="psh_img_list2" id="psh_img_list2">
+										<div style="text-align: left;margin-top: 20px;">无</div>
+									</div>
+							<!-- 		<div id="photo2" class="img_item">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+									</div> -->
+								</div>
+								<div class="info-bar-content-item noBug" id="showPhoto2" style="height: 100px;">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										局部图片								
+									</div>
+									<input id="inputLocalImage" type="hidden" value="" />
+									<div class="psh_img_list3" id="psh_img_list3">
+										<div style="text-align: left;margin-top: 20px;">无</div>
+									</div>
+							<!-- 		<div id="photo3" class="img_item" style="display: none;">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+									</div> -->
+								</div>
+								<div class="info-bar-content-item noBug" id="showPhoto3" style="height: 100px;">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										关键部位										
+									</div>
+									<input id="inputKeyImage" type="hidden" value="" />
+									<div class="psh_img_list4" id="psh_img_list4">
+										<div style="text-align: left;margin-top: 20px;">无</div>
+									</div>
+						<!-- 			<div id="photo4" class="img_item" style="display: none;">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+									</div> -->
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputById" type="text" style="display: none;">
+										<input id="inputByName" type="text" readonly placeholder="请输入填写人" class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填报时间
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputTime" type="text" readonly placeholder="请输入填报时间" class="inputCss">
+									</div>
+								</div>
+								<input type="text" name="strAttachment" id="strAttachment" value="" style="display: none;" />
+								<div id="bottom-div" style="height: 100px;"></div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!--拍照须知-->
+			<div id="middlePopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view" style="background: #FFFFFF;">
+							<li class="mui-table-view-cell"><a href="#">现场图片拍照须知:</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#" style="white-space:initial">1、如手机有水印功能，请开启：【设置】->【水印】</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#" style="white-space:initial">2、整体照片-排水设施总体的空间位置照片</a>
+							</li>
+							<li class="mui-table-view-cell"><a href="#" style="white-space:initial">3、关键照片-缺陷部位的特写照片</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/supervision.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({swipeBack:false});
+		var self;
+		var objType = []
+		var objList = []
+		var currObj = {}
+		var index=0;
+		var extras = {
+			objectId: "",
+			taskRecordId: "",
+			endTime: "",
+			objState: "",
+			objectName: "",
+			currObjGuid:""
+		}
+		var attachment=[{"groupId":"","fileTokens":"","fieldName":"inputAllImage","tableName":"attachment"}]
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			extras.objectId= self.objectId;
+			extras.taskRecordId= self.taskRecordId;
+			extras.endTime= self.endTime;
+			extras.objState= self.objState;
+			extras.objectName=self.objectName;
+			extras.currObjGuid=self.currObj.guid;
+			currObj=self.currObj;
+			objList=self.objList;
+			//界面元素控制
+			initView(currObj);
+			initDownSelect();
+			
+			if(objList.length == 1){
+				$("#prev").css("width","100%");
+				$("#next").hide();
+			}
+			// if (parseInt(self.objState) == 1) {	
+			// 	$("#objState").attr("src", "../../img/commom/ywc.png");
+			// } else $("#objState").attr("src", "../../img/commom/dcc.png");
+			
+			plus.webview.currentWebview().setStyle({
+				softinputMode: "adjustResize" // 弹出软键盘时自动改变webview的高度
+			});
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					plus.webview.currentWebview().setStyle({
+						height: originalHeight + 65
+					});
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function(data) {
+			// console.log("currObj:"+JSON.stringify(data))
+			$("#objName").text(data.objectName);
+			$("#objectName_text").val(data.objectName);
+			$('#deviceNo').val(data.deviceNo)
+			getDicTextByIdAndKey(data.deviceType,'ZHSW.DEVICE.INPUT_OBJECT_TYPE',function(data){
+				$("#obj").html(data);
+				$('#objectType_text').val(data);
+			})
+			$("#endDate").text(self.endTime);
+			//填写人
+			$("#inputById").val(app.userInfo().username);
+			$("#inputByName").val(app.userInfo().realname);
+			//填报时间
+			var nowDate = (new Date()).Format("yyyy-MM-dd");
+			$("#inputTime").val(nowDate)
+			
+			$("input[name='isHaveDefects']").each(function() {
+				if ($(this).val() == data.isHaveDefects) {
+					$(this).attr('checked', true);
+					
+				} else {
+					$(this).attr('checked', false);
+				}
+			});
+			$('#address').val(isEmp(data.address));
+			$('#checkResult').val(isEmp(data.checkResult))
+			//图片
+			if(!(currObj.inputAllImage == 'null' || currObj.inputAllImage == '' || currObj.inputAllImage == null)){	
+			findFilesByGroupId({
+				groupId: data.inputAllImage
+			}, function(data1) {
+				if (data1.success) {
+					// console.log(JSON.stringify(data1))
+					var htm="";
+					if(data1.result.length > 0){
+						if (data1.result.length >= 3) {
+							$("#photo2").hide();
+						}
+						
+						for (var i = 0; i < data1.result.length; i++) {
+							 htm+= '<div id="' + data1.result[i].uploadFile.id + '" data-token="' + data1.result[i].fileToken +
+								'" name="fileMixIdPaths" class="img_item" style="position:relative;">' +
+								'		<img class="img_src" src="' + config.urls.baseUrl + "sys/common/view/" + data1.result[i].uploadFile.savePath +
+								'" style="" data-preview-src="" data-preview-group="fileMixIdPaths" />' +
+								'	</div>';
+								$("#showPhoto").css("height","140px")
+							
+						}
+					}else{
+						htm +=`<div style="text-align:left">无</div>`
+						$("#showPhoto").css("height","125px")
+					}
+					$(".psh_img_list2").html(htm);
+				}
+			});
+			}
+			
+			if(!(currObj.inputLocalImage == 'null' || currObj.inputLocalImage == '' || currObj.inputLocalImage == null)){
+			findFilesByGroupId({
+				groupId: data.inputLocalImage
+			}, function(data1) {
+				if (data1.success) {
+					// console.log(JSON.stringify(data1))
+					var htm="";
+					if(data1.result.length > 0){
+						if (data1.result.length >= 3) {
+							$("#photo3").hide();
+						}
+						
+						for (var i = 0; i < data1.result.length; i++) {							
+							 htm+= '<div id="' + data1.result[i].uploadFile.id + '" data-token="' + data1.result[i].fileToken +
+								'" name="fileMixIdPaths" class="img_item" style="position:relative;">' +
+								'		<img class="img_src" src="' + config.urls.baseUrl + "sys/common/view/" + data1.result[i].uploadFile.savePath +
+								'" style="" data-preview-src="" data-preview-group="2" />' +
+								'	</div>';
+								$("#showPhoto2").css("height","140px")
+						}
+					}else{						
+						htm +=`<div style="text-align:left">无</div>`
+						$("#showPhoto2").css("height","85px")						
+						// console.log($("#showPhoto2").css("height"))
+					}
+					$(".psh_img_list3").html(htm);
+				}
+			});
+			}
+			
+			if(!(currObj.inputKeyImage == 'null' || currObj.inputKeyImage == '' || currObj.inputKeyImage == null)){
+			findFilesByGroupId({
+				groupId: data.inputKeyImage
+			}, function(data1) {
+				if (data1.success) {
+					// console.log(JSON.stringify(data1))
+					var htm="";
+					if(data1.result.length > 0){
+						if (data1.result.length >= 3) {
+							$("#photo4").hide();
+						}
+						
+						for (var i = 0; i < data1.result.length; i++) {
+							 htm+= '<div id="' + data1.result[i].uploadFile.id + '" data-token="' + data1.result[i].fileToken +
+								'" name="fileMixIdPaths" class="img_item" style="position:relative;">' +
+								'		<img class="img_src" src="' + config.urls.baseUrl + "sys/common/view/" + data1.result[i].uploadFile.savePath +
+								'" style="" data-preview-src="" data-preview-group="3" />' +
+								'	</div>';
+							$("#showPhoto3").css("height","140px")
+						}
+					}else{
+						htm +=`<div style="text-align:left">无</div>`
+						$("#showPhoto3").css("height","85px")
+					}
+					$(".psh_img_list4").html(htm);
+				}
+			});
+			}
+			
+			//如果为有缺陷设置不可编辑
+			if(data.isHaveDefects==1){
+				$('input').attr('readonly','readonly')
+				$('#photo2').hide()
+				$('textarea').attr('readonly','readonly')
+			}
+		}
+
+
+
+		// 点击事件
+		var initDownSelect = function() {
+			$(document).on('tap', '.img_src', function() {
+				mui.previewImage();
+			});
+		}
+		
+		//上一个
+		$("#prev").on("tap", function(event) {
+			if($(this).children().text()=="返回"){
+				plus.webview.currentWebview().close('none'); //关闭
+				return;
+			}
+			index--;
+			console.log("index:"+index)
+			$("#next").children().text("下一个")
+			if(index==0||index==objList.length-1){
+				console.log("第一个了")
+				$(this).children().text("返回")
+			}else{
+				$(this).children().text("上一个")
+			}
+			app.showLoaderWithMsg("正在获取上一个巡检对象，请稍后...")
+			setTimeout(function(){
+				initView(objList[index]);
+				app.hideLoader()
+				app.toast("获取成功")
+				mui('#scroll-content').scroll().scrollTo(0,0,500);
+			},1000)
+		});
+		//下一个
+		$("#next").on("tap", function(event) {
+			if($(this).children().text()=="返回"){
+				plus.webview.currentWebview().close('none'); //关闭
+				return;
+			}
+			index++;
+			console.log("index:"+index)
+			$("#prev").children().text("上一个")
+			if(index==0||index==objList.length-1){
+				console.log("最后一个了")
+				$(this).children().text("返回")
+			}else{
+				$(this).children().text("下一个")
+			}
+			app.showLoaderWithMsg("正在获取下一个巡检对象，请稍后...")
+			setTimeout(function(){
+				initView(objList[index]);
+				app.hideLoader()
+				app.toast("获取成功")
+				mui('#scroll-content').scroll().scrollTo(0, 0, 500);
+			},1000)
+			
+		});
+		
+		
+		
+		window.addEventListener('close', function(e) { //监听关闭
+			// var view = plus.webview.getWebviewById("index.html");
+			// var list = plus.webview.currentWebview().opener();
+			// mui.fire(view, 'backInspection');
+			// mui.fire(list, 'backInspection');
+			plus.webview.currentWebview().close('none'); //关闭
+		});
+	</script>
+</html>

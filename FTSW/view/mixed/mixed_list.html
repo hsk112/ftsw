@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接点列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.view-content-item {
+				height: auto;
+				margin: 0px 20px;
+			}
+
+			.view-content-item .view-title {
+				font-size: 14px;
+				color: #444444;
+				/* text-align: left; */
+				padding: 20px 0px 20px 0;
+
+			}
+
+			#label {
+				font-size: 14px;
+				font-weight: 500;
+				color: #1A1616;
+			}
+
+			#OA_task_1 .mui-table-view-cell .span4 {
+				font-size: 14px;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #FF5555;
+				margin-left: 30px;
+			}
+
+			#OA_task_1 .mui-table-view-cell .span2,.span1,.span4 {
+				font-size: 16px;
+				font-weight: 500;
+				color: #191515;
+				line-height: 24px;
+				
+				display: inline-block;
+				box-sizing: border-box;
+				overflow: scroll;
+				white-space: nowrap;
+				/* border: 1px solid red; */
+			}
+			
+			.mui-table-view-cell::-webkit-scrollbar {
+				display: none;
+			}
+			/*隐藏底部*/
+			/*.mui-pull-bottom-pocket {*/
+			/*display: none !important;*/
+			/*}*/
+		</style>
+		<!-- <link rel="stylesheet" type="text/css" href="../../css/mixed.css"/> -->
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">缺陷管理列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="ALL" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="view-content">
+								<div class="view-content-item" style="display: flex;height: 53.5px;">
+									<div id="openFactor">
+										<div class="view-title search-tip" style="display: inline-block;">
+											<img src="../../img/nearIcon.png" style="width: 16px;height: 15px;line-height: 15px;vertical-align:middle;margin-right: 10px" />
+											<span id="label" style="line-height: 16px;">附近1km内混接点共有</span>
+											<div id="num" style="line-height: 16px;margin-left:130px;color:#337BFB;font-size:12px;font-weight:bold;display: inline;float: right;">0</div>
+										</div>
+									</div>
+								</div>
+								<div style="height: 5px;background: #F3F3F3;"></div>
+								<div id="content">
+									<ul id="OA_task_1" class="mui-table-view">
+										<!-- <li class="mui-table-view-cell">
+											<div id="" style="margin: 20px 0;">
+												<span class="span1" style="margin: 0;">1</span>
+												<span class="span2" style="display:inline-block;width:100px;margin-left:10px;font-weight: 500;color: #191515;">HJD-2D312...</span>
+												<span class="span2" style="display:inline-block;width:100px;margin-left:10px;font-weight: 500;color: #191515;">格特图地点...</span>
+												<span class="span4">未改造</span>
+											</div>
+										</li> -->
+									</ul>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+	
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+
+
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/mixed.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var page = 1;//页码
+		// var pageSize=10;
+		// var sum = 0; //总数
+		// var vConsole = new VConsole();
+		mui.init({
+			// 0818 上拉加载
+			pullRefresh: {
+			    container: '#ALL', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			    //下拉刷新
+			    down: {
+			        style:'circle',
+					auto:true,
+			        callback: function(){
+			            console.log("触发刷新")
+			            page = 1;
+			            pulldownRefresh();
+			        }
+			    },
+			//     //上拉加载
+			//     up: {
+			//         auto: true, // 可选,默认false.自动上拉加载一次
+			//         height: 500,  //触发上拉加载拖动距离
+			//         contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+			//         contentnomore:'暂无更多数据',//可选，请求完毕若没有更多数据时显示的提醒内容；
+			//         callback: function() {
+			//     //         console.log("触发上拉")
+			//     //         upLoadMore();
+			//         } //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			//     }
+
+			}
+		});
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+		// //下拉刷新
+		function pulldownRefresh() {
+		    $("#OA_task_1").empty();
+		    //激活上拉
+		    mui('#ALL').pullRefresh().refresh(true);
+			mui('#ALL').pullRefresh().endPulldown(true);
+		   //获取当前坐标
+		   plus.geolocation.getCurrentPosition(function(position) {
+		   	// app.hideLoader();
+		   	var Lon =position.coords.longitude; //获取经度
+		   	var Lat = position.coords.latitude; //获取纬度
+		   	console.log("当前位置信息：" + Lon + "," + Lat);
+			
+		   	//查询附近1km内的所有混接点
+		   	mapData.getFeaturesByBuffer(
+		   		[{
+		   				NAME: 'DEVICE_POINT_INFO',
+		   				HYBRID_TYPE: 1
+		   			},
+		   			{
+		   				NAME: 'DEVICE_POINT_INFO',
+		   				HYBRID_TYPE: 2
+		   			},
+		   		],
+		   		// [114.04950213683215, 22.514631855561593], 0.1
+		   		[Lon, Lat], 0.01
+		   	).then(res => {
+		   		var arr = res.features;
+		   		globalSetItem(GlobalKey.pointNum, res.features.length);
+		   		var guidStr = "";
+		   		for (var i = 0; i < arr.length; i++) {
+		   			guidStr = guidStr + arr[i].properties.GUID + ","
+		   		}
+		   		if (guidStr.length > 0) {
+		   			guidStr = guidStr.substring(0, guidStr.length - 1);
+		   		}
+		   		console.log("附近1km内的混接点：" + JSON.stringify(res) + ",guidList:" + guidStr);
+		   		globalSetItem(GlobalKey.guidsList, guidStr);
+				mixSearch();
+		   	});
+		   	app.hideLoader();
+		   }, function(e) {
+		   	app.hideLoader();
+		   	console.log("error:" + e.message);
+		   	mui.toast("位置信息获取失败，将无法获取附近混接点");
+		   })
+		    
+		}
+		// //上拉加载
+		// function upLoadMore(){
+		// 	mixSearch(function(result){
+		// 	   if (result.length<10){
+		// 	       //不再执行上拉
+		// 	       console.log("暂无更多数据")
+		// 	       mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+		// 	       // mui('#ALL').pullRefresh().disablePullupToRefresh();
+		// 	   } else {
+		// 	       console.log("有数据")
+		// 	       mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+		// 	   }
+		// 	});
+		// }
+
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		//注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			self.setStyle({
+				titleNView: {
+					buttons: [{
+						float: 'right',
+						width: '60',
+						fontSize: '25',
+						text: '＋',
+						onclick: function() {
+							app.openPage("addMix.html", {
+								titleNView: {
+									titleText: '新增混接点',
+									autoBackButton: true,
+								}
+							});
+						}
+					}]
+				}
+			});
+
+			//设置附近的混接点个数
+			// var num=globalGetItem(GlobalKey.pointNum)!=undefined&&globalGetItem(GlobalKey.pointNum)!=null&&globalGetItem(GlobalKey.pointNum)!=""?globalGetItem(GlobalKey.pointNum):0;
+			// $("#num").html(num);
+			// mixSearch();
+			//其他页面回来时进行刷新
+			window.addEventListener('refresh', function(e) {
+				window.location.reload();
+			})
+
+			//跳转新增页面
+			$("#addMix").on("tap", function() {
+				var extras = {}
+				app.openPage("addMix.html", {
+					titleNView: {
+						titleText: '新增混接点',
+						autoBackButton: true,
+					}
+				}, extras);
+			});
+
+		});
+
+		//返回页面刷新
+		window.addEventListener('return', function() {
+			window.location.reload();
+			window.scrollTo(0, 0);
+		}, false);
+
+
+		//查询列表数据
+		function mixSearch() {
+			if(globalGetItem(GlobalKey.guidsList).length!=0){
+				getMixBatchByGuids(globalGetItem(GlobalKey.guidsList), function(data) {
+					if (data.success) {
+						//查询数据返回前端
+						console.log("列表数据：" + JSON.stringify(data.result))
+						if (data.result != null) {
+							getListData(data.result);
+							//设置附近的混接点个数
+							$("#num").html(data.result.length);
+						} else {
+							$("#content").html("<div style='background:#F5F5F5;line-height:100px;width:100%;color:#999999'>暂无数据</div>");
+							$("#num").html(0);
+						}
+						mui.toast("已全部加载完");
+					} else {
+						mui.toast("附近混接点查询失败");
+					}
+				})
+			}else{
+				$("#content").html("<div style='background:#F5F5F5;line-height:100px;width:100%;color:#999999'>暂无数据</div>");
+				$("#num").html(0);
+			}
+		}
+
+		function getListData(data) {
+			// console.log("===="+JSON.stringify(data));
+			var li = "";
+			for (var i = 0; i < data.length; i++) {
+				var item = data[i];
+
+				// var text1=item.guid.length>5?item.guid.substring(0,9)+"...":item.guid; (item.reformState==1?"改造":"未改造")
+				var text1 = item.mixCode.length > 5 ? item.mixCode.substring(0, 5) + "..." : item.mixCode;
+				var text2 = (item.inBasin != null && item.inBasin != undefined)  ? item.inBasin: (item.commName != null ? item.commName : item.streetName);
+				li = li + '<li id="' + item.expNo + '" class="mui-table-view-cell" style="padding-top:20px;padding-right:0px;margin-right:15px">' +
+					'<div id="" style="line-height:20px;">' +
+					'<span class="span1" style="margin: 0;display:inline-block;text-align:left;width:18px;">' + (i + 1) + '</span>' +
+					'<span class="span2" style="display:inline-block;width:80px;margin-left:20px;font-weight: 500;color: #191515;text-align:left;">' +
+					item.mixCode + '</span>' +
+					'<span class="span2" style="display:inline-block;width:80px;margin-left:20px;font-weight: 500;color: #191515;text-align:left;">' +
+					isEmp(text2) + '</span>' +
+					'<span class="span4" style="display:inline-block;width:70px;text-align:left;">' + getRS(item.reformState) +
+					'</span>' +
+					'</div>' +
+					'</li>';
+			}
+			// page++;//换下一页
+			// sum += data.length;
+			$("#OA_task_1").append(li);
+			$("#OA_task_1").css("margin-bottom","20px");
+			//加载完数据，结束转雪花进度条的“正在刷新...”过程
+			// mui('#ALL').pullRefresh().endPulldown();
+			//加载完数据，结束转雪花进度条的“正在加载...”过程
+			// mui('#ALL').pullRefresh().endPullupToRefresh();
+		}
+
+		mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+			var mixId = $(this).attr('id');
+			// alert(mixId);
+			var Status = $(this).attr('data-status');
+			if (mixId == "" || mixId == null) {
+				app.toast("无法获取guid");
+				return;
+			}
+			var extras = {
+				idd: mixId,
+			}
+			console.log(mixId);
+			app.openPage("mixDetail.html", {
+				titleNView: {
+					titleText: '混接点信息',
+					autoBackButton: true,
+				}
+			}, extras);
+		})
+
+		window.addEventListener('refresh1', function(e) { //执行刷新
+			location.reload();
+		});
+	</script>
+
+</html>

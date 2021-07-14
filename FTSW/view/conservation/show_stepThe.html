@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-查看现场检查纪录-整改落实情况</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 50%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		.info-bar-content{
+			min-height: 40px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item" id="preStep">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">上一页</div>
+			</div>
+			<div class="item" id="nextStep">
+				<div style="background: #337BFC;color: #fff">下一页</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper" style="margin-bottom: 100px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title">
+								整改落实情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										上次检查整改要求
+									</div>
+									<div class="mui-input-row item-input">
+										 <!-- <textarea name="text" rows="5" placeholder="给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话"></textarea> -->
+										<input id="lastCheckRequired"  type="text" class="inputCss" value=""
+										 placeholder="不超过200字" maxlength="200" readonly="true">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border: none;">
+									<div class="item-title">
+										整改落实情况
+									</div>
+									<div class="mui-input-row item-input">
+										 <!-- <textarea name="text" rows="5" placeholder="给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话给服务人员捎句话"></textarea> -->
+										<input id="rectifySituation"  type="text" class="inputCss" value=""
+										 placeholder="不超过300字" maxlength="300" readonly="true">
+									</div>
+								</div>																																							
+							</div>
+						</div>
+						<div class="scroll-li">
+							<div class="bar-title">
+								其他情况
+							</div>
+							<div class="info-bar-content">							
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否存在深填高挖边坡
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有</label>
+											<input name="isExistDfhcs" value="1" type="checkbox" disabled="true">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无</label>
+											<input name="isExistDfhcs" value="0" type="checkbox" disabled="true">
+										</div>
+									</div>
+								</div>	
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否告知建设单位
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">是</label>
+											<input name="isToldDfhcs" value="1" type="checkbox" disabled="true">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">否</label>
+											<input name="isToldDfhcs" value="0" type="checkbox" disabled="true">
+										</div>
+									</div>
+								</div>	
+								<div class="info-bar-content-item" style="display: none;" id="detail">
+									<div class="item-title">
+										深填高挖边坡具体情况
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="deepFillHighCutSlope" type="text" class="inputCss" value=""
+										 placeholder="请输入" readonly="true" >
+									</div>
+								</div>									
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否存在堆土
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有</label>
+											<input name="isExistSoil" value="1" type="checkbox" disabled="true">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无</label>
+											<input name="isExistSoil" value="0" type="checkbox" disabled="true">
+										</div>
+									</div>
+								</div>																																					
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否告知建设单位
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">是</label>
+											<input name="isToldSoil" value="1" type="checkbox" disabled="true">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">否</label>
+											<input name="isToldSoil" value="0" type="checkbox" disabled="true">
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="display: none;border: none;" id="detail2">
+									<div class="item-title">
+										堆土具体情况
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="soilSituation"  type="text" class="inputCss" value=""
+										 placeholder="请输入" readonly="true">
+									</div>
+								</div>																													
+							</div>
+						</div>
+					</div>						
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mixed.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({swipeBack:false});
+		var self;
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var opt = "add"; //操作类型
+		var id = "";
+		var flag = false;
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			//界面元素控制
+			initView();
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			self = plus.webview.currentWebview();
+
+			var sceneDataStr = self.data;
+			// console.log(JSON.stringify(self.data))
+			if (sceneDataStr != null) {
+			$('#lastCheckRequired').val(isEmp(sceneDataStr.lastCheckRequired));//上次检查整改要求
+			$('#rectifySituation').val(isEmp(sceneDataStr.rectifySituation));//整改落实情况
+			if (sceneDataStr.isExistDfhcs == '1') {
+				$("input[name='isExistDfhcs'][value=1]").prop("checked", true); //截排水沟是否存在淤积或损毁
+				$("input[name='isExistDfhcs'][value=0]").prop("checked", false);
+				$("#detail").show();
+				$('#deepFillHighCutSlope').val(isEmp(sceneDataStr.deepFillHighCutSlope));//深填高挖边坡具体情况
+			}else if(sceneDataStr.isExistDfhcs == '0') {
+				$("input[name='isExistDfhcs'][value=1]").prop("checked", false); //截排水沟是否存在淤积或损毁
+				$("input[name='isExistDfhcs'][value=0]").prop("checked", true);
+				$("#detail").hide();
+			}else{
+				$('#deepFillHighCutSlope').val(isEmp(sceneDataStr.deepFillHighCutSlope));
+			}
+			if (sceneDataStr.isToldDfhcs == '1') {
+				$("input[name='isToldDfhcs'][value=1]").prop("checked", true); //是否告知建设单位（深填高挖边坡）
+				$("input[name='isToldDfhcs'][value=0]").prop("checked", false);
+			}else if (sceneDataStr.isToldDfhcs == '0') {
+				$("input[name='isToldDfhcs'][value=1]").prop("checked", false); //是否告知建设单位（深填高挖边坡）
+				$("input[name='isToldDfhcs'][value=0]").prop("checked", true);
+			}
+
+			if (sceneDataStr.isExistSoil == '1') {
+				$("input[name='isExistSoil'][value=1]").prop("checked", true);//是否存在堆土
+				$("input[name='isExistSoil'][value=0]").prop("checked", false);
+				$("#detail2").show();
+				$('#soilSituation').val(isEmp(sceneDataStr.soilSituation));//存在堆土具体情况		
+			}else if (sceneDataStr.isExistSoil == '0') {
+				$("input[name='isExistSoil'][value=1]").prop("checked", false);//是否存在堆土
+				$("input[name='isExistSoil'][value=0]").prop("checked", true);
+				$("#detail2").hide();
+			}else{
+				$('#soilSituation').val(isEmp(sceneDataStr.soilSituation));
+				}
+			if (sceneDataStr.isToldSoil == '1') {
+				$("input[name='isToldSoil'][value=1]").prop("checked", true); //是否告知建设单位（堆土）
+				$("input[name='isToldSoil'][value=0]").prop("checked", false);
+			}else if (sceneDataStr.isToldSoil == '0') {
+				$("input[name='isToldSoil'][value=1]").prop("checked", false); //是否告知建设单位（堆土）
+				$("input[name='isToldSoil'][value=0]").prop("checked", true);
+			}					
+			}
+			//控制input显示，只有选择存在深填高挖边坡时才显示具体情况
+			$("input[name='isExistDfhcs']").change(function() {
+				var value = $(this).val();
+				if ((value == 1) && $(this).is(':checked')) {
+					$("#detail").show();
+				} else {
+					$("#detail").hide();
+				}
+			});
+			
+			//控制input显示，只有选择是否存在堆土时才显示具体情况
+			$("input[name='isExistSoil']").change(function() {
+				var value = $(this).val();
+				if ((value == 1) && $(this).is(':checked')) {
+					$("#detail2").show();
+				} else {
+					$("#detail2").hide();
+				}
+			});			
+}	
+		//上一页
+		$("#preStep").on("tap", function(event) {
+			mui.back();
+				// var extras = {data: self.data}
+				// app.openPage("./show_stepTwo.html", {
+				// 	titleNView: {
+				// 		titleText: '查看现场检查纪录',
+				// 		autoBackButton: true
+				// 	}
+				// }, extras);
+		});
+		
+		//下一页
+		$("#nextStep").on("tap", function(event) {
+			var extras = {data : self.data}
+				app.openPage("./show_stepFour.html", {
+					titleNView: {
+						titleText: '查看现场检查纪录',
+						autoBackButton: true
+					}
+				}, extras);		
+		});
+		
+	</script>
+
+</html>

@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>应急资源地图</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mixed.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+			.mapboxgl-ctrl.mapboxgl-ctrl-group{
+				bottom: 55%;
+				left: 10px;
+				position: fixed;
+			}
+			.mui-scroll {
+				/* background: url(../img/temp_dt.png) no-repeat center; */
+				background-size: 100% 100%;
+				height: 100%;
+				width: 100%;
+			}
+
+			.search-bar {
+			    background: none;
+				height: 80px;
+				line-height: 80px;
+			}
+
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+				top: 12px;
+				width: 40px;
+				height: 40px;
+			}
+
+			.search-item {
+			    background: #FFFFFF;
+			    height: 40px;
+			    border-radius: 16px;
+			}
+
+			.search-input {
+			    height: 40px;
+			    line-height: 40px;
+			}
+
+			.search-icon img {
+			    top: 30%;
+				margin-left: 18.5px;
+			}
+
+			.btn1{
+				position: fixed;
+				left: 80%;
+				top: 10px;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			.btn2, .btn2_blur{
+				position: fixed;
+				left: 80%;
+				top: 75px;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			.btn3, .btn3_blur{
+				position: fixed;
+				left: 80%;
+				top: 140px;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			.btn4, .btn4_blur{
+				position: fixed;
+				left: 80%;
+				top: 205px;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			
+			.btn5{
+				position: fixed;
+				left: 80%;
+				top: 560px;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			
+			.stat{
+				font-size: 14px;
+				font-weight: 500;
+				color: #FF5656;
+			}
+			.ws_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 60%;
+				right: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.ys_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 60%;
+				right: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.bottom-item {
+				padding: 19px;
+				background: #FFFFFF;
+				position: fixed;
+				height: 170px;
+				width: 85%;
+				bottom: 0;
+				z-index: 999;
+				text-align: left;
+				border-top-left-radius: 5%;
+				border-top-right-radius: 5%;
+			}
+
+			.bottom-item-title {
+				font-size:10px;
+				color:rgba(22,21,21,1);
+				font-weight: bold;
+			}
+
+			.bottom-item-info{
+				font-size:14px;
+				color:rgba(25,21,21,1);
+				line-height:21px;
+				height:21px;
+				padding: 18px 0 0 0;
+			}
+
+			#left_item{
+				padding: 5px 15px 5px 10px;
+				background: #FFFFFF;
+				position: fixed;
+				top: 500px;
+				left:19px;
+				z-index: 100;
+				border-radius: 5px;
+				text-align: left;
+				box-shadow: 0.5px 0.5px 4px 0.1px #989898;
+			}
+			
+			#left_item ul{
+				padding: 0;
+				margin: auto 5px;
+			}
+			
+			#left_item li{
+				list-style: none;
+			}
+			
+			#left_item ul li span{
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				margin-right: 10px;
+			}
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+
+			.triangle-down {
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				/*border-top: 10px solid #f02e2e;*/
+				margin-bottom: 10px;
+			}
+
+			.mui_rank {
+				position: absolute;
+				top: 0px;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				pointer-events: none;
+				background: url(../img/commom/tingwei.png) no-repeat center ;
+			}
+			.row-1	{
+				font-size: 14px;
+				font-weight: 500;
+				color: #888888;
+			}
+			.row_span	{
+				font-size: 14px;
+				font-weight: 500;
+				color: #444444;
+				margin-left: 15px;
+			}
+			.box:nth-last-child{
+				border: none;
+			}
+			
+			.home-item {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				height: 300px;
+				background: #FFFFFF
+			}
+			
+			.home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+			
+			.home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+			
+			
+			.home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+			
+			.home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+			
+			}
+			
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+			
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar" id="nav-bar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="home-item" id="home-item" style="display: none;">
+			<div class="home-item-list" id="business_item">
+				<div class="item" id="monitor">
+					<img src="../../../img/commom/monitor.png">
+					<span>监测信息</span>
+				</div>
+				<div class="item" id="riverArchives">
+					<img src="../../../img/commom/rivers.png">
+					<span>河湖档案</span>
+				</div>
+				<div class="item" id="leaderList">
+					<img src="../../../img/commom/leaderList.png">
+					<span>河湖长名录</span>
+				</div>
+				<div class="item" id="emergency">
+					<img src="../../../img/commom/emergency.png">
+					<span>应急资源</span>
+				</div>
+				<div class="item" id="waterRisk">
+					<img src="../../../img/commom/waterRisk.png">
+					<span>积水风险点</span>
+				</div>
+				<div class="item" id="paishui">
+					<img src="../../../img/commom/paishuihu.png">
+					<span>排水户</span>
+				</div>
+				<div class="item" id="overflow">
+					<img src="../../../img/commom/overflow.png">
+					<span>冒溢点</span>
+				</div>
+				<div class="item" id="hybrid">
+					<img src="../../../img/commom/mixed.png">
+					<span>混接点</span>
+				</div>
+				<div class="item" id="shuiwuFacility">
+					<img src="../../../img/commom/shuiwu.png">
+					<span>水务设施</span>
+				</div>
+				<div class="item" id="policy">
+					<img src="../../../img/commom/policy.png">
+					<span>政策法规</span>
+				</div>
+				<div class="item" id="standard">
+					<img src="../../../img/commom/standard.png">
+					<span>标准规范</span>
+				</div>
+				<div class="item" id="operContract">
+					<img src="../../../img/commom/operContract.png">
+					<span>运维合同</span>
+				</div>
+			</div>
+		</div>
+
+
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<h1 class="mui-title">混接点管理</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;">
+						</div>
+						<div class="mui_rank">
+							<div class="triangle-down">
+							</div>
+						</div>
+						<div class="btn1" id="suppliesbtn">
+							<img src="../../../img/commom/suppliesbtn.png" style="width: 65px;" />
+						</div>
+						<div class="btn2" id="staffbtn">
+							<img src="../../../img/commom/staffbtn.png" style="width: 65px;" />
+						</div>
+						<div class="btn2_blur" id="staffbtn">
+							<img src="../../../img/commom/ranks.png" style="width: 65px;" />
+						</div>
+						<div class="btn3" id="warehousebtn">
+							<img src="../../../img/commom/warehousebtn.png" style="width: 65px;" />
+						</div>
+						<div class="btn3_blur" id="warehousebtn">
+							<img src="../../../img/commom/wh_blur.png" style="width: 65px;" />
+						</div>
+						<div class="btn4" id="runbtn">
+							<img src="../../../img/commom/runbtn.png" style="width: 65px;" />
+						</div>
+						<div class="btn4_blur" id="runbtn">
+							<img src="../../../img/commom/sanc.png" style="width: 65px;" />
+						</div>
+
+						<div class="btn5" id="refresh">
+							<img src="../../../img/commom/refresh.png" style="width: 65px;" />
+						</div>
+
+						<div id="left_item">
+							<ul>
+								<!--<li style="margin-bottom:13.5px;">-->
+									<!--<span><img style="width:15px;" src="../../../img/commom/staff.png" alt=""></span>-->
+									<!--现场人员-->
+								<!--</li>-->
+								<li style="margin-bottom:13.5px;">
+									<span><img style="width:15px;" src="../../../img/commom/staff.png" alt=""></span>
+									抢险队伍
+								</li>
+								<li style="margin-bottom:13.5px;">
+									<span><img style="width:15px;" src="../../../img/commom/warehouse.png" alt=""></span>
+									防汛仓库
+								</li>
+								<li style="margin-bottom:5px;">
+									<span><img style="width:15px;" src="../../../img/commom/running.png" alt=""></span>
+									避难场所
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- 抢险队伍详情 -->
+					<div class="bottom-item" id="ranks">
+						<div class="bottom-item-title">
+							<div id="left_title" style="display: flex; position: relative;">
+								<img id="info_icon" src="../../../img/commom/emDetails.png" style="width:20px;height:24px;">
+								<div style="display: inline-block;width: 85%;overflow-x: scroll; white-space: nowrap;">
+									<span id="ranksName" style="display: inline-block;font-weight: bold;color: #161515; font-size: 18px;margin-left: 10px;">-</span>
+								</div>
+								<img class="closeBottom" src="../../../img/commom/del.png" style="width: 20px; position: absolute; top: 5px; right: 0;"
+								 alt="">
+							</div>
+						</div>
+						<div id="content" class="bottom-item-info" style="height: 125px; line-height: 25px; color: #444444;">
+							<div id="dutyUnit">
+								<span style="color: #888888;">负责单位:</span>&nbsp;&nbsp;<span id="ranksCompanyName">-</span>
+							</div>
+
+							<div id="centerCont">
+								<div id="first" style="display:inline-block; width: 45%;">
+									<div><span style="color: #888888;">队伍人数:</span>&nbsp;&nbsp;<span id="personCount">-</span></div>
+									<div><span style="color: #888888;">抢险专业:</span>&nbsp;&nbsp;<span id="ranksSpeName">-</span></div>
+								</div>
+								<div id="second" style="display:inline-block; width: 50%;">
+									<div><span style="color: #888888;">队伍类型:</span>&nbsp;&nbsp;<span id="ranksTypeName">-</span></div>
+									<div style="display: flex; align-items: center;">
+										<span style="color: #888888;">联系人:</span>&nbsp;&nbsp;
+										<div style="display: inline-block; width: 87px; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+											<span id="personName">-</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="phone">
+								<div style="display: flex; align-items: center;">
+									<span style="color: #888888;">联系电话:</span>&nbsp;&nbsp;
+									<div style="display: inline-block; width: 71%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+										<span id="personPhone"></span>
+									</div>
+								</div>
+							</div>
+							<div id="address" style="display: flex; align-items: center;">
+								<span style="color: #888888;">详细地址:&nbsp;&nbsp;</span>
+								<div style="display: inline-block; width: 71%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+									<span id="ranksAddress"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 避险中心详情 -->
+					<div class="bottom-item" id="sanc">
+						<div class="bottom-item-title">
+							<div id="left_title" style="display: flex; position: relative;">
+								<img id="info_icon" src="../../../img/commom/sancIcon.png" style="width:20px;height:24px;">
+								<div style="display: inline-block;width: 85%;overflow-x: scroll; white-space: nowrap;">
+									<span id="sancName" style="display: inline-block;font-weight: bold;color: #161515; font-size: 18px;margin-left: 10px;">-</span>
+								</div>
+								<img class="closeBottom" src="../../../img/commom/del.png" style="width: 20px; position: absolute; top: 5px; right: 0;"
+								 alt="">
+							</div>
+						</div>
+						<div id="content" class="bottom-item-info" style="height: 125px; line-height: 25px; color: #444444;">
+							<div id="dutyUnit">
+								<span style="color: #888888;">所属街道:</span>&nbsp;&nbsp;<span id="adName">-</span>
+							</div>
+							<div>
+								<span style="color: #888888;">可容纳人数:</span><span id="capacity">&nbsp;&nbsp;-</span>
+							</div>
+							<div id="centerCont">
+								<div id="first" style=" width: 48%; display:inline-block;">
+									<div style="display: flex; align-items: center;">
+										<span style="color: #888888;">建成时间:</span>&nbsp;&nbsp;
+										<div style="display: inline-block; width: 46%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+											<span id="builtDate">-</span>
+										</div>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<span style="color: #888888;">联系人:</span>&nbsp;&nbsp;
+										<div style="display: inline-block; width: 70px; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+											<span id="sancContact">-</span>
+										</div>
+									</div>
+								</div>
+								<div id="second" style="width: 50%; display:inline-block;">
+									<div>
+										<span style="color: #888888;">有效面积:</span>&nbsp;&nbsp;<span id="sancArea">-</span>
+									</div>
+									<div style="display: flex; align-items: center;">
+										<span style="color: #888888;">联系电话:</span>&nbsp;&nbsp;
+										<div style="display: inline-block; width: 55%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+											<span id="sancPhone">-</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="address" style="display: flex; align-items: center;">
+								<span style="color: #888888;">详细地址:&nbsp;&nbsp;</span>
+								<div style="display: inline-block; width: 71%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+									<span id="sancAddress">-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 三防仓库详情 -->
+					<div class="bottom-item" id="wareHouse">
+						<div class="bottom-item-title">
+							<div id="left_title" style="display: flex; position: relative;">
+								<img id="info_icon" src="../../../img/commom/whIcon.png" style="width:20px;height:24px;">
+								<div style="display: inline-block;width: 85%;overflow-x: scroll; white-space: nowrap;">
+									<span id="whName" style="display: inline-block;font-weight: bold;color: #161515; font-size: 18px;margin-left: 10px;">-</span>
+								</div>
+								<img class="closeBottom" src="../../../img/commom/del.png" style="width: 20px; position: absolute; top: 5px; right: 0;"
+								 alt="">
+							</div>
+						</div>
+						<div id="content" class="bottom-item-info" style="height: 125px; line-height: 25px; color: #444444;">
+							<div id="dutyUnit">
+								<span style="color: #888888;">仓库类型:</span>&nbsp;&nbsp;<span id="whType_dictText">-</span>
+							</div>
+							<div>
+								<span style="color: #888888;">主管单位:</span>&nbsp;&nbsp;<span id="whCompanyName">-</span>
+							</div>
+							<div>
+								<div><span style="color: #888888;">日常管养单位:</span>&nbsp;&nbsp;<span id="managerCompanyName">-</span></div>
+							</div>
+
+							<div id="centerCont">
+								<div id="first" style="display:inline-block; width: 45%;">
+									<div style="display: flex; align-items: center;">
+										<span style="color: #888888;">联系人:</span>&nbsp;&nbsp;
+										<div style="display: inline-block; width: 60px; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+											<span id="whManagerId">-</span>
+										</div>
+									</div>
+								</div>
+								<div id="second" style="display:inline-block; width: 50%;">
+									<div style="display: flex; align-items: center;">
+										<span style="color: #888888;">联系电话:</span>&nbsp;&nbsp;
+										<div style="display: inline-block; width: 55%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+											<span id="whPhone">-</span>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div id="address" style="display: flex; align-items: center;">
+								<span style="color: #888888;">仓库地址:</span>&nbsp;&nbsp;
+								<div style="display: inline-block; width: 71%; overflow-x: scroll;overflow-y: hidden;white-space: nowrap;">
+									<span id="whAdrees">-</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面主内容区结束-->
+				</div>
+			</div>
+		</div>
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/position.js"></script>
+	<script src="../../../js/mixed.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/infoQuery/emList.js"></script>
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script>
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		var isShow = true;
+		var mask = mui.createMask();
+		var ranksIcon = true;
+		var whIcon = true;
+		var sancIcon = true;
+		var iconArray = [{
+			NAME: 'EGY_WH',
+			DEL_FLAG: 0
+		}, {
+			NAME: 'SANC_INFO',
+			DEL_FLAG: 0
+		}, {
+			NAME: 'EGY_RANKS',
+			DEL_FLAG: 0
+		}]
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		mui.init({
+			swipeBack: false
+		});
+
+		mui.back = function() {
+			var curr = plus.webview.currentWebview();
+			var wvs = plus.webview.all();
+				for (var i = 0, len = wvs.length-1; i < len; i++) {
+					let theurl = wvs[i].getURL() + '';
+					if (!(theurl.search('login.html') != -1 ||
+						theurl.search('www/main.html') != -1 ||
+						theurl.search('www/index.html') != -1 ||
+						theurl.search('/searchInfo/index.html') != -1)){					
+						wvs[i].close('none');
+					}
+				}
+			curr.close('slide-out-right');
+		}
+
+		var extras = {
+			openNum: 0
+		}
+
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			$(".bottom-item").hide();
+			extras.openNum = self.openNum + 1; //初始化打开页面数量
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/bgTop.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							if (isShow) {
+								isShow = false;
+								$("#home-item").show();
+								mask.show()
+							} else {
+								isShow = true;
+								$('#home-item').hide();
+								mask.close();
+							}
+						}
+					}],
+				}
+			});
+		});
+
+		$("#riverArchives").on('tap', function() {
+			app.openPage('../rivers/rivers_index.html', {
+				titleNView: {
+					titleText: '河湖档案',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#leaderList").on('tap', function() {
+			app.openPage('../leaderList/leaderList_index.html', {
+				titleNView: {
+					titleText: '河湖长名录',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#emergency").on('tap', function() {
+			isShow = true;
+			$('#home-item').hide();
+			mask.close();
+		})
+
+		$("#paishui").on('tap', function() {
+			app.openPage('../paishuihu/paishuihu_index.html', {
+				titleNView: {
+					titleText: '排水户',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#hybrid").on('tap', function() {
+			//app.openPage('../mixed/mixed_index.html', {
+			app.openPage('../mixed/mixed_index2.html', {
+				titleNView: {
+					titleText: '混接点',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$(".closeBottom").on('click', function(ev) {
+			var oEvent = ev || event;
+			oEvent.cancelBubble = true;
+			oEvent.stopPropagation();
+			$(".bottom-item").hide();
+		})
+
+		$("#suppliesbtn").on('tap', function() {
+			app.openPage('emergencyList.html', {
+				titleNView: {
+					titleText: '应急资源',
+					autoBackButton: true
+				}
+			});
+		})
+
+		// var map = ""; //地图选点对象
+		// var point = {};//选中坐标
+		var pageSize = 6;
+
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options: {
+				minZoom: 10
+			},
+			style: 'color'
+		});
+
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+
+		const layerSelections = window['mobile-lib'].layerSelections;
+
+		mobileContainer.on('load', () => {
+			getCurrentPosition();
+			mobileContainer.enableCenterAddress(true);
+			mobileContainer.setQuery(iconArray); //加载现场人员、防汛仓库、抢险队伍
+
+			mobileContainer.showAnnotation(true);
+		});
+
+
+		//点击地图上现场人员、防汛仓库、抢险队伍的小图标
+		mobileContainer.on('showInfo', data => {
+			let Data = data;
+			console.log("DATA", JSON.stringify(Data))
+			getDetails(data.feature.properties.GUID, data.feature.properties.key);
+			mobileContainer.flyTo(data.feature);
+		});
+
+
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+			if (data) {
+				$(".bottom-item").hide(); //隐藏底部信息
+				clearGlobalItem();
+				mobileContainer.enableCenterAddress(true);
+				mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+				mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+
+				$("#left_item").fadeIn();
+				$("#refresh").show();
+				$(".mapboxgl-ctrl-group").show();
+				$("#add").show();
+			} else {
+				app.toast('当前选择不在可选范围内，请重新选择');
+			}
+		});
+
+		//显示地图信息
+		mobileContainer.on('showAddress', data => {
+			var point = {
+				'lng': data.location.lon,
+				'lat': data.location.lat
+			}
+		});
+
+		$('.btn2').on('tap', function() {
+			ranksIcon = !ranksIcon;
+			setIcon();
+		})
+		$('.btn3').on('tap', function() {
+			whIcon = !whIcon;
+			setIcon();
+		})
+		$('.btn4').on('tap', function() {
+			sancIcon = !sancIcon;
+			setIcon();
+		})
+		$('.btn2_blur').on('tap', function() {
+			ranksIcon = !ranksIcon;
+			setIcon();
+		})
+		$('.btn3_blur').on('tap', function() {
+			whIcon = !whIcon;
+			setIcon();
+		})
+		$('.btn4_blur').on('tap', function() {
+			sancIcon = !sancIcon;
+			setIcon();
+		})
+
+
+		var setIcon = function() {
+			let icon_array = [];
+			if(whIcon){
+				icon_array.push(iconArray[0])
+				$(".btn3").show()
+				$(".btn3_blur").hide();
+			}else{
+				$(".btn3").hide()
+				$(".btn3_blur").show();
+			}
+			if(sancIcon){
+				icon_array.push(iconArray[1])
+				$(".btn4").show()
+				$(".btn4_blur").hide();
+			}else{
+				$(".btn4").hide()
+				$(".btn4_blur").show();
+			}
+			
+			if(ranksIcon){
+				icon_array.push(iconArray[2])
+				$(".btn2").show()
+				$(".btn2_blur").hide();
+			}else{
+				$(".btn2").hide()
+				$(".btn2_blur").show();
+			}
+			mobileContainer.setQuery(icon_array);
+			
+		}
+
+		var getCurrentPosition = function() {
+			if (mui.os.plus) {
+				app.showLoader();
+			}
+            $('.btn2').show();
+            $('.btn2_blur').hide();
+            $('.btn3').show();
+            $('.btn3_blur').hide();
+            $('.btn4').show();
+            $('.btn4_blur').hide();
+			//重新定位时重新查询混接点
+			mobileContainer.setQuery([{
+				NAME: 'EGY_WH',
+				DEL_FLAG: 0
+			}, {
+				NAME: 'SANC_INFO',
+				DEL_FLAG: 0
+			}, {
+				NAME: 'EGY_RANKS',
+				DEL_FLAG: 0
+			}]); //加载混接点
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+				// app.hideLoader();
+				//坐标修正
+				var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+
+				var Lon = point[0]; //获取经度
+				var Lat = point[1]; //获取纬度
+
+				mobileContainer.flyTo([Lon, Lat], {
+					zoom: 13
+				});
+				console.log("当前位置信息：" + Lon + "," + Lat);
+				// $('.btn2').show();
+				// $('.btn2_blur').hide();
+				// $('.btn3').show();
+				// $('.btn3_blur').hide();
+				// $('.btn4').show();
+				// $('.btn4_blur').hide();
+
+				//查询附近1km内的所有混接点
+				mapData.getFeaturesByBuffer(
+					[{
+						NAME: 'EGY_WH',
+						DEL_FLAG: 0
+					}, {
+						NAME: 'SANC_INFO',
+						DEL_FLAG: 0
+					}, {
+						NAME: 'EGY_RANKS',
+						DEL_FLAG: 0
+					}],
+					// [114.04950213683215, 22.514631855561593], 0.1
+					[Lon, Lat], 0.01
+				).then(res => {
+					var arr = res.features;
+					console.log("附近1km：" + arr.length);
+					console.log("附近1km：" + JSON.stringify(arr));
+					globalSetItem(GlobalKey.pointNum, res.features.length);
+					var guidStr = "";
+					for (var i = 0; i < arr.length; i++) {
+						guidStr = guidStr + arr[i].properties.GUID + ","
+					}
+					if (guidStr.length > 0) {
+						guidStr = guidStr.substring(0, guidStr.length - 1);
+					}
+					console.log("附近1km内" + JSON.stringify(res) + ",guidList:" + guidStr);
+					globalSetItem(GlobalKey.guidsList, guidStr);
+				});
+				mobileContainer.markAddress(Lon, Lat);
+				app.hideLoader();
+			}, function(e) {
+				app.hideLoader();
+				console.log("error:" + e.message);
+				mui.toast("位置信息获取失败");
+			})
+
+		}
+
+		// 格式化损坏数据
+		var initDestoryData = function(data, callback) {
+			for (let key in data) {
+				if (data[key] == '' || data[key] == null) {
+					data[key] = '暂无'
+				}
+			}
+			callback(data);
+		}
+
+		var getDetails = function(guid, typeKey) {
+			console.log("--------key---------", typeKey)
+			if (typeKey == 'SANC_INFO') {
+				$("#wareHouse").hide();
+				$("#ranks").hide();
+				getSanksByGuid(guid, function(data) {
+					let sancData = data.result;
+					initDestoryData(sancData, function(Data) {
+						$("#sancName").text(Data.sancName);
+						$("#adName").text(Data.adName);
+						$("#capacity").text(Data.capacity);
+						$("#builtDate").text(Data.builtDate.substring(0, 10));
+						$("#sancContact").text(Data.sancContact);
+						$("#sancArea").text(Data.sancArea);
+						$("#sancPhone").text(Data.sancPhone);
+						$("#sancAddress").text(Data.sancAddress);
+					})
+				})
+				$("#sanc").show();
+			} else if (typeKey == 'EGY_WH') {
+				$("#sanc").hide();
+				$("#ranks").hide();
+				$("#wareHouse").show();
+				getWhByGuid(guid, function(data) {
+					let whData = data.result;
+					initDestoryData(whData, function(Data) {
+						$("#whName").text(Data.whName);
+						$("#whType_dictText").text(Data.whType_dictText);
+						$("#whCompanyName").text(Data.whCompanyName);
+						$("#managerCompanyName").text(Data.managerCompanyName);
+						$("#whManagerId").text(Data.whManagerId);
+						$("#whPhone").text(Data.whPhone);
+						$("#whAdrees").text(Data.whAdrees);
+					})
+				})
+
+			} else {
+				$("#wareHouse").hide();
+				$("#sanc").hide();
+				// console.log("队伍ranksId:"+guid);
+				// getRanksByGuid(guid, function(data) {
+				// 	let ranksData = data.result;
+				// 	console.log("应急："+JSON.stringify(ranksData))
+				// 	initDestoryData(ranksData, function(Data) {
+				// 		$("#ranksName").text(Data.ranksName);
+				// 		$("#ranksCompanyName").text(Data.ranksCompanyName);
+				// 		$("#personCount").text(Data.personCount);
+				// 		$("#ranksSpeName").text(Data.ranksSpeName);
+				// 		$("#ranksTypeName").text(Data.ranksTypeName);
+				// 		$("#personName").text(Data.personName);
+				// 		$("#personPhone").text(Data.personPhone);
+				// 		$("#ranksAddress").text(Data.ranksAddress);
+				// 	})
+				// })
+                getRanksByType(guid, function(data) {
+                    let ranksData = data.result[0];
+                    // console.log("应急："+JSON.stringify(data.result[0]))
+                    initDestoryData(ranksData, function(Data) {
+                        $("#ranksName").text(Data.ranksName);
+                        $("#ranksCompanyName").text(Data.ranksCompanyName);
+                        $("#personCount").text(Data.personCount);
+                        $("#ranksSpeName").text(Data.ranksSpe_dictText);
+                        $("#ranksTypeName").text(Data.ranksType_dictText);
+                        $("#personName").text(Data.personName);
+                        $("#personPhone").text(Data.personPhone);
+                        $("#ranksAddress").text(Data.ranksAddress);
+                    })
+
+                })
+				$("#ranks").show();
+			}
+		}
+
+
+		//重新定位
+		// $("#location_btn").on("tap", function() {
+		// 	$("#searchBox").html("");
+		// 	getCurrentPosition();
+		// });
+
+		// 重新加载
+		$("#refresh").on("tap", function() {
+			$("#searchBox").html("");
+			getCurrentPosition();
+		});
+
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+
+		//只要是点击地图，就直接初始化混接点信息
+		var initMix = function() {
+			var mix = globalGetItem(GlobalKey.mix);
+			var isSelectMix = globalGetItem(GlobalKey.isSelectMix);
+			var address = globalGetItem(GlobalKey.address);
+			if (mix && isSelectMix == "true") {
+				var mixItem = JSON.parse(mix);
+
+			}
+		}
+
+		window.addEventListener('refresh1', function(e) { //执行刷新
+			mobileContainer.setQuery([{
+				NAME: 'EGY_WH',
+				DEL_FLAG: 0
+			}, {
+				NAME: 'SANC_INFO',
+				DEL_FLAG: 0
+			}, {
+				NAME: 'EGY_RANKS',
+				DEL_FLAG: 0
+			}]); //加载混接点
+			// window.location.reload();
+			showBottomInfo(globalGetItem(GlobalKey.guid));
+		});
+	</script>
+
+</html>

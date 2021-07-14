@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+	<!-- 管网运维页面 -->
+
+	<head>
+		<meta charset="utf-8">
+		<title>管网运维</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	<style type="text/css">
+		.drainageNum {
+			/* height: 219px; */
+			background-color: white;
+			/* margin-bottom: 50px; */
+		}
+
+		.drainageNum_h {
+			display: flex;
+			justify-content: space-between;
+			padding: 18px 4% 0px 4%;
+		}
+
+		.drainageNum_hl {
+			font-size: 18px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #262626;
+		}
+
+		.drainageNum_hr {
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #0493F3;
+		}
+
+		.jtqx {
+			display: flex;
+			justify-content: space-between;
+			margin: 20px 30% 0px 32px;
+		}
+
+		.jtqxwz {
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #7F7F7F;
+			/* margin-right: 76px; */
+		}
+
+		.jtqxnum {
+			font-size: 24px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #0493F3;
+		}
+	</style>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 内容区域 -->
+						<!-- 运维养护工作情况统计开始 -->
+						<div class="drainageNum">
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl">运维养护工作情况统计</div>
+								<div class="drainageNum_hr"><span class="timeYear">2020</span><img style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt=""></div>
+							</div>
+							<div class="jtqx">
+								<div class="jtqxwz">发现管网缺陷(个)</div>
+								<div class="jtqxnum tj1">0</div>
+							</div>
+							<div class="jtqx">
+								<div class="jtqxwz">已整改(处)</div>
+								<div class="jtqxnum tj2">0</div>
+							</div>
+							<div class="jtqx">
+								<div class="jtqxwz">响应应急调度指令(次)</div>
+								<div class="jtqxnum tj3">0</div>
+							</div>
+							<div class="jtqx" style="margin-bottom: 40px;">
+								<div class="jtqxwz">抽检合格率(%)</div>
+								<div class="jtqxnum tj4">0</div>
+							</div>
+						</div>
+						<!-- 养护管道 -->
+						<div style="height: 5px; background: #f4f4f4;"></div><strong></strong>
+						<div class="drainageNum">
+							<div class="drainageNum_h" style="margin-bottom: 15px;">
+								<div class="drainageNum_hl">养护管道统计</div>
+								<div class="drainageNum_hr"><span class="yhgdtime">2020</span><img style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt=""></div>
+							</div>
+							<div id="main" style="width: 100%;height: 260px;"></div>
+						</div>
+						<!-- 巡检任务完成率统计 -->
+						<div style="height: 5px; background: #f4f4f4;"></div><strong></strong>
+						<div class="drainageNum">
+							<div class="drainageNum_h" style="margin-bottom: 15px;">
+								<div class="drainageNum_hl">巡检任务完成率统计</div>
+								<div class="drainageNum_hr"><span class="xjrwwctime">2020</span><img style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt=""></div>
+							</div>
+							<div id="main1" style="width: 100%;height: 280px;"></div>
+						</div>
+						<!-- 养护指标 -->
+						<div style="height: 5px; background: #f4f4f4;"></div><strong></strong>
+						<div class="drainageNum">
+							<div class="drainageNum_h" style="margin-bottom: 15px;">
+								<div class="drainageNum_hl">养护指标</div>
+								<div class="drainageNum_hr"><span class="yhzbtime">2020</span><img style="width: 12px; height: 7px;" src="../../img/arrowDownBlue.png" alt=""></div>
+							</div>
+							<div id="main2" style="width: 100%;height: 330px; margin-bottom: 30px;"></div>
+						</div>
+						<!-- 内容区域结束 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/vue.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/echarts.min.js"></script>
+	<script src="../../js/kpi/index.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<!-- 接口js -->
+	<script src="../../js/kpi/maintain.js"></script>
+
+
+	<script type="text/javascript">
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var myDate = new Date();
+		$(".timeYear").text(myDate.getFullYear()); //页面显示当前年份
+		$(".yhgdtime").text(myDate.getFullYear()); //页面显示当前年份
+		$(".xjrwwctime").text(myDate.getFullYear()); //页面显示当前年份
+		$(".yhzbtime").text(myDate.getFullYear()); //页面显示当前年份
+
+
+		var myChart = echarts.init(document.getElementById('main'));
+		// 指定图表的配置项和数据,养护管道统计表
+		var option = {
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'cross',
+					crossStyle: {
+						color: '#999'
+					}
+				}
+			},
+			toolbox: {},
+			legend: {
+				// data: ['蒸发量', '降水量', '平均温度']
+			},
+			grid: {
+				// left: '3%',
+				// right: '4%',
+				// bottom: '3%',
+				// y: '30%',
+				// containLabel: true
+			},
+			xAxis: [{
+				type: 'category',
+				data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+				axisPointer: {
+					type: 'shadow'
+				}
+			}],
+			yAxis: [{
+					type: 'value',
+					// name: '水量',
+					// min: 0,
+					// max: 250,
+					// interval: 50,
+					// axisLabel: {
+					//     formatter: '{value} ml'
+					// }
+					splitLine: {
+						show: false
+					},
+				},
+				{
+					type: 'value',
+					// name: '温度',
+					// min: 0,
+					// max: 25,
+					// interval: 5,
+					splitLine: {
+						show: false
+					}, //这个属性动态生成y轴刻度
+					// axisLabel: {
+					//     formatter: '{value} °C'
+					// }
+				}
+			],
+			series: [{
+					name: '派发工单',
+					type: 'line',
+					// yAxisIndex: 1,
+					data: []
+				},
+				{
+					name: '已完成工单',
+					type: 'line',
+					// yAxisIndex: 1,
+					data: []
+				},
+				{
+					name: '存量工单',
+					type: 'line',
+					yAxisIndex: 1,
+					data: []
+				}
+			]
+		}
+		var myChart1 = echarts.init(document.getElementById('main1'));
+		// var colors = ['#5470C6', '#91CC75', '#EE6666'];
+
+		var option1 = {
+			// color: colors,
+
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'cross'
+				}
+			},
+			grid: {
+				// right: '20%'
+			},
+			toolbox: {
+				feature: {
+					// dataView: {
+					// 	show: true,
+					// 	readOnly: false
+					// },
+					// restore: {
+					// 	show: true
+					// },
+					// saveAsImage: {
+					// 	show: true
+					// }
+				}
+			},
+			legend: {
+				// data: ['蒸发量', '降水量', '平均温度']
+			},
+			xAxis: [{
+				type: 'category',
+				axisTick: {
+					alignWithLabel: true
+				},
+				data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+			}],
+			yAxis: [{
+					splitLine: {
+						show: false
+					},
+				}
+				// {
+				// 	type: 'value',
+				// 	name: '降水量',
+				// 	min: 0,
+				// 	max: 250,
+				// 	position: 'right',
+				// 	offset: 80,
+				// 	axisLine: {
+				// 		show: true,
+				// 		lineStyle: {
+				// 			color: colors[1]
+				// 		}
+				// 	},
+				// 	axisLabel: {
+				// 		formatter: '{value} ml'
+				// 	}
+				// },
+				// {
+				// 	type: 'value',
+				// 	name: '温度',
+				// 	min: 0,
+				// 	max: 25,
+				// 	position: 'left',
+				// 	axisLine: {
+				// 		show: true,
+				// 		lineStyle: {
+				// 			color: colors[2]
+				// 		}
+				// 	},
+				// 	axisLabel: {
+				// 		formatter: '{value} °C'
+				// 	}
+				// }
+			],
+			series: [
+				// {
+				// 	name: '',
+				// 	type: 'bar',
+				// 	data: []
+				// },
+				// {
+				// 	name: '',
+				// 	type: 'bar',
+				// 	// yAxisIndex: 1,//第二个x轴
+				// 	data: []
+				// },
+				// {
+				// 	name: '平均温度',
+				// 	type: 'bar',
+				// 	// yAxisIndex: 2,
+				// 	data: [02, 2, 2, 2, 2, 2, 5, 5, 8, 5, 8]
+				// }
+			]
+		}
+		// 养护指标接口
+		conservejk()
+
+		function conservejk() {
+			var params = {
+				year: $('.yhzbtime').text()
+			}
+			conserve(params, function(data) {
+				var pass_rate = 0, //养护任务完成数
+					average = 0, //养护达标
+					pjyhl = 0, //平均养护
+					total = 100;
+				pass_rate = Number((data.result[0].taskRate * 100).toFixed(2))
+				average = Number((data.result[0].frequencyRate * 100).toFixed(2))
+				pjyhl = Number((data.result[0].avgRate * 100).toFixed(2))
+				var myChart2 = echarts.init(document.getElementById('main2'));
+				var option2 = {
+					tooltip: {
+						show: false,
+
+						trigger: 'item',
+
+						formatter: "{a} : {c} ({d}%)"
+
+					},
+
+					// color: ['#85b6b2', '#6d4f8d'],
+
+					color: ['rgb(4, 147, 243)', 'rgb(0, 182, 77)', 'rgb(255, 200, 32)'],
+
+					legend: {
+						// orient: 'vertical',//加了这个上面的就竖着显示了
+
+						// x: '35%',
+
+						// top: '0%',
+						bottom: '0%',
+
+						itemHeight: 10, //图例的高度
+
+						itemGap: 4, //图例之间的间距
+
+						data: ['养护任务完成数', '养护频率达标率', '平均养护率']
+
+						//图例的名字需要和饼图的name一致，才会显示图例
+
+					},
+
+					series: [
+
+						{
+							name: '养护任务完成数',
+
+							type: 'pie',
+
+							radius: ['70%', '79%'], //第二个可以控制环宽度
+
+							//环的位置
+
+							label: {
+								show: false,
+
+								position: 'center',
+
+								// normal: { // 显示的位置
+
+								// position: 'inner'
+
+								// }
+
+							},
+
+							labelLine: {
+								normal: {
+									show: false
+
+								}
+
+							},
+
+							emphasis: {
+								label: {
+									show: true,
+
+									fontSize: '20',
+
+									fontWeight: 'bold'
+
+								}
+
+							},
+
+							data: [
+
+								{
+									value: pass_rate, //需要显示的数据
+
+									name: '养护任务完成数' + pass_rate + '%',
+
+									itemStyle: {
+										normal: {
+											color: 'rgb(4, 147, 243)',
+
+										}
+
+									}
+
+								},
+
+								{
+									value: total - pass_rate,
+
+									//不需要显示的数据，颜色设置成和背景一样
+
+									itemStyle: {
+										normal: {
+											color: '#f1f1f1'
+
+										}
+
+									}
+
+								}
+
+							]
+
+						},
+
+						{
+							name: '养护频率达标率',
+
+							type: 'pie',
+
+							radius: ['53%', '63%'], //调节圆环的大小
+
+							label: {
+								show: false,
+
+								position: 'center',
+
+								// normal: {
+								// position: 'inner'
+
+								// }
+
+							},
+
+							labelLine: {
+								normal: {
+									show: false
+
+								}
+
+							},
+
+							emphasis: {
+								label: {
+									show: true,
+
+									fontSize: '20',
+
+									fontWeight: 'bold'
+
+								}
+
+							},
+
+							data: [
+
+								{
+									name: '养护频率达标率' + average + '%',
+
+									value: average,
+
+									itemStyle: {
+										normal: {
+											color: 'rgb(0, 182, 77)'
+
+										}
+
+									}
+
+								},
+
+								{
+									value: total - average,
+
+									itemStyle: {
+										normal: {
+											color: '#f1f1f1'
+
+										}
+
+									}
+
+								}
+
+							]
+
+						},
+						{
+							name: '平均养护率',
+
+							type: 'pie',
+
+							radius: ['33%', '43%'], //调节圆环的大小
+
+							label: {
+								show: false,
+
+								position: 'center',
+
+								// normal: {
+								// position: 'inner'
+
+								// }
+
+							},
+
+							labelLine: {
+								normal: {
+									show: false
+
+								}
+
+							},
+
+							emphasis: {
+								label: {
+									show: true,
+
+									fontSize: '20',
+
+									fontWeight: 'bold'
+
+								}
+
+							},
+
+							data: [
+
+								{
+									name: '平均养护率' + pjyhl + '%',
+
+									value: pjyhl,
+
+									itemStyle: {
+										normal: {
+											color: 'rgb(255, 200, 32)'
+
+										}
+
+									}
+
+								},
+
+								{
+									value: total - pjyhl,
+
+									itemStyle: {
+										normal: {
+											color: '#f1f1f1'
+
+										}
+
+									}
+
+								}
+
+							]
+
+						}
+
+					]
+
+				}
+				myChart2.setOption(option2);
+				// myChart2.setOption(option2);
+				// console.log("jjjjggg给", JSON.stringify(data))
+
+			})
+		}
+
+		// 运维养护工作情况统计jk
+		maintenanceWorkjk()
+
+		function maintenanceWorkjk() {
+			var params = {
+				year: $('.timeYear').text()
+			}
+			maintenanceWork(params, function(data) {
+				// console.log("jjjjggg给",JSON.stringify(data))
+				$('.tj1').text(data.result.defectsFound) //发现管网缺陷(个)
+				$('.tj2').text(data.result.rectified) //已整改(处)
+				$('.tj3').text(data.result.dispatchInstruction) //响应应急调度指令(次)
+				$('.tj4').text(data.result.passRate) //抽检合格率(%)
+			})
+		}
+		// 巡检任务完成率统计接口
+		xunjianjk()
+
+		function xunjianjk() {
+			var params = {
+				year: $('.xjrwwctime').text()
+			}
+			xunjian(params, function(data) {
+				// console.log("jjjjggg给", JSON.stringify(data))
+				for (let i = 0; i < data.result.length; i++) {
+					for (let k = 0; k < 12; k++) {
+						data.result[i].data[k] = (data.result[i].data[k] * 100).toFixed(2)
+						// console.log("ehoef欧文",(data.result[i].data[k]*100).toFixed(2))
+					}
+				}
+
+
+				option1.series = []
+				for (let i = 0; i < data.result.length; i++) {
+					option1.series.push({
+						name: data.result[i].name,
+						type: "bar",
+						data: data.result[i].data,
+					})
+					// console.log("uusssi祭祀哦", data.result.length)
+				}
+
+				myChart1.setOption(option1);
+				// console.log("jjjjggg给88", JSON.stringify(data))
+
+			})
+		}
+		// 养护管道统计接口
+		pipelinejk()
+
+		function pipelinejk() {
+			var params = {
+				year: $('.yhgdtime').text()
+			}
+			pipeline(params, function(data) {
+				const keyVal = {
+					allTasks: '派发工单',
+					completeTasks: '已完成工单',
+					remainTasks: '存量工单'
+				}
+
+				option.series[0].data = [] //派发工单
+				option.series[1].data = [] //已完成工单
+				option.series[2].data = [] //存量工单
+				for (let key in data.result) {
+					option.series[0].data[key - 1] = data.result[key].allTasks
+					option.series[1].data[key - 1] = data.result[key].completeTasks
+					option.series[2].data[key - 1] = data.result[key].remainTasks
+				}
+				for (let i = 0; i < 12; i++) {
+					// console.log("永远永远",option.series[0].data[i])
+					if (option.series[0].data[i] == null || option.series[0].data[i] == undefined) {
+						option.series[0].data[i] = "0"
+					}
+					if (option.series[1].data[i] == null || option.series[1].data[i] == undefined) {
+						option.series[1].data[i] = "0"
+					}
+					if (option.series[2].data[i] == null || option.series[2].data[i] == undefined) {
+						option.series[2].data[i] = "0"
+					}
+
+				}
+				// console.log("jjjjggg给88", JSON.stringify( option.series[0].data))
+				// console.log("jjjjggg给88", JSON.stringify(data))
+				// myChart.setOption(option);
+				myChart.setOption(option);
+			})
+		}
+
+		// 运维养护工作情况统计那个年份选者器选择点击触发
+		$('.timeYear').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".timeYear").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 运维养护工作情况统计页面上的年份数变化时触发
+		$('.timeYear').on('DOMNodeInserted', function() {
+			maintenanceWorkjk()
+		})
+		// 养护管道统计工作情况统计那个年份选者器选择点击触发
+		$('.yhgdtime').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".yhgdtime").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 养护管道统计工作情况统计页面上的年份数变化时触发
+		$('.yhgdtime').on('DOMNodeInserted', function() {
+			pipelinejk()
+		})
+		// 巡检任务完成率统计工作情况统计那个年份选者器选择点击触发
+		$('.xjrwwctime').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".xjrwwctime").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 巡检任务完成率统计工作情况统计页面上的年份数变化时触发
+		$('.xjrwwctime').on('DOMNodeInserted', function() {
+			xunjianjk()
+		})
+
+		// 养护指标统计工作情况统计那个年份选者器选择点击触发
+		$('.yhzbtime').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".yhzbtime").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		// 养护指标率统计工作情况统计页面上的年份数变化时触发
+		$('.yhzbtime').on('DOMNodeInserted', function() {
+			conservejk()
+		})
+	</script>
+
+</html>

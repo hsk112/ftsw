@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-input-row {
+				position: relative;
+				float: left;
+				width: 100%;
+				text-align: left;
+				clear: none;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				font-size: 25px;
+			}
+
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-left: 50px;
+				font-size: 16px;
+			}
+
+			.info-bar-title {
+				height: 40px;
+				background: #f6f4f7;
+				font-size: 15px;
+				text-align: left;
+				color: #8e8e8e;
+				line-height: 40px;
+				padding: 0 18px;
+			}
+			.info-bar-content{
+				/* height: 470px; */
+			}
+			.info-bar-content-item {
+				height: 370px;
+				margin: 0px 18px;
+				border-bottom: 1px solid #eee;
+			}
+
+			.info-bar-content-item .item-title {
+				text-align: left;
+				padding: 20px 0px 0px;
+				font-size: 14px;
+			}
+			.borderCss{
+				border-bottom: 1px solid #eee !important
+			}
+			.btn-item {
+				width: 80%;
+				margin-left: 10%;
+			}
+
+			.btn-item-2 {
+				width: 50%;
+				float: left;
+			}
+
+			.btn-item div,
+			.btn-item-2 div {
+				margin: 0 auto;
+				border: 1px solid #337BFC;
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 50px;
+			}
+/* 
+			.mui-scroll-wrapper {
+			} */
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+				color:#444444;
+			}
+
+			.mui-checkbox.mui-left label {
+				padding-left: 0;
+			}
+
+			.mui-backdrop {
+				background: rgba(0, 0, 0, 0.1);
+			}
+			
+			.img_item{
+				float: left;
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				margin-right: 20px;
+			}
+			.img_item::after{
+				clear:both;
+				content:'';
+				display:block;
+				width:0;
+				height:0;
+				visibility:hidden;
+			}
+			.img_item img{
+				width: 72px;
+				height: 72px;
+			}
+
+			.info-bar-content-item{
+				border: 0;
+			}
+			.btn-item {
+				width: 85%;
+				margin: 0 7%;
+			}
+			.img_close{
+				position: relative;
+				top: -84px;
+				left: 64px;
+			}
+			.btn-item div {
+			    margin: 0 auto;
+			    border: 1px solid #337BFC;
+			    width: 85%;
+			    height: 40px;
+			    line-height: 40px;
+			    border-radius: 50px;
+			}
+			.in-obj{
+				color: #888;
+				font-size: 13px;
+			}
+
+			input[type="radio"] {
+				opacity: 0;
+				/* display: inline-block; */
+				position: relative;
+				z-index: 5;
+				width: 20px;
+				height: 20px;
+			}
+
+			span[new] {
+				display: inline-block;
+				position: relative;
+				left:-20px;
+				top: 5px;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid #E3E3E3;
+				margin-right: -10px;
+			}
+			input:checked+span[new] {
+				background-color: #B3D7FF;
+				border: 1px solid #B3D7FF;
+			}
+
+			input:checked+span[new]::after {
+				position: absolute;
+				content: "";
+				width: 5px;
+				height: 10px;
+				top: 3px;
+				left: 6px;
+				border: 2px solid #fff;
+				border-top: none;
+				border-left: none;
+				transform: rotate(45deg)
+			}
+		</style>
+	</head>
+
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page" >
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">巡检内容</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/commom/nfc@2x.png" />
+					<img src="../img/commom/lixz@2x.png" />
+				</div>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content" style="height: 89%;position: relative;">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll" style="background: #ffffff;">
+						<div class="scroll-li" style="" style="background: #ffffff;">
+							<div style="border-bottom: 5px solid #F4F4F4;">
+								<div class="mui-collapse-content li-item-pull" id="object">
+									<div>
+										<div id="objHeader" style="padding: 10px 18px;background: #ffffff;">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="inspectDetail" style="margin-bottom: 3%;">
+				
+							</div>
+							
+							
+						
+
+							<div id="bgb" style="display:none;position: fixed;width: 100%;height: 100%;background: rgba(0,0,0,0.5);left: 0;top: 0;z-index: 995;">
+								<div style="position: absolute;margin: 0;padding: 20px 20px;background: #fff;z-index: 999;width: 80%;left: 10%!important;top: 15%;">
+									<div style="color: #888888;">
+										<h4 style="width: 100%;text-align: center;">检查标准</h4>
+										<h5 style="margin: 30px 0 10px;">检查标准</h5>
+										<p>安装场地必须是水平坚固的，如建平台，要确保平 台稳固无明显振动；电焊、喷漆等安装工作应在设 备就位前先做好，如确实要后做，就必需对整台机器予以保护</p>
+										<img src="../img/cal.png" alt="" width="33%" height="80px" style="background: red;"><img src="../img/cal.png"
+										 alt="" width="33%" height="80px"><img src="../img/cal.png" alt="" width="33%" height="80px">
+										<h5 style="margin: 30px 0 10px;">检查标准</h5>
+										<p>安装场地必须是水平坚固的，如建平台，要确保平 台稳固无明显振动；电焊、喷漆等安装工作应在设 备就位前先做好，如确实要后做，就必需对整台机器予以保护</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+			<!--页面主内容区结束-->
+			<div id="texthtml" class="scroll-li" style="position: fixed;z-index: 99;bottom:0px;width: 100%;background: #F4F4F4;">
+				  <div class="bottom-btn" style="font-size: 16px;">
+					<div class="btn-item-2" style="padding:10px 0;">
+						<div name="INSedit" style="color: #337BFC;width:90%;margin: 0 auto;">编辑</div>
+					</div>
+					<div class="btn-item-2" style="background: #f4f4f4;padding:10px 0;">
+						<div name="INSnext" style="background: #337BFC;color: #fff;width:90%;">下一个</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</body>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/inspect.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/timer.js"></script>
+	<script>
+		var self;
+		var signaturefileToken,signaturefileTokenlist=[]
+		var attachmentList=[]
+		var contentIdList = []
+		var isCheck = 'checked'
+		mui.init({
+			beforeback: function() {
+			
+				var list = plus.webview.currentWebview().opener();
+				//refresh是A页面自定义事件
+				mui.fire(list, 'backInspection');
+				//返回true,继续页面关闭逻辑
+				return true;
+			},
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		(function($){
+		        $(".mui-scroll-wrapper").scroll({
+		              bounce: false,//滚动条是否有弹力默认是true
+		              indicators: false, //是否显示滚动条,默认是true
+		        });        
+		    })(mui);
+		mui.ready(function() {});
+		mui.plusReady(function() {
+			var str =''
+			
+			self = plus.webview.currentWebview();			
+			var state = "";
+			// if(0== parseInt(self.objdata.state)){
+			// 	state = '<img src="../../img/commom/dxj.png" />';
+			// } else if(1== parseInt(self.objdata.state)){
+				state = '<img src="../../img/commom/yxj.png"/>';
+			// }
+			
+			str+=`<div class="object" >
+					<div><span class="in-obj">巡检对象：</span><span class="obj-title">${self.objdata.objectName}</span></div>
+						<div class="type-inspection">${state}</div>
+					</div>
+					<div class="object" style="text-align:left;">
+						<div style="width:100%;">
+							<span class="in-obj">巡检范围：</span>
+							<div class="obj-title" style="width:75%;display:inline-block;vertical-align:top;">${self.objdata.localDesc||'无'}</div>
+						</div>`
+						if(self.objlist[self.index].isNFC == 1){
+							str+=`<div style="float:right;"><img src="../../img/commom/nfc.png" alt=""></div>`
+						}
+					str+=`</div>
+					<div class="object">
+						<div>
+						<span class="in-obj">截止时间：</span>
+						<span class="obj-title">${self.endTime||'无'}</span>
+						</div>
+					</div></div>`							
+			
+			$("#objHeader").html(str)
+			getInspectInspectDetailQueryList({
+				objectId: self.objdata.objectGuid,
+				taskId: self.guid
+			}, function(data) {
+				str2 = ''
+				// var text = ``
+				// console.log(JSON.stringify(data))
+				// var text = `<div class="bottom-btn"><div class="btn-item">
+				// 					<div name="inspection_submit" style="background: #337BFC;color: #fff;">提交</div>
+				// 				</div></div>`
+				
+				if (data.result.records && data.result.records.length > 0) {
+					for (let i = 0; i < data.result.records.length; i++) {
+						
+						var h;
+						if(data.result.records[i].resultEnums != null ){
+							if(data.result.records[i].isPhoto == '1'){
+								h = data.result.records[i].resultEnums.length*50+370;
+							}else{
+								h = data.result.records[i].resultEnums.length*50+250;
+							}
+						}else{
+							if(data.result.records[i].isPhoto == '1'){		
+								h = data.result.records[i].resultContentType == null &&data.result.records[i].insType == 1?50:350;
+							}else{
+								h = 220;
+							}											
+						}
+						// console.log(h)
+						if (data.result.records[i].insType == 2) {
+							
+							str2 +=
+								`<div class="info-bar-content mui-left" style="height:auto;background:#ffffff">
+											<div class="info-bar-content-item radio1 borderCss" style="height: `+h+`px;">
+												<div class="item-title in-obj">
+													${data.result.records[i].contentName}
+												</div>
+												<div class="item-checkbox">`
+												data.result.records[i].resultContent=data.result.records[i].resultContent==null?'':data.result.records[i].resultContent;
+							str2 +=
+								`<div class="mui-input-row mui-checkbox mui-left" style="display:none;">
+								<label><input datacontent name=${data.result.records[i].contentId} resultId='-1' guid='-1' contentId=${data.result.records[i].contentId} value='其他' type="radio" `+isCheck+`>其他</label>
+									</div>
+									<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+										测值
+										<input style="color:#000000;" name=${data.result.records[i].contentId} resultName=${data.result.records[i].resultName} type="text" max=${data.result.records[i].maxValue} min=${data.result.records[i].minValue} name="" id="" placeholder="请输入" readonly value=${data.result.records[i].resultContent==null?'':data.result.records[i].resultContent} >
+								</div>`								
+							str2 +=
+								`<div class="mui-input-row mui-checkbox mui-left" >
+									<div class="item-title in-obj">
+										检查结果
+									</div>
+									<div style="width: 100%;text-align: left;">`
+							if (data.result.records[i].resultContentType == 1) {
+								str2 +=
+									`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="0"><span new></span>正常</label></div>
+											<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="2"><span new></span>良好</label></div>
+											<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="1" checked><span new></span>异常</label></div>`
+							} else if (data.result.records[i].resultContentType == 2) {
+								str2 +=
+									`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="0"><span new></span>正常</label></div>
+											<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="2" checked><span new></span>良好</label></div>
+											<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="1"><span new></span>异常</label></div>`
+							} else {
+								str2 +=
+									`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="0" checked><span new></span>正常</label></div>
+											<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="2"><span new></span>良好</label></div>
+											<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" disabled value="1"><span new></span>异常</label></div>`
+							}
+
+							str2 +=`</div>`
+							if(data.result.records[i].isPhoto == '1') {
+								str2 += `
+									<div class="scroll-li">
+
+										<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+											<div class="item-title in-obj" >
+												现场照片
+											</div>
+											<input id="${data.result.records[i].contentId}_PhotoInput" style="display: none;" />
+											<div class="${data.result.records[i].contentId}_img_list" style="height: 100px;">
+												<div id="${data.result.records[i].contentId}_photo" class="img_item" style="float: left;margin-right: 30px;margin-top:10px">
+													<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+												</div>
+											</div>
+
+
+										</div>
+									</div>`
+							}
+
+							creatDom(data.result.records[i].contentId, data.result.records[i].attachment, i)
+						}
+
+						if(data.result.records[i].insType == 1){
+							str2 +=
+									`<div style="background:#fff;height:auto;"><div class="info-bar-content mui-left" >
+											<div class="info-bar-content-item radio1 borderCss" style="height: `+h+`px">
+												<div class="item-title in-obj">
+													${data.result.records[i].contentName}
+												</div>
+												`
+							if(data.result.records[i].resultId && data.result.records[i].resultId !=1) {
+								for (let j = 0; j < data.result.records[i].resultEnums.length;j++) {
+									if (data.result.records[i].resultEnums.length != 0) {
+										contentIdList[j]=data.result.records[i].contentId;
+										
+										if(data.result.records[i].resultId == data.result.records[i].resultEnums[j].guid &&data.result.records[i].resultName!="其他"){
+											isCheck = ''
+											str2 +=`<div class="item-checkbox"><div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName} disabled checked><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}else{
+												str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName} disabled><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+											}
+									}
+
+									if(j == data.result.records[i].resultEnums.length -1){
+										str2 +=`</div><div class="mui-input-row mui-checkbox mui-left">
+															<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} disabled resultId='-1' guid='-1' type="radio" readonly value='' `+isCheck+`><span new></span>其他</label>
+																</div>
+																<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+																	<input name=${data.result.records[i].resultEnums[j].contentId} resultName=${data.result.records[i].resultEnums[j].resultName} type="text" name="" id="" placeholder="请输入" readonly value="">
+															</div>`
+
+										str2 +=`<div class="mui-input-row mui-checkbox mui-left" >
+																<div class="item-title in-obj">
+																	检查结果
+																</div>
+																<div style="width: 100%;text-align: left;">`
+										if(data.result.records[i].resultContentType == 1){
+											str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="0"><span new></span>正常</label></div>
+																		<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="2"><span new></span>良好</label></div>
+																		<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="1" checked><span new></span>异常</label></div>`
+										}else if(data.result.records[i].resultContentType == 2){
+											str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="0"><span new></span>正常</label></div>
+																		<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="2" checked><span new></span>良好</label></div>
+																		<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="1"><span new></span>异常</label></div>`
+										}else{
+											str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="0" checked><span new></span>正常</label></div>
+																		<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="2"><span new></span>良好</label></div>
+																		<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" disabled value="1"><span new></span>异常</label></div>`
+										}
+
+										str2 +=`</div>`
+										if(data.result.records[i].isPhoto == '1') {
+											str2 +=`
+																<div class="scroll-li">
+
+																	<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+																		<div class="item-title in-obj"">
+																			现场照片
+																		</div>
+																		<input id="${data.result.records[i].resultEnums[j].contentId}_PhotoInput" style="display: none;" />
+																		<div class="${data.result.records[i].resultEnums[j].contentId}_img_list" style="height: 100px;">
+																			<div id="${data.result.records[i].resultEnums[j].contentId}_photo" class="img_item" style=";margin-top:10px;float: left;margin-right: 30px;">
+																				<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+																			</div>
+																		</div>
+
+
+																	</div>
+																</div>`
+										}
+										creatDom(data.result.records[i].resultEnums[j].contentId,data.result.records[i].attachment,i)
+									}
+								}
+							} else {
+								var hasDefault = false;
+								if(data.result.records[i].resultEnums!= null){
+								for (let j = 0; j < data.result.records[i].resultEnums.length;j++) {
+									if (data.result.records[i].resultEnums.length != 0) {
+										contentIdList[j]=data.result.records[i].contentId;
+
+										if(data.result.records[i].resultEnums[j].isDefault){
+											hasDefault = true;
+											str2 +=`<div class="item-checkbox"><div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName} disabled checked><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}else{
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName} disabled><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}
+
+									}
+
+									if(j == data.result.records[i].resultEnums.length -1){
+										if(hasDefault){
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+											<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} resultId='-1' guid='-1' contentId=${data.result.records[i].contentId} value='其他' type="radio" disabled `+isCheck+`><span new></span>其他</label>
+												</div>
+												<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+													<input  style="color:#000000;" name=${data.result.records[i].resultEnums[j].contentId} resultName=${data.result.records[i].resultEnums[j].resultName} type="text" name="" id="" placeholder="请输入" readonly value=${data.result.records[i].resultContent==null?'':data.result.records[i].resultContent} >
+											</div>`
+											str2 +=`
+
+											<div class="mui-input-row mui-checkbox mui-left" >
+												<div class="item-title in-obj">
+													检查结果
+												</div>
+												<div style="width: 100%;text-align: left;">`
+
+											if(data.result.records[i].resultContentType == 1){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" disabled><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" disabled><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" disabled checked><span new></span>异常</label></div>`
+											}else if(data.result.records[i].resultContentType == 2){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" disabled><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" disabled checked><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" disabled><span new></span>异常</label></div>`
+											}else{
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" checked disabled><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" disabled><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" disabled><span new></span>异常</label></div>`
+											}
+
+											str2 +=`</div>`
+											if(data.result.records[i].isPhoto == '1') {
+												str2 +=`
+												<div class="scroll-li">
+
+													<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+														<div class="item-title in-obj">
+															现场照片
+														</div>
+														<input id="${data.result.records[i].resultEnums[j].contentId}_PhotoInput" style="display: none;" />
+														<div class="${data.result.records[i].resultEnums[j].contentId}_img_list" style="height: 100px;">
+															<div id="${data.result.records[i].resultEnums[j].contentId}_photo" class="img_item" style=";margin-top:10px;float: left;margin-right: 30px;">
+																<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+															</div>
+														</div>
+
+
+													</div>
+												</div></div></div>
+							</div>`
+											}
+
+											creatDom(data.result.records[i].resultEnums[j].contentId,data.result.records[i].attachment,i)
+										}else{
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+											<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} resultId='-1' guid='-1' contentId=${data.result.records[i].contentId} value='其他' type="radio" disabled `+isCheck+`><span new></span>其他</label>
+												</div>
+												<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+													<input  style="color:#000000;" name=${data.result.records[i].resultEnums[j].contentId} resultName=${data.result.records[i].resultEnums[j].resultName} type="text" name="" id="" placeholder="请输入" readonly value=${data.result.records[i].resultContent==null?'':data.result.records[i].resultContent} >
+											</div>`
+											str2 +=`
+
+											<div class="mui-input-row mui-checkbox mui-left" >
+												<div class="item-title in-obj">
+													检查结果
+												</div>
+												<div style="width: 100%;text-align: left;">`
+
+											if(data.result.records[i].resultContentType == 1){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" disabled><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" disabled><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" disabled checked><span new></span>异常</label></div>`
+											}else if(data.result.records[i].resultContentType == 2){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" disabled><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" disabled checked><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" disabled><span new></span>异常</label></div>`
+											}else{
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" checked disabled><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" disabled><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" disabled><span new></span>异常</label></div>`
+											}
+
+											str2 +=`</div>`
+											if(data.result.records[i].isPhoto == '1') {
+												str2 +=`
+												<div class="scroll-li">
+
+													<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+														<div class="item-title in-obj">
+															现场照片
+														</div>
+														<input id="${data.result.records[i].resultEnums[j].contentId}_PhotoInput" style="display: none;" />
+														<div class="${data.result.records[i].resultEnums[j].contentId}_img_list" style="height: 100px;">
+															<div id="${data.result.records[i].resultEnums[j].contentId}_photo" class="img_item" style=";margin-top:10px;float: left;margin-right: 30px;">
+																<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+															</div>
+														</div>
+
+
+													</div>
+												</div></div></div>
+							</div>`
+											}
+
+											creatDom(data.result.records[i].resultEnums[j].contentId,data.result.records[i].attachment,i)
+										}
+
+									}
+								}
+								}
+							}
+						}
+										
+											str2 +=`</div>
+												</div>
+												</div>`
+												<!-- <div class="info-bar-title" style="height: 1px;"></div> -->
+										}
+					
+				
+				}
+				$("#inspectDetail").html(str2)
+				$("#inspectDetail").find(".borderCss:last").removeClass("borderCss");
+				
+			});
+
+			var findFilesByGroupId = function(param, callback){
+				var url = config.urls.baseUrl + config.actions.findFilesByGroupId;
+			
+				app.showLoader();
+				$.ajax(url, {
+					data: param,
+					// data: "",
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					headers: {
+						// "Content-Type": "application/json",
+						"Content-Type": "application/x-www-form-urlencoded",
+						"X-Access-Token": app.sessionId(),
+						// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTg5Mjk1MDYsInVzZXJuYW1lIjoiY3doMDEifQ.f1H4CpN_us8XRDI-Nxdpfsw4Xc6eku1tVFmicLM1syw"
+					},
+					timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+					success: function(data) {
+						app.hideLoader();
+						if (dealingWithResponseCode(data)) {
+							callback(data);
+						} else {
+							app.toast(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						dealingWithErrorRequest(errorThrown);
+						app.hideLoader();
+						return callback('网络异常,请稍后再试');
+					}
+				});
+			}
+			
+			
+			function creatDom(name,attachment,j){
+				
+					
+				signaturefileTokenlist[j]=[]
+				// $("body").delegate("#"+name+"_photo","tap", function(e){
+					
+				// 	plusSelectImage(function(data, path) {
+				// 		// console.log(JSON.stringify(data));
+				// 		var html = '<div id="' + data.result.uploadFile.id + '" data-token="'+data.result.fileTokens+'" class="img_item " style="display:inline-block;margin-right:30px;">' +
+				// 			'		<img class="img_src" src="' + path+ '" style=""  />' +
+				// 			'		<div class="'+name+'_img_close img_close"><img src="../../img/deletePhoto.png" style="width:16px;height:16px;"/></div>' +
+				// 			'	</div>';
+				// 		$("."+name+"_img_list").append(html);
+								
+				// 		var count = $("."+name+"_img_list").children(".img_item").length;
+						
+				// 		if (count == 4) { //处理上传的数量
+				// 			$("#"+name+"_photo").hide();
+				// 		}
+						
+				// 	});
+				// });
+				
+				//删除图 附件-
+				
+				$("body").delegate("."+name+"_img_close","tap", function(e){
+					var that = $(this)
+					mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+						if (parseInt(result.index) == 0) {
+							
+							var index = signaturefileTokenlist[j].indexOf(that.parent().attr('data-token')); 
+							if (index > -1) { 
+								signaturefileTokenlist[j].splice(index, 1); 
+							} 
+							
+							that.parent().remove();
+							var count = $("."+name+"_img_list").children(".img_item").length;
+							
+							if (count != 4) {
+								$("#"+name+"_photo").show();
+							}
+						}
+					})
+				});	
+				
+				if(attachment){
+					findFilesByGroupId({groupId:attachment},function(data){
+							
+							var  html ='';
+							if( data.result.length>0){
+								for(let i=0;i<data.result.length;i++){
+									signaturefileToken = data.result[i].fileToken
+									signaturefileTokenlist[j].push(signaturefileToken)
+									html += '<div id="' + data.result[i].uploadFile.id + '" data-token="'+data.result[i].fileToken+'" class="img_item" style="margin-top:10px">' +
+										'		<img data-preview-src="" class="img_src" src="'+config.urls.domain+'/ecidi-cmp/sys/common/view/' + data.result[i].uploadFile.savePath+ '" style=""  />' +
+										// '		<div class="'+name+'_img_close img_close"><img src="../../img/deletePhoto.png" style="width:16px;height:16px;"/></div>' +
+										'	</div>';
+								}
+								$("."+name+"_img_list").html(html);
+							}
+							
+										
+							var count = $("."+name+"_img_list").children(".img_item").length;
+							
+							if (count == 4) { //处理上传的数量
+								$("#"+name+"_photo").hide();
+							}
+							
+					});
+				}
+				
+			}
+			
+			
+			
+		})
+		
+		$(function() {
+			$('input[name=radio1]').click(function() {
+				var val = $('input[type=radio][name=radio1]:checked').val()
+				if (val == 'Item33') {
+					$('#radio1').show();
+					$('.info-bar-content-item.radio1').css("height", "240px")
+				} else {
+					$('#radio1').hide();
+					$('.info-bar-content-item.radio1').css("height", "170px")
+				}
+			})
+		})
+
+// $("#fj_qz_photo").on("tap", function() {
+// 				plusSelectImage(function(data, path) {
+// 					// console.log(JSON.stringify(data));
+// 					signaturefileToken = data.result.fileTokens
+// 					signaturefileTokenlist.push(signaturefileToken)
+// 					console.log(signaturefileToken)
+// 					var html = '<div id="' + data.result.uploadFile.id + '" data-token="'+data.result.fileTokens+'" class="img_item " style="display:inline-block;margin-right:30px;">' +
+// 						'		<img class="img_src" src="' + path+ '" style=""  />' +
+// 						'		<div class="fj_qz_img_close img_close"><img src="../../img/deletePhoto.png" style="width:16px;height:16px;"/></div>' +
+// 						'	</div>';
+// 					$(".fj_qz_img_list").append(html);
+		
+// 					var count = $(".fj_qz_img_list").children(".img_item").length;
+// 					var h = 0
+// 					if(count>0){
+// 						h = 100
+// 					}
+// 					$(".fj_qz_img_list").css("height",h+"px")
+// 					if (count == 4) { //处理上传的数量
+// 						$("#fj_qz_photo").hide();
+// 					}
+					
+// 				});
+// 			});
+			
+			//删除图 附件-
+			$(document).on("tap", ".fj_qz_img_close", function() {
+				var that = $(this)
+				mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						
+						var index = signaturefileTokenlist.indexOf(that.parent().attr('data-token')); 
+						if (index > -1) { 
+							signaturefileTokenlist.splice(index, 1); 
+						} 
+						
+						that.parent().remove();
+						var count = $(".fj_qz_img_list").children(".img_item").length;
+						var h = 0
+						if(count>0){
+							h = 100
+						}
+						
+						$(".fj_qz_img_list").css("height",h+"px")
+						if (count != 4) {
+							$("#fj_qz_photo").show();
+						}
+					}
+				})
+			});	
+			
+	$("#ins_photo").on("tap", function() {
+			plusSelectImage(function(data, path) {
+				// console.log(JSON.stringify(data));
+				var html = '<div id="' + data.result.uploadFile.id + '" data-token="'+data.result.fileTokens+'" class="img_item">' +
+					'		<img class="img_src" src="' + path+ '" style=""  />' +
+					'		<div class="img_close">移除</div>' +
+					'	</div>';
+				$(".ins_img_list").append(html);
+		
+				var count = $(".ins_img_list").children(".img_item").length;
+				if (count == 3) { //处理上传的数量
+					$("#ins_photo").hide();
+				}
+				
+				
+			});
+		});
+		
+		//删除图
+		$(document).on("tap", ".img_close", function() {
+			var that = $(this)
+			mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+				if (parseInt(result.index) == 0) {
+					that.parent().remove();
+					var count = $(".ins_img_list").children(".img_item").length;
+					if (count != 3) {
+						$("#ins_photo").show();
+					}
+				}
+			})
+		});
+		
+	
+		$("body").delegate("div[name=INSedit]","tap", function(e){
+			var extras = {
+				data:self.data,
+				guid:self.guid,
+				objlist:self.objlist,
+				objguid:self.objguid,
+				objdata:self.objdata,
+				endTime:self.data.endTime,
+				index:self.index,
+			}
+			if(self.objdata.isNFC == 1){
+				var btnArray = ['确定', '取消'];
+				mui.confirm('此巡检对象需要进行NFC检测，是否继续', 'NFC检测提示', btnArray, function(e) {
+					if (e.index == 0) {
+						app.openPage("nfc.html", {
+							titleNView: {
+								titleText: 'NFC检测',
+								autoBackButton: true,
+								 "titleSize": "18px",
+							}
+						}, extras);
+					}
+				})
+			}else{
+				app.openPage("inspection_edit.html", {
+					titleNView: {
+						titleText: self.data.name,
+						autoBackButton: true,
+						"titleSize": "18px",
+					}
+				}, extras);
+			}
+			
+		});
+		
+		$("body").delegate("div[name=INSnext]","tap", function(e){
+			var extras
+			// console.log(JSON.stringify(self.objlist))
+			// console.log(self.index)
+			// console.log(self.objlist[parseInt(self.index)+1].state)
+			
+			if((parseInt(self.index)+1)<self.objlist.length){
+				extras = {
+					data:self.data,
+					guid:self.guid,
+					objlist:self.objlist,
+					objguid:self.objlist[parseInt(self.index)+1].objectGuid,
+					objdata:self.objlist[parseInt(self.index)+1],
+					endTime:self.endTime,
+					index:parseInt(self.index)+1,
+				}
+				
+				if(self.objlist[parseInt(self.index)+1].state == 1){
+						app.openPage("inspection_info.html", {
+							titleNView: {
+								titleText: self.data.name,
+								autoBackButton: true,
+								"titleSize": "18px",
+							}
+						}, extras);
+					}else{
+						if(self.data.objectTaskDtos[parseInt(self.index)+1].isNFC == 1){
+							var btnArray = ['确定', '取消'];
+							mui.confirm('此巡检对象需要进行NFC检测，是否继续', 'NFC检测提示', btnArray, function(e) {
+								if (e.index == 0) {
+									app.openPage("nfc.html", {
+										titleNView: {
+											titleText: 'NFC检测',
+											autoBackButton: true,
+											"titleSize": "18px",
+										}
+									}, extras);
+								}
+							})
+						}else{
+							app.openPage("inspection_edit.html", {
+								titleNView: {
+									titleText: self.data.name,
+									autoBackButton: true,
+									"titleSize": "18px",
+								}
+							}, extras);
+						}
+						
+					}
+				
+			}else{
+				var ok=true
+				console.log(JSON.stringify(self.objlist))
+				for(let i=0;i<self.objlist.length;i++){
+					console.log(JSON.stringify(self.objlist[i].state))
+					if(parseInt(self.objlist[i].state) !=1){
+						console.log(i)
+						extras = {
+							data:self.data,
+							guid:self.guid,
+							objlist:self.objlist,
+							objguid:self.objlist[i].objectGuid,
+							objdata:self.objlist[i],
+							endTime:self.endTime,
+							index:i
+						}
+						if(parseInt(self.objlist[i].isNFC) == 1){
+							var btnArray = ['确定', '取消'];
+							mui.confirm('此巡检对象需要进行NFC检测，是否继续', 'NFC检测提示', btnArray, function(e) {
+								if (e.index == 0) {
+									app.openPage("nfc.html", {
+										titleNView: {
+											titleText: 'NFC检测',
+											autoBackButton: true,
+											"titleSize": "18px",
+										}
+									}, extras);
+								}
+							})
+						}else if(parseInt(self.objlist[i].state) ==0){
+							console.log(11111111111111)
+							app.openPage("inspection_edit.html", {
+								titleNView: {
+									titleText: self.data.name,
+									autoBackButton: true,
+									"titleSize": "18px",
+								}
+							}, extras);
+						}
+						ok=false
+						break;
+					}				
+				}
+				console.log(ok)
+				if(ok){
+					var wvs = plus.webview.all();
+					var len = wvs.length;
+					
+					var ws2 = plus.webview.getWebviewById('inspectioning.html')
+					mui.fire(ws2,'aaa')		
+					for (var i = len-1; i >= 0; i--) {						
+					  //关闭除指定页面外的其他页面
+					  //key 可以是指定页面名称或者其他关键字
+					  if (wvs[i].getURL().indexOf("inspection_info") != -1 || wvs[i].getURL().indexOf("inspection_edit") != -1){
+						  console.log(wvs[i].getURL())
+					    // plus.webview.close(wvs[i]);
+						wvs[i].close('none');
+					  }			  
+					}
+					// extras = {
+					// 	guid:self.guid,
+					// }
+					// app.openPage("inspectioning.html", {
+					// 	titleNView: {
+					// 		titleText: self.data.name,
+					// 		autoBackButton: true,
+					// 		"titleSize": "18px",
+					// 	}
+					// }, extras);
+				}
+			}
+			
+		});
+		$("body").delegate("div[name=inspection_submit]","tap", function(e) {
+			param = []
+			$("input[datacontent]:checked").each(function (index) {
+					// alert($("input[type=text][name=" + $(this).attr("resultName") + "]").val())
+			    	param[index]={
+			    		"taskId": self.guid,
+			    		"objectId": self.objdata.objectGuid,
+			    		"isFinish": "1",
+			    		"contentId": $(this).attr("contentId"),
+			    		"resultContent": $("input[type=text][name=" + $(this).attr("resultName") + "]").val(),
+						"resultId":$(this).attr("value")
+						}
+			})
+			getInspectsaveInspectDetailBatch(JSON.stringify(param), function(data) {
+				
+				if (data.success) {
+			        app.toast("任务结束")
+					
+				} else {
+			        app.toast("数据异常")
+				}
+			
+			});
+		});
+
+		$("#help").on("tap", function() {
+			$("#bgb").css("display", "block")
+		});
+		$("#bgb").on("tap", function() {
+			$("#bgb").css("display", "none")
+		});
+		
+		// if(self.objdata.state == 1){
+		// 	$("input").attr("disabled",true)
+		// }
+		window.addEventListener('backInspection', function(e){//执行刷新
+			location.reload();
+		});
+	</script>
+
+</html>

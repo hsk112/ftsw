@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>进度管理</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<style>
+			.scheduleTab {
+				height: 55px;
+				line-height: 55px;
+				display: flex;
+				background: #fff;
+				margin-bottom: 5px;
+			}
+
+			.scheduleTab-month {
+				width: 50%;
+
+			}
+
+			.scheduleTab-week {
+				width: 50%;
+			}
+
+			.color {
+				color: #0493F3;
+			}
+
+			.month-blank {
+				display: block;
+				width: 24px;
+				height: 3px;
+				background: #0493F3;
+				border-radius: 2px;
+				margin: 0 auto;
+				margin-top: -3px;
+			}
+
+			.week-blank {
+				display: block;
+				width: 24px;
+				height: 3px;
+				background: #0493F3;
+				border-radius: 2px;
+				margin: 0 auto;
+				margin-top: -3px;
+
+			}
+
+			.filter {
+				display: flex;
+				justify-content: space-between;
+				padding: 0 16px;
+				height: 55px;
+				line-height: 55px;
+				font-size: 14px;
+				background: #fff;
+				margin-bottom: 5px;
+			}
+
+			.filter-left {
+				display: flex;
+				align-items: center;
+			}
+
+			.selectTime {
+				margin-left: 6px;
+			}
+
+			.reportList .monthReport-item {
+				padding: 0 16px;
+				background: #fff;
+				margin-bottom: 5px;
+			}
+
+			.reportList .monthReport-item .item-top {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 0.5px solid #EDEDED;
+				padding: 20px 0;
+			}
+
+			.monthReport-item .item-top .item-title {
+				display: flex;
+				width: calc(100% - 20px);
+
+			}
+
+			.monthReport-item .titleName {
+				max-width: calc(100% - 100px);
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				text-align: left;
+			}
+
+			.reportList .monthReport-item .item-bottom {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 16px 0;
+			}
+
+			.text-title {
+				font-size: 14px;
+				color: #888888;
+			}
+
+			.textData {
+				font-size: 14px;
+			}
+
+			.empty {
+				line-height: 200px;
+				width: 100%;
+				text-align: center;
+				font-size: 16px;
+				color: #BBBBBB;
+			}
+
+			/* 侧滑框 */
+			.sideslip-menu {
+				width: 295px;
+				height: 100%;
+				position: absolute;
+				top: 0px;
+				right: -295px;
+				background: #fff;
+				z-index: 102;
+				display: none;
+			}
+
+			.sideslip-menu .menu-list {
+				padding-top: 20px;
+			}
+
+			.sideslip-menu .menu-list .menu-list-item {
+				height: 54px;
+				line-height: 54px;
+				padding: 8px 5px 0px 5px;
+				display: flex;
+				justify-content: space-between;
+				border-bottom: 1px solid #EDEDED;
+			}
+
+			.menu-list-item .lable-text {
+				text-align: left;
+			}
+
+			.menu-list-item .proInp {
+				text-align: right;
+			}
+
+			.butt {
+				display: flex;
+				padding: 0px 21px 24px 20px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+
+			.reset {
+				width: 120px;
+				height: 40px;
+				color: #0493F3;
+				line-height: 40px;
+				text-align: center;
+				border: solid 1px #0493F3;
+				border-radius: 4px;
+
+			}
+
+			/* 弹窗日期样式修改 */
+			.mui-dtpicker-header,
+			.mui-poppicker-header {
+				height: 50px;
+			}
+
+			.mui-dtpicker-header button,
+			.mui-poppicker-header button {
+				border: none;
+				background-color: white;
+				color: #0493F3;
+				font-size: 16px;
+			}
+
+			.mui-dtpicker-header button:first-child,
+			.mui-poppicker button:first-child {
+				/*margin-right: 73%;*/
+				position: absolute;
+				left: 0;
+				color: #262626;
+
+			}
+
+			/* 弹窗日期样式修改 */
+			.mui-dtpicker,
+			.mui-poppicker {
+				background-color: white;
+			}
+
+			.mui-dtpicker-title {
+				display: none;
+			}
+
+			.mui-dtpicker .mui-picker,
+			.mui-poppicker .mui-picker {
+				background-color: white;
+			}
+
+			.comit {
+				width: 120px;
+				height: 40px;
+				color: #fff;
+				background: #0493F3;
+				line-height: 40px;
+				text-align: center;
+				border-radius: 4px;
+				margin-left: 14px;
+			}
+
+			/* 遮罩层 */
+			#fade {
+				/* display: none; */
+				position: absolute;
+				top: 0%;
+				left: 0%;
+				width: 100%;
+				height: 100%;
+				background-color: black;
+				z-index: 100;
+				-moz-opacity: 0.8;
+				opacity: .60;
+				/*透明度*/
+				filter: alpha(opacity=88);
+				display: none;
+			}
+
+			.hidden {
+				display: none;
+			}
+		</style>
+	</head>
+	<body style="margin: 0;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<div id="mui-content" class="mui-page">
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="scheduleTab">
+					<div class="scheduleTab-month color">项目月报<span class="month-blank"></span></div>
+					<div class="scheduleTab-week">项目周报<span class="week-blank hidden"></span></div>
+				</div>
+				<div class="filter">
+					<div class="filter-left" style="font-size: 14px;">
+						<img src="../../../img/commom/time1.png"
+							style="width: 13px;height: 14px;line-height: 14px;vertical-align:middle;margin-top:-2px;" />
+						<div class="selectTime month"><span class="nowYear">2020</span>年<span
+								class="nowMonth"></span>月
+						</div>
+						<div class="selectTime week hidden"><span class="nowYear">2020</span>年<span
+								class="nowWeek"></span>周
+						</div>
+						<span class="mui-icon mui-icon-arrowdown" style="font-size: 16px;font-weight: 700;"></span>
+					</div>
+					<div class="filter-right screen_quality" style="position: relative;top:4px;">
+						<img src="../../../img/commom/factor.png" style="width: 13px;height: 16px;" alt="">
+					</div>
+				</div>
+				<div id="scroll-wrapper" style="height: calc(100vh - 120px);">
+					<div>
+						<div class="monthReportList reportList">
+							<!-- <div class="monthReport-item">
+					        <div class="item-top">
+					            <div class="item-title">
+					                <div class="titleName" style="margin-right: 10px;font-weight: bold;">月报名称</div>
+					                <div style="font-size: 12px;border: 1px solid #FF7800; width: 46px;height: 16px;line-height: 16px;color:#FF7800;margin-top: 2px;border-radius: 2px;">流转中</div>
+					            </div>
+					            <div><span class="mui-icon mui-icon-arrowright" style="color:#0493F3;font-size: 20px;" ></span></div>
+					        </div>
+					        <div class="item-bottom">
+					            <div class="inputName">
+					                <span class="text-title">填写人：</span><span class="textData">张三</span>
+					            </div>
+					            <div class="inputTime">
+					                <span class="text-title">时间：</span><span class="textData">2021-05-12</span>
+					            </div>
+					        </div>
+					    </div>
+					
+					    <div class="monthReport-item">
+					        <div class="item-top">
+					            <div class="item-title">
+					                <div class="titleName" style="margin-right: 10px;font-weight: bold;">月报名称</div>
+					                <div style="font-size: 12px;border: 1px solid #FFAB61; width: 46px;height: 16px;line-height: 16px;color:#FF7800;margin-top: 2px;">流转中</div>
+					            </div>
+					            <div><span class="mui-icon mui-icon-arrowright" style="color:#0493F3;font-size: 20px;" ></span></div>
+					        </div>
+					        <div class="item-bottom">
+					            <div class="inputName">
+					                <span class="text-title">填写人：</span><span class="textData">张三</span>
+					            </div>
+					            <div class="inputTime">
+					                <span class="text-title">时间：</span><span class="textData">2021-05-12</span>
+					            </div>
+					        </div>
+					    </div> -->
+						</div>
+						<div class="weekReportList reportList hidden"></div>
+						<div id="no-data" style="display: none;padding:50px 0;">暂无数据</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- 侧滑菜单 -->
+			<div class="sideslip-menu">
+				<div class="menu-list">
+					<div class="mui-input-row input-row-item menu-list-item monthMagaName">
+						<label class="lable-text">月报名称</label>
+						<input type="text" class=" proInp" id="monthMagaName" placeholder="请输入月报名称">
+					</div>
+					<div class="mui-input-row input-row-item menu-list-item weekMagaName" style="display: none;">
+						<label class="lable-text">周报名称</label>
+						<input type="text" class=" proInp " id="weekMagaName" placeholder="请输入周报名称">
+					</div>
+					<div class="mui-input-row input-row-item menu-list-item">
+						<label class="lable-text">填写人</label>
+						<input type="text" class=" proInp realName" placeholder="请输写填写人">
+					</div>
+					<div class="mui-input-row input-row-item menu-list-item">
+						<label class="lable-text">状态</label>
+						<input type="text" class=" proInp state" placeholder="请选择流程状态 >">
+					</div>
+				</div>
+				<div class="butt">
+					<div class="reset">重置</div>
+					<div class="comit comit-month ">确认</div>
+					<div class="comit comit-week hidden">确认</div>
+				</div>
+			</div>
+			<!-- 侧滑菜单遮罩层 -->
+			<div id="fade"></div>
+		</div>
+	</body>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/maintain.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<!-- <script src="../../../js/timer.js"></script> -->
+	<script src="../../../js/vconsole.min.js"></script>
+	<script src="../../../js/bscroll.js"></script>
+	<script src="../../../js/schedule/schedule.js"></script>
+	<script>
+		let param = {
+			pageNo: 1,
+			pageSize: 100,
+			month:'',
+			monthReportName:'',
+			inputerfullname:'',
+			state:'',
+			delFlag:0
+		}
+		let weekParam = {
+			pageNo: 1,
+			pageSize: 100,
+			week:'',
+			weekReportName:'',
+			inputerfullname:'',
+			state:'',
+			delFlag:0
+		}
+		var self;
+		var currentItem = 0;
+		var dataList = null;
+		var monthData;
+		var weekDataList;
+		var allMessageDataLoad = false;
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+	  
+		var dtPicker = new mui.DtPicker({
+			type: 'month',
+			value: year + '-' + 0, // 设置默认时间
+			beginDate: new Date(2020, 00), //设置开始日期
+			endDate: new Date(year, month - 1), //设置结束日期
+			customData: {
+				m: [{
+						value: '0',
+						text: '全部'
+					},
+					{
+						value: '01',
+						text: '01'
+					},
+					{
+						value: '02',
+						text: '02'
+					},
+					{
+						value: '03',
+						text: '03'
+					},
+					{
+						value: '04',
+						text: '04'
+					},
+					{
+						value: '05',
+						text: '05'
+					},
+					{
+						value: '06',
+						text: '06'
+					},
+					{
+						value: '07',
+						text: '07'
+					},
+					{
+						value: '08',
+						text: '08'
+					},
+					{
+						value: '09',
+						text: '09'
+					},
+					{
+						value: '10',
+						text: '10'
+					},
+					{
+						value: '11',
+						text: '11'
+					},
+					{
+						value: '12',
+						text: '12'
+					}
+				]
+			} //时间/日期别名 
+		});
+		var dtweekPicker = new mui.PopPicker({
+			layer: 2
+		});
+		var weekData = [];
+		for (var i = 2020; i <= year; i++) {
+
+			var secondData = [];
+			secondData.push({
+				text: '全部',
+				value: 0
+			})
+			var weekNum = getWeekNum(new Date(i+1,0,0)).year>i?52:getWeekNum(new Date(i+1,0,0)).week;
+			for (var j = 1; j <= weekNum; j++) {
+				
+				var weekText = j<10?'0'+j:''+j
+				secondData.push({
+					text: weekText,
+					value: weekText
+				});
+			}
+			weekData.push({
+				value: i,
+				text: i,
+				children: secondData
+			})
+
+		}
+		dtweekPicker.setData(
+			weekData
+		)
+		dtweekPicker.pickers[0].setSelectedValue(year, '全部');
+		var flowStateNum = -1;
+		if (month < 10) {
+			month = "0" + month;
+		}
+		if (day < 10) {
+			day = "0" + day;
+		}
+		var nowDate = year + "-" + month + "-" + day;
+		mui.init({
+			swipeBack: false,
+			// pullRefresh: {
+			// 	container: '#scroll-wrapper', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			// 	//下拉刷新
+			// 	down: {
+			
+			// 		style:'circle',
+			// 		callback: function(){
+			// 			console.log("触发刷新")
+			// 			param.pageNo = 1;
+			// 			//清空div
+			// 			getMonthReportListData(function(data){
+							
+			// 			});
+			// 		}
+			// 	},
+			// 	//上拉加载
+			// 	up: {
+			// 		auto: false, // 可选,默认false.自动上拉加载一次
+			// 		height: 50,  //触发上拉加载拖动距离
+			// 		contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+			// 		contentnomore:'暂无更多数据',//可选，请求完毕若没有更多数据时显示的提醒内容；
+			// 		callback: function() {
+			// 			console.log("触发上拉")
+
+			// 			//mui('#scroll-wrapper').pullRefresh().endPullupToRefresh(false);
+			// 			getMonthReportListData(function(data){
+			// 				console.log("无更多数据")
+			// 				mui('#scroll-wrapper').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+			// 			});
+			// 			//mui('#scroll-wrapper').pullRefresh().endPullupToRefresh(true); 
+			// 		} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			// 	}
+			
+			//}
+		});
+		var rankBox = document.getElementById("scroll-wrapper"); // slider
+		var cBScroll = new BScroll(rankBox, {
+			click: true, // 主要控制非button元素的点击事件
+			probeType: 3,
+			pullUpLoad: true
+		});
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview()
+			//禁止选项卡自带滑动
+			// cBScroll.on('pullingUp', () => {
+			//     console.log("pullingUp-上拉加载更多" + allMessageDataLoad);
+			//     if (!allMessageDataLoad) {
+			//         upLoadMore();
+			//     }
+			// })
+			$(".nowYear").text(year);
+			$(".nowMonth").text('全部');
+			$(".nowWeek").text('全部');
+			//param.strParams.prjName = self.prjName
+			//param.strParams.minCreateTime = $(".nowYear").text() + '-' + $(".nowMonth").text() + '-' + '01'
+			currentItem = 0;
+			console.log('param=' + JSON.stringify(param))
+			getMonthReportListData()
+
+		})
+		//判断指定年份的第一天是否第1周，防止判断错误
+		function getWeekNumYearStart(date) {
+			if (date.getDay() <= 4) {
+				return 1
+			} else {
+				return 0
+			}
+		}
+
+		 function getWeekNum(date) {
+			var date1 = date;
+			var date2 = new Date(date.getFullYear(), 0, 1);
+			var d = Math.round((date1.valueOf() - date2.valueOf()) / 86400000);
+			var week = Math.ceil((d + ((date2.getDay() + 1) - 1)) / 7);
+			if (!getWeekNumYearStart(date2)) {
+				week = week - 1;
+			}
+			week = week > 9 ? week.toString() : '0' + week.toString();
+			var year = date1.getFullYear();
+			var day = date1.getDay();
+			var start = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate() - day + 1);
+			var end = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate() - day + 7);
+
+			if (end.getMonth() == 0 && end.getDate() >= 4 && start.getMonth() != 0) { //到第二年了。。
+				week = '01';
+				year = date1.getFullYear() + 1
+			}
+
+			return {
+				year: year,
+				week: week
+			}
+		}
+
+
+		function getMonthReportListData(callback) {
+			var url = config.urls.baseUrl + config.actions.getProjectMonthReportList
+			app.showLoader();
+			console.log('11111111111111111=' + JSON.stringify(param))
+			getProject(url, param, function(data) {
+				if (data.success) {
+					console.log('列表数据=' + JSON.stringify(data.result.records));
+					addList(data.result.records);
+					monthData = data.result.records;
+					if(callback){
+						callback();
+					}
+				} else {
+					mui.toast("列表查询失败")
+				}
+			})
+		}
+
+		function getWeekReportListData() {
+			var url = config.urls.baseUrl + config.actions.getProjectWeekReportList
+			app.showLoader();
+			getProject(url, weekParam, function(data) {
+				if (data.success) {
+					console.log('列表数据=' + JSON.stringify(data.result.records));
+					addList(data.result.records);
+					weekDataList = data.result.records
+				} else {
+					mui.toast("列表查询失败")
+				}
+			})
+		}
+
+		$(".scheduleTab-month").on('tap', function() {
+			currentItem = 0;
+			getMonthReportListData()
+
+		})
+		$(".scheduleTab-week").on('tap', function() {
+			currentItem = 1;
+			getWeekReportListData()
+		})
+		var addList = function(data) {
+			selectTab(currentItem);
+			if (data.length != 0) {
+				var item = ''
+				var str = ''
+				dataList = data
+				var color = ['#4990B3', '#FF7800', '#5ECB9B', '#A3A0A3']
+				var state = ['已暂存', '流转中', '已完成', '废弃']
+
+				for (var i = 0; i < dataList.length; i++) {
+					var reportName = currentItem == 0 ? dataList[i].monthReportName : dataList[i].weekReportName;
+					item = `
+                <div class="monthReport-item" data-index="${i}">
+                    <div class="item-top">
+                        <div class="item-title">
+                            <div class="titleName" style="margin-right: 10px;font-weight: bold;">${reportName}</div>
+                            <div style="font-size: 12px;border: 1px solid ${color[dataList[i].state]}; width: 46px;height: 16px;line-height: 16px;color:${color[dataList[i].state]};margin-top: 2px;border-radius: 2px;">${state[dataList[i].state]}</div>
+                        </div>
+                        <div><span class="mui-icon mui-icon-arrowright" style="color:#0493F3;font-size: 20px;" ></span></div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="inputName">
+                            <span class="text-title">填写人：</span><span class="textData">${dataList[i].inputerfullname}</span>
+                        </div>
+                        <div class="inputTime">
+                            <span class="text-title">时间：</span><span class="textData">${dataList[i].inputDate}</span>
+                        </div>
+                    </div>
+                </div>
+                `
+					str += item
+				}
+				switch (currentItem) {
+					case 0:
+						$(".monthReportList").empty()
+						$(".monthReportList").append(str)
+						break;
+					case 1:
+						$(".weekReportList").empty()
+						$(".weekReportList").append(str)
+						break;
+				}
+				// param.pageNo++;
+			} else {
+				switch (currentItem) {
+					case 0:
+						$(".monthReportList").empty()
+						$(".monthReportList").html("<div class='empty'>暂无数据</div>")
+						break;
+					case 1:
+						$(".weekReportList").empty()
+						$(".weekReportList").html("<div class='empty'>暂无数据</div>")
+						break;
+				}
+			}
+		}
+
+		function selectTab(index) {
+			switch (index) {
+				case 0:
+					$(".scheduleTab-month").addClass('color')
+					$(".scheduleTab-week").removeClass('color')
+					$(".week-blank").addClass("hidden")
+					$(".month-blank").removeClass('hidden')
+					$(".weekReportList").addClass('hidden')
+					$(".monthReportList").removeClass('hidden')
+					$(".weekMagaName").css('display', 'none')
+					$(".monthMagaName").css('display', 'block')
+					$(".comit-week").addClass("hidden")
+					$(".comit-month").removeClass("hidden");
+					$('.selectTime.month').removeClass('hidden')
+					$('.selectTime.week').addClass('hidden')
+					break;
+				case 1:
+					$(".scheduleTab-month").removeClass('color')
+					$(".scheduleTab-week").addClass('color')
+					$(".week-blank").removeClass('hidden')
+					$(".month-blank").addClass('hidden')
+					$(".weekReportList").removeClass('hidden')
+					$(".monthReportList").addClass('hidden')
+					$(".weekMagaName").css('display', 'block')
+					$(".monthMagaName").css('display', 'none')
+					$(".comit-week").removeClass("hidden")
+					$(".comit-month").addClass("hidden")
+					$('.selectTime.month').addClass('hidden')
+					$('.selectTime.week').removeClass('hidden')
+					break;
+
+
+			}
+		}
+		$(".selectTime.month").on('tap', function() {
+			dtPicker.show(function(selectItems) {
+				console.log('selectItems=' + JSON.stringify(selectItems))
+
+				var y = selectItems.y.text
+				var m = selectItems.m.text;
+				$(".selectTime.month .nowYear").text(y)
+				$(".nowMonth").text(m)
+				param['month'] = selectItems.m.value ==0?'':y+'-'+m;//全部的不传递month	   		
+				getMonthReportListData()
+				
+			})
+		})
+		$(".selectTime.week").on('tap', function() {
+			dtweekPicker.show(function(selectItems) {
+				console.log('selectItems=' + JSON.stringify(selectItems))
+
+                var yearWeek = dtweekPicker.getSelectedItems();
+				$(".selectTime.week .nowYear").text(yearWeek[0].text)
+				$(".nowWeek").text(yearWeek[1].text);
+				if(yearWeek[1].value == "0"){
+					weekParam['week'] = "";
+				}else{
+					weekParam['week'] = yearWeek[1].text;
+				}
+				getWeekReportListData()
+
+			})
+		})
+		// 遮罩层和侧滑菜单关闭
+		$("#fade").on('tap', function() {
+			reset()
+			$(".sideslip-menu").animate({
+				right: '-295px'
+			}, 0)
+			$(".sideslip-menu").css('display', 'none')
+			$("#fade").css('display', 'none')
+
+		})
+		// 遮罩层和侧滑菜单开启
+		$(".screen_quality").on('tap', function(e) {
+			$(".sideslip-menu").css('display', 'block')
+			$(".sideslip-menu").animate({
+				right: '0px'
+			}, 400)
+			$("#fade").css('display', 'block')
+		});
+		//重置按钮
+		$(".reset").on('tap', function() {
+			reset()
+		})
+
+		function reset() {
+			$("#monthMagaName").val('')
+			$("#weekMagaName").val('')
+			$(".realName").val('')
+			$(".state").val('')
+			flowStateNum = -1
+		}
+		$(".state").on('tap', function() {
+			var picker = new mui.PopPicker();
+			picker.setData([{
+					value: '0',
+					text: '已暂存'
+				},
+				{
+					value: '1',
+					text: '流转中'
+				},
+				{
+					value: '2',
+					text: '已完成'
+				},
+				{
+					value: '3',
+					text: '已废弃'
+				},
+			]);
+			picker.show(function(selectItems) {
+				$(".state").val(selectItems[0].text)
+				flowStateNum = selectItems[0].value
+			})
+		})
+		//月报筛选提交
+		$(".comit-month").on('tap', function() {
+			param.prjName = self.prjName
+			if ($("#monthMagaName").val() != '') {
+				param.monthReportName = $("#monthMagaName").val()
+			}
+			if ($(".realName").val() != '') {
+				param.inputerfullname = $(".realName").val()
+			}
+			if (flowStateNum != '-1') {
+				param.state = flowStateNum
+			}else{
+				param.state = ''
+			}
+		
+			currentItem = 0;
+			getMonthReportListData()
+			param = {
+				pageNo: 1,
+				pageSize: 100,
+				month:'',
+				monthReportName:'',
+				inputerfullname:'',
+				state:'',
+				delFlag:0
+				
+			}
+			reset()
+			$(".sideslip-menu").animate({
+				right: '-295px'
+			}, 0)
+			$(".sideslip-menu").css('display', 'none')
+			$("#fade").css('display', 'none')
+		})
+		//周报筛选提交
+		$(".comit-week").on('tap', function() {
+			weekParam.prjName = self.prjName
+			if ($("#weekMagaName").val() != '') {
+				weekParam.weekReportName = $("#weekMagaName").val()
+			}
+			if ($(".realName").val() != '') {
+				weekParam.prjLeaderFullname = $("realName").val()
+			}
+			if (flowStateNum != '-1') {
+				weekParam.state = flowStateNum
+			}
+			currentItem = 1;
+			getWeekReportListData()
+			weekParam = {
+				pageNo: 1,
+				pageSize: 100,
+				week:'',
+				weekReportName:'',
+				inputerfullname:'',
+				state:'',
+				delFlag:0
+		
+			}
+			reset()
+			$(".sideslip-menu").animate({
+				right: '-295px'
+			}, 0)
+			$(".sideslip-menu").css('display', 'none')
+			$("#fade").css('display', 'none')
+		})
+		//点击Item进入详情
+		$(".reportList").on('tap', '.monthReport-item', function() {
+			var index = $(this).attr('data-index')
+			console.log('monthData[index]=' + JSON.stringify(monthData[index]))
+			if (index != null) {
+				if (currentItem == 0) {
+					var extras = {
+						monthDataIndex: monthData[index],
+						prjName: self.prjName,
+						prId:self.prjId
+					}
+					debugger
+					app.openPage("./monthReportDetail.html", {
+						titleNView: {
+							titleText: monthData[index].monthReportName,
+							autoBackButton: true,
+						}
+					}, extras);
+				} else if (currentItem == 1) {
+					var extras = {
+						weekDataIndex: weekData[index],
+						prjName: self.prjName,
+						prId:self.prjId
+					}
+					app.openPage("./weekReportDetail.html", {
+						titleNView: {
+							titleText: weekDataList[index].weekReportName,
+							autoBackButton: true,
+						}
+					}, extras);
+				}
+			}
+
+		})
+	</script>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>项目概览</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/incidents/incident.css">
+    <link rel="stylesheet" href="../../css/mui.picker.css">
+    <link rel="stylesheet" href="../../css/mui.poppicker.css">
+    <link href="../../css/mui.picker.min.css" rel="stylesheet" />
+    <style>
+        .mui-scroll {
+            padding: 0 20px;
+        }
+
+        input[type=text] {
+            padding: 0;
+            margin: 0;
+        }
+
+        .mui-input-row1 {
+            display: flex;
+            justify-content: space-between;
+            height: 55px;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .mui-input-row1 .lebals {
+            flex: 3;
+            text-align: left;
+            color: #262626;
+            font-size: 16px;
+        }
+/* 1 */
+        .mui-input-row1 .xuanze {
+            flex: 4;
+            display: flex;
+            align-items: center;
+        }
+
+        .mui-input-row1 .xuanze button {
+            color: #B1B1B1;
+            border: none;
+            text-align: right;
+        }
+
+        .button_btn {
+            width: 255px;
+            display: flex;
+            justify-content: space-evenly;
+            position: fixed;
+            bottom: 40px;
+        }
+
+        .btns {
+            width: 110px;
+            height: 40px;
+
+        }
+
+        .mui-btn .mui-btn-block {
+            padding: 0;
+            font-size: 17px;
+        }
+
+        .mui-btn-block {
+            font-size: 17px;
+            margin-bottom: 0px;
+            padding: 0;
+            text-align: right;
+        }
+
+        .zt {
+            /* position: absolute;
+				top: 10px;
+				left: 140px; */
+            display: inline-block;
+            font-size: 12px;
+            /* border: 1px solid #ff7800; */
+            /* color: #ff7800; */
+            width: 46px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+        }
+
+        .zt span {
+            font-size: 12px;
+        }
+
+
+        .mui-input-row .mui-input-clear~.mui-icon-clear,
+        .mui-input-row .mui-input-password~.mui-icon-eye,
+        .mui-input-row .mui-input-speech~.mui-icon-speech {
+            font-size: 20px;
+            position: absolute;
+            z-index: 1;
+            top: 10px;
+            right: 60px;
+            width: 38px;
+            height: 38px;
+            text-align: center;
+            color: #999;
+        }
+
+        .statistical_table{
+             margin: 0 auto;
+             width: 100%;
+             border-radius: 5px;
+             height: 400px;
+             padding: 0px 10px 0px 10px;
+             margin-bottom: 5px;
+             box-sizing: border-box;
+             background-color: #FFF;
+             box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+
+         }
+
+        .statistical_table2{
+            margin: 0 auto;
+            width: 100%;
+            border-radius: 5px;
+            height: 112px;
+            padding: 0px 10px 0px 10px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            background-color: #FFF;
+            box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+
+        }
+
+        .statistical_table3{
+            margin: 0 auto;
+            width: 100%;
+            border-radius: 5px;
+            height: 267px;
+            padding: 0px 10px 0px 10px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            background-color: #FFF;
+            box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+
+        }
+
+        .statistical_table4{
+            margin: 0 auto;
+            width: 100%;
+            border-radius: 5px;
+            height: 267px;
+            padding: 0px 10px 0px 10px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+            background-color: #FFF;
+            box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+
+        }
+
+
+        .arrow{
+            width: 10px;
+            height: 13px;
+            margin-top: 5px;
+            margin-left: 50px;
+        }
+        .item-one{
+            flex-grow: 1;
+            text-align: left;
+        }
+        .item-two{
+            flex-grow: 1;
+            text-align: right;
+            width:65%;
+        }
+        .item-title{
+            display: flex;
+            padding: 10px 0px 10px 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--单页面开始-->
+    <div id="mui-content" class="mui-page">
+        <!--页面主内容区开始-->
+        <div class="mui-page-content" style="background: #FFF;">
+            <div class="mui-scroll-wrapper" style="background: #FFF;">
+                <div class="mui-scroll" style="background: #FFF;">
+
+                    <div class="administration" style="padding: 10px 0px 0px 0px;">
+                        <div class="statistical_table">
+                            <div style="padding: 10px 0px 10px 0px"><img src="../../img/enginering/swiper.jpg"  style="width: 100%;height: 300px;border-radius: 5px;" /></div>
+                            <div id="pro-title" style="display: flex;padding: 10px 0px 10px 0px;">
+                                <div style="border: 2px solid blue;background-color: blue"></div>
+                                <div id="prjName" style="width: 90%;text-align: left;margin-left: 2%;">福田水务正本清源水质项目</div>
+                                <div style="width: 35%"><img id="pro-arrow" class="arrow quality-arrow"  src="../../img/project_supervise/arrow2x.png"></div>
+                            </div>
+                            <div id="prjNo" style="text-align: left;margin-left: 10px;margin-bottom: 10px">FT2021055</div>
+<!--                            <div style="border-bottom: 0.5px solid #777777;padding: 10px 0px 10px 0px">-->
+                            <div id="pro-info" style="display: none">
+                                <div style="border-bottom: 1px solid #eee"></div>
+                                <div class="item-title">
+                                    <div class="item-one">计划完工时间: </div>
+                                    <div id="prjEndtime" class="item-two">2021-06-02</div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">项目类型: </div>
+                                    <div  class="item-two"></div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">项目所在地: </div>
+                                    <div id="prjLocation" class="item-two" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">深圳市福田区新洲路1555号</div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">建设阶段: </div>
+                                    <div id="stageDictText" class="item-two">施工阶段</div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">建设单位: </div>
+                                    <div id="constructionUnit" class="item-two">深圳市天鸿建筑公司</div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">匡算(万元): </div>
+                                    <div class="item-two"></div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">估算(万元): </div>
+                                    <div class="item-two"></div>
+                                </div>
+                                <div class="item-title">
+                                    <div class="item-one">概算(万元): </div>
+                                    <div class="item-two"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="administration" style="padding: 10px 0px 0px 0px;">
+                        <div class="statistical_table2">
+                            <div style="display: flex;padding: 17px 0px 17px 7px;">
+                                <div style="flex-grow: 1;text-align: left;font-weight: bold;">项目大事记</div>
+                                <div id="more-event" style="flex-grow: 1;text-align: right;margin-right: 7px; color: #8C8C8C;">更多</div>
+                            </div>
+                            <div id="big-event">
+<!--                                <div style="border-bottom: 1px solid #eee"></div>-->
+<!--                                <div style="display: flex;padding: 17px 0px 17px 7px;">-->
+<!--                                    <div style="flex-grow: 1;text-align: left">XXX大事记</div>-->
+<!--                                    <div style="flex-grow: 1;text-align: right;margin-right: 7px;">2021-04-09</div>-->
+<!--                                </div>-->
+<!--                                <div style="border-bottom: 1px solid #eee"></div>-->
+<!--                                <div style="display: flex;padding: 17px 0px 17px 7px;">-->
+<!--                                    <div style="flex-grow: 1;width:50%;text-align: left;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">XXX大事记记录记录记录记录</div>-->
+<!--                                    <div style="flex-grow: 1;text-align: right;margin-right: 7px;">2021-04-09</div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="administration" style="padding: 10px 0px 0px 0px;">
+                        <div class="statistical_table2">
+                            <div id="progress" style="display: flex;padding: 17px 0px 17px 7px;">
+                                <div style="flex-grow: 1;text-align: left;font-weight: bold;">前期进度</div>
+                                <div style="flex-grow: 1;text-align: right;margin-right: 7px;"><img id="progress-arrow" class="arrow quality-arrow"  src="../../img/project_supervise/arrow2x.png"></div>
+                            </div>
+                            <div style="border-bottom: 1px solid #eee"></div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="administration" style="padding: 10px 0px 0px 0px;">
+                        <div class="statistical_table3">
+                            <div style="display: flex;padding: 17px 0px 17px 7px;">
+                                <div style="flex-grow: 1;text-align: left;font-weight: bold;">资金情况</div>
+                            </div>
+                            <div style="border-bottom: 1px solid #eee"></div>
+                            <div style="padding: 10px 0px 0px 0px;">
+                                <div id="fund_situation" style="height: 200px"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="administration" style="padding: 10px 0px 0px 0px;">
+                        <div class="statistical_table4">
+                            <div style="display: flex;padding: 17px 0px 17px 7px;">
+                                <div style="flex-grow: 1;text-align: left;font-weight: bold;">安全情况</div>
+                            </div>
+                            <div style="border-bottom: 1px solid #eee"></div>
+                            <div style="padding: 10px 0px 0px 0px;">
+                                <div id="safety_situation" style="height: 200px"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="administration" style="padding: 10px 0px 0px 0px;">
+                        <div class="statistical_table4">
+                            <div style="display: flex;padding: 17px 0px 17px 7px;">
+                                <div style="flex-grow: 1;text-align: left;font-weight: bold;">质量情况</div>
+                            </div>
+                            <div style="border-bottom: 1px solid #eee"></div>
+                            <div style="padding: 10px 0px 0px 0px;">
+                                <div id="quality_situation" style="height: 200px"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束 -->
+    </div>
+</body>
+<script>
+    options = {
+        scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+        bounce: true //是否启用回弹
+    }
+</script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/timer.js"></script>
+<!--<script src="../../js/vconsole.min.js"></script>-->
+<script src="../../js/incident/incident.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/map/echarts.min.js"></script>
+<script src="../../js/projectManage/newProjectList.js"></script>
+
+
+
+<script>
+    // var vConsole = new VConsole();
+    mui.init({
+        swipeBack:false,
+    });
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    var userPicker = new mui.PopPicker();
+
+    let params = {
+        projectId:''
+    }
+
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var currentDayObj
+    mui.plusReady(function () {
+        var curr = plus.webview.currentWebview();
+        console.log(JSON.stringify(curr))
+        params.projectId = curr.guid
+        getProjectInfoByProIdMain(params)
+        getProjectQualityResultDataMain();
+        getSafetyQualityResultDataMain();
+        getMonsContractPaymentInfoDataMain()
+        setMonthMemoribiliaListData(params)
+    });
+
+
+    function getProjectInfoByProIdMain(params) {
+        getProjectInfoByProId(params,function (data) {
+            // console.log(JSON.stringify(data))
+            $('#prjName').text(data.result[0].prjName)
+            $('#prjNo').text(data.result[0].prjNo)
+            $('#prjEndtime').text(data.result[0].prjEndtime.substring(0,11))
+            $('#prjLocation').text(data.result[0].prjLocation)
+            $('#stageDictText').text(data.result[0].stageDictText)
+            $('#constructionUnit').text(data.result[0].constructionUnit)
+        })
+    }
+
+
+    //项目大事件
+
+    var bigEventData = null
+    function  setMonthMemoribiliaListData(params){
+        getMonthMemoribiliaList(params,function (data) {
+            console.log(JSON.stringify(data.result))
+            bigEventData =data.result
+            addBigEvent(data.result)
+        })
+    }
+
+    function  addBigEvent(data) {
+        var html = '';
+        for (let i = 0; i < 2 ; i++) {
+            html +='<div style="border-bottom: 1px solid #eee"></div>\n' +
+                '                                <div style="display: flex;padding: 17px 0px 17px 7px;">\n' +
+                '                                    <div style="flex-grow: 1;text-align: left">'+data[i].title+'</div>\n' +
+                '                                    <div style="flex-grow: 1;text-align: right;margin-right: 7px;">'+data[i].happenTime.substring(0,11)+'</div>\n' +
+                '                                </div>'
+        }
+        if (data.length==0){
+            html +='<div style="border-bottom: 1px solid #eee"></div>'
+            $('#big-event').html(html)
+        }else {
+            $('#big-event').html(html)
+            $('.statistical_table2').css('height',(112+(2-1)*55)+'px')
+        }
+    }
+
+    //更多
+    $('#more-event').on('tap',function () {
+
+        let extras = {
+            bigEventData:bigEventData
+        }
+        app.openPage("projectBigEvent.html", {
+            titleNView: {
+                titleText: '项目大事记',
+                autoBackButton: true,
+            }
+        }, extras);
+
+    })
+
+    //项目信息
+    var pro_arrow = true
+    $("#pro-title").on('tap', function() {
+        if (pro_arrow) {
+            $('#pro-arrow').css('transform', 'rotate(270deg)')
+            pro_arrow = false
+            $('#pro-info').show()
+            $('.statistical_table').css('height','730px')
+        } else {
+            $('#pro-arrow').css('transform', 'rotate(0deg)')
+            pro_arrow = true
+            $('#pro-info').hide()
+            $('.statistical_table').css('height','400px')
+        }
+    })
+
+    //前期进度
+    var progress_arrow = true
+    $("#progress").on('tap', function() {
+        if (progress_arrow) {
+            $('#progress-arrow').css('transform', 'rotate(270deg)')
+            progress_arrow = false
+            // $('#pro-info').show()
+            // $('.statistical_table').css('height','730px')
+        } else {
+            $('#progress-arrow').css('transform', 'rotate(0deg)')
+            progress_arrow = true
+            // $('#pro-info').hide()
+            // $('.statistical_table').css('height','400px')
+        }
+    })
+
+
+    //质量情况
+    function getProjectQualityResultDataMain() {
+        getProjectQualityResultData('',function (data) {
+            // console.log(JSON.stringify(data))
+            qualitySituation(data.result)
+        })
+    }
+
+    //安全情况
+    function getSafetyQualityResultDataMain() {
+        getSafetyQualityResultData('',function (data) {
+            // console.log(JSON.stringify(data))
+            safetySituation(data.result)
+        })
+    }
+
+    //资金情况
+    function getMonsContractPaymentInfoDataMain() {
+        var requestParam = {
+            year:'2021'
+        }
+        getMonsContractPaymentInfoData(requestParam,function (data) {
+            console.log(JSON.stringify(data))
+            fundSituation(data.result)
+        })
+
+    }
+
+    function fundSituation(data) {
+
+        var checkPayments = data.checkPayments
+        var applyPayments = data.applyPayments
+
+        var dom = document.getElementById("fund_situation");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        var option;
+
+
+
+        var posList = [
+            'left', 'right', 'top', 'bottom',
+            'inside',
+            'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+            'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+        ];
+
+        app.configParameters = {
+            rotate: {
+                min: -90,
+                max: 90
+            },
+            align: {
+                options: {
+                    left: 'left',
+                    center: 'center',
+                    right: 'right'
+                }
+            },
+            verticalAlign: {
+                options: {
+                    top: 'top',
+                    middle: 'middle',
+                    bottom: 'bottom'
+                }
+            },
+            position: {
+                options: posList.reduce(function (map, pos) {
+                    map[pos] = pos;
+                    return map;
+                }, {})
+            },
+            distance: {
+                min: 0,
+                max: 100
+            }
+        };
+
+        app.config = {
+            rotate: 90,
+            align: 'left',
+            verticalAlign: 'middle',
+            position: 'insideBottom',
+            distance: 15,
+            onChange: function () {
+                var labelOption = {
+                    normal: {
+                        rotate: app.config.rotate,
+                        align: app.config.align,
+                        verticalAlign: app.config.verticalAlign,
+                        position: app.config.position,
+                        distance: app.config.distance
+                    }
+                };
+                myChart.setOption({
+                    series: [{
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }]
+                });
+            }
+        };
+
+
+        var labelOption = {
+            show: true,
+            position: app.config.position,
+            distance: app.config.distance,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            rotate: app.config.rotate,
+            formatter: '{c}  {name|{a}}',
+            fontSize: 16,
+            rich: {
+                name: {
+                }
+            }
+        };
+
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: ['申请付款', '实际付款']
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {show: false},
+                    data: ['一月', '二月', '三月', '四月', '五月','六月', '七月', '八月', '九月', '十月','十一月', '十二月']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '万元'
+                }
+            ],
+            series: [
+                {
+                    name: '申请付款',
+                    type: 'bar',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: applyPayments
+                },
+                {
+                    name: '实际付款',
+                    type: 'bar',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: checkPayments
+                }
+            ]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    }
+
+
+    function safetySituation(data){
+        var allnum = data.allSafetyRectifyResultCount
+        var unnum = data.unSafetyRectifyResultCount
+        var num =  data.safetyRectifiedResultCount
+
+        var dom = document.getElementById("safety_situation");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        var option;
+
+
+
+        option = {
+            title:{
+                // text: '安全生产天数：0天',
+                left:'center',
+                bottom:10,
+                fontSize:10
+
+            },
+            tooltip: {
+                trigger: 'item',
+
+                formatter: "{a} <br/>{b}:{c}({d}%)"
+            },
+            legend: {
+                top: '5%',
+                left: 'center'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['40%', '60%'],
+                    avoidLabelOverlap: false,
+                    silent:false,
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter:function(){
+                            return ' '+allnum+'\r\n 合计/个'
+                        },
+                        textStyle: {
+                            fontSize:10
+                        }
+                    },
+                    emphasis: {
+                        label: {
+                            show: false,
+                            fontSize: '40',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        // {value: 1048, name: '隐患问题'},
+                        {value: num, name: '已整改'},
+                        {value: unnum, name: '未整改'}
+                    ]
+                }
+            ]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    }
+
+    //
+    function qualitySituation(data){
+
+        var allnum = data.allRectifyResultCount
+        var unnum = data.unRectifyResultCount
+        var num =  data.rectifiedResultCount
+
+        var dom = document.getElementById("quality_situation");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        var option;
+
+
+
+        option = {
+            title:{
+                // text: '质量生产天数：0天',
+                left:'center',
+                bottom:10,
+                fontSize:10
+
+            },
+            tooltip: {
+                trigger: 'item',
+
+                formatter: "{a} <br/>{b}:{c}({d}%)"
+            },
+            legend: {
+                top: '5%',
+                left: 'center'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['40%', '60%'],
+                    avoidLabelOverlap: false,
+                    silent:false,
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter:function(){
+                            return ' '+allnum+'\r\n 合计/个'
+                        },
+                        textStyle: {
+                            fontSize:10
+                        }
+                    },
+                    emphasis: {
+                        label: {
+                            show: false,
+                            fontSize: '40',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        // {value: 1048, name: '隐患问题'},
+                        {value: num, name: '已整改'},
+                        {value: unnum, name: '未整改'}
+                    ]
+                }
+            ]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    }
+
+
+    // fundSituation();
+
+    // safetySituation();
+
+    // qualitySituation();
+
+
+
+</script>
+
+</html>

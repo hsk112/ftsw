@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right{
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-slider{
+				height: 100vh;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+		   .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+		        transform: rotate(90deg);
+		        margin-left: 5px;
+		      }
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active +.titleleft{
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+			.mui-table-view-cell:after{
+				left:1px;
+				background-color: #F4F4F4;
+				height: 10px;
+			}
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 50px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #347CFC;
+				color: #347CFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 14px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: #FF5656;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: #29CC85;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: #FF7800;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+			.task-item_status{
+				position: absolute;
+				top: 8px;
+				right: 5px;
+			}
+
+			.bottom-item {
+				background: #FFFFFF;
+				position: absolute;
+				width: 100%;
+				bottom: 40px;
+				z-index: 999;
+				text-align: left;
+				padding: 20px 0 20px 0;
+				border-top-left-radius: 5%;
+				border-top-right-radius: 5%;
+				display: none;
+			}
+			.bottom-item-title {
+				display: flex;
+				align-items: center;			
+				font-size: 18px;
+				color: #161515;				
+				font-weight: bold;
+				margin-left: 20px;
+				/*margin-left: 15px;*/
+			}
+			
+			.fanwei{
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+			.item1{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 0px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item2{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 0px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item3{
+				position: absolute;
+				top:4px;
+				z-index: 10;
+				right: 64px ;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				/* border: 1px solid #337BFC; */
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.mui-navigate-left:after
+			{
+			    content: '\e472';
+				left: 5px;
+				bottom: 50px;
+			}
+			.object{
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+			.li-item{
+				background-color:white;
+			}
+			.li-item-pull{
+				background-color: #F4F4F4 !important;
+			}
+			.li-margin{
+				margin-bottom: 13px;
+				border-bottom: 1px solid #EDEDED;
+				padding-bottom: 0px;
+				font-size: 13px;
+				padding-bottom: 10px;
+			}
+			.in-obj{
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+			}
+			.obj-title{
+				color: #444444;
+			}
+			.bgc-white{
+				background-color: white;
+			}
+			.bgc-grey{
+				background-color: #F4F4F4;
+			}
+			.mui-navigate-r{
+				background: #fff;
+			}
+			.icon-css{
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+			.task_title{
+				display: inline-block;
+				padding: 8px 0;
+				color: #191515;
+				font-size: 15px;
+				font-weight: 500;
+				width: 50%;
+				word-break: break-all;
+				white-space: pre-wrap;
+			}
+			.sec-line{
+				color: #878787;
+				font-size: 14px;
+			}
+			/* 	.arrow_right{
+				transform: rotate(90deg);
+			} */
+			.ul-mar-bottom{
+				margin-bottom: -18px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn){
+				margin: 0;
+				padding:0;
+			}
+			.mui-table-view-cell.mui-active{
+				background: #fff;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+				    /*border-top: 7px solid #F4F4F4*/
+				border-top: 5px solid #F4F4F4
+			}
+			.color888{
+				color: #888888;
+			}
+			.ibh{
+				display: inline-block;
+				line-height: 28px;
+			}
+			.no-data {
+				position: absolute;
+				top: 10rem;
+				left: 50%;
+				display: inline-block;
+				font-size: 20px;
+				color: #999;
+				transform: translateX(-50%);
+			}
+			.showMore{
+				display: inline-block;
+			}
+			
+			.listTitle span{
+				width: 135px;
+				padding: 0;
+				color: #262626;
+				font-size: 18px;
+				font-weight: 500;
+				/*color: #888888;*/
+			}
+			
+			.listTitle{
+				display: flex;
+				width: 100%;
+				height: 40px;
+				font-size: 16px;
+				text-align: left;
+				padding-left: 15px;
+				line-height: 40px;
+				color: #888888;
+				/*background: #F4F4F4;*/
+			}
+			
+			.mui-table-view-cell{
+				padding: 0!important;
+			}
+			
+			
+			#select_ul span{
+				padding: 0;
+			}
+			.mui-table-view-cell:after{
+				left: 4%;
+				height: 2px;
+				width: 92%;
+			}
+			
+			.home-item {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				height: 300px;
+				background: #FFFFFF
+			}
+			
+			.home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+			
+			.home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+			
+			
+			.home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+			
+			.home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+			
+			}
+			
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+			
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+			
+			#riverMap0,#riverMap1{
+				width: 60px;
+				height: 60px;
+				position: absolute;
+				left: 82%;
+				top: 3%;
+				z-index: 1;
+			}
+			
+			#lakeMap1,#lakeMap0{
+				width: 60px;
+				height: 60px;
+				position: absolute;
+				left: 82%;
+				top: 13%;
+				z-index: 1;
+			}
+			
+			.btn-outlined{
+				border:1px solid #337BFC;
+				color: #337BFC;
+			}
+			.mui-btn.mui-active:enabled{
+				background: #337BFC;
+			}
+			
+			#paishType div{
+				text-align: left;
+			}
+			
+			#paishType{
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.typeWrapper{
+				display: inline-block;
+				max-width: 33.33%;
+				margin:20px 0 0 15px;
+			}
+			
+			#tableWrapper{
+				width: 90%;
+				height:auto;
+				margin: 20px auto;
+				overflow-x: scroll;
+			}
+			
+			#tableWrapper *{
+				border: 1px solid #ECECEC;
+			}
+			
+			#tableWrapper tr{
+				height: 35px;
+			}
+			
+			#percent div{
+				padding:0;
+				margin: 0;
+			}
+			
+			#tableCont{
+				padding-right: 50px;
+			}
+			#tableCont *{
+				word-break: keep-all;
+				white-space:nowrap;
+			}
+			
+			#tableCont th{
+				padding: 0 10px;
+			}
+			
+			#tableBody td{
+				padding: 0 10px;
+			}
+			.title-right{
+				/*width: 65%;*/
+				flex: 1;
+				text-align: right;
+				display: inline-block;
+				font-size: 14px;
+			}
+			.area{
+				width: 60px;
+				padding: 0 5px;
+				text-align:right;
+				display: inline-block;
+				line-height: 25px;
+				font-size: 12px;			
+				font-weight: 400;
+				color: #337BFC;
+			}
+			.street{
+				width: auto;
+				padding: 0 5px;
+				text-align:right;
+				display: inline-block;
+				line-height: 25px;
+				font-size: 12px;			
+				font-weight: 400;
+				color: #337BFC;
+			}
+			.arrow-icon{
+				font-size:16px;
+				font-weight:900;
+				color: #337BFC !important;
+			}
+			.mapboxgl-ctrl-bottom-left {
+			    bottom: 250px;
+			    left: 0;
+			}
+			.bottom-item-info{
+				font-size: 14px;
+				font-weight: 500;
+				color: #888888;
+				margin:10px 20px 0 20px;
+				font-size: 14px;
+			}
+			.pshLabel{			
+				font-size: 14px;
+				font-weight: bold;
+				/*color: #7F7F7F;*/
+				color: #444444;
+			}
+			.marker {width:0; height:0;}
+			
+			.marker span {
+			  display:flex;
+			  justify-content:center;
+			  align-items:center;
+			  box-sizing:border-box;
+			  width: 26px;
+			  height: 26px;
+			  /*color:#fff;*/
+				color:transparent;
+			  /*background: #693;*/
+				background: transparent;
+			  /*border:solid 1px;*/
+				border: none;
+			  /*border-radius: 0 70% 70%;*/
+			  /*box-shadow:0 0 1px #000;*/
+				box-shadow: none;
+			  cursor: pointer;
+			  transform-origin:0 0;
+			  /*transform: rotateZ(-135deg);*/
+				transform: rotateZ(0deg);
+				transform: translate(-10px,-20px);
+			  font-size: 8px;
+			}
+			
+			.marker b {transform: rotateZ(135deg)}
+			
+			#closeBottom{
+				border: 1px solid #337BFB;
+			    border-radius: 20px;
+				height: 40px;
+				line-height: 30px;
+				font-size: 16px;
+				background: #337BFC;
+				color: #fff;width: 80%;
+				margin-left: 10%;
+				margin-bottom: 10px;
+			}
+		/* 自定义样式	*/
+			.arrow-down-blue {
+				width: 9px;
+				height: 6px;
+			}
+			.psh-level-item {
+				display: flex;
+				width: 50%;
+			}
+			.psh-level-item img {
+				width: 20px;
+				height: 24px;
+				margin-right: 5px;
+			}
+
+			/* 选择框 */
+			.mui-checkbox input[type=checkbox]:before {
+				font-size: 22px;
+			}
+			.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]
+			{
+				left: 0;
+				top: 10px;
+			}
+			.mui-checkbox.mui-left label, .mui-radio.mui-left label
+			{
+				padding-left: 20px;
+				display: flex;
+			}
+			/* 滚动指示器 */
+
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 1px solid #FFFFFF;
+			}
+
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+				/*color: #007aff;*/
+				border-bottom: 2px solid #007aff;
+				background: 0 0;
+				content: '';
+				width: 24px;
+				display: block;
+				margin: 0 auto;
+			}
+			.mui-table-view:before {
+				height: 0;
+				background-color: transparent;
+				/*background-color: #F4F4F4;*/
+			}
+			.mui-content-padded {
+				margin: 0;
+			}
+			/*.mapboxgl-canvas {*/
+			/*	height: 100% !important;*/
+			/*}*/
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="home-item" style="display: none;" id="home-item">
+			<div class="home-item-list" id="business_item">
+				<div class="item" id="monitor">
+					<img src="../../../img/commom/monitor.png">
+					<span>监测信息</span>
+				</div>
+				<!-- 	<div class="item" id="quality">
+						<img src="../../../img/commom/quality-icon.png">
+						<span>质量检查</span>
+					</div> -->
+				<div class="item" id="riverArchives">
+					<img src="../../../img/commom/rivers.png">
+					<span>河湖档案</span>
+				</div>
+				<div class="item" id="leaderList">
+					<img src="../../../img/commom/leaderList.png">
+					<span>河湖长名录</span>
+				</div>
+				<div class="item" id="emergency">
+					<img src="../../../img/commom/emergency.png">
+					<span>应急资源</span>
+				</div>
+				<div class="item" id="waterRisk">
+					<img src="../../../img/commom/waterRisk.png">
+					<span>积水风险点</span>
+				</div>
+				<div class="item" id="paishui">
+					<img src="../../../img/commom/paishuihu.png">
+					<span>排水户</span>
+				</div>
+				<div class="item" id="overflow">
+					<img src="../../../img/commom/overflow.png">
+					<span>冒溢点</span>
+				</div>
+				<div class="item" id="hybrid">
+					<img src="../../../img/commom/mixed.png">
+					<span>混接点</span>
+				</div>
+				<div class="item" id="shuiwuFacility">
+					<img src="../../../img/commom/shuiwu.png">
+					<span>水务设施</span>
+				</div>
+				<div class="item" id="policy">
+					<img src="../../../img/commom/policy.png">
+					<span>政策法规</span>
+				</div>
+				<div class="item" id="standard">
+					<img src="../../../img/commom/standard.png">
+					<span>标准规范</span>
+				</div>
+				<div class="item" id="operContract">
+					<img src="../../../img/commom/operContract.png">
+					<span>运维合同</span>
+				</div>
+			</div>
+		</div>
+
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+<!--						mui-slider -->
+						<div id="slider" class="">
+							<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+							 style="padding: 0 68px;color: #888888; height: 46px">
+								<a id="item1" class="mui-control-item mui-active" href="#selectItem1" style="padding-right: 30%;">
+									统计
+								</a>
+								<a id="item2" class="mui-control-item" href="#selectItem2" style="padding-left: 30%;">
+									地图
+								</a>
+							</div>
+<!--							<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #337BFC;height: 2px;background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%,-->
+<!--									 rgba(0, 0, 0, 0) 39.9%, #337BFC 40%, #337BFC 50%, #337BFC 59.9%, -->
+<!--									rgba(0, 0, 0, 0) 60%,  rgba(0, 0, 0, 0) 100%);"></div>-->
+
+							<div id="scroll-wrapper" class="" style="height: calc(100vh - 46px);border-top: 5px solid #F4F4F4;">
+
+								<div class="mui-content-padded">
+									<div id="selectItem1" style="padding-top: 10px;" class="mui-slider-item mui-control-content mui-active">
+										<div id="scroll1" class="mui-scroll-wrapper" style="height: 100vh;background: #FFFFFF;">
+											<div class="mui-table-view">
+												<div class="listNav" >
+													<div class="listTitle">
+														<span>排水户级别统计</span>
+														<div class="title-right">
+															<div class="area" id="area1">
+																<label id="areaLabel">全区</label>
+																<img src="../../../img/arrowDownBlue.png" class="arrow-down-blue" style="width: 9px;">
+	<!--															<span class="mui-icon mui-icon-arrowdown arrow-icon"></span>-->
+															</div>
+															<div class="street" id="street1" style="display: none;">
+																<label>香蜜湖街道</label>
+																<img src="../../../img/arrowDownBlue.png" class="arrow-down-blue" style="width: 9px;">
+	<!--															<span class="mui-icon mui-icon-arrowdown arrow-icon"></span>-->
+															</div>
+														</div>
+													</div>
+													<div id="main1" style="width: 100%;height:300px;"></div>
+													<div id="main2" style="display: none;width: 100%;height:300px;"></div>
+												</div>
+
+												<!-- 分隔线 -->
+												<div style="width: 100%;height: 5px;background-color: #F4F4F4"></div>
+
+
+												<div class="listNav">
+													<div class="listTitle">
+														<span>排水户性质统计</span>
+														<div class="title-right">
+															<div class="area" id="area2">
+																<label>全区</label>
+																<img src="../../../img/arrowDownBlue.png" class="arrow-down-blue" style="width: 9px;">
+	<!--															<span class="mui-icon mui-icon-arrowdown arrow-icon"></span>-->
+															</div>
+															<div class="street" id="street2" style="display: none;">
+																<label>香蜜湖街道</label>
+																<img src="../../../img/arrowDownBlue.png" class="arrow-down-blue" style="width: 9px;">
+	<!--															<span class="mui-icon mui-icon-arrowdown arrow-icon"></span>-->
+															</div>
+														</div>
+													</div>
+													<div id="main3" style="width: 100%;height:500px;"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="selectItem2" class="mui-slider-item mui-control-content">
+										<div id="scroll2" class="mui-scroll-wrapper" style="height: 100vh;">
+											<div id="map" class="mapboxgl-map" style="position: absolute;left: 0;top: 0; z-index: 99;height: 100vh;width: 100%;"></div>
+											<div id="bottom-item" class="bottom-item">
+												<span class="bottom-item-title" style="position: relative;">
+													<span id="bottom-icon" style="margin-right: 5px;display: none">
+														<img style="width: 31px;" src="../../../img/commom/ps_location.png">
+													</span>
+													<span id="allLevel">福田区：排水户统计（<span id="count"></span>）</span>
+													<!-- 	<img id="closeBottom" src="../../../img/commom/del.png" style="width: 20px; position: absolute; top: 8px; right: 5%;"
+													 alt=""> -->
+												</span>
+												<div id="ps_details" class="bottom-item-info" style="font-weight: normal;">
+													<span id="streetLabel" style="color: #8C8C8C;">街道名称：</span>
+													<span id="streetName" style="color: #444444; "></span>
+													<div style="height: 1px;margin-top: 10px;background-color: #F4F4F4;"></div>
+												</div>
+												<div class="content" style="font-size: 14px;padding: 10px 20px;">
+													<div style="display: flex;flex: 1; justify-content: space-between; text-align: left;width: 100%;">
+														<div class="psh-level-item">
+	<!--														<div style="display: inline-block; background-color:#2E64F0; width: 10px; height: 10px;margin-right: 5px;">-->
+															<div class="item-checkbox">
+																<div class="mui-input-row mui-checkbox mui-left">
+																	<label class="checkBoxCss">
+																		<img src="../../../img/icon1.png" alt="" style="width: 20px;"/>
+																		<span class="pshLabel" id="pshLevel1">一级排水户(
+																			<span id="firstLevelPshs" style="color: #444444;"></span>
+																			)
+																		</span>
+																	</label>
+																	<input name="firstLevelPshs" value="0" type="checkbox" checked>
+																</div>
+
+															</div>
+	<!--														<img src="../../../img/icon1.png" alt="" style="width: 20px;"/>-->
+	<!--														<span class="pshLabel" id="pshLevel1">一级排水户(-->
+	<!--															<span id="firstLevelPshs" style="color: #444444;"></span>-->
+	<!--															)-->
+	<!--														</span>-->
+
+														</div>
+														<div class="psh-level-item">
+	<!--														<div style="display: inline-block; background-color:#00E6C0; width: 10px; height: 10px;margin-right: 5px;"></div>-->
+
+															<div class="item-checkbox">
+																<div class="mui-input-row mui-checkbox mui-left">
+																	<label class="checkBoxCss">
+																		<img src="../../../img/icon2.png" alt=""  style="width: 20px;" />
+																		<span class="pshLabel" id="pshLevel2">二级排水户(
+																			<span id="secondLevelPshs" style="color: #444444;"></span>
+																			)
+																		</span>
+																	</label>
+																	<input name="secondLevelPshs" value="0" type="checkbox" checked>
+																</div>
+
+															</div>
+
+	<!--															<img src="../../../img/icon2.png" alt=""  style="width: 20px;" />-->
+	<!--														<span class="pshLabel" id="pshLevel2">二级排水户(-->
+	<!--															<span id="secondLevelPshs" style="color: #444444;"></span>-->
+	<!--															)-->
+	<!--														</span>-->
+														</div>
+													</div>
+												</div>
+												<!--应要求关闭确定按钮 0406前-->
+												<!--<button id="closeBottom">确定</button>-->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--页面主内容区结束-->
+				</div>
+			</div>
+		</div>
+	</body>
+
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/maintain.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/echarts.min.js"></script>
+	<script src="../../../js/infoQuery/paishui.js"></script>
+	<script src="../../../js/position.js"></script>
+	<script src="../../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({
+			swipeBack: false
+		});
+
+		mui.back = function() {
+			var curr = plus.webview.currentWebview();
+			// var wvs = plus.webview.all();
+			// for (var i = 0, len = wvs.length - 1; i < len; i++) {
+			// 	let theurl = wvs[i].getURL() + '';
+			// 	if (!(theurl.search('login.html') != -1 ||
+			// 			theurl.search('www/main.html') != -1 ||
+			// 			theurl.search('www/index.html') != -1 ||
+			// 			theurl.search('/searchInfo/index.html') != -1)) {
+			// 		wvs[i].close('none');
+			// 	}
+			// }
+			curr.close('slide-out-right');
+		}
+
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options: {
+				minZoom: 5 //12
+			},
+			style: 'color',
+			initCallback: () => {}
+		});
+		const layerSelections = window['mobile-lib'].layerSelections;
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,
+			style: 'color'
+		});
+
+		mobileContainer.on('load', () => {
+			// getCurrentPosition();
+			mobileContainer.enableCenterAddress(true);
+			mobileContainer.setQuery(
+			); //加载排水户
+			mobileContainer.showAnnotation(true);
+		});
+		//点击标记
+		mobileContainer.on('showInfo', data => {
+		    console.log("showInfo")
+			console.log(JSON.stringify(data))
+			$("#bottom-item").show();
+			$("#count").text(data.info.total);
+			$('#streetName').text(data.info.name);
+			$('#firstLevelPshs').text(data.info.firstLevelPsh)
+			$('#secondLevelPshs').text(data.info.secondLevelPsh)
+		})
+
+		var keyPoints = [];
+		var keyPointsAll = [];
+		var keyPointsFirst = [];
+		var keyPointsSecond = [];
+		var lastestLayer = {};
+		var keyPointsFirstShow = true;
+		var keyPointsSecondShow = true;
+		var isShow = true;
+		var mask = mui.createMask();
+		var area2OrStreet2Tap = false;
+
+		var streets = []; //街道
+		var firstLevelPshs = []; //一级排水户数量
+		var secondLevelPshs = []; //二级排水户数量
+		var areaData = [{
+				text: '全区',
+				value: '1'
+			},
+			{
+				text: '街道',
+				value: '1'
+			},
+			{
+				text: '流域',
+				value: '2'
+			},
+			{
+				text: '水所',
+				value: '3'
+			}
+		]; //区域筛选数据 
+		var secondData = []; //排水户等级 二级筛选数据
+		var secondData2 = []; //排水户性质 二级筛选数据
+		var natureData = []; //排水户性质数据 - 全区累加
+		var natureDataByStreet = []; //根据街道排水户性质数据 - 没有累加 ，具体街道的数量
+		var pslLevelDataByStreet = []; //根据街道排水户等级数据
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		var extras = {
+			openNum: 0
+		}
+
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+            console.log("click")
+        	$("#bottom-item").hide();
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var pickerpxtop = null;
+		var userPicker = new mui.PopPicker();
+
+		// 没有进入到这个方法 ？
+		mui.plusReady(function() {
+
+			//禁止选项卡自带滑动
+			// mui('.mui-slider').slider().stopped = true;
+			var self = plus.webview.currentWebview();
+			// extras.openNum = self.openNum + 1; //初始化打开页面数量
+
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/bgTopClear.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							// if (isShow) {
+							// 	isShow = false;
+							// 	$("#home-item").show();
+							// 	mask.show()
+							// } else {
+							// 	isShow = true;
+							// 	$('#home-item').hide();
+							// 	mask.close();
+							// }
+						}
+					}],
+				}
+			});
+
+			//0407应要求隐藏掉
+			// self.setStyle({
+			// 	titleNView: {
+			// 		backgroundImage: "../../../img/bgTop.png",
+			// 		backgroundRepeat: 'no-repeat',
+			// 		buttons: [{
+			// 			float: 'right',
+			// 			width: '70',
+			// 			fontSize: '17',
+			// 			text: '',
+			// 			onclick: function() {
+			// 				if (isShow) {
+			// 					isShow = false;
+			// 					$("#home-item").show();
+			// 					mask.show()
+			// 				} else {
+			// 					isShow = true;
+			// 					$('#home-item').hide();
+			// 					mask.close();
+			// 				}
+			// 			}
+			// 		}],
+			// 	}
+			// });
+
+			console.log("init() 之前 ");
+			init();  // 正式放开 ,放到外面
+			// 初始化数据列表（河流数据）
+			// 初始化选项框状态
+			// initCheckBox(); // 加载数据之后调用
+
+			// $("#area1,#area2").on('tap', function() {
+			// 	var that = $(this)
+			// 	if ($(".mui-poppicker").hasClass("mui-active")) {
+			// 		userPicker.hide();
+			// 		return false;
+			// 	} else {
+			// 		userPicker.setData(areaData);
+			// 		userPicker.show(function(items) {
+			// 			that.children().first().text(items[0].text);
+			// 			if (items[0].text == '全区') {
+			// 				that.next().hide();
+			// 				if (that.attr("id") == 'area1') {
+			// 					console.log(111)
+			// 					getData1(items[0].value)
+			// 					that.next().children().first().text(secondData[0].text);
+			// 					drawEchart1()
+			// 					$("#bottom-item").hide();
+			// 				} else {
+			// 					getData2(items[0].value)
+			// 					that.next().children().first().text(secondData2[0].text);
+			// 					drawEchart3(natureData)
+			// 				}
+			// 			} else {
+			// 				that.next().fadeIn();
+			// 				if (that.attr("id") == 'area1') {
+			// 					getData1(items[0].value)
+			// 					that.next().children().first().text(secondData[0].text);
+			// 					drawEchart2(0)
+			// 				} else {
+			// 					getData2(items[0].value)
+			// 					that.next().children().first().text(secondData2[0].text);
+			// 					drawEchart3(natureDataByStreet[0])
+			// 				}
+			// 			}
+			// 		});
+			// 	}
+			// });
+
+			// $("#street1,#street2").on('tap', function() {
+			// 	var that = $(this)
+			// 	if ($(".mui-poppicker").hasClass("mui-active")) {
+			// 		userPicker.hide();
+			// 		return false;
+			// 	} else {
+			// 		if (that.attr("id") == 'street1') {
+			// 			userPicker.setData(secondData);
+			// 		} else userPicker.setData(secondData2);
+			//
+			// 		userPicker.show(function(items) {
+			// 			if (that.attr("id") == 'street1') drawEchart2(items[0].value)
+			// 			else drawEchart3(natureDataByStreet[items[0].value])
+			// 			that.children().first().text(items[0].text);
+			// 		});
+			// 	}
+			//
+			// });
+
+
+			//监听区域滑动
+			// $(".listTitle").on('swipeleft', function() {
+			// 	$('#item1').removeClass("mui-active")
+			// 	$('#item2').addClass("mui-active")
+			// 	var gallery = mui('.mui-slider');
+			// 	gallery.slider().gotoItem(1);
+			// });
+
+
+			document.getElementById('bottom-item').addEventListener("swiperight", function() {
+				$('#item2').removeClass("mui-active")
+				$('#item1').addClass("mui-active")
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(0);
+			});
+		}); // mui.plusReady
+
+		// 点击 '全区'
+		$("#area1,#area2").on('tap', function() {
+			area2OrStreet2Tap = true
+			var that = $(this)
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				userPicker.setData(areaData);
+				userPicker.show(function(items) { // 点击确定
+					that.children().first().text(items[0].text);
+					if (items[0].text == '全区') {
+						that.next().hide();
+						if (that.attr("id") == 'area1') {
+							console.log(111)
+							getData1(items[0].value)
+							that.next().children().first().text(secondData[0].text);
+							drawEchart1()
+							$("#bottom-item").hide();
+						} else {
+							getData2(items[0].value)
+							that.next().children().first().text(secondData2[0].text);
+							drawEchart3(natureData)
+						}
+					} else { // 选择街道1 、流域2 、水所3 ,重新请求数据
+						that.next().fadeIn();
+						if (that.attr("id") == 'area1') {
+							getData1(items[0].value)
+							that.next().children().first().text(secondData[0].text);
+							drawEchart2(0)
+						} else { // 排水户性质统计
+							getData2(items[0].value)
+							that.next().children().first().text(secondData2[0].text);
+							//drawEchart3(natureDataByStreet[0])
+
+						}
+					}
+				});
+			}
+		});
+		$("#street1,#street2").on('tap', function() {
+			area2OrStreet2Tap = true;
+			var that = $(this)
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				if (that.attr("id") == 'street1') {
+					userPicker.setData(secondData);
+				} else userPicker.setData(secondData2);
+
+				userPicker.show(function(items) {
+					// 不可以放else后面 ，drawEchart3报错导致没有赋值
+					that.children().first().text(items[0].text);
+					if (that.attr("id") == 'street1') drawEchart2(items[0].value)
+					else drawEchart3(natureDataByStreet[items[0].value]);
+
+				});
+			}
+
+		});
+
+		function init() {
+			console.log("调用 init 请求数据");
+			getData1(1); // 全区、街道是1
+			drawEchart1()
+			getData2(1);
+		};
+
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".content").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if($(this).attr('name') === "firstLevelPshs") {
+						if($(this).is(':checked')) {
+							keyPointsFirstShow = true;
+							//console.log("显示一级排水户");
+							//keyPoints = keyPointsFirst;
+						}else{
+							keyPointsFirstShow = false;
+							//console.log("隐藏一级排水户");
+							//keyPoints = keyPointsSecond;
+
+						}
+					}else if($(this).attr('name') === "secondLevelPshs") {
+						if($(this).is(':checked')) {
+							keyPointsSecondShow = true;
+							//console.log("显示二级排水户");
+						}else{
+							keyPointsSecondShow = false;
+							//console.log("隐藏二级排水户");
+						}
+					}
+					keyPoints = [];
+					if(keyPointsFirstShow && keyPointsSecondShow) {
+						keyPoints = keyPointsAll;
+					}else if(keyPointsFirstShow) {
+						keyPoints = keyPointsFirst;
+					}else if(keyPointsSecondShow) {
+						keyPoints = keyPointsSecond;
+					}
+
+					getCenter(lastestLayer);
+
+				});
+			});
+		}
+		function getData1(type) {
+			getStatistic(parseInt(type), function(data) {
+				console.log('============getData1======start');
+				console.log(JSON.stringify(data));
+				console.log('============getData1======end');
+				if (data.success) {
+					secondData = [];
+					streets = [];
+					keyPoints = [];
+					keyPointsAll = [];
+					keyPointsFirst = [];
+					keyPointsSecond = [];
+
+					if (data.result) {
+						for (let i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+							if (item.scope != null) {
+								keyPoints.push({
+									properties: {
+										total: item.firstLevelPsh + item.secondLevelPsh,
+										name: item.scope,
+										firstLevelPsh: item.firstLevelPsh,
+										secondLevelPsh: item.secondLevelPsh,
+										type: 1
+									},
+									color: 'url(../../../img/icon1.png) no-repeat', //'#337BFC',
+									text: '' ,//item.firstLevelPsh,
+								})
+								keyPoints.push({
+									properties: {
+										total: item.firstLevelPsh + item.secondLevelPsh,
+										name: item.scope,
+										firstLevelPsh: item.firstLevelPsh,
+										secondLevelPsh: item.secondLevelPsh,
+										type: 2
+									},
+									color: 'url(../../../img/icon2.png) no-repeat', //'#00E6C0',
+									text: item.secondLevelPsh,
+								})
+								// all
+								keyPointsAll.push({
+									properties: {
+										total: item.firstLevelPsh + item.secondLevelPsh,
+										name: item.scope,
+										firstLevelPsh: item.firstLevelPsh,
+										secondLevelPsh: item.secondLevelPsh,
+										type: 1
+									},
+									color: 'url(../../../img/icon1.png) no-repeat',// '#337BFC',
+									text: '',// item.firstLevelPsh,
+								})
+								keyPointsAll.push({
+									properties: {
+										total: item.firstLevelPsh + item.secondLevelPsh,
+										name: item.scope,
+										firstLevelPsh: item.firstLevelPsh,
+										secondLevelPsh: item.secondLevelPsh,
+										type: 2
+									},
+									color: 'url(../../../img/icon2.png) no-repeat',// '#00E6C0',
+									text: '',//item.secondLevelPsh,
+								})
+								// first , second
+								keyPointsFirst.push({
+									properties: {
+										total: item.firstLevelPsh + item.secondLevelPsh,
+										name: item.scope,
+										firstLevelPsh: item.firstLevelPsh,
+										secondLevelPsh: item.secondLevelPsh,
+										type: 1
+									},
+									color: 'url(../../../img/icon1.png) no-repeat' ,//'#337BFC',
+									text: '', //item.firstLevelPsh,
+								})
+								keyPointsSecond.push({
+									properties: {
+										total: item.firstLevelPsh + item.secondLevelPsh,
+										name: item.scope,
+										firstLevelPsh: item.firstLevelPsh,
+										secondLevelPsh: item.secondLevelPsh,
+										type: 2
+									},
+									color: 'url(../../../img/icon2.png) no-repeat', //'#00E6C0',
+									text: '', // item.secondLevelPsh,
+								})
+
+
+								streets.push(item.scope);
+								firstLevelPshs.push(item.firstLevelPsh);
+								secondLevelPshs.push(item.secondLevelPsh);
+								secondData.push({
+									text: item.scope,
+									value: i
+								})
+
+								pslLevelDataByStreet[i] = [{
+									value: item.firstLevelPsh,
+									name: '一级排水户'
+								},
+									{
+										value: item.secondLevelPsh,
+										name: '二级排水户'
+									}
+								];
+							}
+						} // for end
+						initCheckBox(); //
+					}
+				}
+			})
+		}
+
+
+		function getNullDataWithDefault(obj, defaultValue) {
+			if(obj != null && obj != undefined && (obj + "") != "null") {
+				return obj;
+			}
+			return defaultValue ;
+		}
+
+		function getData2(type) {
+			getStatistic(parseInt(type), function(data) {
+				if (data.success) {
+					secondData2 = [];
+					//1,工业类
+					var industry = 0;
+					//2,建筑类
+					var construction = 0;
+					//3,餐饮类
+					var dining = 0;
+					//4,医疗卫生类
+					var health = 0;
+
+					//5,科研类 new
+					var scientific = 0;
+					//6,汽修机洗类
+					var machineWash = 0;
+					//7,垃圾收集处理类
+					var rubbishDisposal = 0;
+					//8,(name = "洗涤类", width = 15)
+					var washing = 0;
+					//9,(name = "住宿服务", width = 15)
+					var accommodation = 0;
+					//10,(name = "畜禽养殖类", width = 15)
+					var farming = 0;
+					//11,(name = "综合商业", width = 15)
+					var commercial = 0;
+					//12,(name = "农贸市场", width = 15)
+					var farmMarkets = 0;
+					//13,(name = "美容美发", width = 15)
+					var hair = 0;
+					//14,(name = "居民类", width = 15)
+					var residential = 0;
+					//15,(name = "其他", width = 20)
+					var others = 0;
+
+					if (data.result) {
+						for (let i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+							// console.log(JSON.stringify(data))
+							if (item.scope != null) {
+								secondData2.push({
+									text: item.scope,
+									value: i
+								})
+								//1,工业类
+								industry += getNullDataWithDefault(item.industry, 0);//item.industry;
+								//2,建筑类
+								construction += getNullDataWithDefault(item.construction, 0); //item.construction;
+								//3,餐饮类
+								dining += getNullDataWithDefault(item.dining, 0); // item.dining;
+								//4,医疗卫生类
+								health += getNullDataWithDefault(item.health, 0); // item.health;
+								//5,科研类 new
+								scientific += getNullDataWithDefault(item.scientific, 0);
+								//6,汽修机洗类
+								machineWash += getNullDataWithDefault(item.machineWash, 0); // item.machineWash;
+								//7,垃圾收集处理类
+								rubbishDisposal += getNullDataWithDefault(item.rubbishDisposal, 0);
+								//8,(name = "洗涤类", width = 15)
+								washing += getNullDataWithDefault(item.washing, 0);
+								//9,(name = "住宿服务", width = 15)
+								accommodation += getNullDataWithDefault(item.accommodation, 0);
+
+								//10,(name = "畜禽养殖类", width = 15)
+								farming += getNullDataWithDefault(item.farming, 0);
+
+								//11,(name = "综合商业", width = 15)
+								commercial += getNullDataWithDefault(item.commercial, 0);
+
+								//12,(name = "农贸市场", width = 15)
+								farmMarkets += getNullDataWithDefault(item.farmMarkets, 0);
+
+								//13,(name = "美容美发", width = 15)
+								hair += getNullDataWithDefault(item.hair, 0);
+
+								//14,(name = "居民类", width = 15)
+								residential += getNullDataWithDefault(item.residential, 0);
+
+								//15,(name = "其他", width = 20)
+								others += getNullDataWithDefault(item.others, 0);
+
+								// other = item.accommodation + item.commercial + item.farmMarkets + item.hair + item.residential + item.rubbishDisposal +
+								// 	item.washing;
+								// others += other;
+
+								pslLevelDataByStreet[i] = [{
+									value: item.firstLevelPsh,
+									name: '一级排水户'
+								},
+									{
+										value: item.secondLevelPsh,
+										name: '二级排水户'
+									}
+								];
+								natureDataByStreet[i] = [ // 没有累加 各街道的数量
+									{
+										value: getNullDataWithDefault(item.industry, 0),
+										name: '工业类'  // 1
+									},
+									{
+										value: getNullDataWithDefault(item.construction, 0),
+										name: '建筑类' // 2
+									},
+									{
+										value: getNullDataWithDefault(item.dining, 0),
+										name: '餐饮类' // 3
+									},
+									{
+										value: getNullDataWithDefault(item.health, 0),
+										name: '医疗卫生类' // 4
+									},
+									{
+										value: getNullDataWithDefault(item.scientific, 0),
+										name: '科研类' // 5
+									},
+									{
+										value: getNullDataWithDefault(item.machineWash, 0),
+										name: '汽修机洗类' // 6
+									},
+									{
+										value: getNullDataWithDefault(item.rubbishDisposal, 0),
+										name: '垃圾收集处理类' // 7
+									},
+									{
+										value: getNullDataWithDefault(item.washing, 0),
+										name: '洗涤类' // 8
+									},
+									{
+										value: getNullDataWithDefault(item.accommodation, 0),
+										name: '住宿服务' // 9
+									},
+									{
+										value: getNullDataWithDefault(item.farming, 0),
+										name: '畜禽养殖类' // 10
+									},
+									{
+										value: getNullDataWithDefault(item.commercial, 0),
+										name: '综合商业' // 11
+									},
+									{
+										value: getNullDataWithDefault(item.farmMarkets, 0),
+										name: '农贸市场' // 12
+									},
+									{
+										value: getNullDataWithDefault(item.hair, 0),
+										name: '美容美发' // 13
+									},
+									{
+										value: getNullDataWithDefault(item.residential, 0),
+										name: '居民类' // 14
+									},
+									{
+										value: getNullDataWithDefault(item.others, 0), //other,
+										name: '其他' // 15
+									}
+								]
+								// natureDataByStreet[i] = [{
+								// 		value: item.industry,
+								// 		name: '工业类'
+								// 	},
+								// 	{
+								// 		value: item.construction,
+								// 		name: '建筑类'
+								// 	},
+								// 	{
+								// 		value: item.dining,
+								// 		name: '餐饮类'
+								// 	},
+								// 	{
+								// 		value: item.health,
+								// 		name: '医疗卫生类'
+								// 	},
+								// 	{
+								// 		value: item.machineWash,
+								// 		name: '汽修机洗类'
+								// 	},
+								// 	{
+								// 		value: other,
+								// 		name: '其他'
+								// 	}
+								// ]
+							}
+
+							natureData = [ // 全区 ，累加
+								{
+									value: industry,
+									name: '工业类'  // 1 industry
+								},
+								{
+									value: construction,
+									name: '建筑类' // 2
+								},
+								{
+									value: dining,
+									name: '餐饮类' // 3
+								},
+								{
+									value: health,
+									name: '医疗卫生类' // 4
+								},
+								{
+									value: scientific,
+									name: '科研类' // 5
+								},
+								{
+									value: machineWash,
+									name: '汽修机洗类' // 6
+								},
+								{
+									value: rubbishDisposal,
+									name: '垃圾收集处理类' // 7
+								},
+								{
+									value: washing,
+									name: '洗涤类' // 8
+								},
+								{
+									value: accommodation,
+									name: '住宿服务' // 9
+								},
+								{
+									value: farming,
+									name: '畜禽养殖类' // 10
+								},
+								{
+									value: commercial,
+									name: '综合商业' // 11
+								},
+								{
+									value: farmMarkets,
+									name: '农贸市场' // 12
+								},
+								{
+									value: hair,
+									name: '美容美发' // 13
+								},
+								{
+									value: residential,
+									name: '居民类' // 14
+								},
+								{
+									value: others,
+									name: '其他' // 15
+								}
+							]
+							// natureData = [{
+							// 		value: industry,
+							// 		name: '工业类'
+							// 	},
+							// 	{
+							// 		value: construction,
+							// 		name: '建筑类'
+							// 	},
+							// 	{
+							// 		value: dining,
+							// 		name: '餐饮类'
+							// 	},
+							// 	{
+							// 		value: health,
+							// 		name: '医疗卫生类'
+							// 	},
+							// 	{
+							// 		value: machineWash,
+							// 		name: '汽修机洗类'
+							// 	},
+							// 	{
+							// 		value: others,
+							// 		name: '其他'
+							// 	}
+							// ]
+						}
+					}
+					drawEchart3(natureData)
+				} // if (data.success) end
+				else{
+					console.log("data error")
+					var len = 1;
+
+					if (len > 0) {
+						for (let i = 0; i < len; i++) {
+							//var item = data.result[i];
+							// console.log(JSON.stringify(data))
+							if (len > 0) {
+								secondData2.push({
+									text: "街道1",
+									value: i
+								})
+
+								pslLevelDataByStreet[i] = [{
+									value: 0,
+									name: '一级排水户'
+								},
+									{
+										value: 0,
+										name: '二级排水户'
+									}
+								];
+								natureDataByStreet[i] = [
+									{
+										value: 0,
+										name: '工业类'  // 1
+									},
+									{
+										value: 0,
+										name: '建筑类' // 2
+									},
+									{
+										value:0,
+										name: '餐饮类' // 3
+									},
+									{
+										value: 0,
+										name: '医疗卫生类' // 4
+									},
+									{
+										value: 0,
+										name: '科研类' // 5
+									},
+									{
+										value: 0,
+										name: '汽修机洗类' // 6
+									},
+									{
+										value: 0,
+										name: '垃圾收集处理类' // 7
+									},
+									{
+										value: 0,
+										name: '洗涤类' // 8
+									},
+									{
+										value: 0,
+										name: '住宿服务' // 9
+									},
+									{
+										value: 0,
+										name: '畜禽养殖类' // 10
+									},
+									{
+										value: 0,
+										name: '综合商业' // 11
+									},
+									{
+										value: 0,
+										name: '农贸市场' // 12
+									},
+									{
+										value: 0,
+										name: '美容美发' // 13
+									},
+									{
+										value: 0,
+										name: '居民类' // 14
+									},
+									{
+										value: 0, //other,
+										name: '其他' // 15
+									}
+								]
+
+							}
+
+							natureData = [
+								{
+									value: 0,
+									name: '工业类'  // 1 industry
+								},
+								{
+									value: 0,
+									name: '建筑类' // 2
+								},
+								{
+									value: 0,
+									name: '餐饮类' // 3
+								},
+								{
+									value: 0,
+									name: '医疗卫生类' // 4
+								},
+								{
+									value: 0,
+									name: '科研类' // 5
+								},
+								{
+									value: 0,
+									name: '汽修机洗类' // 6
+								},
+								{
+									value: 0,
+									name: '垃圾收集处理类' // 7
+								},
+								{
+									value: 0,
+									name: '洗涤类' // 8
+								},
+								{
+									value: 0,
+									name: '住宿服务' // 9
+								},
+								{
+									value: 0,
+									name: '畜禽养殖类' // 10
+								},
+								{
+									value: 0,
+									name: '综合商业' // 11
+								},
+								{
+									value: 0,
+									name: '农贸市场' // 12
+								},
+								{
+									value: 0,
+									name: '美容美发' // 13
+								},
+								{
+									value: 0,
+									name: '居民类' // 14
+								},
+								{
+									value: 0,
+									name: '其他' // 15
+								}
+							]
+
+						}
+					}
+					drawEchart3(natureData)
+				} // else end
+			})
+			// drawEchart3(natureData)
+		}
+
+		var getCurrentPosition = function() {
+			// if (mui.os.plus){
+			// 	app.showLoader();
+			// }
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+				// app.hideLoader();
+				//坐标修正
+				var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+
+				var Lon = point[0]; //获取经度
+				var Lat = point[1]; //获取纬度
+				mobileContainer.flyTo([Lon, Lat], {
+					zoom: 15
+				});
+				mobileContainer.markAddress(Lon, Lat);
+				// mobileContainer.markCurrentLocation(Lon,Lat)
+				mapData.getFeaturesByBuffer([{
+					NAME: 'ps_discharger'
+				}], [Lon, Lat], 0.001).then(data => {
+					console.log("=====getCurrentPosition:"+JSON.stringify(data))
+					var arr = data.features;
+					let guid;
+					if (arr && arr.length > 0) {
+						for (let i in arr) {
+							if (arr[i].properties.USERLEVEL == '1') {
+								guid = arr[i].properties.GUID;
+								break;
+							}
+						}
+						if (!guid) guid = arr[0].properties.GUID;
+						setPsh(guid);
+					}
+				})
+			}, function(e) {
+				mui.toast("获取定位失败，请查看设备是否开启定位");
+			})
+		};
+
+		// methods
+		function viewDetails(target) {
+			if (target == 'river') {
+				window.location.href = 'river_details.html';
+			} else {
+				window.location.href = 'lake_details.html';
+			}
+
+		};
+
+		$("#closeBottom").on('click', function(ev) {
+			var oEvent = ev || event;
+			oEvent.cancelBubble = true;
+			oEvent.stopPropagation();
+			$(".bottom-item").hide();
+		})
+
+		$("#riverArchives").on('tap', function() {
+			app.openPage('../rivers/rivers_index.html', {
+				titleNView: {
+					titleText: '河湖档案',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#leaderList").on('tap', function() {
+			app.openPage('../leaderList/leaderList_index.html', {
+				titleNView: {
+					titleText: '河湖长名录',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#emergency").on('tap', function() {
+			app.openPage('../emergency/emergency_map.html', {
+				titleNView: {
+					titleText: '应急资源',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#paishui").on('tap', function() {
+			isShow = true;
+			$('#home-item').hide();
+			mask.close();
+		})
+
+		$("#hybrid").on('tap', function() {
+			// app.openPage('../mixed/mixed_index.html', {
+			app.openPage('../mixed/mixed_index2.html', {
+				titleNView: {
+					titleText: '混接点',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		//关闭遮罩层
+		$(document).on("click", ".mui-backdrop", function() {
+			isShow = true;
+			$('#home-item').hide();
+			mask.close();
+		})
+
+		window.addEventListener('backInspection', function(e) { //执行刷新
+			// location.reload();
+
+			getMapList();
+			mui('#scroll1').scroll().scrollTo(0, 0, 0);
+			mui('#contentList').scroll().scrollTo(0, 0, 0);
+		});
+
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
+		})(mui);
+
+		function drawEchart1() {
+			getCenter({
+				NAME: 'DEVICE_AD_BASE',
+				AD_GRAD: 4
+			})
+			var myChart1 = echarts.init(document.getElementById('main1'));
+			option1 = {
+				color: ['#2E64F0', '#00E6C0'],
+				// ['#43DE87', '#FFB849'],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // Use axis to trigger tooltip
+						type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+					}
+				},
+				legend: {
+					x: 'center',
+					data: ['一级排水户', '二级排水户'],
+					right: 15,
+					itemWidth: 12,
+					itemHeight: 2,
+					// top: 7,
+					bottom: 10,
+					textStyle: {
+						fonSize: 12,
+						fontWeight: 400,
+						color: '#7F7F7F',
+						padding: [2, 0, 0, 5],
+					},
+				},
+				grid: {
+					left: '10px',
+					right: '30px',
+					bottom: '40px', //'20%', // 3%
+					top: '40px',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'value',
+					axisLabel: {
+						color: '#333333',
+						fontSize: 11,
+						fontWeight: 400,
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							color: '#AAAAAA',
+							type: 'dashed',
+						},
+					},
+				},
+				yAxis: {
+					name: '单位（户）',
+					type: 'category',
+					data: streets,
+					axisLine: {
+						show: false,
+					},
+					axisLabel: {
+						color: '#333333',
+						fontSize: 11,
+						fontWeight: 400,
+					},
+					axisTick: {
+						show: false
+					}
+				},
+				series: [{
+					name: '一级排水户',
+					type: 'bar',
+					stack: 'total',
+					label: {
+						show: false
+					},
+					emphasis: {
+						// focus: 'series' //选中时其他颜色变灰 ，去掉
+					},
+					data: firstLevelPshs
+				},
+					{
+						name: '二级排水户',
+						type: 'bar',
+						stack: 'total',
+						label: {
+							show: false
+						},
+						emphasis: {
+							// focus: 'series' //选中时其他颜色变灰 ，去掉
+						},
+						data: secondLevelPshs
+					}
+				]
+			};
+
+			window.onresize = myChart1.resize;
+			myChart1.setOption(option1);
+			$("#main2").hide();
+			$("#main1").fadeIn();
+		}
+		// 排水户级别统计 - 不是全区的选择
+		function drawEchart2(i) {
+			$("#main1").hide();
+			$("#main2").fadeIn();
+			$("#bottom-item").show();
+			$("#count").text(parseInt(pslLevelDataByStreet[i][0].value) + parseInt(pslLevelDataByStreet[i][1].value));
+			$('#streetName').text(secondData[i].text);
+			$('#firstLevelPshs').text(pslLevelDataByStreet[i][0].value)
+			$('#secondLevelPshs').text(pslLevelDataByStreet[i][1].value)
+
+			// console.log(secondData[i].text.substring(0,2))
+			if ($("#areaLabel").text() == '街道') {
+				$("#streetLabel").text('街道名称：')
+				mobileContainer.fitToRegion({ //地图聚焦到所选街道
+					NAME: 'DEVICE_AD_BASE',
+					AD_NAME: secondData[i].text
+				})
+				getCenter({
+					NAME: 'DEVICE_AD_BASE',
+					AD_GRAD: 4
+				})
+
+			} else if ($("#areaLabel").text() == '流域') {
+				$("#streetLabel").text('流域名称：')
+				mobileContainer.fitToRegion({ //地图聚焦到所选流域
+					NAME: 'DEVICE_ATT_BAS_BASE',
+					BAS_NAME: secondData[i].text
+				})
+				getCenter({
+					NAME: 'DEVICE_ATT_BAS_BASE'
+				})
+			} else if ($("#areaLabel").text() == '水所') {
+				$("#streetLabel").text('水所名称：')
+				mobileContainer.fitToRegion({
+					NAME: 'GIS_WATER_MANAGER',
+					DIRECT_ATTRIBUTE: 'NAME like \'%' + secondData[i].text.substring(0, 2) + '%\''
+				})
+				getCenter({
+					NAME: 'GIS_WATER_MANAGER'
+				})
+			}
+
+
+			var myChart2 = echarts.init(document.getElementById('main2'));
+			option2 = {
+				title: {
+					text: '',
+					subtext: '单位（户）',
+					left: '20',
+					top: '5%'
+				},
+				color: ['#2E64F0', '#00E6C0'],
+
+				// ['#43DE87', '#FFB849'],
+				tooltip: {
+					trigger: 'item'
+				},
+				legend: { // 定义标签栏 ： 一级排水户 、二级排水户
+					type: 'scroll',
+					// orient: 'vertical',
+					// right: 15,
+					left: 'center',
+					itemWidth: 12,
+					itemHeight: 2,
+					 // top: '90%',//'40%',
+					width: '90%',
+					bottom: 10, // 下边显示标签
+					itemGap: 10,
+					textStyle: {
+						fonSize: 12,
+						fontWeight: 400,
+						color: '#7F7F7F',
+						padding: [2, 0, 0, 5],
+					},
+				},
+				series: [{
+					name: '',
+					type: 'pie',
+					selectedMode: 'single',
+					label: {
+						position: 'inner',
+
+					},
+					labelLine: {
+						show: false,
+					},
+				},
+					{
+						name: '',
+						type: 'pie',
+						radius: ['45%', '63%'],
+						// center: ['45%', '50%'],
+						center: ['50%', '40%'],// 整体圆的位置
+						top: '5%',
+						// right: '30%',
+						data: pslLevelDataByStreet[i],
+						avoidLabelOverlap: false,
+						label: {
+							show: true,
+							// normal: {
+							// 	show: true, //false,
+							// },
+							// emphasis: {
+							// 	itemStyle: {
+							// 		shadowBlur: 10,
+							// 		shadowOffsetX: 0,
+							// 		shadowColor: 'rgba(255, 255, 255, 0.1)',
+							// 		opacity: 0.9
+							// 	}
+							// },
+							//	 新添加
+
+							formatter: '{name|{b}}\n{c}',
+							lineHeight: 15,
+							rich: {
+								time: {
+									fontSize: 10,
+									color: '#999'
+								}
+							},
+						},labelLine: {
+							 show: true, //false,
+							//	 新添加
+
+						},
+					}
+				]
+			};
+
+			window.onresize = myChart2.resize;
+			myChart2.setOption(option2);
+		}
+
+		function drawEchart3(natureData) {
+
+			// $("#main3").empty();
+			// 第二个选择确定后不消失
+			console.log("========== function drawEchart3 ============")
+			console.log("natureData :" + JSON.stringify(natureData))
+			// userPicker.hide();
+			if(area2OrStreet2Tap) {
+				area2OrStreet2Tap = false;
+				userPicker.hide();
+			}
+			//console.log(userPicker);
+			var myChart3 = echarts.init(document.getElementById('main3'));
+			option3 = {
+				color: ['#2E64F0', '#00E6C0', '#6B45FB', '#FCB18C', '#FF76C4', '#00BEFB' //],
+				// [
+					,'#337BFC', '#FF584C', '#47CBCA', '#655CE6', '#FFBB00', '#9665E2', '#7DD936', '#E63984','#00B64D'],
+				tooltip: {
+					trigger: 'item',
+					// formatter: '{b} <br/>{d}%',
+					formatter: '{b}<br/>{c}',
+				},
+				legend: { // 标签栏
+					type: 'scroll',
+					orient: 'horizontal',
+					width: '90%',
+					left: 'center',
+					top: 15,
+					// selected: natureData.selected
+				},
+
+				series: [
+					{
+						name: '',
+						type: 'pie',
+						label: {
+							position: 'inner',
+						}
+					},
+					{
+						name: '',
+						type: 'pie',
+						radius: '40%', // 整个圆大小
+						width: '100%',
+						center: ['45%', '30%'], // 位置：x ，y
+						emphasis: {
+							itemStyle: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						},
+						data: natureData,
+					}
+				]
+			};
+
+			window.onresize = myChart3.resize;
+			myChart3.setOption(option3);
+		}
+
+		async function getCenter(layer) {
+			//console.log("===getCenter===")
+			//console.log(JSON.stringify(layer.NAME)) // DEVICE_AD_BASE
+			lastestLayer = layer;
+			await mobileContainer.getFeatureCenter(
+					layer
+			).then(res => {
+				var items = res.features;
+				for (let i = 0; i < items.length; i++) {
+					var point = items[i].geometry.coordinates;
+					for (let j = 0; j < keyPoints.length; j++) {
+						if (layer.NAME == 'DEVICE_AD_BASE') {
+							if (items[i].properties.AD_NAME == keyPoints[j].properties.name) {
+								keyPoints[j].position = keyPoints[j].properties.type == 1 ? [point[0] - 0.005, point[1] - 0.005] : [point[0] +
+								0.005, point[1] + 0.005
+								]
+							}
+						} else if (layer.NAME == 'DEVICE_ATT_BAS_BASE') {
+							if (items[i].properties.BAS_NAME == keyPoints[j].properties.name) {
+								keyPoints[j].position = keyPoints[j].properties.type == 1 ? [point[0] - 0.004, point[1] - 0.004] : [point[0] +
+								0.004, point[1] + 0.004
+								]
+							}
+						} else {
+							// console.log(JSON.stringify(keyPoints[j].properties))
+							if (keyPoints[j].properties.name.indexOf(items[i].properties.NAME.substring(0, 2)) > -1) {
+								keyPoints[j].position = keyPoints[j].properties.type == 1 ? [point[0] - 0.004, point[1] - 0.004] : [point[
+										0] + 0.004, point[1] + 0.004]
+							}
+						}
+					}
+				}
+				// console.log("街道：" + JSON.stringify(res));
+				// console.log(JSON.stringify(keyPoints))
+				// mobileContainer.clear();
+				mobileContainer.showPoints(keyPoints);
+
+			});
+		}
+
+		init();  // 正式放开 ，plusReady 没有调用 ,放到外面
+
+
+		//	测试区
+		function getData1Tmp() {
+			var dataStr = "{\"success\":true,\"message\":\"ok\",\"result\":[{\"rubbishDisposal\":3,\"commercial\":1,\"firstLevelPsh\":211,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":10,\"scientific\":1,\"industry\":6,\"allDrainage\":0,\"hair\":72,\"streetName\":null,\"scope\":\"福保街道\",\"farming\":0,\"construction\":4,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":553,\"dining\":248,\"health\":24,\"farmMarkets\":35,\"secondLevelPsh\":829,\"hasPslCode\":13,\"washing\":4,\"residential\":76,\"uuidFlag\":\"950c1ab9-0793-4c6d-89cb-1c6c4f1e2daa\",\"accommodation\":7,\"rainSlopsPart\":0,\"notHasPslCode\":136},{\"rubbishDisposal\":8,\"commercial\":11,\"firstLevelPsh\":610,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":24,\"scientific\":0,\"industry\":1,\"allDrainage\":0,\"hair\":230,\"streetName\":null,\"scope\":\"福田街道\",\"farming\":0,\"construction\":1,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":1426,\"dining\":962,\"health\":80,\"farmMarkets\":77,\"secondLevelPsh\":2707,\"hasPslCode\":52,\"washing\":22,\"residential\":417,\"uuidFlag\":\"843a3e76-4a29-4a62-ae8f-f7f3e6aaae05\",\"accommodation\":58,\"rainSlopsPart\":0,\"notHasPslCode\":938},{\"rubbishDisposal\":3,\"commercial\":3,\"firstLevelPsh\":128,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":2,\"scientific\":0,\"industry\":1,\"allDrainage\":0,\"hair\":33,\"streetName\":null,\"scope\":\"南园街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":264,\"dining\":119,\"health\":8,\"farmMarkets\":12,\"secondLevelPsh\":398,\"hasPslCode\":2,\"washing\":8,\"residential\":62,\"uuidFlag\":\"2552cc6c-b2ef-4a7d-a229-fa84349edc7c\",\"accommodation\":11,\"rainSlopsPart\":0,\"notHasPslCode\":46},{\"rubbishDisposal\":7,\"commercial\":1,\"firstLevelPsh\":113,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":2,\"scientific\":0,\"industry\":2,\"allDrainage\":0,\"hair\":19,\"streetName\":null,\"scope\":\"华富街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":252,\"dining\":66,\"health\":5,\"farmMarkets\":11,\"secondLevelPsh\":297,\"hasPslCode\":3,\"washing\":1,\"residential\":41,\"uuidFlag\":\"6729dc9c-3a37-49af-9576-6b36952e9155\",\"accommodation\":3,\"rainSlopsPart\":0,\"notHasPslCode\":39},{\"rubbishDisposal\":4,\"commercial\":15,\"firstLevelPsh\":177,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":5,\"scientific\":0,\"industry\":1,\"allDrainage\":0,\"hair\":23,\"streetName\":null,\"scope\":\"华强北街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":578,\"dining\":326,\"health\":8,\"farmMarkets\":13,\"secondLevelPsh\":865,\"hasPslCode\":18,\"washing\":4,\"residential\":46,\"uuidFlag\":\"3e80024d-fade-48bd-a125-8d89df3c7792\",\"accommodation\":19,\"rainSlopsPart\":0,\"notHasPslCode\":86},{\"rubbishDisposal\":7,\"commercial\":16,\"firstLevelPsh\":290,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":56,\"scientific\":0,\"industry\":8,\"allDrainage\":0,\"hair\":179,\"streetName\":null,\"scope\":\"梅林街道\",\"farming\":0,\"construction\":1,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":760,\"dining\":645,\"health\":36,\"farmMarkets\":18,\"secondLevelPsh\":1609,\"hasPslCode\":51,\"washing\":14,\"residential\":135,\"uuidFlag\":\"07c77565-a34c-44f2-9483-8b2163a6ccb4\",\"accommodation\":24,\"rainSlopsPart\":0,\"notHasPslCode\":337},{\"rubbishDisposal\":9,\"commercial\":6,\"firstLevelPsh\":558,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":10,\"scientific\":0,\"industry\":4,\"allDrainage\":0,\"hair\":95,\"streetName\":null,\"scope\":\"沙头街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":762,\"dining\":461,\"health\":28,\"farmMarkets\":65,\"secondLevelPsh\":1317,\"hasPslCode\":17,\"washing\":8,\"residential\":410,\"uuidFlag\":\"b4857a61-02b6-4220-abfd-e964e9d803f3\",\"accommodation\":17,\"rainSlopsPart\":0,\"notHasPslCode\":260},{\"rubbishDisposal\":8,\"commercial\":2,\"firstLevelPsh\":152,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":22,\"scientific\":0,\"industry\":11,\"allDrainage\":0,\"hair\":76,\"streetName\":null,\"scope\":\"园岭街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":594,\"dining\":379,\"health\":14,\"farmMarkets\":14,\"secondLevelPsh\":1030,\"hasPslCode\":27,\"washing\":5,\"residential\":54,\"uuidFlag\":\"21e4b24c-e8df-485a-95d2-c759889c9586\",\"accommodation\":3,\"rainSlopsPart\":0,\"notHasPslCode\":126},{\"rubbishDisposal\":5,\"commercial\":2,\"firstLevelPsh\":258,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":21,\"scientific\":0,\"industry\":0,\"allDrainage\":0,\"hair\":156,\"streetName\":null,\"scope\":\"莲花街道\",\"farming\":0,\"construction\":1,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":942,\"dining\":351,\"health\":32,\"farmMarkets\":38,\"secondLevelPsh\":1436,\"hasPslCode\":44,\"washing\":11,\"residential\":120,\"uuidFlag\":\"5c3c8e6e-5d75-4e44-9ca8-c3a1e088d58e\",\"accommodation\":15,\"rainSlopsPart\":0,\"notHasPslCode\":198},{\"rubbishDisposal\":5,\"commercial\":11,\"firstLevelPsh\":207,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":16,\"scientific\":1,\"industry\":1,\"allDrainage\":0,\"hair\":77,\"streetName\":null,\"scope\":\"香蜜湖街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":259,\"dining\":181,\"health\":14,\"farmMarkets\":14,\"secondLevelPsh\":475,\"hasPslCode\":27,\"washing\":2,\"residential\":89,\"uuidFlag\":\"9014e059-3fef-4c95-846f-626171546cd0\",\"accommodation\":12,\"rainSlopsPart\":0,\"notHasPslCode\":163}],\"timestamp\":1618200099418,\"code\":200}";
+			var data = JSON.parse(dataStr);
+
+			// console.log('============getData1======start');
+			// console.log(JSON.stringify(data));
+			// console.log('============getData1======end');
+			if (data.success) {
+				secondData = [];
+				streets = [];
+				keyPoints = [];
+				if (data.result) {
+					for (let i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						if (item.scope != null) {
+							// 地图上的图标颜色 、文字
+							keyPoints.push({
+								properties: {
+									total: item.firstLevelPsh + item.secondLevelPsh,
+									name: item.scope,
+									firstLevelPsh: item.firstLevelPsh,
+									secondLevelPsh: item.secondLevelPsh,
+									type: 1
+								},
+								color: 'url(../../../img/icon1.png) no-repeat', //'#337BFC',
+								text: '',//item.firstLevelPsh,
+							})
+							keyPoints.push({
+								properties: {
+									total: item.firstLevelPsh + item.secondLevelPsh,
+									name: item.scope,
+									firstLevelPsh: item.firstLevelPsh,
+									secondLevelPsh: item.secondLevelPsh,
+									type: 2
+								},
+								color: 'url(../../../img/icon2.png) no-repeat', //'#00E6C0',
+								text: '', // item.secondLevelPsh,
+							})
+							// all
+							keyPointsAll.push({
+								properties: {
+									total: item.firstLevelPsh + item.secondLevelPsh,
+									name: item.scope,
+									firstLevelPsh: item.firstLevelPsh,
+									secondLevelPsh: item.secondLevelPsh,
+									type: 1
+								},
+								color: 'url(../../../img/icon1.png) no-repeat',// '#337BFC',
+								text: '',// item.firstLevelPsh,
+							})
+							keyPointsAll.push({
+								properties: {
+									total: item.firstLevelPsh + item.secondLevelPsh,
+									name: item.scope,
+									firstLevelPsh: item.firstLevelPsh,
+									secondLevelPsh: item.secondLevelPsh,
+									type: 2
+								},
+								color: 'url(../../../img/icon2.png) no-repeat',// '#00E6C0',
+								text: '',//item.secondLevelPsh,
+							})
+							// first , second
+							keyPointsFirst.push({
+								properties: {
+									total: item.firstLevelPsh + item.secondLevelPsh,
+									name: item.scope,
+									firstLevelPsh: item.firstLevelPsh,
+									secondLevelPsh: item.secondLevelPsh,
+									type: 1
+								},
+								color: 'url(../../../img/icon1.png) no-repeat' ,//'#337BFC',
+								text: '', //item.firstLevelPsh,
+							})
+							keyPointsSecond.push({
+								properties: {
+									total: item.firstLevelPsh + item.secondLevelPsh,
+									name: item.scope,
+									firstLevelPsh: item.firstLevelPsh,
+									secondLevelPsh: item.secondLevelPsh,
+									type: 2
+								},
+								color: 'url(../../../img/icon2.png) no-repeat', //'#00E6C0',
+								text: '', // item.secondLevelPsh,
+							})
+							streets.push(item.scope);
+							firstLevelPshs.push(item.firstLevelPsh);
+							secondLevelPshs.push(item.secondLevelPsh);
+							secondData.push({
+								text: item.scope,
+								value: i
+							})
+
+							pslLevelDataByStreet[i] = [{
+								value: item.firstLevelPsh,
+								name: '一级排水户'
+							},
+								{
+									value: item.secondLevelPsh,
+									name: '二级排水户'
+								}
+							];
+						}
+					}
+				}
+			}
+
+			drawEchart1()
+		}
+		function getData2Tmp() {
+			var dataStr = "{\"success\":true,\"message\":\"ok\",\"result\":[{\"rubbishDisposal\":3,\"commercial\":1,\"firstLevelPsh\":211,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":10,\"scientific\":1,\"industry\":6,\"allDrainage\":0,\"hair\":72,\"streetName\":null,\"scope\":\"福保街道\",\"farming\":0,\"construction\":4,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":553,\"dining\":248,\"health\":24,\"farmMarkets\":35,\"secondLevelPsh\":829,\"hasPslCode\":13,\"washing\":4,\"residential\":76,\"uuidFlag\":\"72bf2f63-dbe0-425d-82bf-dac10aaaab37\",\"accommodation\":7,\"rainSlopsPart\":0,\"notHasPslCode\":136},{\"rubbishDisposal\":8,\"commercial\":11,\"firstLevelPsh\":610,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":24,\"scientific\":0,\"industry\":1,\"allDrainage\":0,\"hair\":230,\"streetName\":null,\"scope\":\"福田街道\",\"farming\":0,\"construction\":1,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":1426,\"dining\":962,\"health\":80,\"farmMarkets\":77,\"secondLevelPsh\":2707,\"hasPslCode\":52,\"washing\":22,\"residential\":417,\"uuidFlag\":\"b6e26f19-551c-479e-a189-f06747e3478a\",\"accommodation\":58,\"rainSlopsPart\":0,\"notHasPslCode\":938},{\"rubbishDisposal\":3,\"commercial\":3,\"firstLevelPsh\":128,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":2,\"scientific\":0,\"industry\":1,\"allDrainage\":0,\"hair\":33,\"streetName\":null,\"scope\":\"南园街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":264,\"dining\":119,\"health\":8,\"farmMarkets\":12,\"secondLevelPsh\":398,\"hasPslCode\":2,\"washing\":8,\"residential\":62,\"uuidFlag\":\"3d2ce886-8a17-438c-b11e-10b2dfcfcfe7\",\"accommodation\":11,\"rainSlopsPart\":0,\"notHasPslCode\":46},{\"rubbishDisposal\":7,\"commercial\":1,\"firstLevelPsh\":113,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":2,\"scientific\":0,\"industry\":2,\"allDrainage\":0,\"hair\":19,\"streetName\":null,\"scope\":\"华富街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":252,\"dining\":66,\"health\":5,\"farmMarkets\":11,\"secondLevelPsh\":297,\"hasPslCode\":3,\"washing\":1,\"residential\":41,\"uuidFlag\":\"47ffc9a9-9746-4b45-9b1c-9bbb8a8eb477\",\"accommodation\":3,\"rainSlopsPart\":0,\"notHasPslCode\":39},{\"rubbishDisposal\":4,\"commercial\":15,\"firstLevelPsh\":177,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":5,\"scientific\":0,\"industry\":1,\"allDrainage\":0,\"hair\":23,\"streetName\":null,\"scope\":\"华强北街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":578,\"dining\":326,\"health\":8,\"farmMarkets\":13,\"secondLevelPsh\":865,\"hasPslCode\":18,\"washing\":4,\"residential\":46,\"uuidFlag\":\"3a2b1c19-9671-4c25-bac9-329d087fc9c7\",\"accommodation\":19,\"rainSlopsPart\":0,\"notHasPslCode\":86},{\"rubbishDisposal\":7,\"commercial\":16,\"firstLevelPsh\":290,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":56,\"scientific\":0,\"industry\":8,\"allDrainage\":0,\"hair\":179,\"streetName\":null,\"scope\":\"梅林街道\",\"farming\":0,\"construction\":1,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":760,\"dining\":645,\"health\":36,\"farmMarkets\":18,\"secondLevelPsh\":1609,\"hasPslCode\":51,\"washing\":14,\"residential\":135,\"uuidFlag\":\"47dbb649-b246-4d15-9763-6e4b3d390dc7\",\"accommodation\":24,\"rainSlopsPart\":0,\"notHasPslCode\":337},{\"rubbishDisposal\":9,\"commercial\":6,\"firstLevelPsh\":558,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":10,\"scientific\":0,\"industry\":4,\"allDrainage\":0,\"hair\":95,\"streetName\":null,\"scope\":\"沙头街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":762,\"dining\":461,\"health\":28,\"farmMarkets\":65,\"secondLevelPsh\":1317,\"hasPslCode\":17,\"washing\":8,\"residential\":410,\"uuidFlag\":\"4b34e807-e12f-4e26-913d-512a2a8df151\",\"accommodation\":17,\"rainSlopsPart\":0,\"notHasPslCode\":260},{\"rubbishDisposal\":8,\"commercial\":2,\"firstLevelPsh\":152,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":22,\"scientific\":0,\"industry\":11,\"allDrainage\":0,\"hair\":76,\"streetName\":null,\"scope\":\"园岭街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":594,\"dining\":379,\"health\":14,\"farmMarkets\":14,\"secondLevelPsh\":1030,\"hasPslCode\":27,\"washing\":5,\"residential\":54,\"uuidFlag\":\"d64d080f-e1f5-49e1-ab35-01654f6d796e\",\"accommodation\":3,\"rainSlopsPart\":0,\"notHasPslCode\":126},{\"rubbishDisposal\":5,\"commercial\":2,\"firstLevelPsh\":258,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":21,\"scientific\":0,\"industry\":0,\"allDrainage\":0,\"hair\":156,\"streetName\":null,\"scope\":\"莲花街道\",\"farming\":0,\"construction\":1,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":942,\"dining\":351,\"health\":32,\"farmMarkets\":38,\"secondLevelPsh\":1436,\"hasPslCode\":44,\"washing\":11,\"residential\":120,\"uuidFlag\":\"44bd5d15-ab75-451f-9b24-161048d2e596\",\"accommodation\":15,\"rainSlopsPart\":0,\"notHasPslCode\":198},{\"rubbishDisposal\":5,\"commercial\":11,\"firstLevelPsh\":207,\"primaryDrainage\":0,\"secondaryDrainage\":0,\"machineWash\":16,\"scientific\":1,\"industry\":1,\"allDrainage\":0,\"hair\":77,\"streetName\":null,\"scope\":\"香蜜湖街道\",\"farming\":0,\"construction\":0,\"rainSlopsNotPart\":0,\"communityName\":null,\"others\":259,\"dining\":181,\"health\":14,\"farmMarkets\":14,\"secondLevelPsh\":475,\"hasPslCode\":27,\"washing\":2,\"residential\":89,\"uuidFlag\":\"a61842fc-c4d5-4009-ae9b-1cfae1380a84\",\"accommodation\":12,\"rainSlopsPart\":0,\"notHasPslCode\":163}],\"timestamp\":1618199147587,\"code\":200}"
+			var data = JSON.parse(dataStr)
+			// console.log('============getData2======start');
+			// console.log(JSON.stringify(data));
+			// console.log('============getData2======end');
+			if (data.success) {
+				secondData2 = [];
+				//1,工业类
+				var industry = 0;
+				//2,建筑类
+				var construction = 0;
+				//3,餐饮类
+				var dining = 0;
+				//4,医疗卫生类
+				var health = 0;
+
+				//5,科研类 new
+				var scientific = 0;
+				//6,汽修机洗类
+				var machineWash = 0;
+				//7,垃圾收集处理类
+				var rubbishDisposal = 0;
+				//8,(name = "洗涤类", width = 15)
+				var washing = 0;
+				//9,(name = "住宿服务", width = 15)
+				var accommodation = 0;
+				//10,(name = "畜禽养殖类", width = 15)
+				var farming = 0;
+				//11,(name = "综合商业", width = 15)
+				var commercial = 0;
+				//12,(name = "农贸市场", width = 15)
+				var farmMarkets = 0;
+				//13,(name = "美容美发", width = 15)
+				var hair = 0;
+				//14,(name = "居民类", width = 15)
+				var residential = 0;
+				//15,(name = "其他", width = 20)
+				var others = 0;
+
+				if (data.result) {
+					for (let i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						// console.log(JSON.stringify(data))
+						if (item.scope != null) {
+							secondData2.push({
+								text: item.scope,
+								value: i
+							})
+
+							//1,工业类
+							industry += getNullDataWithDefault(item.industry, 0);//item.industry;
+							//2,建筑类
+							construction += getNullDataWithDefault(item.construction, 0); //item.construction;
+							//3,餐饮类
+							dining += getNullDataWithDefault(item.dining, 0); // item.dining;
+							//4,医疗卫生类
+							health += getNullDataWithDefault(item.health, 0); // item.health;
+							//5,科研类 new
+							scientific += getNullDataWithDefault(item.scientific, 0);
+							//6,汽修机洗类
+							machineWash += getNullDataWithDefault(item.machineWash, 0); // item.machineWash;
+							//7,垃圾收集处理类
+							rubbishDisposal += getNullDataWithDefault(item.rubbishDisposal, 0);
+							//8,(name = "洗涤类", width = 15)
+							washing += getNullDataWithDefault(item.washing, 0);
+							//9,(name = "住宿服务", width = 15)
+							accommodation += getNullDataWithDefault(item.accommodation, 0);
+
+							//10,(name = "畜禽养殖类", width = 15)
+							farming += getNullDataWithDefault(item.farming, 0);
+
+							//11,(name = "综合商业", width = 15)
+							commercial += getNullDataWithDefault(item.commercial, 0);
+
+							//12,(name = "农贸市场", width = 15)
+							farmMarkets += getNullDataWithDefault(item.farmMarkets, 0);
+
+							//13,(name = "美容美发", width = 15)
+							hair += getNullDataWithDefault(item.hair, 0);
+
+							//14,(name = "居民类", width = 15)
+							residential += getNullDataWithDefault(item.residential, 0);
+
+							//15,(name = "其他", width = 20)
+							others += getNullDataWithDefault(item.others, 0);
+
+							pslLevelDataByStreet[i] = [{
+								value: item.firstLevelPsh,
+								name: '一级排水户'
+							},
+								{
+									value: item.secondLevelPsh,
+									name: '二级排水户'
+								}
+							];
+							// natureDataByStreet[i] = [
+							// 	{
+							// 		value: item.firstLevelPsh,
+							// 		name: '一级排水户'
+							// 	},
+							// 	{
+							// 		value: item.secondLevelPsh,
+							// 		name: '二级排水户'
+							// 	}
+							// ];
+							natureDataByStreet[i] = [ //记录每个 scope的各项数量 ，下拉选择时直接赋值
+								{
+									value: getNullDataWithDefault(item.industry, 0),
+									name: '工业类'  // 1
+								},
+								{
+									value: getNullDataWithDefault(item.construction, 0),
+									name: '建筑类' // 2
+								},
+								{
+									value: getNullDataWithDefault(item.dining, 0),
+									name: '餐饮类' // 3
+								},
+								{
+									value: getNullDataWithDefault(item.health, 0),
+									name: '医疗卫生类' // 4
+								},
+								{
+									value: getNullDataWithDefault(item.scientific, 0),
+									name: '科研类' // 5
+								},
+								{
+									value: getNullDataWithDefault(item.machineWash, 0),
+									name: '汽修机洗类' // 6
+								},
+								{
+									value: getNullDataWithDefault(item.rubbishDisposal, 0),
+									name: '垃圾收集处理类' // 7
+								},
+								{
+									value: getNullDataWithDefault(item.washing, 0),
+									name: '洗涤类' // 8
+								},
+								{
+									value: getNullDataWithDefault(item.accommodation, 0),
+									name: '住宿服务' // 9
+								},
+								{
+									value: getNullDataWithDefault(item.farming, 0),
+									name: '畜禽养殖类' // 10
+								},
+								{
+									value: getNullDataWithDefault(item.commercial, 0),
+									name: '综合商业' // 11
+								},
+								{
+									value: getNullDataWithDefault(item.farmMarkets, 0),
+									name: '农贸市场' // 12
+								},
+								{
+									value: getNullDataWithDefault(item.hair, 0),
+									name: '美容美发' // 13
+								},
+								{
+									value: getNullDataWithDefault(item.residential, 0),
+									name: '居民类' // 14
+								},
+								{
+									value: getNullDataWithDefault(item.others, 0), //other,
+									name: '其他' // 15
+								}
+							]
+						}
+						natureData = [ // 累加数量 ，全区
+							{
+								value: industry,
+								name: '工业类'  // 1 industry
+							},
+							{
+								value: construction,
+								name: '建筑类' // 2
+							},
+							{
+								value: dining,
+								name: '餐饮类' // 3
+							},
+							{
+								value: health,
+								name: '医疗卫生类' // 4
+							},
+							{
+								value: scientific,
+								name: '科研类' // 5
+							},
+							{
+								value: machineWash,
+								name: '汽修机洗类' // 6
+							},
+							{
+								value: rubbishDisposal,
+								name: '垃圾收集处理类' // 7
+							},
+							{
+								value: washing,
+								name: '洗涤类' // 8
+							},
+							{
+								value: accommodation,
+								name: '住宿服务' // 9
+							},
+							{
+								value: farming,
+								name: '畜禽养殖类' // 10
+							},
+							{
+								value: commercial,
+								name: '综合商业' // 11
+							},
+							{
+								value: farmMarkets,
+								name: '农贸市场' // 12
+							},
+							{
+								value: hair,
+								name: '美容美发' // 13
+							},
+							{
+								value: residential,
+								name: '居民类' // 14
+							},
+							{
+								value: others,
+								name: '其他' // 15
+							}
+						]
+					}
+				}
+			}
+
+			drawEchart3(natureData)
+		}
+		// getData1Tmp();
+		// getData2Tmp();
+		//
+		// // 初始化选项框状态
+		// initCheckBox();
+
+
+
+
+	</script>
+
+</html>

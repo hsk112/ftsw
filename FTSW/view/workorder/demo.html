@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>派发子工单</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../css/common.css" rel="stylesheet"/>
+  <link href="../../css/ps.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css"/>
+
+
+  <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet"/>
+  <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet"/>
+
+  <style>
+    .mui-icon-arrowright {
+      color: #62666E;
+      font-weight: 100 !important;
+      width: 16px;
+      padding-top: 7px;
+    }
+
+    .content {
+      overflow: hidden;
+      height: calc(100vh - 100px);
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      margin: 0 20px;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+      margin: auto 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+      padding-right: 0;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .page-bottom {
+      display: flex;
+      padding: 0 20px;
+      height: 100px;
+      background-color: white;
+
+    }
+
+    .page-bottom button {
+      flex: 1;
+      margin-top: 30px;
+      border-radius: 5px;
+      border-color: #0493F3;
+      font-size: 16px;
+      height: 40px;
+      border-width: thin;
+    }
+
+    .btn-temp-save {
+      color: #0493F3;
+      background-color: #FFFFFF;
+      margin-right: 15px;
+    }
+
+    .btn-agree {
+      color: #FFFFFF;
+      background-color: #0493F3;
+      border: none;
+    }
+
+    .img-right-arrow {
+      width: 7px;
+      height: 12px;
+      margin-left: 5px;
+    }
+
+    .bor {
+      border: 1px dashed #E0E0E0;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+      padding: 11px 0;
+      width: 35px;
+      text-align: right;
+    }
+
+    .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    /*		单选框*/
+     
+    .radio-item {
+      width: 50%;
+    }
+
+    .radio_inline label {
+      /*width: 20%;*/
+      /*padding-left: 40px;*/
+      /*padding-right: 20px;*/
+      padding: 0;
+      width: 40px;
+      height: 22px;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+
+    .radio_inline input[type=radio] {
+      width: 15%;
+      right: auto;
+    }
+
+    /*//换个样式*/
+    .change {
+      display: flex;
+      align-items: center;
+    }
+
+    .change .mui-radio input[type='radio']:checked:before {
+      content: '\e442';
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    .mui-radio input[type=radio] {
+      top: 0;
+    }
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+  <!--  <div id="map" class="mapboxgl-map"-->
+  <!--       style="z-index: 7;position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;">-->
+  <!--    &lt;!&ndash;搜索&ndash;&gt;-->
+  <!--    <div id="searchBar" class="mui-input-row" style="position: fixed;z-index: 6;width: 90%;margin: 20px;height: 40px; ">-->
+  <!--      <img src="../../../img/commom/search1@2x.png" alt="" id="search_icon"-->
+  <!--           style="width: 16px;position: fixed;top: 31px;left: 31px;">-->
+  <!--      <input style="margin: 0;border: none;padding-left: 40px;padding-right:70px;width: calc(100% - 40px);"-->
+  <!--             class="mui-input-clear" type="text" placeholder="" name="" id="searchInput" value=""/>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div id="scroll-wrapper-home" style="height: calc(100vh - 65px);">
+    <div class="info-bar-content">
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>工单名称：
+        </div>
+        <div class="mui-input-row item-input">
+          <input id="orderName" required="true" placeholder="请输入工单名称"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>工单编号：
+        </div>
+        <div class="mui-input-row item-input">
+          <input id="orderNo" placeholder="提交表单后自动填写" readonly></input>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>问题类型：
+        </div>
+        <div id="problemType" class="mui-input-row item-input">
+          <span id="problemTypeName"></span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>工单来源：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="orderSource">父工单派生</span>
+          <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>问题等级：
+        </div>
+        <div class="item-checkbox" style="">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;">
+              <div class="radio-item">
+                <input name="initialDesign" type="radio" id="initialDesignOne" value="0">
+                <label for="initialDesignOne" style="margin-right: 10px;text-align: right">一般</label>
+              </div>
+              <div class="radio-item">
+                <input name="initialDesign" type="radio" id="initialDesignTwo" value="1">
+                <label for="initialDesignTwo" style="text-align: right">紧急</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        <div class="mui-input-row change" style="display: flex;">-->
+        <!--          &lt;!&ndash;                     width: 60%;text-align: right;padding-left: 20px; &ndash;&gt;-->
+        <!--          <div class="item-checkbox" style="flex: 1;">-->
+        <!--            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">-->
+        <!--              <label>一般</label>-->
+        <!--              <input name="problemLevel" value="problemLevel" type="radio" checked;>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--          &lt;!&ndash;                     width: 60%;text-align: right;padding-left: 20px; &ndash;&gt;-->
+        <!--          <div class="item-checkbox" style="flex: 1;">-->
+        <!--            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">-->
+        <!--              <label>紧急</label>-->
+        <!--              <input name="problemLevel" value="problemLevel" type="radio">-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>相关工单：
+        </div>
+        <div id="correlationForm" class="mui-input-row item-input">
+          <span id="correlationFormName">请选择</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>父级工单：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="fatherForm">自动填入</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>设施类型：
+        </div>
+        <div id="deviceType" class="mui-input-row item-input">
+          <span id="deviceTypeName">请选择</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>发现地点：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="discoveryAddr">请选择发现地点</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>问题描述：
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <textarea placeholder="请输入处理结果及建议..." required="true" maxlength="300"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0" id="problemDesc"></textarea>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>问题照片：
+        </div>
+        <div class="bor" style="text-align: right">
+          <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px">
+            <img src="../../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">
+            <span id="up" style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>
+          </div>
+          <img id="managePhoto" class="arrow-down-img" alt="1" src=""
+               style="display: none;width: 80px">
+          <!--          <img class="arrow-down-img" alt="1" src="../../../img/problemImg.png">-->
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>受理人：
+        </div>
+        <div class="mui-input-row item-input" id="acceptorUsername">
+          <span id="acceptorName">请选择</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title" style="width: 120px;">
+          <span style="color: white">*</span>受理部门：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="accepteDepartName"></span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>要求完成时间：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="processingDemands">请选择时间</span>
+          <img id="processingDemandsImg" src="../../../img/cal.png"
+               style="width: 16px;height: 16px;margin: auto 0px auto 5px"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>补充要求：
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <textarea placeholder="请输入补充要求(500字以内)" required="true" maxlength="500"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0" id="suppleRequire"></textarea>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>派单人：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="createPerson"></span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>联系方式：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="createPhone"></span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>派单部门：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="createDepartment"></span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="createDate"></span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title" style="width: 120px;margin-top: 8px;">
+          <span></span>新任务通知方式
+        </div>
+        <div class="mui-input-row" style="display: flex;">
+          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+          <div class="item-checkbox" style="flex: 1;">
+            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+              <label>站内消息</label>
+              <input name="notifymethod" value="message" type="checkbox" checked disabled="">
+            </div>
+          </div>
+          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+          <div class="item-checkbox" style="flex: 1;">
+            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+              <label>手机短信</label>
+              <input id="sms" name="sms" value="sms" type="checkbox">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>结果复核：
+        </div>
+        <input id="approverUsername" style="display: none;"/>
+        <div class="mui-input-row item-input" id="resAuditorUsername">
+          <span id="approverFullname"></span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="page-bottom">
+        <button class="btn-temp-save"style="display: none">暂存</button>
+        <button class="btn-agree">提交</button>
+      </div>
+    </div>
+    <!--    </div>-->
+    <!--    </div>-->
+  </div>
+</div>
+
+</body>
+
+<script src="../../js/mui.previewimage.js"></script>
+<script src="../../js/numberBox.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/uploadimage.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script src="../../js/workSpace/addNormalFormItem.js"></script>
+
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+<script>
+    // var vConsole = new VConsole();
+
+  
+
+    var notifArr = ["massage"]
+    var submitParam = {
+      formName: '', //工单名称*
+      problemType: '', // 问题类型
+      problemLevel: '', //问题等级
+      relatedOrder: ''  ,//相关工单
+      relatedOrderId: '', //相关工单Id
+      fatherForm: '', //父级工单
+      fatherFormId: '',//	父级工单Id
+      objType: '', //设施类型
+      foundAddr: '', //发现地点
+      problemDesc: '', //问题描述
+      problemPhoto: '', //问题照片
+      deadline: '', //要求完成时间
+      suppleRequire: '',//补充要求
+      resAuditorName: '',
+      resAuditorUsername: '',//	结果复核用户名
+      formSource: '',//工单来源
+      notifymethod: '',
+      acceptorUsername:'',
+      createdBy:'',
+      inputeDepartName:'',
+      acceptorName:'',
+      accepteDepartName:'',
+      phoneNum:'',
+      createTime: '',
+      flowFinishTime:null,
+      objName:null,
+      accepteDepartCode:null,
+      objNameCode:null,
+      addrCoo:null,
+      advise:null
+    };
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    var userPicker = new mui.PopPicker();
+
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+
+    console.log("normalForm.html==========================================================");
+    let param = {
+        guid: "",
+    }
+    let correlationParam = {
+        pageNo: '1',
+        pageSize: '1000',
+    }
+    var problemTypeList = null;
+    var deviceTypeList = null;
+    var correlationFormList = null;
+															
+    console.log("plusReady==========================================================");
+    mui.plusReady(function () {
+        var self = plus.webview.currentWebview();
+        var proTypeName = '';
+        mui('.mui-scroll-wrapper').scroll({
+            scrollY: true, //是否竖向滚动
+            scrollX: false, //是否横向滚动
+            startX: 0, //初始化时滚动至x
+            startY: 0, //初始化时滚动至y
+            indicators: true, //是否显示滚动条
+            deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+            bounce: true //是否启用回弹
+        });
+       
+        console.log("ASdad")
+		var problemLevel = self.problemLevel
+		if(self.problemLevel =='0'){
+			$('#initialDesignOne').prop('checked','cheacked')
+		}else if(self.problemLevel =='1'){
+          $('#initialDesignTwo').prop('checked','cheacked')
+        }
+		submitParam.createTime = self.createTime
+        var date = self.createTime.split(" ")[0];
+        $('#orderName').val(self.formName);
+        $('#problemTypeName').text(proTypeName);
+        $('#fatherForm').text(self.formName);
+        submitParam.fatherForm = self.formName
+        submitParam.fatherFormId = self.guid
+        submitParam.formSource = self.formSource
+        if (self.fondAddr != null && self.fondAddr.length > 0) {
+            $('#discoveryAddr').text(self.foundAddr);
+        }
+
+        $('#acceptorName').text(self.acceptorName);
+        $('#accepteDepartName').text(self.accepteDepartName);
+        submitParam.accepteDepartName = self.accepteDepartName
+        $('#createPerson').text(self.createBy);
+         submitParam.createdBy = self.createBy
+        $('#createPhone').text(self.phoneNum);
+         submitParam.phoneNum = self.phoneNum
+        $('#createDepartment').text(self.inputeDepartName);
+        submitParam.inputeDepartName  = self.inputeDepartName
+        $('#createDate').text(date);
+        $('#approverFullname').text(self.resAuditorName);
+
+        //禁止选项卡自带滑动，手动监听
+        console.log("slider==========================================================");
+        // mui('.mui-slider').slider().stopped = true;
+
+        console.log("initView==========================================================");
+
+        // 点击关闭遮罩层
+        self.addEventListener("maskClick", closeMask, true);
+        getProblemTypeList(function (data) {
+            if (data != null) {
+                console.log('problemType' + JSON.stringify(data));
+                problemTypeList = data;
+            }
+        });
+        getDeviceTypeList(function (data) {
+            if (data != null) {
+                console.log('deviceType' + JSON.stringify(data));
+                deviceTypeList = data.records;
+            }
+        })
+        getCorrelationFormList(function (data) {
+            if (data != null) {
+                console.log('correlationForm' + JSON.stringify(data));
+                correlationFormList = data.records;
+            }
+        })
+    });
+
+    window.addEventListener('touchmove', function (e) {
+        var target = e.target;
+        if (target && target.className === 'problemTypeItem') {//textarea阻止冒泡
+            e.stopPropagation();
+        }
+    }, true);
+
+    function initMap() {
+        // 地图开启==================================================================================================================================================================================
+        // 初始化地图容器
+        const MobileContainer = window['mobile-lib'].MobileContainer;
+        const mobileContainer = new MobileContainer({
+            serverUrl: config.urls.serverDomain,
+            options: {minZoom: 10},
+            style: 'color',
+            initCallback: () => {
+                console.log("地图初始化完成")
+            }
+        });
+        const layerSelections = window['mobile-lib'].layerSelections;
+        const mapData = window['mobile-lib'].MapData({
+            serverUrl: config.urls.serverDomain,
+            style: 'color'
+        });
+        mobileContainer.on('load', () => {
+            getCurrentPosition();
+            // mobileContainer.enableCenterAddress(true);
+            // mobileContainer.setQuery({NAME: 'ps_dischargeWr'});//加载排水户
+            // mobileContainer.showAnnotation(true);
+        });
+
+        var getCurrentPosition = function () {
+            plus.geolocation.getCurrentPosition(function (position) {
+                //坐标修正
+                var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+
+                var Lon = point[0]; //获取经度
+                var Lat = point[1]; //获取纬度
+
+                console.log("latlng:" + Lat + "," + Lon);
+
+                mobileContainer.flyTo([Lon, Lat], {
+                    zoom: 12
+                });
+            })
+        }
+
+        //点击地图 定位
+        mobileContainer.on('click', data => {
+            if (data) {
+                // flag = true;
+                console.log('点击地图:click')
+                // clearGlobalItem();
+                mobileContainer.enableCenterAddress(true);
+                mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+                mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+            } else {
+                // flag = false;
+                // clearGlobalItem();
+                app.toast('当前选择不在可选范围内，请重新选择');
+            }
+        });
+
+      //地图取消
+      $("#map_cancel").on('tap',function () {
+        console.log("取消");
+        maskClose();
+      })
+
+      //地图确认
+      $('#map_confirm').on('tap',function () {
+          var address =  $("#searchInput").val();
+          $("#discoveryAddr").text(address)
+          maskClose()
+      })
+
+
+        //显示地图信息
+        mobileContainer.on('showAddress', data => {
+            console.log("showAddress" + JSON.stringify(data.addressComponent));
+            var point = {
+                'lng': data.location.lon,
+                'lat': data.location.lat
+            };
+            Point = point;
+            // globalSetItem(GlobalKey.point, JSON.stringify(point));//选中地图点
+
+            var city = data.addressComponent.city ? (data.addressComponent.city) : '';
+            var county = data.addressComponent.county ? (data.addressComponent.county) : '';
+            var road = data.addressComponent.road ? data.addressComponent.road : '';
+            var poi = data.addressComponent.poi ? data.addressComponent.poi : '';
+            var address = city + county + road + poi;
+            $("#searchInput").val(address);
+            $("#searchInput").show();
+            // maskClose();
+            // globalSetItem(GlobalKey.address, address);//保存选中的地址
+        });
+        // 地图结束==================================================================================================================================================================================
+    }
+
+    //关闭遮罩层
+    function closeMask() {
+        console.log('关闭遮罩层' + sharew.id);
+        //避免出现特殊情况，确保分享页面在初始化时关闭
+        if (!sharew) {
+            sharew = plus.webview.getWebviewById("goods/add_to_cart.html");
+            console.log(sharew.id);
+        }
+        if (sharew) {
+            sharew.hide('slide-out-bottom', 300);
+            //sharew = null;
+        }
+        var ws = plus.webview.currentWebview();
+        console.log('关闭遮罩层' + ws.id);
+        ws.setStyle({mask: "none"});
+    }
+
+    mask.clickClose = false;
+
+    function maskClose() {
+        mask.clickClose = true;
+        mask.close();
+    }
+
+    function maskShow() {
+        mask.clickClose = false;
+        mask.show();
+    }
+
+
+    //提交
+    $(".btn-agree").on('tap',function () {
+      var problemStr =  $('#problemTypeName').text();
+      var Type;
+      switch (problemStr) {
+        case '设备检修':
+          Type = "0";
+          break;
+        case '隐患巡查':
+          Type = "1";
+          break;
+        case '水质报警':
+          Type = "2";
+          break;
+        case '投诉处理':
+          Type = "3";
+          break;
+        case '水务调度':
+         Type = "4";
+          break;
+        default:
+          Type = "";
+      }
+      if (document.getElementById("sms").checked){
+        notifArr.push("sms")
+      }
+
+      var problemLevel =  $("input[name='initialDesign']:checked").val();
+      console.log(problemLevel)
+      submitParam.formName =  $('#orderName').val()
+      submitParam.problemType  = Type
+      submitParam.problemLevel = problemLevel
+      submitParam.foundAddr = $("#discoveryAddr").text();
+      submitParam.problemDesc = $("#problemDesc").val();
+      submitParam.deadline =$('#processingDemands').text();
+      submitParam.suppleRequire = $('#suppleRequire').val();
+      submitParam.resAuditorName =  $("#approverFullname").text();
+      submitParam.notifymethod = notifArr
+
+      console.log(JSON.stringify(submitParam))
+
+
+      if (validateRequiredFields()){
+        var photoArr = new Array();
+        photoArr.push(photoParm);
+        console.log("提交")
+        lastParam = {
+          strFormData:JSON.stringify(submitParam),
+          strAttachment: JSON.stringify(photoArr)
+        }
+        addSellSubWorkOrder(lastParam, function(data) {
+          if (data.success) {
+            app.toast("提交成功")
+            mui.back()
+          } else {
+            app.toast("提交失败")
+          }
+        });
+      }
+
+    })
+
+    //必填验证
+    function validateRequiredFields() {
+
+      var isVali = true;
+      $('input[required="true"],textarea[required="true"]').filter(':visible').each(function(i, requiredField) {
+        if ($(requiredField).val() == '') {
+          app.toast($(requiredField).attr('placeholder'));
+          isVali = false;
+          return isVali;
+        }
+      });
+      $('input[type="checkbox"][required="true"]').filter(':visible').each(function(i, requiredField) {
+        let checkVal = $("input[name='" + $(requiredField).attr('name') + "']:checked").val();
+        if (isEmpty(checkVal) || checkVal === undefined) {
+          app.toast($(requiredField).attr('placeholder'));
+          isVali = false;
+          return isVali;
+        }
+      });
+      return isVali;
+    }
+
+    $("#problemType").on('tap', function () {
+        if (problemTypeList != null > 0) {
+            maskShow();
+            addProblemTypeDialog(problemTypeList);
+        }
+    });
+    $('#deviceType').on('tap', function () {
+        if (deviceTypeList != null && deviceTypeList.length > 0) {
+            maskShow();
+            addDeviceTypeDialog(deviceTypeList);
+        }
+    });
+    $('#correlationForm').on('tap', function () {
+        if (correlationFormList != null && correlationFormList.length > 0) {
+             maskShow();
+            addCorrelationForm(correlationFormList);
+        }
+    })
+
+    $('#acceptorUsername').on('tap',function () {
+      app.openPage("../../commom/organ.html", {
+        titleNView: {
+          titleText: '选择人员',
+          autoBackButton: true
+        }
+      }, extras);
+
+      var checkPersonBack = function (data) {
+        console.log(JSON.stringify(data))
+        if (data.detail[0] != undefined) {
+          console.log(JSON.stringify(data.detail[0]));
+          $("#acceptorName").text(data.detail[0].realname);
+          submitParam.acceptorUsername = data.detail[0].username
+          submitParam.acceptorName= data.detail[0].realname
+        }
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+      }
+
+      //移除
+      window.removeEventListener('returnSelect', checkPersonBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkPersonBack, false);
+    })
+
+    $('#resAuditorUsername').on('tap',function () {
+
+
+      app.openPage("../../commom/organ.html", {
+        titleNView: {
+          titleText: '选择人员',
+          autoBackButton: true
+        }
+      }, extras);
+
+      var checkPersonBack = function (data) {
+		  	console.log(JSON.stringify(data.detail))
+        if (data.detail[0] != undefined) {
+          console.log(JSON.stringify(data.detail[0]));
+          $("#approverFullname").text(data.detail[0].realname);
+          submitParam.resAuditorName = data.detail[0].realname
+          submitParam.resAuditorUsername = data.detail[0].username
+        }
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+      }
+
+      //移除
+      window.removeEventListener('returnSelect', checkPersonBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkPersonBack, false);
+
+
+    })
+
+
+
+    var photoParm = {
+      groupId: '',
+      fileToken: '',
+      fieldName: 'problemPhoto',
+      tableName: 'form_base_new'
+    }
+
+    //整体图片上传（未完成的）
+    $("#updateManagePhoto").on("tap", function () {
+        // if(tmpBtnStatus=='false'){ return;}
+        plusSelectImage(function (data, path) {
+            console.log(JSON.stringify(data))
+            if (data.success) {
+                $("#managePhoto").show();
+                $("#updateManagePhoto").hide();
+                $("#managePhoto").attr("src", path);
+                photoParm.groupId = data.result.uploadFile.id;
+                submitParam.problemPhoto = data.result.uploadFile.id;
+                photoParm.fileToken = data.result.fileTokens;
+                // }
+            } else app.toast(data.message)
+        });
+    });
+
+    // 选择地点
+    $('#discoveryAddr').on('tap', function () {
+        console.log("选择地图");
+        maskShow();
+        addMapSelector();
+        initMap();
+    })
+
+
+    // 选择时间
+    $('#processingDemands').on('tap', function () {
+        var that = $(this);
+        plusDateWithDate(function (data) {
+            var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+            that.text(now);
+            $('#processingDemandsImg').hide();
+        });
+    })
+
+
+
+    // 问题类型
+    function selectProblemType(index) {
+        console.log("点击了" + index);
+        maskClose();
+        $('#problemTypeName').text(problemTypeList[index].itemText);
+    }
+
+    // 相关工单
+    function selectCorrelationForm(index) {
+        console.log("点击了" + index);
+        maskClose();
+        $('#correlationFormName').text(correlationFormList[index].formName);
+      submitParam.relatedOrderId=correlationFormList[index].guid
+      submitParam.relatedOrder = correlationFormList[index].formName
+
+    }
+
+    // 设施类型
+    function selectDeviceType(index) {
+        console.log("点击了" + index);
+        maskClose();
+        $('#deviceTypeName').text(deviceTypeList[index].deviceTypeName);
+        submitParam.objType =  deviceTypeList[index].deviceType
+    }
+
+    function getProblemTypeList(callback) {
+        getProblemType(function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("列表查询失败");
+            }
+        })
+    }
+
+    function getDeviceTypeList(callback) {
+        getDeviceType1(function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("列表查询失败");
+            }
+        })
+    }
+
+    function getCorrelationFormList(callback) {
+        console.log("相关工单：===============================================================");
+        getCorrelationForm(correlationParam, function (data) {
+            console.log("相关工单："+JSON.stringify(data));
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("列表查询失败");
+            }
+        })
+    
+
+    // 弹出问题类型列表
+    var addProblemTypeDialog = function (data) {
+        // 先清空
+        $(".mui-backdrop").empty();
+        var dialog = '<div style="padding: 15px;background-color: white;margin: 40% 5%;border-radius: 7px;">' +
+            '<div style="border-bottom: 1px solid #eee;width: 100%;text-align: center;padding: 10px;font-size: 16px;color: black;font-weight: bold">选择问题类型</div>';
+        var count = Object.getOwnPropertyNames(data).length;
+        console.log(count);
+        for (let i = 0; i < count; i++) {
+            var itemName = data[i].itemText;
+            dialog += '<div class="problemTypeItem" onclick="selectProblemType(' + i + ')" style="border-bottom: 1px solid #eee;width: 100%;text-align: center;padding: 10px;font-size: 15px;color: black" data-status="' + i + '">' + itemName + '</div>'
+        }
+        dialog += '</div>';
+        $(".mui-backdrop").append(dialog);
+    }
+    // 弹出设施类型列表
+    var addDeviceTypeDialog = function (data) {
+        // 先清空
+        $(".mui-backdrop").empty();
+        var dialog = '<div style="padding: 15px;background-color: white;margin: 25% 5%;border-radius: 7px;height: 60%;">' +
+            '<div style="border-bottom: 1px solid #eee;width: 100%;text-align: center;padding: 10px;font-size: 16px;color: black;font-weight: bold">选择设施类型</div>' +
+            '<div class="mui-scroll-wrapper" style="height: 90%;overflow: scroll;position: relative;">' +
+            '<div class="mui-scroll" style="float: none">';
+        for (let i = 0; i < data.length; i++) {
+            dialog += '<div class="problemTypeItem" onclick="selectDeviceType(' + i + ')" style="border-bottom: 1px solid #eee;width: 100%;text-align: center;padding: 10px;font-size: 15px;color: black" data-status="' + i + '">' + data[i].deviceTypeName + '</div>'
+        }
+        dialog += '</div></div></div></div>';
+        $(".mui-backdrop").append(dialog);
+    }
+    // 弹出相关工单列表
+    var addCorrelationForm = function (data) {
+        // 先清空
+        $(".mui-backdrop").empty();
+        var dialog = '<div style="padding: 15px;background-color: white;margin: 25% 5%;border-radius: 7px;height: 60%;">' +
+            '<div style="border-bottom: 1px solid #eee;width: 100%;text-align: center;padding: 10px;font-size: 16px;color: black;font-weight: bold">选择相关工单</div>' +
+            '<div class="mui-scroll-wrapper" style="height: 90%;overflow: scroll;position: relative;">' +
+            '<div class="mui-scroll" style="float: none">';
+        for (let i = 0; i < data.length; i++) {
+            dialog += '<div class="problemTypeItem" onclick="selectCorrelationForm(' + i + ')" style="border-bottom: 1px solid #eee;width: 100%;text-align: center;padding: 10px;font-size: 15px;color: black" data-status="' + i + '">' + data[i].formName + '</div>'
+        }
+        dialog += '</div></div></div></div>';
+        $(".mui-backdrop").append(dialog);
+    }
+    // 弹出地图
+    var addMapSelector = function () {
+        // 先清空
+        $(".mui-backdrop").empty();
+        var map = '<div id="map" class="mapboxgl-map" style="z-index: 7;position:absolute;left:0px;top:0px;right:0px;width:80%;height:78vh;margin: 10% 10%">' +
+            '<!--搜索-->' +
+            '<div id="searchBar" class="mui-input-row" style="position: fixed;z-index: 6;width: 90%;margin: 10%;height: 40px; ">' +
+            // '<img src="../../../img/commom/search1@2x.png" alt="" id="search_icon" style="width: 16px;position: fixed;top: 31px;left: 31px;">' +
+            '<input readonly style="margin: 0;border: none;background-color: white;padding: 10px;font-size: 16px;text-align: center;display: none" id="searchInput"></div>' +
+            '</div>' +
+            '<div style="bottom: 8%;margin-left: 10%;width: 80%;display: flex;position: absolute;background-color: white;height: 35px;">' +
+            '<span style="flex: 1;text-align: center;line-height: 35px;border-right: 1px solid #eee" id="map_confirm">确认</span>' +
+            '<span style="flex: 1;text-align: center;line-height: 35px;" id="map_cancel">取消</span>' +
+            '</div>';
+        $(".mui-backdrop").append(map);
+    }
+
+</script>
+</html>

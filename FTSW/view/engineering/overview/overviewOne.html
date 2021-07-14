@@ -1,0 +1,900 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>项目概览-单个</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/overview.css" />
+		<style type="text/css">
+			#home-header {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				height: 120px;
+				background: #FFFFFF
+			}
+
+			#home-header .home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+
+			#home-header .home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+
+
+			#home-header .home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+
+			#home-header .home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+
+			}
+
+			#home-header .home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			#home-header .mui-icon-forward:before {
+				content: '';
+			}
+
+			#home-header .mui-icon-forward::after {
+				content: '\e470';
+				font-size: 15px;
+			}
+
+			.mui-backdrop {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 998;
+				background-color: rgba(0, 0, 0, .2);
+			}
+			.myScorll{
+				overflow-x:scroll ;
+				width: 100%;
+				margin-left: 20px;
+			}
+			.myScorll div{
+				flex: none;
+				width: 30%;
+			}
+			.myScroll_span span{
+				flex: none;
+			}
+			.myScroll_span2 span{
+				flex: none;
+			}
+			.myScroll2{
+				overflow-x:scroll
+			}
+			.myScroll2 div{
+				flex: none;
+				width: 30%;
+			}
+			.empty{
+				width:100%;
+				text-align: center;
+				font-size: 16px;
+				color: #BBBBBB;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<!-- 			<div class="mui-navbar">
+					</div> -->
+				<div class="mui-pages">
+				</div>
+			</div>
+			<div class="home-item" style="display: none; height: 200px;" id="home-header">
+				<div class="home-item-list" id="business_item">
+					<div class="item" id="quality">
+						<img src="../../../img/commom/quality-icon.png">
+						<span>质量检查</span>
+					</div>
+					<div class="item" id="security">
+						<img src="../../../img/commom/security-icon.png">
+						<span>安全检查</span>
+					</div>
+					<div class="item" id="education">
+						<img src="../../../img/commom/education-icon.png">
+						<span>安全教育</span>
+					</div>
+					<div class="item" id="attendance">
+						<img src="../../../img/commom/attendance-icon.png">
+						<span>考勤统计</span>
+					</div>
+					<div class="item" id="meeting">
+						<img src="../../../img/commom/meeting.png">
+						<span>项目会议</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--底部导航栏-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title home-item">
+								资金状况
+							</div>
+							<div id="main" style="width: 100%;height:400px;"></div>
+
+							<div class="bar-title home-item">
+								项目进度
+							</div>
+							<div id="main2" style="width: 100%;">
+								<div id="title" style="padding:20px;display: flex;justify-content: center;">
+									<!-- <span id="" style="font-size:16px;font-family: PingFang SC;font-weight: 500;color: #191515;"></span> -->
+									<div id="">
+										<span class="span-title" id="" style="margin-right: 10px;">
+											<span class="span-icon1"></span>前期阶段
+										</span>
+										<span class="span-title" id="">
+											<span class="span-icon2"></span>施工阶段
+										</span>
+									</div>
+								</div>
+								<div class="empty" id="empty" style="display: none;">暂无数据</div>
+							<div class="main1_wrap myScorll">								
+								<div id="main1_title" style="margin-bottom:10px;color: #888888;font-weight: 400;margin-right: 0;width: 100%;">
+									<!-- 用地规划许可/可研批复（2020/08/04-至今） -->
+								</div>
+								<div class="myScroll_span" style="margin:30px 20px 0 40px;display: flex;;flex-wrap: nowrap;width: 100%;">
+								<!-- <span class="span1_1" style="text-align: center;color: #FFFFFF;margin-bottom:20px;border:none;background-color: #FFBB00">1</span>
+								<span id="" style="background-color:#FFBB00;width:30%;height:5px;margin-top:8px;border-radius:5px;"></span>
+								<span id="" class="span1_1" style="margin-bottom:20px;color: #FFFFFF;background-color: #FFBB00;border:none;">2</span>
+								<span id="" style="background-color:##FFBB00;width:30%;height:5px;margin-top:8px;border-radius:5px;"></span>
+								<span id="" class="span1_1" style="color: #888888;background-color: #EDEDED;border-color:#EDEDED;margin-right: 20px;">3</span> -->
+								</div>
+								<div class="myScroll" style="display: flex;justify-content: flex-start; width: 100%;">
+									<!-- <div style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div  style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div  style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div  style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div> -->
+								</div>
+							</div>	
+								<div class="myScroll_span2" style="margin:30px 20px 0 60px;display: flex;align-items: flex-start;">
+									<!-- <span class="span1_1" style="text-align: center;color: #FFFFFF;margin-bottom:20px;border:none;background-color: #FFBB00">1</span>
+									<span id="" style="background-color:#FFBB00;width:30%;height:5px;margin-top:8px;border-radius:5px;"></span>
+									<span id="" class="span1_1" style="margin-bottom:20px;color: #FFFFFF;background-color: #FFBB00;border:none;">2</span>
+									<span id="" style="background-color:##FFBB00;width:30%;height:5px;margin-top:8px;border-radius:5px;"></span>
+									<span id="" class="span1_1" style="color: #888888;background-color: #EDEDED;border-color:#EDEDED;margin-right: 20px;">3</span> -->
+								</div>
+								<div class="myScroll2" style="display: flex;justify-content: flex-start;margin-left:20px">
+									<!-- <div id="div_1" style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div id="div_2" style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div>
+									<div id="div_3" style="display: flex;justify-content: space-around;flex-direction: column;margin-right: 20px;align-items: center;">
+										<span id="" class="span1_2" style="margin-bottom:10px">进行中</span>
+										<span id="" class="span1_3">用地预审</span>
+									</div> -->
+								</div>
+							</div>
+
+							<div class="bar-title home-item">
+								安全情况
+								<div id="select-item" class="select-item">
+									<!-- 安全生产天数：<span id="num1">19</span>天 -->
+								</div>
+								<div class="empty" id="empty2" style="padding-top:100px">暂无数据</div>
+							</div>
+							<div id="main3" style="width: 100%;height:300px;"></div>
+
+							<div class="bar-title home-item">
+								质量情况								
+								<div id="select-item" class="select-item">
+									<!-- 质量安全天数：<span id="num2">19</span>天 -->
+								</div>
+								<div class="empty" id="empty1" style="padding-top:100px">暂无数据</div>
+							</div>
+							<div id="main4" style="width: 100%;height:300px;"></div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+</html>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/echarts.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/overview.js"></script>
+<script src="../../../js/update.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script src="../../../js/oneprj/oneprj.js"></script>
+<script type="text/javascript">
+	mui.init(
+	{
+		swipeBack:false
+	}
+	)
+	//初始化单页view
+	// var vConsole = new VConsole();
+	// let myProjectInfo = JSON.parse(localStorage.getItem("projectInfo"));
+	// let prjData = {
+	// 	prjName: myProjectInfo.prjName,
+	// 	projectId: myProjectInfo.prjId
+	// };
+	var myProjectId = {
+		projectId: JSON.parse(localStorage.getItem("projectInfo")).prjId
+	};
+	let year = new Date().getFullYear();
+	// console.log(prjData)
+	var viewApi = mui('#app').view({
+		defaultPage: '#mui-content'
+	});
+	//初始化单页的区域滚动
+	//注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+	mui('.mui-scroll-wrapper').scroll();
+	//资金状况
+	var list1 = {
+		titles: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+		data1: [80, 90, 80, 35, 47, 50, 22, 95, 35, 40, 45, 70],
+		data2: [13, 45, 67, 23, 67, 89, 57, 43, 90, 99, 30, 65]
+	}
+	//安全情况
+	// var list2 = [{
+	// 		value: 100,
+	// 		name: '已整改'
+	// 	},
+	// 	{
+	// 		value: 31,
+	// 		name: '未整改'
+	// 	},
+	// 	{
+	// 		value: 25,
+	// 		name: '隐患问题'
+	// 	},
+	// ];
+	var mask = mui.createMask();
+	var isShow = true;
+	var param = {
+		pageCount: 1
+	};
+	mui.plusReady(function() {
+		var self = plus.webview.currentWebview();
+		if (self.pageCount != undefined) {
+			param.pageCount = self.pageCount + 1;
+		}
+		self.setStyle({
+			titleNView: {
+				backgroundImage: "../../../img/bgTop.png",
+				backgroundRepeat: 'no-repeat',
+				buttons: [{
+					float: 'right',
+					width: '70',
+					fontSize: '17',
+					text: '',
+					onclick: function() {
+						if (isShow) {
+							isShow = false;
+							$("#home-header").show();
+							mask.show()
+						} else {
+							isShow = true;
+							$('#home-header').hide();
+							mask.close();
+						}
+					}
+				}], 
+			}
+		});
+
+		// var legendData = [];
+		// var total = 0;
+		// list2.forEach(item => {
+		// 	console.log(JSON.stringify(item))
+		// 	legendData.push(item.name);
+		// 	total += item.value;
+		// })
+
+		// mui("#demo1").progressbar({progress:20}).show();
+		//资金状况
+		var myChart = echarts.init(document.getElementById('main'));
+		var myChart3 = echarts.init(document.getElementById('main3'));
+		var myChart4 = echarts.init(document.getElementById('main4'));
+		getqueryLeastPlan(myProjectId, (res)=> {
+			//获取项目前期进度信息 5
+			// console.log(JSON.stringify(myProjectId));
+			// console.log(JSON.stringify(res));
+			if(res.result){
+				let myMissionName = res.result.planName;
+				let planId = res.result.guid;
+				$('#main1_title').text(myMissionName);
+				getProphaseStageInfoByPlanId({'planId':planId},(res)=>{
+					//获取项目进度反馈信息 6
+					// console.log(res) ;
+					let prjProgress = res.result;
+					var html ='';
+					var html2 = '';
+					prjProgress.forEach((item,index)=>{
+						html2+=`<div style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+										<span class="span1_2" style="margin-bottom:10px;line-height:20px;line-height: 20px;width:90%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;;">${item.missionNames}</span>
+										<span class="span1_3" style="margin-bottom:10px">${item.status}</span>
+										<span class="span1_3" style="margin-bottom:10px">${item.avgCompletePercent}</span>
+									</div>`
+						if(index===prjProgress.length-1){
+							html+=`<span id="" class="span1_1" style="text-align: center;margin-bottom:20px;background-color:#337BFC;color: #FFFFFF">${index+1}</span>`
+						}else{
+							html+=`<span id="" class="span1_1" style="text-align: center;margin-bottom:20px;background-color:#337BFC;color: #FFFFFF">${index+1}</span>
+											<span id="" style="background-color:#337BFC;width:90px;height:5px;margin-top:8px;border-radius:5px;"></span>`
+						}
+					});
+					$('.myScroll_span').html(html);
+					$('.myScroll').html(html2);
+				})
+			}
+			else {
+				$('#empty').show(); //app.toast("暂无数据")
+			}
+		});
+		
+		getLeastPlanByProjectId(myProjectId, (res)=> {
+			//获取施工计划信息 7
+			// console.log(res);
+			if(!res.result){
+				$(".main2 myScroll").html('暂无数据')
+				return false
+			}
+			let planId = res.result.guid;
+			getProjectPackageScheduleByPlanId({'planId':planId},(res)=>{
+				//获取施工阶段项目进度信息 8
+				// console.log(res) ;
+				let prjProgress = res.result;
+				var html ='';
+				var html2 = '';
+				prjProgress.forEach((item,index)=>{
+					html2+=`<div style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+									<span class="span1_2" style="margin-bottom:10px">${item.Name}</span>
+									<span class="span1_3" style="margin-bottom:10px">${item.PercentComplete*100}%</span>
+								</div>`
+					if(index===prjProgress.length-1){
+						html+=`<span id="" class="span1_1" style="text-align: center;margin-bottom:20px;background-color:#FFBB00;color: #FFFFFF;border:none">${index+1}</span>`
+					}else{
+						html+=`<span id="" class="span1_1" style="text-align: center;margin-bottom:20px;background-color:#FFBB00;color: #FFFFFF;border:none">${index+1}</span>
+										<span id="" style="background-color:#FFBB00;width:90px;height:5px;margin-top:8px;border-radius:5px;"></span>`
+					}
+				});
+				$('.myScroll_span2').html(html);
+				$('.myScroll2').html(html2);
+			})
+		});
+		getMonsContractPaymentInfo({
+			'year': year
+		}, (res) => {
+			// console.log(res);
+			list1.data1 = res.result.checkPayments; //实际付款
+			list1.data2 = res.result.applyPayments;
+			var option = {
+				color: ['#3398DB'],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					show: true,
+					right: 8,
+					top: '5%',
+					itemHeight: 5,
+					itemWidth: 15,
+					textStyle: {
+						fontSize: 13,
+						padding: [0, 0, 0, 2],
+						fontFamily: 'PingFang SC',
+						fontWeight: 400,
+						color: '#7F7F7F',
+					},
+				},
+				grid: {
+					left: 20,
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					data: list1.titles,
+					axisTick: {
+						alignWithLabel: true,
+					},
+					axisLabel: {
+						interval: 0
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					name: '单位（户）',
+					max: function (value) {
+						let split = Math.ceil(value.max / 5 / 100);
+						if (value.max == '-Infinity' || value.max == 0 || isNaN(value.max)) {
+							return 1;
+						} else if (value.max < 100) {
+							return Math.ceil(value.max / 10) * 10 + Math.ceil(value.max / 100) * 10;
+						} else return Math.ceil(Math.ceil(value.max / 100) / split) * split * 100;
+						// (Math.ceil(value.max/100)*100)
+					},
+					min: 0,
+				}],
+				series: [{
+						name: '申请付款',
+						type: 'bar',
+						barWidth: '25%',
+						color: '#337BFC',
+						data: list1.data1,
+						itemStyle: {
+							//柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+							emphasis: {
+								barBorderRadius: 30
+							},
+							normal: {
+								//柱形图圆角，初始化效果
+								barBorderRadius: [10, 10, 0, 0],
+							}
+						},
+					},
+					{
+						name: '实际付款',
+						type: 'bar',
+						barWidth: '25%',
+						color: '#43DE87',
+						data: list1.data2,
+						itemStyle: {
+							//柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+							emphasis: {
+								barBorderRadius: 30
+							},
+							normal: {
+								//柱形图圆角，初始化效果
+								barBorderRadius: [10, 10, 0, 0],
+							}
+						},
+					}
+				]
+			};
+			// console.log(option)
+			//自适应
+			window.onresize = myChart.resize;
+			myChart.setOption(option);
+		})
+		getSafetyQualityResult('', (res) => {
+			// console.log(JSON.stringify(res));
+			var myLegendData=[];
+			 var myName = ['已整改','未整改','合计'];
+			 var myData = []
+			 var myTotal=0;
+			for(var key in res.result){
+				myData.push(res.result[key])
+				myTotal+=res.result[key]
+			};
+			myLegendData=myName.map((item,index)=>{
+				return {name:item,value:myData[index]}
+			});
+			myTotal = myLegendData[2].value;
+			myLegendData.pop();
+			// console.log(myLegendData)
+			// console.log('----------')
+			// 使用刚指定的配置项和数据显示图表。
+			var option1 = {
+				color: ['#337BFC', '#43DE87', '#FFBB00', '#FF584C', '#9665E2', '#47CBCA', '#7DD936', '#655CE6', '#E63984'],
+				title: {
+					show: true,
+					text: myTotal, //主标题
+					subtext: '合计(个)', //副标题：企业数量值，此处用标题方式来显示
+					left: '49%',
+					align: 'center',
+					textAlign: 'center',
+					top: '30%',
+					z: 0,
+					zlevel: 100,
+					textStyle: {
+						//设置副标题的样式
+						width: 200,
+						color: '#000',
+						fontSize: 25,
+						fontWeight: 'bold',
+					},
+					subtextStyle: {
+						//设置主标题的 样式
+						color: '#8C8C8C',
+						fontSize: 16,
+					},
+				},
+				tooltip: {
+					show: false,
+					// trigger: 'item',
+					// formatter: '{b}:{d}%',
+				},
+				legend: {
+					orient: 'horizontal',
+					// top: '70%',
+					bottom: 30,
+					left: 'center',
+					data: myName,
+					itemWidth: 10,
+					itemHeight: 10,
+					icon: 'circle',
+					itemGap: 12, // 设置间距
+					formatter: function(name) {
+						for (let item of myLegendData) {
+							if (name == item.name) {
+								return ['{name|' + name + '} {num|' + item.value + '}'].join(''); //name + ' ' + total;
+							}
+						}
+					},
+					textStyle: {
+						rich: {
+							name: {
+								fontSize: 12,
+								fontWeight: 400,
+								color: '#8C8C8C',
+							},
+							num: {
+								fontSize: 12,
+								fontWeight: 400,
+								color: '#282828',
+								padding: [0, 0, 0, 5],
+							},
+						},
+						fontSize: 12,
+						fontWeight: 400,
+						color: '#8C8C8C',
+					},
+				},
+				series: [{
+						name: '',
+						type: 'pie',
+						selectedMode: 'single',
+						label: {
+							position: 'inner',
+						},
+						labelLine: {
+							show: false,
+						},
+					},
+					{
+						name: '',
+						type: 'pie',
+						radius: ['35%', '45%'],
+						center: ['50%', '40%'],
+						label: {
+							normal: {
+								show: false
+							},
+							emphasis: {
+								show: true,
+								formatter: (params) => {
+									if(myTotal == 0) return `${params.name} \n —— `;
+									return `${params.name} \n ${((params.value/myTotal)*100).toFixed(2)}% `;
+								},
+								color: function(params) {
+									return '#1089E7'
+								},
+								borderRadius: 4,
+							}
+						},
+						data: myLegendData,
+					},
+				],
+			};
+			window.onresize = myChart3.resize;
+			
+			myChart3.setOption(option1);
+			$("#empty2").hide()
+		});
+		getProjectQualityResult('',(res)=>{
+			 // legendData = [];
+			 if(res){
+				var myLegendData=[];
+				 var myName = ['合计','已整改','未整改'];
+				 var myData = []
+				 var myTotal=0;
+				for(var key in res.result){
+				    // console.log("key:"+key)
+				    // console.log("res.result[key]:"+res.result[key])
+					myData.push(res.result[key])
+					// myTotal+=res.result[key]
+					var a ={
+				        name:"",
+						value:""
+					};
+					if(key=='allRectifyResultCount'){
+                        a.name = '合计'
+					}else if(key=='unRectifyResultCount'){
+                        a.name = '未整改'
+					}else if(key == 'rectifiedResultCount'){
+                        a.name = '已整改'
+					}
+                    a.value = res.result[key]
+                    myLegendData.push(a);
+				};
+				//0总数 1已整改 2未整改
+				// myLegendData=myName.map((item,index)=>{
+				// 	return {name:item,value:myData[index]}
+				// });
+				// myTotal = myLegendData[0].value;
+                 // console.log(JSON.stringify(myLegendData))
+				myTotal = myLegendData[0].value;
+				myLegendData.splice(0,1)
+				// console.log(JSON.stringify(myLegendData))
+				// console.log('----------')
+				// 指定图表的配置项和数据
+				var option1 = {
+					color: ['#337BFC', '#43DE87', '#FFBB00', '#FF584C', '#9665E2', '#47CBCA', '#7DD936', '#655CE6', '#E63984'],
+					title: {
+						show: true,
+						text: myTotal, //主标题
+						subtext: '合计(个)', //副标题：企业数量值，此处用标题方式来显示
+						left: '49%',
+						align: 'center',
+						textAlign: 'center',
+						top: '30%',
+						z: 0,
+						zlevel: 100,
+						textStyle: {
+							//设置副标题的样式
+							width: 200,
+							color: '#000',
+							fontSize: 25,
+							fontWeight: 'bold',
+						},
+						subtextStyle: {
+							//设置主标题的 样式
+							color: '#8C8C8C',
+							fontSize: 16,
+						},
+					},
+					tooltip: {
+						show: false,
+						// trigger: 'item',
+						// formatter: '{b}:{d}%',
+					},
+					legend: {
+						orient: 'horizontal',
+						// top: '70%',
+						bottom: 30,
+						left: 'center',
+						data: myName,
+						itemWidth: 10,
+						itemHeight: 10,
+						icon: 'circle',
+						itemGap: 12, // 设置间距
+						formatter: function(name) {
+							for (let item of myLegendData) {
+								if (name == item.name) {
+									return ['{name|' + name + '} {num|' + item.value + '}'].join(''); //name + ' ' + total;
+								}
+							}
+						},
+						textStyle: {
+							rich: {
+								name: {
+									fontSize: 12,
+									fontWeight: 400,
+									color: '#8C8C8C',
+								},
+								num: {
+									fontSize: 12,
+									fontWeight: 400,
+									color: '#282828',
+									padding: [0, 0, 0, 5],
+								},
+							},
+							fontSize: 12,
+							fontWeight: 400,
+							color: '#8C8C8C',
+						},
+					},
+					series: [{
+							name: '',
+							type: 'pie',
+							selectedMode: 'single',
+							label: {
+								position: 'inner',
+							},
+							labelLine: {
+								show: false,
+							},
+						},
+						{
+							name: '',
+							type: 'pie',
+							radius: ['35%', '45%'],
+							center: ['50%', '40%'],
+							label: {
+								normal: {
+									show: false
+								},
+								emphasis: {
+									show: true,
+									formatter: (params) => {
+										if(myTotal == 0) return `${params.name} \n —— `;
+										return `${params.name} \n ${((params.value/myTotal)*100).toFixed(2)}% `;
+									},
+									color: function(params) {
+										return '#1089E7'
+									},
+									borderRadius: 4,
+								}
+							},
+							data: myLegendData,
+						},
+					],
+				};
+				// console.log(option1)
+				window.onresize = myChart4.resize;
+				myChart4.setOption(option1); 
+				$("#empty1").hide()
+			 }else $("#empty1").fadeIn()
+		})
+	})
+
+	// 质量检查
+	$("#quality").on('tap', function() {
+		app.openPage("../quality/index.html", {
+			titleNView: {
+				titleText: '质量检查',
+				autoBackButton: true,
+				closePage: true,
+			},
+		}, param);
+	});
+
+	// 安全检查
+	$("#security").on('tap', function() {
+		app.openPage("../security/index.html", {
+			titleNView: {
+				titleText: '安全检查',
+				autoBackButton: true,
+				closePage: true,
+			},
+		}, param);
+	});
+	// 安全教育
+	$("#education").on('tap', function() {
+		app.openPage("../education/index.html", {
+			titleNView: {
+				titleText: '安全教育',
+				autoBackButton: true,
+				closePage: true,
+			},
+		}, param);
+	});
+	// 考勤统计
+	$("#attendance").on('tap', function() {
+		app.openPage("../attendance/month.html", {
+			titleNView: {
+				titleText: '考勤统计',
+				autoBackButton: true,
+				closePage: true,
+			},
+		}, param);
+	});
+	// 项目会议
+	$("#meeting").on('tap', function() {
+		app.openPage("../meeting/index.html", {
+			titleNView: {
+				titleText: '会议签到',
+				autoBackButton: true,
+				closePage: true,
+			},
+		}, param);
+	});
+
+	//关闭遮罩层
+	$(document).on("click", ".mui-backdrop", function() {
+		isShow = true;
+		$('#home-header').hide();
+		mask.close();
+	})
+	//处理页面返回
+	mui.back = function() {
+
+		plus.webview.currentWebview().close('none')
+
+		/* 2021/6/2
+		var preUrl = plus.webview.currentWebview().opener().getURL();
+		
+		if(preUrl.search('overview/overview_map.html') != -1){				
+			plus.webview.currentWebview().close('none')
+		}else {			
+			var extras = {
+				target: "../overview/overviewOne.html",
+				targetName: "项目概览",
+				pageCount: param.pageCount
+			}
+			console.log(JSON.stringify(extras))
+			app.openPage("../overview/projectList.html", {
+				titleNView: {
+					titleText: '项目概览',
+					autoBackButton: true,
+					closePage: true
+				}
+			},extras);
+		}
+
+
+		 */
+	}
+</script>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>待办</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 100px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 30px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				/* border: 1px solid #337BFC; */
+				color: #337BFC;
+				/* border-radius: 21px; */
+				font-size: 10px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-bottom {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-bottom span {
+				text-align: left;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 12px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: red;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: green;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: orange;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+
+			.mui-table-cell {
+				display: initial;
+			}
+
+			.mui-table-view-chevron .mui-table-view-cell {
+				padding-right: 20px;
+			}
+			
+			
+			.bottom-item {
+				padding: 19px;
+				background: #FFFFFF;
+				position: fixed;
+				height: 300px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+				text-align: left;
+				z-index: 999999;
+			}
+			
+			.bottom-item-title {
+				
+				font-size:18px;
+				color:rgba(22,21,21,1);
+				font-weight: bold;
+			}
+			
+			.bottom-item-info{
+				font-size:14px;
+				color:rgba(25,21,21,1);
+				line-height:21px;
+				height:21px;
+				padding: 18px 0px;
+			}
+			
+			.bottom-item-btn {
+				height: 200px;
+				margin-top: 50px;
+			}
+			
+			.bottom-item-btn .item{
+				width: 50%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+				
+			}
+			
+			.bottom-item-btn .item div{
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">排水户列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="pullrefresh" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view mui-table-view-chevron task-ul">
+						</ul>
+					</div>
+				</div>
+				<div class="bottom-item" style="display: none;">
+					<div class="bottom-item-title">
+						任务委托
+					</div>
+					<div id="taskSubject" class="bottom-item-info">
+						任务名称：无
+					</div>
+					<div id="nodeName" class="bottom-item-info">
+						环节名称：无
+					</div>
+					<div id="assigneeFullname" class="bottom-item-info">
+						原执行人：无
+					</div>
+					<div id="taskUserName" class="bottom-item-info">
+						<input id="assignee"style="display: none;" />
+						新执行人：<input type="text" id="assigneeName"  required="true" readonly="readonly" placeholder="请选择审批人" style="width: 50%;border: none;border-bottom: 1px solid #eee;"/>
+					</div>
+					<div class="bottom-item-btn">
+						<div class="item" id="delegate_cancel">
+							<div style="color: #337BFC;">取消</div>
+						</div>
+						<div class="item" id="delegate_submit">
+							<div style="background: #337BFC;color: #fff;">确定</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		var page = 1;
+		var count = 10;
+		var indexNum=1;
+		var taskList = {};
+		var currentTask="";
+
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					style: 'circle',
+					callback: pulldownRefresh
+				},
+				up: {
+					auto: false,//关闭自动下拉
+					height : 100,   
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+		//初始化单页的区域滚动
+		mui.ready(function() {
+			
+		});
+		
+		mui.plusReady(function () {
+		    setTimeout(function(){
+				mui('#pullrefresh').pullRefresh().pulldownLoading();//手动触发下拉刷新
+			},100); 
+		})
+
+		function pullupRefresh() {
+			initData(function(result) {
+				if (page < result.totalPage) {
+					page++;
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+				} else {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+				}
+			});
+		}
+
+		function addData(data) {
+			var li = "";
+			for (var i = 0; i < data.dataList.length; i++) {
+				var item = data.dataList[i];
+				li = li + '<li class="task-li mui-table-view-cell">' +
+					'			<div class="mui-slider-right mui-disabled">' +
+					'				<a class="mui-btn mui-btn-green">处理</a>' +
+					'				<a class="mui-btn mui-btn-red delegate" task-id="'+item.taskId+'">委托</a>' +
+					'			</div>' +
+					'			<div class="mui-slider-handle">' +
+					'				<div class="mui-table-cell">' +
+					'					<div class="mui-row task-item">' +
+					'						<div class="mui-col-xs-12 task-item-title">' +
+					'							<span>' +indexNum+"、"+item.taskCategory + '</span>' +
+					'						</div>' +
+					'					</div>' +
+					'					<div class="mui-row task-item">' +
+					'						<div class="mui-col-xs-4 task-item-tip">' +
+					'							发起人：' + item.startUserFullname +
+					'						</div>' +
+					'						<div class="mui-col-xs-4 task-item-tip">' +
+					'							执行人：' + item.assigneeFullname +
+					'						</div>' +
+					'						<div class="mui-col-xs-4 task-item-tip">' +
+					'							环节：' + item.nodeName +
+					'						</div>' +
+					'					</div>' +
+					'					<div class="mui-row task-item">' +
+					'						<div class="mui-col-xs-12 task-item-tip">' +
+					'						<span>申请时间：' + item.startTime + '</span>' +
+					'					</div>' +
+					'				</div>' +
+					'			</div>' +
+					'		</li>';
+				indexNum = indexNum+1;
+				
+				taskList[item.taskId] =item;
+			}
+			// console.log(li)
+			$(".task-ul").append(li); 
+
+		}
+		
+		
+		//打开委托界面
+		var mask = "";
+		$(document).on("tap", ".delegate", function() {
+			var taskId=$(this).attr("task-id");
+			var task = taskList[taskId];
+			currentTask = task;
+			
+			$("#assigneeName").val("");
+			$("#assignee").val("");
+			
+			
+			$("#taskSubject").html("任务名称："+task.taskSubject);
+			$("#nodeName").html("环节名称："+task.nodeName);
+			$("#assigneeFullname").html("原执行人："+task.assigneeFullname);
+			
+			mask = mui.createMask(function(){
+				$(".bottom-item").hide();
+			});
+			mask.show();//显示遮罩
+			$(".bottom-item").fadeIn();
+			
+		});
+		
+		//选择新的审批人
+		$("#assigneeName").on("tap",function(){
+			var extras = {
+				multiSelect:false
+			}
+			app.openPage("../commom/organ.html", {
+				titleNView: {
+					titleText: '选择审批人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect',setApprovalUser,false);
+			// 赋值
+			window.addEventListener('returnSelect',setApprovalUser,false);
+		});
+		var setApprovalUser = function(data){
+			$("#assigneeName").val(data.detail[0].realname);
+			$("#assignee").val(data.detail[0].username);
+		}
+		  
+		//取消
+		$("#delegate_cancel").on("tap",function(){
+			if (mask){
+				mask.close();
+			}
+			$(".bottom-item").hide();
+		});
+		//提交
+		$("#delegate_submit").on("tap",function(){
+			var that = $(this)
+			//必填验证
+			if (validateRequiredFields()){
+				mui.confirm("确定提交委托任务?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						delegate({
+							assignee:$("#assignee").val(),
+							taskId:currentTask.taskId
+						},function(data){
+							console.log(JSON.stringify(data));
+							if (mask){
+								mask.close();
+							}
+							setTimeout(function(){
+								mui('#pullrefresh').pullRefresh().pulldownLoading();
+							},1500)
+							app.toast(data.message);
+						});
+					}
+				})
+			}
+		});
+		
+		
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			indexNum = 1;
+			page = 1;
+			$(".task-ul").empty();
+			initData(function() {
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+			});
+		}
+
+		var initData = function(callback) {
+			tasks({
+				pageNo: page,
+				pageSize: count,
+				order: 'desc',  
+				column: 'createTime',
+			}, function(data) {
+				addData(data.result);
+				if (callback) {
+					callback(data.result);
+				}
+			});
+		}
+	</script>
+
+</html>

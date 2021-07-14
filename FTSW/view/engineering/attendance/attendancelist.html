@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/attendancelist.css" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body,
+			html {
+				height: 100%;
+			}
+
+			div,
+			span {
+
+				font-family: PingFang SC;
+			}
+
+			.flexCenter {
+				display: flex;
+				align-items: center;
+			}
+
+			.hide {
+				display: none;
+			}
+
+			.tabs {
+				justify-content: space-around;
+				height: 53px;
+				padding: 0 40px;
+				border-bottom: 1px solid #EDEDED;
+				color: #888888;
+				font-size: 16px;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				background: #fff;
+			}
+			.zhanwei{
+				height: 53px;
+				width: 100%;
+			}
+			.tabs .tab {
+				position: relative;
+				height: 100%;
+				line-height: 53px;
+			}
+
+			.tabs .tab.active {
+				color: #337BFC;
+				font-weight: bold;
+			}
+
+			.tabs .tab.active span:after {
+				content: '';
+				background: #337BFC;
+				width: 24px;
+				height: 3px;
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				transform: translateX(-50%);
+				bottom: 0px;
+			}
+
+			.tab1,
+			.tab2,
+			.blankMsg,
+			 {
+				height: 100%;
+			}
+			.lanmu_item_wrap{
+				z-index: 99999;
+			}
+			.blankText{
+				color: #BBBBBB;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="height:100%">
+			<div class='tabs flexCenter'>
+				<div class="tab active" data-index=0>
+					<span class="kaoqin" data-index=0>
+						已打卡(<span class='yidakaCount'>0</span>)
+					</span>
+				</div>
+				<div class="tab" data-index=1>
+					<span class="yuebao" data-index=1>
+						应到未打卡(<span class='weidakaCount'>20</span>)
+					</span>
+				</div>
+			</div>
+			<div class="zhanwei"></div>
+			<div class="tab1">
+				<div class="lanmu">
+					<div class="name" style="text-align: left;">
+						姓名
+					</div>
+					<div class="state" style="position: relative;right: 3px;">
+						状态
+					</div>
+					<div class="state_count" style="">
+						已打卡次数
+					</div>
+				</div>
+				<div style="height: 40px;width: 100%;"></div>
+				<div class="lanmu_item_wrap refreshContainer">
+					<div class="blankMsg">
+						<div class="blankCenter">
+							<img src="../../../img/noMsg.png" style="width: 138px;">
+							<div class="blankText">
+								暂无已打卡人员
+							</div>
+						</div>
+					</div>
+					<!-- <div class="lanmu_item ">
+						<div class="item_name">
+							刘羽西
+						</div>
+						<div class="lanmu_state" style="text-align: center;color:#FF5656">
+							已打卡
+						</div>
+						<div class="lanmu_state_count" style="text-align: center;width: 36%;">
+							3
+						</div>
+					</div> -->
+				</div>
+			</div>
+			<div class="tab2 hide">
+				<div class="lanmu">
+					<div class="name" style="text-align: left;">
+						姓名
+					</div>
+					<div class="state">
+						状态
+					</div>
+					<div class="state_count" style="">
+						未打卡次数
+					</div>
+				</div>
+				<div style="height: 40px;width: 100%;"></div>
+				<div class="lanmu_item_wrap ">
+					<div class="blankMsg ">
+						<div class="blankCenter">
+							<img src="../../../img/noMsg.png" style="width: 138px;">
+							<div class="blankText">
+								暂无未打卡人员
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../../js/s4.js"></script>
+		<script src="../../../js/smutils.js"></script>
+		<script src="../../../js/byte&string.js"></script>
+		<script src="../../../js/ajaxhook.min.js"></script>
+		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../js/vconsole.min.js"></script>
+		<script src="../../../js/app.js"></script>
+		<script src="../../../js/jquery.min.js"></script>
+		<script src="../../../js/common.js"></script>
+		<script src="../../../js/config.js"></script>
+		<script src="../../../js/attendance/attendancelist.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script type="text/javascript">
+			 mui.init({
+			                  pullRefresh : {
+			                    container:'.refreshContainer',//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			                    up : {
+			                      height:50,//可选.默认50.触发上拉加载拖动距离
+			                      auto:false,//可选,默认false.自动上拉加载一次
+			                      contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+			                      contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+			                      callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			                    }
+			                  }
+			                });
+							function pullupRefresh(){
+								params.pageNo++;
+								attendancelist(params,function(res){
+									var yiArr = [];
+									var weiArr = [];
+									var today = new Date().getDate();//有多少天
+											console.log(res)
+											if(res.result.records.length<params.pageNo){
+												//返回来的数据长度少于请求得长度 说明没有更多数据
+												app.toast('没有更多数据了');
+												mui('.refreshContainer').pullRefresh().endPullupToRefresh(true); //参数为false代表还有更多数据了。
+												$('.mui-pull-caption').hide()//隐藏上拉加载更多文字
+											}else{
+												// mui.alert('还有');
+												mui('.refreshContainer').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+												$('.mui-pull-caption').hide()//隐藏上拉加载更多文字
+											}
+											res.result.records.forEach((item,index)=>{
+												let personData = {
+													name:'',
+													count:'',
+													noCount:0,
+													keyCount:0
+												}; 
+												for(var key in item.recordMap){
+													personData.keyCount+=1;
+													if(key==today){
+														personData.state = 1;
+													}else{
+														personData.state = 0;
+													}
+												};
+												personData.name = item.personName;
+												personData.count = !item.recordNumber?0:item.recordNumber;
+												personData.noCount = today-personData.count;
+												if(personData.state>0){
+													yiArr.push(personData);
+												}else{
+													weiArr.push(personData)
+												}
+											console.log(yiArr,weiArr);
+											// 通过state区分已打卡和未打卡
+											});
+											//check 已打卡和未打卡 人数是否为0 0的话就显示图片 否则隐藏图片
+											checkImg(yiArr,weiArr);
+											handleyi(yiArr.length,yiArr,true);
+											handleWei(weiArr.length,weiArr,true);
+										})
+										$('.mui-pull-caption').html('')//隐藏上拉加载更多文字
+										// mui.alert('触底加载')
+							};
+			// var vConsole = new VConsole();
+			let params ={
+				projectId:'',
+				year:'',
+				month:'',
+				pageNo:1,  
+				pageSize:20,
+			};
+			params.year =''+new Date().getFullYear();//当前年份
+			params.month =''+(new Date().getMonth()+1); //当前月
+			params.projectId = JSON.parse(localStorage.getItem("projectInfo")).prjId;
+			mui.plusReady(function(){
+				attendancelist(params,function(res){
+					var yiArr = [];
+					var weiArr = [];
+					var today = new Date().getDate();//有多少天
+							console.log(res)
+							res.result.records.forEach((item,index)=>{
+								let personData = {
+									name:'',
+									count:'',
+									noCount:0,
+									keyCount:0
+								}; 
+								for(var key in item.recordMap){
+									personData.keyCount+=1;
+									if(key==today){
+										personData.state = 1;
+									}else{
+										personData.state = 0;
+									}
+								};
+								personData.name = item.personName;
+								personData.count = !item.recordNumber?0:item.recordNumber;
+								personData.noCount = today-personData.count;
+								if(personData.state>0){
+									yiArr.push(personData);
+								}else{
+									weiArr.push(personData)
+								}
+							console.log(yiArr,weiArr);
+							// 通过state区分已打卡和未打卡
+							});
+							handleyi(yiArr.length,yiArr);
+							handleWei(weiArr.length,weiArr);
+					// 		let myTest = `<div class="lanmu_item ">
+					// 	<div class="item_name">
+					// 		刘羽西
+					// 	</div>
+					// 	<div class="lanmu_state" style="text-align: center;color:#FF5656">
+					// 		已打卡
+					// 	</div>
+					// 	<div class="lanmu_state_count" style="text-align: center;width: 36%;">
+					// 		3
+					// 	</div>
+					// </div>`
+					// for(var i =0;i<5;i++){
+					// 	myTest+=myTest
+					// }
+					// 		$('.lanmu_item_wrap').html(myTest)
+						})
+					});
+			
+			console.log(params.projectId);
+			function handleWei(count,weidata,append) {
+				
+				if (count == 0 &&append!=true) {
+			console.log('这里是未打卡人数为0')
+			$('.weidakaCount').text(0)
+					return
+				}
+				var html = '';
+				weidata.forEach((item, i) => {
+					var hm =
+						`<div class="lanmu_item ">
+						<div class="item_name">
+							${item.name}
+						</div>
+						<div class="lanmu_state" style="text-align: center;color:#FF5656">
+							未打卡
+						</div>
+						<div class="lanmu_state_count" style="text-align: center;width: 36%;">
+							${item.noCount}
+						</div>
+					</div>`;
+					html += hm;
+				});
+				if(append){
+					$('.tab2 .lanmu_item_wrap').append(html);
+					var myCount = parseInt($('.weidakaCount').text()) ;
+					// console.log(myCount);
+					$('.weidakaCount').text(count+myCount)
+					return false 
+				}
+				$('.weidakaCount').text(count)
+				$('.tab2 .lanmu_item_wrap').html(html)
+			};
+			function handleyi(count,yidata,append) {
+				
+				if (count == 0 &&append!=true) {
+			console.log(yidata)
+			$('.yidakaCount').text(0)
+					return
+				}
+				var html = '';
+				// yidata=[
+				// 	{
+				// 		name:213,
+				// 		count:20
+				// 	},
+				// 	{
+				// 		name:999,
+				// 		count:20
+				// 	},
+				// ]
+				yidata.forEach((item, i) => {
+					var hm =
+						`<div class="lanmu_item ">
+						<div class="item_name">
+							${item.name}
+						</div>
+						<div class="lanmu_state" style="text-align: center;color:#337BFC">
+							已打卡
+						</div>
+						<div class="lanmu_state_count" style="text-align: center;width: 36%;">
+							${item.count==null?'0':item.count}
+						</div>
+					</div>`;
+					html += hm;
+				});
+				if(append){
+					$('.tab1 .lanmu_item_wrap').append(html);
+					var myCount = parseInt($('.yidakaCount').text()) ;
+					// mui.alert(myCount);
+					$('.yidakaCount').text(count+myCount)
+					return false 
+				}
+				$('.yidakaCount').text(count)
+				$('.tab1 .lanmu_item_wrap').html(html)
+			}
+			function checkImg (addTabOneItem,addTabTwoItem){
+				// console.log($('.tab2 .lanmu_item_wrap .lanmu_item'))
+				// return false 
+				if(addTabOneItem.length + $('.tab1 .lanmu_item_wrap .lanmu_item').length>0){
+					$('.tab1 .lanmu_item_wrap .blankMsg').hide();
+					console.log('tab1>0')
+				}else{
+					$('.tab1 .lanmu_item_wrap .blankMsg').show();
+					console.log('tab1==0')
+				}
+				if(addTabTwoItem.length + $('.tab2 .lanmu_item_wrap .lanmu_item').length>0){
+					$('.tab2 .lanmu_item_wrap .blankMsg').hide();
+					console.log('tab2>0')
+				}else{
+					$('.tab2 .lanmu_item_wrap .blankMsg').show();
+					console.log('tab2==0')
+				}
+			}
+			//tab 切换
+			$(".tabs .tab").on('tap', function(e) {
+				var index = $(e.target).attr('data-index')
+				$('.tabs .tab').removeClass('active');
+				$($('.tabs .tab[data-index]')[index]).addClass('active');
+				console.log(index)
+				if (index == 1) {
+					$('.tab1').hide();
+					$('.tab2').show();
+				} else {
+					$('.tab2').hide();
+					$('.tab1').show();
+				}
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>查看安全检查</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/mui.previewimage.css" />
+  <script src="../../../js/mui.previewimage.js"></script>
+
+
+  <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet"/>
+  <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet"/>
+
+  <style>
+    .mui-icon-arrowright {
+      color: #62666E;
+      font-weight: 100 !important;
+      width: 16px;
+      padding-top: 7px;
+    }
+
+    .content {
+      overflow: hidden;
+      height: calc(100vh - 100px);
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      margin: 0 20px;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+      margin: auto 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+      padding-right: 0;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .page-bottom {
+      display: flex;
+      padding: 0 20px;
+      height: 100px;
+      background-color: white;
+
+    }
+
+    .page-bottom button {
+      flex: 1;
+      margin-top: 30px;
+      border-radius: 5px;
+      border-color: #0493F3;
+      font-size: 16px;
+      height: 40px;
+      border-width: thin;
+    }
+
+    .btn-temp-save {
+      color: #0493F3;
+      background-color: #FFFFFF;
+      margin-right: 15px;
+    }
+
+    .btn-agree {
+      color: #FFFFFF;
+      background-color: #0493F3;
+      border: none;
+    }
+
+    .img-right-arrow {
+      width: 7px;
+      height: 12px;
+      margin-left: 5px;
+    }
+
+    .bor {
+      border: 1px dashed #E0E0E0;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+      padding: 11px 0;
+      width: 35px;
+      text-align: right;
+    }
+
+    .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    /*		单选框*/
+     
+    .radio-item {
+      width: 50%;
+    }
+
+    .radio_inline label {
+      /*width: 20%;*/
+      /*padding-left: 40px;*/
+      /*padding-right: 20px;*/
+      padding: 0;
+      width: 40px;
+      height: 22px;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+
+    .radio_inline input[type=radio] {
+      width: 15%;
+      right: auto;
+    }
+
+    /*//换个样式*/
+    .change {
+      display: flex;
+      align-items: center;
+    }
+
+    .change .mui-radio input[type='radio']:checked:before {
+      content: '\e442';
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    .mui-radio input[type=radio] {
+      top: 0;
+    }
+
+    .clear-red-star {
+      margin-left: 16px;
+    }
+
+
+    .file_item {
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+
+    .mui-btn-blue, .mui-btn-primary, input[type=submit] {
+      color: #007aff;
+      border: 1px solid #fff;
+      background-color: #fff;
+    }
+
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+  <div id="scroll-wrapper-home" style="height: calc(100vh - 65px);">
+    <div class="info-bar-content">
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>项目名称：
+        </div>
+        <div class="mui-input-row item-input">
+          <input id="pjName" required="true" placeholder="项目名称" value="这是一个项目名称" readonly/>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>项目编号：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="pjNum">522255</span>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查项：
+        </div>
+        <div id="correlationForm" class="mui-input-row item-input">
+          <span id="inspectName">XXX检查项</span>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="inspectTime">2021-6-01</span>
+        </div>
+      </div>
+
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>问题描述：
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <textarea placeholder="请输入问题描述（200字以内）" required="true" maxlength="200"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0" id="problemDesc" disabled></textarea>
+      </div>
+
+
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查照片：
+        </div>
+        <div class="bor" style="text-align: right">
+            <img class="arrow-down-img" alt="1" style="width: 80px" src="" data-preview-src="" data-preview-group="1">
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写人：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="fill-in">林燕如</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>联系方式：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="contact">15521225554</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写部门：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="dept">XX部门</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="fill-date">2021-02-12</span>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="page-bottom" style="display: none">
+        <button class="btn-agree" >提交</button>
+      </div>
+    </div>
+    <!--    </div>-->
+    <!--    </div>-->
+  </div>
+</div>
+
+</body>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/vconsole.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/bscroll.js"></script>
+<script src="../../../js/inspection/dailyInspection.js"></script>
+<script src="../../../js/conservation.js"></script>
+<script>
+    // var vConsole = new VConsole();
+
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+
+
+    let param = {
+      guid: "",
+      projectId: ''
+    }
+
+    let MissionParam ={
+         projectId: ''
+    }
+
+
+
+    console.log("plusReady==========================================================");
+    mui.plusReady(function () {
+      var curr = plus.webview.currentWebview();
+      console.log(JSON.stringify(curr.guid))
+      param.guid = curr.guid
+      param.projectId =  curr.projectId
+      MissionParam.projectId = curr.projectId
+      setSafetyInspectionFormDetail(param)
+      setMissionDetail(MissionParam)
+    });
+
+
+    function setSafetyInspectionFormDetail(param) {
+      querySafetyInspectionForm(param,function (data) {
+        var dataDetail = data.result.records[0]
+        console.log(JSON.stringify(dataDetail))
+        $('#pjName').val(dataDetail.projectName)
+        $('#inspectName').text(dataDetail.checkItemName)
+        $('#inspectTime').text(dataDetail.checkTime.substring(0,11))
+        $('#problemDesc').text(dataDetail.problems)
+        $('#fill-in').text(dataDetail.inputFullname)
+        $('#contact').text(dataDetail.inputPhone)
+        $('#dept').text(dataDetail.inputDepartmentFullname)
+        $('#fill-date').text(dataDetail.inputDate.substring(0,11))
+        if (dataDetail.checkPhoto != null && dataDetail.checkPhoto != undefined && dataDetail.checkPhoto != "") {
+          findFilesByGroupId({
+            groupId: dataDetail.checkPhoto
+          }, function(data) {
+            if(data.success){
+              if(data.result.length> 0){
+                $('.arrow-down-img').attr('src',config.urls.baseUrl + "sys/common/view/" + data.result[0].uploadFile.savePath)
+              }
+            }else app.toast("检查照片查询失败")
+          });
+        }
+      })
+    }
+
+    function setMissionDetail(param) {
+      getMissionDetail(param,function (data) {
+        $('#pjNum').text(data.result.prjNo)
+      })
+    }
+
+
+    // 附件点击
+    $(document).on('click','.arrow-down-img',function () {
+      var index = this.getAttribute("data-status");
+      // var id = this.getAttribute("id");
+      console.log("index:" + index);
+      var fileType = rectifyFiles[index].uploadFile.fileType.toLowerCase();
+      console.log("fileType:" + fileType);
+      var filePath = rectifyFiles[index].uploadFile.savePath;
+      console.log("filePath:" + filePath);
+      var fileId = rectifyFiles[index].uploadFile.fileName;
+      console.log("fileId:" + fileId);
+
+      var fileName = rectifyFiles[index].uploadFile.fileName;
+      console.log("fileName:" + fileName);
+      if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc" )
+      {
+        var extras = {
+          filePath: filePath,
+          fileId: fileId
+        };
+        // console.log(JSON.stringify(extras));
+        // view/conservation/showReform.html
+        // ./preview.html
+        app.openPage("../../conservation/preview.html", {
+          titleNView: {
+            titleText: '文档预览',
+            autoBackButton: true
+          }
+        }, extras);
+      } else if (fileType == '.jpg' || fileType == '.jpeg' || fileType == '.png') {
+        var extras = {
+          filePath: filePath,
+          fileId: fileId
+        };
+        app.openPage("../../mixed/preImg.html", {
+          titleNView: {
+            titleText: '图片预览',
+            autoBackButton: true
+          }
+        }, extras);
+      } else {
+        app.toast("此类型文件不支持预览");
+      }
+    })
+
+
+</script>
+</html>

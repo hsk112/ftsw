@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta id="viewportMeta" name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-input-row {
+				position: relative;
+				float: left;
+				width: 100%;
+				text-align: left;
+				clear: none;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				font-size: 25px;
+			}
+
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-left: 50px;
+				font-size: 16px;
+			}
+
+			.info-bar-title {
+				height: 40px;
+				background: #f6f4f7;
+				font-size: 15px;
+				text-align: left;
+				color: #8e8e8e;
+				line-height: 40px;
+				margin: 0 20px;
+			}
+			.info-bar-content{
+				/* height: 470px; */
+			}
+			.info-bar-content-item {
+				/* height: 240px; */
+				margin: 0px 18px;
+				/* border-bottom: 1px solid #eee; */
+			}
+
+			.info-bar-content-item .item-title {
+				text-align: left;
+				padding: 20px 0px 0px;
+				font-size: 14px;
+			}
+
+
+			.bottom-btn {
+				width: 100%;
+			}
+
+
+
+
+/*
+			.mui-scroll-wrapper {
+			} */
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+				color:#444444;
+			}
+
+			.mui-checkbox.mui-left label {
+				padding-left: 0;
+			}
+
+			.mui-backdrop {
+				background: rgba(0, 0, 0, 0.1);
+			}
+
+			.img_item{
+				float: left;
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				margin-right: 20px;
+			}
+			.img_item::after{
+				clear:both;
+				content:'';
+				display:block;
+				width:0;
+				height:0;
+				visibility:hidden;
+			}
+			.img_item img{
+				width: 72px;
+				height: 72px;
+			}
+
+
+			.info-bar-content-item{
+				border: 0;
+			}
+
+			.img_close{
+				position: relative;
+				top: -84px;
+				left: 64px;
+			}
+			.btn-item div {
+			    margin: 0;
+			    border: 1px solid #337BFC;
+				height:40px;
+			    border-radius: 50px;
+			}
+			.in-obj{
+				color: #888;
+				font-size: 13px;
+			}
+
+
+			input[type="radio"] {
+				opacity: 0;
+				/* display: inline-block; */
+				position: relative;
+				z-index: 5;
+				width: 20px;
+				height: 20px;
+			}
+
+			span[new] {
+				display: inline-block;
+				position: relative;
+				left:-20px;
+				top: 5px;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid #999;
+				margin-right: -10px;
+			}
+			input:checked+span[new] {
+			background-color: #337bfc;
+			border: 1px solid #337bfc;
+			}
+
+			input:checked+span[new]::after {
+			position: absolute;
+			content: "";
+			width: 5px;
+			height: 10px;
+			top: 3px;
+			left: 6px;
+			border: 2px solid #fff;
+			border-top: none;
+			border-left: none;
+			transform: rotate(45deg)
+			}
+			.borderCss{
+				border-bottom: 1px solid #eee !important
+			}
+			.errCss{
+				background : rgb(230, 192, 123, 0.3) !important
+			}
+		</style>
+	</head>
+
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page" >
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">巡检内容</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/commom/nfc@2x.png" />
+					<img src="../img/commom/lixz@2x.png" />
+				</div>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content" >
+				<div class="mui-scroll-wrapper" id="scroll" style="height: 91%;padding-bottom: 10px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div style="background: #F4F4F4;">
+								<div class="mui-collapse-content li-item-pull" id="object">
+									<div>
+										<div id="objHeader" style="padding: 0 18px;background: #ffffff;border-bottom: 5px solid #F4F4F4;">
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div id="inspectDetail" style="background: #F4F4F4;">
+
+							</div>
+
+
+							<div id="helpList">
+
+							</div>
+
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<!--页面主内容区结束-->
+		</div>
+		<div id="textFrame" class="scroll-li" style="display:none;width: 100%;height:60px;background: rgba(0,0,0,0.5);position: fixed;bottom: 0;z-index: 999;"></div>
+		<div id="texthtml" class="scroll-li" style="width: 100%;background: #F4F4F4;position: fixed;bottom: 0;z-index: 99;">
+			<div class="bottom-btn" id="bottom-btn" style="background: #F4F4F4;width: 100%;padding: 10px 0;">
+				<div class="btn-item" style="background: #F4F4F4;">
+					<div name="inspection_submit" style="background: #337BFC;color: #fff;width: 80%;margin-left: 10%;line-height: 40px;">提交</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/inspect.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/timer.js"></script>
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		var now_arrAttachment =[]
+		var isCheck = 'checked'
+		$("#ins_photo").on("tap", function() {
+			plusSelectImage(function(data, path) {
+				// console.log(JSON.stringify(data));
+				var html = '<div id="' + data.result.uploadFile.id + '" data-token="'+data.result.fileTokens+'" class="img_item">' +
+					'		<img class="img_src" src="' + path+ '" style=""  />' +
+					'		<div class="img_close">移除</div>' +
+					'	</div>';
+				$(".ins_img_list").append(html);
+
+				var count = $(".ins_img_list").children(".img_item").length;
+				if (count == 3) { //处理上传的数量
+					$("#ins_photo").hide();
+				}
+			});
+		});
+
+		// //删除图
+		// $(document).on("tap", ".img_close", function() {
+		// 	var that = $(this)
+		// 	mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+		// 		if (parseInt(result.index) == 0) {
+		// 			that.parent().remove();
+		// 			var count = $(".ins_img_list").children(".img_item").length;
+		// 			if (count != 3) {
+		// 				$("#ins_photo").show();
+		// 			}
+		// 		}
+		// 	})
+		// });
+
+
+		var signaturefileToken,signaturefileTokenlist=[]
+		var attachmentList=[]
+
+		var self;
+		$("div[name=INSedit]").on("tap", function() {
+			$("input").attr("disable",false)
+		});
+		$("div[name=INSnext]").on("tap", function() {
+
+		});
+		$("body").delegate("div[name=inspection_submit]","tap", function(e) {
+			param = []
+			var signaturefileTokenlistText = ''
+			var istrue =true
+			$("input[datacontent]:checked").each(function (index) {
+				// alert(($("input[type=radio][name=" + $(this).attr("name") +"]:checked").text()))
+				if(!$("input[type=radio][resultContentType][index="+ index +"]:checked").attr('value')){
+					alert('请勾选检查结果');
+					istrue= false
+					// $("input[type=radio][resultContentType][index="+ index +"]:checked").addClass("errCss")
+					return;
+				}
+				if(signaturefileTokenlist[index]){
+					signaturefileTokenlistText = signaturefileTokenlist[index].toString()
+				}
+
+				attachmentList[index]=
+					[{"groupId":now_arrAttachment[index],
+					 "fileTokens":signaturefileTokenlistText,
+					  "fieldName":"attachment",
+					  "tableName":"device_area_arch_main"}]
+					// $("input[type=text][name=" + $(this).attr("name") +"]").removeClass("errCss")
+					var context = $("input[type=text][name=" + $(this).attr("name") + "]").val()
+					// console.log($(this).attr("guid"))
+					// if($(this).attr("guid") && $(this).attr("guid")!=1){
+					// 	context = ''
+					// }
+					param[index]={
+						"taskRecordId": self.guid,
+						"objectId": self.objguid,
+						"isFinish": "1",
+						"contentId": $(this).attr("contentId"),
+						"resultContent": context,
+						"resultContentType":$("input[type=radio][resultContentType][index="+ index +"]:checked").attr('value'),
+						"attachment":now_arrAttachment[index],
+						"strAttachMent":attachmentList[index],
+						"resultId":$(this).attr("guid"),
+						"resultName":$(this).attr("resultName"),
+						"isObjectFinish":1
+						}
+
+					let min = Number($("input[type=text][name=" + $(this).attr("name") + "]").attr("min"));
+					let max = Number($("input[type=text][name=" + $(this).attr("name") + "]").attr("max"));
+					let name = $("input[type=text][name=" + $(this).attr("name") +"]").attr("contentName");
+					// let id = ($("input[type=text][name=" + $(this).attr("name") +"]").attr("id"));
+					if(min && max) {
+						// mui('#scroll').scroll().reLayout();
+						// mui('#scroll').scroll().scrollToBottom(-100);
+						// document.querySelector('#scroll').addEventListener('scrollend', function(e) {
+						//     console.log("滑动结束");
+						// })
+						// mui('#scroll').scroll().scrollTo(0,0);
+						mui('#scroll').scroll().reLayout();
+						// mui('#scroll').scroll().scrollTo(0,0);
+						var container = $('#scroll');//定义滚动列表div容器
+						scrollTo = $("input[type=text][name=" + $(this).attr("name") + "]");//定义当前待定位的元素
+						var h = scrollTo.attr('offSetTop')-50;
+						console.log('-=-=-')
+						h = -h;
+						console.log(h)
+						if (!context) {
+							mui('#scroll').scroll().scrollTo(0,h);
+							alert(name + '不能为空，请输入数值');
+							istrue =false;
+							// var sh = $("input[type=text][name=" + $(this).attr("name") + "]").offset().top;
+
+							// container.animate({
+							// 	scrollTop: scrollTo.offset().top
+							// });
+
+							// $("input[type=text][name=" + $(this).attr("name") + "]").focus();
+							// mui('#scroll').scroll().scrollTo(0,0,100);
+							// $("input[type=text][name=" + $(this).attr("name") +"]").addClass("errCss")
+
+							return;
+						} else if(Number(context) > max || Number(context) < min|| isNaN(Number(context))) {
+							alert('您输入的'+ name +'不符合要求，取值范围为：' + min + '~' + max);
+							istrue = false;
+							mui('#scroll').scroll().scrollTo(0,h,100);
+							// $("input[type=text][name=" + $(this).attr("name") +"]").addClass("errCss")
+							return;
+						}
+					} else if (min) {
+						if (!context) {
+							alert(name + '不能为空，请输入数值');
+							istrue =false;
+							mui('#scroll').scroll().scrollTo(0,h,100);
+							// $("input[type=text][name=" + $(this).attr("name") +"]").addClass("errCss")
+							return;
+						} else if(min > Number(context)){
+							alert('您输入的'+ name +'不符合要求，最小值为：' + min);
+							istrue =false;
+							mui('#scroll').scroll().scrollTo(0,h,100);
+							// $("input[type=text][name=" + $(this).attr("name") +"]").addClass("errCss")
+							return;
+						}
+					} else if (max) {
+						if (!context) {
+							alert(name + '不能为空，请输入数值');
+							istrue =false;
+							mui('#scroll').scroll().scrollTo(0,h,100);
+							// $("input[type=text][name=" + $(this).attr("name") +"]").addClass("errCss")
+							return;
+						} else if(max < Number(context)){
+							alert('您输入的'+ name +'不符合要求，最大值为：' + max);
+							istrue = false;
+							// $("input[type=text][name=" + $(this).attr("name") +"]").addClass("errCss")
+							mui('#scroll').scroll().scrollTo(0,h,100);
+							return;
+						}
+					}
+
+					if($(this).attr("guid")){
+						context =''
+					}
+			})
+			if(!istrue){
+				return;
+			}
+			if(param.length == 0){
+				alert('请勾选检查结果')
+				return ;
+			}
+
+			getInspectsaveInspectDetailBatch(JSON.stringify(param), function(data) {
+				if (data.success) {
+			        app.toast("巡检成功");
+					var curr = plus.webview.currentWebview();
+					var wvs = plus.webview.all();
+					var len = wvs.length;
+
+					var ws2 = plus.webview.getWebviewById('inspectioning.html')
+					mui.fire(ws2,'aaa')
+					for (var i = len-1; i >= 0; i--) {
+						console.log(i+"--------"+wvs[i].getURL())
+					  //关闭除指定页面外的其他页面
+					  //key 可以是指定页面名称或者其他关键字
+					  if (i>4 &&wvs[i].getURL().indexOf("inspection_info") != -1 ){
+						  wvs[i].hide()
+					    // plus.webview.close(wvs[i]);
+						wvs[i].close('none');
+					  }
+					}
+					var list1 = self.objlist;
+					list1[parseInt(self.index)].state = "1"
+					// console.log(JSON.stringify(list1))
+					var extras = {
+						data:self.data,
+						guid:self.guid,
+						objlist:list1,
+						objguid:list1[parseInt(self.index)].objectGuid,
+						objdata:list1[parseInt(self.index)],
+						endTime:self.endTime,
+						index:parseInt(self.index),
+					}
+					app.openPage("inspection_info.html", {
+						titleNView: {
+							titleText: self.data.name,
+							autoBackButton: true,
+							"titleSize": "18px",
+						}
+					}, extras);
+					curr.close();
+					// close_page(self.index);
+					// mui.back();
+				} else {
+			        app.toast("数据异常")
+				}
+
+			});
+		});
+		var contentIdList = []
+		mui.init({
+			beforeback: function() {
+
+				var list = plus.webview.currentWebview().opener();　　　　
+				//refresh是A页面自定义事件
+				mui.fire(list, 'aaa');
+				mui.fire(list, 'backInspection');
+				mui.fire(list, 'toInfo');
+				//返回true,继续页面关闭逻辑
+				return true;
+			}
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll({
+				});
+		mui.ready(function() {});
+		mui.plusReady(function() {
+			// selfs = plus.webview.currentWebview();
+			// var extra = {
+			// 	data:selfs.data,
+			// 	guid:selfs.guid,
+			// 	objlist:selfs.objlist,
+			// 	objguid:selfs.objlist[parseInt(selfs.index)+1].objectGuid,
+			// 	objdata:selfs.objlist[parseInt(selfs.index)+1],
+			// 	endTime:selfs.endTime,
+			// 	index:parseInt(selfs.index)+1,
+			// }
+			// console.log(JSON.stringify(extra))
+			// var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			// $('body').height($('body')[0].clientHeight);
+			// window.onresize = function () {
+			//     var nowClientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			//     if (clientHeight > nowClientHeight) {
+			// 		$('texthtml').css('display','none')
+
+			//     }
+			//     else {
+			// 		  $('#texthtml').css('display','block')
+			//         //键盘收起的事件处理
+			//     }
+			// };
+			plus.webview.currentWebview().setStyle({
+			　　softinputMode: "adjustResize"  // 弹出软键盘时自动改变webview的高度
+			});
+			var originalHeight=document.documentElement.clientHeight || document.body.clientHeight;
+			    window.onresize=function(){
+			        var  resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
+			        //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+			        if(resizeHeight*1<originalHeight*1){ //resizeHeight<originalHeight证明窗口被挤压了
+			       　　  plus.webview.currentWebview().setStyle({
+			             　　 height:originalHeight + 75
+			          　});
+			        }
+			 }
+
+			self = plus.webview.currentWebview();
+			// console.log(JSON.stringify(self))
+			var findFilesByGroupId = function(param, callback){
+				// console.log(JSON.stringify(param))
+				var url = config.urls.baseUrl + config.actions.findFilesByGroupId;
+			
+				app.showLoader();
+				$.ajax(url, {
+					data: param,
+					// data: "",
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					headers: {
+						// "Content-Type": "application/json",
+						"Content-Type": "application/x-www-form-urlencoded",
+						"X-Access-Token": app.sessionId(),
+						// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTg5Mjk1MDYsInVzZXJuYW1lIjoiY3doMDEifQ.f1H4CpN_us8XRDI-Nxdpfsw4Xc6eku1tVFmicLM1syw"
+					},
+					timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+					success: function(data) {
+						app.hideLoader();
+						if (dealingWithResponseCode(data)) {
+							callback(data);
+						} else {
+							app.toast(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						dealingWithErrorRequest(errorThrown);
+						app.hideLoader();
+						return callback('网络异常,请稍后再试');
+					}
+				});
+			}
+
+
+
+
+			var str =''
+
+
+			var state = "";
+			if(0== parseInt(self.objdata.state)){
+				state = '<img src="../../img/commom/dxj.png" />';
+			} else if(1== parseInt(self.objdata.state)){
+				state = '<img src="../../img/commom/yxj.png" />';
+			}
+
+			str+=`<div class="object">
+					<div><span class="in-obj">巡检对象：</span><span class="obj-title">${self.objdata.objectName}</span></div>
+						<div class="type-inspection">${state}</div>
+					</div>
+					<div class="object" style="text-align:left;">
+						<div style="width:100%;">
+							<span class="in-obj">巡检范围：</span>
+							<div class="obj-title" style="width:75%;display:inline-block;vertical-align:top;">${self.objdata.localDesc||'无'}</div>
+						</div>`
+						if(self.objlist[self.index].isNFC == 1){
+							str+=`<div style="float:right;"><img src="../../img/commom/nfc.png" alt=""></div>`
+						}
+					str+=`</div>
+					<div class="object">
+						<div>
+							<span class="in-obj">截止时间：</span>
+							<span class="obj-title" style="text-align:left;">${self.endTime||'无'}</span>
+						</div>
+					</div>`
+
+			$("#objHeader").html(str)
+			getInspectInspectDetailQueryList({
+				objectId: self.objguid,
+				taskId: self.guid
+			}, function(data) {
+				// console.log(JSON.stringify(data.result.records))
+				str2 = ''
+				// var text = `<div class="bottom-btn"><div class="btn-item">
+				// 					<div name="inspection_submit" style="background: #337BFC;color: #fff;">提交</div>
+				// 				</div></div>`
+				helpText = ''
+				if (data.result.records && data.result.records.length > 0) {
+					for (let i = 0; i < data.result.records.length; i++) {
+						var h;
+						if(data.result.records[i].resultEnums != null ){
+							if(data.result.records[i].isPhoto == '1'){
+								h = data.result.records[i].resultEnums.length*50+370;
+							}else{
+								h = data.result.records[i].resultEnums.length*50+250;
+							}
+						}else{
+							if(data.result.records[i].isPhoto == '1'){
+								h = data.result.records[i].resultContentType == null&&data.result.records[i].insType == 1?50:350;
+								// console.log(JSON.stringify(data.result.records[i]))
+								// console.log(h)
+							}else{
+								h = 220;
+							}
+						}
+						helpText +=`<div name='standard' index=${i} style="display: none;position: fixed;width: 100vw;height: 100%;background: rgba(0,0,0,0.5);left: 0;top: 0;z-index: 995;">
+									<div class="iframe" style="height:300px;position: absolute;margin: 0;padding: 20px 20px;background: #fff;z-index: 999;width: 80%;left: 10%!important;top:15%">
+										<h3>检查标准</h3>
+										<div style="width: 100%;height: 1px;background: #EDEDED;margin: 15px 0;"></div>
+										<p style="text-align:left;color:#888888;font-size:12px;">${data.result.records[i].standard?data.result.records[i].standard:'暂无相关信息，请在web端填写完整'}</p>
+									</div>
+								</div>`
+						if (data.result.records[i].insType == 2) {
+							str2 +=
+								`<div class="info-bar-content mui-left" style="height:auto;background:#ffffff;">
+											<div class="info-bar-content-item radio1 borderCss" style="height: `+h+`px;">
+												<div class="item-title in-obj" name=help tindex=${i}>
+													${data.result.records[i].contentName} <span style="color:red;">*</span>
+													<span style="align-self: center;position:relative;top:2px;"><svg t="1600757088787" class="icon" style="height:16px;line-height:16px;text-align:center;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1177" width="20" height="20"><path d="M500.9408 676.984832c-12.944384 0-23.760896 4.353024-32.457728 13.046784-8.69888 8.706048-13.049856 19.521536-13.049856 32.462848 0 12.940288 4.350976 23.754752 13.049856 32.457728C477.180928 763.650048 487.99744 768 500.9408 768c12.93312 0 23.759872-4.349952 32.45568-13.047808 8.69376-8.702976 13.04576-19.51744 13.04576-32.457728 0-12.941312-4.352-23.7568-13.04576-32.462848-8.695808-8.69376-19.52256-13.046784-32.45568-13.046784zM612.368384 286.83776c-11.830272-10.707968-25.99936-18.625536-42.493952-23.758848-16.52224-5.122048-34.366464-7.465984-53.541888-7.027712-19.641344 0.451584-38.042624 3.462144-55.209984 9.035776-17.181696 5.583872-32.12288 13.049856-44.838912 22.418432-12.716032 9.3696-22.754304 20.640768-30.11584 33.794048-7.361536 13.166592-11.039744 27.553792-11.039744 43.164672 0 11.157504 2.894848 19.638272 8.699904 25.428992 5.79072 5.80608 15.39072 8.930304 28.772352 9.368576 10.707968 0 21.185536-2.8928 31.453184-8.69888 10.257408-5.789696 15.392768-14.4896 15.392768-26.097664 0-11.595776 5.571584-20.074496 16.731136-25.428992 11.149312-5.353472 23.860224-8.251392 38.13888-8.69888 14.27968-0.44032 26.543104 2.569216 36.816896 9.032704 10.246144 6.472704 15.384576 18.852864 15.384576 37.138432 0 7.595008-0.66048 14.391296-2.000896 20.414464-1.338368 6.023168-3.580928 12.045312-6.692864 18.06848-3.137536 6.020096-7.474176 12.379136-13.060096 19.070976-5.583872 6.692864-12.370944 14.0544-20.4032 22.085632-10.708992 10.266624-20.077568 21.307392-28.109824 33.124352-8.030208 11.828224-14.722048 23.656448-20.077568 35.46112-5.353472 11.828224-9.48224 22.982656-12.38016 33.462272-2.90816 10.49088-4.352 19.305472-4.352 26.432512 0 13.84448 4.016128 23.762944 12.046336 29.784064 8.031232 6.020096 17.842176 9.03168 29.447168 9.03168 11.594752 0 21.408768-3.232768 29.438976-9.69728 8.032256-6.46144 12.04736-16.167936 12.04736-29.118464 0-8.466432 0.555008-16.280576 1.677312-23.416832 1.110016-7.12704 3.67616-14.385152 7.691264-21.75488 4.016128-7.353344 9.808896-15.601664 17.399808-24.754176 7.586816-9.143296 17.833984-19.964928 30.785536-32.458752 19.172352-18.292736 32.003072-35.3536 38.4768-51.196928 6.465536-15.828992 9.925632-32.673792 10.371072-50.526208 0.44544-20.511744-2.566144-38.581248-9.030656-54.202368-6.468608-15.609856-15.616-28.773376-27.423744-39.48032z" fill="#337bfc" p-id="1178"></path><path d="M511.996928 64C264.559616 64 64 264.587264 64 512.003072 64 759.43424 264.559616 960 511.996928 960c247.414784 0 448.003072-200.56576 448.003072-447.996928C960 264.587264 759.412736 64 511.996928 64z m0 851.216384c-222.67392 0-403.202048-180.523008-403.202048-403.213312 0-222.67392 180.528128-403.190784 403.202048-403.190784s403.196928 180.516864 403.196928 403.190784c0 222.690304-180.521984 403.213312-403.196928 403.213312z" fill="#337bfc" p-id="1179"></path></svg></span>
+												</div>
+												<div class="item-checkbox">`
+							str2 +=
+								`<div class="mui-input-row mui-checkbox mui-left" style="display:none;">
+								<label><input datacontent name=${data.result.records[i].contentId} resultId='' guid='1' contentId=${data.result.records[i].contentId} resultName='其他' value='其他' type="radio"`+isCheck+`>其他</label>
+									</div>
+									<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+										测值
+										<input style="color:#000000;" name=${data.result.records[i].contentId} resultName=${data.result.records[i].resultName} contentName=${data.result.records[i].contentName} type="text"
+										max=${data.result.records[i].maxValue} min=${data.result.records[i].minValue} id=${data.result.records[i].contentName} placeholder="请输入" value=${data.result.records[i].resultContent || ''}>
+								</div>`
+							str2 +=
+								`<div class="mui-input-row mui-checkbox mui-left" >
+									<div class="item-title in-obj">
+										检查结果<span style="color:red;">*</span>
+									</div>
+									<div style="width: 100%;text-align: left;">`
+							if (data.result.records[i].resultContentType == 1) {
+								str2 +=
+									`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="0"><span new></span>正常</label></div>
+									<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="2"><span new></span>良好</label></div>
+									<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="1" checked><span new></span>异常</label></div>`
+							} else if (data.result.records[i].resultContentType == 2) {
+								str2 +=
+									`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="0"><span new></span>正常</label></div>
+									<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="2" checked><span new></span>良好</label></div>
+									<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="1"><span new></span>异常</label></div>`
+							} else {
+								str2 +=
+									`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="0" checked><span new></span>正常</label></div>
+									<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="2"><span new></span>良好</label></div>
+									<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}" value="1"><span new></span>异常</label></div>`
+							}
+
+							str2 +=`</div>`
+							if(data.result.records[i].isPhoto == '1') {
+								str2 += `
+									<div class="scroll-li">
+										<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+											<div class="item-title in-obj" style="margin-bottom:10px;">
+												现场照片
+											</div>
+											<input id="${data.result.records[i].contentId}_PhotoInput" style="display: none;" />
+											<div class="${data.result.records[i].contentId}_img_list" style="height: 100px;">
+												<div id="${data.result.records[i].contentId}_photo" class="img_item" style="float: left;margin-right: 30px;">
+													<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+												</div>
+											</div>
+										</div>
+									</div>`
+							}
+							creatDom(data.result.records[i].contentId, data.result.records[i].attachment, i)
+						}
+						if(data.result.records[i].insType == 1){
+							str2 +=
+								`<div class="info-bar-content mui-left" style="background:#ffffff;">
+											<div class="info-bar-content-item radio1 borderCss" style="height: `+h+`px;">
+												<div class="item-title in-obj"  name=help tindex=${i}>
+													${data.result.records[i].contentName} <span style="color:red;">*</span>
+													<span style="align-self: center;position:relative;top:2px;"><svg t="1600757088787" class="icon" style="height:16px;line-height:16px;text-align:center;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1177" width="20" height="20"><path d="M500.9408 676.984832c-12.944384 0-23.760896 4.353024-32.457728 13.046784-8.69888 8.706048-13.049856 19.521536-13.049856 32.462848 0 12.940288 4.350976 23.754752 13.049856 32.457728C477.180928 763.650048 487.99744 768 500.9408 768c12.93312 0 23.759872-4.349952 32.45568-13.047808 8.69376-8.702976 13.04576-19.51744 13.04576-32.457728 0-12.941312-4.352-23.7568-13.04576-32.462848-8.695808-8.69376-19.52256-13.046784-32.45568-13.046784zM612.368384 286.83776c-11.830272-10.707968-25.99936-18.625536-42.493952-23.758848-16.52224-5.122048-34.366464-7.465984-53.541888-7.027712-19.641344 0.451584-38.042624 3.462144-55.209984 9.035776-17.181696 5.583872-32.12288 13.049856-44.838912 22.418432-12.716032 9.3696-22.754304 20.640768-30.11584 33.794048-7.361536 13.166592-11.039744 27.553792-11.039744 43.164672 0 11.157504 2.894848 19.638272 8.699904 25.428992 5.79072 5.80608 15.39072 8.930304 28.772352 9.368576 10.707968 0 21.185536-2.8928 31.453184-8.69888 10.257408-5.789696 15.392768-14.4896 15.392768-26.097664 0-11.595776 5.571584-20.074496 16.731136-25.428992 11.149312-5.353472 23.860224-8.251392 38.13888-8.69888 14.27968-0.44032 26.543104 2.569216 36.816896 9.032704 10.246144 6.472704 15.384576 18.852864 15.384576 37.138432 0 7.595008-0.66048 14.391296-2.000896 20.414464-1.338368 6.023168-3.580928 12.045312-6.692864 18.06848-3.137536 6.020096-7.474176 12.379136-13.060096 19.070976-5.583872 6.692864-12.370944 14.0544-20.4032 22.085632-10.708992 10.266624-20.077568 21.307392-28.109824 33.124352-8.030208 11.828224-14.722048 23.656448-20.077568 35.46112-5.353472 11.828224-9.48224 22.982656-12.38016 33.462272-2.90816 10.49088-4.352 19.305472-4.352 26.432512 0 13.84448 4.016128 23.762944 12.046336 29.784064 8.031232 6.020096 17.842176 9.03168 29.447168 9.03168 11.594752 0 21.408768-3.232768 29.438976-9.69728 8.032256-6.46144 12.04736-16.167936 12.04736-29.118464 0-8.466432 0.555008-16.280576 1.677312-23.416832 1.110016-7.12704 3.67616-14.385152 7.691264-21.75488 4.016128-7.353344 9.808896-15.601664 17.399808-24.754176 7.586816-9.143296 17.833984-19.964928 30.785536-32.458752 19.172352-18.292736 32.003072-35.3536 38.4768-51.196928 6.465536-15.828992 9.925632-32.673792 10.371072-50.526208 0.44544-20.511744-2.566144-38.581248-9.030656-54.202368-6.468608-15.609856-15.616-28.773376-27.423744-39.48032z" fill="#337bfc" p-id="1178"></path><path d="M511.996928 64C264.559616 64 64 264.587264 64 512.003072 64 759.43424 264.559616 960 511.996928 960c247.414784 0 448.003072-200.56576 448.003072-447.996928C960 264.587264 759.412736 64 511.996928 64z m0 851.216384c-222.67392 0-403.202048-180.523008-403.202048-403.213312 0-222.67392 180.528128-403.190784 403.202048-403.190784s403.196928 180.516864 403.196928 403.190784c0 222.690304-180.521984 403.213312-403.196928 403.213312z" fill="#337bfc" p-id="1179"></path></svg></span>
+												</div>
+											<div class="item-checkbox">`
+							if(data.result.records[i].resultId) {
+								// console.log(data.result.records[i].resultId)
+								for (let j = 0; j < data.result.records[i].resultEnums.length;j++) {
+
+									if (data.result.records[i].resultEnums.length != 0) {
+										contentIdList[j]=data.result.records[i].contentId;
+										if(data.result.records[i].resultId == data.result.records[i].resultEnums[j].guid &&data.result.records[i].resultName!="其他"  ){
+											isCheck = ''
+											// console.log(11111)
+											// console.log(isCheck)
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName} checked><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}else{
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName}><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}
+
+
+									}
+									if(j == data.result.records[i].resultEnums.length -1){
+										// console.log('======='+isCheck)
+										str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+										<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} resultName='其他' value='其他' resultId='' guid='1' type="radio" `+isCheck+`><span new></span>其他</label>
+											</div>
+											<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+												<input readonly name=${data.result.records[i].resultEnums[j].contentId} resultName=${data.result.records[i].resultEnums[j].resultName} type="text" readonly id="" placeholder="请输入其他" value="">
+										</div>`
+
+										str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+											<div class="item-title in-obj">
+												检查结果<span style="color:red;">*</span>
+											</div>
+											<div style="width: 100%;text-align: left;">`
+										if(data.result.records[i].resultContentType == 1){
+											str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0"><span new></span>正常</label></div>
+													<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2"><span new></span>良好</label></div>
+													<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" checked><span new></span>异常</label></div>`
+										}else if(data.result.records[i].resultContentType == 2){
+											str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0"><span new></span>正常</label></div>
+													<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" checked><span new></span>良好</label></div>
+													<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1"><span new></span>异常</label></div>`
+										}else{
+											str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" checked><span new></span>正常</label></div>
+													<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2"><span new></span>良好</label></div>
+													<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1"><span new></span>异常</label></div>`
+										}
+
+										str2 +=`</div>`
+										if(data.result.records[i].isPhoto == '1') {
+											str2 +=`
+											<div class="scroll-li">
+
+												<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+													<div class="item-title in-obj" style="margin-bottom:10px;">
+														现场照片
+													</div>
+													<input id="${data.result.records[i].resultEnums[j].contentId}_PhotoInput" style="display: none;" />
+													<div class="${data.result.records[i].resultEnums[j].contentId}_img_list" style="height: 100px;">
+														<div id="${data.result.records[i].resultEnums[j].contentId}_photo" class="img_item" style="float: left;margin-right: 30px;">
+															<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+														</div>
+													</div>
+												</div>
+											</div>`
+										}
+
+										creatDom(data.result.records[i].resultEnums[j].contentId,data.result.records[i].attachment,i)
+									}
+								}
+							} else {
+								var hasDefault = false;
+								if(data.result.records[i].resultEnums != null){
+								for (let j = 0; j < data.result.records[i].resultEnums.length;j++) {
+									if (data.result.records[i].resultEnums.length != 0) {
+										contentIdList[j]=data.result.records[i].contentId;
+
+										if(data.result.records[i].resultEnums[j].isDefault){
+											hasDefault = true;
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName} checked><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}else{
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+													<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} guid=${data.result.records[i].resultEnums[j].guid} resultId=${data.result.records[i].resultEnums[j].contentId} contentId=${data.result.records[i].contentId} value=${data.result.records[i].resultEnums[j].guid} type="radio" resultName=${data.result.records[i].resultEnums[j].resultName}><span new></span>${data.result.records[i].resultEnums[j].resultName}</label>
+												</div>`
+										}
+									}
+									if(j == data.result.records[i].resultEnums.length -1){
+										if(hasDefault){
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+											<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} resultId='' guid='1' contentId=${data.result.records[i].contentId} resultName='其他' value='其他' type="radio" `+isCheck+`><span new></span>其他</label>
+												</div>
+												<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">
+													<input readonly name=${data.result.records[i].resultEnums[j].contentId} resultName=${data.result.records[i].resultEnums[j].resultName} type="text" id="" placeholder="请输入其他" value=${data.result.records[i].resultContent||''}>
+											</div>`
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left" >
+												<div class="item-title in-obj">
+													检查结果<span style="color:red;">*</span>
+												</div>
+												<div style="width: 100%;text-align: left;">`
+											if(data.result.records[i].resultContentType == 1){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0"><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2"><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" checked><span new></span>异常</label></div>`
+											}else if(data.result.records[i].resultContentType == 2){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0"><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" checked><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1"><span new></span>异常</label></div>`
+											}else{
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" checked><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2"><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1"><span new></span>异常</label></div>`
+											}
+											str2 +=`</div>`
+											if(data.result.records[i].isPhoto == '1') {
+												str2 +=`
+												<div class="scroll-li">
+													<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+														<div class="item-title in-obj" style="margin-bottom:10px;">
+															现场照片
+														</div>
+														<input id="${data.result.records[i].resultEnums[j].contentId}_PhotoInput" style="display: none;" />
+														<div class="${data.result.records[i].resultEnums[j].contentId}_img_list" style="height: 100px;">
+															<div id="${data.result.records[i].resultEnums[j].contentId}_photo" class="img_item" style="float: left;margin-right: 30px;">
+																<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+															</div>
+														</div>
+													</div>
+												</div>`
+											}
+
+											creatDom(data.result.records[i].resultEnums[j].contentId,data.result.records[i].attachment,i)
+										}else{
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left">
+											<label><input datacontent name=${data.result.records[i].resultEnums[j].contentId} resultId='' guid='1' contentId=${data.result.records[i].contentId} value='其他' resultName='其他' type="radio" `+isCheck+`><span new></span>其他</label>
+												</div>
+												<div class="mui-input-row mui-checkbox mui-left in-obj" id="radio1" style="border-bottom: 1px solid #eee; ">													
+												<input readonly name=${data.result.records[i].resultEnums[j].contentId} resultName=${data.result.records[i].resultEnums[j].resultName} type="text"  id="" placeholder="请输入其他" value=${data.result.records[i].resultContent||''}>
+											</div>`
+											str2 +=`<div class="mui-input-row mui-checkbox mui-left" >
+												<div class="item-title in-obj">
+													检查结果<span style="color:red;">*</span>
+												</div>
+												<div style="width: 100%;text-align: left;">`
+											if(data.result.records[i].resultContentType == 1){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0"><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2"><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1" checked><span new></span>异常</label></div>`
+											}else if(data.result.records[i].resultContentType == 2){
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0"><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2" checked><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1"><span new></span>异常</label></div>`
+											}else{
+												str2 +=`<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="0" checked><span new></span>正常</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="2"><span new></span>良好</label></div>
+														<div class="mui-checkbox" style="width:30%;display: inline-block;"><label><input  resultContentType index="${i}" type="radio" name="${data.result.records[i].contentName}${j}" value="1"><span new></span>异常</label></div>`
+											}
+
+											str2 +=`</div>`
+											if(data.result.records[i].isPhoto == '1') {
+												str2 +=`
+												<div class="scroll-li">
+													<div class="info-bar-content-item qz_fj" style="width: 100%;text-align: left;margin-left:0;height: 150px;">
+														<div class="item-title in-obj" style="margin-bottom:10px;">
+															现场照片
+														</div>
+														<input id="${data.result.records[i].resultEnums[j].contentId}_PhotoInput" style="display: none;" />
+														<div class="${data.result.records[i].resultEnums[j].contentId}_img_list" style="height: 100px;">
+															<div id="${data.result.records[i].resultEnums[j].contentId}_photo" class="img_item" style="float: left;margin-right: 30px;">
+																<img class="img_src" src="../../img/commom/pz@2x.png" style="display:inline-block;" />
+															</div>
+														</div>
+													</div>
+												</div>`
+											}
+
+											creatDom(data.result.records[i].resultEnums[j].contentId,data.result.records[i].attachment,i)
+										}
+
+									}
+									}
+								}
+							}
+						}
+
+						str2 +=`</div>
+							</div>
+							</div>`
+					}
+				}
+
+				$("#inspectDetail").html(str2)
+				$("#helpList").html(helpText)
+				// $("#texthtml").html(text)
+				$('input[value="其他"]:checked').each(function () {
+					   $("input[type=text][name="+$(this).attr('name')+"]").removeAttr('readonly')
+				});
+				$("#inspectDetail").find(".borderCss:last").removeClass("borderCss");
+				// console.log($('input'));
+				for(var k = 0;k<$('input').length;k++){
+					// console.log($('input').eq(k).attr('name'))
+					$('input').eq(k).attr('offSetTop',$('input').eq(k).offset().top);
+					// console.log($('input').eq(k).attr('offSetTop'))
+				}
+			});
+
+
+			function creatDom(name,attachment,j){
+
+
+				signaturefileTokenlist[j]=[]
+				$("body").delegate("#"+name+"_photo","tap", function(e){
+
+					plusSelectImage(function(data, path) {
+						console.log(JSON.stringify(data))
+						signaturefileTokenlist[j].push(data.result.fileTokens)
+						console.log(JSON.stringify(data));
+						var html = '<div id="' + data.result.uploadFile.id + '" data-token="'+data.result.fileTokens+'" class="img_item " style="display:inline-block;margin-right:30px;">' +
+							'		<img class="img_src" src="' + path+ '" style=""  />' +
+							'		<div class="'+name+'_img_close img_close"><img src="../../img/deletePhoto.png" style="width:16px;height:16px;"/></div>' +
+							'	</div>';
+						$("."+name+"_img_list").append(html);
+
+						var count = $("."+name+"_img_list").children(".img_item").length;
+
+						if (count == 4) { //处理上传的数量
+							$("#"+name+"_photo").hide();
+						}
+
+						console.log(JSON.stringify(signaturefileTokenlist))
+					});
+				});
+
+				//删除图 附件-
+
+				$("body").delegate("."+name+"_img_close","tap", function(e){
+					var that = $(this)
+					mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+						if (parseInt(result.index) == 0) {
+
+							var index = signaturefileTokenlist[j].indexOf(that.parent().attr('data-token'));
+							if (index > -1) {
+								signaturefileTokenlist[j].splice(index, 1);
+							}
+
+							that.parent().remove();
+							var count = $("."+name+"_img_list").children(".img_item").length;
+
+							if (count != 4) {
+								$("#"+name+"_photo").show();
+							}
+						}
+					})
+				});
+				if(attachment){
+					findFilesByGroupId({groupId:attachment},function(data){
+							// console.log(JSON.stringify(data))
+							var  html ='';
+							if( data.result.length>0){
+								for(let i=0;i<data.result.length;i++){
+									signaturefileToken = data.result[i].fileToken
+									signaturefileTokenlist[j].push(signaturefileToken)
+									html += '<div id="' + data.result[i].uploadFile.id + '" data-token="'+data.result[i].fileToken+'" class="img_item" style="">' +
+										'		<img data-preview-src="" class="img_src" src="'+config.urls.domain+'/ecidi-cmp/sys/common/view/' + data.result[i].uploadFile.savePath+ '" style=""  />' +
+										'		<div class="'+name+'_img_close img_close"><img src="../../img/deletePhoto.png" style="width:16px;height:16px;"/></div>' +
+										'	</div>';
+								}
+							}
+							$("."+name+"_img_list").append(html);
+
+							var count = $("."+name+"_img_list").children(".img_item").length;
+
+							if (count == 4) { //处理上传的数量
+								$("#"+name+"_photo").hide();
+							}
+
+					});
+					now_arrAttachment[j]=attachment;
+				}else{
+					now_arrAttachment[j] = groupid();
+				}
+
+			}
+
+
+		})
+		$(function() {
+			$('input[name=radio1]').click(function() {
+				var val = $('input[type=radio][name=radio1]:checked').val()
+				if (val == 'Item33') {
+					$('#radio1').show();
+					$('.info-bar-content-item.radio1').css("height", "240px")
+				} else {
+					$('#radio1').hide();
+					$('.info-bar-content-item.radio1').css("height", "170px")
+				}
+			})
+		})
+		$("body").delegate("div[name=help]", "tap", function(e){
+			e.stopPropagation()
+			let boxHight = Math.abs(mui('.mui-scroll-wrapper').scroll().y) + 80;
+			$("div[name=standard][index="+($(this).attr('tindex'))+"]").css("display", "block");
+			$("div[name=standard][index="+($(this).attr('tindex'))+"] .iframe").css("top", boxHight+"px");
+			$("#textFrame").css("display", "block");
+		});
+		$("body").delegate("label", "tap", function(e){
+			// if($(this).find("input[guid='']").attr('name') == ''){
+			if($(this).find("input").attr('value') != '其他'){
+				$("input[type=text][name="+$(this).find("input").attr('name')+"]").attr('readonly','readonly')
+				$("input[type=text][name="+$(this).find("input").attr('name')+"]").val("")
+				// $("input[type=text][name="+$(this).find("input[guid='']").attr('name')+"]").attr('readonly')
+			}else{
+				$("input[type=text][name="+$(this).find("input").attr('name')+"]").removeAttr('readonly')
+				$("input[type=text][name="+$(this).find("input").attr('name')+"]").focus()
+				// $("input[type=text][name="+$(this).find("input[guid='']").attr('name')+"]").removeAttr('readonly','readonly')
+			}
+		});
+
+		$("body").delegate("div[name=standard]", "tap", function(e){
+			$("div[name=standard]").css("display", "none");
+			$("#textFrame").css("display", "none");
+		});
+		function groupid() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+// function close_page(num){
+// 				var n = num || 1;
+// 				var arr = [];
+// 				//获取当前页面
+// 				var page = plus.webview.currentWebview();
+// 				while(n > 1){
+// 					var pagestr;
+// 					//如果需要返回2个页面以上，就将父页面存到数组中
+// 					if(arr.length){
+// 						pagestr = arr[length-1].opener();
+// 					}else{
+// 						pagestr = page.opener();
+// 					}
+// 					arr.push(pagestr);
+// 					n--;
+// 				}
+// 				//关闭当前页
+// 				page.close();
+// 				//关闭数组存的所有父页面
+// 				for (var i = 0; i < arr.length;i++) {
+// 					console.log(JSON.stringify(arr[i]))
+// 					arr[i].close();
+// 				}
+// 				}
+	</script>
+
+</html>

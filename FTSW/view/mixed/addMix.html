@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接点管理-新增混接点</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+		.mui-icon-arrowright{
+			color:#62666E;
+			font-weight: 100 !important;
+		}
+		.inputCss{
+			font-size: 16px;
+			font-weight: 400;
+			color: #1A1616;
+			height: 30px;
+		}
+		.checkBoxCss{
+			font-size: 16px;
+			font-weight: 400;
+			color: #000000;
+		}
+		.img_item{
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			float: left;
+			margin-right: 20px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+		}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 95%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item" id="submit">
+				<div style="background: #337BFC;color: #fff">提交</div>
+			</div>
+			<!-- 			<div class="btn-item" id="submit" style="width:100%;text-align: center;">
+				<div style="background: #337BFC;color: #fff;">提交</div>
+			</div> -->
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">排水户登记</h1>
+    </header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="padding-bottom: 20px;">
+							<div class="bar-title">
+								基础信息
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										混接点编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input type="text" readonly="true" name="mixCode" id="mixCode" value="" placeholder="系统自动生成" />
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										混接类型<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="mixType" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="mixType_text" readonly="readonly" required="true" type="text" class="mui-input-clear" value=""
+										 placeholder="请选择混接类型" class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										调查日期<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="surveyDate" class="inputCss" required="true" readonly="readonly" type="text" class="mui-input-clear"
+										 placeholder="请选择调查日期" style="width: 90%;">
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div id="surveyItem" class="info-bar-content-item isShow">
+									<div class="item-title">
+										调查人员
+									</div>
+									<input id="surveyBy" type="text" style="display: none;">
+									<input id="surveyPerson_text" readonly="readonly" required="true" type="hidden" value="">
+									<div id="survey-box" class="mui-input-row item-input" style="margin-top:12px;">
+										<!-- <div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;">
+											<span class="surveyPerson">张三丰</span>
+											<span class="mui-icon mui-icon-closeempty"></span>
+										</div> -->
+										<input readonly="readonly" type="text" class="mui-input-clear" value="" placeholder="请选择调查人员"
+										 class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										混接地点<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="hjPlace" readonly="readonly" required="true" type="text" class="mui-input-clear" value=""
+										 placeholder="请选择混接地点" style="width:90%;" class="inputCss">
+										<img id="location" src="../../img/commom/dz@2x.png" style="width: 18px;height: 18px;margin-top:5px;float: right;" />
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										检查井编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input class="inputCss" id="expNo" readonly="readonly" type="text" placeholder="系统自动生成">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										上游井编号
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input class="inputCss" id="upNode" readonly="readonly" type="text" placeholder="系统自动生成">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										混接点位置<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="mixPosition" name="mixPosition" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="mixPosition_text" name="mixPosition_text" readonly required="true" type="text" class="mui-input-clear inputCss"
+										 placeholder="请选择混接位置" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										改造状态<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="reformState" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="stat" readonly="readonly" required="true" type="text" class="inputCss" value="" placeholder="请选择改造状态"
+										 style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item upload-file-box" style="height: 175px;display: none;">
+									<div class="item-title" style="margin-bottom: 20px;">改造方案</div>
+									<input id="ideaFileId" style="display: none;" />
+									<div class="file_item" style="text-align: left;">
+										<button type="button" name="file" id="file1_1" class="file_upload mui-btn mui-btn-primary">上传文件</button>
+										<span class="btn-label">支持上传图片、Word、PDF、Excel等格式</span>
+									</div>
+									<!-- 底下已经控制数据 -->
+									<div class="file_list3">
+										<div class="file-item-box">
+											<ul class="mui-table-view" id="ideaFile">
+												<!-- <li class="mui-table-view-cell">
+													<span class="file-name">测试对方看得见放得开肯德基发快递文件列表1.docx</span>
+													<span class="mui-badge file_close">X</span>
+												</li>
+												<li class="mui-table-view-cell" style="color: blue;">
+													<span class="file-name">测试凉快地方绝地反击看得见风ID文件列表2.docx</span>
+													<span class="mui-badge file_close">X</span>
+												</li>
+												<li class="mui-table-view-cell" style="color: blue;">
+													<span class="file-name">测试文件列表2.docx</span>
+													<span class="mui-badge file_close">X</span>
+												</li> -->
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item upload-file-box" style="height: 175px;display: none;">
+									<div class="item-title" style="margin-bottom: 20px;">改造图纸</div>
+									<input id="drawingFileId" style="display: none;" />
+									<div id="file2" class="file_item" style="text-align: left;">
+										<button type="button" name="file" id="file1_2" class="file_upload mui-btn mui-btn-primary">上传文件</button>
+										<span class="btn-label">支持上传图片、Word、PDF、Excel等格式</span>
+									</div>
+									<div class="file_list4">
+										<!-- 底下已经控制数据 -->
+										<div class="file-item-box">
+											<ul class="mui-table-view" id="drawingFile">
+												<!-- <li class="mui-table-view-cell">
+												<span class="file-name">测试文测试测绘的房价的看法件列表1.docx</span>
+													<span class="mui-badge file_close" >X</span>
+												</li>
+												<li class="mui-table-view-cell">
+												<span class="file-name">测试文件列表2.docx</span>
+													<span class="mui-badge file_close">X</span>
+												</li> -->
+
+											</ul>
+										</div>
+									</div>
+
+								</div>
+								<div class="info-bar-content-item upload-file-box" style="height: 175px;display: none;">
+									<div class="item-title" style="margin-bottom: 20px;">竣工图纸</div>
+									<input id="overFileId" style="display: none;" />
+									<div id="file3" class="file_item" style="text-align: left;">
+										<button type="button" name="file" id="file1_3" class="file_upload mui-btn mui-btn-primary">上传文件</button>
+										<span class="btn-label">支持上传图片、Word、PDF、Excel等格式</span>
+									</div>
+									<div class="file_list5">
+										<!-- 底下已经控制数据 -->
+										<div class="file-item-box">
+											<ul class="mui-table-view" id="overFile">
+												<!-- <li class="mui-table-view-cell">
+												<span class="file-name">测试文件列表1.docx</span>
+													<span class="mui-badge file_close" >X</span>
+												</li>
+												<li class="mui-table-view-cell">
+												<span class="file-name">测试文件列表2.docx</span>
+													<span class="mui-badge file_close">X</span>
+												</li> -->
+											</ul>
+										</div>
+									</div>
+
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										所属流域
+									</div>
+									<input id="inBasinId" type="text" style="display: none;">
+									<div class="mui-input-row item-input inputCss">
+										<input id="inBasin" readonly type="text" placeholder="系统自动生成">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										所属街道
+									</div>
+									<input id="inStreetId" style="display: none;" type="text">
+									<div class="mui-input-row item-input">
+										<input id="streetName" class="inputCss" readonly type="text" placeholder="系统自动生成">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										所属小区
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<input id="inCommId" style="display: none;" type="text">
+									<div class="mui-input-row item-input">
+										<input id="commName" class="inputCss" readonly type="text" placeholder="系统自动生成">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>混接点管径(mm)</span>
+										<span style="color: red;margin-left: 3px;">*</span>
+										<span id="error1" class="err-show" style="color: red;float: right;display:none">必须输入四位以内的正整数</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="mixDiameter" class="mui-input-clear inputCss" type="number"  required="true" onblur="isErrFun(this)" onkeyup="format_input_int(1,this)"
+										 class="mui-input-clear" placeholder="请输入混接点管径">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>混接点埋深(m)</span>
+										<span id="error2" class="err-show" style="color: red;float: right;display:none">只能为四位数</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="mixDepth" class="mui-input-clear inputCss" type="number"  onblur="isErrFun(this)" onkeyup="format_input_num2(2,this)"
+										 class="mui-input-clear" placeholder="请输入混接点埋深">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>混接管管材</span>
+										<span id="error2" class="err-show" style="color: red;float: right;display:none">请正确输入混接管管材</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="pipes" class="mui-input-clear inputCss"  onblur="isErrFun(this)"
+										 class="mui-input-clear" placeholder="请输入混接管管材">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										混接程度
+									</div>
+									<input id="dischargerType" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="dischargerType_Text" readonly type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请选择混接程度" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										混接水来源
+									</div>
+									<input id="mixSourceId" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="mixSource"  type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请输入混接水来源" style="width:90%;" maxlength="300">
+										<!-- <span class="mui-icon mui-icon-arrowright"></span> -->
+									</div>
+								</div>
+							<!-- 	<div class="info-bar-content-item isShow" style="height: 120px;">
+									<div class="item-title">
+										有无连续水流出
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有水不连续</label>
+											<input name="isFlow" value="0" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有水连续</label>
+											<input name="isFlow" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无水</label>
+											<input name="isFlow" value="2" type="checkbox">
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow" id="checkBoxShow1">
+									<div class="item-title">
+										流水是否清澈
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">是</label>
+											<input name="flowType" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">否</label>
+											<input name="flowType" value="0" type="checkbox">
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow" id="checkBoxShow2">
+									<div class="item-title">
+										有无明显异味
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">无</label>
+											<input name="isSmell" value="0" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">有</label>
+											<input name="isSmell" value="1" type="checkbox">
+										</div>
+									</div>
+								</div> -->
+								<div class="info-bar-content-item isShow" style="height: 140px">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										<span>问题描述字段</span>
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+										<span id="error10" class="err-show" style="color: red;float: right;display:none">已经是最大长度</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<textarea id="problemDescription" rows="3" class="mui-input-clear inputCss" style="height: 80px;" placeholder="请输入(200以内)问题描述字段..."
+										 onkeyup="format_input_remark(10,200,this)" maxlength="200"></textarea>
+									</div>
+								</div>								
+								<div class="info-bar-content-item isShow" style="height: 140px">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										<span>备注</span>
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+										<span id="error9" class="err-show" style="color: red;float: right;display:none">已经是最大长度</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<textarea id="remark1" rows="3" class="mui-input-clear inputCss" style="height: 80px;" placeholder="请输入(300以内)案例经验..."
+										 onkeyup="format_input_remark(9,300,this)" maxlength="300"></textarea>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 150px;border: none;">
+									<div class="item-title" style="margin-bottom: 20px;">
+										位置照片
+									</div>
+									<input id="fileId" style="display: none;" />
+									<div class="psh_img_list1" id="psh_img_list1">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+                                    <img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+                                    <div class="img_close">移除</div>
+                                </div>
+                                <div class="img_item">
+                                    <img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+                                    <div class="img_close">移除</div>
+                                </div> -->
+									</div>
+									<div id="photo1" class="img_item">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 150px;border: none">
+									<div class="item-title" style="margin-bottom: 20px;">
+										混接点情况照片
+									</div>
+									<input id="fileMixId" style="display: none;" />
+									<div class="psh_img_list2" id="psh_img_list2">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item" style="position: relative;">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close" style="position: absolute;top: 0;right:0;margin:-5px -5px 0 0;width:18px;height: 18px;line-height:18px;border-radius:50%;background: #E7E7E7;"><span style="color:#888888;height: 8px;width: 8px;">x</span></div>
+										</div> -->
+									</div>
+									<div id="photo2" class="img_item">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+									</div>
+								</div>
+
+								<div class="bar-title isShow" style="margin-top: 10px;">混接点水质水量检测指标</div>
+
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										取样日期
+										<!-- 	<span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="samplingDate" readonly="readonly" type="text" class="mui-input-clear inputCss" placeholder="请选择取样日期"
+										 style="width: 90%;">
+										<span id="" class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检测日期
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="testDate" readonly="readonly" type="text" class="mui-input-clear inputCss" placeholder="请选择检测日期"
+										 style="width: 90%;">
+										<span id="detectionDate" class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>天气</span>
+										<span style="color: red;margin-left: 3px;"></span>
+										<span id="error8" class="err-show" style="color: red;float: right;display:none">已经是最大长度</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<!-- <input id="weather" type="text" maxlength="10" onkeyup="format_input_weather(8,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入天气" style="width: 90%;"> -->
+										<input id="weather" type="text" maxlength="10" readonly="readonly" class="mui-input-clear inputCss"
+										 placeholder="请选择天气" style="width: 90%;">
+										<span id="detectionDate" class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检测时间
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="testTime" readonly="readonly" type="text" class="mui-input-clear inputCss" placeholder="请选择检测时间"
+										 style="width: 90%;">
+										<span id="detectionTime" class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										取样人员
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<input id="operatorId" type="text" value="856f6a7760b42645130851b40b808730" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="operatorId_dictText" readonly="readonly" type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请选择取样人员">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检测人员
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<input id="detectionId" type="text" value="" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="detectionId_dictText" readonly="readonly" type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请选择检测人员">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>电导率(ms/cm)</span>
+										<span style="color: red;margin-left: 3px;"></span>
+										<span id="error3" class="err-show" style="color: red;float: right;display:none">只能为8位整数，小数点后保留两位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="conductivity" onblur="isErrFun(this)" onkeyup="format_input_num(3,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入电导率(ms/cm)" style="width: 90%;">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>COD(mg/L)</span>
+										<span style="color: red;margin-left: 3px;"></span>
+										<span id="error4" class="err-show" style="color: red;float: right;display:none">只能为8位整数，小数点后保留两位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="COD" onblur="isErrFun(this)" onkeyup="format_input_num(4,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入COD(mg/L)" style="width: 90%;">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>NH3-N(mg/L)</span>
+										<span style="color: red;margin-left: 3px;"></span>
+										<span id="error5" class="err-show" style="color: red;float: right;display:none">只能为8位整数，小数点后保留两位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="nh3N" onblur="isErrFun(this)" onkeyup="format_input_num(5,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入NH3-N(mg/L)" style="width: 90%;">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>水量(L/min)</span>
+										<span style="color: red;margin-left: 3px;"></span>
+										<span id="error6" class="err-show" style="color: red;float: right;display:none">只能为8位整数，小数点后保留两位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="flowRe" onblur="isErrFun(this)" onkeyup="format_input_num(6,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入水量(L/min)" style="width: 90%;">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title" style="margin-bottom: 10.5px;">
+										<span>备注</span>
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+										<span id="error7" class="err-show" style="color: red;float: right;display:none">长度不能超过2000</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<textarea id="remark2" rows="3" style="height: 80px;" onkeyup="format_input_remark(7,2000,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入备注(2000字以内)" maxlength="2000"></textarea>
+									</div>
+								</div>
+
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputById" type="text" style="display: none;">
+										<input id="inputByName" type="text" readonly placeholder="请输入填写人" class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										联系方式
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputByPhone" type="text" readonly placeholder="请输入联系方式" class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border:none">
+									<div class="item-title">
+										填写部门
+										<!-- <span style="color: red;margin-left: 3px;">*</span> -->
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputByDepart" type="text" readonly placeholder="请输入填写部门" class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDate" class="inputCss" type="text" readonly="true" placeholder="请选择填写日期" style="width: 90%;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+								<input type="text" name="guid" id="guid" value="" style="display: none;" />							
+								<input type="text" name="strAttachment" id="strAttachment" value="" style="display: none;" />
+								<div id="bottom-div" style="height: 100px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/qs.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/mixed.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({
+			swipeBack: false
+		});
+		var isUpload = true;
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,
+			style: 'color'
+		});
+
+		var photo1GroupId = "";
+		var photo2GroupId = "";
+		var file1GroupId = "";
+		var file2GroupId = "";
+		var file3GroupId = "";
+		var photo1Paths = [];
+		var photo2Paths = [];
+		var opt = "add"; //操作类型
+		var mixCode = ""; //混接点编号
+		var id = "";
+		var flag = false;
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			mui('.mui-input-row textarea').input();
+			photo1GroupId = guid().replace(new RegExp('-', 'g'), '');
+			$("#fileId").val(photo1GroupId);
+			photo2GroupId = guid().replace(new RegExp('-', 'g'), '');
+			$("#fileMixId").val(photo2GroupId);
+			file1GroupId = guid().replace(new RegExp('-', 'g'), '');
+			$("#ideaFileId").val(file1GroupId);
+			file2GroupId = guid().replace(new RegExp('-', 'g'), '');
+			$("#drawingFileId").val(file2GroupId);
+			file3GroupId = guid().replace(new RegExp('-', 'g'), '');
+			$("#overFileId").val(file3GroupId);
+			// mixCode = guid().replace(new RegExp('-', 'g'), '').substring(10)
+			// mixCode = (new Date()).Format("yyyyMMddhhmmss");
+			// $("#mixCode").val(mixCode);
+			//界面元素控制
+			initView();
+
+			// 点击事件
+			initDownSelect();
+			//初始化回调
+			// initCallback();
+
+			// 初始化选项框状态
+			initCheckBox();
+
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					// plus.webview.currentWebview().setStyle({
+					// 	height: originalHeight + 75
+					// });
+					
+					$("#bottom-item-btn").hide()
+				} else {
+					
+					$("#bottom-item-btn").show()
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			var self = plus.webview.currentWebview();
+
+			var type = self.type;
+			if (type != undefined && type == "edit") {
+				opt = "edit";
+				console.log("opt:" + opt + ",guid:" + self.guid);
+				//修改,需要进行表单赋值操作
+				var guid = self.guid;
+				if (guid != null && guid != undefined) {
+					searchMixById(guid, function(data) {
+						console.log("详情接口返回：" + JSON.stringify(data));
+						if (data.success) {
+							showData(data.result); //渲染数据
+						} else {
+							mui.toast(data.message == undefined ? data : data.message);
+							app.showLoader();
+							setTimeout(function() {
+								app.hideLoader();
+								mui.back(); //返回
+							}, 3000);
+						}
+					})
+				} else {
+					app.showLoader();
+					setTimeout(function() {
+						app.toast("guid获取异常");
+						app.hideLoader();
+						mui.back(); //返回
+					}, 2000);
+				}
+			}
+
+			function showData(data) {
+				console.log("into")
+				photo1GroupId = data.fileId != undefined && data.fileId != null ? data.fileId : photo1GroupId;
+				photo2GroupId = data.fileMixId != undefined && data.fileMixId != null ? data.fileMixId : photo2GroupId;
+				file1GroupId = data.ideaFileId != undefined && data.ideaFileId != null ? data.ideaFileId : file1GroupId;
+				file2GroupId = data.drawingFileId != undefined && data.drawingFileId != null ? data.drawingFileId : file2GroupId;
+				file3GroupId = data.overFileId != undefined && data.overFileId != null ? data.overFileId : file3GroupId;
+				//文件显示:因改造、改造待确认状态不可修改，此处暂不写
+				// if(data.reformState==1||data.reformState==4){
+				// 	findFilesByGroupId({
+				// 		groupId: file1GroupId
+				// 	}, function(data) {
+				// 		if (data.success) {
+				// 			console.log("文件：" + JSON.stringify(data));
+				// 			if (data.result.length >= 3) {
+				// 			}
+				// 			for (var i = 0; i < data.result.length; i++) {
+
+				// 			}
+				// 		}
+				// 	});
+				// }
+				//照片显示
+				findFilesByGroupId({
+					groupId: photo1GroupId
+				}, function(data) {
+					if (data.success) {
+						console.log("图片：" + JSON.stringify(data));
+						if (data.result.length >= 3) {
+							console.log("into...")
+							let count = data.result.length
+							console.log("count",count)
+							var h = 150+(Math.ceil((count + 1)/3)-1)*100;
+							$(".psh_img_list1").parent().css("height", h+'px')
+							let a = $(".psh_img_list1").height();
+							console.log("height-a", a)
+						}
+						for (var i = 0; i < data.result.length; i++) {
+							var html = '<div id="' + data.result[i].uploadFile.id + '" data-token="' + data.result[i].fileToken +
+								'" name="fileIdPaths" class="img_item" style="position:relative;">' +
+								'		<img class="img_src" src="' + config.urls.baseUrl + "sys/common/view/" + data.result[i].uploadFile.savePath +
+								'" style="" data-preview-src="" data-preview-group="fileIdPaths" />' +
+								'		<input type="hidden" name="fileIdPaths" value="' + data.result[i].uploadFile.savePath + '">' +
+								'		<span class="img_close mui-icon mui-icon-closeempty"  name="' + data.result[i].uploadFile.savePath +
+							'" style="width: 16px;height: 16px;position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+							'	</div>';
+							$(".psh_img_list1").append(html);
+						}
+					}
+				});
+				findFilesByGroupId({
+					groupId: photo2GroupId
+				}, function(data) {
+					if (data.success) {
+						if (data.result.length >= 3) {
+							$("#photo2").hide();
+						}
+						for (var i = 0; i < data.result.length; i++) {
+							var html = '<div id="' + data.result[i].uploadFile.id + '" data-token="' + data.result[i].fileToken +
+								'" name="fileMixIdPaths" class="img_item" style="position:relative;">' +
+								'		<img class="img_src" src="' + config.urls.baseUrl + "sys/common/view/" + data.result[i].uploadFile.savePath +
+								'" style="" data-preview-src="" data-preview-group="fileMixIdPaths" />' +
+								'		<input type="hidden" name="fileMixId" value="' + data.result[i].uploadFile.savePath + '">' +
+								'		<span class="img_close mui-icon mui-icon-closeempty"  name="' + data.result[i].uploadFile.savePath +
+							'" style="width: 16px;height: 16px;position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+							'	</div>';
+							$(".psh_img_list2").append(html);
+						}
+					}
+				});
+				mixCode = data.mixCode; //混接点编号
+				id = data.guid;
+				$("#guid").val(id);
+				$("#fileId").val(photo1GroupId); //混接情况照片
+				$("#fileMixId").val(photo2GroupId); //混接情况照片
+				$("#mixCode").val(mixCode);
+				photo1Paths = data.fileIdPaths != undefined ? data.fileIdPaths : photo1Paths;
+				photo2Paths = data.fileMixIdPaths != undefined ? data.fileMixIdPaths : photo2Paths;
+
+				$("#hjPlace").val(data.address); // "address": "string",
+				$("#COD").val(data.cod); //     "cod": 0,
+				$("#conductivity").val(data.conductivity);
+				$("#commName").val(data.commName); //     "commName": "string",
+				$("#expNo").val(data.expNo); //     "expNo": "string",
+				$("#flowRe").val(data.flowRe); //     "flowRe": 0,
+				$("#inBasin").val(data.inBasin); //     "inBasin": "string",
+				$("#inCommId").val(data.inCommId); //     "inCommId": "string",
+				$("#inStreetId").val(data.inStreetId); //     "inStreetId": "string",
+				$("#inputByDepart").val(data.inputByDepart); //     "inputByDepart": "string",
+				// $("#inputById").val(data.inputById); //     "inputById": "string",
+				// $("#inputByName").val(data.inputByName); //     "inputByName": "string",
+				$("#inputById").val(data.inputByUserName); // 填写人username
+				$("#inputByName").val(data.inputByRealName); //  填写人realname
+				$("#inputByPhone").val(data.inputByPhone); //     "inputByPhone": "string",
+
+				if (data.isFlow == 0 || data.isFlow == 1) {
+					$("#checkBoxShow1").show();
+					$("#checkBoxShow2").show();
+				} else {
+					$("#checkBoxShow1").hide();
+					$("#checkBoxShow2").hide();
+				}
+				$("input[name='isFlow']").each(function() {
+					if ($(this).val() == 1 && $(this).val() != data.isFlow) {
+						$(this).attr('checked', false);
+					}
+					if ($(this).val() == data.isFlow) {
+						$(this).attr('checked', true);
+						return true;
+					} else {
+						$(this).attr('checked', false);
+					}
+				});
+				$("input[name='flowType']").each(function() {
+					if ($(this).val() == 1 && $(this).val() != data.flowType) {
+						$(this).attr('checked', false);
+					}
+					if ($(this).val() == data.flowType) {
+						$(this).attr('checked', true);
+						return true;
+					} else {
+						$(this).attr('checked', false);
+					}
+				});
+				$("input[name='isSmell']").each(function() {
+					if ($(this).val() == 1 && $(this).val() != data.isSmell) {
+						$(this).attr('checked', false);
+					}
+					if ($(this).val() == data.isSmell) {
+						$(this).attr('checked', true);
+						return true;
+					} else {
+						$(this).attr('checked', false);
+					}
+				});
+				$("#mixDepth").val(data.mixDepth); //     "mixDepth": "string",
+				$("#pipes").val(data.pipes); //     "mixDepth": "string",
+				$("#mixDiameter").val(data.mixDiameter); //     "mixDiameter": 0,
+				$("#mixPipe").val(data.mixPipe); //     "mixPipe": "string",
+				$("#mixPosition").val(data.mixPosition);
+				// $("#mixPosition_text").val(getMixPosition(data.mixPosition)); //     "mixPosition": "string",
+				$("dischargerType").val(data.dischargerType); //混接程度
+				getMixDischargerType(data.dischargerType, function(data) {
+					$("#dischargerType_Text").val(data); //混接程度
+				});
+				getMixPosition(data.mixPosition, function(data) {
+					$("#mixPosition_text").val(data); //混接位置
+				})
+				$("#mixSource").val(data.mixSource); //     "mixSource": "string",
+				// $("#mixSource").val(getMixSource(data.mixSource));
+				// getMixSource(data.mixSource, function(data) {
+				// 	$("#mixSource").val(data);
+				// })
+				$("#mixType").val(data.mixType); //     "mixType": "string",
+				// $("#mixType_text").val(getMixType(data.mixType));
+				getMixType(data.mixType, function(data) {
+					$("#mixType_text").val(data);
+				});
+				$("#nh3N").val(data.nh3N); //     "nh3N": 0,
+				if (data.reformState == 5) {
+					$("#stat").off("tap");
+				}
+				$("#reformState").val(data.reformState); //     "reformState": "string",
+				if (data.reformState == 1 || data.reformState == 4) { //改造、改造待确认
+					$(".upload-file-box").show();
+				}
+				// $("#stat").val(data.reformState == 1 ? "改造" : "未改造");
+				// $("#stat").val(getReformState(data.reformState));
+				getReformState(data.reformState, function(data) {
+					$("#stat").val(data);
+				});
+				$("#problemDescription").val(data.problemDescription);
+				$("#remark1").val(data.remark); //     "remark": "string",
+				$("#remark2").val(data.remarkMonitor); //     "remarkMonitor": "string",
+				// $("#operatorId").val(data.samplingBy); //     "samplingBy": "string",
+				// $("#operatorId_dictText").val(data.samplingByName); //     "samplingByName": "string",
+				$("#operatorId").val(data.samplingByUserName); //  取样人员username
+				$("#operatorId_dictText").val(data.samplingByRealName); // 取样人员realname
+				$("#samplingDate").val(data.samplingDate); //     "samplingDate": "2020-09-12T14:14:49.433Z",
+				$("#streetName").val(data.streetName); //     "streetName": "string",
+				// $("#surveyBy").val(data.surveyBy); //     "surveyBy": "string",
+				// $("#surveyPerson_text").val(data.surveyByName); //     "surveyByName": "string",
+				$("#surveyBy").val(data.surveyByUserName); //调查人员username
+				$("#surveyPerson_text").val(data.surveyByRealName); //调查人员realname
+				var perArr = data.surveyByRealName.split(",")
+				var perArr2 = data.surveyByUserName.split(",")
+				if (data.surveyByRealName != undefined && data.surveyByRealName != null && perArr.length > 0) {
+					var text = "";
+					for (let i = 0; i < perArr.length; i++) {
+						text +=
+							`<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+												<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+												<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+											</div>`;
+					}
+					text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+					if (perArr.length >= 4) {
+						var h = $("#surveyItem").height() + (perArr.length / 4) * 22;
+						$("#surveyItem").css("height", h)
+					}
+					$("#survey-box").html(text)
+				}
+				$("#surveyDate").val(data.surveyTime); //     "surveyTime": "2020-09-12T14:14:49.433Z",
+				// $("#detectionId").val(data.testBy); //     "testBy": "string",
+				// $("#detectionId_dictText").val(data.testByName); //     "testByName": "string",
+				$("#detectionId").val(data.testByUserName); // 检测人员username
+				$("#detectionId_dictText").val(data.testByRealName); // 检测人员realname
+				$("#testDate").val(data.testDate); //     "testDate": "2020-09-12T14:14:49.433Z",
+				$("#testTime").val(data.testTime); //     "testTime": "2020-09-12T14:14:49.433Z",
+				$("#upNode").val(data.upNode); //     "upNode": "string",
+				// $("#updateBy").val(data.updateBy); //     "updateBy": "string",
+				// $("#updateTime").val(data.updateTime); //     "updateTime": "2020-09-12T14:14:49.433Z",
+				$("#weather").val(data.weather); //     "weather": "string"
+			}
+
+			//初始化信息
+			// if ($("#hjPlace").val() == "" || $("#hjPlace").val() == undefined) {
+			// 	$("#hjPlace").val(globalGetItem(GlobalKey.address));
+			// }
+
+			// $("#inputById").val(app.userInfo().perId);
+			// $("#inputByName").val(app.userInfo().realname);
+			// $("#inputByPhone").val(app.userInfo().personMobilePhone);
+			// $("#inputByDepart").val(app.depart() ? app.depart().departName : '');
+			queryNumber({type: 3},function(data){
+				if(data.success){
+					$("#mixCode").val(data.message);
+				}
+			})
+			
+			//默认填写
+			var date = new Date();
+			var now = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate()
+			$("#inputDate").val(now);
+			$("#surveyPerson_text").val(app.userInfo().realname);
+			$("#surveyBy").val(app.userInfo().username); //调查人员username
+			var text =
+				`<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin-right:5px;">
+										<span class="surveyPerson" style="color:#337BFC">${app.userInfo().realname}</span>
+										<span class="mui-icon mui-icon-closeempty" rname=${app.userInfo().realname} uname=${app.userInfo().username} style="color:#337BFC"></span>
+									</div>`;
+			text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+			$("#survey-box").html(text)
+			$("#inputById").val(app.userInfo().username);
+			$("#inputByName").val(app.userInfo().realname);
+			$("#inputByPhone").val(app.userInfo().personMobilePhone);
+			$("#inputByDepart").val(app.depart() ? app.depart().departName : '');
+
+			//日期选择
+			$("#surveyDate,#samplingDate,#testDate").on("tap", function() {
+				var that = $(this);
+
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					that.val(d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2))
+				}, function(e) {
+					that.val("");
+				}, {
+					title: "请选择日期"
+				});
+				plusDate(function(data) {
+					that.val(data)
+				}, 1);
+			})
+			//检测时间选择
+			$("#testTime").on("tap", function() {
+				var that = $(this);
+
+				plus.nativeUI.pickTime(function(e) {
+
+					var d = e.date;
+					console.log(d);
+					that.val(preZero(d.getHours(), 2) + ":" + preZero(d.getMinutes(), 2) + ":" + preZero(d.getSeconds(), 2))
+				}, function(e) {
+					that.val("");
+				}, {
+					title: "请选择时间"
+				});
+				// plusTime(function(data) {
+				// 	that.val(data)
+				// }, 1);
+			})
+
+		}
+
+
+
+		//只允许小数
+		function clearNoNum(obj) {
+			obj.value = obj.value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
+			obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是.
+			obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的.
+			obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+		}
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".info-bar-content-item").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if ($(this).is(':checked')) {
+						$(this).parent().siblings().find(":checkbox").each(function() {
+							$(this).prop("checked",false)
+						});
+					}
+				});
+			});
+		}
+
+		// 点击事件
+		var initDownSelect = function() {
+			//混接类型
+			$("#mixType_text").on("tap", function() {
+				var that = $(this);
+				// $(this).addClass("my-active");
+				// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+				getDictItems('MONITOR_MIXING_TYPE', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						// console.log(data.message)
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#mixType_text").val(items[0].text);
+							$("#mixType").val(items[0].value);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+			})
+
+			//混接地点
+			$("#hjPlace,#location").on("tap", function() {
+				globalDelItem(GlobalKey.guid);
+				globalDelItem(GlobalKey.inBasin);
+				globalDelItem(GlobalKey.inBasinId);
+				globalDelItem(GlobalKey.streetName);
+				globalDelItem(GlobalKey.inStreetId);
+				globalDelItem(GlobalKey.commName);
+				globalDelItem(GlobalKey.inCommId);
+				var extras = {}
+				app.openPage("mixed_location.html", {
+					titleNView: {
+						titleText: '混接地点选择',
+						autoBackButton: true,
+					}
+				}, extras);
+				/**
+				 * 以下监听，是来自下一个页面
+				 */
+				//移除
+				window.removeEventListener('reloadAddress', reloadAddress, false);
+				// 赋值
+				window.addEventListener('reloadAddress', reloadAddress, false);
+			});
+			//重新加载
+			var reloadAddress = function(data) {
+				console.log("地点选择后回调的参数：" + JSON.stringify(data));
+				var address = globalGetItem(GlobalKey.address); //地图点地址
+				$("#expNo").val(globalGetItem(GlobalKey.guid) != undefined ? globalGetItem(GlobalKey.guid) : "");
+				$("#upNode").val(globalGetItem(GlobalKey.upNOde) != undefined ? globalGetItem(GlobalKey.upNOde) : "");
+				$("#inBasin").val(globalGetItem(GlobalKey.inBasin) != undefined ? globalGetItem(GlobalKey.inBasin) : "");
+				$("#inBasinId").val(globalGetItem(GlobalKey.inBasinId) != undefined ? globalGetItem(GlobalKey.inBasinId) : "");
+				$("#streetName").val(globalGetItem(GlobalKey.streetName) != undefined ? globalGetItem(GlobalKey.streetName) : "");
+				$("#inStreetId").val(globalGetItem(GlobalKey.inStreetId) != undefined ? globalGetItem(GlobalKey.inStreetId) : "");
+				$("#commName").val(globalGetItem(GlobalKey.commName) != undefined ? globalGetItem(GlobalKey.commName) : "");
+				$("#inCommId").val(globalGetItem(GlobalKey.inCommId) != undefined ? globalGetItem(GlobalKey.inCommId) : "");
+				$("#hjPlace").val(address);
+			}
+
+			//混接程度
+			$("#dischargerType_Text").on("tap", function() {
+				var that = $(this);
+				// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+				getDictItems('MONITOR_MIXING_DISCHARGER_TYPE', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					//普通示例
+					// var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#dischargerType").val(items[0].value);
+							$("#dischargerType_Text").val(items[0].text);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+				// setTimeout(function(){
+				// 	that.attr("disabled",false);//解除禁用状态，防止点击一次之后不能再点击了
+				// },100)
+			})
+
+			//混接位置
+			$("#mixPosition_text").on("tap", function() {
+				var that = $(this);
+				// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+				getDictItems('MONITOR_MIXING_POSITION_TYPE', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					//普通示例
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#mixPosition").val(items[0].value);
+							$("#mixPosition_text").val(items[0].text);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+				// setTimeout(function(){
+				// 	that.attr("disabled",false);//解除禁用状态，防止点击一次之后不能再点击了
+				// },100)
+			})
+			//改造状态
+			$("#stat").on("tap", function() {
+				var that = $(this);
+				// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+				getDictItems('MONITOR_MIXING_REFORM_STATE', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					var start;
+					var end;
+					if (opt == 'add') {
+						start = 2;
+						end = 3;
+						for (var i = start; i < end; i++) {
+							var item = data.result[i];
+							resultJSON.push({
+								text: item.text,
+								value: item.value
+							})
+						}
+					} else {
+						// start = 3;
+						// end = 4;
+						for (var i = 0; i < data.result.length; i++) {
+							if (i == 1 || i == 3) { //未改造  改造待确认
+								var item = data.result[i];
+								resultJSON.push({
+									text: item.text,
+									value: item.value
+								})
+							}
+						}
+					}
+
+					//普通示例
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#reformState").val(items[0].value);
+							$("#stat").val(items[0].text);
+							if (items[0].value == 1 || items[0].value == 4) { //改造、改造待确认
+								$(".upload-file-box").show();
+							} else {
+								$(".upload-file-box").hide();
+							}
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+			})
+
+			// //混接水来源
+			// $("#mixSource").on("tap", function() {
+			// 	var that = $(this);
+			// 	// $(this).attr("disabled",true);//点击之后先禁用，防止重复点击出现两个弹框
+			// 	getDictItems('MONITOR_MIXING_SOURCE', function(data) {
+			// 		if (206 != parseInt(data.code)) {
+			// 			app.toast(data.message);
+			// 			return;
+			// 		}
+			// 		var resultJSON = [];
+			// 		for (var i = 0; i < data.result.length; i++) {
+			// 			var item = data.result[i];
+			// 			resultJSON.push({
+			// 				text: item.text,
+			// 				value: item.value
+			// 			})
+			// 		}
+			// 		if ($(".mui-poppicker").hasClass("mui-active")) {
+			// 			userPicker.hide();
+			// 			return false;
+			// 		} else {
+			// 			userPicker.setData(resultJSON);
+			// 			userPicker.show(function(items) {
+			// 				$("#mixSource").val(items[0].text);
+			// 				$("#mixSourceId").val(items[0].value);
+			// 			});
+			// 		}
+			// 	})
+			// })
+
+			//天气
+			$("#weather").on("tap", function() {
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				} else {
+					userPicker.setData(whetherJson);
+					userPicker.show(function(items) {
+						$("#weather").val(items[0].text);
+					});
+				}
+			})
+			//调查人员
+			$("#survey-box").on("tap", function() {
+				var extras = {
+					multiSelect: true
+				}
+				app.openPage("../commom/organ.html", {
+					titleNView: {
+						titleText: '选择调查人员',
+						autoBackButton: true
+					}
+				}, extras);
+				//移除
+				window.removeEventListener('returnSelect', surveyPersonBack, false);
+				// 赋值
+				window.addEventListener('returnSelect', surveyPersonBack, false);
+
+			})
+			//调查人员回调
+			var surveyPersonBack = function(data) {
+				var oldVal = $("#surveyPerson_text").val();
+				var oldVal2 = $("#surveyBy").val();
+				console.log(oldVal + "===" + oldVal2)
+				console.log(JSON.stringify(data.detail)); //data.detail[0].realname
+				var v1 = oldVal.split(",")
+				var rn = '';
+				var un = '';
+				var flag = false;
+				var a = []
+				for (let i = 0; i < data.detail.length; i++) {
+					console.log(v1.indexOf(data.detail[i].realname))
+					if (v1.indexOf(data.detail[i].realname) == -1) { //避免重复
+						rn += data.detail[i].realname + ",";
+						un += data.detail[i].username + ",";
+					} else {
+						flag = true;
+						a.push(data.detail[i].realname)
+					}
+				}
+				if (flag) {
+					app.toast("已过滤重复项【" + a.toString() + "】")
+				}
+				rn = rn.slice(0, rn.length - 1);
+				un = un.slice(0, un.length - 1);
+				rn = oldVal != "" ? oldVal + "," + rn : rn;
+				un = oldVal2 != "" ? oldVal2 + "," + un : un;
+				$("#surveyPerson_text").val(rn);
+				console.log(rn + "--" + un); //data.detail[0].realname
+				// $("#surveyBy").val(data.detail[0].perId);
+				$("#surveyBy").val(un);
+				var perArr = rn.split(",")
+				var perArr2 = un.split(",")
+				var text = "";
+				for (let i = 0; i < perArr.length; i++) {
+					text +=
+						`<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+											<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+											<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+							</div>`;
+				}
+				text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+				if (perArr.length >= 4) {
+					var h = $("#surveyItem").height() + (perArr.length / 4) * 22;
+					$("#surveyItem").css("height", h)
+				}
+				$("#survey-box").html(text)
+				//移除
+				window.removeEventListener('returnSelect', surveyPersonBack, false);
+			}
+			//删除调查人员
+			$("#survey-box").on('tap', ".mui-icon-closeempty", function(e) {
+				e.stopPropagation() //阻止时间冒泡
+				var realname = $(this).attr("rname");
+				var username = $(this).attr("uname")
+				console.log(realname + "-" + username)
+				var that = $(this)
+				mui.confirm("确定要删除【" + realname + "】?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						var oldValArr = $("#surveyPerson_text").val().split(",").filter(item => {
+							return item != realname
+						});
+						var oldVal2Arr = $("#surveyBy").val().split(",").filter(item => {
+							return item != username
+						});
+						that.parent().remove()
+						console.log(oldValArr.toString() + "----" + oldVal2Arr.toString())
+						$("#surveyPerson_text").val(oldValArr.toString())
+						$("#surveyBy").val(oldVal2Arr.toString())
+						if (oldValArr.length == 0) {
+							var text =
+								`<input readonly="readonly" type="text" class="mui-input-clear" value=""
+												 placeholder="请选择调查人员" class="inputCss" style="width:90%;">
+												<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+							$("#survey-box").html(text)
+						}
+						if (oldValArr.length < 4) {
+							$("#surveyItem").css("height", 90)
+						}
+					}
+				})
+			})
+
+			//检测人员
+			$("#detectionId_dictText").on("tap", function() {
+				var extras = {
+					multiSelect: false
+				}
+				app.openPage("../commom/organ.html", {
+					titleNView: {
+						titleText: '选择检测人员',
+						autoBackButton: true
+					}
+				}, extras);
+				//移除
+				window.removeEventListener('returnSelect', detectionBack, false);
+				// 赋值
+				window.addEventListener('returnSelect', detectionBack, false);
+			})
+			//检测人员回调
+			var detectionBack = function(data) {
+				$("#detectionId_dictText").val(data.detail[0].realname);
+				// $("#detectionId").val(data.detail[0].perId);
+				$("#detectionId").val(data.detail[0].username);
+				//移除
+				window.removeEventListener('returnSelect', detectionBack, false);
+			}
+			//取样人员
+			$("#operatorId_dictText").on("tap", function() {
+				var extras = {
+					multiSelect: false
+				}
+				app.openPage("../commom/organ.html", {
+					titleNView: {
+						titleText: '选择取样人员',
+						autoBackButton: true
+					}
+				}, extras);
+
+				//移除
+				window.removeEventListener('returnSelect', operatorBack, false);
+				// 赋值
+				window.addEventListener('returnSelect', operatorBack, false);
+			})
+			//取样人员回调
+			var operatorBack = function(data) {
+				$("#operatorId_dictText").val(data.detail[0].realname);
+				// $("#operatorId").val(data.detail[0].perId);
+				$("#operatorId").val(data.detail[0].username);
+				//移除
+				window.removeEventListener('returnSelect', operatorBack, false);
+			}
+
+			//控制checkbox显示，只有选择有水时才显示流水是否清澈和有无明显异味
+			$("input[name='isFlow']").change(function() {
+				var value = $(this).val();
+				console.log("value:" + value + "isChecked:" + $(this).is(':checked'));
+				if ((value == 0 || value == 1) && $(this).is(':checked')) {
+					$("#checkBoxShow1").show();
+					$("#checkBoxShow2").show();
+				} else {
+					$("#checkBoxShow1").hide();
+					$("#checkBoxShow2").hide();
+					$("input[name='flowType']:checked").attr("checked", false)
+					$("input[name='isSmell']:checked").attr("checked", false);
+				}
+			});
+
+			$("#reformState").change(function() {
+				var value = $(this).val();
+
+				if (value == 1 || value == 4) { //改造、改造待确认
+					$(".upload-file-box").show();
+				}
+			});
+
+			//文件上传
+			$("#file1_1,#file1_2,#file1_3").on("tap", function() {
+				if (isUpload) {
+					isUpload = false;
+					var that = $(this);
+					var count = that.parent().next().find(".mui-table-view-cell").length;
+					console.log("count=" + count);
+					if (count >= 3) { //处理上传的数量
+						// that.hide();
+						app.toast("最多可上传三个文件哦！")
+						return;
+					}
+					let fileSuffix = 'rar、zip、doc、docx、pdf、jpg';
+					plusSelectFile(fileSuffix,function(data, path) {
+						if (data.success) {
+							app.toast("文件上传成功");
+							var thisId = that.attr("id");
+							var name = "ideaFileId";
+							var eleId = "ideaFile";
+							if (thisId == "file1_1") {
+								name = "ideaFileId";
+								eleId = "ideaFile";
+							} else if (thisId == "file1_2") {
+								name = "drawingFileId";
+								eleId = "drawingFile";
+							} else {
+								name = "overFileId";
+								eleId = "overFile";
+							}
+							let pstr = path.substring(path.lastIndexOf("/") + 1, path.length);
+							// console.log(pstr.length);
+							// let arr=pstr.split(".");
+							// pstr=arr[0].length>=18?"..."+arr[0].substring(arr[0].length-18,arr[0].length)+"."+arr[1]:pstr;
+							var html = '<li class="mui-table-view-cell"' +
+								' id="' + data.result.uploadFile.id + '"' +
+								' data-token="' + data.result.fileTokens +
+								'" name="' + name + '"' + '">' +
+								'<span class="file-name">' + pstr + '</span>' +
+								'<span class="mui-badge file_close">X</span>' +
+								'</li>';
+							console.log(html);
+							$("#" + eleId).append(html);
+							// var count = that.parent().next().find(".mui-table-view-cell").length;
+							// console.log("count=" + count);
+							// if (count == 3) { //处理上传的数量
+							// 	that.hide();
+							// }
+						} else {
+							app.toast(data.message);
+						}
+					})
+				}
+				setTimeout(function() {
+					isUpload = true
+				}, 1000)
+			});
+
+			//拍照
+			$("#photo1,#photo2").on("tap", function() {
+				var that = $(this);
+				plusSelectImage(function(data, path) {
+					// console.log(JSON.stringify(data));
+					if (data.success) {
+						var thisId = that.attr("id");
+						var name = "";
+						if (thisId == "photo1") {
+							// photo1Paths.push(data.result.uploadFile.savePath);
+							name = "fileIdPaths";
+						} else {
+							// photo2Paths.push(data.result.uploadFile.savePath);
+							name = "fileMixIdPaths";
+						}
+
+						var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens + '" name="' +
+							name + '"' +
+							'" class="img_item" style="position:relative;">' +
+							'		<img class="img_src" src="' + path + '" style="" data-preview-src="" data-preview-group="' + name +
+							'"  />' +
+							'		<input type="hidden" name="' + name + '" value="' + data.result.uploadFile.savePath + '">' +
+							'		<span class="img_close mui-icon mui-icon-closeempty"  name="' + data.result.uploadFile.savePath +
+							'" style="width: 16px;height: 16px;position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+							'	</div>';
+						that.prev().append(html);
+						var count = that.prev().children(".img_item").length;
+						if (count >= 3) { //处理上传的数量
+						var h = 150+(Math.ceil((count+1)/3)-1)*100;
+						console.log(h)
+						that.parent().css("height",h+'px')
+							// that.hide();
+						}
+						
+					} else {
+						app.toast(data.message);
+					}
+				});
+
+			});
+			//图片预览
+			// mui(".img_item").on('tap', '.img_src', function() {
+			//     mui.previewImage();
+			// });
+			$(document).on('tap', '.img_src', function() {
+				mui.previewImage();
+			});
+			//删除图
+			$(document).on("tap", ".img_close", function() {
+				var that = $(this)
+				mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						var count = that.parent().parent().children(".img_item").length;
+						var photoObj = that.parent().parent().next();
+						// var thisId = photoObj.attr("id");
+						// var delPath = that.attr("name");
+						
+						//处理上传的数量
+						console.log("count",count)
+						var h = 150+(Math.ceil((count)/3)-1)*100;
+						console.log(h)
+						that.parent().parent().parent().css("height",h+'px')
+						that.parent().remove();
+						
+					}
+				})
+			});
+			//删除文件
+			$(document).on("tap", ".file_close", function() {
+				var that = $(this)
+				mui.confirm("移除该文件?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						var count = that.parent().parent().children(".mui-table-view-cell").length - 1;
+						var photoObj = that.parent().parent().parent().parent().prev();
+						console.log(photoObj.html());
+						// var thisId = photoObj.attr("id");
+						// var delPath = that.attr("name");
+						if (count < 3) {
+							photoObj.show();
+							photoObj.children().show();
+						}
+						that.parent().remove();
+					}
+				})
+			});
+		}
+		//提交
+		$("#submit").on("tap", function(event) {
+			if (validateRequiredFields()) {
+				//自定义校验
+				if (validateAttach()) {
+					//组装表单数据
+					saveMixForm();
+					var url = "";
+					var targetPage = "";
+					var extra = {};
+					var targetPageTitle = "";
+					console.log("====opt:" + opt);
+					// console.log("表单数据：" + $('#form').serialize()+"附件："+globalGetItem(GlobalKey.photoAttachment));
+					var mix = JSON.parse(localStorage.getItem("mix_discharger"));
+
+					console.log("提交参数信息:" + localStorage.getItem("mix_discharger"));
+					// var params = new FormData();
+					// for (var i in mix) {
+					// 	if (mix[i] != "" && mix[i] != null && mix[i] != undefined) { //字段为空则不提交
+					// 		params.append(i, mix[i]);
+					// 	}
+					// }
+					if (opt == "add") {
+						url = config.urls.baseUrl + config.actions.addMixing;
+						targetPage = "mixed_list.html";
+						targetPageTitle = "混接点列表";
+					} else {
+						url = config.urls.baseUrl + config.actions.editMixing;
+						targetPage = "mixDetail.html";
+						extra = {
+							idd: $("#expNo").val()
+						};
+						targetPageTitle = "混接点信息";
+					}
+					// console.log("url:" + url + ",toPage:" + targetPage + ",extra:" + JSON.stringify(extra) + ",targetPageTitle:" +
+					// 	targetPageTitle);
+					app.showLoader();
+				
+					console.log("mix-----------"+mix)
+					$.ajax(url, {
+						data: mix, //.serialize(),
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+							"X-Access-Token": app.sessionId()
+						},
+						timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+						// processData: false, // jQuery不要去处理发送的数据
+						// contentType: false, // jQuery不要去设置Content-Type请求头
+						success: function(data) {
+							console.log("接口返回：" + JSON.stringify(data))
+							app.hideLoader();
+							if (data.success) {
+								//修改地图点
+								mapData.editPoint(
+									globalGetItem(GlobalKey.Lat), globalGetItem(GlobalKey.Lng),
+									'DEVICE_POINT_INFO', {
+										DISCHARGER_TYPE: $("#dischargerType").val(),
+										HYBRID_TYPE: 1,
+										SMID: globalGetItem(GlobalKey.SMID)
+									},
+								);
+								// }
+								// clearGlobalItem();
+								app.toast(data.message);
+								var view = plus.webview.currentWebview().opener();
+								mui.fire(view, 'return');
+								plus.webview.currentWebview().close('none'); //关闭
+								// mui.back();
+								// app.openPage(targetPage, {
+								// 	titleNView: {
+								// 		titleText: targetPageTitle,
+								// 		// autoBackButton: true,
+								// 	},
+								// 	'popGesture': 'none'
+								// }, extra);
+								// popToTarget("mixed_map.html");
+							} else {
+								app.toast(data.message);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							dealingWithErrorRequest(errorThrown);
+							app.hideLoader();
+							app.toast("网络异常,请稍后再试");
+						}
+					});
+				}
+			}
+		});
+		//重新加载
+		var reloadAddress = function(data) {
+			window.location.reload();
+		}
+		//自定义校验
+		var validateAttach = function() {
+			console.log(flag)
+			//校验图片是否上传
+			// let count1 = $("#psh_img_list1").find(".img_item");
+			// let count2 = $("#psh_img_list2").find(".img_item");
+			// if (count1.length == 0) {
+			// 	app.toast("请上传混接点位置照片！");
+			// 	return false;
+			// }
+			// if (count2.length == 0) {
+			// 	app.toast("请上传混接点情况照片！");
+			// 	return false;
+			// }
+			let errArr = $('.err-show:visible');
+			console.log($(errArr[0]).html(), errArr.length);
+			if (errArr.length != 0) { //自定义校验
+				let info = $(errArr[0]).prev().prev().html();
+				app.toast("请正确填写【" + info + "】字段");
+				return false;
+			}
+			//校验文件，如果选择了改造1 改造待确认4 状态，则需要上传文件
+			// let stat = $("#reformState").val();
+			// let ideaFileCount = $("#ideaFile").find(".mui-table-view-cell");
+			// let drawingFileCount = $("#drawingFile").find(".mui-table-view-cell");
+			// let overFileCount = $("#overFile").find(".mui-table-view-cell");
+			// if ((stat == 1 || stat == 4)) {
+			// 	if (ideaFileCount.length == 0) {
+			// 		app.toast("请上传改造方案文件");
+			// 		return false;
+			// 	}
+			// 	if (drawingFileCount.length == 0) {
+			// 		app.toast("请上传改造图纸文件");
+			// 		return false;
+			// 	}
+			// 	if (overFileCount.length == 0) {
+			// 		app.toast("请上传竣工图纸文件");
+			// 		return false;
+			// 	}
+			// }
+			return true;
+		}
+
+		//附件
+		var attach = function() {
+			var imagefileTokens1 = '';
+			var imagefileTokens2 = '';
+			var imagefileTokens3 = '';
+			var imagefileTokens4 = '';
+			var imagefileTokens5 = '';
+			$("[data-token]").each(function(index) {
+				var imgID = $(this).attr("id");
+				var name = $(this).attr("name");
+				var token = $(this).attr("data-token");
+				if (name == "fileIdPaths") {
+					imagefileTokens1 = imagefileTokens1 + "," + token;
+				} else if (name == "fileMixIdPaths") {
+					imagefileTokens2 = imagefileTokens2 + "," + token;
+				} else if (name == "ideaFileId") {
+					imagefileTokens3 = imagefileTokens3 + "," + token;
+				} else if (name == "drawingFileId") {
+					imagefileTokens4 = imagefileTokens4 + "," + token;
+				} else if (name == "overFileId") {
+					imagefileTokens5 = imagefileTokens5 + "," + token;
+				}
+			});
+			console.log("imagefileTokens1:" + imagefileTokens1 + ",imagefileTokens2:" + imagefileTokens2 + ",imagefileTokens3:" +
+				imagefileTokens3 + ",imagefileTokens4:" + imagefileTokens4 + ",imagefileTokens5:" + imagefileTokens5);
+			var photoFile = globalGetItem(GlobalKey.photoAttachment);
+
+			// if (photoFile) {
+			// 	photoAttachment = JSON.parse(photoFile);
+			// }
+			photoAttachment.forEach((img, index, array) => {
+				console.log("====" + JSON.stringify(img));
+				if (img.fieldName == 'fileId') {
+					img.groupId = $("#fileId").val();
+					img.fileTokens = imagefileTokens1;
+				} else if (img.fieldName == 'fileMixId') {
+					img.groupId = $("#fileMixId").val();
+					img.fileTokens = imagefileTokens2;
+				} else if (img.fieldName == 'ideaFileId') {
+					img.groupId = $("#ideaFileId").val();
+					img.fileTokens = imagefileTokens3;
+				} else if (img.fieldName == 'drawingFileId') {
+					img.groupId = $("#drawingFileId").val();
+					img.fileTokens = imagefileTokens4;
+				} else if (img.fieldName == 'overFileId') {
+					img.groupId = $("#overFileId").val();
+					img.fileTokens = imagefileTokens5;
+				}
+			})
+			$("#strAttachment").val(JSON.stringify(photoAttachment));
+			console.log($("#fileId").val() + "---" + $("#fileMixId").val());
+			globalSetItem(GlobalKey.photoAttachment, JSON.stringify(photoAttachment));
+		}
+
+		//组装混接点表单
+		function saveMixForm() {
+			//附件
+			attach();
+
+			var mix_dischargerStr = localStorage.getItem("mix_discharger");
+			if (!mix_dischargerStr) {
+				mix_dischargerStr = JSON.stringify(mix_dischargerStr);
+			}
+			// mix_discharger = JSON.parse(mix_dischargerStr);
+			// if (opt == "edit") {
+			// 	mix_discharger.guid = globalGetItem(GlobalKey.guid) != undefined && globalGetItem(GlobalKey.guid) != "" ?
+			// 		globalGetItem(GlobalKey.guid) : "";
+			// }
+			mix_discharger.mixCode = $("#mixCode").val();;
+			mix_discharger.address = $("#hjPlace").val(); //混接地点
+			mix_discharger.cod = $("#COD").val();
+			mix_discharger.commName = $("#commName").val(); //所属小区 name
+			mix_discharger.conductivity = $("#conductivity").val(); //电导率
+			// mix_discharger.corpCode=$("#weather").val();//所属租户
+			mix_discharger.createBy = $("#inputByName").val(); //创建人
+			// mix_discharger.createTime = getNowDate(); //创建时间
+			mix_discharger.delFlag = 0; //删除标志
+			// mix_discharger.drawingFileId:'',//改造图纸文件
+			mix_discharger.expNo = $("#expNo").val(); //混接点检查井编号
+			mix_discharger.fileId = photo1GroupId; //位置照片
+			mix_discharger.fileIdPaths = photo1Paths; //位置照片路径
+			mix_discharger.fileMixId = photo2GroupId; //混接情况照片
+			mix_discharger.fileMixIdPaths = photo2Paths; //混接情况照片路径
+			mix_discharger.flowRe = $("#flowRe").val(); //水量
+			mix_discharger.guid = $("#guid").val(); //主键
+
+			mix_discharger.inBasin = $("#inBasin").val(); //所属流域
+			mix_discharger.inCommId = $("#inCommId").val(); //所属小区
+			mix_discharger.inStreetId = $("#inStreetId").val(); //所属街道
+			mix_discharger.inputByDepart = $("#inputByDepart").val(); //填写人depart
+			mix_discharger.inputByUserName = $("#inputById").val(); //填写人
+			mix_discharger.inputByRealName = $("#inputByName").val(); //填写人name
+			mix_discharger.inputByPhone = $("#inputByPhone").val(); //填写人phone
+			mix_discharger.createTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
+			// if ($("input[name='isFlow']:checked").val() == undefined) {
+			// 	mix_discharger.isFlow = "";
+			// } else mix_discharger.isFlow = $("input[name='isFlow']:checked").val(); //有无水流连续流出
+
+			// if (mix_discharger.isFlow == 0 || mix_discharger.isFlow == 1) {
+			// 	mix_discharger.flowType = $("input[name='flowType']:checked").val(); //水流是否清澈
+			// 	mix_discharger.isSmell = $("input[name='isSmell']:checked").val(); //有无明显异味
+			// } else {
+			// 	mix_discharger.flowType = ""; //水流是否清澈
+			// 	mix_discharger.isSmell = ""; //有无明显异味
+			// }
+
+			mix_discharger.mixDepth = $("#mixDepth").val(); //混接管埋深
+			mix_discharger.pipes = $("#pipes").val(); //混接管管材
+			mix_discharger.mixDiameter = $("#mixDiameter").val(); //混接管管径
+			mix_discharger.dischargerType = $("#dischargerType").val(); //混接程度
+			mix_discharger.mixPosition = $("#mixPosition").val(); //混接点位置字典
+			mix_discharger.mixSource = $("#mixSource").val(); //混接水来源
+			mix_discharger.mixType = $("#mixType").val(); //混接类型编号
+			mix_discharger.nh3N = $("#nh3N").val(); //NH3-N
+
+			mix_discharger.reformState = $("#reformState").val(); //改造状态: 1改造 2未改造 3新增待确认 4改造待确认 5删除待确认 6已删除
+			if ($("#reformState").val() == 1 || $("#reformState").val() == 4) {
+				mix_discharger.ideaFileId = $("#ideaFileId").val();
+				mix_discharger.drawingFileId = $("#drawingFileId").val();
+				mix_discharger.overFileId = $("#overFileId").val();
+			}
+			mix_discharger.problemDescription = $("#problemDescription").val(); //问题描述字段
+			mix_discharger.remark = $("#remark1").val(); //混接点备注
+			mix_discharger.remarkMonitor = $("#remark2").val(); //混接点监测备注
+			mix_discharger.samplingByUserName = $("#operatorId").val(); //取样人员
+			mix_discharger.samplingByRealName = $("#operatorId_dictText").val(); //取样人员name
+			mix_discharger.samplingDate = $("#samplingDate").val(); //采样日期
+			mix_discharger.strAttachment = $("#strAttachment").val(); //strAttachment
+			mix_discharger.streetName = $("#streetName").val(); //所属街道 name
+			mix_discharger.surveyByUserName = $("#surveyBy").val(); //调查人员
+			mix_discharger.surveyByRealName = $("#surveyPerson_text").val(); //调查人员name
+
+			var surveyTime = new Date().Format(" hh:mm:ss");
+			mix_discharger.surveyTime = $("#surveyDate").val().length <= 10 ? $("#surveyDate").val() + surveyTime : $(
+				"#surveyDate").val(); //调查日期
+			mix_discharger.testByUserName = $("#detectionId").val(); //检测人员
+			mix_discharger.testByRealName = $("#detectionId_dictText").val(); //检测人员name
+			mix_discharger.testDate = $("#testDate").val(); //检测日期
+			mix_discharger.testTime = $("#testTime").val(); //检测时间
+			mix_discharger.upNode = $("#upNode").val(); //混接点上游井编号
+			mix_discharger.updateBy = $("#inputByName").val(); //更新人
+			mix_discharger.updateTime = new Date().Format("yyyy-MM-dd hh:mm:ss"); //更新时间
+			console.log(typeof mix_discharger.updateTime)
+			mix_discharger.weather = $("#weather").val(); //天气
+
+			var mixDiameter = $("#mixDiameter").val();
+			var flowRe = $("#flowRe").val();
+			var cod = $("#COD").val();
+			localStorage.setItem("mix_discharger", JSON.stringify(mix_discharger));
+
+			// console.log(JSON.stringify(mix_discharger));
+			return true;
+		}
+
+		// 对Date的扩展，将 Date 转化为指定格式的String
+		// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+		// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+		// 例子：
+		// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+		// (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+		// 格式化限制数字文本框输入，只能数字或者两位小数
+		function format_input_num(num, obj) {
+			var reg = /^(\d{0,8})(\.(\d{0,2}))?$/g;
+			if (obj.value != null && !reg.test(obj.value)) {
+				$("#error" + num).show();
+				// obj.value = '';
+				flag = false;
+			} else {
+				$("#error" + num).hide();
+				flag = true;
+			}
+			// // 清除"数字"和"."以外的字符
+			// obj.value = obj.value.replace(/[^\d.]/g, "");
+			// // 验证第一个字符是数字
+			// obj.value = obj.value.replace(/^\./g, "");
+			// // 只保留第一个, 清除多余的
+			// obj.value = obj.value.replace(/\.{2,}/g, ".");
+			// obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+			// // 只能输入两个小数
+			// obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+		}
+		// 格式化限制数字文本框输入，只能数字或者两位小数
+		function format_input_num2(num, obj) {
+			var reg = /^(\d{0,4})(\.(\d{0,2}))?$/g;
+			if (obj.value != null && !reg.test(obj.value)) {
+				$("#error" + num).show();
+				// obj.value = '';
+				flag = false;
+			} else {
+				$("#error" + num).hide();
+				flag = true;
+			}
+
+		}
+
+		// 格式化限制数字文本框输入，只能整数
+		function format_input_int(num, obj) {
+			var reg = /^\+?[1-9]\d{0,3}$/;
+			if (!reg.test(obj.value)) {
+				$("#error" + num).show();
+				// obj.value = '';
+				obj.focus();
+				flag = false;
+			} else {
+				$("#error" + num).hide();
+				flag = true;
+			}
+		}
+		//校验不通过焦点重置
+		function isErrFun(obj) {
+			if (!flag) {
+				obj.focus();
+			}
+		}
+
+		function format_input_remark(num, length, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length == length) {
+				$("#error" + num).show();
+				// obj.value = '';
+				// flag = false;
+				setTimeout(function() {
+					$("#error" + num).hide();
+				}, 1000);
+			} else {
+				$("#error" + num).hide();
+				// flag = true;
+			}
+		}
+
+		function format_input_weather(num, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length == 10) {
+				$("#error" + num).show();
+				// obj.value = '';
+				// flag = false;
+				setTimeout(function() {
+					$("#error" + num).hide();
+				}, 1000);
+			} else {
+				$("#error" + num).hide();
+				// flag = true;
+			}
+		}
+	</script>
+</html>

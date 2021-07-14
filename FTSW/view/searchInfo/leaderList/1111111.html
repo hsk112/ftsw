@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<!-- 重构后的河湖长名录页面 -->
+
+	<head>
+		<meta charset="utf-8">
+		<title>河湖长名录</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+	<link href="../../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/../common.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/mui.poppicker.css" />
+	<style type="text/css">
+	
+	
+	
+
+	</style>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 内容区域 -->
+						
+						
+						
+
+
+						<!-- 内容区域结束 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+	</body>
+	
+	<script src="../../../js/vue.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/echarts.min.js"></script>
+	<script src="../../../js/kpi/index.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<!-- 接口js -->
+	<!-- <script src="../../js/kpi/maintain.js"></script> -->
+
+
+	<script type="text/javascript">
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		
+		
+		
+	</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+<div id="slider" class="mui-slider">
+								<!-- <div id="sliderSegmentedControl"
+												class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+												style="color: #888888;">
+												<a id="item1" class="mui-control-item mui-active" href="#selectItem1"
+													style="text-align: center;">
+													河长名录
+												</a>
+												<a id="item2" class="mui-control-item " href="#selectItem2" style="text-align: center;">
+													湖长名录
+												</a>
+											</div> -->
+								<div id="segmentedControl"
+									class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+									<a class="mui-control-item mui-active onclick1" href="#selectItem1">
+										河长名录
+									</a>
+									<a class="mui-control-item" href="#selectItem2">
+										湖长名录
+									</a>
+								</div>
+								<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #337BFC;height: 2px;background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%,
+													 rgba(0, 0, 0, 0) 39.9%, #337BFC 40%, #337BFC 50%, #337BFC 59.9%, 
+													rgba(0, 0, 0, 0) 60%,  rgba(0, 0, 0, 0) 100%);"></div>
+								<!-- 河长名录和湖长名录的内容区 -->
+								<div class="mui-slider-group">
+									<div id="selectItem1" style="padding-top: 10px;"
+										class="mui-slider-item mui-control-content mui-active">
+										<!--									class="mui-scroll-wrapper"-->
+										<div id="scroll1" style="background: #FFFFFF;padding-bottom:50px">
+											<!-- 河长名录内容区 -->
+											<div class="topsl">
+												<div class="topsl-1"><img src="../../../img/clfhhgl/hh1.png"
+														style="width: 22px;height: 22px;"><span
+														style="font-size: 16px;color: #262626; margin-left: 6px;">河流数量：</span><span
+														style="font-size: 14px; font-weight: bold;color: #0493F3;"
+														class="hlslz">2</span>
+												</div>
+												<img class="topsl-2" src="../../../img/clfhhgl/hh2.png"
+													style="width: 22px;height: 22px;">
+											</div>
+											<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+											<!-- 动态内容jkfor循环出来的人 -->
+											<!-- 		<div class="toubu">
+															<div class="toubu-1"></div>
+															<div class="toubu-2">皇岗河</div>
+														</div>
+														<div class="hljb">
+															<div class="hljb-1">河流级别：<span style="color: #262626;">干流</span></div>
+															<div class="hljb-2">上级河流：<span style="color: #262626;">福田河</span></div>
+														</div>
+														<div class="sghz">
+															<div>区级河长：<span style="color: #262626;">1</span></div>
+															<div>社区级河长：<span style="color: #262626;">1</span></div>
+															<div>街道级河长：<span style="color: #262626;">1</span></div>
+														</div>
+														
+														<div class="fankuan">
+															<div class="zfankuan">
+																<div class="zfankuan-1"><span style="margin-right: 2px;">张三</span><img
+																		src="../../../img/clfhhgl/hh3.png"
+																		style="width: 18px;height: 20px;" alt=""></div>
+																<div class="zfankuan-2">...</div>
+															</div>
+															<div class="fankuan-hzjb">河长级别：<span style="color: #262626;">区级</span></div>
+															<div class="fankuan-hzjb">相应职务：<span style="color: #262626;">区级</span></div>
+															<div class="fankuan-hzjb">联系方式：<span style="color: #262626;">区级</span></div>
+														</div> -->
+											<div id="jthlqmc"></div>
+											<!-- <div id="moreNotification" @click="djxltp()" style="padding: 5px">
+															<img id="moreNotificationImg" src="../../../img/home_more_icon@2x.png"
+																style="width: 9px">
+														</div>
+				-->
+										</div>
+									</div>
+									<div id="selectItem2" class="mui-slider-item mui-control-content">
+										<!--									class="mui-scroll-wrapper" -->
+										<div id="scroll2" style="background: #FFFFFF;padding-bottom:50px">
+											<!-- 湖长名录内容区 -->
+
+										</div>
+									</div>
+								</div>
+							</div>

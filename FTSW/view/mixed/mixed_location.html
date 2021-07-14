@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接地点选择</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-scroll {
+				/* 	background: url(../img/temp_dt.png) no-repeat center;
+			        background-size: 100% 100%; */
+				height: 100%;
+				width: 100%;
+			}
+
+			.search-bar {
+				background: none;
+				height: 80px;
+				line-height: 80px;
+			}
+
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+				top: 12px;
+				width: 40px;
+				height: 40px;
+			}
+
+			.search-item {
+				background: #FFFFFF;
+				height: 40px;
+				border-radius: 0;
+
+			}
+
+			.search-input {
+				height: 40px;
+				line-height: 40px;
+			}
+
+			.search-icon img {
+				top: 30%;
+			}
+
+			.add_btn{
+				position: fixed;
+				width: 70px;
+				bottom: 30%;
+				right: 0;
+				z-index: 100;
+				text-align: right;
+			}
+
+			.add_btn img{
+				width: 70px;
+			}
+
+			.bottom-item {
+				padding: 24.5px 20.5px 20.5px 20.5px;
+				background: #FFFFFF;
+				position: fixed;
+				height: 320px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+				text-align: left;
+			}
+
+			.bottom-item-title {
+				font-size: 18px;
+				font-weight: bold;
+				color: #161616;
+			}
+
+			.bottom-item-info{
+				font-size: 14px;
+				font-weight: 500;
+				color: #888888;
+				line-height:21px;
+				/*height:21px;*/
+				padding: 4px 0px;
+			}
+
+			.bottom-item-btn {
+				display: flex;
+				background-color:#F4F4F4 ;
+				width:100%;
+				margin-top: 10px;
+
+				bottom: 0;
+				position: absolute;
+				left: 0;
+			}
+
+			.bottom-item-btn .item{
+				flex: 1;
+				margin: 16px 14px;
+				width: 50%;
+				text-align: center;
+			}
+
+			.bottom-item-btn .item div{
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+			.view-title{
+				font-size:14px;
+				color:#444444;
+				text-align: left;
+				/*padding:20px 0px 20px 0;*/
+
+			}
+			.search-tip {
+				float: right;
+				color: #337BFC;
+				font-size: 14px;
+				font-weight: 500;
+			}
+			.search-tip img{
+				width: 14px;
+				height:12px;
+			}
+			.spanCss{
+				font-size: 14px;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #444444;
+			}
+
+			th
+			{
+				background-color:#F0F0F0;
+				color:#888888;
+				font-family: PingFang-SC-Regular;
+				font-size: 12px;
+				border: 1px solid;
+				padding: 5px;
+			}
+
+
+			.td input{
+				margin-left:10px;
+			}
+
+			.gun{
+				/*max-height: 8vh;*/
+				height: 16vh;
+				/*overflow-y: auto;*/
+				overflow: scroll;
+				-webkit-overflow-scrolling: touch;
+			}
+
+			.mui_rank {
+				position: absolute;
+				top: 0;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				pointer-events: none;
+				/*background: url(../../img/commom/tingwei.png) no-repeat center ;*/
+			}
+			.location_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 40%;
+				/*top:250px;*/
+				left: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+			.location_btn img{
+				width: 30px;
+				margin-top: 10px;
+			}
+			.triangle-down {
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				/*border-top: 10px solid #f02e2e;*/
+				margin-bottom: 10px;
+			}
+			/*放大缩小btn*/
+			.mapboxgl-ctrl.mapboxgl-ctrl-group{
+				bottom: 55%;
+				left: 10px;
+				position: fixed;
+			}
+			html,body{-webkit-overflow-scrolling: touch;}
+			.no{
+				width: 39px;
+			}
+			.ra{
+				width: 65px;
+			}
+
+
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">门牌查看</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="mui-scroll">
+							<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;z-index: -1;">
+								<div id="searchBar" class="mui-input-row" style="position: fixed;z-index: 100;width: 90%;margin: 20px;height: 40px; ">
+									<img src="../../img/commom/search1@2x.png" alt="" id="search_icon" style="width: 16px;position: fixed;top: 31px;left: 31px;">
+									<input style="margin: 0;border: none;padding-left: 40px;padding-right:70px;border-radius: 20px;" class="mui-input-clear" type="text"
+										   placeholder="请输入地址" name="" id="searchInput" value="" />
+								</div>
+								<div class="mui_rank">
+									<div class="triangle-down">
+									</div>
+								</div>
+								<!--定位-->
+								<div class="location_btn" id="location_btn">
+									<img src="../../img/commom/location.png" />
+								</div>
+							</div>
+							<div id="objContent" class="bottom-item" style="display: none;">
+								<!--  -->
+
+								<div class="bottom-item-title">
+									地点位置
+									<div id="reChoose" class="view-title search-tip">
+										<img src="../../img/local.png" />
+										<span>重新选点</span>
+									</div>
+								</div>
+								<div id="address" class="bottom-item-info"></div>
+								<!--<div style="background: #F4F4F4;height: 5px;"></div>-->
+								<div style="display: flex;">
+									<div class="bottom-item-info" style="flex: 1;">
+										检查井编号：<span class="spanCss" id="expNo">未选择</span><a id="del1" style="float: right;">删除</a>
+									</div>
+								</div>
+								<div style="display: flex;">
+									<div class="bottom-item-info" style="flex: 1;">
+										上游井编号：<span class="spanCss objType" id="upNode">未选择</span><a id="del2" style="float: right;">删除</a>
+									</div>
+								</div>
+								<div style="display: flex;">
+									<div class="bottom-item-info " style="flex: 1;">
+										所属流域：<span class="spanCss" id="basin">无</span>
+									</div>
+								</div>
+								<div style="display: flex;">
+									<div class="bottom-item-info " style="flex: 1;">
+										所属小区：<span class="spanCss" id="commName">无</span>
+									</div>
+								</div>
+								<div style="display: flex;">
+									<div class="bottom-item-info " style="flex: 1;">
+										所属街道：<span class="spanCss" id="street">无</span>
+									</div>
+								</div>
+
+								<div class="bottom-item-btn" style="z-index: 200;">
+									<div class="item" id="close">
+										<div style="color: #337BFC;">关闭</div>
+									</div>
+									<div class="item ">
+										<div id="confirm" style="background: #337BFC;color: #fff;">确定</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--页面主内容区结束-->
+			</div>
+
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/position.js"></script>
+	<script src="../../js/mixed.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.ready(function() {});
+		mui.init({swipeBack:false});
+		var count=0;//点击两次，需要记录点击次数
+		//重新选点
+		$("#reChoose").on("tap",function(){
+		    // $("#type").html("");
+			setTimeout(function(){
+			globalDelItem(GlobalKey.SMID);//删除全局SMID
+			globalDelItem(GlobalKey.Lat);
+			globalDelItem(GlobalKey.Lng);
+			globalDelItem(GlobalKey.inBasin);
+			globalDelItem(GlobalKey.inBasinId);
+			globalDelItem(GlobalKey.commName);
+			globalDelItem(GlobalKey.inCommId);
+			globalDelItem(GlobalKey.streetName);
+			globalDelItem(GlobalKey.inStreetId);
+			globalDelItem(GlobalKey.guid);
+			globalDelItem(GlobalKey.upNOde);
+			count=0;
+		    $("#expNo").html("");
+			$("#address").html("");
+			$("#basin").html("");
+			$("#commName").html("");
+			$("#street").html("");
+		    $("#upNode").html("");
+			$("#objContent").hide();
+			},100)
+
+			// getCurrentPosition();
+		})
+
+		//删除检查井
+		$("#del1").on("tap",function(){
+			globalDelItem(GlobalKey.SMID);//删除全局SMID
+			globalDelItem(GlobalKey.Lat);
+			globalDelItem(GlobalKey.Lng);
+			globalDelItem(GlobalKey.inBasin);
+			globalDelItem(GlobalKey.inBasinId);
+			globalDelItem(GlobalKey.commName);
+			globalDelItem(GlobalKey.inCommId);
+			globalDelItem(GlobalKey.streetName);
+			globalDelItem(GlobalKey.inStreetId);
+			globalDelItem(GlobalKey.guid);
+			$("#expNo").html("");
+			$("#address").html("");
+			$("#basin").html("");
+			$("#commName").html("");
+			$("#street").html("");
+		})
+		//删除上游井
+		$("#del2").on("tap",function(){
+			globalDelItem(GlobalKey.upNOde);
+			$("#upNode").html("");
+		})
+
+		$("#close").on("tap",function(){
+			setTimeout(function(){$("#objContent").hide();},200)
+
+			// getCurrentPosition();
+		})
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options:{minZoom:10},
+			style: 'color'
+		});
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+		const layerSelections = window['mobile-lib'].layerSelections;
+
+		mobileContainer.on('load', () => {
+			mobileContainer.enableCenterAddress(true);
+			// mobileContainer.setQuery([{NAME: 'DEVICE_POINT_INFO',HYBRID_TYPE:1}]);//加载混接点
+			mobileContainer.setQuery({
+				NAME: 'DEVICE_POINT_INFO',
+				POINT_CODE: '040501'
+			});
+			mobileContainer.showAnnotation(true);
+			mobileContainer.setSelection([layerSelections.污水点类,layerSelections.雨水点类]);
+
+			// var pointStr = globalGetItem(GlobalKey.point);
+			// var point = JSON.parse(pointStr);
+			// mobileContainer.flyTo([point.lng, point.lat], {
+			// 	zoom: 18
+			// });
+			getCurrentPosition();
+			// mobileContainer.markAddress(point.lng, point.lat);
+			// setTimeout(function(){
+			// 	$(".bottom-item").fadeIn();
+			// },1000);
+		});
+
+
+        //搜索框
+        $("#searchInput").on('input', debounce((e) => {
+            var tx =  $("#searchInput").val()
+			console.log(tx)
+        	getPos(tx);
+
+        }, 600))
+
+        async function getPos(layer){
+            await mobileContainer.getSearchResults(
+                layer
+            ).then(res => {
+                console.log("res:"+JSON.stringify(res))
+				if(res.features[0] != null){
+					var po = res.features[0];
+					var lon = po.geometry.coordinates[0];
+					var lat = po.geometry.coordinates[1];
+					mobileContainer.flyTo([lon, lat], {
+						zoom: 12
+					});//地图移动
+					mobileContainer.markAddress(lon, lat);//蓝点移动
+				}		
+			})
+		}
+
+		//重新定位
+		$("#location_btn").on("tap", function() {
+			globalDelItem(GlobalKey.SMID);//删除全局SMID
+			globalDelItem(GlobalKey.Lat);
+			globalDelItem(GlobalKey.Lng);
+			globalDelItem(GlobalKey.inBasin);
+			globalDelItem(GlobalKey.inBasinId);
+			globalDelItem(GlobalKey.commName);
+			globalDelItem(GlobalKey.inCommId);
+			globalDelItem(GlobalKey.streetName);
+			globalDelItem(GlobalKey.inStreetId);
+			globalDelItem(GlobalKey.guid);
+			globalDelItem(GlobalKey.upNOde);
+			getCurrentPosition();
+			count=0;
+		});
+		var getCurrentPosition = function() {
+			if (mui.os.plus) {
+				app.showLoader();
+			}
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+				app.hideLoader();
+				//坐标修正
+				var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+
+				var Lon = point[0]; //获取经度
+				var Lat = point[1]; //获取纬度
+				// Lon = 114.05326971436261;
+				// Lat = 22.51186935424799;
+				setTimeout(function() {
+					// $(".bottom-item").fadeIn();
+				}, 3000);
+
+				mobileContainer.flyTo([Lon, Lat], {
+					zoom: 12
+				});
+
+				mobileContainer.markAddress(Lon, Lat);
+			}, function(e) {
+				app.hideLoader();
+				console.log("error:" + e.message);
+				mui.toast("位置信息获取失败，将无法获取附近混接点");
+			})
+		}
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+			// clearGlobalItem();
+			if (data) {
+				lastlat = data.lngLat.lat;
+				lastlng = data.lngLat.lng;
+				mobileContainer.enableCenterAddress(true);
+				mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+				mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+			}else{
+				app.toast('当前选择不在可选范围内，请重新选择');
+			}
+			// globalSetItem(GlobalKey.address,data.address);//保存选中的地址
+			// globalSetItem(GlobalKey.isSelectPsh,"false");
+
+			// globalSetItem(GlobalKey.point,JSON.stringify(data.lngLat));
+			// globalDelItem(GlobalKey.psh);
+
+			// $(".bottom-item").fadeIn();
+
+		});
+
+		//显示地图信息
+		mobileContainer.on('showAddress', data => {
+			$("#address").html(data.addressComponent.address)
+			mobileContainer.enableCenterAddress(false);
+			globalSetItem(GlobalKey.address, data.addressComponent.address); //保存选中的地址
+		});
+
+		mui.plusReady(function() {
+			setTimeout(function(){
+				app.toast("请在地图上选点！");
+			},2000);
+
+		})
+		var lastGuid="";//用于保存上一次选择的设施，解决两次选了同一个点第二次为undefined问题
+		var lastlat="";
+		var lastlng="";
+		//点击混接点
+		mobileContainer.on('showInfo', data => {
+			lastlat = data.feature.geometry.coordinates[0]!=undefined? data.feature.geometry.coordinates[0]:lastlat;
+			lastlng = data.feature.geometry.coordinates[1]!=undefined? data.feature.geometry.coordinates[1]:lastlng;
+			lastGuid=data.feature.properties.GUID!=undefined?data.feature.properties.GUID:lastGuid;
+			if($("#upNode").html()!="未选择"&&$("#upNode").html()!=""&&$("#expNo").html()!="未选择"&&$("#expNo").html()!=""){
+				$("#objContent").show();
+				app.toast("已完成选择");
+				return;
+			}
+			$("#objContent").show();
+			var lat = data.feature.geometry.coordinates[0];
+			var lng = data.feature.geometry.coordinates[1];
+			mobileContainer.flyTo(data.feature.geometry.coordinates);
+			mobileContainer.markAddress(lat,lng);
+			// console.log("point:" + lng + "," + lat);
+			var flag1=$("#expNo").html()!="未选择"&&$("#expNo").html()!="";
+			var flag2=$("#upNode").html()!="未选择"&&$("#upNode").html()!="";
+			let guid2=data.feature.properties.GUID!=undefined?data.feature.properties.GUID:lastGuid;//(flag1?$("#expNo").html():(flag2?$("upNode").html():lastGuid))
+			if(guid2==""||guid2==undefined){
+				app.toast("无效设施，请重新选择！")
+				return;
+			}
+			if(!flag1){
+				// console.log("****************"+guid2);
+				$("#expNo").html(guid2);
+				globalSetItem(GlobalKey.guid,guid2);//保存全局检查井guid
+				globalSetItem(GlobalKey.SMID,data.feature.properties.SMID);
+				globalSetItem(GlobalKey.Lat,lat);
+				globalSetItem(GlobalKey.Lng,lng);
+				// console.error("显示信息："+JSON.stringify(data));
+				mobileContainer.getAddress(lat, lng).then(res => {
+					// console.log("*****" + JSON.stringify(res));
+					let addr=res.formatted_address;
+					$("#address").html(addr.length>=50?addr.substring(0,50)+"...":addr);
+					globalSetItem(GlobalKey.address, res.formatted_address); //保存选中的地址
+				});
+				mapData.getFeaturesByBuffer(
+					[{
+							NAME: 'DEVICE_ATT_BAS_BASE',
+							BAS_GRAD: 2
+						},
+						{
+							NAME: 'DEVICE_RE_AREA'
+						},
+						{
+							NAME: 'DEVICE_AD_BASE',
+							AD_GRAD: 4
+						},
+					],
+					[lat, lng], 1e-4
+				).then(res => {
+					console.log(JSON.stringify(res.features))
+					for (var i = 0; i < res.features.length; i++) {
+						var item = res.features[i].properties;
+						// console.log("---" + JSON.stringify(item));
+						if (item.key == "DEVICE_ATT_BAS_BASE") { //流域
+							//所属流域
+							$("#basin").html(item.BAS_NAME);
+							globalSetItem(GlobalKey.inBasin, item.BAS_NAME);
+							globalSetItem(GlobalKey.inBasinId, item.GUID);
+						} else if (item.key == "DEVICE_RE_AREA") { //小区
+							//所属小区
+							$("#commName").html(item.RE_NAME);
+							globalSetItem(GlobalKey.commName, item.RE_NAME);
+							globalSetItem(GlobalKey.inCommId, item.GUID);
+						} else if (item.key == "DEVICE_AD_BASE") { //街道
+							//所属街道
+							$("#street").html(item.AD_NAME);
+							globalSetItem(GlobalKey.streetName, item.AD_NAME);
+							globalSetItem(GlobalKey.inStreetId, item.GUID);
+						}
+					}
+				});
+				
+				$("#commName").val(globalGetItem(GlobalKey.commName) != undefined ? globalGetItem(GlobalKey.commName) : "无");
+				
+				if(!flag2){
+					app.toast("还可选择上游井");
+				}
+			}else if(!flag2){
+				$("#upNode").html(guid2);
+				globalSetItem(GlobalKey.upNOde, guid2);
+			}
+		});
+		//只要是点击地图，就直接初始化混接点信息
+		var initMix = function() {
+
+		}
+		//确定
+		$("#confirm").on("tap", function() {
+			var expNo = $("#expNo").text();
+			var upNode = $("#upNode").text();
+			if((expNo=="未选择"||expNo == "")&&(upNode=="未选择"||upNode == "")){
+				app.toast("您还没有选择任何设施，请先选择！")
+				return;
+			}else if(expNo=="未选择"||expNo == ""|| expNo == null||expNo == undefined){
+			    app.toast("必须选择检查井！")
+			    return;
+			}
+			// var view = plus.webview.getWebviewById("addMix.html");//原来页面用到
+			var view = plus.webview.getWebviewById("../../mixed/addMix2.html");//0320
+			mui.fire(view, 'reloadAddress');
+			console.log(JSON.stringify(view));
+			// popToTarget("addMix.html");//原来页面用到
+			popToTarget("../../mixed/addMix2.html");
+			// plus.webview.currentWebview().close('none');
+		});
+	</script>
+
+</html>

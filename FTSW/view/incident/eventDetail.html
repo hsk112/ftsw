@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看安全整改表单</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/mui.picker.min.css" rel="stylesheet"/>
+    <link href="../../css/mui.poppicker.css" rel="stylesheet"/>
+    <link href="../../css/common.css" rel="stylesheet"/>
+    <link href="../../css/ps.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css"/>
+
+    <style>
+        .mui-icon-arrowright {
+            color: #62666E;
+            font-weight: 100 !important;
+            width: 16px;
+            padding-top: 7px;
+        }
+
+        .content {
+            overflow: hidden;
+            height: calc(100vh - 100px);
+        }
+
+        .mui-table-view:before {
+            height: 0;
+            background-color: #FFFFFF;
+        }
+
+        .mui-table-view:after {
+            height: 0;
+            background-color: #FFFFFF;
+        }
+
+        .info-bar-content-item {
+            font-size: 14px;
+            padding: 10px 0;
+            margin: 0 20px;
+        }
+
+        .info-bar-content-item .item-title {
+            text-align: left;
+            color: #888888;
+            padding: 0;
+            margin: auto 0;
+        }
+
+        .info-bar-content-item .item-input {
+            text-align: right;
+            color: #161515;
+            padding-right: 0;
+        }
+
+        .mui-checkbox.mui-left label {
+            font-size: 14px;
+        }
+
+        .page-bottom {
+            display: flex;
+            padding: 0 20px;
+            height: 100px;
+            background-color: white;
+
+        }
+
+        .page-bottom button {
+            flex: 1;
+            margin-top: 30px;
+            border-radius: 5px;
+            border-color: #0493F3;
+            font-size: 16px;
+            height: 40px;
+            border-width: thin;
+        }
+
+        .btn-temp-save {
+            color: #0493F3;
+            background-color: #FFFFFF;
+            margin-right: 15px;
+        }
+
+        .btn-agree {
+            color: #FFFFFF;
+            background-color: #0493F3;
+            border: none;
+        }
+
+        .img-right-arrow {
+            width: 7px;
+            height: 12px;
+            margin-left: 5px;
+        }
+
+        .bor {
+            border: 1px dashed #E0E0E0;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+            padding: 11px 0;
+            width: 35px;
+            text-align: right;
+        }
+
+        .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+            color: #0493F3;
+            font-size: 22px;
+        }
+
+        /*		单选框*/
+         
+        .radio-item {
+            width: 50%;
+        }
+
+        .radio_inline label {
+            /*width: 20%;*/
+            /*padding-left: 40px;*/
+            /*padding-right: 20px;*/
+            padding: 0;
+            width: 40px;
+            height: 22px;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+
+        .radio_inline input[type=radio] {
+            width: 15%;
+            right: auto;
+        }
+
+        /*//换个样式*/
+        .change {
+            display: flex;
+            align-items: center;
+        }
+
+        .change .mui-radio input[type='radio']:checked:before {
+            content: '\e442';
+            color: #0493F3;
+            font-size: 22px;
+        }
+
+        .mui-radio input[type=radio] {
+            top: 0;
+        }
+
+        .clear-red-star {
+            margin-left: 16px;
+        }
+
+
+        .file_item {
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .mui-btn-blue, .mui-btn-primary, input[type=submit] {
+            color: #007aff;
+            border: 1px solid #fff;
+            background-color: #fff;
+        }
+
+
+
+        .box-shadow{
+            margin-top: 5%;
+            width: 100%;
+            height: 290px;
+            background-color: #FFF;
+            box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+            border-radius: 5px;
+            -moz-border-radius: 25px;
+
+        }
+
+
+        .img-right-arrow2 {
+            width: 7px;
+            height: 12px;
+            margin-left: 5px;
+        }
+
+
+        /* 滚动指示器 */
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+            /*color: #007aff;*/
+            border-bottom: 2px solid #007aff;
+            background: 0 0;
+            content: '';
+            width: 24px;
+            display: block;
+            margin: 0 auto;
+        }
+
+
+        /*  审批流程 */
+        .approval-flow-container {
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+        .approval-flow-first-left-operator {
+            flex: 3;
+            padding: 10px;
+            margin-top: 20px;
+            color: #999999;
+            font-size: 14px
+        }
+        .approval-flow-first-left-operator-username {
+            color: black;
+            font-weight: bold
+        }
+        .approval-flow-first-line-top {
+            background-color: white;
+            height: 33px;
+            width: 1px;
+            margin: 0 auto 0 auto;
+        }
+        .approval-flow-first-line-circle {
+            width: 7px;
+            height: 7px;
+            background-color: #0493F3;
+            border-radius: 3.5px;
+            margin: 5px auto 5px auto
+        }
+        .approval-flow-first-line-bottom {
+            background-color: #0493F3;
+            /*height: 80%;*/
+            height: calc(100% - 40px);
+            width: 1px;
+            margin: 0 auto 0 auto;
+        }
+        .approval-flow-first-right-container {
+            padding: 10px;
+            margin: 10px;
+            background-color: #FFF;
+            box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            -moz-border-radius: 25px;
+            flex: 16
+        }
+        .approval-flow-first-right-status-container {
+            display: flex;
+            flex: 1;
+            text-align: left;
+            align-items: center;
+        }
+        .approval-flow-first-right-status-node {
+            padding: 10px;
+            flex: 1;
+            font-size: 14px;
+            color: black;
+            font-weight: bold
+        }
+        .approval-flow-first-right-status {
+            text-align: right;
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            color: #29CC85
+        }
+        .approval-flow-first-right-content-container {
+            text-align: start;flex: 1;padding: 0 10px 10px 10px;color: black;
+            font-size: 14px;min-height: 75px
+        }
+        .approval-flow-first-right-content {
+            text-align: left;padding-right: 10px;font-size: 14px;color: #999999
+        }
+        .approval-flow-first-right-date {
+            color: black;padding: 5px 10px;font-size: 14px;text-align: left
+        }
+        .approval-flow-middle-circle-img {
+            width: 13px;height: 13px;text-align: center;
+        }
+
+        .empty{
+            line-height:200px;
+            width:100%;
+            text-align: center;
+            font-size: 16px;
+            color: #BBBBBB;
+            /*background: #f4f4f4;*/
+        }
+
+
+
+    </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-navbar">
+        </div>
+        <div class="mui-pages">
+        </div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+
+    <div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted"
+         style="color: #888888;z-index: 100;background-color: #FFFFFF;">
+        <a id="item1" class="mui-control-item mui-active" href="#selectItem1" style="text-align: center;">
+            事件详情
+        </a>
+        <a id="item2" class="mui-control-item " href="#selectItem2" style="text-align: center;">
+            处理情况
+        </a>
+    </div>
+
+    <div style="background-color: #F4F4F4;height: 5px"></div>
+    <div id="scroll-wrapper" class="" style="height: calc(100vh - 65px);">
+        <div style="height: max-content;">
+            <div id="selectItem1" class="mui-slider-item mui-control-content mui-active"
+                 style="position: relative;border-bottom: none!important;">
+                <div style="height:100px; display: none;" tabindex="0" id="top"></div>
+                <div id="scroll-wrapper-home" style="height: calc(100vh - 65px);">
+                    <div class="info-bar-content">
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>事件名称：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventName">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>事件编号：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventNo">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>事件来源：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventSource">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>事件地点：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventLocation">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>发生日期：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="occurTime">自动填充</span>
+                            </div>
+                        </div>
+
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>天气：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="weather">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>事件类型：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventType">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>所需人数：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="number">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>积水深度(cm)：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="floodDepth">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>上报人：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="reportRealName">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>上报人联系方式：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="reportPersonPhone">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>是否发送工单至运维负责人：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="repairOrder">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>运维负责人：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="dutyRealName">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>运维负责人联系方式：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="dutyUserPhone">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span>*</span>危害程度：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="harmLevel">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>事件描述：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventDescription">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>填写人：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="inputRealName">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>填写日期：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="inputTime">自动填充</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="selectItem2" class="mui-control-content">
+                <div style="height:100px; display: none;" tabindex="0" id="top2"></div>
+                <div id="scroll-wrapper-home2" style="height: calc(100vh - 65px);">
+                    <div class="info-bar-content">
+
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>处理人：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="donePerson">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>处理时间：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="doneTime">自动填充</span>
+                            </div>
+                        </div>
+
+                        <div class="info-bar-content-item">
+                            <div class="item-title">
+                                <span style="color: white">*</span>事件总结：
+                            </div>
+                            <div class="mui-input-row item-input">
+                                <span id="eventSummary">自动填充</span>
+                            </div>
+                        </div>
+
+
+                        <div class="info-bar-content-item upload-file-box isShow" id="fileUploadBox">
+                            <div class="item-title" >
+                                <!--													<span class="red-star" id="isRequire">*</span>-->
+                                <span class="clear-red-star" style="margin-left: 5px;"></span>总结报告
+                                <!--												<span style="color: red;margin-left: 3px;" id="isRequire">*</span>-->
+                            </div>
+                            <input id="programme" type="hidden" value="" />
+<!--                            <div id="file3" class="file_item">-->
+<!--                                <button type="button" name="file" id="upload_file" class="file_upload mui-btn mui-btn-primary">上传文件</button>-->
+<!--                                <span class="btn-label" style="display: none;">只能上传.doc .docx .pdf文件!</span>-->
+<!--                                <img src="../../../img/upfile@2x.png" style="width: 16px;height: 16px; margin-left: 5px;" alt="">-->
+<!--                            </div>-->
+                            <div class="" id="fileBoxItem" style="display: none;">
+                                <!-- 底下已经控制数据 -->
+                                <input type="hidden" name="" id="fileToken" value="" />
+                                <div class="file-item-box" style="background: #F4F7FE;text-align: left;margin: 10px 0;border-radius: 5px;">
+                                    <img id="file_type" src="../../img/commom/doc.png" style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px">
+                                    <div id="" style="display: inline-block;vertical-align: middle;margin: 12px 0 0 10px;width:70%">
+                                        <p id="file_name" style="font-weight:500;color: #191515;word-break: break-all;"></p>
+                                        <p id="file_size" style="font-weight:400;color: #191515;"></p>
+                                    </div>
+                                    <img class="file_close" src="../../img/commom/close@2x.png" style="width: 20px;height: 20px; float: right;vertical-align: top;margin: 10px 10px 0 0;">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="notificationDetail"></div>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+<!--<script src="../../../js/mui.previewimage.js"></script>-->
+<!--<script src="../../../js/numberBox.js"></script>-->
+<script src="../../js/vconsole.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/uploadimage.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script src="../../js/inspection/dailyInspection.js"></script>
+<script src="../../js/conservation.js"></script>
+<script src="../../js/workSpace/notification.js"></script>
+<script src="../../js/workSpace/approvalForImproveDetail.js"></script>
+
+<script>
+    // var vConsole = new VConsole();
+
+
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    var userPicker = new mui.PopPicker();
+
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+
+
+
+    console.log("plusReady==========================================================");
+    mui.plusReady(function () {
+
+
+        var curr = plus.webview.currentWebview();
+        console.log("进入表单详情页面")
+        console.log(JSON.stringify(curr.params))
+        $('#eventName').text(curr.params.eventName)
+        $('#eventNo').text(curr.params.eventNo)
+
+        switch (curr.params.eventSource) {
+            case '1':
+                $('#eventSource').text('巡检')
+                break;
+            case '2':
+                $('#eventSource').text('投诉')
+                break;
+            case '3':
+                $('#eventSource').text('第三方')
+                break;
+            default:
+                ;
+        }
+        $('#eventLocation').text(curr.params.eventLocation)
+        $('#occurTime').text(curr.params.occurTime)
+        var weather=['晴','多云','阴','阵雨','雷阵雨','雷阵雨伴有冰雹','雨夹雪','小雨','中雨','大雨','暴雨','大暴雨','特大暴雨','阵雪','小雪','中雪','大雪','暴雪','雾','冻雨','沙尘暴']
+        $('#weather').text(weather[curr.params.weather])
+        var eventType=['','积水','溢流','冒溢']
+        $('#eventType').text(eventType[curr.params.eventType])
+        $('#number').text(curr.params.number)
+        $('#donePerson').text(curr.params.donePerson)
+        $('#doneTime').text(curr.params.doneTime)
+        $('#inputRealName').text(curr.params.inputRealName)
+        $('#inputTime').text(curr.params.inputTime.substring(0,11))
+        $('#eventDescription').text(curr.params.eventDescription)
+        var harmLevel=['待定','低','中','高']
+        $('#harmLevel').text(harmLevel[curr.params.harmLevel])
+        $('#dutyRealName').text(curr.params.dutyRealName)
+        $('#dutyUserPhone').text(curr.params.dutyUserPhone)
+        var repairOrder=['否','是']
+        $('#repairOrder').text(repairOrder[curr.params.repairOrder])
+        $('#reportRealName').text(curr.params.reportRealName)
+        $('#reportPersonPhone').text(curr.params.reportPersonPhone)
+        $('#floodDepth').text(curr.params.floodDepth)
+        $('#eventSummary').text(curr.params.eventSummary)
+        getPhotoFile(curr.params.summaryAttachment)
+        //summaryAttachment
+        // eventSummary
+        // inputRealName
+        // inputTime
+
+
+
+
+
+
+
+        mui('.mui-scroll-wrapper').scroll({
+            scrollY: true, //是否竖向滚动
+            scrollX: false, //是否横向滚动
+            startX: 0, //初始化时滚动至x
+            startY: 0, //初始化时滚动至y
+            indicators: true, //是否显示滚动条
+            deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+            bounce: true //是否启用回弹
+        });
+
+    });
+
+
+
+
+    // 附件点击
+    $(document).on('click','.attachementItem',function () {
+        var id = this.getAttribute("id");
+        console.log("id:" + id)
+        var fileType = $("#fileType"+id).val();
+        console.log("fileType:" + fileType);
+        var filePath = $("#filePath"+id).val();
+        console.log("filePath:" + filePath);
+        var fileId = $("#fileId"+id).val();
+        console.log("fileId:" + fileId);
+
+        var fileName = $("#fileName"+id).val();
+        console.log("fileName:" + fileName);
+
+        if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc" )
+        {
+            var extras = {
+                filePath: filePath,
+                fileId: fileId
+            };
+            // console.log(JSON.stringify(extras));
+            // view/conservation/showReform.html
+            // ./preview.html
+            app.openPage("../conservation/preview.html", {
+                titleNView: {
+                    titleText: '文档预览',
+                    autoBackButton: true
+                }
+            }, extras);
+        } else if (fileType == '.jpg' || fileType == '.jpeg' || fileType == '.png') {
+            var extras = {
+                filePath: filePath,
+                fileId: fileId
+            };
+            // console.log(JSON.stringify(extras));
+            // ../../conservation/preview.html
+            // ./preImg.html
+
+            app.openPage("../mixed/preImg.html", {
+                titleNView: {
+                    titleText: '图片预览',
+                    autoBackButton: true
+                }
+            }, extras);
+        } else {
+            app.toast("此类型文件不支持预览");
+        }
+
+        //  console.log("点击附件item ：" + id.substr(id.lastIndexOf(".")));
+        // var url = config.urls.baseUrl + "sys/common/view/" +id.substr(0,id.indexOf("|"));
+        // console.log("点击附件url ：" + url);
+
+        // createDownloadTask(url,id);
+        // app.openPage("attachementPreview.html",{
+        //     titleNView: {
+        //         titleText: '附件预览',
+        //         autoBackButton: true,
+        //     }
+        // })
+    })
+
+    //添加附件
+
+    function getPhotoFile(groupId) {
+        console.log('进入：'+groupId)
+        let attachementParam = {
+            groupId: groupId,
+        }
+        getNotificationAttachment(attachementParam, function (caseAttachementData) {
+            if (caseAttachementData.success) {
+                console.log(caseAttachementData.result)
+                addData('', caseAttachementData.result);
+            } else {
+                app.toast("附件查询失败")
+            }
+        })
+    }
+
+    function addData(data, caseAttachements) {
+
+        var content = '';
+
+        if (caseAttachements.length > 0) {
+            content = content +
+                '<div style="margin-top: 20px;">' +
+                '<div class="mui-table-view attachement" style="width: 90%;margin-left: 5%;border: 1px solid #EDEDED;border-radius: 10px;">'
+
+            for (let i = 0; i < caseAttachements.length; i++) {
+                var caseItem = caseAttachements[i];
+                var fileSize = caseAttachements[i].uploadFile.fileSize;
+                var fileSizeText = '';
+                if (fileSize>1024){
+                    fileSize = fileSize/1024;
+                    fileSizeText = fileSize.toFixed(2)+'KB';
+                }
+                // 如果经过上面的if之后filesize还是大于1024，继续提升计量单位
+                if (fileSize>1024){
+                    fileSize = fileSize/1024;
+                    fileSizeText = fileSize.toFixed(2)+'MB';
+                }
+
+
+                var hideInputs = '<input id="fileType'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.fileType+'" style="display:none"> ' +
+                    '<input id="filePath'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.savePath+'" style="display:none">' +
+                    '<input id="fileId'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.id+'" style="display:none">' +
+                    '<input id="fileName'+caseAttachements[i].uploadFile.id+'" value="'+caseAttachements[i].uploadFile.fileName+'" style="display:none">';
+
+
+                var fileContent = '<div class="mui-media-body">'+
+                    caseAttachements[i].uploadFile.fileName+
+                    '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+                    '</div>' + hideInputs +
+                    '</div>';
+
+                switch (caseAttachements[i].uploadFile.fileType) {
+                    case ".pdf":
+                        // pdf
+                        <!-- 一个view -->
+                        // content = content+'<div id="'+caseAttachements[i].uploadFile.savePath+'|'+caseAttachements[i].uploadFile.fileName+'" class="mui-table-view-cell mui-media attachementItem">'+
+                        //     '<img src="../../../img/pptIcon.png" class="mui-media-object mui-pull-left" />'+
+                        //     '<div class="mui-media-body">'+
+                        //     caseAttachements[i].uploadFile.fileName+
+                        //     '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+                        //     '</div>'+
+                        //     '</div>'
+
+                        content = content+'<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media attachementItem">'+
+                            '<img src="../../img/pptIcon.png" class="mui-media-object mui-pull-left" />'
+                            + fileContent
+                        // '<div class="mui-media-body">'+
+                        // caseAttachements[i].uploadFile.fileName+
+                        // '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+                        // '</div>'+ hideInputs +
+                        // '</div>'
+
+                        break;
+                    case ".doc":
+                    case ".docx":
+                        // word
+                        //       <!-- 一个view -->
+                        content = content+'<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media attachementItem">'+
+                            '<img src="../../img/wordIcon.png" class="mui-media-object mui-pull-left" />'
+                            + fileContent
+                        // '<div class="mui-media-body">'+
+                        // caseAttachements[i].uploadFile.fileName+
+                        // '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+                        // '</div>' + hideInputs +
+                        // '</div>'
+                        break;
+                    // case ".xls":
+                    // case ".xlsx":
+                    //     //excel
+                    //     <!-- 一个view -->
+                    //     content = content + '<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media attachementItem">'+
+                    //         '<img src="../../../img/excelIcon.png" class="mui-media-object mui-pull-left" />'
+                    //             + fileContent
+                    //     break;
+                    case ".jpg":
+                    case ".png":
+                    case ".jpeg":
+                        //excel
+                        <!-- 一个view -->
+                        content = content + '<div id="'+caseAttachements[i].uploadFile.id+'" class="mui-table-view-cell mui-media  attachementItem">'+
+                            '<img src="../../img/imageIcon.png" class="mui-media-object mui-pull-left" />'
+                            + fileContent
+                        // '<div class="mui-media-body">'+
+                        // caseAttachements[i].uploadFile.fileName+
+                        // '<p class="mui-h6 mui-ellipsis">'+fileSizeText+'</p>'+
+                        // '</div>' + hideInputs +
+                        // '</div>'
+                        break;
+                }
+
+
+            }// for end
+
+
+            content = content +
+                '</div>' +
+                '</div>'
+        }
+        content = content +
+            <!-- 附件结束 -->
+            '</div>';
+        $("#notificationDetail").html(content);
+    }
+
+    </script>
+</html>

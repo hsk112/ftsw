@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接点管理-工单详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mainPage {
+				width: 100%;
+				/* margin-top: 3.5px; */
+				background: #FFFFFF;
+				padding-left: 20.5px;
+				padding-right: 20.5px
+			}
+
+			.workNo {
+				padding: 20px 20px 20px 0;
+				font-size: 16px;
+				font-weight: bold;
+				color: #161616;
+			}
+
+			.contentRow {
+				margin-bottom: 15px;
+			}
+
+			.labelCss {
+				width: 35%;
+				display: inline-block;
+				font-size: 14px;
+				font-weight: 500 !important;
+				color: #888888;
+				vertical-align: top;
+			}
+
+			.contentCss {
+				width: 63%;
+				display: inline-block;
+				font-size: 14px;
+				font-weight: 500 !important;
+				color: #161616;
+				word-break: break-all;
+			}
+
+			.radioCss {
+				width: 63%;
+				display: inline-block;
+				font-size: 14px;
+				font-weight: 400;
+				color: #000000;
+				position: relative;
+				top: -7px;
+				left:-25px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div id="mui-content" class="mui-page">
+			<div class="mainPage">
+				<div style="border-bottom: 1px solid #EDEDED;">
+					<div class="workNo" id="formId"></div>
+				</div>
+				<div style="margin-top: 16px;padding-bottom: 10px;">
+					<div class="contentRow">
+						<label class="labelCss">工单名称: </label>
+						<div class="contentCss"id="formName"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">工单类型: </label>
+						<div class="contentCss" id="taskType"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">调查人员: </label>
+						<div class="contentCss" id="recivName"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">检查井编号: </label>
+						<div class="contentCss" id="itemNo"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">相关表单: </label>
+						<div class="contentCss" id="relatedFormId"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">混接地址: </label>
+						<div class="contentCss" id="addrName"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">问题等级: </label>
+						<div class="contentCss" id="probLevel"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">问题描述: </label>
+						<div class="contentCss"  id="probDesc">						
+						</div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">要求完成时间: </label>
+						<div class="contentCss" id="deadline"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">处理要求:</label>
+						<div class="contentCss" id="treatRequest">
+							
+						</div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">受理部门: </label>
+						<div class="contentCss" id="orgTreatment"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">填写人: </label>
+						<div class="contentCss" id="InputName"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">联系方式: </label>
+						<div class="contentCss" id="phonenum"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">填写人部门:</label>
+						<div class="contentCss" id="orgInput"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">填写日期:</label>
+						<div class="contentCss" id="inputDate"></div>
+					</div>
+					<div class="contentRow" style="margin-bottom:0px">
+						<label class="labelCss">新任务通知方式: </label>
+						<div class="radioCss">
+							<div class="mui-input-row mui-checkbox mui-left" style="width:95px;display: inline-block;">
+								<label style="padding-right:0px">邮件</label>
+								<input name="radio1" type="checkbox" id="Email">
+							</div>
+							<div class="mui-input-row mui-checkbox mui-left" style="width:95px;display: inline-block;">
+								<label style="padding-right:0px">短信</label>
+								<input name="radio1" type="checkbox" id="Mess">
+							</div>
+						</div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">审批人：</label>
+						<div class="contentCss" id="deptLeaderAuditName"></div>
+					</div>
+					<div class="contentRow">
+						<label class="labelCss">核校人:</label>
+						<div class="contentCss" id="resultAuditName">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.view.js"></script>
+		<script src="../../js/mui.locker.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+	
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>	
+		<script src="../../js/uploadimage.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/mixed.js"></script>
+		<script src="../../js/helper.js"></script>
+		<script type="text/javascript">
+			//初始化单页view
+			var viewApi = mui('#app').view({
+				defaultPage: '#mui-content'
+			});
+			
+			mui.init({swipeBack:false});
+			mui.plusReady(function() {
+
+				// 初始化选项框状态
+				initCheckBox();
+				var self = plus.webview.currentWebview();
+				var htId = self.htId;
+				// var qid = "ffa3e125a8cf4d2b9e0681203204071c";
+					getTaskDet(htId, function(data) {
+						if (200 != parseInt(data.code)) {
+							app.toast(data);
+							// console.log(data);
+							return;
+						}
+						var HT = data.result;	
+						document.getElementById('formId').innerText="工单编号："+isEmp(HT.formId);	
+						document.getElementById('formName').innerText=isEmp(HT.formName);
+						document.getElementById('taskType').innerText=isEmp(HT.formSource_dictText);
+						document.getElementById('itemNo').innerText=isEmp(HT.itemNo);
+						document.getElementById('recivName').innerText=isEmp(HT.recivName);
+						document.getElementById('relatedFormId').innerText=isEmp(HT.relatedFormId);
+						document.getElementById('addrName').innerText=isEmp(HT.addrName);
+						if(HT.probLevel==0){
+							document.getElementById('probLevel').innerText="一般";
+						}else if(HT.probLevel==1){
+							document.getElementById('probLevel').innerText="紧急";
+						}else document.getElementById('probLevel').innerText="——";
+						document.getElementById('probDesc').innerText=isEmp(HT.probDesc);
+						document.getElementById('deadline').innerText=isEmp(HT.deadline).substring(0,10);
+						document.getElementById('treatRequest').innerText=isEmp(HT.treatRequest);
+						document.getElementById('orgTreatment').innerText=isEmp(HT.orgTreatment);
+						document.getElementById('InputName').innerText=isEmp(HT.orgInput)+"-"+isEmp(HT.inputerfullname);
+						document.getElementById('phonenum').innerText=isEmp(HT.phonenum);
+						document.getElementById('orgInput').innerText=isEmp(HT.orgInput);	
+						document.getElementById('inputDate').innerText=isEmp(HT.inputDate).substring(0,10);
+						if(HT.notifymethod==""||HT.notifymethod==null||HT.notifymethod==undefined){
+							document.getElementById('Mess').setAttribute('checked',false);
+							document.getElementById('Mess').setAttribute('checked',false);														
+							document.getElementById('Mess').setAttribute('disabled',true);
+							document.getElementById('Email').setAttribute('disabled',true);							
+						}else if(HT.notifymethod=='["massage"]'){
+							document.getElementById('Mess').setAttribute('checked',true);
+							document.getElementById('Mess').setAttribute('disabled',true);
+							document.getElementById('Email').setAttribute('disabled',true);
+						}else {
+							document.getElementById('Email').setAttribute('checked',true);
+							document.getElementById('Mess').setAttribute('disabled',true);
+							document.getElementById('Email').setAttribute('disabled',true);
+							}
+						document.getElementById('deptLeaderAuditName').innerText=isEmp(HT.deptLeaderAuditName);
+						document.getElementById('resultAuditName').innerText=isEmp(HT.resultAuditName);
+					});
+			});
+			// 初始化选项框状态
+			var initCheckBox = function() {
+				$(".radioCss").find(":checkbox").each(function() {
+					$(this).click(function() {
+						if ($(this).is(':checked')) {
+							$(this).parent().siblings().find(":checkbox").each(function() {
+								$(this).prop("checked",false)
+							});
+						}
+					});
+				});
+			}
+
+		</script>
+	</body>
+
+</html>

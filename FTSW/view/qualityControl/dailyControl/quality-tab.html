@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/common.css" rel="stylesheet" />
+    <link href="../../../css/mui.picker.min.css" rel="stylesheet" />    
+	<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+    <link href="../../../css/mui.imageviewer.css" rel="stylesheet" />
+
+    <title>治安管理-问题列表和检查记录选项卡</title>
+    <style>
+        
+        /* 问题列表样式 */
+        
+        .add-corner {
+            color: brown;
+            font-size: 20px;
+            left: 150px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .quality-tab {
+            height: 55px;
+            line-height: 55px;
+            display: flex;
+
+        }
+
+        .issues-list {
+            width: 50%;
+
+        }
+
+        .record {
+            width: 50%;
+        }
+
+        .color {
+            color: #0493F3;
+        }
+
+        .label-issus {
+            display: block;
+            width: 24px;
+            height: 3px;
+            background: #0493F3;
+            border-radius: 2px;
+            margin: 0 auto;
+        }
+		.label-record {
+		    display: none;
+		    width: 24px;
+		    height: 3px;
+		    background: #0493F3;
+		    border-radius: 2px;
+		    margin: 0 auto;
+		}
+
+        .interval {
+            height: 5px;
+            width: 100%;
+            background: #F4F4F4;
+            margin-top: 3px;
+        }
+
+        .issues-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 55px;
+            line-height: 55px;
+            font-size: 14px;
+        }
+
+        .total {
+            color: #0493F3;
+        }
+
+        .main-page {
+            padding: 0 10px;
+            text-align: left;
+            background: #F4F4F4;
+        }
+
+        .date-title {
+            padding-left: 8px;
+            font-size: 14px;
+            background: #F4F4F4;
+            color: #88888888;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        .issues-item {
+            background: #fff;
+            border-radius: 5px;
+        }
+
+        .mui-icon-bars {
+            font-size: 14px;
+            color: #0493F3;
+        }
+
+        .mui-icon-paperclip {
+            font-size: 14px;
+            color: #0493F3;
+        }
+
+        .issues-item-probably {
+            font-size: 14px;
+            padding-left: 20px;
+            padding-right: 27px;
+            padding-top: 1px;
+            border-radius: 5px;
+        }
+
+        .item-list {
+            margin-top: 20px;
+            display: flex;
+        }
+
+        .text-ellipsis {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .fixed {
+            color: #8C8C8C;
+            display: inline-block;
+            white-space: nowrap;
+            margin-right: 8px;
+        }
+
+        .dynamic {
+            color: #444444;
+        }
+
+        .pic {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            overflow: hidden;
+        }
+        .setHeight{
+            height: 72px;
+        }
+
+        .quesList_img>img {
+            width: 72px;
+            height: 72px;
+            border-radius: 5px;
+            margin-right: 2px;
+            margin-bottom: 2px;
+
+        }
+        .quesList_img{
+            width: 72px;
+            height: 72px;
+            border-radius: 5px;
+            margin-right: 2px;
+            margin-bottom: 2px;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        .item-probably-bot {
+            margin-top: 20px;
+            border-top: solid 0.5px #EDEDED;
+            line-height: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .corner {
+            font-size: 18px;
+            color: #C5C5C5;
+            line-height: 44px;
+        }
+
+        .cut {
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* 检查记录样式 */
+        
+        .record-item-top {
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        .record-item-top>.item-top-left {
+            font-weight: bold;
+        }
+
+        .record-item-middle {
+            display: flex;
+            font-size: 14px;
+            line-height: 14px;
+            margin-top: 12px;
+            margin-bottom: 18px;
+        }
+
+        .record-item-middle>.item-middle-left {
+            color: #8C8C8C;
+        }
+
+        .record-item-bottom {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #8C8C8C;
+            line-height: 14px;
+        }
+
+        .item-top-right {
+            display: flex;
+        }
+
+        .record-item-list {
+            padding: 16px 20px 25px 20px;
+            background: #fff;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .record-list {
+            background: #F4F4F4;
+            padding-top: 10px;
+            
+        }
+
+        .upload {
+            width: 74px;
+            height: 26px;
+            background: #0493F3;
+            border-radius: 2px;
+            font-size: 12px;
+            line-height: 26px;
+            color: #fff;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .create {
+            width: 74px;
+            height: 26px;
+            border-radius: 2px;
+            border: solid 1px #0493F3;
+            font-size: 12px;
+            line-height: 26px;
+            color: #0493F3;
+            text-align: center;
+        }
+
+        .switch-area-record {
+            display: none;
+        }
+
+        .switch-area-issues {
+            display: block;
+        }
+
+        /* 弹框样式 */
+        .mui-popover .mui-popover-arrow:after {
+            display: none;
+        }
+
+        #popover {
+            width: 90%;
+            position: fixed;
+            background: #fff;
+            top: 45px !important;
+            left: 5% !important;
+            
+        }
+
+        #popover .add-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #262626;
+            height: 58px;
+            line-height: 58px;
+        }
+
+        #popover .mui-table-view-cell {
+            height: 55px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+        }
+        #popover .mui-input-row{
+            height: 55px;
+            
+        }
+        #popover .view-cell-right{
+            display: flex;
+        }
+        #popover .view-cell-right .check_TY{
+            text-align: right;
+            display: block;
+            overflow:hidden;
+            width: 200px;
+        }
+        #popover .view-cell-right .check_RS{
+            text-align: right;
+            display: block;
+            overflow:hidden;
+            width: 200px;
+        }
+        #popover .mui-table-view-cell .mui-icon-arrowright {
+            font-size: 16px;
+        }
+
+        .about-pic {
+            height: 55px;
+            text-align: left;
+            line-height: 55px;
+            padding: 0 15px;
+
+        }
+
+        .about-pic div {
+            border-bottom: solid 0.5px #EDEDED;
+            border-top: solid 0.5px #EDEDED;
+        }
+
+        .more-text {
+            padding: 0 15px;
+
+        }
+
+        .uplode {
+            padding: 15px;
+            display: flex;
+            
+        }
+
+        #qs_photo {
+            width: 80px;
+            height: 80px;
+        }
+        #qs_photo img{
+            width:80px ;
+            height: 80px;
+        }
+
+        .bottom-btn {
+            height: 55px;
+            line-height: 55px;
+            display: flex;
+        }
+
+        /* ::mui-active{
+            left:20px;
+        } */
+        .cancel {
+            width: 50%;
+            text-align: center;
+            border-right: solid 0.5px #EDEDED;
+        }
+
+        .confirm {
+            width: 50%;
+            text-align: center;
+            border-left: solid 0.5px #EDEDED;
+            color: #0493F3;
+        }
+        /* 侧滑框 */
+        .sideslip-menu {
+            width: 295px;
+            height: 100%;
+            position: absolute;
+            top: 0px;
+            right: -295px;
+            background: #fff;
+            z-index: 102;
+            display: none;
+        }
+        .sideslip-menu .menu-list{
+            padding-top: 20px;
+        }
+        .sideslip-menu .menu-list .menu-list-item{
+            height: 54px;
+            line-height: 54px;
+            padding:8px 5px 0px 6px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .menu-list-item .lable-text{
+            text-align: left;
+        }
+        .menu-list-item .proInp{
+            text-align: right;
+        }
+        .date-sideslip{
+            position: absolute;
+            right:15px;
+            top:13px;
+        }
+        .butt{
+            display: flex;
+            padding: 0px 21px 24px 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .reset{
+            width: 120px;
+            height: 40px;
+            color: #0493F3;
+            line-height: 40px;
+            text-align: center;
+            border: solid 1px #0493F3;
+            border-radius: 4px;
+            
+        }
+        .comit{
+            width: 120px;
+            height: 40px;
+            color: #fff;
+            background: #0493F3;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 4px;
+            margin-left:14px ;
+        }
+        /* 遮罩层 */
+        #fade{
+            /* display: none; */
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:100;
+            -moz-opacity: 0.8;
+            opacity:.60;/*透明度*/
+            filter: alpha(opacity=88);
+			display: none;
+        }
+        .empty{
+            line-height:200px;
+            width:100%;
+            text-align: center;
+            font-size: 16px;
+            color: #BBBBBB;
+        }
+        .myImgClose{
+            position: absolute;
+            right: 0px;
+        }
+        .img_item{
+            position: relative;
+        }
+        .img_item>img{
+            width: 72px;
+            height: 72px;
+            border-radius: 5px;
+            margin-right: 2px;
+            margin-bottom: 2px;
+
+        }
+        .qua_img_list{
+            display: flex;
+        }
+        .isWrap{
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!--页面主结构开始-->
+
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--页面主结构结束-->
+
+    <!-- 单页面主要内容开始 -->
+    <div id="mui-content" class="mui-page">
+        <!--单页面标题开始-->
+        <!-- <header class="mui-bar mui-bar-nav common-header">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">质安监管</h1>
+            <span id="openPopover" class="mui-icon mui-icon-plusempty add-corner openPopover"></span>
+             <span class="mui-icon mui-icon-plusempty add-corner"></span>
+        </header>  -->
+        <!--页面标题栏结束-->
+        <div class="mui-page-content">
+            <div class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <div class="quality-tab">
+                        <div class="issues-list color">问题列表 <span class="label-issus"></span></div>
+                        <div class="record">检查记录<span class="label-record"></span></div>
+                    </div>
+                    <div class="interval"></div>
+                    <div class="issues-total">
+                        <div class="issues-total-left">
+                            <img src="../../../img/fujin-icon.png"
+                       style="width: 13px;height: 14px;line-height: 14px;vertical-align:middle;margin-top:-2px;"/>
+                            <span class="issues-text">问题列表</span>:
+                            <span class="total totalP">0</span>
+                            <span class="total totalR hidden">0</span>
+                        </div>
+                        <div class="issues-total-right screen_quality" style="position: relative;top:4px;">
+                            <img src="../../../img/commom/factor.png" style="width: 13px;height: 16px;" alt="">
+                        </div>
+                    </div>
+
+                    <div class="switch">
+                        <div class="switch-area-issues">
+                            <div class="main-page switch-main-page">
+                                <!-- <div class="issues-list-item">
+                                    <div class="date-title">2021-05-01</div>
+                                    <div class="issues-item">
+                                        <div class="issues-item-probably">
+                                            <div class="item-list ">
+                                                <span class="fixed">问题类型:</span>
+                                                <span class="dynamic">地基与基础</span>
+                                            </div>
+                                            <div class="item-list ">
+                                                <span class="fixed">检查结果:</span>
+                                                <span
+                                                    class="dynamic text-ellipsis">安全管理制度、操不完善操作规程不完善操作规程不完善操作规程不完善</span>
+                                            </div>
+                                            <div class="item-list ">
+                                                <span class="fixed">整改要求:</span>
+                                                <span class="dynamic text-ellipsis">这里是一段很长的整改要求，
+                                                    这里是2111111111的is阿杰科技</span>
+                                            </div>
+                                            <div class="item-list">
+                                                <span class="fixed">相关图片:</span>
+                                                <div class="pic dynamic setHeight">
+                                                    <div class="quesList_img">
+                                                        <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg"alt="">
+                                                    </div>
+                                                    <div class="quesList_img">
+                                                        <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg"alt="">
+                                                    </div>
+                                                    <div class="quesList_img">
+                                                        <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg"alt="">
+                                                    </div>
+                                                    <div class="quesList_img">
+                                                        <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg"alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item-probably-bot">
+                                                <span class="cut cut1 ">详情</span>
+                                                <span class="cut cut2 hidden">收起</span>
+                                                <span class="mui-icon mui-icon-arrowdown corner corner1"></span>
+                                                <span class="mui-icon mui-icon-arrowup hidden corner corner2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                
+                            </div>
+                        </div>
+                        <div class="switch-area-record">
+                            <div class="main-page switch-record-page">
+                                <div class="record-list">
+                                    <!-- <div class="record-item-list">
+                                        <div class="record-item-top">
+                                            <div class="item-top-left">监督名称</div>
+                                            <div class="item-top-right">
+                                                <div class="upload">上传通知书</div>
+                                                <div class="create">生成通知书</div>
+                                            </div>
+                                        </div>
+                                        <div class="record-item-middle">
+                                            <div class="item-middle-left">检查内容：</div>
+                                            <div class="item-middle-right">各种内容各种内容各种内容各种内容</div>
+                                        </div>
+                                        <div class="record-item-bottom">
+                                            <div class="item-bottom-left">日常检查</div>
+                                            <div class="item-bottom-middle">张三</div>
+                                            <div class="item-bottom-right">2021-12-12</div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 侧滑菜单 -->
+        <div class="sideslip-menu">
+            <div class="menu-list">
+                <div class="mui-input-row input-row-item menu-list-item">
+                    <label class="lable-text" id="lable">问题类型</label>
+                    <input type="text" class="mui-input-clear proInp detailCheckProject"  placeholder="请输入问题类型">
+                    <!-- <select class="text-ellipsis" name="" id="selectType" style="text-align:right;width: 150px;">
+                       
+                    </select> -->
+                </div>
+                <div class="mui-input-row input-row-item menu-list-item">
+                    <label class="lable-text">检查结果</label>
+                    <input type="text" class="mui-input-clear proInp detailCheckContent"  placeholder="请输入检查结果">
+                    <!-- <select class="text-ellipsis" name="" id="selectResult" style="text-align: right!important;width: 150px;">
+                         
+                    </select> -->
+                </div>
+                <div class="mui-input-row input-row-item menu-list-item">
+                    <label class="lable-text">检查人</label>
+                    <input type="text" class="mui-input-clear proInp createByName"  placeholder="请输入检查人">
+                </div>
+                <div class="mui-input-row input-row-item menu-list-item" style="position: relative;">
+                    <label class="lable-text">检查日期</label>
+                    <!-- <input type="text" 
+                        class="mui-input-clear proInp  dateSelect-fill endCreateTime"  placeholder="开始日期" style="width:78px;"/>
+                        <span style="margin-left:-10px;margin-top:-8px ;">~</span> -->
+                        <input type="text" startCreateTime
+                        class="mui-input-clear proInp  dateSelect-fill startCreateTime"  placeholder="请选择日期" style="width:100px;margin-right: 24px;"/>
+                    <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;margin-bottom:10px;margin-right: 4px;" alt=""></span>
+                </div>
+            </div>
+            <div class="butt">
+                <div class="reset">重置</div>
+                <div class="comit comit-ques ">确认</div>
+                <div class="comit comit-record hidden">确认</div>
+            </div>
+        </div>
+        <!-- 侧滑菜单遮罩层 -->
+        <div id="fade"></div>
+        <!-- 问题弹框 -->
+        <div id="popover" class="mui-popover mui-popover-bottom popover">
+            <div class="add-title">新增问题</div>
+            <ul class="mui-table-view">
+                <div class="mui-input-row input-row-item menu-list-item" style="background: #fff;border-bottom: 1px solid #EDEDED;">
+                    <label class="lable-text">问题类型</label>
+                    <input type="text" class="mui-input-clear proInp check_TY" readonly="readonly" placeholder="请选择检查类型">
+                </div>
+                <!-- <li class="mui-table-view-cell">
+                    <div class="view-cell-left">问题类型</div>
+                    <div class="view-cell-right"><span class="check_TY text-ellipsis" style="overflow: hidden;" >请选择问题类型</span><span class="mui-icon mui-icon-arrowright"></span></div>
+                </li> -->
+                <div class="mui-input-row input-row-item menu-list-item" style="background: #fff;border-bottom: 1px solid #EDEDED;">
+                    <label class="lable-text">检查结果</label>
+                    <input type="text" class="mui-input-clear proInp check_RS" readonly="readonly" placeholder="请选择检查结果">
+                </div>
+                <!-- <li class="mui-table-view-cell">
+                    <div class="view-cell-left">检查结果</div>
+                    <div class="view-cell-right"><span class="check_RS text-ellipsis" style="overflow: hidden;">请选择检查结果</span><span class="mui-icon mui-icon-arrowright"></span></div>
+                </li> -->
+                <li class="mui-table-view-cell">
+                    <div>整改要求</div>
+                </li>
+            </ul>
+            <div class="more-text">
+                <textarea name="rectify" id="rectify" maxlength=200 placeholder="请输入整改要求(200字以内)"
+                    style="height: 144px;padding: 15px 10px 0 10px;border: none;"></textarea>
+            </div>
+            <div class="about-pic">
+                <div>相关图片</div>
+            </div>
+            <div class="uplode">
+                <div class="qua_img_list img_item">
+
+                </div>
+                <div id="qs_photo" class="img_item">
+                    <img class="img_src" src="../../../img/commom/pz@2x.png" style="" />
+                </div>
+            </div>
+            <div class="bottom-btn">
+                <div class="cancel">取消</div>
+                <div class="confirm">确认</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/qualityControl/qualityControl.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/mui.previewimage.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/vconsole.min.js"></script>
+
+<script>
+    // var vConsole = new VConsole();
+    
+    mui.init({});
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    var isUpload = true
+    var dataRecord = []
+    var uploadSuccess = false
+    var isRequest = false
+    var problemImgListObj = {}
+    var imgUrl = []
+    var strAttachment = [{
+			groupId:'',
+			fileTokens:'',
+			fieldName:"checkFile",
+			tableName:"PROJECT_DAILY_INSPECTION"}]
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    mui.plusReady(function () {
+        self = plus.webview.currentWebview()
+        // console.log(JSON.stringify(self.dataIndex),'----------------------------')
+        self.setStyle({
+                        titleNView:{
+                            buttons:[{
+                                float:'right',
+                                width:'60',
+                                fontSize:'25',
+                                text:'＋',
+                                onclick:function(){
+                                        var extras = {
+                                        dataIndex:self.dataIndex
+                                    }
+                                    app.openPage("./addQuestion.html", {
+                                        titleNView: {
+                                            titleText: '新增问题',
+                                            autoBackButton: true,										
+                                        }       
+                                    },extras);
+                                }
+                            }]
+                        }
+                    })
+        var params = {
+            projectName:self.projectName,
+            pageNo:1,
+            pageSize:100,
+        }
+        var type = 'get'
+        var url = config.urls.baseUrl + config.actions.getProblemList
+        var dataProblemList = null
+        
+        app.showLoader()
+        getProject(url,params,type,function(data){
+            data = data.result.records
+            // console.log(JSON.stringify(data))
+            dataProblemList = data
+            var getProblem = null
+            getALLProblem(data)
+            
+        })
+        
+        paramRecord = {
+            projectName:self.projectName,
+            pageNo:1,
+            pageSize:100
+        }
+        urlRecord = config.urls.baseUrl + config.actions.getRecordList
+        app.showLoader()
+        getProject(urlRecord,paramRecord,type,function(dataR){
+            console.log('dataR='+JSON.stringify(dataR))
+            var getRecord =null
+            dataR = dataR.result.records
+            // console.log(dataR.length)
+            getAllRecords(dataR)
+            //点击item进入检查记录详情
+            $(".record-item-list").each(function(index){
+                        $(this).on('tap',function(e){
+                            var extras = {
+                                guid : dataR[index],
+                                dataProblemList:dataProblemList,
+                                imgUrl:imgUrl
+                            }
+                            app.openPage("./quality_RecordDetails.html", {
+                                  titleNView: {
+                                    titleText: '检查记录',
+                                    autoBackButton: true,										
+                                  }
+                                },extras);
+                        })
+            })
+            $(".create").each(function(index){
+                $(this).on('tap',function(e){
+                    var extras = {dataRIndex:dataR[index]}
+                    app.openPage("./quality_ResultNotice.html", {
+                                  titleNView: {
+                                    titleText: '结果通知',
+                                    autoBackButton: true,										
+                                  }
+                                },extras);
+                    event.stopPropagation()            
+                })
+            })
+            $(".upload").each(function(index){
+                $(this).on('tap',function(e){
+                    event.stopPropagation()
+                    var params = {guid:dataR[index].guid}
+                    var url = config.urls.baseUrl + config.actions.getRecordDetail
+                    var type = 'get'
+                    app.showLoader()
+                    getProject(url,params,type,function(data){
+                        if(data.success){
+                            data = data.result
+                            dataRecord = JSON.parse(JSON.stringify(data))
+                            console.log(JSON.stringify(dataRecord))
+                            isRequest = true
+                            //
+                            if(dataRecord.strAttachment == null){
+                                dataRecord.strAttachment = [{
+                                    groupId:"",
+                                    fileTokens:"",
+                                    fieldName:"attachment",
+                                    tableName:"EGY_PLAN_FILE"
+                                }]
+                                dataRecord.strAttachment[0].groupId = uuid()
+                                dataRecord.attachment = dataRecord.strAttachment[0].groupId
+                                if(isUpload && isRequest){
+                                    isUpload = false;
+                                    let fileSuffix = 'jpg、png、jpeg、rar、zip、doc、docx、pdf、xls、xlsx';
+                                    plusSelectFile(fileSuffix,function(data, path) {
+                                        if (data.success) {
+                                            
+                                            
+                                            var fileType = data.result.uploadFile.fileType;
+                                            var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+                                            if (fileType == '.jpg' || fileType == '.png' || fileType == '.jepg'||
+                                                fileType == '.pdf' || fileType == '.doc' || fileType == '.docx'||
+                                                fileType == '.xls' || fileType == '.xlsx' || fileType == '.rar'  || fileType == '.zip') {
+                                                app.toast("选择文件成功");
+                                                dataRecord.strAttachment[0].fileTokens = dataRecord.strAttachment[0].fileTokens + data.result.fileTokens + ',';
+                                                dataRecord.strAttachment = JSON.stringify(dataRecord.strAttachment)
+                                                console.log('strAttachment='+JSON.stringify(dataRecord))
+                                                uploadSuccess = true
+                                                    
+                                            } else {
+                                                app.toast("文件必须为jpg、png、jpeg、rar、zip、doc、docx、pdf、xls、xlsx格式，请重新上传！");
+                                            }
+                                            setTimeout(function(){
+                                                isUpload = true
+                                            },1000)
+                                            
+                                            // isUpload = true
+                                            // if(isUpload){
+                                                if(uploadSuccess){
+                                                    var urlX = config.urls.baseUrl + config.actions.recordModification
+                                                    var typeX= 'post'
+                                                    var paramsX = JSON.parse(JSON.stringify(dataRecord))
+                                                    console.log('params='+JSON.stringify(dataRecord))                            
+                                                    getProjectPost(urlX,paramsX,typeX,function(dataX){
+                                                        if(data.success){
+                                                            // console.log('dataX='+JSON.stringify(dataX))
+                                                            app.toast('上传成功')
+                                                        }else{
+                                                            app.toast('网络异常，请检查你的网络')
+                                                        }
+                                                    })
+                                                }
+                                            // }        
+
+
+
+                                        } else {
+                                            app.toast(data.message);
+                                            
+                                        }
+                                    })
+                                } 
+                                
+            
+                        
+                            }
+                            //
+
+                            //
+                        }else{
+                            app.toast('网络异常，请检查网络')
+                        }
+                    })
+                    
+                    
+                    // if(dataRecord.problemList == [] || dataRecord.problemList == null){
+                    //     dataRecord.problemList = [{
+                    //         checkDate:dataRecord.actualCheckTime,
+                    //         projectId:dataRecord.projectModel.guid,
+                    //         projectName:dataRecord.projectModel.projectName,
+                    //         recordId:dataRecord.guid,
+                    //         checkResults:[
+                    //             {
+                    //                 attachment: '',
+                    //                 level: 0,
+                    //                 strAttachment: [{"groupId":"","fileTokens":"","fieldName":"attachment","tableName":"EGY_PLAN_FILE"}]
+                    //             }
+                    //         ]
+                    //     }]
+                    //     dataRecord.problemList[0].checkResults[0].strAttachment[0].groupId = uuid()
+                    //     dataRecord.problemList[0].checkResults[0].attachment = dataRecord.problemList[0].checkResults[0].strAttachment[0].groupId
+                    // }
+                    
+                    //
+                        
+
+                    
+                })
+            })
+
+        })
+        $('.quality-tab').children().each(function (index) {
+            $(this).on('tap',function (e) {
+                $(this).addClass('color').siblings().removeClass('color')
+                $('.switch').children().eq(index).css('display', 'block').siblings().css('display', 'none')
+                $('.issues-text').html($(this).text())
+                $('.total').toggleClass("hidden")
+                if(index=='1'){
+                    $('.label-issus').css('display','none')
+                    $('.label-record').css('display','block')
+                    $('.comit-ques').toggleClass('hidden')
+                    $('.comit-record').toggleClass('hidden')
+                    $("#lable").html('检查类别')
+                    self.setStyle({
+                        titleNView:{
+                            buttons:[{
+                                float:'right',
+                                width:'60',
+                                fontSize:'25',
+                                text:'＋',
+                                onclick:function(){
+                                    app.showLoader()
+                                    var extras = {
+                                        dataIndex:self.dataIndex,
+                                        dataProblemList:dataProblemList,
+                                        imgUrl:imgUrl,
+                                        problemImgListObj:problemImgListObj,
+                                        projectName:self.projectName
+                                    }
+                                    
+                                    app.openPage("./quality_inspe.html",{
+                                        titleNView:{
+                                            titleText:'新增检查记录',
+                                            autoBackButton:true
+                                        }
+                                    },extras)
+                                }
+                            }]
+                        }
+                    })
+                    
+                }else if(index=='0'){
+                    $('.label-issus').css('display','block')
+                    $('.label-record').css('display','none')
+                    $('.comit-ques').toggleClass('hidden')
+                    $('.comit-record').toggleClass('hidden')
+                    $("#lable").html('问题类型')
+                    self.setStyle({
+                        titleNView:{
+                            buttons:[{
+                                float:'right',
+                                width:'60',
+                                fontSize:'25',
+                                text:'＋',
+                                onclick:function(){
+                                    var extras = {
+                                        dataIndex:self.dataIndex
+                                    }
+                                    
+                                    app.openPage("./addQuestion.html", {
+                                        titleNView: {
+                                            titleText: '新增问题',
+                                            autoBackButton: true,										
+                                        }
+                                    },extras);
+                                }
+                            }]
+                        }
+                    })
+                }
+            })
+        })
+        
+        
+        $(".comit-ques").on('tap',function(){
+            //问题侧滑框提交按钮
+            var screenListData = {
+            projectName:self.projectName,//工程名称
+            detailCheckProject:$(".detailCheckProject").val(),//检查类别
+            detailCheckContent:$(".detailCheckContent").val(),//检查结果
+            createByName:$(".createByName").val(),//检查人
+            startCreateTime:$(".startCreateTime").val(),//开始时间
+            endCreateTime:$(".endCreateTime").val(),//结束时间
+        }
+            var params={}
+            params.projectName = screenListData.projectName
+            if(screenListData.detailCheckProject != ''){
+                params.detailCheckProject = screenListData.detailCheckProject
+            }else if(screenListData.detailCheckContent != ''){
+                params.detailCheckContent = screenListData.detailCheckContent
+            }else if(screenListData.createByName != ''){
+                params.createByName = screenListData.createByName
+            }else if(screenListData.startCreateTime != ''){
+                params.startCreateTime = screenListData.startCreateTime 
+            }
+            // else if(screenListData.endCreateTime != ''){
+            //     params.endCreateTime = screenListData.endCreateTime
+            // }
+            
+            var url = config.urls.baseUrl + config.actions.getProblemList
+            app.showLoader()
+            getProject(url,params,type,function(data){
+                if(data.success){
+                    console.log('问题列表='+JSON.stringify(data))
+                    return
+                    $(".sideslip-menu").css('display','none')
+                    $("#fade").css('display','none')
+                    $('.switch-main-page').empty()
+                    $('.totalP').html(data.result.records.length)
+                    if(data.result.records == 0){
+                        // console.log('====')
+                        $('.switch-main-page').html("<div class='empty'>暂无数据</div>")
+                        
+                    }else{
+                        data = data.result.records 
+                        getALLProblem(data)
+                    }
+                }else{
+                    mui.toast("查询失败");
+                }
+            })
+        })
+        //检查记录侧滑框提交按钮
+        
+
+        $(".check_TY").on('tap',function(){
+            
+            var pickerType = new mui.PopPicker();
+            pickerType.setData(piackerArr);
+            pickerType.show(function (selectItems) {
+                $(".check_TY").val(selectItems[0].text)
+                questionText = selectItems[0].text
+                // console.log(JSON.stringify())
+            })
+        })
+        $(".check_RS").on('tap',function(){
+            var pickerObj={}
+            var check_RSArr = []
+            index = ques_key.indexOf(questionText)
+            if( index == -1){
+                app.toast('请选择问题类型')
+                return 
+            }
+            // console.log(index)
+            var resultArr = ques_item[index]
+            // console.log(JSON.stringify(resultArr))
+            for(var i=0;i<resultArr.length;i++){
+                pickerobj = {value:i,text:resultArr[i].detailCheckContent}
+                // console.log(pickerobj,'???')
+                check_RSArr.push(pickerobj)
+            }
+            getPicker(check_RSArr,$(".check_RS"))
+        }) 
+    }); 
+    //筛选参数
+    var scrrenList = {
+        detailCheckProject:$(".detailCheckProject").val(),//检查类别
+        detailCheckContent:$(".detailCheckContent").val(),//检查结果
+        createByName:$(".createByName").val(),//检查人
+        checkDate:$(".checkDate").val()//检查日期
+    }
+    
+    //问题列表渲染
+    
+    // var ImgListArr = []
+    function getALLProblem(data){
+            $('.totalP').html(data.length)
+            for(var i=0;i<data.length;i++){
+                var item = data[i]
+                // if(console.log('data='+JSON.stringify(data)))
+                // if(!item.attachment && !problemImgListObj[item.attachment]){
+                    // return
+                    // return
+                    app.showLoader()
+                    queryPhoto(item.attachment, function (imgData) {
+                        // console.log(JSON.stringify(item.attachment),'item.attachment')
+                            if(imgData.success){
+                                    problemImgListObj[item.attachment] = imgData
+                                    // console.log(JSON.stringify(imgData))
+                                    
+                            }else{
+                                problemImgListObj[item.attachment].result = []
+                            }
+                            // console.log(JSON.stringify(problemImgListObj[item.attachment]))
+                            // if(imgData.success){
+                            //     problemImgListObj[item.attachment] = imgData
+                            // }else{
+                            //     problemImgListObj[item.attachment] = null
+                            // }
+                    })
+                    imgUrl.push(problemImgListObj[item.attachment])  
+                    
+                // }     
+                
+            }
+            // console.log(JSON.stringify(problemImgListObj,'123'))
+            // for(key in problemImgListObj){
+            //     imgUrl.push(problemImgListObj[key])
+            // }
+            // console.log(JSON.stringify(imgUrl[9]))
+            // return
+            for(var i=0;i<data.length;i++){
+                if(data[i].detailCheckProject == null){
+                    data[i].detailCheckProject = '无'
+                }
+                if(data[i].detailCheckContent == null){
+                    data[i].detailCheckContent = '无'
+                }
+                if(data[i].correctRequirement == null){
+                    data[i].correctRequirement = '无'
+                }
+                getProblem = `
+                <div class="issues-list-item" >
+                    <div class="date-title">${data[i].checkDate}</div>
+                    <div class="issues-item">
+                        <div class="issues-item-probably" style="padding-bottom:10px;">
+                            <div class="item-list ">
+                                <span class="fixed">问题类型:</span>
+                                <span class="dynamic isWrap">${data[i].detailCheckProject}</span>
+                            </div>
+                            <div class="item-list ">
+                                <span class="fixed">检查结果:</span>
+                                <span
+                                class="dynamic isWrap">${data[i].detailCheckContent}</span>
+                            </div>
+                            <div class="item-list ">
+                                <span class="fixed">整改要求:</span>
+                                <span class="dynamic isWrap">${data[i].correctRequirement}</span>
+                            </div>
+                            <div class="item-list">
+                                <span class="fixed">相关图片:</span>
+                                <div class="photo${i} pic dynamic setHeight">
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        </div>
+                        </div>
+                        
+                        
+                        `
+                        // <div class="item-probably-bot">
+                        //         <span class="cut cut1 ">详情</span>
+                        //         <span class="cut cut2 hidden">收起</span>
+                        //         <span class="mui-icon mui-icon-arrowdown corner corner1"></span>
+                        //         <span class="mui-icon mui-icon-arrowup hidden corner corner2"></span>
+                        // </div>
+                        $('.switch-main-page').append(getProblem)
+                        // console.log(JSON.stringify(imgUrl[9],'999999999999999999999'))
+                        // return
+                    if (imgUrl[i].result && imgUrl[i].result.length && imgUrl[i].result[0].uploadFile){
+                        for(var j=0;j<imgUrl[i].result.length;j++){
+                            let path = imgUrl[i].result[j].uploadFile.savePath;
+                            let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                            
+                            var html = '<div class="quesList_img">' +
+                                    '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""/>' +
+                                    '	</div>';
+                            $(`.photo${i}`).append(html)  
+                            console.log(url)      
+                        }
+                    }else{
+                        $(`.photo${i}`).html('<div>无</div>')
+                        $(`.photo${i}`).removeClass('setHeight')
+                    }
+                    
+            }
+                    $('.item-probably-bot').each(function(index){
+                        $(this).on('tap', function (e) {
+                            // console.log(index)
+                            $(this).parent().children($('.item-list')).find($('.dynamic')).toggleClass('text-ellipsis').toggleClass('isWrap')
+                            $('.cut1').eq(index).toggleClass('hidden')
+                            $('.cut2').eq(index).toggleClass('hidden')
+                            $('.corner1').eq(index).toggleClass('hidden')
+                            $('.corner2').eq(index).toggleClass('hidden')
+                            $('.pic').eq(index).toggleClass('setHeight')
+                        })
+                    })
+    }
+    //检查记录列表渲染
+    function getAllRecords(dataR){
+        $('.totalR').html(dataR.length)
+        for(var i=0;i<dataR.length;i++){
+            if(dataR[i].dailyCheckTypeStr == null){
+                dataR[i].dailyCheckTypeStr = '无'
+            }
+            getRecord = `
+            <div class="record-item-list">
+                <div class="record-item-top">
+                    <div class="item-top-left text-ellipsis">${dataR[i].dailyName}</div>
+                    <div class="item-top-right">
+                        <div class="upload">上传通知书</div>
+                        <div class="create">生成通知书</div>
+                    </div>
+                </div>
+                <div class="record-item-middle">
+                    
+                </div>
+                <div class="record-item-bottom">
+                    <div class="item-bottom-left">${dataR[i].dailyCheckTypeStr}</div>
+                    <div class="item-bottom-middle">${dataR[i].dailyCheckPersonRealname}</div>
+                    <div class="item-bottom-right">${dataR[i].actualCheckTime}</div>
+                </div>
+            </div>
+            `
+            // <div class="item-middle-left">检查内容：</div>
+            //         <div class="item-middle-right">${dataR[i].dailyCheckContent}</div>
+            $(".record-list").append(getRecord)
+        }
+    }
+    // tab选项卡
+    // 问题详情
+    
+    //禁止关闭遮罩
+    window.addEventListener('tap', function (e) {
+        e.target.className == 'mui-backdrop mui-active' && e.stopPropagation();
+    }, true);
+
+    // 遮罩层和侧滑菜单关闭
+    $("#fade").on('tap',function(){
+        reset()
+        $(".sideslip-menu").animate({
+                right:'-295px'
+            },0)
+        $(".sideslip-menu").css('display','none')
+        $("#fade").css('display','none')
+
+    })
+        var ques_key = []
+        var ques_item = []
+        var piackerArr = []
+        var piackerArr_item = {}
+        var index = null
+        var questionText = null
+    // 弹框开启
+    function openBounced(){
+        mui('.mui-popover').popover('show')
+        
+        var type = 'get'
+        var params={}
+        var url = config.urls.baseUrl + config.actions.getCheckStandardList
+        app.showLoader()
+        getProject(url,params,type,function(data){
+                    data = data.result
+                    for(var i=0;i<data.length;i++){
+                        var paramsType = {guid:data[i].key}
+                        var urlType = config.urls.baseUrl + config.actions.questionType
+                        app.showLoader()
+                        getProject(urlType,paramsType,type,function(dataT){
+                            dataT = dataT.result
+                            var j =0
+                            for(key in dataT){
+                                ques_key.push(key)
+                                ques_item.push(dataT[key])
+                                piackerArr_item = {value:j,text:key}
+                                j = j + 1
+                                piackerArr.push(piackerArr_item)
+                            }
+                        })
+                    }
+        })
+        
+    }
+    // $(".openPopover").on('tap',function(){
+        //     mui('.mui-popover').popover('show')
+        // })
+        $("#qs_photo").on("tap", function() {
+            plusSelectImage(function(data, path) {
+                // console.log(JSON.stringify(data))
+				if (data.success) {
+                    strAttachment[0].groupId = data.result.uploadFile.id
+                    strAttachment[0].fileTokens = strAttachment[0].fileTokens + data.result.fileTokens + ',';
+
+					var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+                    '" class="img_item">' +
+                    '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style="width:80px;height:80px;"  />' +
+                    '<span class=" myImgClose mui-icon mui-icon-closeempty" style="    font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+                    '	</div>';
+					$(".qua_img_list").append(html);
+                    
+					var count = $(".qua_img_list").children(".img_item").length;
+					if (count == 3) { //处理上传的数量
+						$("#qs_photo").hide();
+					}                    
+                    $(".myImgClose").each(function(){
+                        $(this).on('tap',function(e){
+                        $(this).parent().hide()
+                        if(count == 2){
+                            $("#qs_photo").show()
+                        }
+                    })
+                    
+        })
+				} else app.toast(data.message)
+			});
+		});
+        //侧滑框选择日期
+        getDatePicker($(".startCreateTime"),$(".startCreateTime"))
+        // getDatePicker($(".endCreateTime"),$(".endCreateTime"))
+        // $(".startCreateTime").on('tap',function(){
+        //     var dtPicker = new mui.DtPicker({type:'date'}); 
+        //     dtPicker.show(function (selectItems) { 
+        //         var y = selectItems.y.text;  //获取选择的年
+        //         var m = selectItems.m.text;  //获取选择的月
+        //         var d = selectItems.d.text;  //获取选择的日
+        //         var date = y + "-" + m + "-" + d ;
+        //         console.log(date)
+        //         $(".startCreateTime").val(date)  
+        //     }) 
+        // })
+        
+        
+        // 遮罩层和侧滑菜单开启
+        $(".screen_quality").on('tap', function (e) {
+            $(".sideslip-menu").css('display','block')
+            $(".sideslip-menu").animate({
+                right:'0px'
+            },400)
+            // $(".sideslip-menu").slideDown()
+            
+            $("#fade").css('display','block')
+        });
+        //重置按钮
+        $(".reset").on('tap',function(){
+            reset()
+        })
+        function reset(){
+            $(".detailCheckProject").val('')
+            $(".detailCheckContent").val('')
+            $(".createByName").val('')
+            $(".startCreateTime").val('')
+            // $(".endCreateTime").val('')
+        }
+        //手动关闭弹窗
+        $(".cancel").on('tap',function(){
+            mui('.mui-popover').popover('hide')
+            $(".check_TY").val('')
+            $(".check_RS").val('')
+            $("#rectify").val('')
+            $(".qua_img_list").empty()
+        })
+      
+        //检查记录侧滑框提交
+        $(".comit-record").on('tap',function(data){
+            var screenListData = {
+            projectName:self.projectName,//工程名称
+            detailCheckProject:$(".detailCheckProject").val(),//检查类别
+            detailCheckContent:$(".detailCheckContent").val(),//检查结果
+            createByName:$(".createByName").val(),//检查人
+            startCreateTime:$(".startCreateTime").val(),//开始时间
+            // endCreateTime:$(".endCreateTime").val(),//结束时间
+        }
+            var params={}
+            params.projectName = screenListData.projectName
+            if(screenListData.detailCheckProject != ''){
+                params.detailCheckProject = screenListData.detailCheckProject
+            }else if(screenListData.detailCheckContent != ''){
+                params.detailCheckContent = screenListData.detailCheckContent
+            }else if(screenListData.createByName != ''){
+                params.createByName = screenListData.createByName
+            }else if(screenListData.startCreateTime != ''){
+                params.startCreateTime = screenListData.startCreateTime 
+            }else if(screenListData.endCreateTime != ''){
+                params.endCreateTime = screenListData.endCreateTime
+            }
+            var type = 'get'
+            var url = config.urls.baseUrl + config.actions.getRecordList
+            getProject(url,params,type,function(data){
+                if(data.success){
+                    // console.log(JSON.stringify(data))
+                    $(".sideslip-menu").animate({
+                        right:'-295px'
+                    },0)
+                    $(".sideslip-menu").css('display','none')
+                    $("#fade").css('display','none')
+                    $(".record-list").empty()
+                    $('.totalP').html(data.result.records.length)
+                    if(data.result.records == 0){
+                        // console.log('------')
+                        $(".record-list").html("<div class='empty'>暂无数据</div>")
+                        
+                    }else{
+                        data = data.result.records 
+                        getAllRecords(data)
+                    }
+                }else{
+                    mui.toast("查询失败");
+                }
+            })
+        })
+
+        //弹框提交按钮
+        $(".confirm").on('tap',function(){
+            // console.log('~~~~~~~~~~~~~~~')
+            //获取当前时间年月日
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var nowDate = year + "-" + month + "-" + day;
+        
+        var stateText = localStorage.getItem('$state') || "{}";
+        stateText = JSON.parse(stateText)
+        // console.log(JSON.stringify(stateText).userInfo.realname)
+        if(strAttachment[0].groupId == ''){
+            strAttachment[0].groupId = uuid()
+        }
+            var type = 'post'
+            var params={
+                checkDate:nowDate,
+                createByName:stateText.userInfo.realname,
+                projectId:self.dataIndex.projectGuid,
+                projectName:self.dataIndex.projectModel.projectName,
+                recordId:self.dataIndex.guid,
+                checkResults:[
+                    {
+                        detailCheckProject:$(".check_TY").val(),
+                        detailCheckContent:$(".check_RS").val(),
+                        correctRequirement:$("#rectify").val(),
+                        strAttachment:JSON.stringify(strAttachment),
+                        attachment:strAttachment[0].groupId,
+                        checkStandardName:ques_item[index][0].checkStandardName,
+                        standardId:ques_item[index][0].guid,
+                    },
+                    
+                ],    
+                
+            }
+            // console.log(JSON.stringify(params),'-------------------------')
+            
+            // console.log(JSON.stringify(self.dataIndex),'-----------------')
+            
+            // console.log(JSON.stringify(ques_item),'------------------------')
+            var url = config.urls.baseUrl + config.actions.addQuestion
+            app.showLoader()
+            getProjectPost(url,params,type,function(data){
+                if(data.success){
+                   
+                    app.toast(data.message)
+                    // plus.webview.currentWebview().opener().reload();
+                    var params = {
+                        projectName:self.projectName,
+                        pageNo:1,
+                        pageSize:100,
+                    }
+                    var type = 'get'
+                    var url = config.urls.baseUrl + config.actions.getProblemList
+                    var dataProblemList = null
+                    
+                    app.showLoader()
+                    getProject(url,params,type,function(data){
+                        data = data.result.records
+                        dataProblemList = data
+                        var getProblem = null
+                        $('.switch-main-page').html('')
+                        getALLProblem(data)
+                        
+                    })
+                    mui('.mui-popover').popover('hide')
+                    $(".check_TY").val('')
+                    $(".check_RS").val('')
+                    $("#rectify").val('')
+                    $(".qua_img_list").empty()
+                }else{
+                    app.toast('添加失败')
+                }
+            }) 
+        })
+        //图片预览
+        $(document).on('tap', '.img_src', function() {
+		    mui.previewImage();
+		});
+
+        
+    </script>
+
+</html>

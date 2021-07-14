@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+		<title>质安监管-新增检查记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" /> 
+        <link href="../../../css/mui.picker.min.css" rel="stylesheet" />    
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+        <style>
+            .mui-page-content{
+                padding-top:44px !important;
+            }
+            .recordInp::placeholder{
+                text-align: right;
+            }
+            .recordInp{
+                text-align: right;
+                padding:10px 0 10px 15px !important;
+                position: relative;
+                top:10px;
+            }
+            .record-list{
+               padding:0 20px 0 20px;
+            }
+            .lable{
+                position: relative;
+                text-align: left;
+                padding:11px 0 11px 8px !important;
+                height: 55px;
+            }
+            .lable span{
+                position: absolute;
+                top:15px;
+                left:0px;
+                color: #DB2828;
+            }
+            .date-item{
+                position: relative;
+            }
+            .date-select{
+                position: absolute;
+                right: 0px;
+                top:10px;
+                font-size:16px;
+            }
+            .dateSelect{
+                text-align: left !important;;
+                width: 120px !important;
+                font-size:  16px !important; ;
+            }
+            .dateSelect::placeholder{
+                text-align: left;
+                font-size: 16px;
+            }
+            .dateSelect-fill{
+                text-align: left !important;;
+                width: 120px !important;
+                font-size:  16px !important; ;
+            }
+            .dateSelect-fill::placeholder{
+                text-align: left;
+                font-size: 16px;
+            }
+            .day-record{
+                position: relative;
+            }
+            .dayRecord{
+                position: absolute;
+                right: 0px;
+                top:0PX;
+            }
+            .dayRecord span{
+                font-size: 16px;
+                color: #C5C5C5;
+            }
+            /* ------------- */
+            .issues-total{
+                display: flex;
+                justify-content: space-between;
+                padding:0 16px;
+                height: 55px;
+                line-height: 55px;
+                font-size: 14px;
+            }
+            .total{
+                color:#0493F3;
+            }
+            .mui-icon-bars{
+                font-size: 14px;
+                color:#0493F3;
+            } 
+            .bar{
+                font-size: 18px;
+                color:#0493F3;
+            }  
+            /* ------------*/
+            
+            .issues-list-item{
+                padding:10px 10px 2px 10px;
+                text-align: left;
+                background: #f4f4f4;
+                
+            }
+            .issues-item-probably{
+                font-size: 14px;
+                padding-left: 20px;
+                padding-right: 27px;
+                padding-bottom: 20px;
+                padding-top:1px;
+                background: #fff;
+                border-radius: 5px;
+            }
+            .item-list{
+                margin-top:20px;
+                display: flex;
+                
+            }
+            .text-ellipsis{
+                overflow: hidden;
+                white-space:nowrap;
+                text-overflow: ellipsis;
+            }
+            .fixed{
+                color:#8C8C8C;
+                display: inline-block;
+                white-space:nowrap;
+                margin-right: 8px;
+            }
+            .dynamic{
+                color:#444444;
+            }
+            .pic{
+                
+                display: flex;
+                flex-direction:row;
+                flex-wrap:wrap;
+                overflow:hidden
+            }
+            .quesList_img>img{
+                width: 72px;
+                height: 72px;
+                border-radius: 5px;
+            }
+            .setHeight{
+                height: 72px;
+            }
+            .quesList_img{
+                margin-right: 2px;
+                margin-bottom: 2px;
+            }
+            .item-probably-bot{
+                margin-top:20px;
+                border-top: solid 0.5px #EDEDED;
+                line-height: 44px;
+                height: 44px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .corner{
+                font-size: 18px;
+                color: #C5C5C5;
+                line-height: 44px;
+            }
+            
+            .cut{
+                font-size: 14px;
+                color: #444444;
+            }
+            
+            .hidden{
+                display: none;
+            }
+            
+            /* ----- */
+            .page-middle .for_result{
+                display: flex;
+                height: 55px;
+                align-items: center;
+            }
+            .page-middle .for_result .check-item {
+                display: flex;
+                justify-content: space-between;
+            }
+            .checkbox{
+                display: flex !important;
+                align-items: center !important;
+                justify-content:flex-start !important;
+            }
+            .checkbox label{
+                margin-left:  -28px !important;;
+            }
+            .checkbox input{
+                margin-left:-20px;
+            }
+            .page-bottom{
+                padding-left: 20px;
+            }
+            .remark-text{
+                height: 55px;
+                text-align: left ;
+                line-height: 55px;
+                border-top:solid 0.5px #EDEDED;
+                border-bottom: solid 0.5px #EDEDED;
+            }
+            /* ---------- */
+            .page-footer{
+                padding:0 20px 0 20px;
+            }
+            .page-footer .f-item-list{
+                height: 55px;
+                line-height: 55px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .page-footer .f-item-list input{
+                border:none;
+                text-align: right;
+            }
+            .page-footer .f-item-list input::placeholder{
+                text-align: right;
+                font-size: 16px;
+            }
+            .page-footer .dateS{
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding-right: 12px;
+            }
+            /* ------ */
+            .footer-btn{
+                height: 98px;
+                background: #F4F4F4;
+                line-height: 98px;
+            }
+            .footer-btn .btn-sub{
+                width: 335px;
+                height: 48px;
+                background: #0493F3;
+                color:#fff;
+                font-size: 18px;
+                text-align: center;
+                border-radius: 4px;
+                margin: 0 auto;
+                vertical-align:middle;
+            }
+            .issues-item{
+                margin-bottom: 20px;
+            }
+            .mui-input-row:not(:nth-child(5)){
+                border-bottom: 1px solid #EDEDED;
+                
+            }
+            .lable{
+                position: relative;
+                top: 10px;
+            }
+            .problemList{
+                padding:10px;
+            }
+            .isWrap{
+                word-wrap: break-word;
+                word-break: break-all;
+                overflow: hidden;
+            }
+        </style>
+</head>
+<body>
+    <!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+        <div id="mui-content" class="mui-page">
+            <!--单页面标题开始-->
+            <!-- <header class="mui-bar mui-bar-nav common-header">
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+                <h1 class="mui-title">新增问题</h1>
+            </header> -->
+            <!--页面标题栏结束-->
+            <!-- 页面主要内容区开始 -->
+            <div class="mui-page-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div class="record-list">
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable"><span>*</span>工程名称</label>
+                                <input type="text" class=" recordInp projectName" readonly="readonly" placeholder="工程名称">
+                            </div>                       
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable">建设单位</label>
+                                <input type="text" class=" recordInp constructionUnitName" readonly="readonly" placeholder="建设单位名称">
+                            </div>
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable">施工单位</label>
+                                <input type="text" class=" recordInp engineerUnitName" readonly="readonly" placeholder="施工单位名称">
+                            </div>
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable"><span>*</span>监督内容</label>
+                                <input type="text" class=" recordInp supervisorUnitName" readonly="readonly" placeholder="监督内容">
+                            </div>
+                            <div class="mui-input-row input-row-item record-type day-record" style="border-bottom:1px solid #ededed">
+                                <label class="lable"><span>*</span>检查类型</label>
+                                <div class="dayRecord " style="position: absolute;top:19px;"><span class="dailyCheckTypeStr" style="color: #000;">日常检查</span><span class="mui-icon mui-icon-arrowright"></span></div>
+                            </div>
+                            <div class="mui-input-row input-row-item date-item">
+                                <label class="lable"><span>*</span>实际检查日期</label>
+                                <input type="text" readonly="readonly" class=" recordInp dateSelect actualCheckTime" placeholder="2021-04-19"/>
+                                <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;position: absolute;right: 0px;top:22px;" alt=""></span>
+                            </div>
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable">检查人</label>
+                                <input type="text" class=" recordInp dailyCheckPersonRealname" readonly="readonly" >
+                            </div>
+                        </div>
+                        
+                        <div class="issues-total">
+                            <div class="issues-total-left">
+                                <img src="../../../img/fujin-icon.png"
+                       style="width: 13px;height: 14px;line-height: 14px;vertical-align:middle;margin-top: -2px"/>
+                                <span class="issues-text">问题列表</span>:
+                                <span class="total">0</span>
+                            </div>  
+                            <div class="issues-total-right">
+                                <span class="mui-icon mui-icon-arrowdown top-bar  bar"></span>
+                                <span class="mui-icon mui-icon-arrowup bottom-bar hidden bar"></span>
+                            </div>
+                        </div>
+                        <div class="problemList">
+                            <!-- <div class="issues-item">
+                                <div class="issues-item-probably">
+                                    <div class="item-list ">
+                                        <span class="fixed">问题类型:</span>
+                                        <span class="dynamic">地基与基础</span>
+                                    </div>
+                                    <div class="item-list ">
+                                        <span class="fixed">检查结果:</span>
+                                        <span class="dynamic text-ellipsis">安全管理制度、操不完善操作规程不完善操作规程不完善操作规程不完善</span>
+                                    </div>
+                                    <div class="item-list ">
+                                        <span class="fixed">整改要求:</span>
+                                        <span class="dynamic text-ellipsis">这里是一段很长的整改要求， 这里是2111111111的is阿杰科技</span>
+                                    </div>
+                                    <div class="item-list">
+                                        <span class="fixed">相关图片:</span>
+                                        <div class="pic dynamic clearfix">
+                                            <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg" alt="">
+                                            <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg" alt="">
+                                            <img src="http://img.hc360.com/shoes/info/images/200812/200812100834368125.jpg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="item-probably-bot">
+                                        <span class="cut cut1 ">详情</span>
+                                        <span class="cut cut2 hidden">收起</span>
+                                        <span  class="mui-icon mui-icon-arrowdown corner corner1"></span>
+                                        <span  class="mui-icon mui-icon-arrowup hidden corner corner2"></span>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="page-middle">
+                            <div class="for_result">
+                                <div class="item-titlt" style="width:25%;white-space:nowrap;text-align: left;padding-left:20px ;">
+                                    检查结果
+                                </div>
+                                <div class="check-item">
+                                    <div class="mui-input-row mui-checkbox mui-left checkbox" style="width:80px;white-space:nowrap;">
+                                        <label>纠正</label>
+                                        <input class="checkboxI" name="input_hasEslCode"  disabled  value="1" type="checkbox" >
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left checkbox" style="width:80px;white-space:nowrap;">
+                                        <label>整改</label>
+                                        <input class="checkboxI" name="input_hasEslCode"  disabled value="2" type="checkbox" >
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left checkbox" style="width:100px;white-space:nowrap;">
+                                        <label>停工整改</label>
+                                        <input class="checkboxI" name="input_hasEslCode"  disabled value="3" type="checkbox" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-bottom">
+                                <div class="remark-text">
+                                    备注:
+                                </div>
+                                <textarea disabled class="remark" name="remark" id="remark" maxlength= 300 placeholder="请输入相关描述(300以内)" style="height:144px;width:100%;border:none"></textarea>
+                            </div>
+                            <div class="page-footer">
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">填写人</label>
+                                    <input type="text" class=" recordInp realname" readonly="readonly" placeholder="法外狂徒">
+                                </div>
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">填写部门</label>
+                                    <input type="text" class=" recordInp inputDepartmenFullname" readonly="readonly" placeholder="质检部">
+                                </div>
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">联系方式</label>
+                                    <input type="text" class=" recordInp mobilePhone" readonly="readonly" placeholder="123456789">
+                                </div>
+                                <div class="mui-input-row input-row-item date-item">
+                                    <label class="lable" >填写日期</label>
+                                        <input type="text" readonly="readonly" class=" recordInp  dateSelect-fill inputDate" placeholder="2021-04-19"/>
+                                        <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;position: absolute;right: 0px;top:22px;" alt=""></span>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+    <script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+
+    <script src="../../../js/qualityControl/qualityControl.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/mui.zoom.js"></script>
+    <script src="../../../js/mui.previewimage.js"></script>
+    
+<script>
+    mui.init({});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+        var problemImgListObj = {}
+        var imgUrl = []
+		mui.plusReady(function() {
+            
+            // initCheckBox()
+            var self = plus.webview.currentWebview()
+            // var imgUrl = self.imgUrl
+            // $(".total").html(self.dataProblemList.length)
+            // dataProblemList = self.dataProblemList
+            // var getRecordProblem = null
+            // for(var i=0;i<dataProblemList.length;i++){
+            //     if(dataProblemList[i].detailCheckProject == null){
+            //         dataProblemList[i].detailCheckProject = '无'
+            //     }
+            //     if(dataProblemList[i].detailCheckContent == null){
+            //         dataProblemList[i].detailCheckContent = '无'
+            //     }
+            //     if(dataProblemList[i].correctRequirement == null){
+            //         dataProblemList[i].correctRequirement = '无'
+            //     }
+            //     getRecordProblem = `
+            //     <div class="issues-item" >
+            //                         <div class="issues-item-probably">
+            //                             <div class="item-list ">
+            //                                 <span class="fixed">问题类型:</span>
+            //                                 <span class="dynamic ">${dataProblemList[i].detailCheckProject}</span>
+            //                             </div>
+            //                             <div class="item-list ">
+            //                                 <span class="fixed">检查结果:</span>
+            //                                 <span class="dynamic ">${dataProblemList[i].detailCheckContent}</span>
+            //                             </div>
+            //                             <div class="item-list ">
+            //                                 <span class="fixed">整改要求:</span>
+            //                                 <span class="dynamic ">${dataProblemList[i].correctRequirement}</span>
+            //                             </div>
+            //                             <div class="item-list">
+            //                                 <span class="fixed">相关图片:</span>
+            //                                 <div class="photo${i} pic dynamic clearfix setHeight">
+                                                
+            //                                 </div>
+            //                             </div>
+                                        
+            //                         </div>
+            //                     </div>
+            //     `
+            //     // <div class="item-probably-bot">
+            //     //                             <span class="cut cut1 ">详情</span>
+            //     //                             <span class="cut cut2 hidden">收起</span>
+            //     //                             <span  class="mui-icon mui-icon-arrowdown corner corner1"></span>
+            //     //                             <span  class="mui-icon mui-icon-arrowup hidden corner corner2"></span>
+            //     //                         </div>
+            //     $(".issues-list-item").append(getRecordProblem)
+            //     if (imgUrl[i].result && imgUrl[i].result.length && imgUrl[i].result[0].uploadFile){
+            //             for(var j=0;j<imgUrl[i].result.length;j++){
+            //                 let path = imgUrl[i].result[j].uploadFile.savePath;
+            //                 let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                            
+            //                 var html = '<div class="quesList_img">' +
+            //                         '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""/>' +
+            //                         '	</div>';
+            //                 $(`.photo${i}`).append(html)        
+            //             }
+            //     }else{
+            //         $(`.photo${i}`).html('<div>无</div>')
+            //         $(`.photo${i}`).removeClass('setHeight')
+            //     }                
+            // }
+            $('.item-probably-bot').each(function(index){
+                        $(this).on('tap', function (e) {                        
+                            $(this).parent().children($('.item-list')).find($('.dynamic')).toggleClass('text-ellipsis')
+                            $('.cut1').eq(index).toggleClass('hidden')
+                            $('.cut2').eq(index).toggleClass('hidden')
+                            $('.corner1').eq(index).toggleClass('hidden')
+                            $('.corner2').eq(index).toggleClass('hidden')
+                            $('.pic').eq(index).toggleClass('setHeight')
+                        })
+            })
+            
+            var params = {guid:self.guid.guid}
+            var url = config.urls.baseUrl + config.actions.getRecordDetail
+            var type = 'get'
+            app.showLoader()
+            getProject(url,params,type,function(data){
+                data = data.result
+                console.log('data='+JSON.stringify(data))
+                if(data.problemList && data.problemList.length != 0 && data.problemList[0].checkResults){
+                    var problemData = data.problemList[0].checkResults
+                    getALLProblem(problemData)
+                }
+                data.createTime = data.createTime.split(" ")[0]
+                $(".projectName").val(data.projectModel.projectName)
+                $(".constructionUnitName").val(data.projectModel.constructionUnitName)
+                $(".engineerUnitName").val(data.projectModel.constructionUnitName)
+                $(".supervisorUnitName").val(data.dailyName)
+                $(".dailyCheckTypeStr").html(data.dailyCheckTypeStr)
+                $(".actualCheckTime").val(data.actualCheckTime)
+                $(".dailyCheckPersonRealname").val(data.dailyCheckPersonRealname)
+                $(".remark").val(data.remark)
+                $(".inputDepartmenFullname").val(data.projectModel.inputDepartmenFullname)
+                $(".inputDate").val(data.createTime)
+                $(".realname").val(data.createByModel.realname)
+                $(".mobilePhone").val(data.createByModel.mobilePhone)  
+                $(`input[name='input_hasEslCode'][value=${data.actualCheckResult}]`).prop("checked",true)
+                      
+            })
+        });
+
+    // 时间选择器
+    // $(".date-select").on('tap',function() {
+    //     var dtPicker = new mui.DtPicker({type:'date'}); 
+    //     dtPicker.show(function (selectItems) { 
+    //         var y = selectItems.y.text;  //获取选择的年
+    //            var m = selectItems.m.text;  //获取选择的月
+    //            var d = selectItems.d.text;  //获取选择的日
+    //            var date = y + "-" + m + "-" + d ;
+    //            console.log(date)
+    //            $(".dateSelect").val(date) 
+               
+    //     }) 
+    //     // var picker = new mui.PopPicker();
+    //     //         picker.setData([{value:'zz',text:'智子'},{value:'?',text:'1'},{value:'2',text:'3'}]);
+    //     //         picker.show(function (selectItems) {
+    //     //             console.log(selectItems[0].text);//智子
+    //     //             console.log(selectItems[0].value);//zz 
+    //     //         })
+    // })
+
+    
+    
+    $('.issues-total').on('tap',function () {
+        $('.top-bar').toggleClass('hidden')
+        $('.bottom-bar').toggleClass('hidden')
+        $('.issues-list-item').toggleClass('hidden')
+
+    })
+    //图片预览
+    $(document).on('tap', '.img_src', function() {
+		    mui.previewImage();
+    });    
+
+    function getALLProblem(problemData){
+            // var data = problemData
+            $('.total').html(problemData.length)
+            for(var i=0;i<problemData.length;i++){
+                var item = problemData[i]
+                // if(console.log('data='+JSON.stringify(data)))
+                // if(!item.attachment && !problemImgListObj[item.attachment]){
+                    // return
+                    // return
+                    
+                    queryPhoto(item.attachment, function (imgData) {
+                        // console.log(JSON.stringify(item.attachment),'item.attachment')
+                            if(imgData.success){
+                                    problemImgListObj[item.attachment] = imgData
+                                    console.log(JSON.stringify(imgData))
+                                    
+                            }else{
+                                app.toast('获取图片失败,请检查网络')
+                                problemImgListObj[item.attachment].result = []
+                            }
+                            // console.log(JSON.stringify(problemImgListObj[item.attachment]))
+                            // if(imgData.success){
+                            //     problemImgListObj[item.attachment] = imgData
+                            // }else{
+                            //     problemImgListObj[item.attachment] = null
+                            // }
+                    })
+                    imgUrl.push(problemImgListObj[item.attachment])  
+                    
+                // }     
+                
+            }
+            // console.log(JSON.stringify(problemImgListObj,'123'))
+            // for(key in problemImgListObj){
+            //     imgUrl.push(problemImgListObj[key])
+            // }
+            // console.log(JSON.stringify(imgUrl[9]))
+            // return
+            var getProblem = null
+            for(var i=0;i<problemData.length;i++){
+                if(problemData[i].detailCheckProject == null){
+                    problemData[i].detailCheckProject = '无'
+                }
+                if(problemData[i].detailCheckContent == null){
+                    problemData[i].detailCheckContent = '无'
+                }
+                if(problemData[i].correctRequirement == null){
+                    problemData[i].correctRequirement = '无'
+                }
+                getProblem = `
+                <div class="issues-list-item">
+                    <div class="date-title" style="font-size:14px;">${problemData[i].checkDate}</div>
+                    <div class="issues-item">
+                        <div class="issues-item-probably">
+                            <div class="item-list ">
+                                <span class="fixed">问题类型:</span>
+                                <span class="dynamic isWrap">${problemData[i].detailCheckProject}</span>
+                            </div>
+                            <div class="item-list ">
+                                <span class="fixed">检查结果:</span>
+                                <span
+                                class="dynamic isWrap">${problemData[i].detailCheckContent}</span>
+                            </div>
+                            <div class="item-list ">
+                                <span class="fixed">整改要求:</span>
+                                <span class="dynamic isWrap">${problemData[i].correctRequirement}</span>
+                            </div>
+                            <div class="item-list">
+                                <span class="fixed">相关图片:</span>
+                                <div class="photo${i} pic dynamic setHeight">
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                        </div>
+                        </div>
+                        
+                        
+                        `
+                        // <div class="item-probably-bot">
+                        //         <span class="cut cut1 ">详情</span>
+                        //         <span class="cut cut2 hidden">收起</span>
+                        //         <span class="mui-icon mui-icon-arrowdown corner corner1"></span>
+                        //         <span class="mui-icon mui-icon-arrowup hidden corner corner2"></span>
+                        // </div>
+                        $('.problemList').append(getProblem)
+                        // console.log(JSON.stringify(imgUrl[9],'999999999999999999999'))
+                        // return
+                    if (imgUrl[i].result && imgUrl[i].result.length && imgUrl[i].result[0].uploadFile){
+                        for(var j=0;j<imgUrl[i].result.length;j++){
+                            let path = imgUrl[i].result[j].uploadFile.savePath;
+                            let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                            
+                            var html = '<div class="quesList_img">' +
+                                    '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""/>' +
+                                    '	</div>';
+                            $(`.photo${i}`).append(html)  
+                            console.log(url)      
+                        }
+                    }else{
+                        $(`.photo${i}`).html('<div>无</div>')
+                        $(`.photo${i}`).removeClass('setHeight')
+                    }
+                    
+            }
+    }
+        
+
+        
+</script>
+</html>

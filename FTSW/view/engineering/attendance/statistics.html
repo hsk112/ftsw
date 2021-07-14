@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/statistics.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/calendar.css" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			div,
+			span,
+			input {
+
+				font-family: PingFang SC;
+			}
+
+			.hide {
+				display: none;
+			}
+
+			.flexCenter {
+				display: flex;
+				align-items: center;
+			}
+
+			.state_text {
+				padding-bottom: constant(safe-area-inset-bottom);
+				padding-bottom: env(safe-area-inset-bottom);
+				padding-bottom: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="search_wrap">
+			<div class="search_bar">
+				<span class="mui-icon mui-icon-search" style="font-size: 19px;margin-right: 9px;"></span>
+				<input class="input_person" type="text" placeholder="搜索成员打卡记录" value="" />
+				<div class="enter">
+					<span class="search">查询</span>
+				</div>
+			</div>
+		</div>
+		<div class="itemHeight" style="border-bottom: 1px solid #C3C3C3;">
+			<div class="dateMonth">
+				<div class="arrow_left" id="prev">
+
+				</div>
+				<span class="month_text" style="font-size: 18px; color: #161515;font-weight: bold;">
+
+				</span>
+				<div class="arrow_right" id="next">
+
+				</div>
+			</div>
+			<div class="attendence_text" style="color:#337BFC;font-size: 14px;font-weight: bold;">
+				当月出勤率--
+			</div>
+		</div>
+		<div class="itemHeight" style="display: block;line-height: 56.5px;font-size: 16px;font-weight: bold;">
+			每日统计<span class="month_wrap">(<span class="month">--</span>)</span>
+		</div>
+		<div id="data">
+			<ul id="title" style="background:#f4f4f4">
+				<li>日</li>
+				<li>一</li>
+				<li>二</li>
+				<li>三</li>
+				<li>四</li>
+				<li>五</li>
+				<li>六</li>
+			</ul>
+			<!-- <p>
+			 	<span id="prev">上一月</span>
+				<span id="nian"></span>
+				<span id="next">下一月</span> 
+			</p> -->
+			<!-- 			<div id="yue">2020年10月</div> -->
+
+			<ul id="date" style="margin-bottom:0;border-bottom: none;padding-bottom: 0;">
+			</ul>
+		</div>
+		<div class='fenge'>
+			<div class="line"></div>
+			<span class="mui-icon mui-icon-arrowdown"></span>
+			<div class="line"></div>
+		</div>
+		<button type="button" class="hide">--</button>
+		<div class="halfCircle_wrap">
+			<div class='person_count'>
+				<div class="count">
+					<span class="yiCount">--</span>/<span class="totalCount">--</span>
+				</div>
+				<div class="count_text">
+					每天打卡/应到统计
+				</div>
+			</div>
+			<canvas id="myCanvas" width="200" height="100"></canvas>
+		</div>
+		<div class='state_text'>
+			<div class="normal flexCenter">
+				考勤正常:<span style="font-size:18px;color:#43DE87;margin-left: 3px;">--</span>
+			</div>
+			<div class="nonnormal flexCenter">
+				未打卡:<span style="font-size:18px;color:#FF5656;margin-left: 3px;">--</span>
+			</div>
+		</div>
+		<script src="../../../js/s4.js"></script>
+		<script src="../../../js/smutils.js"></script>
+		<script src="../../../js/byte&string.js"></script>
+		<script src="../../../js/ajaxhook.min.js"></script>
+		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../js/jquery.min.js"></script>
+		<script src="../../../js/app.js"></script>
+		<script src="../../../js/config.js"></script>
+		<script src="../../../js/common.js"></script>
+		<script src="../../../js/attendance/satistics.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/vconsole.min.js"></script>
+		<script type="text/javascript">
+			// var vConsole = new VConsole();
+			mui.init({
+				swipeBack: false
+				})
+			var yidata;
+			var weidata;
+			let params = {
+				projectId: '',
+				year: '',
+				month: '',
+				pageNo: 1,
+				pageSize: 100,
+			};
+			var myProjectId = {
+				projectId: JSON.parse(localStorage.getItem("projectInfo")).prjId
+			};
+			let oneParam = {
+				projectId: myProjectId.projectId,
+				personId: JSON.parse(localStorage.getItem('$state')).account,
+				// personId: 'chen_k',
+				year: new Date().getFullYear(),
+				month: (dat.getMonth() + 1)
+			};
+			const screenWidth = document.documentElement.clientWidth;
+			const screenHeight = document.documentElement.clientHeight;
+			const canvasWidth = screenWidth / 2;
+
+			function PI(deg) {
+				return deg / 180 * Math.PI;
+			}
+
+			function changePI(count, total, state) {
+				//已占几分之几得形式
+				if (state) {
+					var per = 1 - count / total;
+				} else {
+					var per = count / total
+				}
+
+				// console.log(per)
+				var deg = 180 * per;
+				// console.log(deg)
+				return -(deg / 180 * Math.PI)
+			}
+			function drawCanvas(leftCount,rightCount) {
+				var canvas = document.getElementById('myCanvas');
+				var context = canvas.getContext('2d');
+				var pi = Math.PI;
+				// context.beginPath();
+				// context.lineCap="round";
+				// context.arc(100, 100,canvasWidth/2,PI(-180), PI(0), false);
+				// context.lineWidth = 12;
+				// context.strokeStyle = '#43DE87';
+				// context.stroke();
+				// context.beginPath();
+				// context.lineCap="round";
+				// context.arc(100, 100, canvasWidth/2, changePI(16,21), PI(0), false);
+				// context.lineWidth = 12;
+				// context.strokeStyle = '#FF5656';
+				// context.stroke();
+				// 测试
+				context.beginPath();
+				context.lineCap = "round";
+				context.arc(100, 100, canvasWidth / 2, PI(180), changePI(leftCount,rightCount,true), false); //changePi第一个参数减1.5 若小于1.5写0
+				context.lineWidth = 12;
+				context.strokeStyle = '#43DE87';
+				context.stroke();
+				context.beginPath();
+				context.lineCap = "round";
+				if(rightCount-leftCount===0){
+					console.log('等于0')
+					return
+				}
+				context.arc(100, 100, canvasWidth / 2, PI(0), changePI(rightCount-leftCount, rightCount, false), true);
+				context.lineWidth = 12;
+				context.strokeStyle = '#FF5656';
+				context.stroke();
+			}
+			//为查询按钮添加样式
+			$('.input_person').bind('input propertychange', (e) => {
+				let text = $('.search_bar input').val();
+				if (text != '') {
+					$('.enter .search').css('color', "#000")
+				} else {
+					$('.enter .search').css('color', "#b1b1b1")
+				}
+			})
+			//为查询按钮添加事件
+			$('.enter .search').on('tap', () => {
+				let text = $('.search_bar input').val();
+				oneParam.personId = text
+				if (text != '') {
+					attendanceOne(oneParam, (res) => {
+						console.log(JSON.stringify(res))
+						if(res.result.dayList.length == 0){
+							app.toast("暂无【"+text+"】的考勤信息")
+						}
+						if(oneParam.month!=new Date().getMonth()+1){
+							$('.yiCount').text(res.result.dayList.length);
+							$('.totalCount').text(day.getDate());
+							$('.normal span').text(res.result.dayList.length);
+							$('.nonnormal span').text(day.getDate()-res.result.dayList.length);
+							
+							var day = new Date(nianD,oneParam.month,0);   //最后一个参数为0,意为获取2018年10月一共多少天
+							var per = ((res.result.dayList.length / day.getDate()) * 100).toFixed(0);
+							$('.attendence_text').text(`当月出勤率${per}%`)
+						}else{
+							$('.yiCount').text(res.result.dayList.length);
+							$('.totalCount').text(new Date().getDate());
+							$('.normal span').text(res.result.dayList.length);
+							$('.nonnormal span').text((new Date().getDate())-res.result.dayList.length);
+							var per =((res.result.dayList.length/new Date().getDate())*100).toFixed(0);
+							$('.attendence_text').text(`当月出勤率${per}%`)
+						}
+						
+						if (res.result.dayList.length > 0) {
+							test = res.result.dayList;
+						}else{
+							test = [];
+						}
+						if (ifClip) {
+							//此时处于一行面板
+							add(firstIndex, lastIndex)
+						} else {
+							showAll(); //重新执行渲染 获取去 改变后的 年月日 进行渲染; 
+						}
+					});
+					console.log('不为空')
+				} else {
+					
+					//点击查询后 应该将所有日期都恢复默认今日得
+				}
+			});
+			$('.input_person').on('input propertychange',(e)=>{
+				if($('.input_person').val()!=''){
+					return 
+				}
+				oneParam.personId = app.userInfo().personName;
+				attendanceOne(oneParam, (res) => {
+					var per = ((res.result.dayList.length / new Date().getDate()) * 100).toFixed(0);
+					$('.attendence_text').text(`当月出勤率${per}%`)
+					if (res.result.dayList.length > 0) {
+						test = res.result.dayList;
+						$('.yiCount').text(res.result.dayList.length);
+						$('.totalCount').text(new Date().getDate());
+						$('.normal span').text(res.result.dayList.length);
+						$('.nonnormal span').text(new Date().getDate()-res.result.dayList.length);
+					}
+					if (ifClip) {
+						//此时处于一行面板
+						add(firstIndex, lastIndex)
+					} else {
+						showAll(); //重新执行渲染 获取去 改变后的 年月日 进行渲染; 
+					}
+				});
+			})
+			mui.plusReady(function() {
+				params.year = '' + new Date().getFullYear(); //当前年份
+				params.month = '' + (new Date().getMonth() + 1); //当前月
+				params.projectId = JSON.parse(localStorage.getItem("projectInfo")).prjId;
+				getDateList(oneParam, (res) => {
+					var per = ((res.result.dayList.length / new Date().getDate()) * 100).toFixed(0);
+					$('.attendence_text').text(`当月出勤率${per}%`);
+					$('.yiCount').text(res.result.dayList.length);
+					$('.totalCount').text(new Date().getDate());
+					$('.normal span').text(res.result.dayList.length);
+					$('.nonnormal span').text((new Date().getDate())-res.result.dayList.length);
+					drawCanvas(res.result.dayList.length,new Date().getDate())
+				});
+			});
+			//api
+			function attendancelist(param, callback) {
+				// console.log(app.sessionId())
+				var url = config.urls.baseUrl + config.actions.attendancelist;
+				// console.log(url)
+
+				// var url =`http://zhswtest.ecidi.com/ecidi-cmp/ft-prjManage/projectattendencecheck/projectAttendenceCheck/add`;
+				app.showLoader();
+				$.ajax(url, {
+					data: param,
+					// data: "",
+					dataType: 'json', //服务器返回json格式数据
+					type: 'GET', //HTTP请求类型
+					headers: {
+						// "Content-Type": "application/json",
+						"Content-Type": "application/x-www-form-urlencoded",
+						"X-Access-Token": app.sessionId(),
+					},
+					timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+					success: function(data) {
+						app.hideLoader();
+						if (dealingWithResponseCode(data)) {
+							callback(data);
+							// mui.alert(data.message)
+						} else {
+							app.toast(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						var res = xhr.responseText;
+						res = JSON.parse(res)
+						mui.alert(res.message)
+						dealingWithErrorRequest(errorThrown);
+						app.hideLoader();
+						return callback('网络异常,请稍后再试');
+					}
+				});
+			};
+
+			function attendanceOne(param, callback) {
+				var url = config.urls.baseUrl + config.actions.attendanceOne;
+				// var url =`http://zhswtest.ecidi.com/ecidi-cmp/ft-prjManage/projectattendencecheck/projectAttendenceCheck/add`;
+
+				console.log(JSON.stringify(param))
+				app.showLoader();
+				$.ajax(url, {
+					data: param,
+					// data: "",
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					headers: {
+						// "Content-Type": "application/json",
+						"Content-Type": "application/x-www-form-urlencoded",
+						"X-Access-Token": app.sessionId(),
+					},
+					timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(JSON.stringify(data))
+						app.hideLoader();
+						if (dealingWithResponseCode(data)) {
+							callback(data);
+							// mui.alert(data.message)
+						} else {
+							app.toast(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(type)
+						dealingWithErrorRequest(errorThrown);
+						app.hideLoader();
+						return callback('网络异常,请稍后再试');
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

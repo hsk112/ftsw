@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-全部</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 100px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 30px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				/* border: 1px solid #337BFC; */
+				color: #337BFC;
+				/* border-radius: 21px; */
+				font-size: 10px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-bottom {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-bottom span {
+				text-align: left;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 12px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: red;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: green;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: orange;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">排水户列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="pullrefresh" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view mui-table-view-chevron task-ul">
+							<!-- <li class="task-li">
+								<div class="mui-row task-item">
+									<div class="mui-col-xs-9 task-item-title"> <span>国电大厦</span> </div>
+									<div class="mui-col-xs-3 task-item-title">
+										<div class="task-item-running"><span>流转中</span></div>
+									</div>
+								</div>
+								<div class="mui-row task-item">
+									<div class="mui-col-xs-5 task-item-tip">类型：居民住宅 </div>
+									<div class="mui-col-xs-5 task-item-tip">污水：混合污水 </div>
+									<div class="mui-col-xs-2 task-item-tip">级别：一级 </div>
+								</div>
+								<div class="mui-row task-item">
+									<div class="mui-col-xs-12 task-item-tip"> <span>登记时间:2020-02-02 10:10:10</span> </div>
+								</div>
+								<div class="mui-row task-item">
+									<div class="mui-col-xs-12 task-item-tip"> <span>地址:福田区中天元8西门</span> </div>
+								</div>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script type="text/javascript">
+		// var vConsole = new VConsole();
+		var page = 1;
+		var count = 20;
+		var listData = [];
+
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					style: 'circle',
+					callback: pulldownRefresh
+				},
+				up: {
+					auto: true,
+					height: 300,
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+
+		//初始化单页的区域滚动
+		mui.ready(function() {
+
+		});
+
+		function pullupRefresh() {
+			initData(function(result) {
+				if (page < result.pages) {
+					page++;
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+				} else {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+				}
+			});
+		}
+
+		function addData(data) {
+			var li = "";
+			// console.log(page)
+			// console.log(count)
+			for (var i = 0; i < data.length; i++) {
+				var item = data[i];	
+				var dateIndex = (page-1)*count+i
+				var state = '';
+				if(parseInt(item.state) == 0) {
+					state = '暂存	';
+				} else if(parseInt(item.state) == 1) {
+					state = '流转中';
+				} else if(parseInt(item.state) == 2) {
+					state = '已完成';
+				}
+				if (!item.dischargerName) item.dischargerName = '暂无';
+				if (!item.usertype_dictText) item.usertype_dictText = '无';
+				if (!item.pollutematter_dictText) item.pollutematter_dictText = '无';
+				if (!item.userlevel_dictText) item.userlevel_dictText = '无';
+				li = li + '<li class="task-li" data-index="'+ dateIndex +'">' +
+					'	<div class="mui-row task-item">' +
+					'		<div class="mui-col-xs-9 task-item-title">' +
+					'			<span>' + item.dischargerName + '</span>' +
+					'		</div>' +
+					'		<div class="mui-col-xs-3 task-item-title">' +
+					'			<div class="task-item-btn"><span>'+state+'</span></div>'+
+					'		</div>' +
+					'	</div>' +
+					'	<div class="mui-row task-item">' +
+					'		<div class="mui-col-xs-4 task-item-tip">' +
+					'类型：' + item.usertype_dictText +
+					'		</div>' +
+					'		<div class="mui-col-xs-5 task-item-tip">' +
+					'污水：' + item.pollutematter_dictText +
+					'		</div>' +
+					'		<div class="mui-col-xs-3 task-item-tip">' +
+					'级别：' + item.userlevel_dictText +
+					'		</div>' +
+					'	</div>' +
+					'	<div class="mui-row task-item">' +
+					'		<div class="mui-col-xs-12 task-item-tip">' +
+					'			<span>地址:' + isEmp(item.address) + '</span>' +
+					'		</div>' +
+					'	</div>' +
+					'</li>';
+			}
+			$(".task-ul").append(li);
+
+			$(".task-li").each(function() {
+				$(this).click(function() {
+					let index = $(this).attr("data-index")		
+					queryByGuid(listData[index].guid, function (data) {
+							console.log(JSON.stringify(data))			
+						if (data.result) {
+							globalSetItem(GlobalKey.id, listData[index].guid);//选中排水户的id	
+							var point = {
+								'lng':data.result.longitude,
+								'lat':data.result.latitude
+							}
+							globalSetItem(GlobalKey.psh, JSON.stringify(data.result));
+							globalSetItem(GlobalKey.point, JSON.stringify(point));
+							var extras = {
+                        		data: data.result,
+								returnUrl: 'paish_alllist.html'
+                    		}
+                    		app.openPage("paish_showOne.html", {
+                    		    titleNView: {
+                    		        titleText: '查看排水户',
+                    		        autoBackButton: true,
+                    		    }
+                    		}, extras);
+						} else {
+							app.toast('网络异常,无法获取排水户信息,请稍后再试');
+						}
+					})
+				});
+			});
+		}
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			page = 1;
+			$(".task-ul").empty();
+			initData(function() {
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+			});
+		}
+
+		var initData = function(callback) {
+			getPshList({
+				pageNo: page,
+				pageSize: 20,
+				order: 'desc',
+				userlevel: 1,
+				field: 'id___dischargerName_villageText_characterText_stationId_dictText_inputerfullname_inputDate_state_dictText_action',
+				column: 'createTime',
+				// dischargerName: '台剧句'
+			}, function(data) {
+				listData=listData.concat(data.result.records);
+				addData(data.result.records);
+				if (callback) {
+					callback(data.result);
+				}
+			});
+		}
+	</script>
+
+</html>

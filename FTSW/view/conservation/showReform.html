@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-查看整改文件</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+		width: 16px;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #444444;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 90%;
+			text-align: center;
+			padding: 0 14px;
+			margin-left: 5%;
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		
+		.uploadBtn{
+			padding-top: 2px;
+			display: inline-block;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 400;
+			color: #FFFFFF;
+			width: 83px;
+			height: 26px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.tip{
+			width: 70%;
+			text-align: left;
+			vertical-align: bottom;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			margin-left: 20px;
+		}
+		.fileContent{
+			padding:20px 0;
+			margin:0 20px;
+			border-bottom: 1px solid #eeeeee;
+		}
+		.fileContent-item{
+			width: 100%;
+			min-height: 60px;
+			/*background: #F4F7FE;*/
+			border:1px solid #EDEDED;
+			border-radius: 5px;
+			margin-bottom: 10px;
+		}
+		.fileContent-item:last-child{
+			margin-bottom: 0px;
+		}
+		.typeImg{
+			width: 30px;
+			height: 34px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.fileContent-item-title{
+			width: calc(100% - 90px);
+			height: 34px;
+			display: inline-block;
+			text-align: left;
+			margin-left: 10px;
+		}
+		.titleSpan{
+			width: 100%;
+			word-break: break-all;
+			font-size: 14px;
+			font-weight: 500;
+			color: #191515;
+			line-height: 14px;
+			display: block;		
+		}
+		.fileSize{
+			font-size: 12px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 14px;
+		}
+		.removeFile{
+			width: 18px;
+			height: 18px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.signDetail{
+			padding:30px 0 !important;
+/* 			font-size: 16px;
+			font-weight: 400;
+			color: #B1B1B1; */
+			line-height: 14px;"
+		}
+		.input-email{
+			border-bottom:5px solid #F4F4F4;
+		}
+		.input-email:last-child{
+			border-bottom:none;
+		}
+		.addDiv{
+			width: 100%;
+			height: 40px;
+			text-align: center;
+			margin: 30px 0
+		}
+		.addBtn{
+			/* margin-left: 10%; */
+			width:80%;
+			line-height: 30px;
+			font-size: 16px;
+			font-weight: bold;
+			color: #FFFFFF;
+			border-radius: 40px;
+			background: #337BFC;
+			border: #fff
+		}
+		.mui-input-row .mui-input-clear~.mui-icon-clear{
+			top:20px
+		}
+	/*	自定义样式	*/
+			.paish .info-bar-content-item {
+				height: 55px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			.paish .mui-input-row {
+
+			}
+			.paish .info-bar-content-item .item-title {
+				padding: 0;
+				width: 120px;
+			}
+			input[type=text] {
+				margin-bottom: 0;
+				/*height: auto;*/
+				/*width: auto;*/
+				/*text-align: right;*/
+			}
+			.paish .info-bar-content-item .item-input input {
+				text-align: right;
+			}
+			.right-input-date {
+				display: flex;
+				align-items: center;"
+			}
+			.right-input-date .inputCss {
+				/*width: 90%;*/
+				height: 20px;
+				margin-bottom: 0;
+				margin-right: 5px;
+			}
+			.checkBoxCss {
+				padding: 10px 0;
+			}
+			.paish .mui-input-row.mui-checkbox.mui-left {
+				width: auto;
+				margin-left: 20px;
+			}
+			.sign-item {
+				width: 100%;
+				border-bottom: 1px solid #EDEDED;
+				height: 55px;
+				text-align: left;
+			}
+			.signDetail {
+				margin-bottom: 0px;
+				border: none;
+				/* border-bottom: 1px solid #eee; */
+				height: 40px;
+				text-align: left;
+			}
+			.item-checkbox {
+				display: flex;
+			}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn" style="display: none;">
+			<div class="item" id="back">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">返回</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+<!--			style="margin-bottom: 100px;"	-->
+				<div id="scroll-content" class="mui-scroll-wrapper" >
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目名称
+									</div>
+									<div class="mui-input-row item-input" style="width: auto;">
+										<input id="prjName" readonly="true" type="text" value="" placeholder="由监督检查记录表回填" class="inputCss"
+										style="text-align: right; margin: 0;"/>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 30px;border: none;">
+									<div class="item-title">
+										整改文件
+									</div>
+								<!-- 	<div style="margin-top: 10px;text-align: left;">
+										<button class="uploadBtn" id="uploadBtn" disabled="disabled">上传文件</buttom>
+											<span class="tip">可上传文件格式：doc、docx和pdf</span>
+									</div> -->
+								</div>
+								<input id="fileType" value="" style="display:none">
+								<input id="filePath" value="" style="display:none">
+								<input id="fileId" value="" style="display:none">
+								<div class="fileContent" id="reformFile" style="display: none;">
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										要求完成日期
+									</div>
+									<div class="mui-input-row item-input right-input-date" style="width: auto;">
+										<input id="comDate" class="inputCss" readonly="true" type="text" class="mui-input-clear"
+										 placeholder="由监督检查记录表回填" style="margin: 0; text-align: right;margin-right: 5px;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border-bottom: none;">
+									<div class="item-title">
+										发送方式
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss" style="padding: 10px 0;margin-left: 30px;">邮箱</label>
+											<input name="notifymethod" value="1" type="checkbox" disabled="true" >
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss" style="padding: 10px 0;margin-left: 30px;">短信</label>
+											<input name="notifymethod" value="0" type="checkbox" disabled="true">
+										</div>
+									</div>
+								</div>
+								<div style="height: 1px;background: #EDEDED;"></div>
+								<div class="fileContent" style="padding-bottom: 0;min-height:275px;border:none" id="signPerson">
+
+								</div>
+								<div style="height: 1px;background: #EDEDED;"></div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										发送日期
+									</div>
+									<div class="mui-input-row item-input right-input-date">
+										<input id="sendDate" class="inputCss" readonly="true" type="text" placeholder="请选择日期" style="">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										当前状态
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="conservationStatus_dictText" type="text" readonly="true" maxlength="10" class="inputCss"
+										 placeholder="由监督检查记录表回填" style="">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputByName" readonly="true" type="text" class="inputCss" value="" placeholder="请输入填写人">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border:none">
+									<div class="item-title">
+										联系方式
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputByPhone" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		//  测试环境
+		var isTest = false;
+		if(!isTest) {
+			mui.init({
+				beforeback: function() {
+					//获得父页面的webview
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'reload1');
+					//返回true,继续页面关闭逻辑
+					return true;
+				}
+			});
+		}
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+
+		var count = 1;
+		mui.plusReady(function() {
+			//界面元素控制
+			console.log("plusReady")
+			initView();
+		});
+
+		//界面元素控制
+
+		var initView = function() {
+
+			var self = plus.webview.currentWebview();
+			console.log("self.superviseId:" + self.superviseId);
+
+			getFileForm({
+				superviseId: self.superviseId
+			},function(data) {
+				//获取整改文件
+				console.log("==== 获取整改文件getFileForm start ==== ")
+				console.log(JSON.stringify(data))
+				console.log("==== 获取整改文件getFileForm end ==== ")
+				if (data.result != null) {
+					var item = data.result;
+					$("#prjName").val(isEmp(item.projectName));
+					$("#comDate").val(isEmp(item.comDate));
+					$("#sendDate").val(isEmp(item.sendDate));
+					var notifymethod = JSON.parse(item.notifymethod)
+					for(let i = 0; i < notifymethod.length;i++){
+						if(notifymethod[i] == 'email'){
+							$("input[name='notifymethod'][value=1]").prop("checked", true);
+						}else if(notifymethod[i] == 'msg'){
+							$("input[name='notifymethod'][value=0]").prop("checked", true);
+						}
+					}
+
+					getDicTextByIdAndKey(self.conservationStatus, "conservation_status", function(data) {
+						$("#conservationStatus_dictText").val(isEmp(data));
+					})
+					$("#inputByName").val(isEmp(item.inputer));
+					$("#inputByPhone").val(isEmp(item.phonum));
+					if (item.superviseFile != null && item.superviseFile != undefined && item.superviseFile != "") {
+						findFilesByGroupId({
+							groupId: item.superviseFile
+						}, function(data) {
+							// console.log(JSON.stringify(data))
+							// console.log("==== findFilesByGroupId start ==== ")
+							// console.log(JSON.stringify(data))
+							// console.log("==== findFilesByGroupId end ==== ")
+							$("#fileType").val(data.result[0].uploadFile.fileType)
+							$("#filePath").val(data.result[0].uploadFile.savePath)
+							$("#fileId").val(data.result[0].uploadFile.id)
+							var str = `<div class="fileContent-item"` +
+								` data-token="` + data.result[0].fileToken + `"` +
+								`<div style="padding:12px 0 10px 0">
+														<div class="typeImg">`
+														if(data.result[0].uploadFile.fileType == '.pdf'){
+															str += `<img src="../../img/commom/pdf.png" style="width: 30px;height: 34px;"></img>`;
+														}else{
+															str += `<img src="../../img/commom/doc.png" style="width: 30px;height: 34px;"></img>`
+														}
+														str += `</div>
+														<div class="fileContent-item-title">
+															<span class="titleSpan">` +
+								data.result[0].uploadFile.fileName + `</span>
+															<span class="fileSize">` + data.result[0].uploadFile.fileSize + "KB" +
+								`</span>
+														</div>
+													</div>
+												</div>`
+							// var str1 = str;
+														//str = str + str1;
+
+							$("#reformFile").append(str);
+							$("#reformFile").show();
+						});
+					}
+
+					queryWs({
+						guid: item.guid
+					},function(data) {
+						// data = {"success":true,"message":"成功","result":[{"personPhonum":"13750001111","updateTime":null,"corpName":"abc","delFlag":0,"corpCode":"A01","prjCode":null,"personName":"a","createBy":"chen_m2","createTime":"2020-11-13 11:23:29","updateBy":null,"guid":"ce380c79e8c32a3b8e661b8feecc1a48","sheetId":"edac37a8cdaee46fb8442ecf75ba7903","personMail":"11@qq.com"},{"personPhonum":"13750001111","updateTime":null,"corpName":"abc","delFlag":0,"corpCode":"A01","prjCode":null,"personName":"a","createBy":"chen_m2","createTime":"2020-11-13 11:23:29","updateBy":null,"guid":"ce380c79e8c32a3b8e661b8feecc1a48","sheetId":"edac37a8cdaee46fb8442ecf75ba7903","personMail":"11@qq.com"},],"timestamp":1606113223666,"code":200}
+						// console.log("==== 获取签收人员queryWs start ==== ")
+						// console.log(JSON.stringify(data))
+						// console.log("==== 获取签收人员queryWs end ==== ")
+						if (data.result != null) {
+							var item = data.result;
+							count = item.length;
+							var str = '';
+							$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) + 275 * (count - 1) + 'px');
+							for (let i = 0; i < item.length; i++) {
+									str += `<div class = "person" id = "row_` + (i + 1) +`">
+													<div class="item-title" style="text-align: left;" class="morePerson">
+														签收人员${i+1}
+													</div>
+													<div class="mui-input-row item-input sign-item">
+														<input class="inputCss signDetail" name = "personName" required="true" readonly="true" value="${isEmp(item[i].personName)}"
+														type="text" placeholder="请输入姓名"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+													<div class="mui-input-row item-input sign-item">
+													<input class="inputCss signDetail" name = "corpName" required="true" readonly="true" value="${isEmp(item[i].corpName)}"
+													type="text" placeholder="请输入单位名称"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+													<div class="mui-input-row item-input sign-item">
+													<input class="inputCss signDetail" name = "personPhonum" required="true" readonly="true" value="${isEmp(item[i].personPhonum)}"
+													type="text"  placeholder="请输入电话"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+													<div class="mui-input-row item-input input-email sign-item" style="">
+													<input class="inputCss signDetail" name = "personMail" required="true"  readonly="true"  value="${isEmp(item[i].personMail)}"
+													type="text" placeholder="请输入电子邮箱"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+												</div>`
+							}
+							$("#signPerson").append(str);
+							$('#signPerson .input-email').each(function(index) {
+								if (index == count - 1) {
+									$(this).css("border", "none")
+								} else {
+									$(this).css("border-bottom", "5px solid #F4F4F4")
+								}
+							});
+						}
+					}) // queryWs end
+				} // if (data.result != null) end
+			})
+		}
+
+		// 预览
+		$("#reformFile").on('tap',function(){
+		    var fileType = $("#fileType").val();
+		    var filePath = $("#filePath").val();
+		    var fileId = $("#fileId").val();
+		    console.log("fileType:"+fileType)
+            if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc") {
+                var extras = {
+                    filePath: filePath,
+                    fileId: fileId
+                };
+                // console.log(JSON.stringify(extras));
+                app.openPage("./preview.html", {
+                    titleNView: {
+                        titleText: '文档预览',
+                        autoBackButton: true
+                    }
+                }, extras);
+            } else if (fileType == '.jpg' || fileType == '.png') {
+                var extras = {
+                    filePath: filePath,
+                    fileId: fileId
+                };
+                // console.log(JSON.stringify(extras));
+                app.openPage("./preImg.html", {
+                    titleNView: {
+                        titleText: '图片预览',
+                        autoBackButton: true
+                    }
+                }, extras);
+            } else {
+                app.toast("此类型文件不支持预览");
+            }
+		})
+
+
+		//返回
+		$("#back").on("tap", function(event) {
+				mui.fire( plus.webview.getWebviewById('proDetail.html') ,'reload1');
+				popToTarget('proDetail.html');
+		});
+
+		// 测试区
+		function initViewTmp() {
+
+			//var fileFormDataStr = `{"success":true,"message":"查询成功","result":{"guid":"784e5861f27ac42bdd078db95570a4a0","createBy":"cao_xs","createTime":"2021-03-25 10:43:31","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"projectName":"项目","projectId":null,"superviseFile":"9772223af9dd4b28baf46be91a5654f8","comDate":"2021-03-26","notifymethod":"[\\"email\\",\\"msg\\"]","sendDate":"2021-03-25","inputDepart":null,"phonum":"18011808576","inputer":"曹锡森","superviseId":"9ec8e8166fd43dd4288b98293a2b9a98"},"timestamp":1618824882113,"code":200}`;
+			var fileFormDataStr = `{"success":true,"message":"查询成功","result":{"guid":"c1bd1de24d8f2ef886e5f6d00a5cfdc1","createBy":"cwh01","createTime":"2021-05-20 11:51:47","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"projectName":"竹子林","projectId":null,"superviseFile":"05b6a0d912604a159d3f0b46ab82c74e","comDate":"2021-05-21","notifymethod":"[\\"email\\",\\"msg\\"]","sendDate":"2021-05-20","inputDepart":null,"phonum":"19955458260","inputer":"ceshi","superviseId":"889701f33bf492a590b4dc9f0037ef8d"},"timestamp":1621486057353,"code":200} `;
+			var fileFormData = JSON.parse(fileFormDataStr);
+			//获取整改文件
+			// console.log("==== 获取整改文件getFileForm start ==== ")
+			// console.log(JSON.stringify(data))
+			// console.log("==== 获取整改文件getFileForm end ==== ")
+
+				if (fileFormData.result != null) {
+					var item = fileFormData.result;
+					$("#prjName").val(isEmp(item.projectName));
+					$("#comDate").val(isEmp(item.comDate));
+					$("#sendDate").val(isEmp(item.sendDate));
+					var notifymethod = JSON.parse(item.notifymethod)
+					for(let i = 0; i < notifymethod.length;i++){
+						if(notifymethod[i] == 'email'){
+							$("input[name='notifymethod'][value=1]").prop("checked", true);
+						}else if(notifymethod[i] == 'msg'){
+							$("input[name='notifymethod'][value=0]").prop("checked", true);
+						}
+					}
+					//
+					getDicTextByIdAndKeyTmp(self.conservationStatus, "conservation_status", function(data) {
+						$("#conservationStatus_dictText").val(isEmp(data));
+					})
+					$("#inputByName").val(isEmp(item.inputer));
+					$("#inputByPhone").val(isEmp(item.phonum));
+
+					if (item.superviseFile != null && item.superviseFile != undefined && item.superviseFile != "") {
+
+						var filesByGroupIdDataStr = `{"success":true,"message":"成功！","result":[{"fileToken":"1dbf9a653f1c0d03d86dd2d4ae8c1410","uploadFile":{"fileName":"月报1616376826000.pdf","inRecycleBin":null,"updateTime":null,"readOnly":null,"collected":null,"uploadTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"uploadUser":"曹锡森","createBy":"cao_xs","fileSize":62009,"createTime":"2021-03-25 10:43:16","updateBy":null,"savePath":"ecidi/1318154338764c48879c981d2b548d88.pdf","downloadTimes":0,"fileUsage":"0","id":"1dbf9a653f1c0d03d86dd2d4ae8c1410","fileType":".pdf","md5":""}}],"timestamp":1618824927988,"code":200}`;
+						var filesByGroupIdData = JSON.parse(filesByGroupIdDataStr);
+
+						$("#fileType").val(filesByGroupIdData.result[0].uploadFile.fileType)
+						$("#filePath").val(filesByGroupIdData.result[0].uploadFile.savePath)
+						$("#fileId").val(filesByGroupIdData.result[0].uploadFile.id)
+						var str = `<div class="fileContent-item"` +
+								` data-token="` + filesByGroupIdData.result[0].fileToken + `"` +
+								`<div style="padding:12px 0 10px 0">
+													<div class="typeImg">`
+						if(filesByGroupIdData.result[0].uploadFile.fileType == '.pdf'){
+							str += `<img src="../../img/commom/pdf.png" style="width: 30px;height: 34px;"></img>`;
+						}else{
+							str += `<img src="../../img/commom/doc.png" style="width: 30px;height: 34px;"></img>`
+						}
+						str += `</div>
+													<div class="fileContent-item-title">
+														<span class="titleSpan">` +
+								filesByGroupIdData.result[0].uploadFile.fileName + `</span>
+														<span class="fileSize">` + filesByGroupIdData.result[0].uploadFile.fileSize + "KB" +
+								`</span>
+													</div>
+												</div>
+											</div>`
+
+						var str1 = str;
+						str = str + str1;
+						$("#reformFile").append(str);
+						$("#reformFile").show();
+
+					}
+
+
+					var queryWsDataStr = `{"success":true,"message":"成功","result":[{"personPhonum":"18376144920","updateTime":null,"corpName":"123","delFlag":0,"corpCode":"A01","prjCode":null,"personName":"123","createBy":"cao_xs","createTime":"2021-03-25 10:43:31","updateBy":null,"guid":"50b7612be056ccab11832ac045ea03f8","sheetId":"784e5861f27ac42bdd078db95570a4a0","personMail":"103@qq.com"}],"timestamp":1618824882562,"code":200}`;
+					var queryWsData = JSON.parse(queryWsDataStr);
+
+						// data = {"success":true,"message":"成功","result":[{"personPhonum":"13750001111","updateTime":null,"corpName":"abc","delFlag":0,"corpCode":"A01","prjCode":null,"personName":"a","createBy":"chen_m2","createTime":"2020-11-13 11:23:29","updateBy":null,"guid":"ce380c79e8c32a3b8e661b8feecc1a48","sheetId":"edac37a8cdaee46fb8442ecf75ba7903","personMail":"11@qq.com"},{"personPhonum":"13750001111","updateTime":null,"corpName":"abc","delFlag":0,"corpCode":"A01","prjCode":null,"personName":"a","createBy":"chen_m2","createTime":"2020-11-13 11:23:29","updateBy":null,"guid":"ce380c79e8c32a3b8e661b8feecc1a48","sheetId":"edac37a8cdaee46fb8442ecf75ba7903","personMail":"11@qq.com"},],"timestamp":1606113223666,"code":200}
+
+						if (queryWsData.result != null) {
+							var item = queryWsData.result;
+							count = item.length;
+							var str = '';
+							$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) + 275 * (count - 1) + 'px');
+							for (let i = 0; i < item.length; i++) {
+								str += `<div class = "person" id = "row_` + (i + 1) +`">
+													<div class="item-title" style="text-align: left;" class="morePerson">
+														签收人员${i+1}
+													</div>
+													<div class="mui-input-row item-input sign-item">
+														<input class="inputCss signDetail" name = "personName" required="true" readonly="true" value="${isEmp(item[i].personName)}"
+														type="text" placeholder="请输入姓名"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+													<div class="mui-input-row item-input sign-item">
+													<input class="inputCss signDetail" name = "corpName" required="true" readonly="true" value="${isEmp(item[i].corpName)}"
+													type="text" placeholder="请输入单位名称"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+													<div class="mui-input-row item-input sign-item">
+													<input class="inputCss signDetail" name = "personPhonum" required="true" readonly="true" value="${isEmp(item[i].personPhonum)}"
+													type="text"  placeholder="请输入电话"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+													<div class="mui-input-row item-input input-email sign-item" style="">
+													<input class="inputCss signDetail" name = "personMail" required="true"  readonly="true"  value="${isEmp(item[i].personMail)}"
+													type="text" placeholder="请输入电子邮箱"  style="margin-bottom: 0px;border:none;"/>
+													</div>
+												</div>`
+							}
+							$("#signPerson").append(str);
+							$('#signPerson .input-email').each(function(index) {
+								if (index == count - 1) {
+									$(this).css("border", "none")
+								} else {
+									$(this).css("border-bottom", "5px solid #F4F4F4")
+								}
+							});
+						}
+
+
+				} // if (data.result != null) end
+
+		}
+		//获取字典枚举对应的text
+		function getDicTextByIdAndKeyTmp(sid,key,callback) {
+			//用枚举
+			//getDict(key,function (data) {
+			var dataStr = `{"success":true,"message":"操作成功!","result":[{"text":"新开工","title":"新开工","value":"0"},{"text":"整改中","title":"整改中","value":"1"},{"text":"已过整改期","title":"已过整改期","value":"2"},{"text":"正常","title":"正常","value":"3"}],"timestamp":1618825995099,"code":206,"key":"conservation_status"}`;
+			var data = JSON.parse(dataStr);
+				// console.log("==== getDicTextByIdAndKeyTmp start ==== ")
+				// console.log(JSON.stringify(data))
+				// console.log("==== getDicTextByIdAndKeyTmp end ==== ")
+
+				if (206 != parseInt(data.code)) {
+					app.toast(data.message);
+					// console.log(data.message)
+					return;
+				}
+				var resultJSON =[];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.text,
+						value: item.value
+					})
+				}
+				if(sid ==""||sid ==null||sid == undefined){
+					callback("");
+					return ;
+				}
+				for(var i in resultJSON){
+					if(sid == parseInt(resultJSON[i].value)){
+						callback(resultJSON[i].text);
+						return;
+					}
+				}
+				return ;
+			//})
+		}
+		if(isTest) {
+			initViewTmp();
+		}
+	</script>
+
+</html>

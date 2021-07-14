@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接点管理-查找混接点</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mixed.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+			.mapboxgl-ctrl.mapboxgl-ctrl-group{
+				bottom: 55%;
+				left: 10px;
+				position: fixed;
+			}
+			.mui-scroll {
+				/* background: url(../img/temp_dt.png) no-repeat center; */
+				background-size: 100% 100%;
+				height: 100%;
+				width: 100%;
+			}
+
+			.search-bar {
+			    background: none;
+				height: 80px;
+				line-height: 80px;
+			}
+
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+				top: 12px;
+				width: 40px;
+				height: 40px;
+			}
+
+			.search-item {
+			    background: #FFFFFF;
+			    height: 40px;
+			    border-radius: 16px;
+				overflow: hidden;
+			}
+
+			.search-input {
+			    height: 40px;
+			    line-height: 40px;
+			}
+
+			.search-icon img {
+			    top: 30%;
+				margin-left: 18.5px;
+			}
+
+			.btn1{
+				position: fixed;
+				width: 70px;
+				bottom: 200px;
+				right: 0;
+				margin-right: 5px;
+				z-index: 100;
+				text-align: right;
+			}
+			.btn2{
+				position: fixed;
+				width: 80px;
+				bottom: 53px;
+				right: 0;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			.add_btn{
+				position: fixed;
+				width: 70px;
+				bottom: 300px;
+				right: 0;
+				margin-right: 5px;
+				z-index: 100;
+				text-align: right;
+			}
+			.add_btn img{
+				width: 70px;
+			}
+			.stat{
+				font-size: 14px;
+				font-weight: 500;
+				color: #FF5656;
+			}
+			.location_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 45%;
+				left: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.ws_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 60%;
+				right: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.ys_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 60%;
+				right: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.location_btn img{
+				width: 30px;
+				margin-top: 10px;
+			}
+
+			.bottom-item {
+				padding: 19px 10px;
+				background: #FFFFFF;
+				position: fixed;
+				height: 260px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+				text-align: left;
+			}
+
+			.bottom-item-title {
+				font-size:18px;
+				color:rgba(22,21,21,1);
+				font-weight: bold;
+			}
+
+		/* 	.bottom-item-info{
+				font-size:14px;
+				color:rgba(25,21,21,1);
+				line-height:21px;
+				height:21px;
+				padding: 18px 0px;
+				border: 1px solid red;
+			} */
+
+			.bottom-item-btn {
+				height: 200px;
+			}
+
+			.bottom-item-btn .item{
+				width: 50%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+			}
+
+			.bottom-item-btn .item div{
+				border: 1px solid #347CFC;
+				border-radius: 20px;
+				height: 40px;
+				margin-top: 12px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+
+			#left_item{
+				padding: 15px;
+				background: #FFFFFF;
+				position: fixed;
+				bottom: 40px;
+				left:19px;
+				z-index: 100;
+				border-radius: 5px;
+				text-align: left;
+			}
+			#left_item ul li span{
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				margin-right: 10px;
+			}
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+
+			.triangle-down {
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				/*border-top: 10px solid #f02e2e;*/
+				margin-bottom: 10px;
+			}
+
+			.mui_rank {
+				position: absolute;
+				top: 0px;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				pointer-events: none;
+				background: url(../img/commom/tingwei.png) no-repeat center ;
+			}
+			.row-1	{
+				font-size: 14px;
+				font-weight: 500;
+				color: #888888;
+			}
+			.row_span	{
+				font-size: 14px;
+				font-weight: 500;
+				color: #444444;
+				margin-left: 15px;
+				overflow: hidden;
+				text-overflow: ellipsis;  
+				white-space: nowrap;
+				width: 60%;
+			}
+			.box:nth-last-child{
+				border: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar" id="nav-bar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<h1 class="mui-title">混接点管理</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;">
+						</div>
+						<div class="mui_rank">
+							<div class="triangle-down">
+							</div>
+						</div>
+						<!-- <div class="location_btn" id="location_btn">
+							<img src="../../img/commom/location.png" />
+						</div> -->
+						<div class="btn1" id="add">
+							<img src="../../img/dengji2x.png" />
+						</div>
+						<!-- <div class="add_btn" id="hunjie">
+							<img src="../../img/hunjieicon2.png" />
+						</div> -->
+						<div class="btn2" id="refresh">
+							<img src="../../img/rfIcon.png" />
+						</div>
+						<div id="left_item">
+							<ul>
+								<li style="margin-bottom:13.5px;"><span style="background-color:red;"></span>重度混接</li>
+								<li style="margin-bottom:13.5px;"><span style="background-color:yellow;"></span>中度混接</li>
+								<li style="margin-bottom:13.5px;"><span style="background-color:blue;"></span>轻度混接</li>
+								<li><span style="background-color:gray;"></span>未改造</li>
+							</ul>
+						</div>
+						<div class="bottom-item" style="display: none;">
+							<div class="bottom-item-title">
+								<div id="left_title" style="float: left;">
+									<img id="info_icon" src="../../img/icon1.png" style="width:20px;height:24px">
+									<h1 style="display: inline-block;font-size: 18px;font-weight: bold;color: #161616;">
+										编号：
+										<span id="code" style="font-size: 18px;font-weight: bold;color: #161616;">加载中</span>
+									</h1>
+								</div>
+								<div id="right_title" class="stat" style="float: right;height:30px;line-height:30px;">
+									加载中
+								</div>
+							</div>
+							<div id="content" class="bottom-item-info" style="padding: 0 10px;margin-top: 40px;">
+								<p>
+									<div class="row-1" style="width: 50%;">混接类型:<span id="mixType" class="row_span">加载中</span> </div>
+									<div class="row-1">混接水来源:<span class="row_span" id="mixSour">加载中</span></div>
+								</p>
+								<p>
+									<div class="row-1" style="width: 50%;">混接管管径(mm):<span id="mixDiameter" class="row_span">加载中</span> </div>
+									<div class="row-1">混接管埋深(mm):<span class="row_span" id="mixDep">加载中</span></div>
+								</p>
+								<p>
+									<div class="row-1">混接点位置:<span id="mixPosition" class="row_span">加载中</span> </div>
+
+								</p>
+								<p>
+									<div class="row-1">混接地点:<span id="mixAddress" class="row_span">加载中</span> </div>
+
+								</p>
+							</div>
+							<div class="bottom-item-btn">
+								<div class="item" id="editBtn">
+									<div style="color: #337BFC;">修改</div>
+								</div>
+								<div class="item" id="psh_list">
+									<div style="background: #337BFC;color: #fff;">更多</div>
+								</div>
+							</div>
+						</div>
+						<div class="search-bar" id="searchBar">
+							<div class="search-item">
+								<div class="search-icon" id="searchIcon">
+									<img src="../../img/commom/search1@2x.png" />
+								</div>
+								<div class="search-input">
+									<div class="mui-input-row">
+										<input id="searchInput" type="text" placeholder="请输入混接点编号或地址">
+									</div>
+									<!-- mui-input-clear -->
+								</div>
+							</div>
+							<!--  -->
+							<div id="searchBox" style="touch-action: none;position: fixed;z-index:1000; top:62px;margin:0 20px;background: #FFFFFF;width: calc(100% - 40px);box-shadow: 1px 1px 23px 0px rgba(0, 0, 0, 0.06);">
+									<!-- <div class="box" style="width:100%;height: 70px;border-bottom: 1px solid #EDEDED;">
+										<div style="float: left;width: 15%;background: #FFFFFF;height: 70px;">
+											<img src="../../img/commom/dz@2x.png" style="width: 20px;height: 20px;" />
+										</div>
+										<div style="width:85%;float: right;background: #FFFFFF;">
+											<div style="padding-top: 10px;font-size: 14px;font-weight: 400;color: #1A1616;line-height: 21px;text-align: left;background: #FFFFFF;">福田区保税区混接点</div>
+											<div style="padding-top: 5px; font-size: 12px;font-weight: 400;color: #B2B2B2;line-height: 21px;text-align: left;background: #FFFFFF;">深圳市福田区保税区桃花路8号中天元物大厦</div>
+										</div>
+									</div>
+									<div class="box" style="width:100%;height: 70px;border-bottom: 1px solid #EDEDED;">
+										<div style="float: left;width: 15%;background: #FFFFFF;height: 70px;">
+											<img src="../../img/commom/dz@2x.png" style="width: 20px;height: 20px;" />
+										</div>
+										<div style="width:85%;float: right;background: #FFFFFF;">
+											<div style="padding-top: 10px;font-size: 14px;font-weight: 400;color: #1A1616;line-height: 21px;text-align: left;background: #FFFFFF;">福田区保税区混接点</div>
+											<div style="padding-top: 5px; font-size: 12px;font-weight: 400;color: #B2B2B2;line-height: 21px;text-align: left;background: #FFFFFF;">深圳市福田区保税区桃花路8号中天元物大厦</div>
+										</div>
+									</div>
+									<div style="height:30px;line-height:30px;">
+										<a style="font-size: 12px;margin-right: 10px;">更多搜索结果</a>
+									</div> -->
+							</div>
+
+						</div>
+					</div>
+
+					<!--页面主内容区结束-->
+				</div>
+
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/position.js"></script>
+	<script src="../../js/mixed.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		mui.init({
+			swipeBack: false
+		});
+
+		mui.plusReady(function() {
+
+			var self = plus.webview.currentWebview();
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../img/bgTop.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							app.openPage("mixed_list.html", {
+								titleNView: {
+									titleText: '混接点列表',
+									autoBackButton: true,
+								}
+							});
+						}
+					}],
+				}
+			});
+
+
+		});
+		// var map = ""; //地图选点对象
+		// var point = {};//选中坐标
+		var pageSize = 6;
+
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options:{minZoom:10},
+			style: 'color'
+		});
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+		const layerSelections = window['mobile-lib'].layerSelections;
+
+		mobileContainer.on('load', () => {
+			getCurrentPosition();
+			mobileContainer.enableCenterAddress(true);
+			mobileContainer.setQuery([{
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 1,
+				DEL_FLAG:0
+			}, {
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 2,
+				DEL_FLAG:0
+			}]); //加载混接点
+			mobileContainer.showAnnotation(true);
+			mobileContainer.setSelection([layerSelections.污水点类,layerSelections.雨水点类]);
+		});
+
+
+		//点击混接点
+		mobileContainer.on('showInfo', data => {
+			// clearGlobalItem();
+			//重新定位时重新查询混接点
+			// mobileContainer.setQuery([{
+			// 	NAME: 'DEVICE_POINT_INFO',
+			// 	HYBRID_TYPE: 1,
+			// 	DEL_FLAG:0
+			// }, {
+			// 	NAME: 'DEVICE_POINT_INFO',
+			// 	HYBRID_TYPE: 2,
+			// 	DEL_FLAG:0
+			// }]); //加载混接点
+			$(".bottom-item").hide(); //显示底部信息
+			mobileContainer.flyTo(data.feature);
+			console.log("显示信息：" + JSON.stringify(data));
+			if (data.feature.properties.GUID) { //point_info_b_67951
+				//保存SMID
+				globalSetItem(GlobalKey.SMID, data.feature.properties.SMID);
+				//显示底部信息
+				showBottomInfo(data.feature.properties.GUID);
+			} else {
+				//显示底部信息
+				// app.toast("已为您定位至最近一次选择的混接点");
+				showBottomInfo(globalGetItem(GlobalKey.guid));
+				globalSetItem(GlobalKey.isSelectMix, "false"); //是否设置混接点
+				//删除混接点
+				globalDelItem(GlobalKey.mix);
+			}
+		});
+
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+			if(data){
+				$("#searchBox").html("");
+				$("#searchBar").show();
+				$(".bottom-item").hide(); //隐藏底部信息
+				clearGlobalItem();
+				mobileContainer.enableCenterAddress(true);
+				console.log(data);
+				mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+				mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+
+				globalSetItem(GlobalKey.isSelectMix, "false"); //是否设置混接点
+
+				console.log("点击位置：" + JSON.stringify(data.lngLat))
+				// globalSetItem(GlobalKey.point, JSON.stringify(data.lngLat)); //选中地图点
+				globalDelItem(GlobalKey.mix); //删除选中混接点
+
+				// $(".bottom-item").fadeIn();
+				$("#left_item").fadeIn();
+				$("#refresh").show();
+				$("#location_btn").show();
+				$(".mapboxgl-ctrl-group").show();
+				$("#hunjie").show();
+				$("#add").show();
+			}else{
+				app.toast('当前选择不在可选范围内，请重新选择');
+			}
+		});
+
+		//显示地图信息
+		mobileContainer.on('showAddress', data => {
+
+			var point = {
+				'lng': data.location.lon,
+				'lat': data.location.lat
+			}
+			globalSetItem(GlobalKey.point, JSON.stringify(point)); //选中地图点
+
+			// mobileContainer.enableCenterAddress(false);
+			globalSetItem(GlobalKey.address, data.addressComponent.address); //保存选中的地址
+			globalSetItem(GlobalKey.isSelectMix, "false"); //是否设置混接点
+			// $(".bottom-item").fadeIn();
+			// $("#left_item").hide();
+			//删除混接点
+			globalDelItem(GlobalKey.mix);
+		});
+
+
+
+		var getCurrentPosition = function() {
+			if (mui.os.plus) {
+				app.showLoader();
+			}
+			//重新定位时重新查询混接点
+			mobileContainer.setQuery([{
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 1,
+				DEL_FLAG:0
+			}, {
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 2,
+				DEL_FLAG:0
+			}]); //加载混接点
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+				// app.hideLoader();
+				//坐标修正
+				var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+
+				var Lon = point[0]; //获取经度
+				var Lat = point[1]; //获取纬度
+
+				mobileContainer.flyTo([Lon, Lat], {
+					zoom: 12
+				});
+				console.log("当前位置信息：" + Lon + "," + Lat);
+				//查询附近1km内的所有混接点
+				mapData.getFeaturesByBuffer(
+					[
+						{
+							NAME: 'DEVICE_POINT_INFO',
+							HYBRID_TYPE: 1,
+							DEL_FLAG:0
+						},
+						{
+							NAME: 'DEVICE_POINT_INFO',
+							HYBRID_TYPE: 2,
+							DEL_FLAG:0
+						}
+					],
+					// [114.04950213683215, 22.514631855561593], 0.1
+					[Lon, Lat], 0.01
+				).then(res => {
+					var arr = res.features;
+					console.log("附近1km内的混接点个数：" + arr.length);
+					globalSetItem(GlobalKey.pointNum, res.features.length);
+					var guidStr = "";
+					for (var i = 0; i < arr.length; i++) {
+						guidStr = guidStr + arr[i].properties.GUID + ","
+					}
+					if (guidStr.length > 0) {
+						guidStr = guidStr.substring(0, guidStr.length - 1);
+					}
+					console.log("附近1km内的混接点：" + JSON.stringify(res) + ",guidList:" + guidStr);
+					globalSetItem(GlobalKey.guidsList, guidStr);
+				});
+				mobileContainer.markAddress(Lon, Lat);
+				app.hideLoader();
+			}, function(e) {
+				app.hideLoader();
+				console.log("error:" + e.message);
+				mui.toast("位置信息获取失败，将无法获取附近混接点");
+			})
+
+		}
+
+		//混接
+		$("#hunjie").on("tap", function() {
+			$("#searchInput").focus();
+			$(".bottom-item").hide();
+		});
+
+		// 登记（新增混接点）
+		$("#add").on("tap", function() {
+			var extras = {}
+			app.openPage("addMix.html", {
+				titleNView: {
+					titleText: '新增混接点',
+					autoBackButton: true,
+				}
+			}, extras);
+		});
+
+		//重新定位
+		$("#location_btn").on("tap", function() {
+			$("#searchBox").html("");
+			getCurrentPosition();
+		});
+
+		//重新加载
+		$("#refresh").on("tap", function() {
+			$("#searchBox").html("");
+			getCurrentPosition();
+		});
+
+		//混接点信息
+		$("#psh_list").on("tap", function() {
+			var guid = globalGetItem(GlobalKey.guid);
+			// var guid="point_info_sz_6937";
+			var Status = $(this).attr('data-status');
+			if (guid == "" || guid == null) {
+				app.toast("无法获取guid");
+				return;
+			}
+			var extras = {
+				idd: guid,
+			}
+			app.openPage("mixDetail.html", {
+				titleNView: {
+					titleText: '混接点信息',
+					autoBackButton: true,
+				}
+			}, extras);
+		});
+
+
+		//修改
+		$("#editBtn").on("tap", function() {
+			// var guid="point_info_sz_6937";
+			if (oldstate == 2) {
+				var guid = globalGetItem(GlobalKey.guid);
+				var extras = {
+					type: "edit",
+					guid: guid
+				};
+				app.openPage("addMix.html", {
+					titleNView: {
+						titleText: '修改混接点',
+						autoBackButton: true,
+					}
+				}, extras);
+			} else if(oldstate==3||oldstate==4||oldstate==5){
+				getReformState(oldstate, function(data) {
+					mui.toast(data+"的混接点不可修改,请等待审核确认！");
+				});
+			}else{
+				getReformState(oldstate, function(data) {
+					mui.toast(data+"状态的混接点不可修改！");
+				});
+			}
+		});
+
+		//修改后返回重新加载底部数据
+		window.addEventListener('return', function() {
+			mobileContainer.setQuery([{
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 1,
+				DEL_FLAG:0
+			}, {
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 2,
+				DEL_FLAG:0
+			}]); //加载混接点
+			showBottomInfo(globalGetItem(GlobalKey.guid));
+		}, false);
+
+		/**
+		  * @param fn {Function}   实际要执行的函数
+		  * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		  * @return {Function}     返回一个“去弹跳”了的函数
+		  */
+		  function debounce(fn, delay) {
+		    // 定时器，用来 setTimeout
+		    var timer
+		    // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+		    return function () {
+		      // 保存函数调用时的上下文和参数，传递给 fn
+		      var context = this
+		      var args = arguments
+		      // 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+		      clearTimeout(timer)
+		      // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+		      // 再过 delay 毫秒就执行 fn
+		      timer = setTimeout(function () {
+		        fn.apply(context, args)
+		      }, delay)
+		    }
+		  }
+		//搜索框
+		$("#searchInput").on('input',debounce((e)=>{
+			$(".bottom-item").hide();
+			$("#left_item").hide();
+			$("#searchBox").html("正在搜索...");
+			var inputdata = $("#searchInput").val();
+			if (inputdata != null && inputdata != "") {
+				var param = {
+					pageNo: 1,
+					pageSize: pageSize,
+					appParameter: inputdata,
+				};
+				searchInfo(param);
+			} else {
+				$("#searchBox").html("");
+			}
+		},680))
+
+		function searchInfo(param) {
+			param.appParameter = $("#searchInput").val();
+			getMixPageList(false, param, function(data) {
+				if (data.success) {
+					console.log("搜索结果：" + JSON.stringify(data));
+					var dataList = data.result.records
+					var html = "";
+					$("#searchBox").html("");
+					if (dataList.length == 0 && param.pageNo == 1) {
+						html = '<div style="width:100%;height: 50px;border-bottom: 1px solid #EDEDED;">' +
+							'<div style="background: #FFFFFF;">' +
+							'暂无数据' +
+							'</div>' +
+							'</div>';
+						// $("#searchBox").append(html);
+						// $("#searchBox").html(html);
+					} else {
+						for (var i = 0; i < dataList.length; i++) {
+							var guid = dataList[i].guid;
+							var addr = dataList[i].address!=null?(dataList[i].address.length > 20 ? dataList[i].address.substring(0, 20) + "..." : dataList[i].address):"无";
+							var expNo = dataList[i].expNo;
+							var SmY = dataList[i].SmY != undefined ? dataList[i].SmY : 114.11111;
+							var SmX = dataList[i].SmX != undefined ? dataList[i].SmX : 22.114455;
+							console.log("====SmY:" + dataList[i].SmY + ",SmX:" + dataList[i].SmX);
+							html += '<div class="box" guid="' + expNo + '" name="' + SmY + ',' + SmX +
+								'" style="width:100%;height: 70px;border-bottom: 1px solid #EDEDED;">' +
+								'<div style="float: left;width: 15%;background: #FFFFFF;height: 70px;">' +
+								'	<img src="../../img/commom/dz@2x.png" style="width: 20px;height: 20px;" />' +
+								'</div>' +
+								'<div style="width:85%;float: right;background: #FFFFFF;">' +
+								'	<div style="padding-top: 10px;font-size: 14px;font-weight: 400;color: #1A1616;line-height: 21px;text-align: left;background: #FFFFFF;">' +
+								expNo + '</div>' +
+								'	<div style="padding-top: 5px; font-size: 12px;font-weight: 400;color: #B2B2B2;line-height: 21px;text-align: left;background: #FFFFFF;">' +
+								addr + '</div>' +
+								'</div>' +
+								'</div>';
+							// alert(guid + addr + expNo);
+							// $("#searchBox").append(html);
+
+						}
+						if (dataList.length == pageSize) {
+							if (param.pageNo == 1) {
+								html += '<div style="height:30px;line-height:30px;">' +
+									'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+									'</div>';
+							} else {
+								html += '<div style="height:30px;line-height:30px;">' +
+									'<a id="pre" name="' + param.pageNo +
+									'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+									'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+									'</div>';
+							}
+
+						} else {
+							if (param.pageNo == 1) {
+								html += '<div id="nomore" style="height:30px;line-height:30px;">' +
+									'<a style="font-size: 12px;margin-right: 10px;">没有更多了</a>' +
+									'</div>';
+							} else {
+								if (dataList.length == 0) {
+									html += '<div style="width:100%;height: 60px;border-bottom: 1px solid #EDEDED;margin-bottom:20px">' +
+										'<div style="background: #FFFFFF;">' +
+										'暂无更多数据' +
+										'</div>' +
+										'</div>';
+								}
+								html += '<div style="height:30px;line-height:30px;">' +
+									'<a id="pre" name="' + param.pageNo +
+									'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+									'<a style="font-size: 12px;margin-right: 10px;">没有更多了</a>' +
+									'</div>';
+							}
+						}
+
+					}
+					$("#searchBox").html(html);
+				} else {
+					app.toast("未查询到任何数据");
+					$("#searchBox").html("未查询到任何数据");
+				}
+			});
+		}
+
+		$("#searchInput").focus(function() {
+			$(".bottom-item").hide();
+			$("#left_item").hide();
+			$("#hunjie").hide();
+			$("#add").hide();
+			$("#refresh").hide();
+			$("#location_btn").hide();
+			$(".mapboxgl-ctrl-group").hide();
+		});
+		// .blur(function() {
+		// 	$("#refresh").show();
+		// 	$("#location_btn").show();
+		// 	$(".mapboxgl-ctrl-group").show();
+		// 	// $("#searchBox").html("");
+		// 	// $("#searchBox").css("z-index",-1);
+		// 	$("#left_item").show();
+		// 	$("#hunjie").show();
+		// 	$("#add").show();
+		// 	// $(this).val("");
+		// });
+		$("#searchBox").on('tap', "#more", function() {
+			$("#location_btn").hide();
+			$(".mapboxgl-ctrl-group").hide();
+			$("#left_item").hide();
+			$("#hunjie").hide();
+			$("#add").hide();
+			var pageNo = parseInt($(this).attr("name")) + 1;
+			var param = {
+				pageNo: pageNo,
+				pageSize: pageSize,
+				appParameter: $("#searchInput").val(),
+			};
+			searchInfo(param);
+			setTimeout(function() {
+				mui.toast("加载完成");
+			}, 1500);
+		})
+
+		$("#searchBox").on('tap', "#pre", function() {
+			$("#location_btn").hide();
+			$(".mapboxgl-ctrl-group").hide();
+			$("#left_item").hide();
+			$("#hunjie").hide();
+			$("#add").hide();
+			var pageNo = parseInt($(this).attr("name")) - 1;
+			var param = {
+				pageNo: pageNo,
+				pageSize: pageSize,
+				appParameter: $("#searchInput").val(),
+			};
+			searchInfo(param);
+			setTimeout(function() {
+				mui.toast("加载完成");
+			}, 1500);
+		})
+
+		$("#searchBox").on('tap', "#nomore", function() {
+			mui.toast("没有更多了");
+		})
+
+		$("#searchBox").on('tap', ".box", function() {
+			var that=$(this)
+			setTimeout(function(){
+				var latlng = that.attr("name").split(",");
+				var lat = latlng[0];
+				var lng = latlng[1];
+				console.log(lat + "," + lng);
+				
+				//通过guid查询混接点信息
+				showBottomInfo(that.attr("guid"));
+				
+				$("#location_btn").show();
+				$(".mapboxgl-ctrl-group").show();
+				$("#searchBox").html("");
+				// $("#left_item").show();
+				$("#hunjie").show();
+				// $("#add").show();
+				$("#searchInput").val("");
+			},200)
+		});
+
+
+		$("#searchInput").keypress(function(even) {
+			$(".bottom-item").hide();
+			if (even.which == 13) {
+				var inputdata = $("#searchInput").val();
+				if (inputdata != null && inputdata != "") {
+					var param = {
+						page: 1,
+						pageSize: pageSize,
+						appParameter: inputdata,
+					};
+					searchInfo(param);
+				} else {
+					$("#searchBox").html("");
+				}
+			}
+		});
+
+		/**
+		 * 显示底部混接点信息
+		 * @param {Object} mixInfo
+		 */
+		var oldstate;
+		var showBottomInfo = function(guid) {
+			searchMixById(guid, function(data1) {
+				console.log(JSON.stringify(data1));
+				if (data1.success && data1.result != null) { //是混接点
+					var mixInfo = data1.result;
+					//定位至混接点
+					var lat = mixInfo.SmY;
+					var lng = mixInfo.SmX;
+					//保存选中混接点经纬度
+					globalSetItem(GlobalKey.Lat, lng);
+					globalSetItem(GlobalKey.Lng, lat);
+					mobileContainer.markAddress(lng, lat);
+					mobileContainer.flyTo([lng, lat], {
+						zoom: 13
+					});
+					//重置底部信息
+					// console.log(mixInfo);
+					document.getElementById("info_icon").setAttribute("src", mixLevel(isEmp(mixInfo.reformState),isEmp(mixInfo.dischargerType)));
+					// $("#code").html(data.feature.properties.EXP_NO); //编号
+					$("#code").html(mixInfo.mixCode);
+					// var status = mixInfo.reformState == 1 ? "改造" : "未改造";
+					// var status =getReformState(mixInfo.reformState);
+					var mixTypeText = mixInfo.mixType == 1 ? "雨水入污水" : "污水入雨水";
+					getReformState(mixInfo.reformState, function(data) {
+						$("#right_title").html(data); //状态
+					});
+					oldstate = mixInfo.reformState
+					$("#mixType").html(mixTypeText); //混接类型
+					var mixSource =mixInfo.mixSource!=null?(mixInfo.mixSource.length > 15 ? mixInfo.mixSource.substring(0, 15) + "...": mixInfo.mixSource):"无";
+					$("#mixSour").html(mixSource); //混接来源
+					// getMixSource(mixInfo.mixSource, function(data) {
+					// 	$("#mixSour").html(data);
+					// })
+					$("#mixDiameter").html(mixInfo.mixDiameter); //混接管径
+					$("#mixDep").html(mixInfo.mixDepth); //混接埋深
+					// $("#mixPosition").html(getMixPosition(mixInfo.mixPosition)); //混接位置
+					getMixPosition(mixInfo.mixPosition, function(data) {
+						$("#mixPosition").html(data); //混接位置
+					})
+					var addr =mixInfo.address!=null?(mixInfo.address.length > 15 ? mixInfo.address.substring(0, 15) + "..." : mixInfo.address):"无";
+					$("#mixAddress").html(addr); //混接地点
+					// globalSetItem(GlobalKey.mixStatusText)
+					globalSetItem(GlobalKey.mix, JSON.stringify(mixInfo)); //保存混接点信息
+					globalSetItem(GlobalKey.guid, guid);
+					globalSetItem(GlobalKey.isSelectMix, "true"); //是否设置混接点
+					$(".bottom-item").fadeIn(); //显示底部信息
+					$("#left_item").hide();
+					$("#searchBar").hide();
+					$("#add").hide();
+					//修改标题为混接点信息
+					var self = plus.webview.currentWebview();
+					self.setStyle({
+						titleNView: {
+							titleText: "混接点信息",
+						}
+					});
+
+				} else {
+					app.toast("未查询到混接点信息，该混接点已不存在或网络异常，请稍后再试！");
+					$(".bottom-item").hide(); //隐藏底部信息
+					$("#left_item").fadeIn();
+					$("#searchBar").show();
+					$("#add").show();
+					//修改标题为混接点信息
+					var self = plus.webview.currentWebview();
+					self.setStyle({
+						titleNView: {
+							titleText: "查找混接点",
+						}
+					});
+				}
+			});
+		}
+
+		//只要是点击地图，就直接初始化混接点信息
+		var initMix = function() {
+			var mix = globalGetItem(GlobalKey.mix);
+			var isSelectMix = globalGetItem(GlobalKey.isSelectMix);
+			var address = globalGetItem(GlobalKey.address);
+			if (mix && isSelectMix == "true") {
+				var mixItem = JSON.parse(mix);
+
+			}
+		}
+
+		window.addEventListener('refresh1', function(e) { //执行刷新
+			mobileContainer.setQuery([{
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 1,
+				DEL_FLAG:0
+			}, {
+				NAME: 'DEVICE_POINT_INFO',
+				HYBRID_TYPE: 2,
+				DEL_FLAG:0
+			}]); //加载混接点
+			// window.location.reload();
+			showBottomInfo(globalGetItem(GlobalKey.guid));
+		});
+	</script>
+
+</html>

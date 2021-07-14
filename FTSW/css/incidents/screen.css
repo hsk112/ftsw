@@ -1,0 +1,49 @@
+.mui-bar {
+    background: #354052;
+}
+
+.mui-icon-plusempty {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.mui-title {
+    font-family: PingFangSC-Medium;
+    font-size: 18px;
+    color: #FFFFFF;
+}
+.screen{
+    width: 295px;
+    /* height: 65px; */
+}
+.screen .mui-input-row{
+    display: flex;
+    justify-content: space-around;
+    height: 55px;
+    line-height: 55px;
+    align-items: center;
+    font-size: 16px;
+}
+.screen .mui-input-row h5{
+    color: #262626;
+}
+.screen .mui-input-row span{
+    color: #B1B1B1;
+    align-items: center;
+}
+.screen .mui-input-row i{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../img/cal.png)no-repeat;
+    background-size: 100%;
+    
+}
+.mui-button-row .mui-btn{
+    width: 120px;
+    height: 40px;
+    /* position: static; */
+    margin-right: 6px;
+    margin-left: 6px;
+}
+

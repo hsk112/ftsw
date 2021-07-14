@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>NFC检测</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-slider{
+				height: 100vh;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 50px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #337BFC;
+				color: #337BFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 14px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: red;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: green;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: orange;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+			
+			.bottom-item {
+				padding: 19px;
+				background: #FFFFFF;
+				position: absolute;
+				height: 400px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+				text-align: left;
+			}
+			
+			.bottom-item-btn-list {
+				height: 200px;
+				width: 98%;
+				position: absolute;
+			}
+			
+			.bottom-item-btn-list .bottom-item-btn-list-top{
+				width: 100%;
+				
+			}
+			.item1{
+				position: absolute;
+				top:0;
+				right: 95px ;
+				text-align: center;
+				line-height: 26px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+			
+			.item2{
+				position: absolute;
+				top:0;
+				right: 5px ;
+				text-align: center;
+				line-height: 26px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+			
+			.mui-navigate-left:after
+			{
+			    content: '\e472';
+				left: 5px;
+				bottom: 50px;
+			}
+			.object{
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+			.li-item{
+				background-color:white;
+			}
+			.li-item-pull{
+				background-color: #F4F4F4 !important;
+			}
+			.in-obj{
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+			}
+			.obj-title{
+				color: #444444;
+			}
+			.bgc-white{
+				background-color: white;
+			}
+			.bgc-grey{
+				background-color: #F4F4F4;
+			}
+			.mui-navigate-r{
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">巡检管理</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/nfc@2x.png" />
+					<img src="../img/download@2x.png" />
+				</div>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			
+			<div class="mui-page-content">
+				<div>
+					<img onclick="readData()" src="../../img/select_nfc.png" style="width: 220px;margin-top: 35%;"/>
+				</div>
+				<p style="font-size: 16px;font-weight: bold;color: #000000;">请将手机靠近检查对象NFC Tag</p>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+<!-- 输入要写入的内容:<br/><textarea id="text">姓名:张二蛋年龄:29地址：北京海淀区</textarea><br/>  
+       <button onclick="writeData()">写入</button>  
+        <button style="position: absolute; bottom: 100px; right: 100px;" onclick="readData()">读取</button><br/>  
+        读取的内容:  -->
+        <div id="content"/>  
+	</body>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/inspect.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/timer.js"></script>
+	<script>
+		var NfcAdapter;
+		var NdefRecord;
+		var NdefMessage;
+		function listenNFCStatus() {
+			try{
+				var main = plus.android.runtimeMainActivity();
+				var Intent = plus.android.importClass('android.content.Intent');
+				var Activity = plus.android.importClass('android.app.Activity');
+				var PendingIntent = plus.android.importClass('android.app.PendingIntent');
+				var IntentFilter = plus.android.importClass('android.content.IntentFilter');
+				NfcAdapter = plus.android.importClass('android.nfc.NfcAdapter');
+				var nfcAdapter = NfcAdapter.getDefaultAdapter(main);
+				var intent = new Intent(main, main.getClass());
+				intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				var pendingIntent = PendingIntent.getActivity(main, 0, intent, 0);
+				var ndef = new IntentFilter("android.nfc.action.TECH_DISCOVERED");
+				ndef.addDataType("*/*");
+				var intentFiltersArray = [ndef];
+				var techListsArray = [
+					["android.nfc.tech.IsoDep"],
+					["android.nfc.tech.NfcA"],
+					["android.nfc.tech.NfcB"],
+					["android.nfc.tech.NfcF"],
+					["android.nfc.tech.Nfcf"],
+					["android.nfc.tech.NfcV"],
+					["android.nfc.tech.NdefFormatable"],
+					["android.nfc.tech.MifareClassic"],
+					["android.nfc.tech.MifareUltralight"]
+				];
+				document.addEventListener("newintent",
+						function() {
+							console.error('newintent');
+							setTimeout(Selectnfc, 1000);
+						}, false);
+				document.addEventListener("pause", function(e) {
+					if (nfcAdapter) {
+						nfcAdapter.disableForegroundDispatch(main);
+						console.log('pause');
+					}
+				}, false);
+				document.addEventListener("resume", function(e) {
+					if (nfcAdapter) {
+						console.log('resume');
+						Selectnfc
+						nfcAdapter.enableForegroundDispatch(main, pendingIntent, intentFiltersArray, techListsArray);
+					}
+				}, false);
+				nfcAdapter.enableForegroundDispatch(main, pendingIntent, intentFiltersArray, techListsArray);
+			}catch(e){
+				console.error(e);
+			}
+		}
+
+		function handle_nfc_data() {
+			NdefRecord = plus.android.importClass("android.nfc.NdefRecord");
+			NdefMessage = plus.android.importClass("android.nfc.NdefMessage");
+			var main = plus.android.runtimeMainActivity();
+			var intent = main.getIntent();
+			console.log("action type:" + intent.getAction());
+			if("android.nfc.action.TECH_DISCOVERED" == intent.getAction()){
+				if(readyWriteData){
+					__write(intent);
+					readyWriteData = false;
+				}else if(readyRead){
+					__read(intent);
+					readyRead = false;
+				}
+			}
+		}
+
+		function showToast(msg){
+			plus.nativeUI.toast(msg);
+		}
+
+		function __write(intent){
+			try{
+				waiting.setTitle('请勿移开标签\n正在写入...');
+				var text = document.getElementById('text').value;
+				console.log("text=" + text);
+				var textBytes = plus.android.invoke(text,"getBytes");
+				var textRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
+						plus.android.invoke("text/plain","getBytes"), plus.android.invoke("","getBytes"), textBytes);
+				var message = new NdefMessage([textRecord]);
+				var Ndef = plus.android.importClass('android.nfc.tech.Ndef');
+				var NdefFormatable = plus.android.importClass('android.nfc.tech.NdefFormatable');
+				var tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+				var ndef = Ndef.get(tag);
+				if (ndef != null) {
+					var size = message.toByteArray().length;
+					console.log("size=" + size);
+					ndef.connect();
+					if (!ndef.isWritable()) {
+						showToast("tag不允许写入");
+						waiting.close();
+						return ;
+					}
+					if (ndef.getMaxSize() < size) {
+						showToast("文件大小超出容量");
+						waiting.close();
+						return ;
+					}
+
+					ndef.writeNdefMessage(message);
+					waiting.close();
+					showToast("写入数据成功.");
+					return ;
+				} else {
+					var format = NdefFormatable.get(tag);
+					if (format != null) {
+						try {
+							format.connect();
+							format.format(message);
+							showToast("格式化tag并且写入message");
+							waiting.close();
+							return ;
+						} catch (e) {
+							showToast("格式化tag失败.");
+							waiting.close();
+							return ;
+						}
+					} else {
+						showToast("Tag不支持NDEF");
+						waiting.close();
+						return ;
+					}
+				}
+			}catch(e){
+				console.log("error=" + e);
+				waiting.close();
+				// alert('写入失败');
+			}
+
+		}
+
+		function __read(intent){
+			try{
+				var content = "";
+				waiting.setTitle('请勿移开标签\n正在读取数据...');
+				var tag = plus.android.importClass("android.nfc.Tag");
+				tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+				var bytesId  = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+
+				waiting.close();
+				content +="卡片字节数组ID："+tag.getId()+"<br/>";
+				content +="卡片16进制ID："+ bytesToHexString(tag.getId())+"<br/>";
+				var tagid = reverseTwo(bytesToHexString(tag.getId()));
+				content +="卡片16进制翻转ID："+tagid+"<br/>";
+				content +="卡片10进制卡号："+parseInt(tagid, 16)+"<br/>";
+
+				$("#content").html(content);
+
+			}catch(e){
+				// alert(e);
+				//TODO handle the exception
+			}
+		}
+
+		function bytesToHexString(inarray){
+			var i, j, x;
+			var hex = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A",
+				"B", "C", "D", "E", "F" ];
+			var out = "";
+			for (j = 0; j < inarray.length; ++j) {
+				x = parseInt(inarray[j]) & 0xff;
+				i = (x >> 4) & 0x0f;
+				out += hex[i];
+				i = x & 0x0f;
+				out += hex[i];
+			}
+			return out;
+		}
+
+		function reverseTwo(str)
+		{
+
+			var str1 = "";
+			for(var i = 1; i <= str.length; i++){
+				str1 +=str[i-1];
+				if(i%2==0){
+					if(i == str.length){
+						break;
+					}
+					str1+=":";
+				}
+			}
+			var str2 = "";
+			for(var i = str1.split(":").length-1; i >= 0 ; i--){
+				str2+= str1.split(":")[i];
+			}
+			return str2;
+		}
+
+		document.addEventListener('plusready',listenNFCStatus,false);
+
+		var waiting ;
+		var readyWriteData = false;
+		var readyRead = false;
+		function writeData(){
+			var textEle = document.getElementById('text');
+			if(!textEle.value){
+				// alert('请输入要写入的内容');
+				return;
+			}
+			readyWriteData = true;
+			waiting = plus.nativeUI.showWaiting("请将NFC标签靠近！");
+		}
+		window.addEventListener('toInfo', function(e) { //执行刷新
+			mui.back()
+		});
+	</script>
+	<script>
+		var bytesId
+		var self;
+		mui.init({
+			beforeback: function() {
+				var list = plus.webview.currentWebview().opener();　　　　
+				//refresh是A页面自定义事件
+				mui.fire(list, 'aaa');
+				mui.fire(list, 'backInspection');
+				//返回true,继续页面关闭逻辑
+				return true;
+			},
+			swipeBack: false,
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			readData();
+			
+			$("#rwzf").on('tap', function() {
+				app.openPage("view/commom/organ.html", {
+					titleNView: {
+						titleText: '巡检管理',
+						autoBackButton: true,
+					},
+				});
+			});
+
+		});
+
+		function readData(){
+			readyRead = true;
+			// waiting = plus.nativeUI.showWaiting("请将NFC标签靠近！");
+			Selectnfc();
+		}
+
+		function Selectnfc(){
+			var main = plus.android.runtimeMainActivity();
+			var intent = main.getIntent();
+			var tag = plus.android.importClass("android.nfc.Tag");
+			tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+			console.log(JSON.stringify(tag))
+			bytesId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+			if(bytesId){
+				clearTimeout(Selectnfc)
+				var url = config.urls.baseUrl + config.actions.recordNfc;
+				let dataTime = new Date();
+				let year = dataTime.getFullYear();
+				let month = dataTime.getMonth() + 1;
+				let date = dataTime.getDate();
+				let time = dataTime.toLocaleTimeString().slice(2);
+				let scanTime = year + '-' + month + '-' + date + ' ' + time;
+				let param = {
+					objectGuid: self.objguid,
+					recordId: self.guid,
+					nfc: bytesId.toString(),
+					scanTime: scanTime
+				};
+
+				app.showLoader();
+				$.ajax(url, {
+					data: param,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					headers: {
+						"Content-Type": "application/json",
+						"X-Access-Token": app.sessionId(),
+					},
+					timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+					success: function(data) {
+						app.hideLoader();
+						if (dealingWithResponseCode(data)) {
+							console.log(JSON.stringify(data))
+							app.toast('录入成功');
+							bytesId = '';
+							var extras = {
+								data:self.data,
+								guid:self.guid,
+								objlist:self.objlist,
+								objguid:self.objguid,
+								objdata:self.objdata,
+								endTime:self.endTime,
+								index: self.index,
+							}
+							if (self.data.taskStatus == 3 || self.data.taskStatus == 1) {
+								app.openPage("inspection_end.html", {
+									titleNView: {
+										titleText: self.data.name,
+										autoBackButton: true,
+									}
+								}, extras);
+							} else {
+								app.openPage("inspection_edit.html", {
+									titleNView: {
+										titleText: self.data.name,
+										autoBackButton: true,
+									}
+								}, extras);
+							}
+						} else {
+							console.log(JSON.stringify(data))
+							app.toast(data.message);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						dealingWithErrorRequest(errorThrown);
+						app.hideLoader();
+					}
+				});
+			}else{
+				app.toast('未检测到nfc,请重新检测');
+			}
+		}
+
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
+		})(mui);
+	</script>
+</html>

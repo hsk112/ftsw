@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>新增会议</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+		width: 16px;
+	}
+	.inputCss{
+		/*font-size: 16px;*/
+		/*font-weight: 400;*/
+		/*color: #1A1616;*/
+		/*height: 30px;*/
+		/*text-align: right;*/
+		/*border: 0px;*/
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 50%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		textarea::-webkit-input-placeholder{
+            color:#B1B1B1;			
+			font-size: 16px;
+			font-weight: 400;
+		}
+		.img_item {
+			float: left;
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			margin-right: 20px;
+			position: relative;
+		}
+		
+		.img_item::after {
+			clear: both;
+			content: '';
+			display: block;
+			width: 0;
+			height: 0;
+			visibility: hidden;
+		}
+		.img_item .myImgClose{
+			position: absolute;
+			right: -5px;
+			top: -5px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		.img_item .img_close {
+			display: inline-block;
+			background-color: #1da1f2;
+			color: #FFF;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		
+		.uploadBtn{
+			padding-top: 2px;
+			display: inline-block;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 400;
+			color: #FFFFFF;
+			width: 83px;
+			height: 26px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.tip{
+			width: 100%;
+			text-align: left;
+			vertical-align: bottom;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			margin-top: 10px;
+		}
+		.fileContent{
+			padding:20px 0;
+			margin:0 20px;
+			border-bottom: 1px solid #eeeeee;
+		}
+		.fileContent-item{
+			width: 100%;
+			min-height: 60px;
+			background: #F4F7FE;
+			border-radius: 10px;
+			margin-bottom: 10px;
+		}
+		.fileContent-item:last-child{
+			margin-bottom: 0px;
+		}
+		.typeImg{
+			width: 30px;
+			height: 34px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.fileContent-item-title{
+			width: calc(100% - 90px);
+			height: 34px;
+			display: inline-block;
+			text-align: left;
+			margin-left: 10px;
+		}
+		.titleSpan{
+			width: 100%;
+			word-break: break-all;
+			font-size: 14px;
+			font-weight: 500;
+			color: #191515;
+			line-height: 14px;
+			display: block;		
+		}
+		.fileSize{
+			font-size: 12px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 14px;
+		}
+		.removeFile{
+			width: 18px;
+			height: 18px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		
+		.radio_inline{
+			display: inline-block;
+			width: 65%;
+		}
+		.radio_inline label{
+
+			width: 20%;
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+		.radio_inline input[type=radio]{
+			width: 15%;             
+			right: auto;
+		}
+		
+		#sign-wrapper{
+			height: 160px;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			background-color: #F4F4F4;
+		}
+		
+		.add_meeting{
+			width: 280px;
+			height: 40px;
+			border-radius: 20px;
+			font-size: 16px;
+			margin: 0 auto;
+		}
+		
+		#sign-wrapper{
+			height: 100px;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			background-color: #F4F4F4;
+		}
+		
+		*{
+			touch-action: none;
+		}
+
+		.my-item-block {
+			display: flex;
+			justify-content: space-between;
+			/*height: 70px;*/
+			border-bottom: 1px solid #EDEDED;
+			line-height: 70px;
+			font-size: 16px;
+		}
+		.my-title-left{
+			margin-left: 30px
+		}
+		.my-title-right{
+			text-align: right;
+			margin-right: 30px;
+			overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+			width: 50%;
+		}
+		.inputClzz{
+			border: none;
+			text-align: right
+		}
+		.mark {
+			position: relative;
+		}
+		.mark::before {
+			content: "*";
+			color: red;
+			position: absolute;
+			left: -10px;
+		}
+		
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="info-bar-content">
+								<div class="my-item-block">
+									<div class="my-title-left mark">
+										项目名称
+									</div>
+									<div class="my-title-right">
+										<input id="projectName" readonly="readonly" required="true" type="text" style="border: none;text-align: right" value="" placeholder="自动填充"
+										 maxlength="100">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left">
+										项目编号
+									</div>
+									<div class="my-title-right">
+										<input id="projectNo" readonly="readonly" required="true" type="text" value="" placeholder="自动填充" style="border:none;text-align: right">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left mark">
+										会议名称
+									</div>
+									<div class="my-title-right">
+										<input id="conferenceTitle" required="true" type="text" style="border:none;text-align: right" value="" placeholder="请输入"
+										 maxlength="25">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left">
+										会议类型
+									</div>
+									<div class="my-title-right">
+										<input id="meetingType" readonly="readonly"  type="text" style="border:none;text-align: right" value="" placeholder="请选择会议类型 >"/>
+										 style="width: 90%;">
+										<span id="detectionDate" class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left mark">
+										会议地址
+									</div>
+									<div class="my-title-right">
+										<input id="conferenceAddress" readonly="readonly" required="true" type="text" style="border:none;text-align: right" value="" placeholder="请选择会议地址 >"
+										 style="width: 90%;">
+										<span class="mui-icon mui-icon-location"></span>
+									</div>
+
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left mark">
+										开始时间
+									</div>
+									<div class="my-title-right">
+										<input id="startTime" readonly="readonly" required="true" type="text"  placeholder="请选择会议开始时间"
+										 style="width: 90%;border: none;text-align: right">
+										<!--<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">-->
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left mark">
+										结束时间
+									</div>
+									<div class="my-title-right">
+										<input id="endTime" readonly="readonly" required="true" type="text" class="mui-input-clear inputCss" placeholder="请选择会议结束时间"
+										 style="width: 90%;border: none;text-align: right">
+										<!--<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">-->
+									</div>
+								</div>
+
+								<div class="my-item-block">
+									<div class="my-title-left">
+										填写人
+									</div>
+									<div class="my-title-right">
+										<input id="inputFullname" readonly="readonly" required="true" type="text" style="border:none;text-align: right" value=""
+										 placeholder="自动填充" maxlength="100">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left">
+										联系电话
+									</div>
+									<div class="my-title-right">
+										<input id="inputPhone" readonly="readonly" required="true" type="text" style="border:none;text-align: right" value="" placeholder="自动填充"
+										 maxlength="100">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left">
+										填写部门
+									</div>
+									<div class="my-title-right">
+										<input id="inputDepartmentFullname" readonly="readonly"  type="text" style="border:none;text-align: right" value=""
+										 placeholder="自动填充" maxlength="100">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left">
+										填写日期
+									</div>
+									<div class="my-title-right">
+										<input id="inputDate" readonly="readonly" required="true" type="text" style="border:none;text-align: right" value="" placeholder="自动填充"
+										 maxlength="100">
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div class="my-title-left">
+										主持人
+										<!--<span style="color: red;margin-left: 3px;">*</span>-->
+									</div>
+									<input id="checkPerson" type="text" style="display: none;">
+									<div class="my-title-right">
+										<input id="checkPersonFullname"  readonly="true" type="text" style="border:none;text-align: right" value=""
+											   placeholder="请选择人员 >" maxlength="50" style="width:calc(100% - 25px)"><a id="clearZc" style="display:none;text-align: center;width:60px;height:30px;z-index: 100;position: absolute;top:5px;right: 20px;line-height:30px;color:white;background-color: #2E64F0" src="#">清 除</a>
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</div>
+								</div>
+								<div class="my-item-block">
+									<div id="surveyItem" style="display: flex;align-items: center">
+										<div class="my-title-left mark" style="width: 80px;">
+											与会人员
+										</div>
+										<input id="surveyBy" type="text" style="display: none;">
+										<input id="surveyPerson_text" readonly="readonly" required="true" type="hidden" value="">
+										<div id="survey-box" style="margin-right: 30px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
+											<input readonly="readonly" required="true" type="text" value="" placeholder="请选择人员 >" style="text-align: right;border: none">
+											<!--<span class="mui-icon mui-icon-arrowright"></span>-->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="sign-wrapper">
+							<button id="submit" type="button" class="mui-btn mui-btn-primary add_meeting">提交</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://39.98.190.45/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://39.98.190.45/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://39.98.190.45/mobile-lib/mobile-lib.umd.min.js"></script>
+
+
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/conservation.js"></script>
+	<script src="../../../js/quality/quality.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/uploadimage.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/mui.previewimage.js"></script>
+	<script src="../../../js/meeting/meeting.js"></script>
+
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		var userPicker = new mui.PopPicker();
+		mui('.mui-scroll-wrapper').scroll();
+
+		mui.init({
+			swipeBack: false,
+            beforeback: function() {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'Refresh');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var self;
+		var extras = {
+			materialId: '',
+			whId: ''
+		}
+
+		var strFormData = {
+			projectName: "",
+			projectNo: "",
+			prjCode: "",
+			projectId: "",
+			conferenceTitle: "",
+			meetingType: "",
+			conferenceAddress: "",
+			conferenceTime: "",
+			startTime: "",
+			endTime: "",
+			host: "",
+			hostFullname: "",
+			inputFullname: "",
+			inputPhone: "",
+			inputDepartmentFullname: "",
+			inputDate: "",
+			safetyConferenceInfoDetailList: [],
+			smx: 114.0571922789319,
+			smy: 22.54389240979802,
+			attachment: ""
+		}
+
+		var strAttachment = [{
+			groupId: "",
+			fileTokens: "",
+			fieldName: "",
+			tableName: ""
+		}]
+
+		var participantList = [];
+
+		var meetingTypeJSON = [{
+			text: '安全会议',
+			value: 1
+		}, {
+			text: '其他会议',
+			value: 2
+		}]
+		var tableData = [];
+		var myProjectInfo = JSON.parse(localStorage.getItem("projectInfo"));
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			//界面元素控制
+			console.log("---->", JSON.stringify(myProjectInfo))
+			self = plus.webview.currentWebview();
+			extras.materialId = self.materialId;
+			extras.whId = self.whId
+			console.log(JSON.stringify(extras))
+
+			initForm();
+			//  initCallback();
+
+			// var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			// window.onresize = function() {
+			// 	var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			// 	//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+			// 	if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+			// 		// plus.webview.currentWebview().setStyle({
+			// 		// 	height: originalHeight + 75
+			// 		// });
+			// 		$("#scroll-content").css("margin","0")
+			// 		$("#bottom-item-btn").hide()
+			// 	}else{
+			// 		$("#scroll-content").css("margin-bottom","100px")
+			// 		$("#bottom-item-btn").show()
+			// 	}
+			// }
+		});
+
+		// methods
+
+		//生成groupId
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+		var initDestoryData = function(data, callback) {
+			for (let key in data) {
+				if (data[key] == '' || data[key] == null) {
+					data[key] = '暂无'
+				}
+			}
+			callback(data);
+		}
+
+		var getToday = function() {
+			let DATE = new Date();
+			let year = DATE.getFullYear();
+			let month = DATE.getMonth() + 1 < 10 ? '0' + (DATE.getMonth() + 1) : DATE.getMonth() + 1;
+			let day = DATE.getDate() < 10 ? '0' + DATE.getDate() : DATE.getDate();
+			return year + '-' + month + '-' + day
+		}
+
+		// 数据聚合
+		var dataCombine = function(data, callback) {
+			var newArray = data;
+			var combine = {};
+			while (newArray.length != 0) {
+				combine = newArray[0];
+				newArray.splice(0, 1)
+				for (index in newArray) {
+					if (combine.unitName === newArray[index].unitName) {
+						combine.participant += `,` + newArray[index].participant;
+						newArray.splice(index, 1);
+					}
+				}
+				strFormData.safetyConferenceInfoDetailList.push(combine)
+			}
+			callback();
+		}
+
+		//初始化表单
+		function initForm() {
+			$('#projectName').attr("value", myProjectInfo.prjName);
+			$('#projectNo').attr("value", myProjectInfo.prjNo);
+			$('#inputFullname').attr("value", app.userInfo().realname);
+			$('#inputPhone').attr("value", app.userInfo().personMobilePhone);
+			$('#inputDepartmentFullname').attr("value", app.userInfo().departName);
+			$('#inputDate').attr("value", getToday());
+			console.log("user",JSON.stringify(app.userInfo()))
+			strFormData.prjCode = myProjectInfo.prjCode
+			strFormData.projectId = myProjectInfo.prjId
+		}
+
+		// JQ
+		
+		//地图选址
+		$('#conferenceAddress').on('tap', function(){
+			globalDelItem(GlobalKey.inBasin);
+			globalDelItem(GlobalKey.inBasinId);
+			globalDelItem(GlobalKey.streetName);
+			globalDelItem(GlobalKey.inStreetId);
+			globalDelItem(GlobalKey.commName);
+			globalDelItem(GlobalKey.inCommId);
+			app.openPage("meeting_location.html", {
+				titleNView: {
+					titleText: '会议地址选择',
+					autoBackButton: true,
+				}
+			});
+			/**
+			 * 以下监听，是来自下一个页面
+			 */
+			//移除
+			window.removeEventListener('reloadAddress', reloadAddress, false);
+			// 赋值
+			window.addEventListener('reloadAddress', reloadAddress, false);
+		})
+		
+		var reloadAddress = function(event) {
+			console.log("地点选择后回调的参数：" + JSON.stringify(event.detail));
+			 //地图点地址
+			$("#conferenceAddress").attr("value",event.detail.address);
+			strFormData.conferenceAddress = event.detail.address;
+			strFormData.smx = event.detail.Lng;
+			strFormData.smy = event.detail.Lat;
+		}
+		
+		// 会议类型选择框
+		$('#meetingType').on('tap', function() {
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				userPicker.setData(meetingTypeJSON);
+				userPicker.show(function(items) {
+					if (items[0].value !== null) {
+						$('#meetingType').attr('value', items[0].text)
+						strFormData.meetingType = items[0].value;
+					}
+				})
+			}
+		})
+
+		//组装表单
+		$('#submit').on('tap', function() {
+            var start = Date.parse($('#startTime').val());
+            var end = Date.parse($('#endTime').val());
+            var now = Date.parse(new Date());
+            if(now > start){
+                app.toast("会议开始时间必须大于当前时间")
+                return;
+            }
+            if(start > end){
+                app.toast("会议开始时间不能大于结束时间")
+                return;
+			}
+            var d1 = $('#startTime').val().substring(0,10)
+            var d2 = $('#endTime').val().substring(0,10)
+            if(d1 != d2 ){
+                app.toast("会议时间起止间请选择同一天")
+                return;
+            }
+
+			if (validateRequiredFields()) {
+				// 会议时间（有争议的参数）
+				strFormData.conferenceTime = $('#startTime').val();
+				
+				strFormData.projectName = $('#projectName').val();
+				strFormData.projectNo = $('#projectNo').val();
+				strFormData.conferenceTitle = $('#conferenceTitle').val();
+				strFormData.conferenceAddress = $('#conferenceAddress').val();
+				strFormData.startTime = $('#startTime').val();
+				strFormData.endTime = $('#endTime').val();
+				strFormData.hostFullname = $('#checkPersonFullname').val();
+				strFormData.inputFullname = $('#inputFullname').val();
+				strFormData.inputPhone = $('#inputPhone').val();
+				strFormData.inputDepartmentFullname = $('#inputDepartmentFullname').val();
+				strFormData.inputDate = $('#inputDate').val();
+				strFormData.attachment = getGroupId();
+				strAttachment[0].groupId = strFormData.attachment;
+
+				dataCombine(participantList, function() {
+					
+					addMeeting(strFormData,
+						strAttachment,
+						function(data) {
+							if(data.success == true){
+							    app.toast("会议添加成功")
+								// var view = plus.webview.getWebviewById("../meeting/index.html");
+								// mui.fire(view, 'Refresh');
+								// console.log("id:"+plus.webview.currentWebview().id)
+								mui.back();
+								// popToTarget('../meeting/index.html')
+                                // app.openPage("../meeting/index.html", {
+                                //     titleNView: {
+                                //         titleText: '会议签到',
+                                //         autoBackButton: true,
+                                //     },
+                                // });
+							}else{
+                                app.toast("会议添加失败")
+							}
+
+						})
+					
+					console.log("--->",JSON.stringify(strFormData))
+					console.log("--->",JSON.stringify(strAttachment))
+				});
+
+			}
+
+
+		})
+
+		//日期选择
+		$("#endTime,#startTime").on("tap", function() {
+			var that = $(this);
+
+			plus.nativeUI.pickDate(function(e) {
+				var d1 = e.date;//日期
+                // console.log('date:'+d1);
+				//检测时间选择
+				plus.nativeUI.pickTime(function(e) {
+					var d2 = e.date;//时分
+					// console.log('time:'+d2);
+					that.val(d1.getFullYear() + "-" + preZero((d1.getMonth() + 1), 2) + "-" + preZero(d1.getDate(), 2) + " " +
+						preZero(d2.getHours(), 2) + ":" + preZero(d2.getMinutes(), 2))
+				}, function(e) {
+					that.val("");
+				}, {
+					title: "请选择时间"
+				});
+
+			}, function(e) {
+				that.val("");
+			}, {
+				title: "请选择日期"
+			});
+
+			plusDate(function(data) {
+				that.val(data)
+			}, 1);
+		})
+
+		// 主持人选择
+		$("#checkPersonFullname").on("tap", function() {
+			var extras = {
+				multiSelect: false
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择主持人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', checkPersonBack, false);
+			// 赋值
+			window.addEventListener('returnSelect', checkPersonBack, false);
+
+		})
+		//清除主持
+		$("#clearZc").on('tap',function(){
+            $("#checkPersonFullname").val("")
+            $("#checkPerson").val("")
+			$(this).css("display","none")
+		})
+
+		//主持人回调
+		var checkPersonBack = function(data) {
+			if (data.detail[0] != undefined) {
+				console.log(JSON.stringify(data.detail[0]))
+				$("#checkPersonFullname").val(data.detail[0].realname)
+				$("#checkPerson").val(data.detail[0].username)
+				strFormData.host = data.detail[0].username;
+                console.log("主持人", JSON.stringify(data.detail)); //data.detail[0].realname
+                $("#clearZc").css("display","block");
+			}
+			//移除
+			window.removeEventListener('returnSelect', checkPersonBack, false);
+		}
+
+
+		// 与会人员选择
+		$("#survey-box").on("tap", function(e) {
+			e.stopPropagation()
+			var extras = {
+				multiSelect: true,
+				// unSelect: truefalse
+			}
+			app.openPage("../../commom/organ.html", {
+				titleNView: {
+					titleText: '选择与会人员',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', checkTeamBack, false);
+			// 赋值
+			window.addEventListener('returnSelect', checkTeamBack, false);
+
+		})
+		var checkTeamBack = function(data) {
+			if (data != "") {
+				var oldVal = $("#surveyPerson_text").val();
+				var oldVal2 = $("#surveyBy").val();
+				console.log(oldVal + "===" + oldVal2)
+				console.log("与会人员", JSON.stringify(data.detail)); //data.detail[0].realname
+				var v1 = oldVal.split(",")
+				var rn = '';
+				var un = '';
+				var flag = false;
+				var a = []
+				for (let i = 0; i < data.detail.length; i++) {
+					console.log(v1.indexOf(data.detail[i].realname))
+					if (v1.indexOf(data.detail[i].realname) == -1) { //避免重复
+						rn += data.detail[i].realname + ",";
+						un += data.detail[i].username + ",";
+						participantList.push({
+							unitName: data.detail[i].departName,
+							participant: data.detail[i].realname
+						})
+					} else {
+						flag = true;
+						a.push(data.detail[i].realname)
+					}
+				}
+				if (flag) {
+					app.toast("已过滤重复人员【" + a.toString() + "】")
+				}
+				rn = rn.slice(0, rn.length - 1);
+				un = un.slice(0, un.length - 1);
+				console.log(oldVal)
+				console.log(rn)
+				if (rn != "") {
+					rn = oldVal != "" ? oldVal + "," + rn : rn;
+					un = oldVal2 != "" ? oldVal2 + "," + un : un;
+				} else {
+					rn = oldVal;
+					un = oldVal2;
+				}
+
+				$("#surveyPerson_text").val(rn);
+				console.log(rn + "--" + un); //data.detail[0].realname
+
+				$("#surveyBy").val(un);
+				var perArr = rn.split(",")
+				var perArr2 = un.split(",")
+				var text = "";
+				for (let i = 0; i < perArr.length; i++) {
+					if (perArr[i] != '') {
+						text +=	
+							`<div style="font-size:14px;display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 2px 5px 0;">
+								<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+								<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+							</div>`
+					}
+				}
+				// text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></sapn>`;
+				if (perArr.length > 4) {
+					var h = 100 + (Math.floor(perArr.length / 4)) * 30;
+					console.log(h)
+					$("#surveyItem").css("height", h)
+				}
+				$("#survey-box").html(text)
+			}
+			//移除
+			window.removeEventListener('returnSelect', checkTeamBack, false);
+		}
+
+		//删除与会人员
+		$("#survey-box").on('tap', ".mui-icon-closeempty", function(e) {
+			e.stopPropagation() //阻止时间冒泡
+			var realname = $(this).attr("rname");
+			var username = $(this).attr("uname")
+			console.log(realname + "-" + username)
+
+			for (index in participantList) {
+				if (participantList[index].participant === realname) {
+					participantList.splice(index, 1)
+				}
+			}
+
+			var that = $(this)
+			// mui.confirm("确定要删除【"+realname+"】?", "提示", ['确定', '取消'], function(result) {
+			// 	if (parseInt(result.index) == 0) {
+			var oldValArr = $("#surveyPerson_text").val().split(",").filter(item => {
+				return item != realname
+			});
+			var oldVal2Arr = $("#surveyBy").val().split(",").filter(item => {
+				return item != username
+			});
+			that.parent().remove()
+			console.log(oldValArr.toString() + "----" + oldVal2Arr.toString())
+			$("#surveyPerson_text").val(oldValArr.toString())
+			$("#surveyBy").val(oldVal2Arr.toString())
+			if (oldValArr.length == 0) {
+				var text =
+					`<input readonly="readonly" required="true" type="text" value="" placeholder="请选择人员 >" style="text-align: right;border: none">
+						 <!--<span class="mui-icon mui-icon-arrowright" style="float: right;"></sapn>-->
+`;
+				$("#survey-box").html(text)
+			}				
+			console.log(oldValArr.length)
+			if (oldValArr.length > 4) {
+				var h = 100 + (Math.floor(oldValArr.length / 4)) * 30;
+				console.log(h)
+				$("#surveyItem").css("height", h)
+			} else $("#surveyItem").css("height", 90)
+			// 	}
+			// })
+		})
+	</script>
+
+</html>

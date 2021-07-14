@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>消息通知</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../css/common.css" rel="stylesheet"/>
+  <style>
+    #search_input1 {
+      margin: 0;
+      width: 90%;
+      height: 32px;
+      border-radius: 5px;
+      border: none;
+      padding-left: 35px;
+    }
+
+    .search {
+      padding: 20px 0;
+      background: #F4F4F4;
+      /*border-bottom: 7px solid #F4F4F4;*/
+      position: relative;
+    }
+
+
+    .search_icon img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      left: 9%;
+      top: 40%;
+    }
+
+    #del_icon1 img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 9%;
+      top: 40%;
+    }
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page" style="background-color: white">
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="search" style="z-index: 100">
+      <div class="search_icon"><img style="width: 14px;" src="../../img/commom/search1@2x.png"></div>
+      <div id="del_icon1"><img src="../../img/commom/del.png"></div>
+      <input type="text" id="search_input1" value="" placeholder="请输入名称、发起人"/>
+    </div>
+    <div
+      style="display: flex;text-align: center;padding-top: 10px;padding-bottom: 20px;border-bottom: solid 1px #eee;z-index: 100;position: relative;background-color: white">
+      <div id="tab1" style="flex: 1;display: flex;flex-direction: column">
+        <img id="allMsgIcon" src="../../img/all_message_checked@2x.png" style="width: 30%;margin: auto auto"/>
+        <span id="allMessageCount" style="margin-top: 5px;font-size: small;color: #1399F4 ">全部(0)</span>
+      </div>
+      <div id="tab2" style="flex: 1;display: flex;flex-direction: column">
+        <img id="notificationMsgIcon" src="../../img/notification_unchecked@2x.png"
+             style="width: 30%;margin: auto auto"/>
+        <span id="notificationMessageCount" style="margin-top: 5px;font-size: small">通知(0)</span>
+      </div>
+      <div id="tab3" style="flex: 1;display: flex;flex-direction: column">
+        <img id="systemMsgIcon" src="../../img/system_message_unchecked@2x.png" style="width: 30%;margin: auto auto"/>
+        <span id="systemMessageCount" style="margin-top: 5px;font-size: small">系统消息(0)</span>
+      </div>
+    </div>
+    <div id="scroll-wrapper" class="" style="height: calc(100vh - 180px);">
+      <div class="mui-content-padded"
+           style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);background-color: white;margin: 0">
+        <div id="allMsgList"></div>
+        <div id="notificationMsgList"></div>
+        <div id="systemMsgList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/timer.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script src="../../js/homeMessage/messageList.js"></script>
+
+<script>
+
+    let param = {
+        titile: "",
+        pageNo: 1,
+        pageSize: 20,
+        msgCategory: "",// 通知1，系统2
+    }
+    var currentItem = 0;//全部0，通知1，系统2
+    var dataList = null;
+    var allMessageDataLoad = false;
+
+    var allMsgCount = 0;
+    var notificationMsgCount = 0;
+    var systemMsgCount = 0;
+    mui.init({
+        swipeBack: false
+    });
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        var wvs = plus.webview.all();
+        for (var i = 0, len = wvs.length - 1; i < len; i++) {
+            let theurl = wvs[i].getURL() + '';
+            if (!(theurl.search('login.html') != -1 ||
+                theurl.search('www/main.html') != -1 ||
+                theurl.search('www/index.html') != -1 ||
+                theurl.search('/searchInfo/index.html') != -1)) {
+                wvs[i].close('none');
+            }
+        }
+        curr.close('slide-out-right');
+    }
+
+    var rankBox = document.getElementById("scroll-wrapper"); // slider
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        pullUpLoad: true
+    });
+
+    mui.plusReady(function () {
+        $("#del_icon1").hide();
+
+        //禁止选项卡自带滑动
+        cBScroll.on('pullingUp', () => {
+            console.log("pullingUp-上拉加载更多" + allMessageDataLoad);
+            if (!allMessageDataLoad) {
+                upLoadMore();
+            }
+
+        })
+
+        currentItem = 0;
+        getAllMessageListData(false, function (data) {
+            console.log("allMessage:" + JSON.stringify(data));
+            if (data.records != null) {
+                addList(false, data.records)
+            }
+        });
+        param.pageNo= 1;
+        getNotificationMessageListData(false, function (data) {
+            if (param.pageNo >= data.pages) {
+                //不再执行上拉
+                console.log("===暂无更多数据");
+                app.toast("已加载完所有项目");
+            } else {
+                console.log("有数据");
+            }
+            if (data.records != null) {
+                addList(false, data.records);
+            }
+            cBScroll.finishPullUp();
+            cBScroll.refresh();
+        });
+        param.pageNo= 1;
+        getSystemMessageListData(false, function (data) {
+            if (param.pageNo >= data.pages) {
+                console.log("暂无更多数据");
+                app.toast("已加载完所有项目");
+            } else {
+                console.log("有数据");
+            }
+            if (data.records != null) {
+                addList(false, data.records);
+            }
+            // cBScroll.finishPullUp();
+            cBScroll.refresh();
+        });
+        param.pageNo= 1;
+    });
+
+    // //下拉刷新
+    function pulldownRefresh() {
+        $("#tab1-content-ul").empty();
+        param.pageNo = 1;
+        console.log("下拉刷新");
+        // getCount()
+
+        switch (currentItem) {
+            case 0:
+                getAllMessageListData(false, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        //不再执行上拉
+                        console.log("暂无更多数据");
+                        app.toast("已加载完所有项目");
+                        allMissionDataLoad = true;
+                    } else {
+                        console.log("有数据");
+                        allMissionDataLoad = false;
+                    }
+                    if (data.records != null) {
+                        addList(false, data.records);
+                    }
+                    cBScroll.finishPullUp();
+                    cBScroll.refresh();
+                })
+                break;
+            case 1:
+                getNotificationMessageListData(false, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        //不再执行上拉
+                        console.log("===暂无更多数据");
+                        app.toast("已加载完所有项目");
+                    } else {
+                        console.log("有数据");
+                    }
+                    if (data.records != null) {
+                        addList(false, data.records);
+                    }
+                    cBScroll.finishPullUp();
+                    cBScroll.refresh();
+                });
+                break;
+            case 2:
+                getSystemMessageListData(false, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        console.log("暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    if (data.records != null) {
+                        addList(false, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+        }
+    }
+
+    // //上拉加载
+    function upLoadMore() {
+        //console.log("上拉加载")
+        console.log("pageSize" + param.pageSize);
+        console.log("pageNo" + param.pageNo);
+        switch (currentItem) {
+            case 0:
+                getAllMessageListData(true, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        //不再执行上拉
+                        console.log("暂无更多数据");
+                        app.toast("已加载完所有项目");
+                        allMissionDataLoad = true;
+                    } else {
+                        console.log("有数据");
+                        allMissionDataLoad = false;
+                    }
+                    if (data.records != null) {
+                        addList(true, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                })
+                break;
+            case 1:
+                getNotificationMessageListData(true, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        //不再执行上拉
+                        console.log("===暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    if (data.records != null) {
+                        addList(true, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+            case 2:
+                getSystemMessageListData(true, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        console.log("暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    if (data.records != null) {
+                        addList(true, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+        }
+    }
+
+    // JQ
+    $('#search_input1').change(function () {
+        $("#del_icon1").show();
+        param.titile = $("#search_input1").val();
+        getCurrentList();
+    });
+
+    $('#del_icon1').on('tap', function () {
+        $('#search_input1').val("");
+        param.titile = "";
+        getCurrentList();
+    })
+    $('#search_input1').on('input', function () {
+        param.combineCondition = '';
+        if ($("#search_input1").val() != '') {
+            $("#del_icon1").show();
+        } else {
+            $("#del_icon1").hide();
+        }
+    })
+
+    function getCurrentList() {
+        switch (currentItem) {
+            case 0:
+                getAllMessageListData(false, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        //不再执行上拉
+                        console.log("暂无更多数据");
+                        app.toast("已加载完所有项目");
+                        allMissionDataLoad = true;
+                    } else {
+                        console.log("有数据");
+                        allMissionDataLoad = false;
+                    }
+                    if (data.records != null) {
+                        addList(false, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                })
+                break;
+            case 1:
+                getNotificationMessageListData(false, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        //不再执行上拉
+                        console.log("===暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    if (data.records != null) {
+                        addList(false, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+            case 2:
+                getSystemMessageListData(false, function (data) {
+                    if (param.pageNo >= data.pages) {
+                        console.log("暂无更多数据")
+                        app.toast("已加载完所有项目")
+                    } else {
+                        console.log("有数据")
+                    }
+                    if (data.records != null) {
+                        addList(false, data.records)
+                    }
+                    cBScroll.finishPullUp()
+                    cBScroll.refresh()
+                });
+                break;
+        }
+    }
+
+    function selectTab(index) {
+        switch (index) {
+            case 0:
+                $("#allMsgIcon").attr('src', '../../img/all_message_checked@2x.png');
+                $("#allMessageCount").text("全部(" + allMsgCount + ")");
+                $("#allMessageCount").css({color: "#1399F4"});
+
+                $("#notificationMsgIcon").attr('src', '../../img/notification_unchecked@2x.png');
+                $("#notificationMessageCount").text("通知(" + notificationMsgCount + ")");
+                $("#notificationMessageCount").css({color: "black"});
+
+                $("#systemMsgIcon").attr('src', '../../img/all_message_unchecked@2x.png');
+                $("#systemMessageCount").text("系统消息(" + systemMsgCount + ")");
+                $("#systemMessageCount").css({color: "black"});
+                $("#allMsgList").show();
+                $("#notificationMsgList").hide();
+                $("#systemMsgList").hide();
+                break;
+            case 1:
+                $("#allMsgIcon").attr('src', '../../img/all_message_unchecked@2x.png');
+                $("#allMessageCount").text("全部(" + allMsgCount + ")");
+                $("#allMessageCount").css({color: "black"});
+
+                $("#notificationMsgIcon").attr('src', '../../img/notification_checked@2x.png');
+                $("#notificationMessageCount").text("通知(" + notificationMsgCount + ")");
+                $("#notificationMessageCount").css({color: "#1399F4"});
+
+                $("#systemMsgIcon").attr('src', '../../img/all_message_unchecked@2x.png');
+                $("#systemMessageCount").text("系统消息(" + systemMsgCount + ")");
+                $("#systemMessageCount").css({color: "black"});
+                $("#allMsgList").hide();
+                $("#notificationMsgList").show();
+                $("#systemMsgList").hide();
+                break;
+            case 2:
+                $("#allMsgIcon").attr('src', '../../img/all_message_unchecked@2x.png');
+                $("#allMessageCount").text("全部(" + allMsgCount + ")");
+                $("#allMessageCount").css({color: "black"});
+
+                $("#notificationMsgIcon").attr('src', '../../img/notification_unchecked@2x.png');
+                $("#notificationMessageCount").text("通知(" + notificationMsgCount + ")");
+                $("#notificationMessageCount").css({color: "black"});
+
+                $("#systemMsgIcon").attr('src', '../../img/all_message_checked@2x.png');
+                $("#systemMessageCount").text("系统消息(" + systemMsgCount + ")");
+                $("#systemMessageCount").css({color: "#1399F4"});
+                $("#allMsgList").hide();
+                $("#notificationMsgList").hide();
+                $("#systemMsgList").show();
+                break;
+        }
+    }
+
+
+    function getAllMessageListData(append, callback) {
+        param.msgCategory = "";
+        if (!append) {
+            param.pageNo = 1;
+        }
+        getMessageList(param, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+                allMsgCount = data.result.total;
+                $('#allMessageCount').text("全部(" + allMsgCount + ")");
+            } else {
+                mui.toast("列表查询失败")
+            }
+        })
+    }
+
+    function getNotificationMessageListData(append, callback) {
+        param.msgCategory = "1";
+        if (!append) {
+            param.pageNo = 1;
+        }
+        getMessageList(param, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+                notificationMsgCount = data.result.total;
+                $('#notificationMessageCount').text("通知(" + notificationMsgCount + ")");
+            } else {
+                mui.toast("列表查询失败")
+            }
+        })
+    }
+
+    function getSystemMessageListData(append, callback) {
+        param.msgCategory = "2";
+        if (!append) {
+            param.pageNo = 1;
+        }
+        getMessageList(param, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+                systemMsgCount = data.result.total;
+                $('#systemMessageCount').text("系统消息(" + systemMsgCount + ")");
+            } else {
+                mui.toast("列表查询失败")
+            }
+        })
+    }
+
+    // tab点击事件
+    $("#tab1").on('tap', function () {
+        currentItem = 0;
+        getAllMessageListData(false, function (data) {
+            console.log("allMessage:" + JSON.stringify(data));
+            if (data.records != null) {
+                addList(false, data.records)
+            }
+        })
+    })
+    $("#tab2").on('tap', function () {
+        currentItem = 1;
+        getNotificationMessageListData(false, function (data) {
+            console.log("getNotificationMessageListData:" + JSON.stringify(data));
+            if (data.records != null) {
+                addList(false, data.records)
+            }
+        })
+    })
+    $("#tab3").on('tap', function () {
+        currentItem = 2;
+        getSystemMessageListData(false, function (data) {
+            console.log("getSystemMessageListData:" + JSON.stringify(data));
+            if (data.records != null) {
+                addList(false, data.records)
+            }
+        })
+    })
+
+
+    // item点击事件
+    $('#allMsgList').on('tap', '.msgItem', function () {
+        var index = $(this).attr('data-status');
+        if (index != null) {
+            var extras = dataList[index];
+            app.openPage("messageDetail.html", {
+                titleNView: {
+                    titleText: '详情',
+                    autoBackButton: true,
+                }
+            }, extras);
+        }
+    });
+    $('#notificationMsgList').on('tap', '.msgItem', function () {
+        var id = $(this).attr('data-status');
+        if (id != null) {
+            var extras = dataList[i];
+            app.openPage("messageDetail.html", {
+                titleNView: {
+                    titleText: '详情',
+                    autoBackButton: true,
+                }
+            }, extras);
+        }
+    });
+    $('#systemMsgList').on('tap', '.msgItem', function () {
+        var id = $(this).attr('data-status');
+        if (id != null) {
+            var extras = dataList[i];
+            app.openPage("messageDetail.html", {
+                titleNView: {
+                    titleText: '详情',
+                    autoBackButton: true,
+                }
+            }, extras);
+        }
+    });
+    var addList = function (append, data) {
+        if (append) {
+            dataList.add(data);
+        } else {
+            dataList = data;
+        }
+        var item = '';
+        for (let i = 0; i < dataList.length; i++) {
+            var importStr = '';
+            switch (dataList[i].priority) {
+                case 'L':
+                    // 一般消息
+                    importStr = '<span style="margin-right: 9px;border-radius: 5px;border: 1px solid #1399F4;background-color: #F9FDFF;color: #179BF4;padding: 2px 6px;font-size: 12px">一般消息</span>';
+                    break;
+                case 'M':
+                    // 重要消息
+                    importStr = '<span style="margin-right: 9px;border-radius: 5px;border: 1px solid #FAB75B;background-color: #FEFAF4;color: #FF9E19;padding: 2px 6px;font-size: 12px">重要消息</span>';
+                    break;
+                case "H":
+                    //紧急消息
+                    importStr = '<span style="margin-right: 9px;border-radius: 5px;border: 1px solid #EF5A5A;background-color: #FDF6F6;color: #EF5A5A;padding: 2px 6px;font-size: 12px">紧急消息</span>';
+                    break;
+
+            }
+            item += '<div class="msgItem" data-status="' + i + '" style="border-bottom: solid 1px #eee;display: flex;flex-direction: row;padding: 20px 10px">' +
+                '<div style="flex: 1">' +
+                '<div style="background-color: red;border-radius: 4px;width: 8px;height: 8px;margin: 7px auto"></div>' +
+                '</div>' +
+                '<div style="flex: 7">' +
+                '<div style="font-size: medium;text-align: left">' + dataList[i].titile + '</div>' +
+                '<div style="font-size: 12px;color: #B1B1B1;margin-top: 12.5px;text-align: left">' + dataList[i].sendTime + ' 发布</div>' +
+                '</div>' +
+                '<div style="flex: 3;text-align: right;margin: auto 0">' +
+                importStr +
+                '<img src="../../img/arrow-right-blue@2x.png" style="height: 10px;width: 6px;"/>' +
+                '</div>' +
+                '</div>';
+        }
+        if (param.pageNo >= data.pages) {
+            allMessageDataLoad == true;
+        } else {
+            allMessageDataLoad == false;
+        }
+        param.pageNo++;
+        console.log("=========================================" + currentItem);
+        switch (currentItem) {
+            case 0:
+                console.log("000000000000000000000000000000000000000");
+                $("#allMsgList").html(item);
+                break;
+            case 1:
+                console.log("11111111111111111111111111111111111111111");
+                $("#notificationMsgList").html(item);
+                break;
+            case 2:
+                console.log("222222222222222222222222222222222222222222");
+                $("#systemMsgList").html(item);
+                break;
+        }
+        selectTab(currentItem);
+    }
+
+</script>
+</html>

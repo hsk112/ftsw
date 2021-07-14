@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>周报详情</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<style>
+			.week-item {
+				margin: 9px;
+				background: #fff;
+				border-radius: 10px;
+				padding: 18px;
+			}
+
+			.week-item .title {
+				color: #262626;
+				font-size: 16px;
+				font-weight: 600;
+				height: 16px;
+				/* line-height: 30px; */
+				padding-bottom: 40px;
+				text-align: left;
+				border-bottom: 0.5px solid #ededed;
+
+			}
+            .title i{
+				width: 2px;
+				height: 15px;
+				background:#0493F3 ; 
+				vertical-align: middle;
+				display: inline-block;
+			}
+			.title span{
+				vertical-align: middle;
+			}
+			.week-item-content {
+				min-height: 100px;
+					font-size: 16px;
+					line-height: 18px;
+					text-align: left;
+					padding: 12px 0;
+			}
+
+			.scheduleTab {
+				height: 55px;
+				line-height: 55px;
+				display: flex;
+				background: #fff;
+				margin-bottom: 5px;
+			}
+
+			.scheduleTab-month {
+				width: 50%;
+
+			}
+
+			.scheduleTab-week {
+				width: 50%;
+			}
+
+			.color {
+				color: #0493F3;
+			}
+
+			.month-blank {
+				display: block;
+				width: 24px;
+				height: 3px;
+				background: #0493F3;
+				border-radius: 2px;
+				margin: 0 auto;
+				margin-top: -3px;
+			}
+
+			.week-blank {
+				display: block;
+				width: 24px;
+				height: 3px;
+				background: #0493F3;
+				border-radius: 2px;
+				margin: 0 auto;
+				margin-top: -3px;
+			}
+
+			.page-content {
+				padding: 0px 20px;
+				background: #fff;
+			}
+
+			.page-content .content-item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 14px 0px;
+				border-bottom: 0.5px solid #ededed;
+			}
+
+			.hidden {
+				display: none;
+			}
+		</style>
+	</head>
+	<body style="margin: 0;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<div id="mui-content" class="mui-page">
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+
+				<div id="scroll-wrapper" style="height: calc(100vh - 60px);background: #fff;">
+					<div>
+						<div class="page-content clearfix">
+							
+								<div class="content-item">
+									<div class="item-left">项目名称</div>
+									<div class="item-right prjName">xxx项目</div>
+								</div>
+								<div class="content-item">
+									<div class="item-left">项目编号</div>
+									<div class="item-right prjName">YH021554877788</div>
+								</div>
+								<div class="content-item">
+									<div class="item-left">时间</div>
+									<div class="item-right prjName" style="display: flex;">
+										<span>2021-02</span><span><img src="../../../img/cal.png"
+												style="width:16px;height:16px;margin-left: 5px;margin-bottom: -2px;"
+												alt=""></span></div>
+								</div>
+								<div class="content-item">
+									<div class="item-left">周报名称</div>
+									<div class="item-right prjName">福田水务2021-05周报</div>
+								</div>
+								<div class="content-item">
+									<div class="item-left">参与单位与负责人</div>
+									<div class="item-right prjName" style="width: 150px;">滑动勘测设计研究院有限公司-张三</div>
+								</div>
+
+								<div class="content-item">
+									<div class="item-left">形象进度:</div>
+								</div>
+								<div class=""
+									style="min-height: 160px;padding-bottom: 40px;padding-top: 14px;border-bottom: solid 0.5px #ededed;text-align: left;">
+									这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度这是形象进度
+								</div>
+								<div class="content-item">
+									<div class="item-left">存在问题:</div>
+								</div>
+								<div class=""
+									style="min-height: 160px;padding-bottom: 40px;padding-top: 14px;text-align: left;">
+									问题
+								</div>
+							
+						</div>
+						<div class="clearfix" style="background: #f6f4f7;border: 1px solid #f6f4f7;">
+							<div class="week-item">
+								<div class="title">
+									<i></i>
+									<span>本周工作计划</span>
+								</div>
+								<div class="week-item-content" id="thisweekplan">
+									本周工作计划test
+								</div>
+							</div>
+							<div class="week-item">
+								<div class="title">
+									<i></i>
+									<span>本周工作计划</span>
+								</div>
+								<div class="week-item-content" id="thisweekplan">
+									本周工作计划test
+								</div>
+							</div>
+							<div class="week-item">
+								<div class="title">
+									<i></i>
+									<span>进度分析</span>
+								</div>
+								<div class="week-item-content" id="thisweekplan">
+									进度分析test
+								</div>
+							</div>
+							<div class="week-item">
+								<div class="title">
+									<i></i>
+									<span>存在的问题及建议</span>
+								</div>
+								<div class="week-item-content" id="thisweekplan">
+									存在的问题及建议test
+								</div>
+							</div>
+							<div class="week-item">
+								<div class="title">
+									<i></i>
+									<span>下周工作计划</span>
+								</div>
+								<div class="week-item-content" id="thisweekplan">
+									下周工作计划test
+								</div>
+							</div>
+						</div>
+						<div class="page-content clearfix">
+                           <div class="content-item">
+								<div class="title">本周计划进度：</div>
+								<div class="week-item-content">
+
+								</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left">项目进展照片:</div>
+							</div>
+							<div class="content-item">
+								<div class="imgList" style="width: 23%;height: auto;">
+									<img src="https://img0.baidu.com/it/u=3731387020,1142375646&fm=26&fmt=auto&gp=0.jpg"
+										alt="" style="width: 100%;height: 100%;">
+								</div>
+								<div class="imgList" style="width: 23%;height: auto;">
+									<img src="https://img0.baidu.com/it/u=3731387020,1142375646&fm=26&fmt=auto&gp=0.jpg"
+										alt="" style="width: 100%;height: 100%;">
+								</div>
+								<div class="imgList" style="width: 23%;height: auto;">
+									<img src="https://img0.baidu.com/it/u=3731387020,1142375646&fm=26&fmt=auto&gp=0.jpg"
+										alt="" style="width: 100%;height: 100%;">
+								</div>
+								<div class="imgList" style="width: 23%;height: auto;">
+									<img src="https://img0.baidu.com/it/u=3731387020,1142375646&fm=26&fmt=auto&gp=0.jpg"
+										alt="" style="width: 100%;height: 100%;">
+								</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left">周报文件</div>
+
+							</div>
+							<div class=""
+								style="min-height: 150px;padding:14px 0px;text-align: left;border-bottom: solid 0.5px #ededed;">
+
+							</div>
+							<div class="content-item">
+								<div class="item-left">填写人</div>
+								<div class="item-right prjName">自动回填</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left">填写部门</div>
+								<div class="item-right prjName">自动回填</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left">联系方式</div>
+								<div class="item-right prjName">自动回填</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left">填写日期</div>
+								<div class="item-right prjName">自动回填</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left" style="white-space:nowrap;">新任务通知方式</div>
+								<div class="item-right prjName" style="display: flex;">
+									<div class=" mui-checkbox mui-left" style="margin-left: -10px;">
+										<label
+											style="white-space:nowrap;margin-right: -4px;margin-left:-18px ;">站内消息</label>
+										<input name="checkbox1" value="Item 1" type="checkbox" style="margin-top:-7px;"
+											checked>
+									</div>
+									<div class=" mui-checkbox mui-left" style="margin-left: -10px;">
+										<label
+											style="white-space:nowrap;margin-right: -4px;margin-left:-18px ;">手机短信</label>
+										<input name="checkbox1" value="Item 1" type="checkbox" style="margin-top:-7px;"
+											checked>
+									</div>
+								</div>
+							</div>
+							<div class="content-item">
+								<div class="item-left">监理单位复核</div>
+								<div class="item-right prjName">张三</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script>
+		// mui.init({
+		//     swipeBack: false
+		// });
+	</script>

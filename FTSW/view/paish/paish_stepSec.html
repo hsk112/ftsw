@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-证照</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-popover {
+				height: 300px;
+			}
+			.img_item{
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				float: left;
+				margin-right: 20px;
+				margin-top: 10px;
+			}
+			.img_item img{
+				width: 72px;
+				height: 72px;
+			}
+			.img_item .img_close {
+				width: 16px;
+				height: 16px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<div style="position:fixed;top:0;left:0;z-index: 99;width:100%;background: #ffffff;">
+				<ol class="steps">
+					<li class="step-active">
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">基本信息</div>
+						</div>
+					</li>
+					<li class="step-active">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">证照信息</div>
+						</div>
+					</li>
+					<li class="">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">排口信息</div>
+						</div>
+					</li>
+				</ol>
+				<div style="height: 5px;background: #F4F4F4;"></div>
+			</div>
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">排水户登记</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content" style="height: 100vh">
+				<div class="mui-scroll-wrapper" style="margin-top: 90px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title">
+								证照情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否需办营业执照<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="hasDiscCode" required="true" placeholder="是否需办营业执照" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="hasDiscCode" required="true" placeholder="是否需办营业执照" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+								<div id="for_hasDiscCode" class="info-bar-content-item" style="display: none;">
+									<div class="item-title">
+										是否取得营业执照<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="input_discCode" required="true" placeholder="是否取得营业执照" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="input_discCode" required="true" placeholder="是否取得营业执照" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+
+								<div id="for_input_discCode" style="display: none;">
+									<div class="info-bar-content-item" style="height: 140px;">
+										<div class="item-title">
+											营业执照照片<span style="color: red;">*</span>
+											<a style="float: right;font-size: 14px;color: #337BFC;" href="#photoNotice">拍照须知</a>
+										</div>
+										<div class="dis_img_list"></div>
+										<div id="discCodeAttachment_img">
+											<div class="img_item">
+												<img id="discCodeAttachment" class="img_src" data-token='' style="width: 72px;height: 72px;float: left;"
+												 src="../../img/commom/pz@2x.png" />
+												<span id="close1" class="img_close mui-icon mui-icon-closeempty" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>
+												<!-- <div class="img_close"  style="display: none;">移除</div> -->
+											</div>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											营业执照统一社会信用代码
+											<span style="color: red;">*</span>
+											<span id="discCodeError" style="float: right;color: red;display: none;"></span>
+											<!-- 输入格式不合法！ -->
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="discCode" required="true" onblur="disCodeReg(this)" type="text" class="mui-input-clear"
+											 placeholder="请输入营业执照统一社会信用代码" style="width: 90%;">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											营业执照核发日期<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="discDate" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入营业执照核发日期">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											营业执照有效期<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="discExpired" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入营业执照有效期">
+										</div>
+									</div>
+								</div>
+
+
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否需办排水许可证<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="hasPslCode" required="true" placeholder="是否需办排水许可证" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="hasPslCode" required="true" placeholder="是否需办排水许可证" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+
+
+								<div id="for_hasPslCode" class="info-bar-content-item" style="display: none;">
+									<div class="item-title">
+										是否取得排水许可证<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="input_hasPslCode" required="true" placeholder="是否取得排水许可证" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="input_hasPslCode" required="true" placeholder="是否取得排水许可证" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+								<div id="for_input_hasPslCode" style="display: none;">
+									<div class="info-bar-content-item" style="height: 140px;">
+										<div class="item-title">
+											排水许可证照片<span style="color: red;">*</span>
+											<a style="float: right;font-size: 14px;color: #337BFC;" href="#photoNotice">拍照须知</a>
+										</div>
+										<div class="psl_img_list"></div>
+										<div id="pslCodeAttachment_img">
+											<div class="img_item">
+												<img id="pslCodeAttachment" data-token='' style="width: 72px;height: 72px;float: left;" src="../../img/commom/pz@2x.png" />
+												<span id="close2" class="img_close mui-icon mui-icon-closeempty" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>
+												<!-- <div class="img_close"  style="display: none;">移除</div> -->
+											</div>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水许可证号<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="pslCode" required="true" maxlength="16" onkeyup="format_input(1,this)" type="text" class="mui-input-clear"
+											 placeholder="请输入排水许可证号(最多16位)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水许可证核发日期<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="pslBeginDate" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排水许可证核发日期">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水许可证有效期<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="pslEndDate" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排水许可证有效期">
+										</div>
+									</div>
+								</div>
+
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否需要排污许可证<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="hasEslCode" required="true" placeholder="是否需要排污许可证" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="hasEslCode" required="true" placeholder="是否需要排污许可证" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+								<div id="for_hasEslCode" class="info-bar-content-item" style="display: none;">
+									<div class="item-title">
+										是否取得排污许可证<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="input_hasEslCode" required="true" placeholder="是否取得排污许可证" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="input_hasEslCode" required="true" placeholder="是否取得排污许可证" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+
+								<div id="for_input_hasEslCode" style="display: none;">
+									<div id="permit-photo3" class="info-bar-content-item" style="height: 140px;">
+										<div class="item-title">
+											排污许可证照片<span style="color: red;">*</span>
+											<a style="float: right;font-size: 14px;color: #337BFC;" href="#photoNotice">拍照须知</a>
+										</div>
+										<div class="esl_img_list"></div>
+										<div id="eslCodeAttachment_img">
+											<div class="img_item ">
+												<img id="eslCodeAttachment" data-token='' style="width: 72px;height: 72px;float: left;" src="../../img/commom/pz@2x.png" />
+												<span id="close3" class="img_close mui-icon mui-icon-closeempty" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>
+												<!-- <div class="img_close"  style="display: none;">移除</div> -->
+											</div>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排污许可证号<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="eslCode" required="true" maxlength="16" onkeyup="format_input(2,this)" type="text" class="mui-input-clear"
+											 placeholder="请输入排污许可证号(最多16位)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排污许可证核发日期<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="eslBeginDate" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排污许可证核发日期">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排污许可证有效期<span style="color: red;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="eslEndDate" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排污许可证有效期">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="bottom-btn">
+							<div class="btn-item" id="step_save">
+								<div style="color: #337BFC;">暂存</div>
+							</div>
+							<div class="btn-item" id="next_step">
+								<div style="background: #337BFC;color: #fff;">下一步</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+		<!--拍照须知-->
+		<div id="photoNotice" class="mui-popover" style="height:130px;text-align: left;background: #FFFFFF;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#">拍照须知:</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">拍照时应将证件摆放端正，拍摄照片应内容完整、字迹清晰。</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		var self;
+		var isErr = false;
+		mui.init({
+			swipeBack: false
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,
+			style: 'color'
+		});
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+			if (isSelectPsh == "true" && self.type != "add") {
+				$('#step_save').hide()
+				$('#next_step').css("width", "100%")
+				var pshData = JSON.parse(globalGetItem(GlobalKey.psh));
+				if (pshData) {
+
+					if (pshData.discCodeAttachment) {
+						queryPhoto(pshData.discCodeAttachment, function(data) {
+							if (data.result && data.result.length) {
+								let path = data.result[0].uploadFile.savePath;
+								let url = config.urls.baseUrl + 'sys/common/view/' + path;
+								var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+									'" class="img_item">' +
+									'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""  />' +
+									'       <span class="img_close mui-icon mui-icon-closeempty" type="discCodeAttachment" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+									'	</div>';
+								// $("#discCodeAttachment").attr('src',url);								
+								$(".dis_img_list").append(html);
+								// $("#close1").show();
+								$("#discCodeAttachment").attr("data-token", data.result[0].fileToken);
+								$("#discCodeAttachment_img").hide();
+							}
+						})
+					}
+					if (pshData.hasDiscCode == '1') {
+						$("#for_hasDiscCode").show();
+						$("input[name='hasDiscCode'][value=1]").prop("checked", true);
+						$("input[name='hasDiscCode'][value=0]").prop("checked", false);
+						if (pshData.discCode || pshData.discCodeAttachment) {
+							$("#for_input_discCode").show();
+							if (pshData.discCode) {
+								$("input[name='input_discCode'][value=1]").prop("checked", true);
+								$("input[name='input_discCode'][value=0]").prop("checked", false);
+								$("#discCode").val(pshData.discCode);
+								$("#discDate").val(pshData.discDate);
+								$("#discExpired").val(pshData.discExpired);
+							} else {
+								$("input[name='input_discCode'][value=1]").prop("checked", false);
+								$("input[name='input_discCode'][value=0]").prop("checked", true);
+							}
+						}
+					} else {
+						$("#for_hasDiscCode").hide();
+						$("#for_input_discCode").hide();
+						$("input[name='hasDiscCode'][value=1]").prop("checked", false);
+						$("input[name='hasDiscCode'][value=0]").prop("checked", true);
+					}
+
+
+					if (pshData.pslCodeAttachment) {
+						queryPhoto(pshData.pslCodeAttachment, function(data) {
+							if (data.result && data.result.length) {
+								let path = data.result[0].uploadFile.savePath;
+								let url = config.urls.baseUrl + 'sys/common/view/' + path;
+								var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+									'" class="img_item">' +
+									'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""  />' +
+									'		<span class="img_close mui-icon mui-icon-closeempty" type="pslCodeAttachment" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+									'	</div>';
+								$(".psl_img_list").append(html);
+								$("#pslCodeAttachment_img").hide();
+								$("#pslCodeAttachment").attr("data-token", data.result[0].fileToken);
+								// $("#close2").show();								
+							}
+						})
+					}
+
+					if (pshData.hasPslCode == '1') {
+						$("#for_hasPslCode").show();
+						$("input[name='hasPslCode'][value=1]").prop("checked", true);
+						$("input[name='hasPslCode'][value=0]").prop("checked", false);
+						if (pshData.pslCode || pshData.pslCodeAttachment) {
+							$("#for_input_hasPslCode").show();
+							if (pshData.pslCode) {
+								$("input[name='input_hasPslCode'][value=1]").prop("checked", true);
+								$("input[name='input_hasPslCode'][value=0]").prop("checked", false);
+								$("#pslCode").val(pshData.pslCode);
+								$("#pslBeginDate").val(pshData.pslBeginDate);
+								$("#pslEndDate").val(pshData.pslEndDate);
+							} else {
+								$("input[name='input_hasPslCode'][value=1]").prop("checked", false);
+								$("input[name='input_hasPslCode'][value=0]").prop("checked", true);
+							}
+						}
+					} else {
+						$("#for_hasPslCode").hide();
+						$("#for_input_hasPslCode").hide();
+						$("input[name='hasPslCode'][value=1]").prop("checked", false);
+						$("input[name='hasPslCode'][value=0]").prop("checked", true);
+					}
+
+
+					if (pshData.eslCodeAttachment) {
+						queryPhoto(pshData.eslCodeAttachment, function(data) {
+							if (data.result && data.result.length) {
+								let path = data.result[0].uploadFile.savePath;
+								let url = config.urls.baseUrl + 'sys/common/view/' + path;
+								var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+									'" class="img_item">' +
+									'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""  />' +
+									'		<span class="img_close mui-icon mui-icon-closeempty" type="eslCodeAttachment" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+									'	</div>';
+								$(".esl_img_list").append(html);
+								$("#eslCodeAttachment_img").hide();
+								$("#eslCodeAttachment").attr("data-token", data.result[0].fileToken);
+								// $("#eslCodeAttachment").attr('src',url);
+								// $("#close3").show();								
+							}
+						})
+					}
+
+					if (pshData.hasEslCode == '1') {
+						$("#for_hasEslCode").show();
+						$("input[name='hasEslCode'][value=1]").prop("checked", true);
+						$("input[name='hasEslCode'][value=0]").prop("checked", false);
+						if (pshData.eslCode || pshData.eslCodeAttachment) {
+							$("#for_input_hasEslCode").show();
+							if (pshData.eslCode) {
+								$("input[name='input_hasEslCode'][value=1]").prop("checked", true);
+								$("input[name='input_hasEslCode'][value=0]").prop("checked", false);
+								$("#eslCode").val(pshData.eslCode);
+								$("#eslBeginDate").val(pshData.eslBeginDate);
+								$("#eslEndDate").val(pshData.eslEndDate);
+							} else {
+								$("input[name='input_hasEslCode'][value=1]").prop("checked", false);
+								$("input[name='input_hasEslCode'][value=0]").prop("checked", true);
+							}
+						}
+					} else {
+						$("#for_hasEslCode").hide();
+						$("#for_input_hasEslCode").hide();
+						$("input[name='hasEslCode'][value=1]").prop("checked", false);
+						$("input[name='hasEslCode'][value=0]").prop("checked", true);
+					}
+				}
+			}
+		});
+
+		mui.ready(function() {
+			initCheckBox();
+			/*var pshData = localStorage.getItem("ps_discharger");
+			if(pshData) {
+				pshData = JSON.parse(pshData);
+				if(parseInt(pshData.hasDiscCode) == '1') {
+					$("input[name='hasDiscCode'][value=1]").prop("checked", true);
+					$("input[name='hasDiscCode'][value=0]").prop("checked", false);
+					$("#discCode").val(pshData.discCode);
+					$("#discDate").val(pshData.discDate);
+					$("#discExpired").val(pshData.discExpired);
+				} else {
+					$("input[name='hasDiscCode'][value=1]").prop("checked", false);
+					$("input[name='hasDiscCode'][value=0]").prop("checked", true);
+				}
+				if(parseInt(pshData.hasPslCode) == '1') {
+					$("input[name='hasPslCode'][value=1]").prop("checked", true);
+					$("input[name='hasPslCode'][value=0]").prop("checked", false);
+					$("#pslCode").val(pshData.pslCode);
+					$("#pslBeginDate").val(pshData.pslBeginDate);
+					$("#pslEndDate").val(pshData.pslEndDate);
+				} else {
+					$("input[name='hasPslCode'][value=1]").prop("checked", false);
+					$("input[name='hasPslCode'][value=0]").prop("checked", true);
+				}
+				if(parseInt(pshData.hasEslCode) == '1') {
+					$("input[name='hasEslCode'][value=1]").prop("checked", true);
+					$("input[name='hasEslCode'][value=0]").prop("checked", false);
+					$("#eslCode").val(pshData.eslCode);
+					$("#eslBeginDate").val(pshData.eslBeginDate);
+					$("#eslEndDate").val(pshData.eslEndDate);
+				} else {
+					$("input[name='hasEslCode'][value=1]").prop("checked", false);
+					$("input[name='hasEslCode'][value=0]").prop("checked", true);
+				}
+			}*/
+		});
+
+		$('.img_close').hide()
+		//文件路径
+		var filepath;
+		var a = '#discCodeAttachment,#pslCodeAttachment,#eslCodeAttachment'
+
+		function imgFun() {
+			var imgID = $(this).attr("id");
+			plusSelectImage(function(data, path) {
+				if (data.success) {
+					// console.log(JSON.stringify(data))
+					$("#" + imgID).attr("src", path);
+					$("#" + imgID).attr("data-token", data.result.fileTokens);
+					$("#" + imgID).next().fadeIn()
+					// console.log('============')
+					// console.log($("#" + imgID).next().attr("id"))
+					$("#" + imgID).off('tap')
+					plus.io.resolveLocalFileSystemURL(
+						path,
+						function(entry) {
+							entry.file(function(file) {
+								let reader = null;
+								reader = new plus.io.FileReader();
+								reader.onload = function(e) {};
+								reader.readAsDataURL(file);
+								reader.onloadend = function(e) {
+									let dataBase = e.target.result;
+									//图像识别
+									if (imgID == "discCodeAttachment") { //营业执照
+										bizLicenseOCR(dataBase, function(data) {
+											if (!data.success) {
+												console.log(JSON.stringify(data))
+												app.toast("营业执照照片识别失败，请重新上传")
+												$("#close1").prev().on('tap', imgFun);
+												$("#close1").prev().attr("src", "../../img/commom/pz@2x.png");
+												$("#close1").prev().attr("data-token", "");
+												$("#close1").hide();
+											}
+											// {"RegNum":"91410411MA46PX3X5J","Name":"平顶山市久协商贸有限公司","Capital":"伍佰万圆整","Person":"王正斌","Address":"河南省平顶山市湛河区南环路1号飞翔社区5号楼1单元3楼东户","Business":"批发、零售服装、文化用品、体育用品、五金产品、家用电器、电子产品、办公用品、家具、建材、塑料制品、厨卫用具、日用百货、珠宝首饰、宠物用品.(涉及许可经营项目,应取得相关部门许可后方可经营)(依法须经批准的项目,经相关部门批准后方可开展经营活动)","Type":"有限责任公司(自然人投资或控股)","Period":"2019年05月08日至2049年05月07日","ComposingForm":"","SetDate":"2019年05月08日","RequestId":"e4413c4c-f6de-4f71-a740-af8dbbac1be9"}
+										});
+									} else if (imgID == "pslCodeAttachment") { //排水
+										generalBasicOCR(dataBase, function(data) {
+											console.log(JSON.stringify(data))
+											if (!data.success) {
+												app.toast("排水许可证照片识别失败，请重新上传")
+												$("#close2").prev().on('tap', imgFun);
+												$("#close2").prev().attr("src", "../../img/commom/pz@2x.png");
+												$("#close2").prev().attr("data-token", "");
+												$("#close2").hide();
+											}
+											// Result(success=true, message=ok, code=200, result={"Language":"zh","RequestId":"03cbaad8-0b13-4a0f-a550-fd4ae944b2f9","Angel":0.0,"TextDetections":[{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":1}}","ItemPolygon":{"X":224,"Y":80,"Height":61,"Width":527},"DetectedText":"城市排水许可证","Confidence":99,"Polygon":[{"X":224,"Y":80},{"X":750,"Y":80},{"X":750,"Y":140},{"X":224,"Y":140}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":2}}","ItemPolygon":{"X":180,"Y":240,"Height":51,"Width":636},"DetectedText":"深圳加德士石油产品有限公司皇岗加油站","Confidence":99,"Polygon":[{"X":180,"Y":240},{"X":815,"Y":240},{"X":815,"Y":290},{"X":180,"Y":290}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":3}}","ItemPolygon":{"X":155,"Y":321,"Height":39,"Width":737},"DetectedText":"根据《城镇排水与污水处理条例》(中国 人民共和","Confidence":95,"Polygon":[{"X":155,"Y":321},{"X":891,"Y":321},{"X":891,"Y":359},{"X":155,"Y":359}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":3}}","ItemPolygon":{"X":90,"Y":378,"Height":38,"Width":802},"DetectedText":"国国务院令第641号)、《城镇污水排入排水管网许可","Confidence":98,"Polygon":[{"X":90,"Y":378},{"X":891,"Y":378},{"X":891,"Y":415},{"X":90,"Y":415}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":3}}","ItemPolygon":{"X":90,"Y":436,"Height":37,"Width":801},"DetectedText":"管理办法》(中华人 民共和国住房和城乡建设部令第21","Confidence":95,"Polygon":[{"X":90,"Y":436},{"X":890,"Y":436},{"X":890,"Y":472},{"X":90,"Y":472}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":3}}","ItemPolygon":{"X":90,"Y":493,"Height":36,"Width":802},"DetectedText":"号)以及《深圳市排水条例》的规定，经审查，准予在","Confidence":99,"Polygon":[{"X":90,"Y":493},{"X":891,"Y":493},{"X":891,"Y":528},{"X":90,"Y":528}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":3}}","ItemPolygon":{"X":88,"Y":551,"Height":34,"Width":486},"DetectedText":"许可范围内向城镇排水设施排水。","Confidence":99,"Polygon":[{"X":88,"Y":551},{"X":573,"Y":551},{"X":573,"Y":584},{"X":88,"Y":584}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":4}}","ItemPolygon":{"X":156,"Y":629,"Height":33,"Width":146},"DetectedText":"特发此证","Confidence":99,"Polygon":[{"X":156,"Y":629},{"X":301,"Y":629},{"X":301,"Y":661},{"X":156,"Y":661}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":5}}","ItemPolygon":{"X":157,"Y":710,"Height":35,"Width":189},"DetectedText":"有效期:自","Confidence":99,"Polygon":[{"X":157,"Y":710},{"X":345,"Y":710},{"X":345,"Y":744},{"X":157,"Y":744}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":5}}","ItemPolygon":{"X":414,"Y":715,"Height":32,"Width":208},"DetectedText":"2020年08月","Confidence":99,"Polygon":[{"X":414,"Y":715},{"X":621,"Y":715},{"X":621,"Y":746},{"X":414,"Y":746}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":5}}","ItemPolygon":{"X":654,"Y":715,"Height":35,"Width":77},"DetectedText":"13日","Confidence":94,"Polygon":[{"X":654,"Y":715},{"X":730,"Y":715},{"X":730,"Y":749},{"X":654,"Y":749}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":6}}","ItemPolygon":{"X":412,"Y":784,"Height":33,"Width":321},"DetectedText":"2025年08月12日","Confidence":99,"Polygon":[{"X":412,"Y":784},{"X":732,"Y":784},{"X":732,"Y":816},{"X":412,"Y":816}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":7}}","ItemPolygon":{"X":156,"Y":863,"Height":34,"Width":177},"DetectedText":"许可证编号","Confidence":99,"Polygon":[{"X":156,"Y":863},{"X":332,"Y":863},{"X":332,"Y":896},{"X":156,"Y":896}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":7}}","ItemPolygon":{"X":401,"Y":861,"Height":36,"Width":349},"DetectedText":"深福排许字第20200125号","Confidence":99,"Polygon":[{"X":401,"Y":861},{"X":749,"Y":861},{"X":749,"Y":896},{"X":401,"Y":896}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":8}}","ItemPolygon":{"X":674,"Y":970,"Height":33,"Width":144},"DetectedText":"单位关章)","Confidence":78,"Polygon":[{"X":674,"Y":970},{"X":817,"Y":970},{"X":817,"Y":1002},{"X":674,"Y":1002}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":9}}","ItemPolygon":{"X":491,"Y":1035,"Height":48,"Width":336},"DetectedText":"2020年08用1B日","Confidence":79,"Polygon":[{"X":491,"Y":1035},{"X":826,"Y":1035},{"X":826,"Y":1082},{"X":491,"Y":1082}]},{"AdvancedInfo":"{\"Parag\":{\"ParagNo\":10}}","ItemPolygon":{"X":231,"Y":1119,"Height":32,"Width":510},"DetectedText":"中华人民共和国住房和城乡建设部监制","Confidence":99,"Polygon":[{"X":231,"Y":1119},{"X":740,"Y":1119},{"X":740,"Y":1150},{"X":231,"Y":1150}]}]}, timestamp=1598846742486)
+										});
+									} else if (imgID == "eslCodeAttachment") { //排污
+																
+										generalBasicOCR(dataBase, function(data) {
+											console.log(JSON.stringify(data))
+											if (!data.success) {
+												app.toast("排污许可证照片识别失败，请重新上传")
+												$("#close3").prev().on('tap', imgFun);
+												$("#close3").prev().attr("src", "../../img/commom/pz@2x.png");
+												$("#close3").prev().attr("data-token", "");
+												$("#close3").hide();
+											}
+										});
+									}
+
+								};
+							});
+						},
+						function(error) {
+							var code = error.code; // 错误编码
+							var message = error.message; // 错误描述信息
+							// console.log(message)
+						}
+					);
+				} else app.toast(data.message)
+			});
+		}
+
+		$(a).on('tap', imgFun);
+
+		//删除图
+		$(document).on("tap", ".img_close", function() {
+			var that = $(this)
+			mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+				if (parseInt(result.index) == 0) {
+					console.log(that.id)
+					if (that.attr("id") != undefined) {
+						that.prev().on('tap', imgFun);
+						that.prev().attr("src", "../../img/commom/pz@2x.png");
+						that.prev().attr("data-token", "");
+						that.hide();
+					} else {
+						let type = that.attr("type");
+						console.log(that.parent().parent().attr("class"))
+						that.parent().parent().html("");
+						$("#" + type + "_img").show();
+						$('#' + type).attr("data-token", "");
+						// console.log($('#'+type).attr("data-token"))
+						// console.log(22222222222222222)
+					}
+
+				}
+			})
+		});
+
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".info-bar-content-item").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if ($(this).is(':checked')) {
+						$(this).parent().siblings().find(":checkbox").each(function() {
+							$(this).prop("checked",false)
+						});
+					}
+				});
+			});
+		}
+
+		//组装
+		function fileTokens(imgID) {
+			var token = $("#" + imgID).attr("data-token");
+			var photoFile = globalGetItem(GlobalKey.photoJSON);
+			if (photoFile) {
+				photoJSON = JSON.parse(photoFile);
+			}
+			console.log(JSON.stringify(photoJSON))
+			// var ps_dischargerStr = localStorage.getItem("ps_discharger");
+			// if (ps_dischargerStr) {				
+			// 	ps_dischargerStr = JSON.stringify(ps_discharger);
+			// }			
+			// ps_discharger = JSON.parse(ps_dischargerStr);
+
+			photoJSON.forEach((img, index, array) => {
+				if (img.fieldName == imgID) {
+					// if(ps_discharger[imgID] == ''){
+					// 	img.groupId = getGroupId();
+					// 	ps_discharger[imgID] = img.groupId;
+					// }else img.groupId = ps_discharger[imgID]
+					img.fileTokens = token;
+				}
+			})
+			// console.log(JSON.stringify(photoJSON))
+
+			globalSetItem(GlobalKey.photoJSON, JSON.stringify(photoJSON));
+			// console.log("组装附件：" + globalGetItem(GlobalKey.photoJSON));
+		}
+
+		//营业执照
+		$("input[name='hasDiscCode']").on("change", function() {
+			if ($(this).val() == "1") {
+				$("#for_hasDiscCode").show();
+			} else {
+				$("#for_hasDiscCode").hide();
+				$("#for_input_discCode").hide();
+			}
+		});
+		$("input[name='input_discCode']").on("change", function() {
+			if ($(this).val() == "1") {
+				$("#for_input_discCode").show();
+			} else {
+				$("#for_input_discCode").hide();
+			}
+		});
+
+		// 排水许可
+		$("input[name='hasPslCode']").on("change", function() {
+			if ($(this).val() == "1") {
+				$("#for_hasPslCode").show();
+			} else {
+				$("#for_hasPslCode").hide();
+				$("#for_input_hasPslCode").hide();
+			}
+		});
+		$("input[name='input_hasPslCode']").on("change", function() {
+			if ($(this).val() == "1") {
+				$("#for_input_hasPslCode").show();
+			} else {
+				$("#for_input_hasPslCode").hide();
+			}
+		});
+
+		// 排水许可
+		$("input[name='hasEslCode']").on("change", function() {
+			if ($(this).val() == "1") {
+				$("#for_hasEslCode").show();
+			} else {
+				$("#for_hasEslCode").hide();
+				$("#for_input_hasEslCode").hide();
+			}
+		});
+		$("input[name='input_hasEslCode']").on("change", function() {
+			if ($(this).val() == "1") {
+				$("#for_input_hasEslCode").show();
+			} else {
+				$("#for_input_hasEslCode").hide();
+			}
+		});
+		//开始时间
+		$("#discDate,#eslBeginDate,#pslBeginDate").on("tap", function() {
+			var that = $(this);
+			plusDate(function(data) {
+				that.val(data);
+			}, 1);
+		})
+
+		//结束时间
+		$("#discExpired,#eslEndDate,#pslEndDate").on("tap", function() {
+			var that = $(this);
+			plusDate(function(data) {
+				that.val(data);
+			}, 2);
+		})
+
+		//暂存记录
+		function savePSH() {
+			var ps_dischargerStr = localStorage.getItem("ps_discharger");
+			var ps_discharger = JSON.parse(ps_dischargerStr);
+
+			//营业
+			ps_discharger.hasDiscCode = $("input[name='hasDiscCode']:checked").val();//是否需办营业执照
+			if (ps_discharger.hasDiscCode == "1") {
+				ps_discharger.discCode = $("#discCode").val();//请输入营业执照统一社会信用代码
+				ps_discharger.discDate = $("#discDate").val();//营业执照核发日期
+				ps_discharger.discExpired = $("#discExpired").val();//营业执照有效期
+				//组装附件
+				if (parseInt($("input[name='input_discCode']:checked").val()) == 1) {
+					fileTokens("discCodeAttachment");
+				}
+			} else {
+				ps_discharger.discCode = "";
+				ps_discharger.discDate = "";
+				ps_discharger.discExpired = "";
+				ps_discharger.discCodeAttachment = ''; //清空附件
+			}
+
+			//排水
+			ps_discharger.hasPslCode = $("input[name='hasPslCode']:checked").val();//是否需办排水许可证
+			if (ps_discharger.hasPslCode == '1') {
+				ps_discharger.pslCode = $("#pslCode").val();//排水许可证号
+				ps_discharger.pslBeginDate = $("#pslBeginDate").val();//排水许可证核发日期
+				ps_discharger.pslEndDate = $("#pslEndDate").val();//排水许可证有效期
+
+				if (parseInt($("input[name='input_hasPslCode']:checked").val()) == 1) {
+					fileTokens("pslCodeAttachment");
+				}
+			} else {
+				ps_discharger.pslCode = "";
+				ps_discharger.pslBeginDate = "";
+				ps_discharger.pslEndDate = "";
+				ps_discharger.pslCodeAttachment = ''; //清空附件
+			}
+
+			//排污
+			ps_discharger.hasEslCode = $("input[name='hasEslCode']:checked").val();//是否需要排污许可证
+			if (ps_discharger.hasEslCode == '1') {
+				ps_discharger.eslCode = $("#eslCode").val();//排污许可证号
+				ps_discharger.eslBeginDate = $("#eslBeginDate").val();//排污许可证核发日期
+				ps_discharger.eslEndDate = $("#eslEndDate").val();//排污许可证有效期
+
+				if (parseInt($("input[name='input_hasEslCode']:checked").val()) == 1) {
+					fileTokens("eslCodeAttachment");
+				}
+			} else {
+				ps_discharger.eslCode = "";
+				ps_discharger.eslBeginDate = "";
+				ps_discharger.eslEndDate = "";
+				ps_discharger.eslCodeAttachment = ''; //清空附件
+			}
+			var photoData = JSON.parse(globalGetItem(GlobalKey.photoJSON));
+			console.log(JSON.stringify(photoData))
+			ps_discharger.discCodeAttachment = photoData[0].groupId;//营业执照pic
+			ps_discharger.pslCodeAttachment = photoData[1].groupId;//排水许可证pic
+			ps_discharger.eslCodeAttachment = photoData[2].groupId;//排污许可证pic
+
+			localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+			console.log("第二步：" + localStorage.getItem("ps_discharger"))
+			console.log("第二步：" + localStorage.getItem("photoJSON"))
+		}
+
+		//保存
+		$("#step_save").on("tap", function(data) {
+			// let obj = {};
+			// var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+			// if (isSelectPsh == "true") {
+			// 	var pshData = JSON.parse(localStorage.getItem("ps_discharger"));
+			// 	obj.SMID = pshData.SMID;
+			// }
+			// var pointStr = globalGetItem(GlobalKey.point);
+			// var point = JSON.parse(pointStr);
+			// mapData.editPoint(
+			// 	point.lng,
+			// 	point.lat,
+			// 	'ps_discharger',
+			// 	obj).then(() => {
+			savePSH();
+			let psh = localStorage.getItem("ps_discharger");
+			let photoData = globalGetItem(GlobalKey.photoJSON);
+			temporaryPSH(psh, photoData, function(data) {
+				app.toast("暂存成功");
+				// clearGlobalItem();
+				globalSetItem(GlobalKey.photoJSON, '');
+				localStorage.setItem("ps_discharger", '');
+				plus.webview.currentWebview().opener().opener().opener().reload();
+				plus.webview.currentWebview().opener().opener().close('none');
+				plus.webview.currentWebview().opener().close('none'); //上一个页面	
+				plus.webview.currentWebview().close('none'); //本页面						
+				// app.openPage("/main.html", {
+				//     titleNView: {
+				//         titleText: '福田水务',
+				//     },
+				//     'popGesture': 'none'
+				// });
+				// popToTarget(self.returnUrl);
+			});
+			// }).catch();
+		});
+
+		//下一步
+		$("#next_step").on("tap", function() {
+			if (validateRequiredFields()) {
+				var hasDiscCode = $("input[name='hasDiscCode']:checked").val();
+				var input_discCode = $("input[name='input_discCode']:checked").val();
+				if (1 == parseInt(hasDiscCode) && 1 == parseInt(input_discCode)) {
+					console.log($("#discCodeError").is(":visible"))
+					if (isErr) { //$("#discCodeError").is(":visible")
+						app.toast("营业执照统一社会信用代码格式不合法!")
+						return;
+					}
+					var discDate = $("#discDate").val();
+					var discExpired = $("#discExpired").val();
+					if (!compareDateStr(discExpired, discDate)) {
+						app.toast("营业执照有效期不能小于核发日期")
+						return;
+					}
+					if ($("#discCodeAttachment").attr("data-token") == '') {
+						app.toast("请上传营业执照")
+						return;
+					}
+					// 营业执照校验91110000100010433L
+					// var discCode = $("#discCode").val()
+					// if (!checkLicense(discCode)) {
+					// 	app.toast("营业执照照片错误,重新输入")
+					// 	return;
+					// }
+				}
+
+				var hasPslCode = $("input[name='hasPslCode']:checked").val();
+				var input_hasPslCode = $("input[name='input_hasPslCode']:checked").val();
+				if (1 == parseInt(hasPslCode) && 1 == parseInt(input_hasPslCode)) {
+					var pslBeginDate = $("#pslBeginDate").val();
+					var pslEndDate = $("#pslEndDate").val();
+					if (!compareDateStr(pslEndDate, pslBeginDate)) {
+						app.toast("排水许可证有效期不能小于核发日期")
+						return;
+					}
+					if ($("#pslCodeAttachment").attr("data-token") == '') {
+						app.toast("请上传排水许可证照片")
+						return;
+					}
+				}
+
+				var hasEslCode = $("input[name='hasEslCode']:checked").val();
+				var input_hasEslCode = $("input[name='input_hasEslCode']:checked").val();
+				if (1 == parseInt(hasEslCode) && 1 == parseInt(input_hasEslCode)) {
+					var eslBeginDate = $("#eslBeginDate").val();
+					var eslEndDate = $("#eslEndDate").val();
+					if (!compareDateStr(eslEndDate, eslBeginDate)) {
+						app.toast("排污许可证有效期不能小于核发日期")
+						return;
+					}
+					if ($("#eslCodeAttachment").attr("data-token") == '') {
+						app.toast("请上传排污许可证照片")
+						return;
+					}
+				}
+
+				savePSH();
+
+				let extras = {
+					type: plus.webview.currentWebview().type
+				};
+				// let extras = { returnUrl: self.returnUrl };
+				app.openPage("paish_stepThe.html", {
+					titleNView: {
+						titleText: '排水户登记',
+						autoBackButton: true,
+					}
+				}, extras);
+			}
+		});
+
+		//统一信用代码验证
+		function disCodeReg(obj) {
+			var reg = /^[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}$/;
+
+			if (reg.test(obj.value) || obj.value== '') {
+				isErr = false;
+				// $("#discCodeError").hide()
+			} else {
+				// $("#discCodeError").fadeIn()
+				obj.focus();
+				isErr = true;
+				app.toast("统一社会信用代码格式错误")
+			}
+		}
+
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+		mui(".dis_img_list,.psl_img_list,.esl_img_list").on('tap', '.imgCss', function() {
+			// $('#bottom-item-btn').hide();
+			mui.previewImage();
+		});
+
+		function format_input(type, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			var t;
+			var num;
+			switch (type) {
+				case 1:
+					t = '排水许可证号';
+					num = 16;
+					break
+				case 2:
+					t = '排污许可证号';
+					num = 16;
+					break
+			}
+			if (obj.value.length >= num) {
+				obj.value = obj.value.slice(0, num);
+				// obj.focus();
+				app.toast(t + "不可大于" + num + "个字！")
+			}
+		}
+	</script>
+
+</html>

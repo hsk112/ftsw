@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>项目列表</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.view-content-item {
+				height: auto;
+				margin: 0px 20px;
+			}
+
+			.view-content-item .view-title {
+				font-size: 14px;
+				color: #0493F3;
+				/*color: #444444;*/
+				text-align: left;
+				/* padding: 20px 0px 20px 0; */
+
+			}
+
+			#label {
+				/*font-size: 14px;*/
+				/*font-weight: 500;*/
+				/*color: #1A1616;*/
+				/*color: #0493F3;*/
+			}
+
+
+			#OA_task_1 .mui-table-view-cell .span2,
+			.span1,
+			.span4 {
+				font-size: 16px;
+				font-weight: 500;
+				color: #191515;
+				line-height: 24px;
+
+				display: inline-block;
+				box-sizing: border-box;
+				overflow: scroll;
+				white-space: nowrap;
+				/* border: 1px solid red; */
+			}
+
+			.mui-table-view-cell::-webkit-scrollbar {
+				display: none;
+			}
+
+			.content {
+				width: 100%;
+				background: #FFFFFF;
+			}
+
+			.ulCss {
+				width: 100%;
+				padding: 0 20px;
+				margin: 0;
+				text-align: left;
+			}
+
+			.ulCss .liCss {
+				list-style-type: none;
+				width: 100%;
+				/*height: 55px;*/
+				height: 110px;
+				/*border-bottom: 0.5px solid #F4F4F4;*/
+				/*border: 1px solid #F4F4F4;*/
+				margin: 10px 0;
+
+				/*display: flex;*/
+				/*align-items: center;*/
+				/*justify-content: space-between;*/
+				/*height: auto;*/
+				/*padding:20px 0;*/
+				color: #262626;
+				background-color: white;
+				box-shadow: 0px 1px 34px 2px rgba(0, 0, 0, 0.08);
+				border-radius: 5px;
+			}
+
+			.ulCss .liCss .span1 {
+				text-align: left;
+				font-size: 14px;
+				font-weight: 400;
+				color: #262626;
+				width: 20px;
+				line-height: 18px;
+				vertical-align: top;
+				display: inline-block;
+			}
+
+			.ulCss .liCss .span2 {
+				font-size: 16px;
+				font-weight: 400;
+				color: #262626;
+				line-height: 18px;
+				/*width: calc(100vw - 100px);*/
+				width: calc(100vw - 40px);
+				display: inline-block;
+				vertical-align: top;
+				word-break: break-all;
+				text-align: left;
+				/*margin-left:20px;*/
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			/* 自定义样式 */
+			.ulCss .liCss .look {
+				/*width: 80px;*/
+				/*text-align: right;*/
+				width: 50%;
+				text-align: center;
+				line-height: 55px;
+			}
+
+			.search-item {
+				border-radius: 5px;
+				overflow: hidden;
+			}
+
+			.li-top-title-container {
+				display: flex;
+				margin: 0;
+				height: 55px;
+				border-bottom: 1px solid #F4F4F4;
+				align-items: center;
+				padding: 0 10px;
+			}
+
+			.li-bottom-buttons-container {
+				display: flex;
+				justify-content: space-around;
+				text-align: center;
+				align-items: center;
+				height: 55px;
+				position: relative;
+			}
+
+			.li-bottom-buttons-container a {
+				color: #0493F3;
+			}
+
+			.li-bottom-buttons-seperator {
+				background-color: #F4F4F4;
+				height: 100%;
+				width: 1px;
+				position: absolute;
+				top: 0;
+				left: 50%;
+
+			}
+
+			.ulCss .liCss .monitor {
+				width: 50%;
+				line-height: 55px;
+			}
+
+			/*	平板样式修改*/
+			.search-input input {
+				font-size: 16px;
+			}
+
+			/*	搜索结果*/
+			#search-result-container {
+				display: none;
+				background-color: white;
+				position: fixed;
+				top: 70px;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 8;
+			}
+
+			.search_ul {
+				color: #262626;
+				font-weight: bold;
+				font-size: 16px;
+				text-align: left;
+			}
+
+			.search-result-li {
+				display: flex;
+				padding: 20px 0;
+				margin: 0 20px;
+				border-bottom: 1px solid #EDEDED;
+			}
+
+			.search-result-li-content {
+				width: calc(100vw - 60px);
+				padding: 0px 10px;
+			}
+
+			.search-result-li-addr {
+				color: #888888;
+				font-size: 12px;
+				font-weight: normal;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">缺陷管理列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="ALL" class="mui-scroll-wrapper" style="background: #FFFFFF;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="view-content">
+								<div class="info-bar-content">
+									<div class="search-bar">
+										<div class="search-item">
+											<div class="search-icon">
+												<img src="../../img/commom/search1@2x.png" />
+											</div>
+											<div class="search-input">
+												<div class="mui-input-row" style="text-align: left">
+													<input id="search_input" value="" type="text" style="width: 90%;"
+														maxlength="10" placeholder="请输入项目名称">
+													<!-- <span class="mui-icon mui-icon-close delete-icon1" onclick="deleteDate('search_input')"></span> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="view-content-item" style="display: flex;line-height: 55px;">
+									<div id="openFactor" style="font-size:12px; color: #0493F3;">
+										<div class="view-title search-tip">
+											<img src="../../img/fujin-icon.png"
+												style="width: 13px;height: 14px;line-height: 15px;vertical-align:middle;margin-right: 10px" />
+											<span id="label" style="line-height: 16px;">列表中项目的总量：</span>
+											<div id="num" style="line-height: 16px;display: inline;">0</div>
+										</div>
+									</div>
+								</div>
+								<div style="height: 0.5px;background: #F4F4F4;"></div>
+								<div id="no-data"
+									style="display: none;padding:50px 0;color: #999;background-color: #F4F4F4;">暂无数据
+								</div>
+								<!-- 搜索显示结果开始 -->
+								<div id="search-result-container" class="mui-scroll-wrapper">
+									<ul id="search_ul" class="search_ul">
+										<!-- <li class="search-result-li">
+												<div class="overLineEllipsis">深圳登喜路国际大酒店(宝安店)深圳登喜路国际大酒店深圳登喜路国际大酒店</div>
+												<div style="display: flex; align-items: center;">
+													<img src="../../img/arrow-right-blue@2x.png" alt=""
+														style="width: 7px; height:12px;">
+												</div>
+											</li> -->
+									</ul>
+
+								</div>
+								<!-- 搜索显示结果结束 -->
+								<div id="content">
+									<ul id="list" class="ulCss">
+										<!-- <li class="liCss">
+											<span class="span1">1</span>
+											<span class="span2">XXXXXXXXXXXXXX项目</span>
+										</li>
+										<li class="liCss">
+											<span class="span1">2</span>
+											<span class="span2">XXXXXXXXXXXXXX项目</span>
+										</li>
+										<li class="liCss">
+											<span class="span1">3</span>
+											<span class="span2">XXXXXXXXXXXXXX项目</span>
+										</li>
+										<li class="liCss">
+											<span class="span1">4</span>
+											<span class="span2">XXXXXXXXXXXXXX项目</span>
+										</li> -->
+									</ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+
+
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script src="../../js/kpi/drainage.js"></script>
+	<script>
+		//列表全局参数
+		var param = {
+			pageNo: 1, //页码
+			pageSize: 10,
+			order: 'desc',
+			field: 'id,prjName,programme,conservationStatus,action',
+			column: 'createTime',
+			prjName: '',
+			guid: ""
+		}
+
+		var sum = 0; //总数
+		//我写的开始
+		//模糊搜索
+		var arrayName = [] //储存所有列表项目名字
+		var arrayGuid = [] //储存所有列表项目guid
+		var url1 = config.urls.baseUrl + "ft-emergency/projectlist/projectList/queryPageList"
+		var parmas1 = {
+			pageSize: 10000,
+		}
+		getDrainage(url1, parmas1, function(data) {
+			// console.log(JSON.stringify(data.result.records))//1111111111111111111111111111111111
+			for (var i = 0; i < data.result.records.length; i++) {
+				arrayName.push(data.result.records[i].prjName)
+				arrayGuid.push(data.result.records[i].guid)
+			}
+			console.log(arrayName)
+			console.log(arrayGuid)
+		})
+		$('#search_input').on("input", function() {
+			listName = ''
+			var arrays = [] //关键字搜索出的名字
+			var keyWord = $('#search_input').val().trim()
+			$("#search-result-container").css({
+				"display": "block",
+			})
+			
+			if (keyWord == "") {
+				$("#search-result-container").css({
+					"display": "none"
+				})
+			}
+			for (var i = 0; i < arrayName.length; i++) {
+				if (arrayName[i].indexOf(keyWord) >= 0) {
+					arrays.push(arrayName[i]) //将关键字搜索到的名字存入
+				}
+			}
+			console.log("模糊搜索出的数据", arrays)
+			var listName = ''
+			for (var i = 0; i < arrays.length; i++) {
+				listName += `<li class="search-result-li">
+												<div class="overLineEllipsis">${arrays[i]}</div>
+												
+											</li>
+				
+				`
+			}
+			$("#search_ul").html(listName)
+			var gnum = ""
+			$("#search_ul").on("tap", ".search-result-li", function() {
+				$("#list").empty();
+				$("#search-result-container").css({
+					"display": "none"
+				})
+				event.stopPropagation()
+				var j = $(this).index() //获取点击的下标
+				console.log("我点击了", arrays[j]) //获取点击的名字
+				gnum = arrayName.findIndex(item => item == arrays[j])
+				console.log("获取点击名字的guid:", arrayGuid[gnum])
+				param.guid = arrayGuid[gnum] //给后端传guid
+				// $("#list").empty();s
+				// pulldownRefresh() 
+				mixSearch(false, false, function(data) {
+					if (data.length == 0) {
+						$("#content").hide();
+						$("#no-data").show();
+						$("#num").html(0);
+						mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+						mui('#ALL').pullRefresh().disablePullupToRefresh();
+					}
+					$("#list").empty();
+					pulldownRefresh()
+				})
+			})
+			if (keyWord == "") {
+				param.guid = ""
+				// upLoadMore() 
+			}
+		})
+		//我写的结束
+
+
+
+		//  测试环境
+		var isTest = false //true; //false;
+
+		// var vConsole = new VConsole();
+
+		if (!isTest) {
+			mui.init({
+				swipeBack: false,
+				// 0818 上拉加载
+				pullRefresh: {
+					container: '#ALL', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+					//下拉刷新
+					down: {
+						style: 'circle',
+						auto: true,
+						callback: function() {
+							//c/onsole.log("触发刷新")
+							page = 1;
+							pulldownRefresh();
+						}
+					},
+					//上拉加载
+					up: {
+						// auto: true, // 可选,默认false.自动上拉加载一次
+						height: 50, //触发上拉加载拖动距离
+						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore: '暂无更多数据', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: function() {
+							upLoadMore();
+						} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+
+				}
+			});
+
+		}
+
+		// //下拉刷新
+		function pulldownRefresh() {
+			$("#list").empty();
+			param.pageNo = 1;
+			$("#num").html(0)
+			// param.prjName = ''
+			// getCount() // 这个数量不对的
+			// c/onsole.log("mixSearch(true, false, function(data)");
+			mixSearch(true, false, function(data) {
+				if (data.length < param.pageSize) {
+					//不再执行上拉
+					// app.toast("暂无更多数据")
+					// $("#no-data").fadeIn()
+					mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#ALL').pullRefresh().disablePullupToRefresh();
+				} else {
+					//c/onsole.log("有数据")
+					mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+				}
+			})
+			//激活上拉
+			mui('#ALL').pullRefresh().refresh(true);
+			mui('#ALL').pullRefresh().endPulldown(true);
+		}
+		// //上拉加载
+		function upLoadMore() {
+
+			mixSearch(false, true, function(data) {
+				if (data.length < param.pageSize) {
+					//不再执行上拉
+					//c/onsole.log("暂无更多数据")
+					mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#ALL').pullRefresh().disablePullupToRefresh();
+				} else {
+					//c/onsole.log("有数据")
+					mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+				}
+			});
+		}
+
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		//注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			//c/onsole.log(self.id)
+			console.log(JSON.stringify(app.userInfo()))
+			var extras = {
+				operatorType: 'add'
+			}
+			self.setStyle({
+				titleNView: {
+					buttons: [{
+						float: 'right',
+						width: '60',
+						fontSize: '25',
+						text: '＋',
+						onclick: function() {
+							app.openPage("addProject.html", { //addProject_stepOne.html
+								titleNView: {
+									titleText: '新增项目',
+									autoBackButton: true,
+								}
+							}, extras);
+						}
+					}]
+				}
+			});
+
+			//设置附近的混接点个数
+			// $("#num").html(num);
+			// mixSearch();
+			//其他页面回来时进行刷新
+			window.addEventListener('refresh', function(e) {
+				// window.location.reload();
+				$("#list").empty();
+				param.pageNo = 1;
+				$("#num").html(0)
+				// if($("#search_input").val().length > 0) {
+				// 	param.prjName = "*" + $("#search_input").val() + "*";
+				// }else{
+				// 	param.prjName = ""
+				// }
+				param.prjName = $("#search_input").val();
+				mixSearch(false, false, function(data) {
+					// app.toast("已获取最新数据")
+				})
+				//激活上拉
+				mui('#ALL').pullRefresh().refresh(true);
+				mui('#ALL').pullRefresh().endPulldown(true);
+			})
+
+		});
+
+		//返回页面刷新
+		window.addEventListener('return', function() {
+			// window.location.reload();
+			$("#list").empty();
+			param.pageNo = 1;
+			$("#num").html(0)
+			// if($("#search_input").val().length > 0) {
+			// 	param.prjName = "*" + $("#search_input").val() + "*";
+			// }else{
+			// 	param.prjName = ""
+			// }
+			param.prjName = $("#search_input").val();
+
+			mixSearch(false, false, function(data) {
+				app.toast("已获取最新数据")
+			})
+			//激活上拉
+			mui('#ALL').pullRefresh().refresh(true);
+			mui('#ALL').pullRefresh().endPulldown(true);
+			window.scrollTo(0, 0);
+		}, false);
+
+		//获取项目个数
+		function getCount() {
+			getProjectCount({}, function(data) {
+				if (data.success) {
+					// c/onsole.log("==获取项目个数 start ===")
+					// c/onsole.log(JSON.stringify(data))
+					// c/onsole.log("==获取项目个数 start ===")
+					var sum = data.result[0].newPrj;
+					$("#num").html(sum);
+				} else {
+					app.toast("获取项目个数失败！")
+				}
+			})
+		}
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+		//搜索框
+		$("#search_input").on('input', debounce((e) => {
+			param.pageNo = 1;
+			$("#list").empty();
+			$("#num").html(0)
+			if ($("#search_input").val().trim() != "") {
+				// console.log("搜索关键字：" + $("#search_input").val().trim())
+				//param.prjName = "*" + $("#search_input").val() + "*";
+				param.prjName = $("#search_input").val().trim()
+			} else {
+				param.prjName = ''
+				// mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+				mui('#ALL').pullRefresh().refresh(true);
+				mui('#ALL').pullRefresh().endPulldown(true);
+			}
+			mixSearch(false, false, function(data) {
+				if (data.length == 0) {
+					$("#content").hide();
+					$("#no-data").show();
+					$("#num").html(0);
+					mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#ALL').pullRefresh().disablePullupToRefresh();
+				}
+			})
+		}, 600))
+
+		/**
+		 * 查询列表数据
+		 * @param {Object} isLoading 是否显示加载框
+		 * @param {Object} append 是否追加
+		 * @param {Object} callback
+		 */
+		function mixSearch(isLoading, append, callback) {
+			// c/onsole.log("getProjectList(param, isLoading, function(data)")
+			//c/onsole.log(JSON.stringify(param))
+			$("#no-data").hide();
+			$("#content").show();
+			getProjectList(param, isLoading, function(data) {
+				console.log("=== getProjectList start ===")
+				// console.log(JSON.stringify(data))//暂时注释
+				console.log("=== getProjectList end ===")
+				if (data.success) {
+					if (data.result != null) {
+						// var prjCnt = data.result.total;
+						$("#num").html(data.result.total);
+						getListData(data.result.records, append);
+						callback(data.result.records);
+						// var oldNum=$("#num").html();
+						// $("#num").html(parseInt(oldNum)+data.result.records.length);
+					} else if ($("#list").find("li").length == 0) {
+						$("#content").hide();
+						$("#no-data").show();
+						$("#num").html(0);
+					}
+				} else {
+					mui.toast("项目列表查询失败");
+				}
+			})
+		}
+
+		function getListData(data, append) {
+
+			var li = "";
+			var index = $("#list").find("li").length;
+			for (var i = 0; i < data.length; i++) {
+				var dataJson = JSON.stringify(data[i]);
+				index++
+				// look - 查看 - 项目清单
+				li +=
+					//	 id=${data[i].guid} name=${data[i].prjName}
+					`<li class="liCss">
+						<div class="li-top-title-container">
+							<div class="span1">${index}</div>
+							<div class="span2">${data[i].prjName}</div>
+						</div>
+						<div class="li-bottom-buttons-container">
+							<div class="li-bottom-buttons-seperator"></div>
+							<a id="${index}" class="look">项目详情</a>
+							<a class="monitor" id=${data[i].guid} name=${data[i].prjName} style="">监督检查</a>
+						</div>
+						<div id="project-detail-${index}" style="display:none">${dataJson}</div>
+					</li>`;
+			}
+			// c/onsole.log(append + "===" + li)
+			if (append) {
+				$("#list").append(li);
+			} else {
+				$("#list").html(li);
+			}
+			if (index == 0) {
+				$("#content").hide();
+				$("#no-data").show();
+			}
+			param.pageNo++;
+			// $("#num").html(index); // result 有返回总数量 total
+			$("#list").css("margin-bottom", "20px");
+			//加载完数据，结束转雪花进度条的“正在刷新...”过程
+			mui('#ALL').pullRefresh().endPulldown();
+			//加载完数据，结束转雪花进度条的“正在加载...”过程
+			mui('#ALL').pullRefresh().endPullupToRefresh();
+			// 动态生成的标签 - 平板适配
+			padCheckCss()
+		}
+
+		// 跳转明细 proDetail - 点击条目不跳转 ，点击 监督检查跳转
+		// $("#list").on('tap', '.liCss', function() {
+		// 	var pid = $(this).attr('id');
+		// 	var pname = $(this).attr('name');
+		// 	c/onsole.log("pid:" + pid)
+		// 	c/onsole.log("====== 跳转到项目列表明细 proDetail =========")
+		// 	var extras = {
+		// 		projectId: pid,
+		// 		proName: pname
+		// 	}
+		// 	app.openPage("proDetail.html", {
+		// 		titleNView: {
+		// 			titleText: pname + '项目',
+		// 			autoBackButton: true,
+		// 		}
+		// 	}, extras);
+		// })
+
+		// 点击 监督检查跳转
+		$("#list").on('tap', '.monitor', function() {
+			var pid = $(this).attr('id');
+			var pname = $(this).attr('name');
+			//c/onsole.log("pid:" + pid)
+			//c/onsole.log("pname:" + pname)
+			// c/onsole.log("监督检查跳转")
+			// var i = 1;
+			// if(i == 1) {
+			// 	return;
+			// }
+			var extras = {
+				projectId: pid,
+				proName: pname
+			}
+			app.openPage("proDetail.html", {
+				titleNView: {
+					titleText: pname + '项目',
+					autoBackButton: true,
+				}
+			}, extras);
+		})
+
+		//查看 - 项目详情,注意存放数据的节点 - 修改为与新增一样界面 ，但不可修改
+		$("#list").on('tap', '.look', function(e) {
+			e.stopPropagation()
+			// c/onsole.log($(this).next().html())
+			// c/onsole.log("点击查看-详情")
+
+			//var index = $(this).attr('id');
+			//console.log("index:" + index)
+
+			var proDataObj = "#project-detail-" + $(this).attr('id');
+			var extras = {
+				proData: $(proDataObj).html() //$(this).next().html()
+					,
+				operatorType: 'show' // 添加add ，修改 edit，查看show
+			}
+
+			// 原： showProject
+			app.openPage("addProject.html", {
+				titleNView: {
+					titleText: "查看" + $(this).prev().html() + "项目",
+					autoBackButton: true,
+				}
+			}, extras);
+		})
+
+		window.addEventListener('refresh1', function(e) { //执行刷新
+			// location.reload();
+			$("#list").empty();
+			param.pageNo = 1;
+			$("#num").html(0)
+			// if($("#search_input").val().length > 0) {
+			// 	param.prjName = "*" + $("#search_input").val() + "*";
+			// }else{
+			// 	param.prjName = "";
+			// }
+			param.prjName = $("#search_input").val();
+
+			mixSearch(false, false, function(data) {
+				app.toast("已获取最新数据")
+			})
+			//激活上拉
+			mui('#ALL').pullRefresh().refresh(true);
+			mui('#ALL').pullRefresh().endPulldown(true);
+		});
+
+		// 平板样式调整
+		function padCheckCss() {
+			// screenWidth:1024
+			const screenWidth = document.documentElement.clientWidth;
+			// screenHeight:1366
+			const screenHeight = document.documentElement.clientHeight;
+			if (screenWidth > 1000) {
+				//  判断为平板
+				// === 字体大小 ===
+				// 平板字体 ，是App字体 + 4px ；
+				setupDynamicCss('body', 'font-size', 20)
+				setupDynamicCss('.search-input input', 'font-size', 20)
+				setupDynamicCss('.view-content-item .view-title', 'font-size', 18)
+				setupDynamicCss('.ulCss .liCss .span2', 'font-size', 20)
+				setupDynamicCss('.ulCss .liCss .span1', 'font-size', 18)
+
+				// // === 宽、高 ===
+				setupDynamicCss('.view-content-item .view-title img', 'width', 17)
+				setupDynamicCss('.view-content-item .view-title img', 'height', 18)
+			}
+		}
+
+		function setupDynamicCss(pTarget, pAttr, pVal) {
+			$(pTarget).css(pAttr, pVal + 'px');
+		}
+
+		padCheckCss();
+
+
+		//	测试区
+		function getDataTmp() {
+			var dataStr =
+				"{\"success\":true,\"message\":\"操作成功!\",\"result\":{\"records\":[{\"prjType\":\"0\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"0\",\"supervisoryContacts\":\"\",\"industry\":\"0\",\"planCheckDate\":\"2021-03-25;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"11\",\"preventionArea\":\"0\",\"inputName\":null,\"checkPlan\":\"1\",\"updateBy\":null,\"programmeType\":\"2\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"12\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-25 00:00:00\",\"programme\":\"611be5bed9084e41bac2b6b5d470db58\",\"smy\":22.5327886,\"email\":\"183@qq.com\",\"smx\":114.0540631,\"conservationStatus\":\"2\",\"prjSource\":\"0\",\"prjLocationStreet\":\"福田街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"项目\",\"inputDate\":\"2021-03-25 10:45:45\",\"inputerFullname\":\"曹锡森                                                                                                                                                                                                  \",\"createBy\":\"cao_xs\",\"approvalDep\":\"\",\"checkTime\":2,\"createTime\":\"2021-03-25 10:41:54\",\"inspectors\":\"杨润锋,杨慕\",\"guid\":\"0b858861a5cc1196e5c3490e56481cca\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0,\"civilInvestment\":0,\"startDate\":\"2021-03-25 00:00:00\",\"prjLocation\":\"深圳市福田区福华三路111深圳会展中心1展馆13号门\"},{\"prjType\":\"0\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"0\",\"supervisoryContacts\":\"\",\"industry\":\"3\",\"planCheckDate\":\"2021-03-25;2021-03-25;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"saa\",\"preventionArea\":\"0.01\",\"inputName\":null,\"checkPlan\":\"2\",\"updateBy\":null,\"programmeType\":\"1\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"i\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-24 00:00:00\",\"programme\":\"b548aabf89934d8f8292651083bbe175\",\"smy\":22.5107682,\"email\":\"saa@qq.com\",\"smx\":114.0499937,\"conservationStatus\":\"0\",\"prjSource\":\"0\",\"prjLocationStreet\":\"福保街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"lll\",\"inputDate\":\"2021-03-24 15:50:07\",\"inputerFullname\":\"林燕如                                                                                                                                                                                                  \",\"createBy\":\"lin_yr\",\"approvalDep\":\"\",\"checkTime\":0,\"createTime\":\"2021-03-24 15:46:16\",\"inspectors\":\"萧家伟,罗彦波\",\"guid\":\"0c57dd54eabe5262a92ee4f8e13bc734\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0.0001,\"civilInvestment\":0.0001,\"startDate\":\"2021-03-19 00:00:00\",\"prjLocation\":\"深圳市福田区福田保税区槟榔道万乘公司仓库南侧深圳市有信达物流有限公司\"},{\"prjType\":\"1\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"1\",\"supervisoryContacts\":\"\",\"industry\":\"1\",\"planCheckDate\":\"2021-03-22;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"11\",\"preventionArea\":\"0\",\"inputName\":null,\"checkPlan\":\"1\",\"updateBy\":null,\"programmeType\":\"0\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"11\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-25 00:00:00\",\"programme\":\"838c630fea524430be42dd0e89a30859\",\"smy\":22.5374909,\"email\":\"1039991841@qq.com\",\"smx\":114.0178338,\"conservationStatus\":\"2\",\"prjSource\":\"1\",\"prjLocationStreet\":\"沙头街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"11\",\"inputDate\":\"2021-03-22 13:47:33\",\"inputerFullname\":\"曹锡森                                                                                                                                                                                                  \",\"createBy\":\"cao_xs\",\"approvalDep\":\"\",\"checkTime\":1,\"createTime\":\"2021-03-22 13:43:33\",\"inspectors\":\"杨润锋,杨慕\",\"guid\":\"3a8d7cec3386cb42699bd86777d771ef\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0,\"civilInvestment\":0,\"startDate\":\"2021-03-22 00:00:00\",\"prjLocation\":\"深圳市福田区深南大道6023创建大厦链家\"},{\"prjType\":\"0\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"0\",\"supervisoryContacts\":\"\",\"industry\":\"0\",\"planCheckDate\":\"2021-03-22;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"11\",\"preventionArea\":\"0\",\"inputName\":null,\"checkPlan\":\"1\",\"updateBy\":null,\"programmeType\":\"2\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"1\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-24 00:00:00\",\"programme\":\"870209ab32f74ef7a2a944bf00f8161b\",\"smy\":22.530847,\"email\":\"182@qq.com\",\"smx\":114.0538605,\"conservationStatus\":\"0\",\"prjSource\":\"0\",\"prjLocationStreet\":\"福田街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"11\",\"inputDate\":\"2021-03-22 11:29:06\",\"inputerFullname\":\"曹锡森                                                                                                                                                                                                  \",\"createBy\":\"cao_xs\",\"approvalDep\":\"\",\"checkTime\":0,\"createTime\":\"2021-03-22 11:25:07\",\"inspectors\":\"杨腾,杨润锋,杨慕\",\"guid\":\"77a0ef1e2ca6204c876dfef65f538c49\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0,\"civilInvestment\":0,\"startDate\":\"2021-03-22 00:00:00\",\"prjLocation\":\"深圳市福田区皇岗吉龙二村77号西南方向88米皇岗村内临时停车场\"},{\"prjType\":\"1\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"3\",\"supervisoryContacts\":\"\",\"industry\":\"3\",\"planCheckDate\":\"2021-03-22;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"11\",\"preventionArea\":\"0\",\"inputName\":null,\"checkPlan\":\"1\",\"updateBy\":null,\"programmeType\":\"2\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"11\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-23 00:00:00\",\"programme\":\"f6595d5113c843eab1473c82e224beac\",\"smy\":22.5320547,\"email\":\"108@qq.com\",\"smx\":114.0525536,\"conservationStatus\":\"0\",\"prjSource\":\"2\",\"prjLocationStreet\":\"福田街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"新增\",\"inputDate\":\"2021-03-22 10:54:16\",\"inputerFullname\":\"曹锡森                                                                                                                                                                                                  \",\"createBy\":\"cao_xs\",\"approvalDep\":\"\",\"checkTime\":0,\"createTime\":\"2021-03-22 10:50:17\",\"inspectors\":\"杨慕\",\"guid\":\"1726f7427fd5dca29ecec7b3fa0f4ce1\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0,\"civilInvestment\":0,\"startDate\":\"2021-03-22 00:00:00\",\"prjLocation\":\"深圳市福田区福华三路111深圳会展中心2展馆6号门\"},{\"prjType\":\"0\",\"approvalDate\":\"2021-03-22 10:50:39\",\"buildContacts\":\"名称商品名称商品名称商品名称商品名称商品\",\"prjCharacter\":\"0\",\"supervisoryContacts\":\"名称商品名称商品名称商品名称商品名称商品\",\"industry\":\"0\",\"planCheckDate\":\"2021-03-22;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"名称商品名称商品名称商品名称商品名称商品\",\"preventionArea\":\"0.06\",\"inputName\":null,\"checkPlan\":\"1\",\"updateBy\":null,\"programmeType\":\"0\",\"supervisoryUnit\":\"名称商品名称商品名称商品名称商品名称商品\",\"designContacts\":\"名称商品名称商品名称名称商品名称商品名称\",\"constructionUnit\":\"名称商品名称商品名称商品名称商品名称商品\",\"designUnit\":\"名称商品名称商品名称商品名称商品名称商品\",\"planEndDate\":\"2021-03-25 00:00:00\",\"programme\":\"00356494cf4441f2be56945e6fb193a0\",\"smy\":22.5339921,\"email\":\"182@qq.com\",\"smx\":114.0590077,\"conservationStatus\":\"2\",\"prjSource\":\"0\",\"prjLocationStreet\":\"福田街道\",\"updateTime\":null,\"approvalNumber\":\"名称商品名称商品名称商品名称商品名称商品\",\"buildUnit\":\"名称商品名称商品名称商品名称商品名称商品\",\"prjName\":\"名称商品名称商品名称商品名称商品名称商品\",\"inputDate\":\"2021-03-22 10:51:00\",\"inputerFullname\":\"曹锡森                                                                                                                                                                                                  \",\"createBy\":\"cao_xs\",\"approvalDep\":\"名称商品名称商品名称商品名称商品新名称商\",\"checkTime\":2,\"createTime\":\"2021-03-22 10:47:01\",\"inspectors\":\"杨腾\",\"guid\":\"d2a16f9bc1b02f2ab8ba3c9ad1bfa037\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0.0003,\"civilInvestment\":0.0005,\"startDate\":\"2021-03-22 00:00:00\",\"prjLocation\":\"深圳市福田区深圳市福田区金田路2028-1号皇岗商务中心B1楼LEVELClub\"},{\"prjType\":\"1\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"4\",\"supervisoryContacts\":\"\",\"industry\":\"6\",\"planCheckDate\":\"2021-03-22;2021-03-21;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"联系人\",\"preventionArea\":\"0\",\"inputName\":null,\"checkPlan\":\"2\",\"updateBy\":null,\"programmeType\":\"0\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"单位\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-22 00:00:00\",\"programme\":\"eeaf4e3d0f4648468254b355d0aa7fc5\",\"smy\":22.5335686,\"email\":\"183@qq.com\",\"smx\":114.0601117,\"conservationStatus\":\"0\",\"prjSource\":\"2\",\"prjLocationStreet\":\"福田街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"项目名称商品名称\",\"inputDate\":\"2021-03-22 10:47:48\",\"inputerFullname\":\"曹锡森                                                                                                                                                                                                  \",\"createBy\":\"cao_xs\",\"approvalDep\":\"\",\"checkTime\":0,\"createTime\":\"2021-03-22 10:43:48\",\"inspectors\":\"杨润锋\",\"guid\":\"8ae923813b58b2e9ef412c117101a3f8\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0,\"civilInvestment\":0,\"startDate\":\"2021-03-22 00:00:00\",\"prjLocation\":\"深圳市福田区福华三路卓越世纪中心3号楼A座1510室(交通信息)地铁会展中心E出口维港齿科门诊所\"},{\"prjType\":\"0\",\"approvalDate\":\"2021-03-16 20:50:30\",\"buildContacts\":\"4566\",\"prjCharacter\":\"1\",\"supervisoryContacts\":\"429\",\"industry\":\"2\",\"planCheckDate\":\"2021-03-31;\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"孔\",\"preventionArea\":\"0.01\",\"inputName\":null,\"checkPlan\":\"1\",\"updateBy\":null,\"programmeType\":\"1\",\"supervisoryUnit\":\"4390\",\"designContacts\":\"5588\",\"constructionUnit\":\"咯与\",\"designUnit\":\"550\",\"planEndDate\":\"2021-03-31 00:00:00\",\"programme\":\"c28129a1bd984481a9ce5178cbee43d8\",\"smy\":22.5583434,\"email\":\"111112@qq.com\",\"smx\":114.0667963,\"conservationStatus\":\"2\",\"prjSource\":\"1\",\"prjLocationStreet\":\"华富街道\",\"updateTime\":null,\"approvalNumber\":\"清空\",\"buildUnit\":\"566\",\"prjName\":\"好抠\",\"inputDate\":\"2021-03-18 20:50:46\",\"inputerFullname\":\"管理员一                                                                                                                                                                                                \",\"createBy\":\"A01admin\",\"approvalDep\":\"凹凸\",\"checkTime\":1,\"createTime\":\"2021-03-18 20:46:55\",\"inspectors\":\"刘毓敏,刘铮\",\"guid\":\"d31b38590e6f8d5cb141912cfdd86b41\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0.0002,\"civilInvestment\":0.0002,\"startDate\":\"2021-03-09 00:00:00\",\"prjLocation\":\"深圳市福田区皇岗路5001号正西方向125米上马\"},{\"prjType\":\"0\",\"approvalDate\":null,\"buildContacts\":\"(ಡωಡ)hiahiahia \",\"prjCharacter\":\"2\",\"supervisoryContacts\":\"可以\",\"industry\":\"2\",\"planCheckDate\":\"\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"偷摸\",\"preventionArea\":\"0.01\",\"inputName\":null,\"checkPlan\":\"\",\"updateBy\":null,\"programmeType\":\"\",\"supervisoryUnit\":\"靠拢\",\"designContacts\":\"功夫\",\"constructionUnit\":\"力扣\",\"designUnit\":\"不耽误\",\"planEndDate\":\"2021-03-31 00:00:00\",\"programme\":\"\",\"smy\":22.5570163,\"email\":\"111111@qq.com\",\"smx\":114.0558446,\"conservationStatus\":\"0\",\"prjSource\":\"2\",\"prjLocationStreet\":\"莲花街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"566\",\"prjName\":\"力扣\",\"inputDate\":null,\"inputerFullname\":\"                                                                                                                                                                                                        \",\"createBy\":\"A01admin\",\"approvalDep\":\"\",\"checkTime\":0,\"createTime\":\"2021-03-18 20:35:56\",\"inspectors\":\"\",\"guid\":\"ea58ba6e4fe7928482cb7a575154b717\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0.0003,\"civilInvestment\":0.0002,\"startDate\":\"2021-03-18 00:00:00\",\"prjLocation\":\"深圳市福田区新洲路6030号莲花山\"},{\"prjType\":\"0\",\"approvalDate\":null,\"buildContacts\":\"\",\"prjCharacter\":\"0\",\"supervisoryContacts\":\"\",\"industry\":\"0\",\"planCheckDate\":\"\",\"delFlag\":0,\"corpCode\":\"A01\",\"prjCode\":null,\"conContacts\":\"的\",\"preventionArea\":\"0.01\",\"inputName\":null,\"checkPlan\":\"\",\"updateBy\":null,\"programmeType\":\"\",\"supervisoryUnit\":\"\",\"designContacts\":\"\",\"constructionUnit\":\"嗯\",\"designUnit\":\"\",\"planEndDate\":\"2021-03-26 00:00:00\",\"programme\":\"\",\"smy\":22.5223407,\"email\":\"hhjh@163.com\",\"smx\":114.0580762,\"conservationStatus\":\"2\",\"prjSource\":\"0\",\"prjLocationStreet\":\"福田街道\",\"updateTime\":null,\"approvalNumber\":\"\",\"buildUnit\":\"\",\"prjName\":\"啊\",\"inputDate\":null,\"inputerFullname\":\"                                                                                                                                                                                                        \",\"createBy\":\"A01admin\",\"approvalDep\":\"\",\"checkTime\":1,\"createTime\":\"2021-03-18 20:20:06\",\"inspectors\":\"\",\"guid\":\"a81791ba9b4c1ded37f5a8d229b0c073\",\"prjLocationDistrict\":\"福田区\",\"totalInvestment\":0.0001,\"civilInvestment\":0.0001,\"startDate\":\"2021-03-19 00:00:00\",\"prjLocation\":\"深圳市福田区广东省深圳市福田区水围六街与水围七街交汇处附近东水围村106-107号楼\"}],\"total\":58,\"size\":10,\"current\":1,\"orders\":[],\"hitCount\":false,\"searchCount\":true,\"pages\":6},\"timestamp\":1618542067300,\"code\":200}";
+			var data = JSON.parse(dataStr);
+
+			if (data.success) {
+				if (data.result != null) {
+					getListDataTmp(data.result.records, false);
+					//callback(data.result.records);
+					// var oldNum=$("#num").html();
+					// $("#num").html(parseInt(oldNum)+data.result.records.length);
+				} else if ($("#list").find("li").length == 0) {
+					$("#content").hide();
+					$("#no-data").show();
+					$("#num").html(0);
+				}
+			} else {
+				mui.toast("项目列表查询失败");
+			}
+		}
+
+		function getListDataTmp(data, append) {
+
+			var li = "";
+			var index = $("#list").find("li").length;
+			for (var i = 0; i < data.length; i++) {
+				var dataJson = JSON.stringify(data[i]);
+				index++
+				// look - 查看 - 项目清单
+				li +=
+					`<li class="liCss">
+<div class="li-top-title-container">
+<div class="span1">${index}</div>
+<div class="span2">${data[i].prjName} - 项目项目项目项目项目项目项目项目项目项目</div>
+</div>
+<div class="li-bottom-buttons-container">
+<div class="li-bottom-buttons-seperator"></div>
+<a class="look" id="${index}">项目详情</a>
+<a class="monitor" id=${data[i].guid} name=${data[i].prjName} style="">监督检查</a>
+</div>
+
+
+							<div id="project-detail-${index}" style="display:none">${dataJson}</div>
+						</li>`;
+			}
+			// c/onsole.log(append + "===" + li)
+			if (append) {
+				$("#list").append(li);
+			} else {
+				$("#list").html(li);
+			}
+			if (index == 0) {
+				$("#content").hide();
+				$("#no-data").show();
+			}
+			//param.pageNo++;
+			//$("#num").html(index);
+			$("#list").css("margin-bottom", "20px");
+			//加载完数据，结束转雪花进度条的“正在刷新...”过程
+			//mui('#ALL').pullRefresh().endPulldown();
+			//加载完数据，结束转雪花进度条的“正在加载...”过程
+			//mui('#ALL').pullRefresh().endPullupToRefresh();
+		}
+
+		if (isTest) {
+			getDataTmp();
+		}
+
+		//	padCheckCss()
+	</script>
+
+</html>

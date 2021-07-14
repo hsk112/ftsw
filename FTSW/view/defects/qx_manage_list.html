@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>缺陷管理列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+        	.view-content-item{
+        	    height: auto;
+        	    margin: 0px 20px;
+        	    border-bottom: 1px solid #EDEDED;
+        	}
+
+        	.view-content-item .view-title{
+        	    font-size:14px;
+        	    color:#444444;
+        	    text-align: left;
+        	    padding:20px 0px 20px 0;
+
+        	}
+
+
+        	.btn-item2 div{
+        	    margin: 0 auto;
+        	    border: 1px solid #337BFC;
+        	    width: 85%;
+        	    height: 40px;
+        	    line-height: 40px;
+        	    border-radius: 50px;
+        	    margin-top: 30px;
+
+        	}
+
+        	.search-tip {
+        	    display: block;
+        	}
+
+        	.search-tip span{
+        	    font-size:14px;
+        	    color:rgba(51,123,252,1);
+        	}
+
+        	.search-tip img{
+        	    width: 14px;
+        	}
+
+        	.select-query-list{
+        	    border-bottom: 1px solid #eee;
+        	    height: 40px;
+        	    margin-top: 15px;
+        	}
+
+        	.select-query-list-title{
+        	    width: 100%;
+				float: left;
+        	    /*text-align: left;*/
+        	}
+
+        	.select-query-list-img-status{
+        	    width: 30%;float: right;
+        	}
+        	.select-query-list-img-status img{
+        	    width: 50px;
+        	}
+        	.def-font{
+        	    color: #888888;
+        	    font-size: small;
+        	}
+        	.item-title{
+        	    text-align: left;
+        	    padding: 15px 0px 0px 0px;
+        	    font-size: 14px;
+        	    color: #444444;
+        	}
+        	.paish .btn-item{
+        	    width: 100%;
+        	}
+			.radios{
+				float:left;
+				text-align: left;
+				bottom: 7px
+			}
+			.spanLim{
+				text-align: left;
+				display: inline-block;
+				width: 85%;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+
+			}
+        	.spanLim2{
+        	    width: 50%;
+        	    float: left;
+        	    text-align: left;
+        	}
+
+			.spanStatus {
+				display: inline-block;
+				width: 15%;
+				text-align: center;
+				font-size: 12px;
+				vertical-align: top;
+			}
+
+			.delete-icon1 {
+				position: absolute;
+				top: 6px;
+				right: 10px;
+				z-index: 10;
+				display: none;
+				line-height: 16px;
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #FFFFFF;
+				border-radius: 50%;
+				background: #999999;
+			}
+			.delete-icon {
+				position: absolute;
+				top: 12px;
+				right: 10px;
+				z-index: 10;
+				display: none;
+				line-height: 16px;
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #FFFFFF;
+				border-radius: 50%;
+				background: #999999;
+			}
+
+        	/*隐藏底部*/
+        	/*.mui-pull-bottom-pocket {*/
+        	  /*display: none !important;*/
+        	/*}*/
+			.row-title{
+				display: inline-block;
+				width: 20%;
+				font-size: 14px;
+				color: #444444;
+			}
+			.info-bar-content-item{
+				height: 55px !important;
+			}
+
+    	</style>
+
+		<script>
+			function deleteDate(a) {
+				$("#"+a).val("");
+				$("#"+a).next().css('display', 'none');
+				if (a === 'street') {
+					$("#comm").val("");
+					$("#comm").next().css('display', 'none');
+					streetId = '';
+				}
+				if (a === 'comm') commId = '';
+				if (a === 'bugSource') sourceId = '';
+				if (a === 'obj_input') {
+					$("#bugType_input").val("");
+					$("#bugType_input").next().css('display', 'none');
+					$("#bugLevel_input").val("");
+					$("#bugLevel_input").next().css('display', 'none');
+					objTypeId = '';
+					bugType = '';
+					levelId = '';
+				}
+				if (a === 'bugType_input') bugType = '';
+				if (a === 'bugLevel_input') levelId = '';
+				if (a === 'bugStatus') statusId = '';
+			}
+		</script>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">缺陷管理列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="ALL" class="mui-scroll-wrapper" >
+					<div class="mui-scroll" >
+						<div class="scroll-li">
+							<div class="info-bar-content">
+								<div class="search-bar">
+									<div class="search-item">
+										<div class="search-icon">
+											<img src="../../img/commom/search1@2x.png" />
+										</div>
+										<div class="search-input">
+											<div class="mui-input-row" style="text-align: left">
+												<input id="search_input" value="" type="text" style="width: 90%;" placeholder="请输入缺陷描述">
+												<span class="mui-icon mui-icon-closeempty delete-icon1" onclick="deleteDate('search_input')"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="scroll-li">
+							<div class="view-content">
+                                <div class="view-content-item" style="display: flex">
+                                    <a id="openFactor"  href="#">
+                                        <div class="view-title search-tip">
+                                            <img id="ico" src="../../img/add.png" />
+                                            <span>更多搜索条件</span>
+                                        </div>
+                                    </a>
+									<a id="toAdd"  href="#" style="margin-left: auto">
+										<div class="view-title search-tip">
+											<img id="ico2" src="../../img/add.png" />
+											<span>新增</span>
+										</div>
+									</a>
+                                </div>
+								<div id="moreContent" class="view-content-item" style="display: none;margin: 0 ">
+
+									<div class="info-bar-content-item">
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+												所在街道<span style="color: red;"></span>
+											</div>
+											<input id="street" readonly="readonly" type="text" style="width: 50%;" value="" placeholder="请选择街道">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('street')"></span>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+												所在片区<span style="color: red;"></span>
+											</div>
+											<input id="comm" readonly="readonly" type="text" style="width: 50%;" value="" placeholder="请选择所在片区">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('comm')"></span>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+												缺陷来源<span style="color: red;"></span>
+											</div>
+											<input id="bugSource" readonly="readonly" type="text" style="width: 50%;" placeholder="请选择缺陷来源">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('bugSource')"></span>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+											   设施类型<span style="color: red;"></span>
+										    </div>
+											<input id="obj_input" readonly="readonly" type="text" style="width: 50%;" value="" placeholder="请选择设施类型">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('obj_input')"></span>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+												缺陷类型<span style="color: red;"></span>
+											</div>
+											<input id="bugType_input" readonly="readonly" type="text" style="width: 50%;" value="" placeholder="请选择缺陷类型">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('bugType_input')"></span>
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+												缺陷等级<span style="color: red;"></span>
+											</div>
+											<input id="bugLevel_input" readonly="readonly" type="text" style="width: 50%;" value="" placeholder="请选择缺陷等级">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('bugLevel_input')"></span>
+										</div>
+									</div>
+									<div class="info-bar-content-item ">
+
+										<div class="mui-input-row item-input">
+											<div class="row-title">
+												问题状态<span style="color: red;"></span>
+											</div>
+											<input id="bugStatus" readonly="readonly" type="text" style="width: 50%;" value="" placeholder="请选择问题状态">
+											<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('bugStatus')"></span>
+										</div>
+									</div>
+
+									<div class="info-bar-content-item">
+										<div class="mui-input-row item-input">
+											<div class="mui-row task-item">
+												<div class="mui-col-xs-2 row-title" style="margin-top: 10px;">
+													处理日期
+												</div>
+												<div class="mui-col-xs-4 task-item-title" style="padding-left: 5px;">
+													<input id="startTime" value="" readonly="readonly" type="text" placeholder="开始日期" style="width: 90%;">
+													<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('startTime')"></span>
+												</div>
+												<div class="mui-col-xs-1 task-item-title" style="bottom: -10px">-</div>
+												<div class="mui-col-xs-4 task-item-title">
+													<input id="endTime" value="" readonly="readonly" type="text" placeholder="结束日期" style="width: 90%;">
+													<span class="mui-icon mui-icon-closeempty delete-icon" onclick="deleteDate('endTime')"></span>
+												</div>
+											<!-- 	<div class="mui-col-xs-1" style="line-height: 43px;text-align: right;">
+													<img src="../../img/cal.png" style="width: 14px;height: 14px;" />
+												</div> -->
+											</div>
+										</div>
+									</div>
+
+									<div class="bottom-btn" style="background-color: white">
+										<div class="btn-item">
+											<div id="search" style="background: #337BFC;color: #fff; margin-bottom: 10px;">搜索</div>
+										</div>
+									</div>
+
+								</div>
+
+                                <div id="content" >
+									<ul id="OA_task_1" class="mui-table-view">
+										<!--<li class="mui-table-view-cell" style="line-height: 27px">-->
+											<!--<div class="mui-slider-right mui-disabled">-->
+												<!--<a class="mui-btn mui-btn-green editQx">修改</a>-->
+												<!--<a class="mui-btn mui-btn-red delQx">删除</a>-->
+											<!--</div>-->
+											<!--<div class="mui-slider-handle">-->
+												<!--<div  class="select-query-list-title ">-->
+													<!--<span class="spanLim">1&nbsp;&nbsp;缺陷描述....哒哒哒哒哒哒多多多多多多多多多多多多多多多多多哒哒哒哒哒哒多多多多多多多多多多多多多多多多多多.</span>-->
+												<!--</div>-->
+												<!--<br/>-->
+												<!--<div  class="select-query-list-title ">-->
+													<!--<span class="def-font spanLim2">缺陷来源：订来源</span>-->
+													<!--<span class="def-font spanLim2">缺陷类型：订类型</span>-->
+												<!--</div>-->
+                                                <!--<br/>-->
+												<!--&lt;!&ndash;<div class="select-query-list-img-status">&ndash;&gt;-->
+												<!--<div class="select-query-list-title">-->
+													<!--<span class="def-font spanLim2">发现时间：2020-07-23</span>-->
+												<!--</div>-->
+											<!--</div>-->
+										<!--</li>-->
+									</ul>
+
+                                </div>
+
+							</div>
+						</div>
+
+						<!--<div class="bottom-btn">-->
+							<!--<div  class="btn-item2">-->
+								<!--<div id="delQx"  style="color: #337BFC;">删除</div>-->
+							<!--</div>-->
+							<!--<div class="btn-item2">-->
+								<!--<div id="editQx" style="color: #337BFC;">修改</div>-->
+							<!--</div>-->
+							<!--<div class="btn-item2">-->
+								<!--<div id="addMag" style="background: #337BFC;color: #fff;">新增</div>-->
+							<!--</div>-->
+						<!--</div>-->
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+
+
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/qx.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script type="text/javascript">
+	// var vConsole = new VConsole();
+        var pages = 1;//页码
+		var sum = 1; //总数
+		mui.init({
+            //0818 上拉加载
+            pullRefresh: {
+                container: '#ALL', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+                //下拉刷新
+                down: {
+
+                    style:'circle',
+                    callback: function(){
+                        console.log("触发刷新")
+                        pages = 1;
+                        pulldownRefresh()
+                    }
+                },
+                //上拉加载
+                up: {
+                    auto: true, // 可选,默认false.自动上拉加载一次
+                    height: 50,  //触发上拉加载拖动距离
+                    contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore:'暂无更多数据',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback: function() {
+                        console.log("触发上拉")
+                        searchByParams()
+                    } //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                }
+
+            }
+
+        });
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+        //注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+
+        var sourceId = "";//缺陷来源Id
+        var levelId = ""; //缺陷等级id
+        var statusId = "";//缺陷状态id
+        var belongId = "";//负责单位
+        var objTypeId ="";//设施类型
+		var streetId = "";//街道id
+		var commId = "";//小区id
+		var bugType ='';//缺陷类型
+
+        var objList =[];    //存放设施json
+        var sourceList = [];//存储所有缺陷来源
+		mui.plusReady(function() {
+            getSources();//获取所有缺陷来源
+            getObjList();//获取所有设施
+
+            //其他页面回来时进行刷新
+            window.addEventListener('refresh',function(e){
+                // location.reload();
+				pulldownRefresh()
+            })
+
+			$("#openFactor").on("tap", function() {
+                // mui('#ALL').pullRefresh().endPullupToRefresh(true); //禁止上拉加载
+                mui('#ALL').pullRefresh().disablePullupToRefresh();
+
+			    //隐藏内容
+                var content = $("#content").css("display");
+
+			    var show = $("#moreContent").css('display');
+			    if(show == 'block'){
+			        $("#ico").attr('src','../../img/add.png');
+
+			        $("#moreContent").css('display','none');
+                    $("#content").css('display','block');
+
+			    }
+			    if(show == 'none'){
+			        $("#ico").attr('src','../../img/cut.png');
+			        $("#moreContent").css('display','block');
+                    $("#content").css('display','none');
+			    }
+			});
+			//跳转新增页面
+			$("#addMag").on("tap", function() {
+				var extras = {}
+				app.openPage("qx_manage.html", {
+					titleNView: {
+						titleText: '缺陷管理',
+						autoBackButton: true,
+					}
+				},extras);
+			});
+            $("#toAdd").on("tap", function() {
+                var extras = {}
+                app.openPage("qx_manage.html", {
+                    titleNView: {
+                        titleText: '缺陷管理',
+                        autoBackButton: true,
+                    }
+                },extras);
+            });
+
+			//编辑
+			$(document).on('tap', '.editQx', function () {
+            // $(".editQx").on("tap", function() {
+            //     var guid = $('input[name="guid"]:checked').attr('id')//获取id
+                var guid  = $(this).parent().parent().attr('id');
+                var Status  = $(this).attr('data-status');
+
+                if(guid ==""||guid ==null){
+                    app.toast("无法获取guid");
+                 	return;
+				}
+                var extras = {
+                    idd:guid,
+                    btnStatus:Status
+                }
+                app.openPage("qx_edit.html", {
+                    titleNView: {
+                        titleText: '缺陷编辑',
+                        autoBackButton: true
+                    }
+                }, extras);
+            });
+
+			//查看
+			$(document).on('tap', '.queryQx', function () {
+				var guid  = $(this).parent().parent().attr('id');
+				var Status  = $(this).attr('data-status');
+				if(guid ==""||guid ==null){
+					app.toast("无法获取guid");
+					return;
+				}
+				var extras = {
+					idd: guid,
+					btnStatus: Status
+				}
+				app.openPage("qx_query.html", {
+					titleNView: {
+						titleText: '缺陷查看',
+						autoBackButton: true
+					}
+				}, extras);
+			});
+
+            //删除
+            $(document).on('tap', '.delQx', function () {
+				console.log(111111111111)
+            // $(".delQx").on("tap", function() {
+            //     var guid = $('input[name="guid"]:checked').attr('id')//获取id
+                var Status  = $(this).attr('data-status');
+                if(Status == 'false'){
+                    app.toast('已处理数据无法删除')
+					return;
+				}
+                var guid  = $(this).parent().parent().attr('id');
+                var  btnArray=['确定','取消'];    //注意这里的顺序是先否再是
+                mui.confirm("是否确定删除该缺陷信息",'',btnArray, function(e) {
+                    if (e.index == 0) {     //索引是1的就是选择的是
+                        qxDel(guid,function(data){
+                            //console.log(data)
+                            if(data.success) {
+                                mui.toast("删除成功")
+                                // window.location.reload();
+								pulldownRefresh()
+                            }else{
+                                mui.toast("删除失败")
+                            }
+                        })
+                    }
+                })
+            });
+
+            //处理
+            $(document).on('tap', '.handQx', function () {
+                var guid  = $(this).parent().parent().attr('id');
+                var Status  = $(this).attr('data-status');
+				var title = '处理缺陷情况'
+
+				if(Status == 'true') title = '处理缺陷';
+                if(guid ==""||guid ==null){
+                    app.toast("无法获取guid");
+                    return;
+                }
+                var extras = {
+                    idd:guid,
+                    btnStatus:Status
+                }
+
+                app.openPage("qx_handle.html", {
+                    titleNView: {
+                        titleText: title,
+                        autoBackButton: true
+                    }
+                }, extras);
+            });
+
+			//进入详情
+			$(document).on('tap', '.enterQx', function () {
+				var guid  = $(this).parent().attr('id');
+				var status  = $(this).attr('data-status');
+				if(guid ==""||guid == null){
+					app.toast("无法获取guid");
+					return;
+				}
+				var extras = { idd: guid, btnStatus: 'true' };
+				let url;
+				let title;
+				if (status == 1) {
+					url = 'qx_edit.html';
+					title = "修改缺陷"
+				}else {
+					url = 'qx_query.html';
+					title = '查看缺陷'}
+				app.openPage(url, {
+					titleNView: {
+						titleText: title,
+						autoBackButton: true
+					}
+				}, extras);
+			});
+
+            //获取街道
+			$("#street").on("tap",function(){
+			    getJD(function (data) {
+                    if (200 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.adName,//街道名
+                            value: item.guid //guid
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#street").val(items[0].text);
+						streetId = items[0].value;
+
+						$("#street").next().css('display', 'inline-block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+                })
+			})
+
+			//获取小区ByStreet
+			$("#comm").on("tap",function () {
+				if (streetId) {
+					var param = streetId;
+					getXqByStreet(param,function (data) {
+						if (200 != parseInt(data.code)) {
+							app.toast(data.message);
+							console.log(data.message)
+							return;
+						}
+						var resultJSON =[];
+						for (var i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+
+							resultJSON.push({
+								text: item.reName,//小区名
+								value: item.guid //小区guid
+							})
+						}
+						var extras = {
+							dataList: resultJSON,//内容
+							multiSelect:false,
+							module: 'com'
+						}
+						app.openPage("../commom/select.html", {
+							titleNView: {
+								titleText: '小区过滤街道',
+								autoBackButton: true
+							}
+						}, extras);
+						//移除
+						window.removeEventListener('returnSelect',setComm,false);
+						// 赋值
+						window.addEventListener('returnSelect',setComm,false);
+					})
+				} else {
+					app.toast("请先选择所在街道")
+				}
+            })
+            var setComm = function(data){
+                $("#comm").val(data.detail[0].text);
+                // $("#approverUsername").val(data.detail[0].value);
+                commId = data.detail[0].value; //小区guid
+                // commName = data.detail[0].text;
+                //console.log(commId);
+				$("#comm").next().css('display', 'inline-block');
+            }
+
+            //获取缺陷来源
+            $("#bugSource").on("tap", function() {
+                getDictItems('ZHSW.DEVICE.BUG_SOURCE',function (data) {
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugSource").val(items[0].text);
+                        sourceId = items[0].value;
+
+						$("#bugSource").next().css('display', 'inline-block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+
+                })
+            });
+
+            //获取设施类型
+			var newObj;
+			var oldBoj = $("#obj_input").val();
+            $("#obj_input").on("tap", function() {
+                getDictItems("ZHSW.DEVICE.BUG_OBJECT_TYPE",function(data){
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+						$("#obj_input").val(items[0].text);
+                        newObj = items[0].text;
+                        objTypeId = items[0].value;
+						$("#obj_input").next().css('display', 'inline-block');
+
+                        if (oldBoj != newObj) {
+                            //设施类型变，缺陷类型清除
+							deleteDate('bugType_input')
+                        }
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+				})
+			});
+
+            //*获取缺陷等级√
+            $("#bugLevel_input").on("tap", function() {
+            	let deviceData = $("#obj_input").val();
+				// if(deviceData.indexOf('管渠') == -1 && deviceData.indexOf('灌渠') == -1) {
+				// 	app.toast("请先选择管渠类或者灌渠类设施才能选择等级");
+				// 	return;
+				// }
+                getDictItems('ZHSW.DEVICE.BUG_LEVEL',function (data) {
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        console.log(data.message)
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugLevel_input").val(items[0].text);
+                        levelId = items[0].value;
+
+						$("#bugLevel_input").next().css('display', 'inline-block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+
+                })
+            });
+
+            //*获取缺陷状态
+            $("#bugStatus").on("tap", function() {
+                getDictItems('ZHSW.DEVICE.BUG_STATE',function (data) {
+                    if (206 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        return;
+                    }
+                    var resultJSON =[];
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        resultJSON.push({
+                            text: item.text,
+                            value: item.value
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugStatus").val(items[0].text);
+                        statusId = items[0].value;
+
+						$("#bugStatus").next().css('display', 'inline-block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+
+                })
+            });
+
+            //*获取缺陷类型
+            $("#bugType_input").on("tap", function() {
+                var param = objTypeId;
+                var resultJSON =[];
+
+                if(param == ""||param ==null){
+                    app.toast("请先选择设施");
+                    return;
+                }
+                var param = objTypeId;
+                var resultJSON =[];
+                getQx_Type(param,function(data){
+
+                    //console.log(data)
+                    if (200 != parseInt(data.code)) {
+                        app.toast(data.message);
+                        return;
+                    }
+                    for (var i = 0; i < data.result.length; i++) {
+                        var item = data.result[i];
+                        //console.log(item.problemType_dictText)
+                        resultJSON.push({
+                            text: item.problemType_dictText,
+                            value: item.problemType
+                        })
+                    }
+                    var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#bugType_input").val(items[0].text);
+                        bugType = items[0].value;
+
+						$("#bugType_input").next().css('display', 'inline-block');
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+                    });
+                })
+            });
+
+            //点击搜索（条件）
+            $("#search").on("tap",function (data){
+                var start = $("#startTime").val().replace("-","");
+                var end = $("#endTime").val().replace("-","");
+                if(end < start){
+                    app.toast("时间不合理！请重新选择")
+                    return;
+                }
+
+                var content = $("#content").css("display");
+                var show = $("#moreContent").css('display');
+                if(show == 'block'){
+                    $("#ico").attr('src','../../img/add.png');
+
+                    $("#moreContent").css('display','none');
+                    $("#content").css('display','block');
+
+                }
+                if(show == 'none'){
+                    $("#ico").attr('src','../../img/cut.png');
+                    $("#moreContent").css('display','block');
+                    $("#content").css('display','none');
+                }
+                //让其回到头部
+                // mui('#ALL').scroll().scrollTo(0,0,100);
+                mui('#ALL').pullRefresh().scrollTo(0, 0, 100);
+                // mui('#ALL').pullRefresh().endPullupToRefresh(false); //允许上拉加载
+                mui('#ALL').pullRefresh().enablePullupToRefresh();
+                $("#OA_task_1").empty();//清空
+                pages = 1;//回到第一页
+				sum = 1;
+                searchByParams();
+            });
+
+            //监听搜索（缺陷标题）
+            document.getElementById("search_input").addEventListener('input', onSearch);
+		})
+
+		//搜索查询
+		function onSearch() {
+			let seachVal = $('#search_input').val();
+			if (seachVal == ''||seachVal == null||seachVal == undefined) {
+				$("#bugType_input").next().css('display', 'none');
+				pulldownRefresh();
+			} else {
+				$("#search_input").next().css('display', 'inline-block');
+				$("#OA_task_1").empty();
+				mui('#ALL').pullRefresh().enablePullupToRefresh();
+				sum = 1;
+				pages = 1;
+				let params = getParamsData()
+				BugSearch(params, function(result){
+					if (result.length < 10){
+						//不再执行上拉
+						console.log("暂无更多数据")
+						mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					} else {
+						console.log("有数据")
+						mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+					}
+				});
+			}
+		}
+
+        //下拉刷新
+        function pulldownRefresh() {
+			$("#moreContent").css('display','none');
+			$("#ico").attr('src','../../img/add.png');
+
+			$("#moreContent").css('display','none');
+			$("#content").css('display','block');
+            $("#OA_task_1").empty();
+            //激活上拉
+            // mui('#ALL').pullRefresh().refresh(true);
+            mui('#ALL').pullRefresh().enablePullupToRefresh();
+		    sum = 1;//重置总数
+			pages = 1;
+			let params = getParamsData()
+            BugSearch(params,function(result){
+                if (10>result.length){
+                    //不再执行上拉
+                    console.log("无更多数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+                    // mui('#ALL').pullRefresh().disablePullupToRefresh();
+                } else {
+                    console.log("有数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+                }
+
+            });
+			// pages++;
+        }
+
+        //时间
+        $("#startTime").on("tap", function() {
+            var that = $(this);
+            // plus.nativeUI.pickDate(function(e) {
+            //     var d = e.date;
+            //     that.val(d.getFullYear()+"-"+preZero((d.getMonth()+1),2)+"-"+preZero(d.getDate(),2))
+            // }, function(e) {
+            //     that.val("");
+            // }, {
+            //     title: "请选择日期"
+            // });
+            plusDate(function(data){
+                that.val(data)
+            },1);
+        })
+
+        $("#endTime").on("tap", function() {
+            var that = $(this);
+            // plus.nativeUI.pickDate(function(e) {
+            //     var d = e.date;
+            //     that.val(d.getFullYear()+"-"+preZero((d.getMonth()+1),2)+"-"+preZero(d.getDate(),2))
+            // }, function(e) {
+            //     that.val("");
+            // }, {
+            //     title: "请选择日期"
+            // });
+            plusDate(function(data){
+                    that.val(data)
+            },1);
+        })
+
+		//编辑搜索条件
+		function getParamsData(){
+			if (!$('#street').val()) streetId =''
+			if (!$('#comm').val()) commId =''
+			if (!$('#bugSource').val()) sourceId =''
+			if (!$('#obj_input').val()) objTypeId =''
+			if (!$('#bugType_input').val()) bugType =''
+			if (!$('#bugLevel_input').val()) levelId =''
+			if (!$('#bugStatus').val()) statusId =''
+			// 缺陷描述
+			var searchVal = $('#search_input').val();
+			if (searchVal == ''||searchVal == null||searchVal == undefined) searchVal = '';
+			//开始时间
+			var startTime = $("#startTime").val()
+			if (startTime) startTime = startTime + ' 00:00:00'
+			else startTime = ''
+			//结束时间
+			var endTime = $("#endTime").val()
+			if (endTime) endTime = endTime + ' 23:59:59'
+			else endTime = ''
+			let params = {
+				pageNo:pages,     //页码 上拉自增
+				streetId:streetId,//街道
+				commId:commId,//小区         （深圳青年少活动中心）
+				bugSource:sourceId,//缺陷来源
+				objectType:objTypeId,//设施类型
+				bugType:bugType ,//缺陷类型
+				bugLevel:levelId,//缺陷等级
+				bugStatus:statusId,//状态
+				problemContent:searchVal,//缺陷描述
+				startTime:startTime,//处理开始时间
+				endTime:endTime//处理结束时间
+			}
+			return params
+		}
+
+        //根据参数查询
+        function searchByParams(){
+            let params = getParamsData()
+			BugSearch(params, function(result){
+                if (10>result.length){
+                    //不再执行上拉
+                    console.log("暂无更多数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+                    // mui('#ALL').pullRefresh().disablePullupToRefresh();
+                } else {
+                    console.log("有数据")
+                    mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+                }
+            });
+        }
+
+        //查询
+		function BugSearch(params,callback){
+			let obj = {};
+			for(let key in params){
+				if(params[key]) obj[key] = params[key];
+			}
+			searchBug(obj,function (data) {
+			    // console.log("缺陷列表："+JSON.stringify(data))
+                if (data.success) {
+                   //查询数据返回前端
+					addData(data.result.records);
+                    if (callback){
+                        //返回当前数据个数
+                        callback(data.result.records);
+                    }
+                } else {
+                    mui.toast("查询失败")
+                }
+            })
+		}
+		//获取所有缺陷来源
+        function getSources(){
+            getDictItems('ZHSW.DEVICE.BUG_SOURCE',function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+                    sourceList.push({
+                        text: item.text,
+                        value: item.value
+                    })
+                }
+            })
+        }
+
+		//获取设施对象集合
+        function getObjList(){
+            getDictItems("ZHSW.DEVICE.BUG_OBJECT_TYPE",function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    console.log(data.message)
+                    return;
+                }
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+                    objList.push({
+                        text: item.text,
+                        value: item.value
+                    })
+                }
+            })
+        }
+
+        //遍历List
+        function getListI(list,sid){
+            if(isEmpty(sid)){
+                return '无'
+            }
+			for(var i in list){
+                if(sid == parseInt(list[i].value)){
+                    return list[i].text;
+                }
+            }
+        }
+
+		function addData(data){
+		    console.log("addData"+data.length)
+            var ss = '';
+            var obj='';
+            var li = "";
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                var status = item.bugStatus;//处理状态
+				var status_text;
+
+
+                li = li + '<li id="'+item.guid+'" class="mui-table-view-cell" style="line-height: 22px;">'
+                    +'<div class="mui-slider-right mui-disabled">';
+                if(status == 1){
+					status_text = '<span class="spanStatus" style="color: red">待处理</span>'
+                    li = li +'<a class="mui-btn mui-btn-blue handQx" data-status="true" style="width: 70px;padding-left:20px;text-align:center">处理</a>'
+                        +'<a class="mui-btn mui-btn-green editQx" data-status="false" style="width: 70px;padding-left:20px;text-align:center">修改</a>'
+                        +'<a class="mui-btn mui-btn-red delQx" style="width: 70px;padding-left:20px;text-align:center ">删除</a>';
+				}else if(status == 2){
+					status_text = '<span class="spanStatus" style="color: #43DE87">已处理</span>'
+                    li = li +'<a class="mui-btn mui-btn-green queryQx" data-status="false" style="width: 70px;padding-left:20px;text-align:center">查看</a>'
+                        +'<a class="mui-btn mui-btn-blue handQx" data-status="false" style="width: 70px;padding-left:20px;text-align:center">情况</a>'
+                        // +'<a class="mui-btn mui-btn-grey delQx" style="width: 70px;padding-left:20px;text-align:center ">删除</a>';
+				}else{
+					status_text = '<span class="spanStatus" style="color: #999">已审核</span>'
+                    li = li +'<a class="mui-btn mui-btn-green queryQx" data-status="false" style="width: 70px;padding-left:20px;text-align:center">查看</a>'
+                        +'<a class="mui-btn mui-btn-blue handQx" data-status="false" style="width: 70px;padding-left:20px;text-align:center">情况</a>'
+                        // +'<a class="mui-btn mui-btn-grey delQx" style="width: 70px;padding-left:20px;text-align:center ">删除</a>';
+				}
+                li = li +'</div>'
+                    +'<div class="mui-slider-handle enterQx" data-status="'+status+'">'
+                    +'<div class="select-query-list-title">'
+					+'<span class="spanLim">' + (i + sum) + '&nbsp;&nbsp;' + item.problemContent +'</span>'
+					+ status_text
+					+'</div><br/>'
+                    +'<div class="select-query-list-title ">'
+                    +'<span class="def-font spanLim2">缺陷来源：'+ getListI(sourceList,item.bugSource) +'</span>'
+                    +'<span class="def-font spanLim2">设施类型：'+ getListI(objList,item.objectType) +'</span>'
+                    +'</div>'
+                    +'<br/><div class="select-query-list-title">'
+                    +'<span class="def-font spanLim2">发现时间：' + item.findTime + '</span>'
+                    +'</div>'
+                    +'</div>'
+                    +'</li>';
+
+            }
+            pages++;//换下一页
+            sum += data.length ;
+            // console.log("sum")
+            // console.log(sum)
+            // $("#OA_task_1").html(li);
+            // $("#streetDetail").append(li);
+            $("#OA_task_1").append(li);
+            //加载完数据，结束转雪花进度条的“正在刷新...”过程
+            mui('#ALL').pullRefresh().endPulldown();
+            //加载完数据，结束转雪花进度条的“正在加载...”过程
+            mui('#ALL').pullRefresh().endPullupToRefresh();
+        }
+	</script>
+
+</html>

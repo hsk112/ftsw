@@ -1,0 +1,903 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>事件详情-处理情况</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<!-- <link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" /> -->
+	<!-- 文件预览 -->
+	<!-- <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /> -->
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=10,user-scalable=yes">
+	<link href="css/mui.css" rel="stylesheet" />
+	<!-- <script src="../../js/mui.min.js"></script> -->
+	<script src="../../js/jquery.min.js"></script>
+	<!-- <script src="./build/pdf.js" type="text/javascript"></script> -->
+	<!-- <script src="../../js/app.js"></script> -->
+	<script src="../../js/config.js"></script>
+	<script src="../../js/conservation.js"></script>
+	<!-- <script src="../defects/web/viewer.js"></script> -->
+	<!-- <script src="web/viewer.js"></script> -->
+	<!-- 预览完 -->
+	<style type="text/css">
+	* { touch-action: pan-y; }
+	/* * {
+	      manipulation
+	} */
+		.mui-segmented-control {
+			background: #FFFFFF;
+			font-size: 16px;
+			font-weight: 400;
+			height: 50px;
+			/* border: none; */
+		}
+/* 1 */
+		.mui-active {
+			/* font-size: 16px !important; */
+			/* font-weight: bold; */
+			/* color: #0493F3 !important; */
+			border-bottom: 3px solid #0493F3 !important;
+			/* font-weight: bold; */
+		}
+
+		.mainPage {
+			width: 100%;
+			background: #FFFFFF;
+		}
+
+		.ulCss {
+			width: 100%;
+			padding: 0 20px;
+			margin: 0;
+		}
+
+		.liCss {
+			list-style-type: none;
+			width: 100%;
+			/*border-bottom: 1px solid #DEDEDE;*/
+			/*display: inline-block;*/
+			height: auto;
+			padding: 20px 0;
+			display: flex;
+			justify-content: space-between;
+
+
+		}
+
+		.span1 {
+			font-size: 14px;
+			font-weight: 400;
+			color: #191515;
+			width: 20px;
+			line-height: 18px;
+			vertical-align: top;
+			display: inline-block;
+		}
+
+		.span2 {
+			font-size: 16px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 18px;
+			/*width: calc(50% - 60px);*/
+			display: inline-block;
+			vertical-align: top;
+			word-break: break-all;
+		}
+
+		.span3 {
+			font-size: 16px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 18px;
+			/*width:calc(40% - 20px);*/
+			display: inline-block;
+			vertical-align: top;
+			word-break: break-all;
+		}
+
+		.span4 {
+			width: 20px !important;
+			height: 16px !important;
+			line-height: 18px;
+			vertical-align: top;
+			margin-left: 10px;
+			display: inline-block;
+		}
+
+		.span5 {
+			font-size: 16px;
+			text-align: right;
+			font-weight: 400;
+			width: 50px;
+			line-height: 18px;
+		}
+
+		.span6 {
+			font-size: 16px;
+			display: inline-block;
+			font-weight: 400;
+			width: 50px;
+			line-height: 18px;
+		}
+
+		.bottom-item-btn {
+			height: 55px;
+			width: 100%;
+			z-index: 99;
+			margin-top: 5px;
+			background: white;
+			display: flex;
+			align-items: center;
+
+			/*position: fixed;*/
+			/*background: #f2f2f2;*/
+			/*bottom: 0px;*/
+			/*padding-top: 30px;*/
+			/*padding-left: 5%;*/
+		}
+
+
+
+
+
+		.empty {
+			line-height: 200px;
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			color: #BBBBBB;
+		}
+
+		/* 开始 */
+		.mui-slider .mui-active {
+			font-size: 14px;
+			color: #262626;
+		}
+
+		.info-bar-content-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 55px;
+
+			margin: 0;
+		}
+
+		.info-bar-content-item {
+			font-size: 14px;
+			padding: 10px 0;
+			margin: 0 20px;
+			height: auto;
+		}
+
+		.info-bar-content-item .item-title {
+			width: 120px;
+			color: #888888;
+			font-size: 14px;
+			padding: 0;
+		}
+
+		.red-star {
+			color: red;
+			margin-left: 3px;
+			margin-right: 5px;
+		}
+
+
+		.paish .mui-input-row {
+			height: 30px;
+			text-align: right;
+		}
+
+		.paish .mui-input-row {
+			position: relative;
+			float: left;
+			width: 100%;
+			text-align: left;
+			clear: none;
+		}
+
+		.right-input-date {
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-input-row {
+			clear: left;
+			overflow: hidden;
+		}
+
+		.fileContent {
+			padding: 20px 0;
+			margin: 0 20px;
+			border-bottom: 1px solid #eeeeee;
+		}
+
+		.fileContent-item {
+			width: 100%;
+			min-height: 60px;
+			background: #FFFFFF;
+			border-radius: 10px;
+			margin-bottom: 10px;
+		}
+
+		.fileContent-item-title {
+			width: calc(100% - 90px);
+			height: 34px;
+			display: inline-block;
+			text-align: left;
+			margin-left: 10px;
+			/* display: flex; */
+		}
+
+		.typeImg {
+			width: 30px;
+			height: 34px;
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.titleSpan {
+			width: 100%;
+			word-break: break-all;
+			font-size: 14px;
+			font-weight: 500;
+			color: #191515;
+			line-height: 14px;
+			display: block;
+		}
+
+		.fileSize {
+			font-size: 12px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 14px;
+		}
+		.input-row{
+			text-align: right;
+			font-size: 14px;
+		}
+		.input-row::placeholder{
+			text-align: right;
+			font-size: 14px;
+		}
+		.themeT{
+			position: absolute;
+			top:4px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav header" style="background: #354052;">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;"></a>
+		<h1 class="mui-title" style="color: #FFFFFF;">事件详情</h1>
+	</header>
+	<div id="app" class="mui-views">
+		<div class="mui-view">
+			<div class="mui-navbar">
+			</div>
+			<div class="mui-pages">
+			</div>
+		</div>
+	</div>
+	<div id="mui-content" class="mui-page" style="height: calc(100% - 100px);overflow: auto; padding-top: 60px;">
+		<!-- <div class="mui-segmented-control" style="position: fixed;z-index: 99;"> -->
+		<div class="mui-slider" id="slider">
+			<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+				style="position: fixed;z-index: 99;">
+				<a class="mui-control-item mui-active" id="page1" href="#scene"
+					style="font-weight: normal;background: #FFFFFF;color: #888888;line-height: 55px;">事件详情</a>
+				<a class="mui-control-item" id="page2" href="#reform"
+					style="font-weight: normal;background: #FFFFFF;color: #888888;line-height: 55px;">处理情况</a>
+			</div>
+			<!-- <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #0493F3; height: 2px; z-index: 100;top: 50px;
+							background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 42%,
+							 rgb(51, 123, 252) 42.1%, rgb(51, 123, 252) 50%, rgb(51, 123, 252) 57%, rgba(0, 0, 0, 0) 57.1%,
+							 rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);"></div> -->
+			<div style="position: fixed;top: 50px;z-index: 99;width:100%;height: 3.5px;background-color: #f2f2f2;">
+			</div>
+			<div class="mui-slider-group">
+				<div id="scene" class="mui-slider-item mui-control-content mui-active"
+					style="border-bottom: none!important;">
+					<div style="height:53.5px" tabindex="0" id="top"></div>
+					<div id="detail1" style="overflow-y: auto;background-color: #FFFFFF;">
+						<div class="mainPage">
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>事件名称
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="gdname"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>事件编号
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class=" sjbh" readonly="readonly"></span>
+                                                                  
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>事件来源
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="sjly"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>事件地点
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="sjdd"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>发生日期
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="fsrq"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star ">*</span>天气
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="weather"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>事件类型
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="eventtype"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>所需人数
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="number"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>积水深度
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="depth"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>上报人
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="informer"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>上报人联系方式
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="informernumber"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>是否发送工单
+									至运维负责人
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="pfgd"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>运维负责人
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="
+									operation"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>运维负责人联系方式
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="operationnumber"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>危害程度
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="harm"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title" style="width: 120px!important ;">
+									<span class="red-star">*</span>事件描述
+								</div>
+								<div class="mui-input-row item-input right-input-date" >
+									<span
+										style="margin-right: 0px;" class="describe"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star">*</span>填写人
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="fillout"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									<span class="red-star ">*</span>填写日期
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="fillouttime"></span>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+				</div>
+				<div id="reform" class="mui-slider-item mui-control-content" style="border-bottom: none!important;height: 1000px!important;background-color: #FFFFFF;">
+
+					<!-- <div style="height:53.5px"></div> -->
+					<div id="detail2" style="overflow-y: auto; padding-top:53.5px;height:100%!important;">
+						<div class="mainPage">
+							<!-- <div class="mui-input-row">
+								<label class="themeT " id="eventname">处理人</label>
+								<input class="iptOne input-row" type="text" placeholder="处理人" value="">
+							</div>
+							<div class="mui-input-row">
+								<label class="themeT " id="eventname">处理时间</label>
+								<input class="iptOne input-row" type="text" placeholder="处理人" value="">
+							</div>
+							<div class="mui-input-row">
+								<label class="themeT " id="eventname">总结报告</label>
+								<input class="iptOne input-row" type="text" placeholder="处理人" value="">
+							</div>
+							<div class="mui-input-row">
+								<label class="themeT " id="eventname">整改文件</label>
+								<input class="iptOne input-row" type="text" placeholder="处理人" value="">
+							</div> -->
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									处理人
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="handle"></span>
+
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									处理时间
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span class="clsj"></span>
+
+								</div>
+							</div>
+
+							<div class="info-bar-content-item">
+								<div class="item-title" style="width: 120px!important;">
+									总结报告
+								</div>
+								<div class="mui-input-row item-input right-input-date">
+									<span style="margin-right: 0px;" class="summarize"></span>
+								</div>
+							</div>
+							<div class="info-bar-content-item" style="height: 30px;border: none;">
+								<div class="item-title">
+									整改文件
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div style="margin-top: 10px;text-align: left;">
+			<button class="uploadBtn" id="uploadBtn" disabled="disabled">上传文件</buttom>
+			<span class="tip">可上传文件格式：doc、docx和pdf</span>
+		</div> -->
+</body>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<!-- <script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script> -->
+<!-- <script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script> -->
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/jquery.min.js"></script>
+
+<script src="../../js/maintain.js"></script>
+<script src="../../js/workSpace/notification.js"></script>
+
+<script src="../../js/uploadimage.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/conservation.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/mui.previewimage.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script src="../../js/incident/incident.js"></script>
+
+<!-- 预览文件 -->
+        <script src="../../js/common.js"></script>
+		<script src="../../js/vconsole.min.js"></script>
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+<!-- 完 -->
+<script type="text/javascript">
+    mui('.mui-slider').slider().stopped = true;
+	//  var vConsole = new VConsole();
+	var viewApi = mui('#app').view({
+		defaultPage: '#mui-content'
+	});
+	//  测试环境
+	var isTest = false;
+
+	// var vConsole = new VConsole();
+	var page = 1;
+	var count = 10;
+	var projectId = '';
+	var page2 = 1;
+	var count2 = 10;
+	var listData1 = [];
+	var listData2 = [];
+	var begin = true;
+	var signFileObj;
+	//初始化单页view
+	// var viewApi = mui('#app').view({
+	// 	defaultPage: '#mui-content'
+	// });
+
+	if (!isTest) {
+		mui.init({
+			// pullRefresh: {
+			// 	container: '#slider',
+			// 	down: {
+			// 		style: 'circle',
+			// 		callback: pulldownRefresh
+			// 	},
+			// 	up: {
+			// 		auto: true,
+			// 		height: 300,
+			// 		contentrefresh: '正在加载...',
+			// 		callback: pullupRefresh
+			// 	}
+			// },
+			beforeback: function () {
+				//获得父页面的webview
+				var list = plus.webview.currentWebview().opener();
+				//触发父页面的自定义事件(refresh),从而进行刷新
+				mui.fire(list, 'refresh1');
+				//返回true,继续页面关闭逻辑
+				return true;
+			},
+			gestureConfig: {
+				swipe: true, //默认为true
+			},
+			swipeBack: false
+		});
+	}
+
+    //文件预览跳转
+// document.getElementById('reformFile').addEventListener('tap', function() {
+//         mui.openWindow({
+//             url: './preview.html', //通过URL传参
+//         })
+// });
+
+
+
+	// getWork(url,params,function(data){
+	// 	console.log('data')
+	// 	data = data.result.records
+	// 	console.log(data)
+	// })
+
+	mui.plusReady(function () {
+		console.log("进入表单详情页面")
+		var self = plus.webview.currentWebview(); //获取上个
+		console.log(596,self);
+		var eventpose=self.data
+		$(".gdname").text(eventpose.eventName) //单位名称
+		$(".sjbh").text(eventpose.eventNo) //事件编号
+		var eventsource=['','巡检','投诉','第三方']
+		$(".sjly").text(eventsource[eventpose.eventSource]) //事件来源
+		// $(".sjly").text(eventpose.eventSource) //事件来源
+		// $(".sjly").text(eventpose.	ZHSW.EVENT.SOURCE) //事件来源
+	   console.log('self:data:'+JSON.stringify(self.data));
+		
+		$(".sjdd").text(eventpose.eventLocation) //事件地点
+		$(".fsrq").text(eventpose.occurTime) //发生日期
+		
+        var weather=['晴','多云','阴','阵雨','雷阵雨','雷阵雨伴有冰雹','雨夹雪','小雨','中雨','大雨','暴雨','大暴雨','特大暴雨','阵雪','小雪','中雪','大雪','暴雪','雾','冻雨','沙尘暴']
+		$(".weather").text(weather[eventpose.weather])
+		// console.log(weather[index])
+		//$(".weather").text(eventpose.weather)//天气
+		// $(".weather").text(weather[eventpose.weather]) //天气
+		// $(".weather").text(eventpose.conservation_weather ) //天气
+
+		var eventtye=[]
+		if(eventpose.eventType =='0'){
+			$('#initialDesignOne').prop('checked','cheacked')
+		}else if(self.problemLevel =='1'){
+          $('#initialDesignTwo').prop('checked','cheacked')
+        }
+	    var repairOrder=['否','是']
+		$(".pfgd").text(repairOrder[eventpose.repairOrder])//是否派发工单
+		var eventType=['积水','溢流','冒溢']
+	    $(".eventtype").text(eventType[eventpose.eventType]) //事件类型
+		//我自己加的
+        $(".sjbh").text(eventpose.eventNo) //事件编号
+		//
+		$(".number").text(eventpose.number) //所需人数
+		$(".depth").text(eventpose.floodDepth) //积水深度
+		$(".informer").text(eventpose.reportRealName) //上报人
+		// $(".weather").text(eventpose.weather[eventpose.weather])
+		// $(".weather").text(eventpose.weather)//天气
+		// $(".weather").text(eventpose.conservation_weather)//天气
+		// $(".weather").text(eventpose.conservation_weather[eventpose.conservation_weather])//天气
+		$(".informernumber").text(eventpose.reportPersonPhone) //上报人联系方式
+		// $(".sjnumber").text(eventpose.repairOrder) //是否发送工单致运维负责人
+		$(".operation").text(eventpose.dutyUserName) //运维负责人
+		$(".operationnumber").text(eventpose.dutyUserPhone) //运维负责人联系方式
+		var harmLevel=['待定','低','中','高']
+		$(".harm").text(harmLevel[eventpose.harmLevel]) //危害程度
+		$(".describe").text(eventpose.eventDescription) //事件描述
+		$(".fillout").text(eventpose.createBy) //填写人
+		$(".fillouttime").text(eventpose.createTime) //填写日期
+		console.log("111")
+		console.log('222')
+		// $(".reformFile").text(eventpose.inputTime) //整改文件
+
+		if(eventpose.handlingState == '2'){
+
+		}
+        //$(".fillouttime").text(eventpose.getAttribute)
+		//$(".handle").text(eventpose.donePerson) //处理人//.substring(0,10)
+		//$(".clsj").text(eventpose.doneTime) //处理时间
+		//$(".summarize").text(eventpose.eventSummary) //事件总结
+		
+		// // 文件预览跳转
+		// document.getElementById('reformFile').addEventListener('tap', function() {
+		//         mui.openWindow({
+		//             // url: './view/conservation/preview.html', //通过URL传参
+		// 			 url: 'preview.html', //通过URL传参
+		//         })
+		// });
+		
+		
+		// function addData(data) {
+		// 	var li = "";
+		// 	var li2 = "";
+		// 	// console.log(JSON.stringify(data))
+		// 	if(data.length > 0) {
+		// 		firstListData = data[0];// 新增记录时传入 ，填充数据
+		// 	}
+		
+		// 	for (var i = 0; i < data.length; i++) {					
+		// 		var item = data[i];
+		// 		var dateIndex = (page - 1) * count + i
+		// 		var flag = false;
+		// 		Object.keys(signFileObj).forEach(key =>{
+		// 			if(key == item.signatureReturn && signFileObj[key].length != 0){
+		// 				flag = true;
+		// 			}
+		// 		})
+		// 		var separator = "";
+		// 		if(i < (data.length - 1)) {
+		// 			separator = "style=\"border-bottom: 1px solid #F4F4F4;\"";
+		// 		}
+		// 		li = li +
+		// 			`<li class="liCss" `+separator+` groupId=${data[i].signatureReturn} name="history" title="`+(i+1)+`现场检查记录" guid=${data[i].guid} projectId=${data[i].projectId}>
+		// 				 <div><span class="span1">${i+1}</span>
+		// 				 <span class="span2">${data[i].checkDate.slice(0,10)}</span></div>
+		// 				 <span class="span3">${isEmp(data[i].conservationStatus_dictText)}</span>
+		// 				 <span class="span6" style="width:50px;text-align:right" index=${i}>查看</span>`
+		// 				 // if(!flag){
+		// 					//  li +=  `<img src="../../img/commom/upload.png" class="span4" guid=${data[i].guid} />`;
+		// 				 // }						
+		// 			 li +=  `</li>`;
+		// 		li2 +=
+		// 				`<li class="liCss" `+separator+` groupId=${data[i].signatureReturn} reformReportStatus=${data[i].reformReportStatus} name="reform"  title="`+(i+1)+`整改文件"  guid=${data[i].guid}>
+		// 					 <div><span class="span1">${i+1}</span>
+		// 					 <span class="span2">${data[i].checkDate.slice(0,10)}</span></div>
+		// 					 <span class="span3">${isEmp(data[i].conservationStatus_dictText)}</span>
+		// 					 <div class="span5" style="width:50px;display:inline-block;float:right" 
+		// 					 comDate=${data[i].comDate}
+		// 					 conservationStatus=${data[i].conservationStatus}
+		// 					 checkPeopleNum=${data[i].checkPeopleNum}
+		// 					 reformReportStatus=${data[i].reformReportStatus}>${data[i].reformReportStatus == 0?'发送':'查看'}</div>
+		// 				</li>`		
+				
+		// 	}
+		// 	$("#list1").append(li);
+		// 	$("#list2").append(li2);
+		// }
+		
+		// function addData2(data) {
+		// 				var li2 = "";
+		// 				// console.log("page2:"+page2)
+		// 				// console.log(count)
+		// 				// for (var i = 0; i < data.length; i++) {
+		// 				for (var i = 0; i < 10; i++) {
+		// 					var item = data[i];
+		// 					var dateIndex = (page - 1) * count + i
+		
+		// 					li2 +=
+		// 						`<li class="liCss" groupId="8daf261e18d3453caf699674e7f331d3"  name=`+(i+1)+`整改文件>
+		// 							 <span class="span1">${i+1}</span>
+		// 							 <span class="span4">整改文件</span>
+		// 						</li>`
+		// 				}
+		// 				$("#list2").append(li2);
+		
+		// 				$("#list2").each(function() {
+		// 					$(this).click(function() {
+		// 						var extras = {
+		// 							filePath: "ecidi/c8a2173b2f23471d825f47e9e242771f.pdf",
+		// 							fileId: "0a9847fd306f2f09f8f37d8a4ea07872"
+		// 						}
+		// 						app.openPage("./preview.html", {
+		// 							titleNView: {
+		// 								titleText: '文档预览',
+		// 								autoBackButton: true
+		// 							}
+		// 						}, extras);
+		// 					});
+		// 				});
+		// 			}
+		
+		
+		
+		
+		
+		
+		
+		// var self;
+		// mui.init({
+		// 	beforeback: function() {
+		// 		popToTarget('proDetail.html');
+		// 	},
+		// });
+		// //初始化单页view
+		// var viewApi = mui('#app').view({
+		// 	defaultPage: '#mui-content'
+		// });
+		
+		// mui.plusReady(function() {
+		// 	self = plus.webview.currentWebview();
+			
+		// 	$("#confirm").on("tap", function() {				
+		// 		popToTarget('proDetail.html');			
+		// 	}); 
+			
+		// 	$("reformFile").on("tap", function() {
+		
+		// 	var extras ={};
+		// 	 if(self.projectId){
+		// 		 extras.projectId = self.projectId;
+		// 		 extras.guid = self.guid;
+		// 	 }else{
+		// 		 extras.filePath=self.filePath;
+		// 		 extras.fileId=self.fileId;
+		// 	}		
+		// 	// console.log(JSON.stringify(extras));
+		// 	app.openPage("./preview.html", {
+		// 		titleNView: {
+		// 			titleText: '文档预览',
+		// 			autoBackButton: true
+		// 		}
+		// 	}, extras);
+		// 		// plus.webview.currentWebview().close('none'); //关闭
+		// 	}); 
+		// })
+		
+		
+		
+		// 文件预览完
+		// mui('#reformFile').on('tap', '#reformFile', function(e) { 
+		//              var href = this.getAttribute('href');
+		//              console.log('当前轮播图片地址：'+href);
+		//                //开跳转链接
+		//                mui.openWindow({ //目标页面  
+		//                url:'../../preview.html',
+		//                    id: '../../preview.html',
+		//                    extras:{
+		//                    href:href
+		//                    }
+		//                });  
+		//            });
+		// //页面跳转事件委托
+		// mui('body').on('tap','#reformFile',function(){
+		//    window.top.location.href=this.href;
+		// });
+		
+		
+		
+		
+		// //获取子页面webview  
+		// var subWebview = plus.webview.getWebviewById('preview.html')；  
+		// //fire自定义事件  
+		// mui.fire(subWebview ,'reformFile',{XXX:'XXX'});
+		
+		// 点击跳转到 通知公告详情
+		// mui("#reformFile").on('tap','fileContent',function(){
+		//   //获取id
+		//   var id = this.getAttribute("id");
+		//   console.log("点击item ：" + id);
+		//   // 跳转详情页
+		//   var recordInfo = {
+		//     // opera:"add",
+		//     nid: id
+		//   };
+		//   app.openPage("../../conservation/preview.html", {
+		//     titleNView: {
+		//       titleText: "文件预览",
+		//       autoBackButton: true,
+		//     }
+		//   }, recordInfo);
+		
+		// })
+		// //完
+		
+	})
+	
+	
+	
+	
+</script>
+
+
+</html>

@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<!-- 老的河湖长名录页面 -->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>河湖长名录</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+
+			.mui-slider {
+				height: 100vh;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-table-view-cell.mui-collapse.mui-active+.www .arrow_right {
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 0;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active+.titleleft {
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-table-view-cell:after {
+				left: 1px;
+				background-color: #F4F4F4;
+				height: 10px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 50px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #347CFC;
+				color: #347CFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 14px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: #FF5656;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: #29CC85;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: #FF7800;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item_status {
+				position: absolute;
+				top: 8px;
+				right: 5px;
+			}
+
+			.bottom-item {
+				background: #FFFFFF;
+				position: absolute;
+				/* height: 300px; */
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				text-align: left;
+			}
+
+			.bottom-item-btn-list {
+				/* height: 200px; */
+				width: 98%;
+				position: absolute;
+			}
+
+			.fanwei {
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+
+			.bottom-item-btn-list .bottom-item-btn-list-top {
+				width: 100%;
+
+			}
+
+			.item1 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				right: 0px;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item2 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				right: 0px;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item3 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				right: 64px;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				/* border: 1px solid #337BFC; */
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.mui-navigate-left:after {
+				content: '\e472';
+				left: 5px;
+				bottom: 50px;
+			}
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+
+			.li-item {
+				background-color: white;
+			}
+
+			.li-item-pull {
+				background-color: #F4F4F4 !important;
+			}
+
+			.li-margin {
+				margin-bottom: 13px;
+				border-bottom: 1px solid #EDEDED;
+				padding-bottom: 0px;
+				font-size: 13px;
+				padding-bottom: 10px;
+			}
+
+			.in-obj {
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+			}
+
+			.obj-title {
+				color: #444444;
+			}
+
+			.bgc-white {
+				background-color: white;
+			}
+
+			.bgc-grey {
+				background-color: #F4F4F4;
+			}
+
+			.mui-navigate-r {
+				background: #fff;
+			}
+
+			.icon-css {
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+
+			.task_title {
+				display: inline-block;
+				padding: 8px 0;
+				color: #191515;
+				font-size: 15px;
+				font-weight: 500;
+				width: 50%;
+				word-break: break-all;
+				white-space: pre-wrap;
+			}
+
+			.sec-line {
+				color: #878787;
+				font-size: 14px;
+			}
+
+			/* 	.arrow_right{
+				transform: rotate(90deg);
+			} */
+			.ul-mar-bottom {
+				margin-bottom: -18px;
+			}
+
+			.mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+				padding: 0;
+			}
+
+			.mui-table-view-cell.mui-active {
+				background: #fff;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-top: 7px solid #F4F4F4
+			}
+
+			.color888 {
+				color: #888888;
+			}
+
+			.ibh {
+				display: inline-block;
+				line-height: 28px;
+			}
+
+			.no-data {
+				position: absolute;
+				top: 10rem;
+				left: 50%;
+				display: inline-block;
+				font-size: 20px;
+				color: #999;
+				transform: translateX(-50%);
+			}
+
+			.showMore {
+				display: inline-block;
+			}
+
+			#listTitle span {
+				padding: 0;
+				color: #888888;
+			}
+
+			#listTitle {
+				width: 100%;
+				height: 40px;
+				padding-left: 20px;
+				line-height: 40px;
+				background: #F0F0F0;
+			}
+
+			.mui-table-view-cell {
+				padding: 0 !important;
+			}
+
+			#selectDistrict_ul span,
+			#selectStreet_ul span,
+			#selectCommunity_ul span,
+			#selectLakeDistrict_ul span,
+			#selectLakeStreet_ul span,
+			#selectLakeCommunity_ul span {
+				padding: 0;
+			}
+
+			.mui-table-view-cell:after {
+				left: 4%;
+				height: 2px;
+				width: 92%;
+			}
+
+			.home-item {
+				position: fixed;
+				width: 100%;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				height: 300px;
+				background: #FFFFFF
+			}
+
+			.home-item-title {
+				font-size: 19px;
+				width: 100%;
+				height: 20px;
+				text-align: left;
+				padding: 25px 23px;
+				color: #191515;
+				font-weight: bold;
+			}
+
+			.home-item-title .span-bg {
+				width: 78px;
+				height: 12px;
+				background: rgba(219, 232, 255, 1);
+				margin-top: -10px;
+			}
+
+
+			.home-item-list {
+				width: 100%;
+				margin-top: 23px;
+				height: 77px;
+				/* height: 107px; */
+			}
+
+			.home-item-list .item {
+				width: 25%;
+				float: left;
+				text-align: center;
+				font-size: 13px;
+				margin-bottom: 24px;
+				/* border-bottom: 2px solid #EEEEEE; */
+
+			}
+
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			.home-item-list .item img {
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			#search_input1,
+			#search_input2 {
+				margin: 0;
+				width: 90%;
+				height: 32px;
+				border-radius: 16px;
+				border: none;
+				padding-left: 35px;
+			}
+
+			#search {
+				padding: 5px 0;
+				background: #F4F4F4;
+				border-bottom: 7px solid #F4F4F4;
+				position: relative;
+			}
+
+
+			#search_icon img {
+				width: 14px;
+				height: 14px;
+				position: absolute;
+				left: 9%;
+				top: 30%;
+			}
+
+			#del_icon1 img,
+			#del_icon2 img {
+				width: 14px;
+				height: 14px;
+				position: absolute;
+				right: 9%;
+				top: 33%;
+			}
+
+			.btn-outlined {
+				border: 1px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-btn.mui-active:enabled {
+				background: #337BFC;
+			}
+
+			#foldTitle {
+				height: 40px;
+				line-height: 40px;
+				background: #F0F0F0;
+			}
+
+			#whichRiver {
+				padding-left: 20px;
+				background-color: #FFFFFF;
+				height: 40px;
+				line-height: 40px;
+				color: #191515;
+				display: none;
+			}
+
+			#whichRiver span {
+				padding: 0;
+			}
+
+			#whichLake {
+				padding-left: 20px;
+				background-color: #FFFFFF;
+				height: 40px;
+				line-height: 40px;
+				color: #191515;
+				display: none;
+			}
+
+			#whichLake span {
+				padding: 0;
+			}
+
+			#highest {
+				height: 50px;
+				line-height: 50px;
+			}
+
+			#leader {
+				height: 50px;
+				line-height: 50px;
+			}
+
+			#details {
+				margin: 0 20px;
+			}
+
+			#viewMore {
+				border-top: 5px solid #F4F4F4;
+				display: flex;
+				align-items: center;
+				color: #337BFC;
+				height: 40px;
+				padding-left: 20px;
+			}
+
+			#viewLakeMore {
+				border-top: 5px solid #F4F4F4;
+				display: flex;
+				align-items: center;
+				color: #337BFC;
+				height: 40px;
+				padding-left: 20px;
+			}
+
+			* {
+				touch-action: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="home-item" style="display: none;" id="home-item">
+			<div class="home-item-list" id="business_item">
+				<div class="item" id="monitor">
+					<img src="../../../img/commom/monitor.png">
+					<span>监测信息</span>
+				</div>
+				<!-- 	<div class="item" id="quality">
+						<img src="../../../img/commom/quality-icon.png">
+						<span>质量检查</span>
+					</div> -->
+				<div class="item" id="riverArchives">
+					<img src="../../../img/commom/rivers.png">
+					<span>河湖档案</span>
+				</div>
+				<div class="item" id="leaderList">
+					<img src="../../../img/commom/leaderList.png">
+					<span>河湖长名录</span>
+				</div>
+				<div class="item" id="emergency">
+					<img src="../../../img/commom/emergency.png">
+					<span>应急资源</span>
+				</div>
+				<div class="item" id="waterRisk">
+					<img src="../../../img/commom/waterRisk.png">
+					<span>积水风险点</span>
+				</div>
+				<div class="item" id="paishui">
+					<img src="../../../img/commom/paishuihu.png">
+					<span>排水户</span>
+				</div>
+				<div class="item" id="overflow">
+					<img src="../../../img/commom/overflow.png">
+					<span>冒溢点</span>
+				</div>
+				<div class="item" id="hybrid">
+					<img src="../../../img/commom/mixed.png">
+					<span>混接点</span>
+				</div>
+				<div class="item" id="shuiwuFacility">
+					<img src="../../../img/commom/shuiwu.png">
+					<span>水务设施</span>
+				</div>
+				<div class="item" id="policy">
+					<img src="../../../img/commom/policy.png">
+					<span>政策法规</span>
+				</div>
+				<div class="item" id="standard">
+					<img src="../../../img/commom/standard.png">
+					<span>标准规范</span>
+				</div>
+				<div class="item" id="operContract">
+					<img src="../../../img/commom/operContract.png">
+					<span>运维合同</span>
+				</div>
+			</div>
+		</div>
+
+
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="slider" class="mui-slider">
+							<div id="sliderSegmentedControl"
+								class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
+								style="color: #888888;">
+								<a id="item1" class="mui-control-item mui-active" href="#selectItem1"
+									style="text-align: center;">
+									河长名录
+								</a>
+								<a id="item2" class="mui-control-item " href="#selectItem2"
+									style="text-align: center;;">
+									湖长名录
+								</a>
+							</div>
+							<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #337BFC;height: 2px;background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%,
+									 rgba(0, 0, 0, 0) 39.9%, #337BFC 40%, #337BFC 50%, #337BFC 59.9%, 
+									rgba(0, 0, 0, 0) 60%,  rgba(0, 0, 0, 0) 100%);"></div>
+
+							<div class="mui-slider-group">
+								<div id="selectItem1" style="padding-top: 10px;"
+									class="mui-slider-item mui-control-content mui-active">
+									<div id="scroll1" class="mui-scroll-wrapper"
+										style="overflow-y: scroll;height: 100vh;background: #FFFFFF;padding-bottom:50px">
+										<div id="mui-table-view">
+											<div id="listNav">
+												<div id="search">
+													<div id="search_icon"><img src="../../../img/commom/search1@2x.png">
+													</div>
+													<div id="del_icon1"><img src="../../../img/commom/del.png"></div>
+													<input type="text" id="search_input1" value=""
+														placeholder="请输入所属街道/社区" />
+												</div>
+												<div id="openFactor">
+													<div class="view-title search-tip"
+														style="display: flex;align-items: center; height: 50px; line-height: 50px; ">
+														<img src="../../../img/commom/river.png"
+															style="width: 16px;height: 15px; margin-left: 20px;" />
+														<span id="riverLabel" style="margin-left:10px;">河流信息</span>
+													</div>
+												</div>
+
+												<div id="listTitle">
+													<div id="riverTitle">
+														<div class="mui-row" style="text-align: left;">
+															<div id="riverSelect" class="mui-col-sm-4 mui-col-xs-4">
+																<span id="riverOption"
+																	class="mui-table-view-cell">河流名称</span>
+																<span
+																	style="font-size: 16px; font-weight: bold;color: #337BFC;"
+																	class="mui-icon mui-icon-arrowdown"></span>
+															</div>
+															<div class="mui-col-sm-4 mui-col-xs-4">
+																<span class="mui-table-view-cell">河流级别</span>
+															</div>
+															<div class="mui-col-sm-4 mui-col-xs-4">
+																<span class="mui-table-view-cell">上级河流</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<ul class="mui-table-view" id="selectRiver_ul">
+
+												<li id="whichRiver"></li>
+												<div id="loadTips1"
+													style="color: #888888;line-height:100px;width:100%; margin-top:5px;">
+													请先选择河流名称！</div>
+												<li id="districtInfo" style="background-color: #FFFFFF;	"></li>
+
+												<div id="viewMore" style="display: none;">
+													<img id="river_arrow_down" src="../../../img/commom/arrow.png"
+														style="width: 15px; height: 15px;">
+													<span id="viewMoreText" style="margin: 2px 0 0 5px;">查看更多</span>
+												</div>
+												<div id="streetDetail" style="display: none;"></div>
+											</ul>
+
+											<div id="bottomWhite" style="width: 100%;height: 20px;"></div>
+										</div>
+
+									</div>
+								</div>
+								<div id="selectItem2" class="mui-slider-item mui-control-content">
+									<div id="scroll2" class="mui-scroll-wrapper"
+										style="overflow-y: scroll;height: 100vh;background: #FFFFFF;padding-bottom:50px">
+										<div id="mui-table-view">
+											<div id="listNav">
+												<div id="search">
+													<div id="search_icon"><img src="../../../img/commom/search1@2x.png">
+													</div>
+													<div id="del_icon2"><img src="../../../img/commom/del.png"></div>
+													<input type="text" id="search_input2" value=""
+														placeholder="请输入所属街道/社区" />
+												</div>
+												<div id="openFactor">
+													<div class="view-title search-tip"
+														style="display: flex;align-items: center; height: 50px; line-height: 50px; ">
+														<img src="../../../img/commom/river.png"
+															style="width: 16px;height: 15px; margin-left: 20px;" />
+														<span id="riverLabel" style="margin-left:10px;">湖泊信息</span>
+													</div>
+												</div>
+
+												<div id="listTitle">
+													<div id="lakeTitle">
+														<div class="mui-row" style="text-align: left;">
+															<div id="lakeSelect" class="mui-col-sm-4 mui-col-xs-5">
+																<span id="lakeOption"
+																	class="mui-table-view-cell">湖泊（水库）名称</span>
+																<span
+																	style="font-size: 16px; font-weight: bold;color: #337BFC;"
+																	class="mui-icon mui-icon-arrowdown"></span>
+															</div>
+															<div class="mui-col-sm-4 mui-col-xs-4"></div>
+															<div class="mui-col-sm-4 mui-col-xs-4"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<ul class="mui-table-view" id="selectLake_ul">
+												<li id="whichLake"></li>
+
+												<div id="loadTips2"
+													style="color: #888888;line-height:100px;width:100%; margin-top:5px;">
+													请先选择湖泊（水库）名称！</div>
+
+												<li id="districtLakeInfo" style="background-color: #FFFFFF;"></li>
+
+												<div id="viewLakeMore" style="display: none;">
+													<img id="lake_arrow_down" src="../../../img/commom/arrow.png"
+														style="width: 15px; height: 15px;">
+													<span id="viewLakeMoreText" style="margin: 2px 0 0 5px;">查看更多</span>
+												</div>
+
+												<div id="streetLakeDetail" style="display: none;"></div>
+
+											</ul>
+											<div id="bottomWhite" style="width: 100%;height: 20px;"></div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+	</body>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/maintain.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script src="../../../js/infoQuery/leaderList.js"></script>
+
+	<script>
+		mui.init({
+			swipeBack: false
+		});
+		// var vConsole = new VConsole();
+		mui.back = function() {
+			var curr = plus.webview.currentWebview();
+			var wvs = plus.webview.all();
+			for (var i = 0, len = wvs.length - 1; i < len; i++) {
+				let theurl = wvs[i].getURL() + '';
+				if (!(theurl.search('login.html') != -1 ||
+						theurl.search('www/main.html') != -1 ||
+						theurl.search('www/index.html') != -1 ||
+						theurl.search('/searchInfo/index.html') != -1)) {
+					wvs[i].close('none');
+				}
+			}
+			curr.close('slide-out-right');
+		}
+
+		var riverData = [];
+		var lakeData = [];
+		var isOpen = false;
+		var isLakeOpen = false;
+		var isShow = true;
+		var riverPageNo = '1';
+		var riverPageSize = '100';
+		var lakePageNo = '1';
+		var lakePageSize = '100';
+		var userPicker = new mui.PopPicker();
+		var searchRiver = [];
+		var searchLake = [];
+		var riverList = [];
+		var lakeList = [];
+		var riverResultJSON = [];
+		var lakeResultJSON = [];
+
+		var mask = mui.createMask();
+
+		//初始化单页view	
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var pickerpxtop = null;
+
+		var extras = {
+			openNum: 0
+		}
+
+		var input1 = document.getElementById("search_input1");
+		var input2 = document.getElementById("search_input2");
+
+		mui.plusReady(function() {
+
+			$("#del_icon1").hide();
+			$("#del_icon2").hide();
+			initSelected();
+			// 初始化数据列表（河流数据）
+			// getDirectories('river',riverPageNo,riverPageSize);
+			//禁止选项卡自带滑动
+			mui('.mui-slider').slider().stopped = true;
+			var self = plus.webview.currentWebview();
+			extras.openNum = self.openNum + 1; //初始化打开页面数量
+
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/bgTop.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							if (isShow) {
+								isShow = false;
+								$("#home-item").show();
+								mask.show()
+							} else {
+								isShow = true;
+								$('#home-item').hide();
+								mask.close();
+							}
+						}
+					}],
+				}
+			});
+
+			//监听区域滑动
+			document.getElementById('selectItem1').addEventListener("swipeleft", function() {
+				console.log("点击了左边")
+				input1.blur();
+				$("#del_icon1").hide();
+				$("#del_icon2").hide();
+				$('#item1').removeClass("mui-active")
+				$('#item2').addClass("mui-active")
+				// getDirectories('lake',lakePageNo,lakePageSize);
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(1);
+			});
+
+			document.getElementById('selectItem2').addEventListener("swiperight", function() {
+				input2.blur();
+				$('#item1').addClass("mui-active")
+				$('#item2').removeClass("mui-active")
+				// getDirectories('river',riverPageNo,riverPageSize);
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(0);
+			});
+		});
+
+		// methods
+		var initDestoryData = function(data, callback) {
+			for (let key in data) {
+				if (data[key] == '' || data[key] == null) {
+					data[key] = '暂无'
+				}
+			}
+			callback(data);
+		}
+
+		function getRiver(riverName) {
+			getRiverDirectories(riverName, riverPageNo, riverPageNo, function(data) {
+				riverData = data.result.records;
+				let str0 = '';
+				let str1 = '';
+				let str2 = '';
+				if (riverData != null && riverData.length != 0) {
+					let dataLength = riverData[0].childLevel.length
+					initDestoryData(riverData[0], function(Data) {
+						str0 =
+							`<div class="mui-row" style="text-align: left;">
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${riverName}</span>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${Data.riverLevelText}</span>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${Data.superRiver}</span>
+								</div>
+							</div>`;
+						str1 =
+							`<div id="highest" class="mui-row" style="font-weight: bold;border-top: 5px solid #F4F4F4;">
+									<div class="mui-col-sm-6 mui-col-xs-6" style="padding: 0 20px;text-align: left;">
+										<span class="mui-table-view-cell">河长职务</span>
+									</div>
+									<div class="mui-col-sm-6 mui-col-xs-6" style="padding: 0 20px;text-align: right;">
+										<span class="mui-table-view-cell">${Data.personDuty}</span>
+									</div>
+								</div>
+								
+								<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+									<div class="mui-row" style="">
+										<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">河长级别：${Data.levelDicText}</div>
+											<div style="padding: 0; height: 30px; line-height: 30px; white-space: nowrap;">河长电话：${Data.personPhone}</div>
+										</div>
+										<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">河长姓名：${Data.personName}</div>
+										</div>
+									</div>
+								</div>`;
+					})
+
+
+					for (let i = 0; i < dataLength; i++) {
+						initDestoryData(riverData[0].childLevel[i], function(Data) {
+							str2 +=
+								`<li id="streetInfo" style="background-color: #FFFFFF;	border-top: 5px solid #F4F4F4;">
+										<div id="leader" class="mui-row" style="font-weight: bold;">
+											<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;padding: 0 20px;">
+												<span class="mui-table-view-cell">河长职务</span>
+											</div>
+											<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: right;padding: 0 20px;">
+												<span class="mui-table-view-cell">${Data.personDuty}</span>
+											</div>
+										</div>
+										
+										<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+											<div class="mui-row" style="">
+												<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+													<div style="padding: 0; height: 30px; line-height: 30px;">所属街道：${Data.streetName}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px;">河长级别：${Data.levelDicText}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px; white-space: nowrap;">河长电话：${Data.personPhone}</div>
+												</div>
+												<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+													<div style="padding: 0; height: 30px; line-height: 30px;">所属社区：${Data.communityName}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px;">河长姓名：${Data.personName}</div>
+												</div>
+											</div>
+										</div>
+									</li>`
+						})
+
+					}
+					$('#whichRiver').html(str0);
+					$('#districtInfo').html(str1);
+					$('#streetDetail').html(str2);
+					$("#viewMore").show();
+					$("#riverOption").css("color", "#337BFC")
+					$('#streetDetail').hide();
+					$('#viewMoreText').text("查看更多")
+					$('#river_arrow_down').css("transform", "rotate(0)")
+				} else {
+					$('#loadTips1').text("暂无数据！");
+					$('#loadTips1').show();
+
+					str0 =
+						`<div class="mui-row" style="text-align: left;">
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${riverName}</span>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${Data.riverLevelText}</span>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${Data.superRiver}</span>
+							</div>
+						</div>`;
+					$('#whichRiver').html(str0);
+					$('#districtInfo').html(str1);
+					$('#streetDetail').html(str2);
+					$("#viewMore").hide();
+				}
+
+			})
+
+
+		}
+
+		function getLake(lakeName) {
+			getLakeDirectories(lakeName, lakePageNo, lakePageSize, function(data) {
+				lakeData = data.result.records;
+				let str0 = '';
+				let str1 = '';
+				let str2 = '';
+				if (lakeData.length != 0) {
+					let dataLength = lakeData[0].childLevel.length;
+					initDestoryData(lakeData[0], function(Data) {
+
+						str0 =
+							`<div class="mui-row" style="text-align: left;">
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${lakeName}</span>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4"></div>
+								<div class="mui-col-sm-4 mui-col-xs-4"></div>
+							</div>`;
+						str1 =
+							`<div id="leader" class="mui-row" style="font-weight: bold;	border-top: 5px solid #F4F4F4;">
+									<div class="mui-col-sm-4 mui-col-xs-4" style="text-align: left;padding-left: 20px;">
+										<span class="mui-table-view-cell">湖长职务</span>
+									</div>
+									<div class="mui-col-sm-8 mui-col-xs-8" style="text-align: right;padding-right: 20px;">
+										<span class="mui-table-view-cell">${Data.personDuty}</span>
+									</div>
+								</div>
+								
+								<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+									<div class="mui-row">
+										<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">湖长级别：${Data.levelDicText}</div>
+											<div style="padding: 0; height: 30px; line-height: 30px; white-space: nowrap;">湖长电话：${Data.personPhone}</div>
+										</div>
+										<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">湖长姓名：${Data.personName}</div>
+										</div>
+									</div>
+								</div>`;
+					})
+					for (let i = 0; i < dataLength; i++) {
+						initDestoryData(lakeData[0].childLevel[i], function(Data) {
+							str2 += `<li id="streetInfo" style="background-color: #FFFFFF;	border-top: 5px solid #F4F4F4;">
+										<div id="leader" class="mui-row" style="font-weight: bold;">
+											<div class="mui-col-sm-4 mui-col-xs-4" style="text-align: left; padding-left: 20px;">
+												<span class="mui-table-view-cell">湖长职务</span>
+											</div>
+											<div class="mui-col-sm-8 mui-col-xs-8" style="text-align: right;padding-right: 20px;">
+												<span class="mui-table-view-cell">${Data.personDuty}</span>
+											</div>
+										</div>
+										
+										<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+											<div class="mui-row" style="">
+												<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+													<div style="padding: 0; height: 30px; line-height: 30px;">所属街道：${Data.streetName}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px;">湖长级别：${Data.levelDicText}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px; white-space: nowrap;">湖长电话：${Data.personPhone}</div>
+												</div>
+												<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+													<div style="padding: 0; height: 30px; line-height: 30px;">所属社区：${Data.communityName}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px;">湖长姓名：${Data.personName}</div>
+												</div>
+											</div>
+										</div>
+									</li>`
+						})
+
+					}
+					$('#whichLake').html(str0)
+					$('#districtLakeInfo').html(str1);
+					$('#streetLakeDetail').html(str2)
+					$("#viewLakeMore").show();
+					$("#lakeOption").css("color", "#337BFC")
+					$('#streetLakeDetail').hide();
+					$('#viewLakeMoreText').text("查看更多")
+					$('#lake_arrow_down').css("transform", "rotate(0)")
+				} else {
+					console.log(lakeName)
+					$('#loadTips2').text("暂无数据！");
+					$('#loadTips2').show();
+					str0 =
+						`<div class="mui-row" style="text-align: left;">
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${lakeName}</span>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4"></div>
+							<div class="mui-col-sm-4 mui-col-xs-4"></div>
+					</div>`;
+					$('#whichLake').html(str0)
+					$('#districtLakeInfo').html(str1);
+					$('#streetLakeDetail').html(str2)
+					$("#viewLakeMore").hide();
+				}
+
+			})
+		}
+
+		var initRiver = function() {
+			let searchLength = searchRiver.length;
+			if (searchLength != 0) {
+				let str = '';
+				for (let i = 0; i < searchLength; i++) {
+					initDestoryData(searchRiver[i], function(Data) {
+						str += `<li id="streetInfo" style="background-color: #FFFFFF;border-top: 5px solid #F4F4F4;">
+									<div id="leader" class="mui-row" style="font-weight: bold;">
+										<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;padding: 0 20px;">
+											<span class="mui-table-view-cell">河长职务</span>
+										</div>
+										<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: right;padding: 0 20px;">
+											<span class="mui-table-view-cell">${Data.personDuty}</span>
+										</div>
+									</div>
+									
+									<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+										<div class="mui-row" style="">
+											<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+												<div style="padding: 0; height: 30px; line-height: 30px;">所属街道：${Data.streetName}</div>
+												<div style="padding: 0; height: 30px; line-height: 30px;">河长级别：${Data.levelDicText}</div>
+												<div style="padding: 0; height: 30px; line-height: 30px;">河长电话：${Data.personPhone}</div>
+											</div>
+											<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+												<div style="padding: 0; height: 30px; line-height: 30px;">所属社区：${Data.communityName}</div>
+												<div style="padding: 0; height: 30px; line-height: 30px;">河长姓名：${Data.personName}</div>
+											</div>
+										</div>
+									</div>
+								</li>`
+					})
+
+				}
+				$('#loadTips1').hide();
+				$('#districtInfo').html(str);
+
+			} else {
+				$('#loadTips1').show();
+				$('#loadTips1').text("暂无数据！");
+				$('#districtInfo').empty();
+				$("#viewMore").hide();
+				$("#whichRiver").hide();
+				$("#riverOption").css("color", "#888888")
+			}
+		}
+
+		var initSelected = function() {
+			getRiverSelected(function(data) {
+				riverList = data.result.records;
+				for (let i = 0; i < riverList.length; i++) {
+					riverResultJSON[i] = {
+						text: riverList[i].riverName,
+						value: riverList[i].riverName
+					}
+				}
+			})
+
+			getLakeSelected(function(data) {
+				lakeList = data.result;
+				for (let i = 0; i < lakeList.length; i++) {
+					lakeResultJSON[i] = {
+						text: lakeList[i].name,
+						value: lakeList[i].name
+					}
+				}
+			})
+		}
+
+		var initLake = function() {
+			let searchLength = searchLake.length;
+			if (searchLength != 0) {
+				let str = '';
+				for (let i = 0; i < searchLength; i++) {
+					initDestoryData(searchLake[i], function(Data) {
+						str += `<li id="streetInfo" style="background-color: #FFFFFF; border-top: 5px solid #F4F4F4;">
+								<div id="leader" class="mui-row" style="font-weight: bold;">
+									<div class="mui-col-sm-4 mui-col-xs-4" style="text-align: left; padding-left: 20px;">
+										<span class="mui-table-view-cell">湖长职务</span>
+									</div>
+									<div class="mui-col-sm-8 mui-col-xs-8" style="text-align: right;padding-right: 20px;">
+										<span class="mui-table-view-cell">${Data.personDuty}</span>
+									</div>
+								</div>
+								
+								<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+									<div class="mui-row" style="">
+										<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">所属街道：${Data.streetName}</div>
+											<div style="padding: 0; height: 30px; line-height: 30px;">湖长级别：${Data.levelDicText}</div>
+											<div style="padding: 0; height: 30px; line-height: 30px;">湖长电话：${Data.personPhone}</div>
+										</div>
+										<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+											<div style="padding: 0; height: 30px; line-hegsht: 30px;">所属社区：${Data.communityName}</div>
+											<div style="padding: 0; height: 30px; line-height: 30px;">湖长姓名：${Data.personName}</div>
+										</div>
+									</div>
+								</div>
+							</li>`
+					})
+
+				}
+				$('#loadTips2').hide();
+				$('#districtLakeInfo').html(str);
+			} else {
+				$('#loadTips2').show();
+				$('#loadTips2').text("暂无数据！");
+				$('#districtLakeInfo').empty();
+				$("#viewLakeMore").hide();
+				$("#whichLake").hide();
+				$("#lakeOption").css("color", "#888888")
+			}
+		}
+
+
+		// JQ
+		$('#search_input1').change(function() {
+			if ($('#search_input1').val() != '') {
+				$("#del_icon1").show();
+				fuzzySearch(riverPageNo, riverPageSize, $('#search_input1').val(), 1, function(data) {
+					searchRiver = data.result.records;
+					initRiver();
+					$("#whichRiver").hide();
+					$("#streetDetail").hide();
+					$("#viewMore").hide();
+					$("#riverOption").css("color", "#888888")
+				})
+			} else {
+				app.toast("检索内容为空！")
+				$('#del_icon1').hide();
+			}
+		})
+
+		$('#search_input2').change(function() {
+			if ($('#search_input2').val() != '') {
+				$("#del_icon2").show();
+				fuzzySearch(lakePageNo, lakePageSize, $('#search_input2').val(), 2, function(data) {
+					searchLake = data.result.records;
+					initLake();
+					$("#whichLake").hide();
+					$("#streetLakeDetail").hide();
+					$("#viewLakeMore").hide();
+					$("#lakeOption").css("color", "#888888")
+				})
+			} else {
+				app.toast("检索内容为空！")
+				$('#del_icon2').hide();
+			}
+		})
+
+		$('#search_input1').on('input', function() {
+			if ($("#search_input1").val() != '') {
+				$("#del_icon1").show();
+			} else {
+				$("#del_icon1").hide();
+			}
+		})
+
+		$('#search_input2').on('input', function() {
+			if ($("#search_input2").val() != '') {
+				$("#del_icon2").show();
+			} else {
+				$("#del_icon2").hide();
+			}
+		})
+
+		$("#del_icon1").on('tap', function() {
+			$('#search_input1').val('');
+			$("#del_icon1").hide();
+			app.toast("检索内容为空！")
+		})
+
+		$("#del_icon2").on('tap', function() {
+			$('#search_input2').val('');
+			$("#del_icon2").hide();
+			app.toast("检索内容为空！")
+		})
+
+		$('#item1').on('tap', function() {
+			// getDirectories('river',riverPageNo,riverPageSize);
+			input2.blur();
+		})
+
+		$('#item2').on('tap', function() {
+			// getDirectories('lake',lakePageNo,lakePageSize);
+			input1.blur();
+		})
+
+		$('#viewMore').on('tap', function() {
+			isOpen = !isOpen;
+			if (isOpen) {
+				$('#streetDetail').show();
+				$('#viewMoreText').text("收起")
+				$('#river_arrow_down').css("transform", "rotate(180deg)")
+			} else {
+				$('#streetDetail').hide();
+				$('#viewMoreText').text("查看更多")
+				$('#river_arrow_down').css("transform", "rotate(0)")
+			}
+		})
+
+		$('#viewLakeMore').on('tap', function() {
+			isLakeOpen = !isLakeOpen;
+			if (isLakeOpen) {
+				$('#streetLakeDetail').show();
+				$('#viewLakeMoreText').text("收起")
+				$('#lake_arrow_down').css("transform", "rotate(180deg)")
+			} else {
+				$('#streetLakeDetail').hide();
+				$('#viewLakeMoreText').text("查看更多")
+				$('#lake_arrow_down').css("transform", "rotate(0)")
+			}
+		})
+
+		$("#riverArchives").on('tap', function() {
+			app.openPage('../rivers/rivers_index.html', {
+				titleNView: {
+					titleText: '河湖档案',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#leaderList").on('tap', function() {
+			isShow = true;
+			$('#home-item').hide();
+			mask.close();
+		})
+
+		$("#emergency").on('tap', function() {
+			app.openPage('../emergency/emergency_map.html', {
+				titleNView: {
+					titleText: '应急资源',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#paishui").on('tap', function() {
+			app.openPage('../paishuihu/paishuihu_index.html', {
+				titleNView: {
+					titleText: '排水户',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$("#hybrid").on('tap', function() {
+			app.openPage('../mixed/mixed_index2.html', {
+				titleNView: {
+					titleText: '混接点',
+					autoBackButton: true
+				}
+			}, extras);
+		})
+
+		$('#riverSelect').on('tap', function() {
+
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				userPicker.setData(riverResultJSON);
+				userPicker.show(function(items) {
+					if (items[0].value !== null) {
+						getRiver(items[0].value);
+						$('#loadTips1').hide();
+						$('#whichRiver').show();
+					}
+				})
+			}
+
+
+		})
+
+		$('#lakeSelect').on('tap', function() {
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			} else {
+				userPicker.setData(lakeResultJSON);
+				userPicker.show(function(items) {
+					if (items[0].value !== null) {
+						console.log(items[0].value)
+						getLake(items[0].value);
+						$('#loadTips2').hide();
+						$('#whichLake').show();
+					}
+				})
+			}
+		})
+
+		//关闭遮罩层
+		$(document).on("click", ".mui-backdrop", function() {
+			isShow = true;
+			$('#home-item').hide();
+			mask.close();
+		})
+
+		window.addEventListener('backInspection', function(e) { //执行刷新
+			// location.reload();
+			// getDirectories('river',riverPageNo,riverPageSize);
+			mui('#scroll1').scroll().scrollTo(0, 0, 0);
+			mui('#contentList').scroll().scrollTo(0, 0, 0);
+		});
+
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
+			});
+		})(mui);
+		// $('.mui-scroll-wrapper').scroll( function(ev){
+		// 	var oEvent = ev || event;
+		// 	oEvent.stopImmediatePropagation();
+		// });
+	</script>
+
+</html>

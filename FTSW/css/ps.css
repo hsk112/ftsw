@@ -1,0 +1,390 @@
+.mui-popover {
+	height: 300px;
+}
+
+.img_item {
+	text-align: left;
+	width: 72px;
+	height: 100px;
+	float: left;
+	margin-right: 20px;
+}
+
+.img_item img {
+	width: 72px;
+	height: 72px;
+}
+
+.bottom-item-btn {
+	height: 100px;
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	background: #F4F4F4;;
+	bottom: 0px;
+	padding-top: 30px;
+	display: flex;
+}
+
+.bottom-item-btn .item {
+	width: 90%;
+	text-align: center;
+	padding: 0 14px;
+	display: inline-block;
+	border: 1px solid #0493F3;
+	border-radius: 10px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+}
+
+.ps ol li {
+	width: 25%;
+	float: left;
+	font-size: 14px;
+}
+
+.steps {
+	height: 60px;
+	line-height: 40px;
+	padding-top: 7px;
+}
+
+.step-line {
+	width: 28%;
+	height: 3px;
+	background: #EDEDED;
+	position: fixed;
+	margin-left: -14%;
+	margin-top: 5px;
+	z-index: -1;
+}
+
+
+.step-num {
+	width: 12px;
+	height: 12px;
+	border-radius: 10px;
+	background: #EDEDED;
+	margin: 0 auto;
+}
+
+.step-text {
+	color: #888888;
+	font-size: 14px;
+}
+
+.step-active .step-line {
+	background: #EDEDED;
+}
+
+.step-active .step-num {
+	background: #0493F3;
+	background-size: 55%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.step-active .step-text {
+	color: #888888;
+	font-size: 14px;
+}
+
+.step-current .step-text {
+	font-weight: bold;
+	color: #0493F3;
+	font-size: 16px;
+}
+
+.info-bar-content-item {
+	display: flex;
+	justify-content: space-between;
+	text-align: left;
+	font-size: 16px;
+	font-weight: 400;
+	margin: 0 0 0 20px;
+	padding-top: 10px;
+	border-bottom: 1px solid #EDEDED;
+}
+
+.info-bar-content-item .item-title {
+	text-align: left;
+	padding: 10px 0px 0px 0px;
+	color: #444444;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 20px;
+}
+
+.info-bar-content-item .item-title span {
+	color: #DB2828;
+	margin-right: 5px;
+}
+
+.info-bar-content-item .item-input {
+	display: inline-block;
+	width: 60%;
+	padding-right: 20px;
+}
+
+.info-bar-content-item .item-input input {
+	border: none;
+	padding: 0;
+	text-align: right;
+	font-size: 14px;
+	font-weight: 400;
+	color: #191515;
+	margin-bottom: 10px;
+	/* padding-right: 30px; */
+}
+
+.info-bar-content-item .item-input textarea{
+	border: none;
+	padding: 0;
+	text-align: right;
+	font-size: 14px;
+	font-weight: 400;
+	color: #191515;
+	margin-bottom: 10px;
+	padding-right: 30px;
+}
+
+.mui-input-row.mui-checkbox.mui-left{
+	position: relative;
+	float: left;
+	width: 50%;
+	text-align: left;
+	clear:none;
+	padding-bottom: 8px;
+}
+
+.mui-checkbox input[type=checkbox]:before{
+	font-size: 22px;
+}
+
+.mui-checkbox.mui-left input[type=checkbox]{
+	left: 0px;
+	top:9px
+}
+
+.mui-checkbox.mui-left label, .mui-radio.mui-left label {
+	padding-left: 28px;
+	font-size: 16px;
+	color: #000000;
+}
+
+::-webkit-input-placeholder {
+	font-size: 14px !important;
+	font-weight: 400;
+	color: red;
+	position: relative;
+	/* right: -30px; */
+}
+
+textarea::-webkit-input-placeholder{
+	color:#B1B1B1;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.marginRight{
+	margin-right: 11.5px !important;
+}
+.paddingLeft{
+	padding-left: 11.5px;
+}
+.clearIcon{
+	position: relative;
+	top: 10px;
+	line-height:16px;
+	width:16px;
+	height:16px;
+	font-size: 16px; 
+	color:#FFFFFF;
+	border-radius: 50%;
+	background:#999999;
+}
+
+.img_item {
+    text-align: left;
+    width: 72px;
+    height: 72px;
+    float: left;
+    margin-right: 20px;
+	margin-bottom: 10px;
+}
+
+.mui-input-row .mui-input-clear~.mui-icon-clear{
+	right: -10px;
+}
+
+.delPhoto{
+	position:relative;
+    top: -85px;
+    left: 65px;
+	font-size: 16px;
+	color: #888888;
+	background: #E7E7E7;
+	border-radius: 50%;
+}
+/*删除按钮*/
+.delDevice{
+	position: absolute;
+	top: 5px;
+	left: 95%;
+	font-size: 16px;
+	color: #888888;
+	background: #E7E7E7;
+	border-radius: 50%;
+}
+.delDevice2{
+	position: absolute;
+	top: 5px;
+	left: 95%;
+	font-size: 16px;
+	color: #888888;
+	background: #E7E7E7;
+	border-radius: 50%;
+}
+
+.item-label{
+	width: 120px;
+	line-height: 20px;
+	padding: 10px 0 20px 0 !important;
+}
+
+.card{
+	background: #FFFFFF;
+	border-radius: 14px;
+	margin:0px 20px 10px 20px;
+	padding: 0 20px 10px 20px;
+}
+.card-div{
+	position: relative;
+}
+.card-header{
+	display: flex;
+	justify-content: space-between;
+	padding:20px 0 10px 0;
+}
+
+.card-header-title{
+	font-size: 16px;
+	font-weight: 500;
+	color: #333333;
+	line-height: 14px;
+}
+.card-header-btn{
+	font-size: 14px;
+	font-weight: 500;
+	color: #0493F3;
+	line-height: 14px;
+}
+
+.card-body{
+	display: flex;
+	justify-content: space-between;
+	padding:20px 0 18px 0;
+	border-top: 1px solid #EDEDED ;
+	font-size: 14px;
+	font-weight: 400;
+	color: #444444;
+	line-height: 14px;
+}
+
+.card .card-body :first{
+	margin-top: 10px;
+}
+.card-body-content{
+	display: flex;
+	justify-content: space-between;
+}
+
+.card-body-content-num{
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #FFFFFF;
+	line-height: 20px;
+	background: #0493F3;
+	border: 1px solid #0493F3;
+	border-radius: 4px;
+}
+
+.card-body-content-name{
+	padding-top: 4px;
+}
+
+.card-body-info{
+	font-size: 14px;
+	font-weight: 400;
+	color: #444444;
+}
+
+.card-body-raw{
+	display: flex;
+	justify-content: space-between;
+	padding: 0 20px 10px 30px;
+}
+
+.card-icon{
+	font-size: 14px;
+	font-weight: 900;
+	color: #0493F3;
+	padding-top: 1px;
+}
+.card-icon-up{
+	 transform:rotate(180deg);
+}
+
+.moreText{
+	word-break: break-all;
+	overflow: hidden;      
+	text-overflow: ellipsis;  
+	text-align: right;
+	width: 50%;
+	white-space: nowrap;
+}
+/*滚动显示*/
+.moreText2{
+	word-break: break-all;
+	overflow: scroll;
+	/*text-overflow: ellipsis;*/
+	text-align: right;
+	width: 50%;
+	white-space: nowrap;
+}
+.searchResult{
+	background-color: #FFFFFF;
+	width: 90%;
+	position: absolute;
+	top:57px;
+	z-index: 999;
+	margin:0 20px;
+	text-align: left;
+	font-size: 14px;
+	font-weight: 400;
+	color: #888888;
+}
+
+.searchResult-item{
+	line-height: 30px;
+	padding: 0 20px;
+	border-bottom: 1px solid #DEDEDE;
+	word-break: break-all;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.searchResult-nodata{
+	line-height: 30px;
+	padding: 0 20px;
+	word-break: break-all;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center
+}

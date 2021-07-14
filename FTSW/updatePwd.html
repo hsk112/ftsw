@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>修改密码</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			.mui-input-group label {
+				width: 30%;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 70%;
+			}
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+				margin-top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">demo</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="mui-input-group">
+							<div class="mui-input-row">
+								<label>旧密码</label>
+								<input id='oldpassword' type="password" value="" class="mui-input-clear mui-input" placeholder="请输入旧登录密码">
+							</div>
+
+							<div class="mui-input-row">
+								<label>新密码</label>
+								<input id='password' type="password" value=""class="mui-input-clear mui-input" placeholder="请输入新登录密码">
+							</div>
+
+							<div class="mui-input-row">
+								<label>确认密码</label>
+								<input id='checkPassword' type="password" value=""class="mui-input-clear mui-input" placeholder="请再次输入密码">
+							</div>
+						</div>
+						<div class="mui-content-padded">
+							<a id='sendButton' class="mui-btn mui-btn-block mui-btn-primary">提交</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.view.js"></script>
+	<script src="js/mui.locker.js"></script>
+
+	<script src="js/app.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/helper.js"></script>
+	<script src="js/s4.js"></script>
+	<script src="js/smutils.js"></script>
+	<script src="js/byte&string.js"></script>
+	<script src="js/ajaxhook.min.js"></script>
+	<script>
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.ready(function() {
+
+		});
+
+		mui.plusReady(function() {})
+
+		$("#sendButton").on('tap', function() {
+			var oldpassword = $("#oldpassword");
+			var password = $("#password");
+			var checkPassword = $("#checkPassword");
+
+			var accInfo = {}
+			accInfo.oldpassword = oldpassword.val();
+			accInfo.password = password.val();
+			accInfo.checkPassword = checkPassword.val();
+			
+			app.updatePassword(accInfo, function(data) {
+				app.toast("操作成功");
+				setTimeout(function() {
+					app.setState({});
+					plus.runtime.restart();
+				}, 2000);
+			});
+
+		});
+	</script>
+
+</html>

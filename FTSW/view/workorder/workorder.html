@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>工单列表</title>
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+		<link href="../../css/common.css"  rel="stylesheet" />
+
+		<style type="text/css">
+			.header {
+				color: #fff;
+				background: #354052;
+				position: relative;
+			}
+
+			.header a,
+			.header h1 {
+				color: #fff;
+			}
+
+			.add {
+				width: 17px;
+				height: 17px;
+				position: absolute;
+				margin-top: 8.5px;
+				margin-left: -8.5px;
+				right: 10px;
+				top: 50%;
+				bottom: 50%;
+				float: right;
+				/* margin: auto 0; */
+			}
+
+			.search {
+				width: 81%;
+				height: 40px;
+				margin: 2.5px auto;
+				margin-left: 10px;
+				position: relative;
+			}
+
+			.mui-navigate-right {
+				color: #0493f3;
+				z-index: 100000;
+			}
+
+			.mui-table-view-cell img {
+				width: 7px;
+				height: 12px;
+				float: right;
+			}
+
+			.table-bnt {
+				border-top: 1px solid #ededed;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				margin-top: 10px;
+				padding-top: 7px;
+				padding-bottom: 10px;
+			}
+
+			.table-bnt p {
+				color: #000;
+				width: 45%;
+				margin-bottom: 10px;
+			}
+
+			.table-bnt p span {
+				color: #888888;
+			}
+
+			.mui-table-view {
+				height: 125px;
+				margin-bottom: 5px;
+			}
+
+			.screen {
+				margin: 5px 18px;
+			}
+
+			.add_1 {
+				display: block;
+				width: 15px;
+				height: 15px;
+				float: right;
+				background: red;
+			}
+
+			.menu {
+				background: #fff;
+				width: 293px;
+				margin-top: 44px;
+			}
+
+			.input_wk {
+				border-bottom: 1px solid #EDEDED !important;
+				margin: 0 18px 0 20px;
+			}
+
+			.shai {
+				text-align: right;
+				height: 66px !important;
+				width: 60% !important;
+				padding: 0 !important;
+				float: right;
+				line-height: 67px;
+			}
+
+			.label {
+				padding: 0 !important;
+				line-height: 67px !important;
+				font-size: 16px;
+				width: 40% !important;
+			}
+
+			.input-right {
+				position: relative;
+				float: right;
+				text-align: right;
+				color: #888 !important;
+			}
+
+			.time {
+				position: absolute;
+				top: 25px;
+				right: 0;
+			}
+
+			.menu_bottom {
+				position: relative;
+				bottom: -120px;
+				display: flex;
+				justify-content: space-around;
+			}
+
+			.menu_bottom button {
+				width: 120px;
+				height: 40px;
+			}
+
+			.inp {
+				margin-top: 9px;
+				margin-bottom: 10px;
+			}
+
+			.zt span {
+				font-size: 12px;
+			}
+
+			.mui-table-view-cell p {
+				display: inline-block;
+			}
+
+			.zt {
+				/* position: absolute;
+				top: 10px;
+				left: 140px; */
+				display: inline-block;
+				font-size: 12px;
+				/* border: 1px solid #ff7800; */
+				/* color: #ff7800; */
+				width: 46px;
+				height: 16px;
+				text-align: center;
+				line-height: 16px;
+			}
+			.empty{
+			  line-height:200px;
+			  width:100%;
+			  text-align: center;
+			  font-size: 16px;
+			  color: #BBBBBB;
+			  /*background: #f4f4f4;*/
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!-- 侧滑导航根容器 -->
+		<div class="mui-off-canvas-wrap mui-draggable mui-slide-in ch">
+			<!-- 主页面容器 -->
+			<div class="mui-inner-wrap">
+				<!-- 菜单容器 -->
+				<aside class="mui-off-canvas-right menu">
+					<div class="mui-scroll-wrapper ">
+						<div class="mui-scroll " style="position: relative;">
+							<!-- 菜单具体展示内容 -->
+							<div class="mui-input-row input_wk">
+								<label class="label">设施类型</label>
+								<input id="objType" type="text" class="shai" placeholder="请选择设施类型" required="required">
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">问题等级</label>
+								<input type="text" class="shai problemLevel" placeholder="请选择设施类型">
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">工单来源</label>
+								<input type="text" class="shai formSource" placeholder="请选择设施类型">
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label">工单状态</label>
+								<input type="text" class="shai workorderState" placeholder="请选择工单状态">
+							</div>
+							<!-- <div class="mui-input-row input_wk">
+								<label class="label" style="width: 40% ;">最早完成日期</label>
+
+								<p class="input-right" style="line-height: 42px;">
+									<div id="result" class="ui-alert shai" style="color: #c4c4c4; margin-right: 20px;">请在选择时间 </div>
+									<img src="../../img/workorder/time.png" / id="demo1" data-options="{}" class="btn mui-btn mui-btn-block time" style="width: 16px; height: 16px;border: none; padding: 0;">
+								</p>
+
+							</div> -->
+							<div class="mui-input-row input_wk">
+								<label class="label" style="width: 40% ;">最早完成日期</label>
+								<input type="text" class="shai fastTime" placeholder="请选择日期" "/>
+								<!-- <img src=" ../../img/workorder/time.png" id="demo1" data-options="{}"
+									class="btn mui-btn mui-btn-block time"
+									style="width: 16px; height: 16px;border: none; padding: 0;"> -->
+
+							</div>
+							<div class="mui-input-row input_wk">
+								<label class="label" style="width: 40% ;">最晚完成日期</label>
+								<input type="text" class="shai lateTime" placeholder="请选择日期" "/>
+								<!-- <img src=" ../../img/workorder/time.png" id="demo1" data-options="{}"
+									class="btn mui-btn mui-btn-block time"
+									style="width: 16px; height: 16px;border: none; padding: 0;"> -->
+
+							</div>
+
+							<div class="menu_bottom">
+								<button id="reset" type="button"
+									class="mui-btn mui-btn-primary mui-btn-outlined">重置</button>
+								<button type="button" class="mui-btn mui-btn-primary cbSearch">搜索</button>
+							</div>
+						</div>
+					</div>
+				</aside>
+				<!-- 主页面标题 -->
+				<!-- <header class="mui-bar mui-bar-nav header">
+					<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+					<h1 class="mui-title">工单管理</h1>
+					<img src="../../img/workorder/add.png" alt="" class="add">
+				</header> -->
+				<!-- 主页面内容容器 -->
+				<div class="mui-content mui-scroll-wrapper">
+					<img src="../../img/workorder/screen.png"
+						style="float: right; margin: 10px 15px 0 0; width: 22px;height: 22px;"
+						class="mui-action-menu" />
+
+					<div class="search" style="background: #eee;">
+						<input type="search" class="inp" id="search_inp" placeholder="请输入工单名称" style="background: #fff;"
+							value="">
+					</div>
+					<div class="mui-scroll dome" style="margin-top: 10px;padding-bottom: 50px;">
+						<!-- <ul class="mui-table-view xiangqing">
+							<li class="mui-table-view-cell">安全整改审批
+								<div class="zt">
+									处理中
+								</div>
+								<img src="../../img/workorder/right.png" / style="margin: 0 10px;">
+								<div class="table-bnt">
+									<p><span>工单来源：</span>市民投诉</p>
+									<p><span>问题类型：</span>投诉处理</p>
+									<p><span>问题等级：</span>紧急</p>
+								</div>
+							</li>
+						</ul> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/workorder/gdtj.js"></script>
+	<script src="../../js/workorder/workorder.js"></script>
+	<script src="../../js/kpi/drainage.js"></script>
+	<script>
+		mui.init();
+		mui('.mui-scroll-wrapper').scroll({
+			scrollY: true, //是否竖向滚动
+			scrollX: false, //是否横向滚动
+			startX: 0, //初始化时滚动至x
+			startY: 0, //初始化时滚动至y
+			indicators: true, //是否显示滚动条
+			deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+			bounce: true //是否启用回弹
+		});
+		var xggdname = []
+		var url = config.urls.baseUrl + config.actions.getCorrelationForm
+		//搜索
+		$("#search_inp").on('input', function() {
+			console.log("123")
+			var params = {}
+			if ($("#search_inp").val() == '') {
+				params = {
+					pageSize: 10000,
+					order: "desc",
+					column: "createTime"
+				}
+			} else {
+				params = {
+					// pageNo:1,
+					// pageSize: 100000,
+					// order:"desc",
+					// column:"createTime",
+					formName: '*' + $("#search_inp").val() + '*'
+				}
+			}
+			getWork(url, params, function(data) {
+				if (data.result.records.length != 0) {
+					$('.dome').empty($('.xiangqing'))
+					console.log("=======")
+					console.log(JSON.stringify(data))
+					data = data.result.records
+					constData = data
+					// console.log(constData)
+					console.log(JSON.stringify(constData))
+					var gd = ''
+					var state = ["暂存", "流转中", "已完成", "废弃"]
+					var color = ["#0493F3", "#FF7800", "#29CC85", "#888888"]
+					for (var i = 0; i < data.length; i++) {
+						// console.log(data[i].state_dictText)
+						// console.log(data.length)
+						gd += `
+						 		<ul class="mui-table-view xiangqing" >
+						 						<li class="mui-table-view-cell">
+						 						<p id="problemTypeName">${data[i].formName}</p>
+						 							<div class="zt" style="color: ${color[data[i].state]}; border: 1px solid ${color[data[i].state]};">
+						 								<span>${state[data[i].state]}</span>
+						 							</div>
+						 							<img src="../../img/workorder/right.png" / style="margin: 0 10px;">
+						 							<div class="table-bnt">
+						 								<p><span>工单来源：</span>${data[i].formSource_dictText}</p>
+						 								<p><span>问题类型：</span>${data[i].problemType_dictText}</p>
+						 								<p><span>问题等级：</span>${data[i].problemLevel_dictText}</p>
+						 							</div>
+						 						</li>
+						 					</ul>
+						 	`
+						$(".mui-content").on('tap', '.xiangqing', function() {
+							// 
+							// var datas = $('#problemTypeName').text();
+							var i = $(this).index() //点击的下标
+							mui.openWindow({
+								url: './workorder_look.html',
+								extras: {
+									name: constData, //扩展参数
+									index: i //点击的位置
+								},
+							})
+
+						})
+					}
+
+					$('.dome').append(gd)
+				} else {
+					$('.dome').html("<div class='empty'>暂无数据</div>")
+				}
+
+			})
+		})
+
+
+
+
+
+
+
+		//
+		var constData = null
+		mui('.mui-scroll-wrapper').scroll()
+
+		console.log(url)
+		var params = {
+			//formSource:"0"
+			//pageNo: 1,
+			pageSize: 10000,
+			order: "desc",
+			column: "createTime",
+		}
+		// console.log(url)
+		getWork(url, params, function(data) {
+			console.log("=======")
+			// console.log(JSON.stringify(data))
+			data = data.result.records
+			constData = data
+			// console.log(constData)
+			console.log(JSON.stringify(constData))
+			//相关工单名字
+			for (var i = 0; i < constData.length; i++) {
+				xggdname.push(constData[i].formName)
+			}
+			var gd = ''
+			var state = ["暂存", "流转中", "已完成", "废弃"]
+			var color = ["#0493F3", "#FF7800", "#29CC85", "#888888"]
+			for (var i = 0; i < data.length; i++) {
+				// console.log(data[i].state_dictText)
+				// console.log(data.length)
+				gd += `
+						<ul class="mui-table-view xiangqing" >
+										<li class="mui-table-view-cell">
+										<p id="problemTypeName">${data[i].formName}</p>
+											<div class="zt" style="color: ${color[data[i].state]}; border: 1px solid ${color[data[i].state]};">
+												<span>${state[data[i].state]}</span>
+											</div>
+											<img src="../../img/workorder/right.png" / style="margin: 0 10px;">
+											<div class="table-bnt">
+												<p><span>工单来源：</span>${data[i].formSource_dictText}</p>
+												<p><span>问题类型：</span>${data[i].problemType_dictText}</p>
+												<p><span>问题等级：</span>${data[i].problemLevel_dictText}</p>
+											</div>
+										</li>
+									</ul>
+					`
+				$(".mui-content").on('tap', '.xiangqing', function() {
+					// 
+					// var datas = $('#problemTypeName').text();
+					let i = $(this).index() //点击的下标
+
+
+					//获取流程图
+					var url1 = "https://zhswtest.hdec.com/ecidi-cmp/flowablePm/process/diagram"
+					var params1 = {
+						processDefinitionKey: 'FormBaseNew',
+						id: constData[i].guid
+					}
+					getWork(url1, params1, function(data) {
+						// console.log(data)
+						// console.log("123")
+					})
+
+
+
+					//*******
+
+
+					mui.openWindow({
+						url: './workorder_look.html',
+						extras: {
+							name: constData, //扩展参数
+							index: i ,//点击的位置
+							guid: constData[i].guid
+						},
+					})
+
+				})
+			}
+			$('.dome').append(gd)
+		})
+
+		$('.add').on('tap', function() {
+			mui.openWindow({
+				url: './workorder_add.html'
+			})
+		})
+
+		$('.mui-action-menu').on('tap', function() {
+
+			mui('.mui-off-canvas-wrap').offCanvas('show');
+			(function($) {
+				$.init();
+				var result = $('#result')[0];
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						console.log('asd')
+						var _self = this;
+						if (_self.picker) {
+							_self.picker.show(function(rs) {
+								result.innerText = '选择结果: ' + rs.text;
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						} else {
+							var optionsJson = this.getAttribute('data-options') || '{}';
+							var options = JSON.parse(optionsJson);
+							var id = this.getAttribute('id');
+							/*
+							 * 首次显示时实例化组件
+							 * 示例为了简洁，将 options 放在了按钮的 dom 上
+							 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+							 */
+							var picker = new $.DtPicker(options);
+							picker.show(function(rs) {
+								/*
+								 * rs.value 拼合后的 value
+								 * rs.text 拼合后的 text
+								 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+								 * rs.m 月，用法同年
+								 * rs.d 日，用法同年
+								 * rs.h 时，用法同年
+								 * rs.i 分（minutes 的第二个字母），用法同年
+								 */
+								result.innerText = '选择结果: ' + rs.text;
+								/* 
+								 * 返回 false 可以阻止选择框的关闭
+								 * return false;
+								 */
+								/*
+								 * 释放组件资源，释放后将将不能再操作组件
+								 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+								 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+								 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+								 */
+								picker.dispose();
+							});
+						}
+
+					}, false);
+				});
+			})(mui);
+		})
+		mui.plusReady(function() {
+			// console.log("222:"+JSON.stringify(plus.webview.currentWebview()))
+			var curr = plus.webview.currentWebview();
+			curr.setStyle({
+				titleNView: {
+					buttons: [{
+						float: 'right',
+						width: '60',
+						fontSize: '25',
+						text: '＋',
+						onclick: function() {
+							console.log(xggdname)
+							let extras = {
+								type: "add",
+								gdnames: xggdname
+							}
+							app.openPage("workorder_add.html", {
+								// titleNView: {
+								// 	titleText: '新增排水户',
+								// 	autoBackButton: true,
+								// }
+							}, extras);
+						}
+					}]
+				}
+			})
+		})
+
+		//设施类型
+		$("#objType").on("tap", function() {
+			var picker = new mui.PopPicker();
+			picker.setData([{
+					value: '1',
+					text: '检查井'
+				},
+				{
+					value: '2',
+					text: '截流井'
+				},
+				{
+					value: '3',
+					text: '雨水口'
+				},
+				{
+					value: '4',
+					text: '排放口'
+				},
+				{
+					value: '5',
+					text: '泵站'
+				},
+				{
+					value: '6',
+					text: '化粪池'
+				},
+				{
+					value: '7',
+					text: '隔油池'
+				},
+				{
+					value: '8',
+					text: '沉淀池'
+				},
+				{
+					value: '9',
+					text: '管渠'
+				},
+				{
+					value: '10',
+					text: '断面'
+				},
+				{
+					value: '11',
+					text: '水闸'
+				},
+				{
+					value: '12',
+					text: '水库'
+				},
+				{
+					value: '13',
+					text: '湖泊'
+				},
+				{
+					value: '14',
+					text: '大坝'
+				}
+
+			]);
+			picker.show(function(selectItems) {
+				$("#objType").val(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		//问题等级
+		$(".problemLevel").on("tap", function() {
+			var picker = new mui.PopPicker();
+			picker.setData([{
+					value: '1',
+					text: '一般'
+				},
+				{
+					value: '2',
+					text: '紧急'
+				},
+			]);
+			picker.show(function(selectItems) {
+				$(".problemLevel").val(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		//工单来源
+		$(".formSource").on("tap", function() {
+			var picker = new mui.PopPicker();
+			picker.setData([{
+					value: '1',
+					text: '监测预警'
+				},
+				{
+					value: '2',
+					text: '市民投诉'
+				},
+				{
+					value: '3',
+					text: '排水巡检'
+				},
+				{
+					value: '4',
+					text: '事件'
+				},
+				{
+					value: '5',
+					text: '父工单派生'
+				},
+
+			]);
+			picker.show(function(selectItems) {
+				$(".formSource").val(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		//工单状态
+		$(".workorderState").on("tap", function() {
+			var picker = new mui.PopPicker();
+			picker.setData([{
+					value: '1',
+					text: '暂存'
+				},
+				{
+					value: '2',
+					text: '流转中'
+				},
+				{
+					value: '3',
+					text: '已完成'
+				},
+				{
+					value: '4',
+					text: '废弃'
+				},
+			]);
+			picker.show(function(selectItems) {
+				$(".workorderState").val(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		//时间
+		$('.fastTime').on('tap', function() {
+			var dtPicker = new mui.DtPicker({
+				type: 'date'
+			});
+			dtPicker.show(function(selectItems) {
+				var y = selectItems.y.text; //获取选择的年
+				var m = selectItems.m.text; //获取选择的月
+				var d = selectItems.d.text; //获取选择的日
+				var date = y + "-" + m + "-" + d;
+				$(".fastTime").val(date)
+			})
+		})
+		$('.lateTime').on('tap', function() {
+			var dtPicker = new mui.DtPicker({
+				type: 'date'
+			});
+			dtPicker.show(function(selectItems) {
+				var y = selectItems.y.text; //获取选择的年
+				var m = selectItems.m.text; //获取选择的月
+				var d = selectItems.d.text; //获取选择的日
+				var date = y + "-" + m + "-" + d;
+				$(".lateTime").val(date)
+			})
+		})
+		//重置
+		$('#reset').on("tap", function() {
+			$("#objType").val("") //设施类型
+			$(".problemLevel").val("") //问题等级
+			$(".formSource").val("") //工单来源
+			$(".workorderState").val("") //工单状态
+			$(".fastTime").val("") //最早完成日期
+			$(".lateTime").val("") //最晚完成时间
+		})
+
+
+		//侧边搜索
+		$(".cbSearch").on('tap', function() {
+			console.log("侧边搜索")
+			var params1 = {}
+			//问题等级
+			var problemL = ["一般", "紧急"]
+			if($(".problemLevel").val()){
+				var pnum = problemL.findIndex(item=>item==$(".problemLevel").val())
+			}else{
+				var pnum = " "
+			}
+			//设施类型
+			var facTypes = ["检查井", "截流井", "雨水口", "排放口", "泵站", "化粪池", "隔油池", "沉淀池", "管渠", "断面", "水闸", "水库", "湖泊",
+				"大坝"] //设施类型
+			if($("#objType").val()){
+				var snum = facTypes.findIndex(item => item == $("#objType").val())
+			}else{
+				var snum=""
+			}
+			//工单来源
+			var gdly=["监测预警","市民投诉","排水巡检","事件","父工单派生"]
+			if($(".formSource").val()){
+				var gnum=gdly.findIndex(item=>item==$(".formSource").val())
+			}else{
+				var gnum=" "
+			}
+			//工单状态
+			var states=["暂存","流转中","已完成","废弃"]
+			if($(".workorderState").val()){
+				var stateNum = states.findIndex(item=>item==$(".workorderState").val())
+			}else{
+				var stateNum = " "
+			}
+			//时间
+			if($(".fastTime").val()!="请选择日期"){
+				var minTime = $(".fastTime").val()
+			}else{
+				var minTime = " "
+			}
+			
+			if($(".lateTime").val()!="请选择日期"){
+				var maxTime = $(".lateTime").val()
+			}else{
+				var maxTime = " "
+			}
+			console.log(minTime)
+			params1 = {
+				pageNo: 1,
+				pageSize: 100000,
+				order: "desc",
+				column: "createTime",
+				problemLevel:pnum, //问题等级
+				formSource:gnum, //工单来源
+				objType:snum, //设施类型
+				state: stateNum, //工单状态
+				 minCreateTime: minTime,
+				 maxCreateTime: maxTime
+			}
+			getWork(url, params1, function(data) {
+				if (data.result.records.length != 0) {
+					$('.dome').empty($('.xiangqing'))
+					console.log("=======")
+					console.log(JSON.stringify(data))
+					data = data.result.records
+					constData = data
+					// console.log(constData)
+					console.log(JSON.stringify(constData))
+					var gd = ''
+					var state = ["暂存", "流转中", "已完成", "废弃"]
+					var color = ["#0493F3", "#FF7800", "#29CC85", "#888888"]
+					for (var i = 0; i < data.length; i++) {
+						// console.log(data[i].state_dictText)
+						// console.log(data.length)
+						gd += `
+						 		<ul class="mui-table-view xiangqing" >
+						 						<li class="mui-table-view-cell">
+						 						<p id="problemTypeName">${data[i].formName}</p>
+						 							<div class="zt" style="color: ${color[data[i].state]}; border: 1px solid ${color[data[i].state]};">
+						 								<span>${state[data[i].state]}</span>
+						 							</div>
+						 							<img src="../../img/workorder/right.png" / style="margin: 0 10px;">
+						 							<div class="table-bnt">
+						 								<p><span>工单来源：</span>${data[i].formSource_dictText}</p>
+						 								<p><span>问题类型：</span>${data[i].problemType_dictText}</p>
+						 								<p><span>问题等级：</span>${data[i].problemLevel_dictText}</p>
+						 							</div>
+						 						</li>
+						 					</ul>
+						 	`
+						$(".mui-content").on('tap', '.xiangqing', function() {
+							// 
+							// var datas = $('#problemTypeName').text();
+							var i = $(this).index() //点击的下标
+							mui.openWindow({
+								url: './workorder_look.html',
+								extras: {
+									name: constData, //扩展参数
+									index: i //点击的位置
+								},
+							})
+
+						})
+					}
+
+					$('.dome').append(gd)
+				} else {
+					$('.dome').html("<div class='empty'>暂无数据</div>")
+				}
+
+			})
+		})
+	</script>
+
+</html>

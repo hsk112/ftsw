@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-门牌定位</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link href="../../css/ps.css" rel="stylesheet" />
+		<style>
+			.mapboxgl-ctrl.mapboxgl-ctrl-group{
+				top: 200px;
+				left: 10px;
+				position: fixed;
+			}
+			.mui-scroll {
+				/* background: url(../img/temp_dt.png) no-repeat center; */
+				background-size: 100% 100%;
+				height: 100%;
+				width: 100%;
+			}
+			
+			.search-bar {
+			    background: none;
+				height: 80px;
+				line-height: 80px;
+			}
+			
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+				top: 12px;
+				width: 40px;
+				height: 40px;
+			}
+			
+			.search-item {
+			    background: #FFFFFF;
+			    height: 40px;
+			    border-radius: 15px;
+			    
+			}
+			
+			.search-input {
+			    height: 40px;
+			    line-height: 40px;
+			}
+			
+			.search-icon img {
+			    top: 30%;
+			}
+			
+			.add_btn{
+				position: fixed;
+				width: 70px;
+				bottom: 30%;
+				right: 0;
+				z-index: 100;
+				text-align: right;
+			}
+			
+			.add_btn img{
+				width: 70px;
+			}
+			
+			.bottom-item1 {
+				padding: 19px;
+				background: #FFFFFF;
+				position: fixed;
+				height: 192px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+				text-align: left;
+			}
+			
+			.bottom-item1-title {	
+				font-size:18px;
+				color:rgba(22,21,21,1);
+				font-weight: bold;
+			}
+			
+			.bottom-item1-info{
+				font-size:14px;
+				color:rgba(25,21,21,1);
+				line-height:21px;
+				height:21px;
+				padding: 18px 0px;
+			}
+			
+			.bottom-item1-btn {
+				height: 200px;
+				margin-top: 50px;
+			}
+			
+			.bottom-item1-btn .item{
+				width: 100%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+				
+			}
+			
+			.bottom-item1-btn .item div{
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+			
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+			
+			.triangle-down {
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				/*border-top: 10px solid #f02e2e;*/
+				margin-bottom: 10px;
+			}
+			
+			.mui_rank {
+				position: absolute;
+				top: 0px;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				pointer-events: none;
+				/* background: url(../img/commom/tingwei.png) no-repeat center ; */
+			}
+			.location_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				top: 350px;
+				left: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+			
+			.mapboxgl-ctrl-scale{
+				position: fixed;
+				top: 420px;
+			}
+			
+			.location_btn img{
+				width: 30px;
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">门牌查看</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;">
+							<div class="mui_rank">
+								<div class="triangle-down">
+								</div>
+							</div>
+							<div class="location_btn" id="location_btn">
+								<img src="../../img/commom/location.png" />
+							</div>
+							<div class="bottom-item1" style="display: none;">
+								<div class="bottom-item1-title">
+									门牌信息
+								</div>
+								<div id="address" class="bottom-item1-info">
+									<!-- 福田区/福田街道事处/福保社区工作站/绒花路/94号(富华里） -->
+								</div>
+								<div class="bottom-item1-btn">
+									<div class="item" id="comfirmSubmit">
+										<div style="background: #337BFC;color: #fff;">确定</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="search-bar">
+							<div class="search-item">
+								<div class="search-icon" id="searchIcon">
+									<img src="../../img/commom/search1@2x.png" />
+								</div>
+								<div class="search-input">
+									<div class="mui-input-row" style="text-align: left">
+										<input id="searchInput" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入地址">
+									</div>
+								</div>
+							</div>
+						</div>
+						<ul class="searchResult" id="searchResult">				
+
+						</ul>
+					</div>
+				</div>
+
+				<!--页面主内容区结束-->
+			</div>
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/position.js"></script>
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.ready(function() {});
+		mui.init({swipeBack:false});
+		var isClick = true;
+
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({serverUrl: config.urls.serverDomain,options:{minZoom:10},style:'color'});
+		const layerSelections =window['mobile-lib'].layerSelections;
+
+		//初始化地图(不显示地图)
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,style:'color'
+		});
+
+		mobileContainer.on('load', () => {
+		    console.log("map load")
+			mobileContainer.enableCenterAddress(true);
+			// mobileContainer.setQuery({ NAME: 'DEVICE_POINT_INFO',POINT_CODE:'040532'});//加载排水户
+
+			mobileContainer.setSelection([layerSelections.小区, layerSelections.建筑, layerSelections.热点]);
+			// getCurrentPosition();//获取当前定位
+        	var self = plus.webview.currentWebview();
+        	console.log("xq:"+self.xq);
+		    var xq ={
+		        NAME:'DEVICE_RE_AREA',
+				RE_NAME:self.xq
+			}
+            mobileContainer.fitToRegion(xq);
+		});
+
+		//选中排水户返回信息
+		/*mobileContainer.on('showInfo', data => {
+			clearGlobalItem();
+			mobileContainer.flyTo(data.feature);
+			if (data.feature.properties.EXP_NO){
+				getPshByExpNo(data.feature.properties.EXP_NO,function(data){
+					if (data.result.length==0){
+						app.toast("排水户异常");
+						$("#address").html("");
+						return;
+					}
+					if (data.result){
+						$("#address").html(data.result[0].address);
+						mobileContainer.enableCenterAddress(true);
+						mobileContainer.markAddress(point.lng, point.lat);
+						mobileContainer.flyTo([point.lng, point.lat]);
+					}
+				});
+			} else {
+				// 不是排水户
+				$("#address").html(data.feature.properties.address);
+				globalSetItem(GlobalKey.address,data.feature.properties.address);//选中地址
+					//console.log("2"+JSON.stringify(data.feature.properties))
+				globalSetItem(GlobalKey.point,JSON.stringify(data.feature.properties.lonlat));//选中地图点
+				globalSetItem(GlobalKey.isSelectPsh,"false");//是否设置排水户
+				//删除排水户
+				globalDelItem(GlobalKey.psh);
+			}
+			$(".bottom-item1").fadeIn();
+		});*/
+		
+		//重新定位
+		$("#location_btn").on("tap",function(){
+			getCurrentPosition();
+		});
+		var getCurrentPosition = function(){
+			if (mui.os.plus){
+				app.showLoader();//加载
+			}
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+				app.hideLoader();
+				//坐标修正 
+				var point = coordtransform.gcj02towgs84(position.coords.longitude,position.coords.latitude);
+				var Lon = point[0]; //获取经度
+				var Lat = point[1]; //获取纬度
+				setTimeout(function(){ 
+					
+				},5000);
+				mobileContainer.flyTo([Lon, Lat], {
+					zoom: 18
+				});
+				mobileContainer.markAddress(Lon,Lat);
+			}, function(e) {
+				mui.toast("获取定位失败，请查看设备是否开启定位");
+			})
+		}
+
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+		    console.log("click")
+			if(isClick){
+				$("#searchResult").hide()
+				if (data) {
+					// clearGlobalItem();
+					mobileContainer.enableCenterAddress(true);
+					mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+					mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+					$(".bottom-item1").fadeIn();
+				} else {
+					app.toast('当前选择不在可选范围内，请重新选择');
+				}				
+			}
+
+		});  
+		
+		//点击地图 显示地图信息
+		mobileContainer.on('showAddress', data => {
+            console.log("showAddress")
+			if (data) {
+				console.log(JSON.stringify(data))
+				mobileContainer.enableCenterAddress(false);
+				var county = data.addressComponent.county?(data.addressComponent.county+"/"):'';
+				var road = data.addressComponent.road?(data.addressComponent.road+"/"):'';
+				var poi = data.addressComponent.poi?data.addressComponent.poi:'';
+				var address = county+road+poi
+				console.log(address)
+				$("#address").html(address)
+				globalSetItem(GlobalKey.address, address);//保存选中的地址
+				let lon = data.location.lon;
+				let lat = data.location.lat;
+
+                // 流域分区: [{ NAME: l'DEVICE_ATT_BAS_BASE'
+                 //    , BAS_GRAD: 2 }],
+				// 社区: [{ NAME: DEVICE_AD_BASE
+				// , AD_GRAD: 5 }],
+                // 街道：[{ NAME: DEVICE_AD_BASE
+                 //    , AD_GRAD: 4 }]
+                mapData.getFeaturesByBuffer(
+                    [
+                        {
+                            NAME: 'DEVICE_ATT_BAS_BASE',
+                            BAS_GRAD: 2
+                        }],
+                    [lon, lat], 1e-4
+                ).then(res => {
+					console.log("附近信息：" + JSON.stringify(res));
+                    let point ={};
+					point.lon = lon;
+					point.lat = lat;
+					globalSetItem(GlobalKey.point,JSON.stringify(point));//选中地图点
+					console.log("point1:"+JSON.stringify(point))
+					globalSetItem(GlobalKey.basin,res.features[0].properties.BAS_NAME);
+					globalSetItem(GlobalKey.basinId,res.features[0].properties.GUID);
+					globalSetItem(GlobalKey.smid, res.features[0].properties.SMID);
+				});
+                mapData.getFeaturesByBuffer(
+                    [
+                        { NAME: 'DEVICE_RE_AREA' }
+					],
+                    [lon, lat], 1e-4
+                ).then(res => {
+                    // console.log("附近信息：" + JSON.stringify(res));
+            	});
+			}
+		});
+
+		mui.plusReady(function() {
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了				
+					$(".bottom-item1").hide()
+				}
+			}
+		})
+
+		//排水户列表
+		$("#comfirmSubmit").on("tap", function() {
+			var page = plus.webview.getWebviewById('addPaishuihu.html')
+			mui.fire(page, 'backShowInfo');
+			popToTarget("addPaishuihu.html");
+		});
+
+		//搜索框
+		// $("#searchInput").bind('input propertychange', function() {
+		// 	var inputdata = $("#searchInput").val();
+		// 	mobileContainer.showSearchResults(inputdata);
+		// })
+
+        //搜索框0407
+        // $("#searchInput").on('input', debounce((e) => {
+        //     var tx =  $("#searchInput").val()
+        //     console.log(tx)
+        // 	getPos(tx);
+        //
+        // }, 600))
+        //
+        // async function getPos(layer){
+			// console.log("getPos")
+        //     await mobileContainer.getSearchResults(
+        //         layer
+        //     ).then(res => {
+        //         console.log("res:"+JSON.stringify(res))
+			// 	if(res.features[0] != null){
+			// 		var po = res.features[0];
+			// 		var lon = po.geometry.coordinates[0];
+			// 		var lat = po.geometry.coordinates[1];
+			// 		mobileContainer.flyTo([lon, lat], {
+			// 			zoom: 12
+			// 		});//地图移动
+			// 		mobileContainer.markAddress(lon, lat);//蓝点移动
+			// 	}
+			// })
+        // }
+
+		$("#searchInput").keypress(function(even) {
+			if (even.which == 13) {
+				var inputdata = $("#searchInput").val() || '';
+				getPos(inputdata)
+				$("#searchInput").blur();
+			}
+		});
+		
+		async function getPos(layer){
+		    await mobileContainer.getSearchResults(
+		        layer
+		    ).then(res => {
+		        // console.log("res:"+JSON.stringify(res))
+				$("#searchResult").hide()
+				let html = '';
+				if(res.features.length>0){
+					let count = res.features.length>=5? 5: res.features.length;
+					for(let i = 0 ; i< count;i++){
+						let item = res.features[i];
+						var po = item.properties.lonlat.split(" ");
+						// console.log(JSON.stringify(item))
+						html +=`<li class="searchResult-item" lon=${po[0]} lat=${po[1]}>${item.properties.address}</li>`
+					}
+		
+				}else{
+					html = '<li class="searchResult-nodata">暂无数据</li>'
+				}	
+				$("#searchResult").html(html)
+				$("#searchResult").show()
+			})
+		}
+
+		$("body").delegate(".searchResult-item", "tap", function(e) {
+			e.stopPropagation()
+			isClick = false;
+			$("#searchResult").hide()
+			var lon = $(this).attr("lon");
+			var lat = $(this).attr("lat");
+			var address = $(this).text();
+			mobileContainer.flyTo([lon, lat], {
+				zoom: 18
+			}); //地图移动
+			mobileContainer.markAddress(lon, lat);//蓝点移动
+			mapData.getFeaturesByBuffer(
+				[
+					{
+						NAME: 'DEVICE_AD_BASE',
+						AD_GRAD: 4
+					},
+					{
+						NAME: 'DEVICE_AD_BASE',
+						AD_GRAD: 5
+					},
+				],
+				[lon, lat], 1e-4
+			).then(res => {
+			    console.log("地址信息:"+JSON.stringify(res));
+				// console.log("街道：" + JSON.stringify(res.features[0].properties.GUID));
+				// console.log("街道：" + JSON.stringify(res.features[0].properties.AD_NAME));
+				// console.log("社区：" + JSON.stringify(res.features[1].properties.GUID));
+				// console.log("社区：" + JSON.stringify(res.features[1].properties.AD_NAME));
+				var point = {
+					'lng':lon,
+					'lat':lat
+				}
+				globalSetItem(GlobalKey.point,JSON.stringify(point));//选中地图点
+				console.log("point2:"+JSON.stringify(point))
+				//街道
+				globalSetItem(GlobalKey.street,res.features[0].properties.GUID);
+				globalSetItem(GlobalKey.street_dictText,res.features[0].properties.AD_NAME);
+				//社区
+				globalSetItem(GlobalKey.commuId,res.features[0].properties.GUID);
+				globalSetItem(GlobalKey.commuId_dictText,res.features[1].properties.AD_NAME);
+
+				var street = res.features[0].properties.AD_NAME?(res.features[0].properties.AD_NAME+"/"):'';
+				var comm = res.features[1].properties.AD_NAME?(res.features[1].properties.AD_NAME+"/"):'';
+	
+				$("#address").html('福田区/'+street+comm+address)
+				
+				globalSetItem(GlobalKey.address,'福田区/'+street+comm+address);
+				
+				$(".bottom-item1").fadeIn();
+			});
+
+			//流域要单独拿出来
+            mapData.getFeaturesByBuffer(
+                [
+                    {
+                        NAME: 'DEVICE_ATT_BAS_BASE',
+                        BAS_GRAD: 2
+                    }
+                ],
+                [lon, lat], 1e-4
+            ).then(res => {
+				//流域
+				if(res.features.length != 0){
+					globalSetItem(GlobalKey.basin,res.features[0].properties.BAS_NAME);
+					globalSetItem(GlobalKey.basinId,res.features[0].properties.GUID);
+					// console.log(res.features[0].properties.BAS_NAME)
+				}else{
+					globalSetItem(GlobalKey.basin,"");
+					globalSetItem(GlobalKey.basinId,"");
+                	// console.log("res 为空")
+				}
+
+			});
+
+			setTimeout(function(){
+				isClick = true;
+			},1000);
+		})
+
+
+		// mobileContainer.on('searchResults', data => {
+		// 	if (!data.features || data.features.length < 1)  app.toast('在显示区域内搜索不到相关数据')
+		// });
+		
+		//只要是点击地图，就直接初始化排水户信息
+		// var initPsh = function(){
+		// 	var psh = globalGetItem(GlobalKey.psh);
+		// 	var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+		//
+		// 	if (psh && isSelectPsh == "true") {
+		// 		var pshItem = JSON.parse(psh);
+		//
+		// 		var point = {
+		// 			'lng':pshItem.longitude,
+		// 			'lat':pshItem.latitude
+		// 		}
+		// 		globalSetItem(GlobalKey.point,JSON.stringify(point));//选中地图点
+		//
+		// 		//街道
+		// 		globalSetItem(GlobalKey.street,pshItem.street);
+		// 		globalSetItem(GlobalKey.street_dictText, pshItem.street_dictText);
+		// 		//社区
+		// 		globalSetItem(GlobalKey.commuId, pshItem.commuId);
+		// 		globalSetItem(GlobalKey.commuId_dictText,pshItem.commuId_dictText);
+		// 		//街
+		// 		globalSetItem(GlobalKey.road,pshItem.road);
+		// 		globalSetItem(GlobalKey.road_dictText,pshItem.road_dictText);
+		// 		//门牌
+		// 		globalSetItem(GlobalKey.houseNo,pshItem.houseNo);
+		// 	}
+		// }
+	</script>
+</html>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=10,user-scalable=yes">
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/uploadimage.js"></script>
+		<script src="../../js/archives.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="web/viewer.js"></script>
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+		<style>
+			body {
+				margin: 0;
+			}
+
+			#showPdf {
+				height: 100%;
+			}
+
+			#showPdf #pdfContainer {
+				height: 100vh;
+			}
+
+			.qzxx {
+				position: fixed;
+				right: 30px;
+				bottom: 50px;
+				width: 40px;
+				height: 40px;
+				background: #337BFC;
+				border: 2px solid #FFFFFF;
+				box-shadow: 0px 3px 11px 0px rgba(9, 97, 255, 0.19);
+				border-radius: 50%;
+				font-size: 13px;
+				font-family: PingFang SC;
+				color: #FFF;
+				text-align: center;
+				line-height: 18px;
+				padding: 8px;
+				z-index: 2;
+			}
+
+			.gd {
+				bottom: 130px;
+				line-height: 38px;
+				background: #FFA04B;
+				position: fixed;
+				right: 30px;
+				width: 40px;
+				height: 40px;
+				border: 2px solid #FFFFFF;
+				box-shadow: 0px 3px 11px 0px rgba(9, 97, 255, 0.19);
+				border-radius: 50%;
+				font-size: 13px;
+				font-family: PingFang SC;
+				color: #FFF;
+				text-align: center;
+				padding: 8px;
+				z-index: 2;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="showPdf">
+			<iframe id="pdfContainer" src="" width="100%" frameborder="0"></iframe>
+		</div>
+		<div class="gd" id="gd">
+			<p style="margin-top: 2px;">
+				归档
+			</p>
+		</div>
+		<div class="qzxx">
+			<p style="margin-top: 2px;">
+				签章<br>
+				信息
+			</p>
+		</div>
+		<!-- <script src="../../js/vconsole.min.js"></script> -->
+		<script>
+			// var vConsole = new VConsole();
+			var self;
+			var isUpload = true;
+			var strAttachment = [{
+				fieldName: "archivedAttachment",
+				groupId: "",
+				fileTokens: "",
+				tableName: "device_area_arch_main"
+			}]
+			//页面初始化完成渲染
+			// var url = 'http://172.23.244.32/api/getPdf?mainNo='
+			mui.plusReady(function() {
+				self = plus.webview.currentWebview();
+				self.setStyle({
+					scalable: true
+				});
+
+				if (self.value.archivedAttachment) {
+					$(".gd").text("已归档")
+				}
+				// 	console.log(JSON.stringify(url+self.mainNo))
+
+				// findFilesByGroupId({
+				// 	groupId: 
+				// 	'053161cecb8362ae7d3b2fee47739567'
+				// }, function(data) {					
+				// 	if(data.success){											
+				// 		if(data.result.length> 0){								
+				// 			var url=config.urls.baseUrl + "sys/common/view/" + data.result[0].uploadFile.savePath;
+				// 			console.log(url)
+				// 			$("#pdfContainer").attr("src", "./web/viewer.html?file="+encodeURIComponent(data));								
+				// 		}
+				// 	}
+				// });
+
+				var data = "http://172.23.244.32/proc/pdfProc?guid=" + self.value.guid+"&archId="+self.archId+"&beginTime="+self.beginTime+"&endTime="+self.endTime;;
+				// data ="http://zhswtest.ecidi.com/ecidi-cmp/file/uploadFile/previewFileById?id="+self.archivedAttachment
+				console.log(data)
+				$("#pdfContainer").attr("src", "./web/viewer.html?file=" + encodeURIComponent(data));
+			});
+			// 	self = plus.webview.currentWebview();
+			// 	console.log(JSON.stringify(url+self.mainNo))
+			// 	$.ajax(url+self.mainNo, {
+			// 		data:{},
+			// 		dataType: 'json', //服务器返回json格式数据
+			// 		type: 'get', //HTTP请求类型
+			// 		headers: {
+			// 			"Content-Type": "application/x-www-form-urlencoded",
+			// 			"X-Access-Token":app.sessionId()
+			// 		},
+			// 		timeout: config.settings.requestTimeOut, //超时时间设置为10秒；	
+			// 		success: function(data) {
+			// 			console.log(data)
+			// 			console.log(JSON.stringify(data))
+			// 			data =" http://172.23.244.32/api/getPdf?mainNo=YL-2019-X-001"
+			// 			$("#pdfContainer").attr("src", "./web/viewer.html?file="+encodeURIComponent(data));
+
+			// 		},
+			// 		error: function(xhr, type, errorThrown) {
+			// 			console.log(JSON.stringify(xhr));
+			// 			app.hideLoader();
+			// 			return callback('网络异常,请稍后再试');.
+			// 		}
+			// 	});
+
+			// 	// $("#pdfContainer").attr("src", url);
+			// 	// plus.runtime.openFile( url, function(){},  function(){} );
+			// 	// $("#pdfContainer").attr("src", "./web/viewer.html?file="+window.HTMLMediaElement.srcObject(url));
+			// })
+			// window.URL.createObjectURL
+			// $(function () {
+			// 	$("#pdfContainer").attr("src", "./web/viewer.html?file="+url+".pdf#page=1");
+			// 	console.log('curl'+url)
+			// });
+			$(".qzxx").on('click', function(e) {
+				if (self.value.archivedAttachment) {
+					var extras = {
+						archId: self.archId,
+						communityId: self.value.guid, //动态获取文件url地址
+						dredgeRun: self.value.dredgeRun, //动态获取文件url地址
+						dredgePmc: self.value.dredgePmc, //动态获取文件url地址
+						checkRun: self.value.checkRun, //动态获取文件url地址
+						checkPmc: self.value.checkPmc, //动态获取文件url地址
+						dredgeSupervision: self.value.dredgeSupervision, //动态获取文件url地址
+						checkSupervision: self.value.checkSupervision, //动态获取文件url地址
+						fixRun: self.value.fixRun, //动态获取文件url地址
+						fixJianli: self.value.fixJianli, //动态获取文件url地址
+						fixSupervision: self.value.fixSupervision, //动态获取文件url地址
+						fixPmc: self.value.fixPmc, //动态获取文件url地址
+						priceRun: self.value.priceRun, //动态获取文件url地址
+						priceConsult: self.value.priceConsult, //动态获取文件url地址
+						signature: self.value.signature, //动态获取文件url地址					
+					}
+					console.log(JSON.stringify(extras))
+					app.openPage("./dadj.html", {
+						titleNView: {
+							titleText: '查看登记签章',
+							autoBackButton: true
+						}
+					}, extras);
+				} else app.toast("请先归档！")
+			});
+
+			$(".gd").on('click', function(e) {
+				if (self.value.archivedAttachment) {
+					var extras = {
+						groupId: self.value.archivedAttachment,
+					}
+					app.openPage("./viewPdf.html", {
+						titleNView: {
+							titleText: '查看文档',
+							autoBackButton: true
+						}
+					}, extras);
+				} else {
+					if (isUpload) {
+						let fileSuffix = 'doc、docx、pdf';
+						isUpload = false;
+						plusSelectFile(fileSuffix,function(data, path) {
+							if (data.success) {
+								console.log(JSON.stringify(data))
+								var fileType = data.result.uploadFile.fileType;
+
+								if (fileType == '.pdf' || fileType == '.doc' || fileType == '.docx') {
+									strAttachment[0].fileTokens = data.result.fileTokens;
+									var groupId = getGroupId();
+									var formData = {};
+									formData.isillegalDa = '';
+									formData.roadId = '';
+									formData.inputPhone = '';
+									formData.corpCode = '';
+									formData.prjCode = '';
+									formData.passType = '';
+									formData.drainNum = '';
+									formData.conId = self.value.conId;
+									formData.inputDepartmentFullname = '';
+									formData.stationId = self.value.stationId;
+									formData.isillegal = '';
+									formData.unitName = '';
+									formData.updateArea = '';
+									formData.stormSysId = self.value.stormSysId;
+									formData.inputDate = '';
+									formData.reType = self.value.reType;
+									formData.guid = self.value.guid;
+									formData.usedName = '';
+									formData.isback = '';
+									formData.streetId = self.value.streetId;
+									formData.smid = '';
+									formData.dredgCount = self.value.dredgCount;
+									formData.remark = '';
+									formData.unitPhone = '';
+									formData.delFlag = '';
+									formData.inputName = '';
+									formData.streetName = self.value.streetName;
+									formData.updateBy = '';
+									formData.reArea = '';
+									formData.rePass = '';
+									formData.stationName = self.value.stationName;
+									formData.elevation = '';
+									formData.reNo = '';
+									formData.reAddress = '';
+									formData.reName = self.value.reName;
+									formData.drainageBasin = '';
+									formData.smgeometry = '';
+									formData.culvertsBasin = '';
+									formData.bugCount = self.value.bugCount;
+									formData.checkCount = self.value.checkCount;
+									formData.updateTime = '';
+									formData.managerId = '';
+									formData.cityVillage = '';
+									formData.createBy = '';
+									formData.sewageSysId = self.value.sewageSysId;
+									formData.inputDepartment = '';
+									formData.inputFullname = '';
+									formData.createTime = '';
+									formData.reCode = '';
+
+									formData.archivedAttachment = groupId;
+									strAttachment[0].groupId = groupId;
+									formData.archId = self.archId;
+									formData.strAttachment = JSON.stringify(strAttachment);
+
+									console.log(JSON.stringify(formData))
+
+									addArchive(formData, function(data) {
+										app.toast(data.message);
+
+										// self.reload()
+										self.value.archivedAttachment = groupId
+										$(".gd").text("已归档")
+										var view = plus.webview.getWebviewById('view/defects/archives.html')
+										mui.fire(view,'reload1')
+									});
+
+								} else {
+									app.toast("仅允许上传word和pdf！");
+								}
+							} else {
+								app.toast(data.message);
+							}
+						})
+					}
+					setTimeout(function() {
+						isUpload = true
+					}, 1000)
+				}
+			});
+
+			//生成groupId
+			function getGroupId() {
+				return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+					var r = Math.random() * 16 | 0,
+						v = c == 'x' ? r : (r & 0x3 | 0x8);
+					return v.toString(16);
+				});
+			}
+		</script>
+		<!-- 		<script type="text/javascript">
+			console.log('getQueryVariable',getQueryVariable())
+
+			        // mui.plusReady(function(){        
+			        // 	plus.runtime.openFile( "http://134.175.255.143:10086/group1/default/20200831/23/45/3/801132020-08-31.docx" );
+			        // });
+			mui.init()
+			function getQueryVariable(variable)
+			{
+			       var query = window.location.search.substring(1);
+			       var vars = query.split("&");
+			       for (var i=0;i<vars.length;i++) {
+			               var pair = vars[i].split("=");
+			               if(pair[0] == variable){return pair[1];}
+			       }
+			       return(false);
+			}
+		</script> -->
+	</body>
+
+</html>

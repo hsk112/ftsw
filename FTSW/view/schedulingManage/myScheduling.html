@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>我的值班</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../css/common.css" rel="stylesheet"/>
+  <link href="../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../css/mui.poppicker.css" rel="stylesheet"/>
+
+  <style>
+    .dateStyle {
+      width: max-content;
+      background-color: #F4F4F4;
+      border-radius: 5px;
+      border: 1px solid #F4F4F4;
+      padding: 10px 20px;
+      font-size: 12px;
+      line-height: 16px;
+      color: #888888;
+    }
+
+    .itemNotSignInBtn {
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      border: 1px solid #0493F3;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .itemIsSignBtn {
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      border: 1px solid #F4F4F4;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .itemNotSignOutBtn {
+      background-color: #0493F3;
+      border-radius: 5px;
+      border: 1px solid #0493F3;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .mask-item-cell-first {
+      display: flex;
+      padding: 20px;
+      position: relative;
+    }
+
+    .mask-item-cell {
+      display: flex;
+      padding: 20px;
+      border-bottom: 1px solid #EDEDED;
+      position: relative;
+    }
+
+    .mask-item-cell-name {
+      width: 100px;
+      text-align: left;
+      color: #444444;
+      font-size: 16px;
+    }
+
+    .mask-item-cell-value {
+      flex: 1;
+      text-align: right;
+      color: #191515;
+      font-size: 14px;
+      border: none;
+    }
+
+    .mask-item-cell-record-value {
+      flex: 1;
+      text-align: start;
+      color: #191515;
+      font-size: 14px;
+      border: none;
+      min-height: 100px;
+    }
+
+    .tip {
+      color: #DB2828;
+      margin-right: 5px;
+    }
+
+    .mui-content-this {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+    }
+  </style>
+</head>
+<body style="margin: 0">
+
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-content-this">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div id="scroll-wrapper" class="" style="height: calc(100vh - 65px);">
+      <div class="mui-content-padded" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+        <div style="margin-top: 20px;padding-top: 10px;height: 38px;text-align: center;">
+          <div class="dateStyle" style="display: inline-block;margin-right: 15px">
+            <span id="beginDate">2021-02-11</span>
+            <img src="../../img/black_arrow_down@2x.png" style="width: 10px;"/>
+          </div>
+          <span>至</span>
+          <div class="dateStyle" style="display: inline-block;margin-left: 15px">
+            <span id="endDate">2021-02-11</span>
+            <img src="../../img/black_arrow_down@2x.png" style="width: 10px;"/>
+          </div>
+        </div>
+        <div style="background-color: #F4F4F4;height: 1px;margin-top: 20px"></div>
+        <div style="margin-top: 15px;display: flex;align-items: center">
+          <img src="../../img/icon_list@2x.png" style="width: 13px;height:15px;margin-left: 30px;">
+          <span style="color: black;font-family: PingFang-SC-Regular;font-size: medium;margin-left: 5px;">值班计划：</span>
+          <span id="schedulingCount" style="color: #0493F3;font-weight: bold;font-size: 15px"></span>
+        </div>
+        <div style="background-color: #F4F4F4;height: 5px;margin-top: 15px"></div>
+        <div id="schedulingList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="../../js/jquery.min.js"></script>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/schedulingManage/myScheduling.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script>
+    // var vConsole = new VConsole();
+    let mySchedulingParam = {
+        userId: app.userInfo().id,
+        planDate_begin: "",
+        planDate_end: "",
+        order: 'desc',
+        column:'planDate',
+        pageNo: 1,
+        pageSize: 2000,
+    }
+    let schedulingRecordParam = {
+        // strFormData: '',
+        awayTime: '',
+        corpCode: '',
+        createBy: '',
+        createTime: '',
+        delFlag: '0',
+        dutyDepartment: '',
+        dutyMan: '',
+        dutyManName: '',
+        dutyRecord: '',
+        dutyTime: '',
+        guid: '',
+        position: '',
+        prjCode: '',
+        recordId: '',
+
+    }
+    let strFormData = {
+        recordData: "",
+        responseLevel: "-1",
+        dutyDepartment: "",
+        dutyPrincipal: "",
+        dutyMan: "",
+        dutyPersonNum: "1",
+        dutySummary: "",
+        rainfall: "0",
+        filler: "",
+        contactInfo: "",
+        department: "",
+        fillTime: "",
+        dutyPrincipalName: "",
+        dutyRecordDetailList: [
+            {
+                dutyTime: "",
+                awayTime: "",
+                dutyDepartment: "",
+                dutyMan: "",
+                position: "",
+                dutyManName: "",
+                dutyRecord: ""
+            }
+        ],
+    }
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+
+    var planDatas = null;
+    mui.init({
+        swipeBack: false
+    });
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        curr.close('slide-out-right');
+    }
+    mui.plusReady(function () {
+        var self = plus.webview.currentWebview();
+        console.log("plusReady")
+        self.setStyle({
+            softinputMode: "adjustPan"
+        })
+        var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        window.onresize = function () {
+            var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+            if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+                plus.webview.currentWebview().setStyle({
+                    height: originalHeight + 65
+                });
+            }
+        }
+
+        // 点击关闭遮罩层
+        self.addEventListener("maskClick", closeMask, true);
+        //禁止选项卡自带滑动
+        // cBScroll.on('pullingUp', () => {
+        //     console.log("pullingUp-上拉加载更多" + allMissionDataLoad);
+        //     if (!allMissionDataLoad) {
+        //         upLoadMore();
+        //     }
+        //
+        // })
+        initDate();
+    });
+    var dlgBox = document.getElementById("scroll-wrapper"); // slider
+    var cBScroll = new BScroll(dlgBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        pullUpLoad: false
+    });
+
+    //关闭遮罩层
+    function closeMask() {
+        console.log('关闭遮罩层' + sharew.id);
+        //避免出现特殊情况，确保分享页面在初始化时关闭
+        if (!sharew) {
+            sharew = plus.webview.getWebviewById("goods/add_to_cart.html");
+            console.log(sharew.id);
+        }
+        if (sharew) {
+            sharew.hide('slide-out-bottom', 300);
+            //sharew = null;
+        }
+        var ws = plus.webview.currentWebview();
+        console.log('关闭遮罩层' + ws.id);
+        ws.setStyle({mask: "none"});
+    }
+
+    mask.clickClose = false;
+
+    function maskClose() {
+        mask.clickClose = true;
+        mask.close();
+    }
+
+    function maskShow() {
+        mask.clickClose = false;
+        mask.show();
+    }
+
+    function maskItemCellCancelBtnOCL() {
+        console.log("提交的取消按钮点击 0");
+        maskClose()
+    }
+
+    function maskItemCellSubmitBtnOCL(index, signOutTimeStr) {
+        // var index = $(this).attr("data-status");
+        console.log("提交按钮点击:" + index + "," + signOutTimeStr);
+        console.log("点击的list数据" + JSON.stringify(planDatas[index]));
+        var recordStr = $("#schedulingRecord").val();
+        if (recordStr == null || recordStr.length == 0) {
+            app.toast("请输入值班记录");
+            return;
+        }
+        // schedulingRecordParam.recordData = planDatas[index].signInTime;
+        schedulingRecordParam.dutyDepartment = planDatas[index].dutyDepartment;
+        schedulingRecordParam.dutyMan = planDatas[index].watchman;
+        // schedulingRecordParam.dutyMan = planDatas[index].watchmanName;
+        // schedulingRecordParam.filler = planDatas[index].watchmanName;
+        // schedulingRecordParam.contactInfo = planDatas[index].watchmanPhone;
+        // schedulingRecordParam.department = planDatas[index].dutyDepartment_dictText;
+        // schedulingRecordParam.fillTime = signOutTimeStr;
+        // schedulingRecordParam.dutyPrincipalName = planDatas[index].watchmanName;
+        schedulingRecordParam.dutyTime = planDatas[index].signInTime;
+        schedulingRecordParam.awayTime = signOutTimeStr;
+        // schedulingRecordParam.dutyDepartment = planDatas[index].signInTime;
+        schedulingRecordParam.dutyMan = planDatas[index].watchman;
+        schedulingRecordParam.dutyManName = planDatas[index].watchmanName;
+        schedulingRecordParam.dutyRecord = recordStr;
+        schedulingRecordParam.position = planDatas[index].position;
+        // var strFormDataStr = JSON.stringify(strFormData);
+        // schedulingRecordParam.strFormData = strFormDataStr;
+
+        console.log(JSON.stringify(schedulingRecordParam));
+        var item = planDatas[index];
+        item.signStatus = 1;
+        item.signOutTime = signOutTimeStr;
+        signOut(function (data) {
+            signOutSecond(item, function (data) {
+                console.log("第二步成功");
+                // 签退成功
+                addMySchedulingList(false);
+                maskClose();
+                app.openPage("commitSuc.html", {
+                    titleNView: {
+                        titleText: '我的值班',
+                        autoBackButton: true,
+                    }
+                })
+            })
+        })
+    }
+
+    $("#schedulingList").on('tap', '.itemNotSignInBtn', function () {
+        // 签到点击事件
+        var signInTime = new Date();
+        var index = $(this).attr("data-status");
+        var item = planDatas[index];
+        item.signStatus = 0;
+        var dateStr = signInTime.getFullYear() + "-" + (signInTime.getMonth() + 1) + "-" + signInTime.getDate() + " " + signInTime.getHours() + ":" + signInTime.getMinutes() + ":" + signInTime.getSeconds();
+        item.signInTime = dateStr;
+        // 走接口签到
+        signIn(item, function () {
+            app.toast("签到成功");
+            addMySchedulingList(false);
+        })
+    })
+    $('#schedulingList').on('tap', '.itemNotSignOutBtn', function () {
+        // 签退点击事件
+        var index = $(this).attr("data-status");
+        console.log("签退点击" + index)
+        maskShow();
+        addSignOutDialog(planDatas[index], index);
+    })
+
+    function signIn(signInParam, callback) {
+        schedulingSign(signInParam, function (data) {
+            if (data.success == true) {
+                callback(data.result)
+            } else {
+                mui.toast("签到失败")
+            }
+        })
+    }
+
+    function signOutSecond(signOutParam, callback) {
+        schedulingSign(signOutParam, function (data) {
+            if (data.success == true) {
+                callback(data.result)
+            } else {
+                mui.toast("签退失败")
+            }
+        })
+    }
+
+    function signOut(callback) {
+        addSchedulingRecord(schedulingRecordParam, function (data) {
+            if (data.success == true) {
+                console.log("第一步成功")
+                callback(data.result);
+            } else {
+                mui.toast("签退失败");
+            }
+        })
+    }
+
+    var initDate = function () {
+        var date = new Date();
+        var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var day2 = day+6
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if (day2 < 10) {
+                day = "0" + day;
+            }
+        var currentData = year + '-' + month + '-' + day;
+        var currentData2 = year + '-' + month + '-' + day2;
+        mySchedulingParam.planDate_begin = currentData;
+        mySchedulingParam.planDate_end = currentData2
+
+        $('#beginDate').text(currentData);
+        $('#endDate').text(currentData2);
+
+        $('#beginDate').on("tap", function () {
+            var that = $(this);
+            plusDateWithDate(function (data) {
+                var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+                that.text(now);
+
+                mySchedulingParam.planDate_begin = now;
+                addMySchedulingList(false);
+            });
+        })
+        $('#endDate').on("tap", function () {
+            var that = $(this);
+            plusDateWithDate(function (data) {
+                var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+                that.text(now);
+
+                mySchedulingParam.planDate_end = now;
+                addMySchedulingList(false);
+            });
+        })
+        addMySchedulingList(false);
+    }
+
+
+    function getMySchedulingData(callback) {
+        console.log("getMySchedulingParam:" + JSON.stringify(mySchedulingParam));
+        getMyScheduling(mySchedulingParam, function (data) {
+            if (data.success == true) {
+                callback(data.result)
+            } else {
+                mui.toast("查询失败")
+            }
+        })
+    }
+
+
+    var addMySchedulingList = function (append) {
+        console.log("schedulingParam:" + JSON.stringify(mySchedulingParam));
+        $('#schedulingList').empty();
+        getMySchedulingData(function (data) {
+            console.log(JSON.stringify(data));
+            showData(data, append);
+
+        })
+    }
+
+    function showData(data, append) {
+        if (append) {
+            planDatas.add(data.records);
+        } else {
+            planDatas = data.records;
+        }
+        $('#schedulingCount').text(planDatas.length);
+        var item = "";
+        for (let i = 0; i < planDatas.length; i++) {
+            var timeStamp = new Date(planDatas[i].planDate);
+            var week = "";
+            switch (timeStamp.getDay()) {
+                case 1:
+                    week = '周一';
+                    break;
+                case 2:
+                    week = '周二';
+                    break;
+                case 3:
+                    week = '周三';
+                    break;
+                case 4:
+                    week = '周四';
+                    break;
+                case 5:
+                    week = '周五';
+                    break;
+                case 6:
+                    week = '周六';
+                    break;
+                case 0:
+                    week = '周日';
+                    break;
+                default:
+                    week = '';
+            }
+            var dateStr = timeStamp.getFullYear() + "-" + (timeStamp.getMonth() + 1) + "-" + timeStamp.getDate() + "&nbsp&nbsp&nbsp&nbsp" + week;
+            if (planDatas[i].signStatus == 0) {
+                // 已签到
+                item += '<div style="padding: 1px 0;width: 100%;">' +
+                    '<div style="margin-left: 30px;margin-top: 20px;text-align: left">' +
+                    '<span style="font-size: small;color: #262626;">' + (i + 1) + '</span><span style="margin-left: 20px;font-weight: bold;font-size: small">' + dateStr + '</span>' +
+                    '<span class="itemNotSignOutBtn" data-status="' + i + '" style="color: #FFFFFF;padding: 4px 0px;font-size: 13px;float: right;margin-right: 18px;width: 70px;text-align: center">签退</span>' +
+                    '<span class="itemIsSignBtn" style="color: #29CC85;padding: 4px 0px;font-size: 13px;float: right;width: 70px;text-align: center;margin-right: 5px">已签到</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div style="background-color: #F4F4F4;height: 5px;margin-top: 20px"></div>';
+            } else if (planDatas[i].signStatus == 1) {
+                // 已签退
+                item += '<div style="padding: 1px 0;width: 100%;">' +
+                    '<div style="margin-left: 30px;margin-top: 20px;text-align: left">' +
+                    '<span style="font-size: small;color: #262626;">' + (i + 1) + '</span><span style="margin-left: 20px;font-weight: bold;font-size: small">' + dateStr + '</span>' +
+                    '<span class="itemIsSignBtn" style="color: #FF7800;padding: 4px 0px;font-size: 13px;float: right;width: 70px;text-align: center;margin-right: 18px;">已签退</span>' +
+                    '<span class="itemIsSignBtn" style="color: #29CC85;padding: 4px 0px;font-size: 13px;float: right;;width: 70px;text-align: center;margin-right: 5px">已签到</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div style="background-color: #F4F4F4;height: 5px;margin-top: 20px"></div>';
+            } else {
+                // 未签到
+                item += '<div style="padding: 1px 0;width: 100%;">' +
+                    '<div style="margin-left: 30px;margin-top: 20px;text-align: left">' +
+                    '<span style="font-size: small;color: #262626;">' + (i + 1) + '</span><span style="margin-left: 20px;font-weight: bold;font-size: small">' + dateStr + '</span>' +
+                    '<span class="itemNotSignInBtn" data-status="' + i + '" style="color: #0493F3;padding: 4px 0px;font-size: 13px;float: right;margin-right: 18px;width: 70px;text-align: center">签到</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div style="background-color: #F4F4F4;height: 5px;margin-top: 20px"></div>';
+            }
+        }
+        $('#schedulingList').html(item);
+
+    }
+
+    var addSignOutDialog = function (data, index) {
+        console.log("======================= var addSignOutDialog = function (data,index) start======================");
+        console.log("index:" + index)
+        console.log(JSON.stringify(data))
+        console.log("======================= var addSignOutDialog = function (data,index) end======================");
+        // 先清空
+        $(".mui-backdrop").empty();
+        var signOutTime = new Date();
+        var signOutTimeStr = signOutTime.getFullYear() + "-" + preZero((signOutTime.getMonth() + 1), 2) + "-" + preZero(signOutTime.getDate(), 2) + " " + preZero(signOutTime.getHours(), 2) + ":" + preZero(signOutTime.getMinutes(), 2) + ":" + preZero(signOutTime.getSeconds(), 2);
+        var html = '<div style="background-color:white;margin: 0% 5%;border-radius: 7px;padding-top: 1px">' +
+            '<div style="text-align: center;margin-top: 30px">' +
+            '<span style="color: #262626;font-weight: bold">值班记录</span>' +
+            '</div>' +
+
+            '<div id="scroll-wrapper" style="height: calc(100vh - 255px)>' +
+            '<div class="mui-table-view">' +
+            '<div class="mask-item-cell-first">' +
+            '<div class="mask-item-cell-name"><span class="tip">*</span>到岗时间</div>' +
+            '<input readonly class="mask-item-cell-value" style="color: #8C8C8C" value="' + data.signInTime + '"/>' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name"><span class="tip">*</span>离岗时间</div>' +
+            '<input readonly class="mask-item-cell-value" style="color: #8C8C8C"  value="' + signOutTimeStr + '"/>' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name"><span class="tip">*</span>所在科室</div>' +
+            '<input readonly class="mask-item-cell-value" style="color: #8C8C8C"  value="' + data.dutyDepartment_dictText + '"/>' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name"><span class="tip">*</span>值班人员</div>' +
+            '<input readonly class="mask-item-cell-value" style="color: #8C8C8C"  value="' + data.watchmanName + '"/>' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name"><span class="tip">*</span>岗位</div>' +
+            '<input readonly class="mask-item-cell-value" style="color: #8C8C8C"  value="' + data.position + '"/>' +
+            '</div>' +
+            '<div class="mask-item-cell">' +
+            '<div class="mask-item-cell-name"><span class="tip">*</span>值班记录</div>' +
+            '</div>' +
+            '<div style="display: flex;padding: 20px;position: relative;">' +
+            '<textarea id="schedulingRecord" class="mask-item-cell-record-value" placeholder="请输入值班记录（300字以内）" maxlength="300"></textarea>' +
+            '</div>' +
+            '<div  style="display: flex;position: relative;border-top: 1px solid #EDEDED;">' +
+            '<button onclick="maskItemCellCancelBtnOCL()" class="mask-item-cell-name" data-status="0" style="width: 50%;text-align: center;padding: 15px 0px;color: #262626;font-size: medium">' + '取消' + '</button>' +
+            '<button onclick="maskItemCellSubmitBtnOCL(' + index + ',\'' + signOutTimeStr + '\')" class="mask-item-cell-name" data-status="' + index + '" style="width: 50%;text-align: center;padding: 15px 0px;border-left:1px solid #EDEDED;color: #0493F3;font-size: medium">' + '提交' + '</button>' +
+            // '<div class="mask-item-cell-name" style="width: 50%;text-align: center;padding: 15px 0px"><span style="color: #262626;font-size: medium">取消</span></div>' +
+            // '<div class="mask-item-cell-name" style="width: 50%;text-align: center;padding: 15px 0px;border-left:1px solid #EDEDED "><span style="color: #0493F3;font-size: medium">确认签退</span></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+
+        // index , signOutTimeStr
+
+        $(".mui-backdrop").append(html);
+    }
+
+    //  测试区
+    // function getDataTmp() {
+    //     var dataStr = "{\"records\":[{\"dutyLeader\":null,\"dutyLeaderName\":null,\"signStatus\":null,\"departmentHead\":\"52b0372d452b5b71b16afbe747f5426a\",\"remark\":null,\"delFlag\":0,\"dutyDepartment_dictText\":\"水资源管理科\",\"corpCode\":\"A01\",\"prjCode\":null,\"departmentSort\":4,\"updateBy\":null,\"watchman\":\"52b0372d452b5b71b16afbe747f5426a\",\"position_dictText\":null,\"commonDutyDept\":\"0\",\"headerPhone\":\"19955458260\",\"signOutTime\":null,\"departmentHeadName\":\"ceshi\",\"watchmanName\":\"ceshi\",\"updateTime\":null,\"signPerson\":null,\"planDate\":\"2021-04-28 19:05:07\",\"createBy\":\"lin_yr\",\"signInTime\":null,\"dutyDepartment\":\"100000022003\",\"createTime\":\"2021-04-27 18:59:53\",\"phone\":null,\"watchmanPhone\":\"19955458260\",\"guid\":\"b280bbb66e69aed32a149d720240f7a0\",\"position\":null}],\"total\":1,\"size\":20,\"current\":1,\"orders\":[],\"hitCount\":false,\"searchCount\":true,\"pages\":1}";
+    //     var data = JSON.parse(dataStr);
+    //     showData(data, false);
+    // }
+    //
+    // getDataTmp();
+
+    // function addSignOutDialogTmp() {
+    //       var dataStr = "{\"dutyLeader\":\"\",\"dutyLeaderName\":\"\",\"signStatus\":\"0\",\"departmentHead\":\"a77dde7eb5631ddb83a44fc84abbdeb7\",\"remark\":\"\",\"delFlag\":0,\"dutyDepartment_dictText\":\"水资源管理科\",\"corpCode\":\"A01\",\"prjCode\":\"\",\"departmentSort\":4,\"updateBy\":\"cwh01\",\"watchman\":\"52b0372d452b5b71b16afbe747f5426a\",\"position_dictText\":null,\"commonDutyDept\":\"0\",\"headerPhone\":\"18832323232\",\"signOutTime\":null,\"departmentHeadName\":\"张金如\",\"watchmanName\":\"ceshi\",\"updateTime\":\"2021-04-27 19:58:55\",\"signPerson\":\"\",\"planDate\":\"2021-04-29 19:05:34\",\"createBy\":\"lin_yr\",\"signInTime\":\"2021-04-27 20:04:31\",\"dutyDepartment\":\"100000022003\",\"createTime\":\"2021-04-27 18:57:55\",\"phone\":\"\",\"watchmanPhone\":\"19955458260\",\"guid\":\"4db54bd73a453c38a685bb4c854d96d2\",\"position\":\"\"}";
+    //     var data = JSON.parse(dataStr);
+    //     maskShow();
+    //     addSignOutDialog(data, 1);
+    //
+    // }
+    //
+    //   addSignOutDialogTmp();
+
+</script>
+</html>

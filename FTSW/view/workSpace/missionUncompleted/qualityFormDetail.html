@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>质量整改</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <style>
+    .mui-col-xs-6 {
+      text-align: left;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-control-content .mui-loading {
+      margin-top: 50px;
+    }
+
+    .mui-slider {
+      height: 100vh;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 2px solid #337BFC;
+      color: #337BFC;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+      border-bottom: 0;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 0;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active + .titleleft {
+      border-bottom: solid 2px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-segmented-control .mui-control-item {
+      line-height: 43px;
+    }
+
+    .mui-scroll {
+      background: #FFFFFF;
+    }
+
+    .task-ul {
+      padding: 0;
+    }
+
+    .task-li {
+      border-bottom: 5px solid #F4F4F4;
+      height: 110px;
+      padding: 0 20px;
+    }
+
+    .task-item {
+      /* height: 50px; */
+      line-height: 50px;
+      /* padding: 0 5px; */
+    }
+
+    .task-item-btn {
+      width: 50%;
+      float: left;
+      text-align: right;
+      white-space: nowrap;
+      padding: 0 0 0 5px;
+    }
+
+    .task-item-btn span {
+      padding: 5px 15px;
+      border: 1px solid #347CFC;
+      color: #347CFC;
+      border-radius: 21px;
+      font-size: 12px;
+    }
+
+    .task-item-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .task-item-title span {
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .task-item-tip {
+      color: #989898;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .task-item-running {
+      color: #FF5656;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item-finished {
+      color: #29CC85;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item-ischange {
+      color: #FF7800;
+      font-size: 13px;
+      text-align: right;
+      /* margin-right: 20px; */
+    }
+
+    .task-item_status {
+      position: absolute;
+      top: 8px;
+      right: 5px;
+    }
+
+    .bottom-item {
+      background: #FFFFFF;
+      position: absolute;
+      /* height: 300px; */
+      width: 100%;
+      bottom: 0;
+      z-index: 100;
+      text-align: left;
+    }
+
+    .bottom-item-btn-list {
+      /* height: 200px; */
+      width: 98%;
+      position: absolute;
+    }
+
+    .fanwei {
+      white-space: nowrap;
+      display: inline-block;
+      width: 280px;
+      margin-left: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left
+    }
+
+    .bottom-item-btn-list .bottom-item-btn-list-top {
+      width: 100%;
+
+    }
+
+    .item1 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 0px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      border: 1px solid #337BFC;
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .item2 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 0px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      border: 1px solid #337BFC;
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .item3 {
+      position: absolute;
+      top: 4px;
+      z-index: 10;
+      right: 64px;
+      text-align: center;
+      line-height: 24px;
+      vertical-align: bottom;
+      padding: 0 14px;
+      /* border: 1px solid #337BFC; */
+      border-radius: 20px;
+      height: 26px;
+      font-size: 12px;
+    }
+
+    .mui-navigate-left:after {
+      content: '\e472';
+      left: 5px;
+      bottom: 50px;
+    }
+
+    .object {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .li-item {
+      background-color: white;
+    }
+
+    .li-item-pull {
+      background-color: #F4F4F4 !important;
+    }
+
+    .li-margin {
+      margin-bottom: 13px;
+      border-bottom: 1px solid #EDEDED;
+      padding-bottom: 0px;
+      font-size: 13px;
+      padding-bottom: 10px;
+    }
+
+    .in-obj {
+      font-weight: 400;
+      color: #888888;
+      margin-right: 7px;
+    }
+
+    .obj-title {
+      color: #444444;
+    }
+
+    .bgc-white {
+      background-color: white;
+    }
+
+    .bgc-grey {
+      background-color: #F4F4F4;
+    }
+
+    .mui-navigate-r {
+      background: #fff;
+    }
+
+    .icon-css {
+      display: inline-block;
+      padding: 8px 0 0;
+      vertical-align: top;
+    }
+
+    .task_title {
+      display: inline-block;
+      padding: 8px 0;
+      color: #191515;
+      font-size: 15px;
+      font-weight: 500;
+      width: 50%;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    .sec-line {
+      color: #878787;
+      font-size: 14px;
+    }
+
+    /* 	.arrow_right{
+      transform: rotate(90deg);
+    } */
+    .ul-mar-bottom {
+      margin-bottom: -18px;
+    }
+
+    .mui-table-view-cell > a:not(.mui-btn) {
+      margin: 0;
+      padding: 0;
+    }
+
+    .mui-table-view-cell.mui-active {
+      background: #fff;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+      border-bottom: solid 3px #337BFC;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+      border-top: 7px solid #F4F4F4
+    }
+
+    .color888 {
+      color: #888888;
+    }
+
+    .ibh {
+      display: inline-block;
+      line-height: 28px;
+    }
+
+    .no-data {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      display: inline-block;
+      font-size: 20px;
+      color: #999;
+      transform: translateX(-50%);
+    }
+
+    .showMore {
+      display: inline-block;
+    }
+
+    #listTitle span {
+      padding: 0;
+      color: #888888;
+    }
+
+    #listTitle {
+      width: 100%;
+      height: 40px;
+      padding-left: 20px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view-cell {
+      padding: 10px;
+      /*padding: 0!important;*/
+    }
+
+
+    #selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+    #selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span {
+      padding: 0;
+    }
+
+    /*.mui-table-view-cell:after{*/
+    /*  left: 4%;*/
+    /*  height: 2px;*/
+    /*  width: 92%;*/
+    /*}*/
+    .mui-table-view-cell:after {
+      left: 1px;
+      background-color: #F4F4F4;
+      height: 10px;
+    }
+
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 300px;
+      background: #FFFFFF
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mui-btn.mui-active:enabled {
+      background: #337BFC;
+    }
+
+    .spanItemType {
+      background-color: #FFF7F0;
+      border-radius: 5px;
+      border: 1px solid #FFAB61;
+      padding: 0px 5px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+
+    #highest {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #leader {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #details {
+      margin: 0 20px;
+    }
+
+    * {
+      touch-action: none;
+    }
+
+    /*
+    自定义的样式
+     */
+    .list-title {
+      color: #191515;
+      font-size: 19px;
+      clear: both;
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    .select-query-list-title {
+      height: 22px;
+      color: #888888;
+      font-size: 14px;
+    }
+
+    .mui-table-view-cell > .mui-slider-right {
+      height: 98%;
+    }
+
+    /* 滚动指示器 */
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 1px solid #FFFFFF;
+    }
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+      /*color: #007aff;*/
+      border-bottom: 2px solid #007aff;
+      background: 0 0;
+      content: '';
+      width: 24px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .mask-item-cell {
+      display: flex;
+      padding: 20px;
+      border-bottom: 1px solid #EDEDED;
+      position: relative;
+    }
+
+
+    .mask-item-cell-name {
+      width: 100px;
+      text-align: left;
+      color: #444444;
+      font-size: 16px;
+    }
+
+    .mask-item-cell-value {
+      flex: 1;
+      text-align: right;
+      color: #191515;
+      font-size: 14px;
+      border: none;
+    }
+
+    .mask-item-cell-button {
+      text-align: center;
+      border-color: #0493F3;
+      font-size: 16px;
+      color: #0493F3;
+      width: 48%;
+      height: 40px;
+      border-radius: 7px;
+    }
+
+    .mask-item-cell-input-button {
+      position: absolute;
+      width: 200px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: transparent;
+      border: none;
+    }
+
+    /* 表单详情 */
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      border-bottom: none;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .content-row {
+      border-top: 5px solid #F4F4F4;
+    }
+
+    .content-row-title {
+      border-bottom: 1px solid #EDEDED;
+      padding: 20px 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #161515;
+    }
+
+    .arrow-right-img {
+      width: 7px;
+      height: 10px;
+    }
+
+    .arrow-down-img {
+      width: 10px;
+      height: 7px;
+    }
+
+    .problem-img {
+      width: 78px;
+      height: 78px;
+    }
+
+    .incomplete-status {
+      color: red;
+    }
+
+    .hide-content {
+      display: none;
+    }
+
+    .show-content {
+      display: block;
+    }
+
+    /*  审批流程 */
+    .approval-flow-container {
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+
+    .approval-flow-first-left-operator {
+      flex: 3;
+      padding: 10px;
+      margin-top: 20px;
+      color: #999999;
+      font-size: 14px
+    }
+
+    .approval-flow-first-left-operator-username {
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .approval-flow-first-line-top {
+      background-color: white;
+      height: 33px;
+      width: 1px;
+      margin: 0 auto 0 auto;
+    }
+
+    .approval-flow-first-line-circle {
+      width: 7px;
+      height: 7px;
+      background-color: #0493F3;
+      border-radius: 3.5px;
+      margin: 5px auto 5px auto
+    }
+
+    .approval-flow-first-line-bottom {
+      background-color: #0493F3;
+      /*height: 80%;*/
+      height: calc(100% - 40px);
+      width: 1px;
+      margin: 0 auto 0 auto;
+    }
+
+    .approval-flow-first-right-container {
+      padding: 10px;
+      margin: 10px;
+      background-color: #FFF;
+      box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      -moz-border-radius: 25px;
+      flex: 14
+    }
+
+    .approval-flow-first-right-status-container {
+      display: flex;
+      flex: 1;
+      text-align: left;
+      align-items: center;
+    }
+
+    .approval-flow-first-right-status-node {
+      padding: 10px;
+      flex: 1;
+      font-size: 16px;
+      color: black;
+      font-weight: bold
+    }
+
+    .approval-flow-first-right-status {
+      text-align: right;
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      color: #29CC85
+    }
+
+    .approval-flow-first-right-content-container {
+      text-align: start;
+      flex: 1;
+      padding: 0 10px 10px 10px;
+      color: black;
+      font-size: 14px;
+      min-height: 75px
+    }
+
+    .approval-flow-first-right-content {
+      text-align: left;
+      padding-right: 10px;
+      font-size: 14px;
+      color: #999999
+    }
+
+    .approval-flow-first-right-date {
+      color: black;
+      padding: 5px 10px;
+      font-size: 14px;
+      text-align: left
+    }
+
+    .approval-flow-middle-circle-img {
+      width: 13px;
+      height: 13px;
+      text-align: center;
+    }
+
+    .mui-table-cell {
+      display: block;
+      overflow: hidden;
+    }
+
+    /* 左侧线 ，分上、下两部分 */
+    .left-line-top-white {
+      border-left: 1px solid white;
+      height: 18px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 0;
+    }
+
+    .left-line-top-gray {
+      border-left: 1px solid #EEEEEE;
+      height: 18px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 0;
+    }
+
+    .left-line-top-blue {
+      border-left: 1px solid #0493F3;
+      height: 18px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 0;
+    }
+
+    .left-line-bottom-white {
+      border-left: 1px solid white;
+      height: 1000px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 21px;
+    }
+
+    .left-line-bottom-gray {
+      border-left: 1px solid #EEEEEE;
+      height: 1000px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 21px;
+    }
+
+    .left-line-bottom-blue {
+      border-left: 1px solid #0493F3;
+      height: 1000px;
+      width: 10px;
+      position: absolute;
+      left: 2.5px;
+      top: 21px;
+    }
+
+    .paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+      padding: 11px 0;
+      width: 35px;
+      text-align: right;
+    }
+
+    .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+      /*color: #0493F3;*/
+      font-size: 22px;
+    }
+
+    /*		单选框*/
+     
+    .radio-item {
+      width: 30%;
+    }
+
+    .radio_inline label {
+      /*width: 20%;*/
+      /*padding-left: 40px;*/
+      /*padding-right: 20px;*/
+      padding: 0;
+      width: 40px;
+      height: 22px;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+
+    .radio_inline input[type=radio] {
+      width: 15%;
+      right: auto;
+    }
+
+    /*//换个样式*/
+    .change {
+      display: flex;
+      align-items: center;
+    }
+
+    .change .mui-radio input[type='radio']:checked:before {
+      content: '\e442';
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    .mui-radio input[type=radio] {
+      top: 0;
+    }
+
+    .mui-checkbox input[type=checkbox]:checked:before {
+      color: #AAA;
+    }
+
+    .page-bottom {
+      display: flex;
+      padding: 0 20px;
+      height: 100px;
+      background-color: white;
+    }
+
+    .page-bottom button {
+      flex: 1;
+      margin-top: 30px;
+      border-radius: 5px;
+      border-color: #0493F3;
+      font-size: 16px;
+      height: 40px;
+      border-width: thin;
+    }
+
+    .btn-temp-save {
+      color: #0493F3;
+      background-color: #FFFFFF;
+      margin-right: 15px;
+    }
+
+    .btn-agree {
+      color: #FFFFFF;
+      background-color: #0493F3;
+      border: none;
+    }
+
+    .bor {
+      border: 1px dashed #E0E0E0;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .shadow {
+      width: 94%;
+      margin-top: 10px;
+      margin-left: 3%;
+      background-color: #FFF;
+      box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+      /* 0 阴影水平偏移值(可取正负值)
+       10px 阴影垂直偏移值(可取正负值)
+       10px 阴影模糊值
+       rgba(0,0,0,0.2) 阴影颜色
+    */
+      margin-bottom: 25px;
+      /* 底外边距 */
+      border-radius: 5px;
+      /* 设置圆角 */
+      -moz-border-radius: 25px;
+      /* 老版的Firefox浏览器 */
+      padding: 15px;
+    }
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<div class="home-item" style="display: none;" id="home-item">
+  <div class="home-item-list" id="business_item">
+    <div class="item" id="missionUncompleted">
+      <img src="../../../img/missionUncompleted.png">
+      <span>待办任务</span>
+    </div>
+    <div class="item" id="notification">
+      <img src="../../../img/notification.png">
+      <span>通知公告</span>
+    </div>
+    <div class="item" id="directory">
+      <img src="../../../img/directory.png">
+      <span>通讯录</span>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="swiper-no-swiping">
+
+      <div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted"
+           style="color: #888888;z-index: 100;background-color: #FFFFFF;">
+        <a id="item1" class="mui-control-item mui-active" href="#selectItem1" style="text-align: center;">
+          整改明细表
+        </a>
+        <a id="item2" class="mui-control-item" href="#selectItem2" style="text-align: center;">
+          表单详情
+        </a>
+        <a id="item3" class="mui-control-item" href="#selectItem3" style="text-align: center;">
+          审批流程
+        </a>
+      </div>
+
+      <div id="content" class="mui-scroll-wrapper" style="height: calc(100vh - 65px);position: relative">
+        <!--          <div  class="mui-slider-group" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">-->
+        <div class="mui-scroll" style="width: 100%;height: max-content;">
+          <!-- selectItem2 start-->
+
+          <div id="selectItem1" style="padding-top: 0px;background-color: white"
+               class="mui-control-content mui-active">
+            <div class="content-row">
+              <!--              <div style="padding: 0 20px;text-align: left;">-->
+              <!--                &lt;!&ndash;检查类型&ndash;&gt;-->
+              <!--                <div id="missionType" class="content-row-title"></div>-->
+              <!--              </div>-->
+              <div id="checkList"></div>
+              <!-- 检查项目单独一个 ，方便展示\隐藏问题内容 -->
+              <!-- 一个item start -->
+              <div class="info-bar-content-item" style="border-bottom: 1px solid #eee;margin-right: 20px">
+                <div class="item-title">
+                  <span style="color: white">*</span>审批意见：
+                </div>
+              </div>
+              <!-- 一个item end -->
+              <!-- 一个item start -->
+              <div class="info-bar-content-item" style="margin-right: 20px">
+                          <textarea id="taskComment" required="true" placeholder="请输入审批意见(300字以内)" maxlength="300"
+                                    style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0"></textarea>
+              </div>
+              <!-- 一个item end -->
+              <!--              <div-->
+              <!--                style="height: 1px;width:  calc(100vw - 30px);background-color: #EDEDED;margin-top: 15px;margin-left: 15px"></div>-->
+              <div class="page-bottom" style=";width: 100%">
+                <button class="btn-temp-save" style="display: none;">暂存</button>
+                <button id="submit" class="btn-agree">同意</button>
+              </div>
+            </div>
+
+          </div>
+          <!-- selectItem2 end-->
+          <!-- selectItem1 start -->
+          <div id="selectItem2" style="padding-top: 0px;" class=" mui-control-content">
+            <ul id="tab1-content-ul" class="mui-table-view" style="background: #FFFFFF;">
+              <li>
+                <div class="content-row">
+                  <!--                  <div style="padding: 0 20px;text-align: left;">-->
+                  <!--                    <div class="content-row-title">表单详情</div>-->
+                  <!--                  </div>-->
+                  <div class="content">
+                    <div class="info-bar-content">
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>项目名称：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="projectName" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>项目编号：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="projectNo" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>监理单位：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="superviceUnit" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>施工单位：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="buildUnit" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>检查日期：
+                        </div>
+                        <div class="mui-input-row item-input" style="">
+                          <span id="checkData" class=""></span>
+                          <img src="../../../img/cal.png" style="width: 16px"/>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>整改单位：
+                        </div>
+                        <div class="mui-input-row" style="display: flex;">
+                          <div class="item-checkbox" style="flex: 1;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                              <label>施工单位</label>
+                              <input id="isWorkDepartment" value="message" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+                          <div class="item-checkbox" style="flex: 1;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                              <label>监理单位</label>
+                              <input id="isSupervisorDepartment" value="sms" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>检查单位：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="checkDepartment" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>检查组成员：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="checkingMembetextr" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>总监理工程师：
+                        </div>
+                        <div class="mui-input-row" style="display: flex;">
+                          <div class="item-checkbox" style="flex: 3;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                              <label style="white-space: nowrap">不在岗</label>
+                              <input id="generalEngieerNotInPosition" value="message" type="checkbox" readonly
+                                     disabled="">
+                            </div>
+                          </div>
+                          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+                          <div class="item-checkbox" style="flex: 2;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                              <label style="white-space: nowrap">在岗</label>
+                              <input id="generalEngieerInPosition" value="sms" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>项目经理：
+                        </div>
+                        <div class="mui-input-row" style="display: flex;">
+                          <div class="item-checkbox" style="flex: 3;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                              <label style="white-space: nowrap">不在岗</label>
+                              <input id="PrjManagerNotInPosition" value="message" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+                          <div class="item-checkbox" style="flex: 2;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                              <label style="white-space: nowrap">在岗</label>
+                              <input id="PrjManagerInPosition" value="sms" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>项目总工：
+                        </div>
+                        <div class="mui-input-row" style="display: flex;">
+                          <div class="item-checkbox" style="flex: 3;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                              <label style="white-space: nowrap">不在岗</label>
+                              <input id="prjEngieerNotInPosition" value="message" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+                          <div class="item-checkbox" style="flex: 2;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                              <label style="white-space: nowrap">在岗</label>
+                              <input id="prjEngieerInPosition" value="sms" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>检查内容：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="checkContent" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <div class="info-bar-content-item" style="padding-right: 10px">
+                        <div class="item-title">
+                          <span style="color: white">*</span>是否停工：
+                        </div>
+                        <div class="mui-input-row" style="display: flex;">
+                          <div class="item-checkbox" style="flex: 1;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                              <label>是</label>
+                              <input id="yes" value="message" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+                          <div class="item-checkbox" style="flex: 1;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                              <label>否</label>
+                              <input id="no" value="sms" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                          <div class="item-checkbox" style="flex: 4;">
+                            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                              <label>部分停工</label>
+                              <input id="partOf" value="sms" type="checkbox" readonly disabled="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>整改期限：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="rectificationPeriod" class=""></span>
+                          <img src="../../../img/cal.png" style="width: 16px"/>
+                        </div>
+                      </div>
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>质量检查及整改文件：
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+<!--                      &lt;!&ndash; 一个item start &ndash;&gt;-->
+<!--                      <div class="info-bar-content-item">-->
+<!--                        <div class="item-title" id="notificationAndReplyFiles" style="width: 100%;margin-right: 20px">-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      &lt;!&ndash; 一个item end &ndash;&gt;-->
+<!--                      &lt;!&ndash; 一个item start &ndash;&gt;-->
+<!--                      <div class="info-bar-content-item">-->
+<!--                        <div class="item-title">-->
+<!--                          <span style="color: white">*</span>整改描述：-->
+<!--                        </div>-->
+<!--                        <div class="mui-input-row item-input">-->
+<!--                          <span id="abarbeitungContent" class=""></span>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      &lt;!&ndash; 一个item end &ndash;&gt;-->
+
+<!--                      &lt;!&ndash; 一个item start &ndash;&gt;-->
+<!--                      <div class="info-bar-content-item">-->
+<!--                        <div class="item-title">-->
+<!--                          <span style="color: white">*</span>附件：-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      &lt;!&ndash; 一个item end &ndash;&gt;-->
+<!--                      &lt;!&ndash; 一个item start &ndash;&gt;-->
+<!--                      <div class="info-bar-content-item">-->
+<!--                        <div class="item-title" id="attachment" style="width: 100%;margin-right: 20px">-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      &lt;!&ndash; 一个item end &ndash;&gt;-->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title" style="overflow: hidden;white-space: nowrap;">
+                          <span>*</span>施工、监理确认人：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="constructionConfirmPerson" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>整改负责人：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="abarbeitungResponsablePerson" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>监理审核人：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="supervisorAuditPerson" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span>*</span>复核人：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="reviewPerson" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>填写人：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="inputPerson" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>联系方式：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="inputPersonPhone" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>填写部门：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="inputDepartment" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->                      <!-- 一个item start -->
+                      <div class="info-bar-content-item">
+                        <div class="item-title">
+                          <span style="color: white">*</span>填写日期：
+                        </div>
+                        <div class="mui-input-row item-input">
+                          <span id="inputDate" class=""></span>
+                        </div>
+                      </div>
+                      <!-- 一个item end -->
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+          <!-- selectItem1 end -->
+          <!-- selectItem3 start -->
+          <div id="selectItem3" style="padding-top: 0px;" class="mui-control-content">
+            <div style="background-color: #FFFFFF;margin-top: 5px;text-align: left;padding: 20px;">
+              审批人（依次审批）
+            </div>
+            <div style="background-color: #ffffff;">
+              <ul id="tab2-content-ul" class="mui-table-view"
+                  style="background: #FFFFFF;margin: 0 20px;">
+
+              </ul>
+            </div>
+          </div>
+          <!-- selectItem3 end -->
+
+
+        </div>
+
+      </div>
+      <!-- slider end -->
+
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+</body>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/maintain.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<!-- <script src="../../js/timer.js"></script> -->
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script src="../../../js/workSpace/approvalForImproveDetail.js"></script>
+<!-- 分页1 -->
+<script src="../../../js/bscroll.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+
+<script>
+    mui.init({
+        // pullRefresh: {
+        //     container: '#slider', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+        //     //下拉刷新
+        //     down: {
+        //         style: 'circle',
+        //         height: 50, //可选,默认50.触发下拉刷新拖动距离,
+        //         offset:'0px', //可选 默认0px,下拉刷新控件的起始位置
+        //         auto: true,
+        //         contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+        //         contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+        //         contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+        //
+        //         callback: function () {
+        //             console.log("触发刷新")
+        //             param.pageNo = 1;
+        //             pulldownRefresh();
+        //           mui("#slider").pullRefresh().endPulldownToRefresh();//结束动画
+        //         }
+        //     },
+        //     //上拉加载
+        //     up: {
+        //         // auto: true, // 可选,默认false.自动上拉加载一次
+        //         height: 300, //触发上拉加载拖动距离
+        //         contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+        //         contentnomore: '暂无更多数据', //可选，请求完毕若没有更多数据时显示的提醒内容；
+        //         callback: function () {
+        //           upLoadMore();
+        //         } //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+        //     }
+        //
+        // },
+        swipeBack: false
+    });
+
+    // //下拉刷新
+    function pulldownRefresh() {
+        $("#tab1-content-ul").empty();
+        param.pageNo = 1;
+        console.log("下拉刷新")
+    }
+
+    // //上拉加载
+    function upLoadMore() {
+    }
+
+    // var vConsole = new VConsole();
+
+    let param = {
+        projectId: '',
+    }
+    let checkParam = {
+        guid: '',
+    }
+    let processParam = {
+        businessKey: '',
+        processDefinitionKey: '',
+        processDefinitionId: '',
+        processInstanceId: '',
+        taskId: '',
+    }
+    let allCheckNameParam = {
+        order: 'desc',
+        pageNo: 1,
+        pageSize: 20,
+    }
+    let rectifyFiles = null;
+    let strFlow = {
+        api: "/task/audit",
+        processDefinitionKey: "",
+        targetNodeId: null,
+        taskId: ""
+    }
+    let submitCheckItems = {
+        formPath: null,
+        nodeName: null,
+        taskId: null,
+        buildUnitFullname: null,
+        checkTeam: null,
+        successCheckItem: null,
+        checkContent: null,
+        investigater: null,
+        inputPhone: null,
+        delFlag: null,
+        checkUnitFullname: null,
+        corpCode: null,
+        notifymethod: null,
+        prjCode: null,
+        inputName: null,
+        questionCheckItem: null,
+        constructorName: null,
+        inputerfullname: null,
+        superviceUnitFullname: null,
+        updateBy: null,
+        rectifyTime: null,
+        superviceUnit: null,
+        state: 1,
+        inputDepartmentFullname: null,
+        inputername: null,
+        rectifierFullname: null,
+        rectifyFile: null,
+        isStop: 0,
+        rectifyUnitType: null,
+        updateTime: null,
+        constructiorFullname: null,
+        buildUnit: null,
+        actualFinishTime: null,
+        checkUnit: null,
+        inputDate: null,
+        createBy: null,
+        inputDepartment: null,
+        checkTime: null,
+        inputFullname: null,
+        createTime: null,
+        investigaterFullname: null,
+        rectifier: null,
+        guid: null,
+        checkTeamFullname: null,
+        projectName: null,
+        projectId: null,
+        rectificationRate: null,
+        supervisor: null,
+        supervisorFullname: null,
+        nodeId: null,
+        // projectNumber: null,
+        taskComment: null,
+        projectQualityRectifyDetailList: null
+    }
+    let qualityRectifyDetailList = [];
+    let qualityStrAttachementList = [];
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        // var wvs = plus.webview.all();
+        // for (var i = 0, len = wvs.length - 1; i < len; i++) {
+        //     let theurl = wvs[i].getURL() + '';
+        //     if (!(theurl.search('login.html') != -1 ||
+        //         theurl.search('www/main.html') != -1 ||
+        //         theurl.search('www/index.html') != -1 ||
+        //         theurl.search('/searchInfo/index.html') != -1)) {
+        //         wvs[i].close('none');
+        //     }
+        // }
+        curr.close('slide-out-right');
+    }
+
+    var riverData = [];
+    var lakeData = [];
+    var isOpen = false;
+    var isLakeOpen = false;
+    var isShow = true;
+    var riverPageNo = '1';
+    var riverPageSize = '100';
+    var lakePageNo = '1';
+    var lakePageSize = '100';
+    var userPicker = new mui.PopPicker();
+    var searchRiver = [];
+    var searchLake = [];
+    var riverList = [];
+    var lakeList = [];
+    var riverResultJSON = [];
+    var lakeResultJSON = [];
+
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+    mask.clickClose = false;
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll({
+        bounce: false
+    });
+    var pickerpxtop = null;
+
+    var extras = {
+        openNum: 0
+    }
+
+    var input1 = document.getElementById("search_input1");
+    var input2 = document.getElementById("search_input2");
+    var input3 = document.getElementById("search_input3");
+
+    // var rankBox = document.getElementById("rank-box"); // slider
+    var rankBox = document.getElementById("scroll-wrapper"); // slider
+    // var cBScroll = new BScroll(rankBox, {
+    //     click: true, // 主要控制非button元素的点击事件
+    // });
+
+    function maskClose() {
+        mask.clickClose = true;
+        mask.close();
+    }
+
+    function maskShow() {
+        mask.clickClose = false;
+        mask.show();
+    }
+
+    // 分页
+    var allDataLoad = false; // 根据数量判断是否已加载完
+    var rankBox = document.getElementById("content"); // slider
+    // var cBScroll = new BScroll(rankBox, {
+    //     click: true, // 主要控制非button元素的点击事件
+    //     probeType: 3,
+    //     // pullUpLoad: true
+    // });
+
+    mui.plusReady(function () {
+
+        // initSelected();
+        // 先不调用
+
+        // 初始化数据列表（河流数据）
+        // getDirectories('river',riverPageNo,riverPageSize);
+        // console.log("cBScroll : " + cBScroll);
+        //禁止选项卡自带滑动
+        // cBScroll.on('pullingUp', () => {
+        //     console.log("pullingUp-上拉加载更多");
+        //     var allDataLoad = true; // 根据数量判断是否已加载完
+        //     if (!allDataLoad) {
+        //         upLoadMore();
+        //     }
+        //
+        // })
+
+        // mui('.mui-slider').slider().stopped = true;
+        // mui('#slider').slider().stopped = true;
+        //$('#slider').slider().gotoItem(0,0);
+        var self = plus.webview.currentWebview();
+        // console.log(JSON.stringify(self))
+        if (self.globalItem=='item2'||self.globalItem=='item3'){
+            $('#submit').css('display','none')
+        }
+        processParam.businessKey = self.businessKey;
+        processParam.processDefinitionKey = self.processDefinitionKey;
+        strFlow.processDefinitionKey = self.processDefinitionKey;
+        processParam.processDefinitionId = self.processDefinitionId;
+        processParam.processInstanceId = self.processInstanceId;
+        processParam.taskId = self.taskId;
+        strFlow.taskId = self.taskId;
+        submitCheckItems.taskId = self.taskId;
+        console.log('taskId' + processParam.taskId);
+        getMissionData();
+        self.setStyle({
+            titleNView: {
+                backgroundImage: "../../../img/bgTopClear.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '70',
+                    fontSize: '17',
+                    text: '',
+                }],
+            }
+        });
+        // 点击关闭遮罩层
+        self.addEventListener("maskClick", closeMask, true);
+
+        // BScroll
+        /*
+
+                //监听区域滑动
+                document.getElementById('selectItem1').addEventListener("swipeleft", function() {
+                    input1.blur();
+                    $("#del_icon1").hide();
+                    $("#del_icon2").hide();
+                    $("#del_icon3").hide();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').addClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('lake',lakePageNo,lakePageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(1);
+                });
+
+                document.getElementById('selectItem2').addEventListener("swipeleft", function() {
+                    input2.blur();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').removeClass("mui-active")
+                    $('#item3').addClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(2);
+                });
+                document.getElementById('selectItem2').addEventListener("swiperight", function() {
+                    input2.blur();
+                    $('#item1').addClass("mui-active")
+                    $('#item2').removeClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(0);
+                });
+                document.getElementById('selectItem3').addEventListener("swiperight", function() {
+                    input3.blur();
+                    $('#item1').removeClass("mui-active")
+                    $('#item2').addClass("mui-active")
+                    $('#item3').removeClass("mui-active")
+                    // getDirectories('river',riverPageNo,riverPageSize);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider().gotoItem(1);
+                });
+                */
+    });
+
+    // 展示或隐藏检查项目
+    // 点击检查项目
+    mui("#selectItem1").on('tap', '.checkItemBtn', function (event) {
+        event.stopPropagation();
+        console.log("点击检查项目" + JSON.stringify(event));
+        var index = $(this).attr('data-status');
+        console.log("点击的item：" + index);
+
+        var imgObj = event.target.nextElementSibling;//previousElementSibling;
+        if (event.target.nodeName == "IMG") {
+            imgObj = event.target;
+        }
+        //console.log(imgObj);
+        if (imgObj != null) {
+            if (imgObj.alt == 1) {
+                imgObj.alt = 0;
+            } else {
+                imgObj.alt = 1;
+            }
+            var detailObj = $("#problem-detail")
+            console.log(detailObj);
+            if (imgObj.alt == 1) {
+                // imgObj.className = "arrow-down-img";
+                imgObj.src = "../../../img/arrowDownBlue.png"
+                if ($("#checkContent" + index) != null) {
+                    $('#checkContent' + index).removeClass("hide-content");
+                }
+
+            } else {
+                // imgObj.className = "arrow-right-img";
+                imgObj.src = "../../../img/arrowUpBlue.png"
+                if ($("#checkContent" + index) != null) {
+                    $('#checkContent' + index).addClass("hide-content");
+                }
+            }
+        }
+
+    })
+
+    //关闭遮罩层
+    function closeMask() {
+        console.log('关闭遮罩层' + sharew.id);
+        //避免出现特殊情况，确保分享页面在初始化时关闭
+        if (!sharew) {
+            sharew = plus.webview.getWebviewById("goods/add_to_cart.html");
+            console.log(sharew.id);
+        }
+        if (sharew) {
+            sharew.hide('slide-out-bottom', 300);
+            //sharew = null;
+        }
+        var ws = plus.webview.currentWebview();
+        console.log('关闭遮罩层' + ws.id);
+        ws.setStyle({mask: "none"});
+    }
+
+    var getMissionData = function () {
+        console.log("===========================getMissionData===========================");
+        getMissionProcess(function (data) {
+            console.log('missionData' + JSON.stringify(data));
+            if (data != null) {
+                param.projectId = data.formData.projectId;
+                getMission(function (processData) {
+                    // 接口返回数据
+                    console.log("processData:" + JSON.stringify(processData));
+                    if (processData != null) {
+                        checkParam.guid = data.formData.guid;
+                        // 获取整改表单详情
+                        getQualityMissionFormDetail(checkParam, function (rectifyData) {
+                            console.log("==========================================整改详情====================================================");
+                            console.log("rectifyData:" + JSON.stringify(rectifyData));
+                            if (rectifyData.success == true) {
+                                addMissionData(data, processData, rectifyData.result);
+                            } else {
+                                mui.toast("查询失败");
+                            }
+                        })
+                        // 获取审批流程
+                        getApprovalProcess(function (approvalDatas) {
+                            console.log("==========================================审批流程====================================================")
+                            console.log("approvalDatas:" + JSON.stringify(approvalDatas));
+                            addApprovalProcessData(approvalDatas);
+                        })
+
+                        if (processParam.processDefinitionKey.search("quality") != -1) {
+                            // 获取质量整改的检查项
+                            console.log("==========================================质量整改====================================================")
+                            getQualityCheck(function (qalityCheckData) {
+                                console.log(JSON.stringify(qalityCheckData));
+                                addCheckData(qalityCheckData);
+                                // imgParam.groupId = qalityCheckData.problemPhoto;
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+    // methods
+    var initDestoryData = function (data, callback) {
+        for (let key in data) {
+            if (data[key] == '' || data[key] == null) {
+                data[key] = '暂无'
+            }
+        }
+        callback(data);
+    }
+
+
+    //关闭遮罩层
+    // $(document).on("click", ".mui-backdrop", function() {
+    //     isShow = true;
+    //     $('#home-item').hide();
+    //     mask.close();
+    // })
+
+    window.addEventListener('backInspection', function (e) { //执行刷新
+        // location.reload();
+        // getDirectories('river',riverPageNo,riverPageSize);
+        mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        mui('#contentList').scroll().scrollTo(0, 0, 0);
+    });
+
+    (function ($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+    })(mui);
+
+    function getMissionProcess(callback) {
+        console.log("getMissionProcess:" + JSON.stringify(processParam));
+        getMissionProcessDetail(processParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败")
+            }
+        })
+    }
+
+    function getMission(callback) {
+        console.log("getMission:" + JSON.stringify(param))
+        getMissionDetail(param, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败")
+            }
+            // cBScroll.finishPullUp()
+            // cBScroll.refresh()
+        })
+    }
+
+    function getApprovalProcess(callback) {
+        getMissionApprovalProcess(checkParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getSafetyCheck(callback) {
+        getMissionSafetyCheckItem(checkParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getQualityCheck(callback) {
+        console.log("getQualityCheck:" + JSON.stringify(checkParam))
+        getMissionQualityCheckItem(checkParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getAllSafetyCheckName(callback) {
+        getAllSafetyCheckItem(allCheckNameParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getAllQualityCheckName(callback) {
+        getAllQualityCheckItem(allCheckNameParam, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("查询失败");
+            }
+        })
+    }
+
+    function getImg(Id, callback) {
+        findFilesByGroupId({groupId: Id}, function (data) {
+            console.log("imgInfo:" + JSON.stringify(data))
+            if (data.result.length > 0) {
+                callback(data.result);
+                // dredgeRunfileToken = data.result[0].fileToken
+                // var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+                //     '" class="img_item">' +
+                //     '		<img  data-preview-src="" data-preview-group="1" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+                //     data.result[0].uploadFile.savePath + '" style=""  />' +
+                //     '	</div>';
+                // $(".yy_qs_img_list").append(html);
+                //
+                // var count = $(".yy_qs_img_list").children(".img_item").length;
+                // if (count >= 1) { //处理上传的数量
+                //     $("#yy_qs_photo").hide();
+                // }
+            }
+        });
+    }
+
+
+    function addMissionData(data, processData, rectifyData) {
+        var date = new Date(data.formData.checkTime);
+        var dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+        console.log("明细类型：" + processParam.processDefinitionKey);
+        // if (processParam.processDefinitionKey.search("quality") != -1) {
+        //     // 质量审批
+        //     $('#missionType').text('质量整改明细');
+        // } else if (processParam.processDefinitionKey.search("safety") != -1) {
+        //     // 安全审批
+        //     $('#missionType').text('安全整改明细');
+        // } else {
+        //     $('#missionType').text('');
+        // }
+
+        $("#projectName").text(data.formData.projectName);
+        $("#projectNo").text(processData.prjNo);
+        $("#superviceUnit").text(data.formData.superviceUnitFullname);
+        $("#buildUnit").text(data.formData.buildUnitFullname);
+        $("#checkData").text(dateStr);
+        $('#checkDepartment').text(data.formData.checkUnitFullname);
+        switch (data.formData.rectifyUnitType) {
+            case 1:
+                // 施工单位
+                $('#isWorkDepartment').prop("checked",true);
+                break;
+            case 2:
+                // 监理单位
+                $('#isSupervisorDepartment').prop("checked",true);
+                break;
+        }
+        switch (data.formData.supervisorOnduty) {
+            // 总监理工程师
+            case 0:
+                // 不在岗
+                $('#generalEngieerNotInPosition').prop("checked",true);
+                break;
+            case 1:
+                // 在岗
+                $('#generalEngieerInPosition').prop("checked",true);
+                break;
+        }
+        switch (data.formData.managerOnduty) {
+            // 总监理工程师
+            case 0:
+                // 不在岗
+                $('#PrjManagerNotInPosition').prop("checked",true);
+                break;
+            case 1:
+                // 在岗
+                $('#PrjManagerInPosition').prop("checked",true);
+                break;
+        }
+        switch (data.formData.chiefEngineerOnduty) {
+            // 总监理工程师
+            case 0:
+                // 不在岗
+                $('#prjEngieerNotInPosition').prop("checked",true);
+                break;
+            case 1:
+                // 在岗
+                $('#prjEngieerInPosition').prop("checked",true);
+                break;
+        }
+        $("#checkingMembetextr").text(data.formData.checkTeamFullname);
+        switch (rectifyData.isStop) {
+            case 0:
+                // 是
+                $('#yes').prop("checked", true);
+                break;
+            case 1:
+                // 否
+                $('#no').prop("checked", true);
+                break;
+            case 2:
+                // 部分停工
+                $('#partOf').prop("checked", true);
+                break;
+
+        }
+        $('#rectificationPeriod').text(rectifyData.rectifyTime.split(" ")[0]);
+        console.log(rectifyData.rectifyFile + "----------------------------------------------------------------");
+        findFilesByGroupId({groupId: rectifyData.rectifyFile}, function (filesData) {
+            if (filesData.success == true) {
+                addrectifyNotifications(filesData.result);
+                console.log("整改通知及答复" + JSON.stringify(filesData));
+                for (let i = 0; i < filesData.result.length; i++) {
+                    var attachementItem = {
+                        groupId: filesData.result[i].uploadFile.id,
+                        fileTokens: filesData.result[i].fileToken,
+                        fieldName: "rectifyFile",
+                        tableName: "SAFETY_RECTIFY"
+                    }
+                    qualityStrAttachementList.push(attachementItem);
+                }
+                if (filesData.result == null || filesData.result.length == 0) {
+                    var attachementItem = {
+                        groupId: rectifyData.rectifyFile,
+                        fileTokens: "",
+                        fieldName: "rectifyFile",
+                        tableName: "SAFETY_RECTIFY"
+                    }
+                    qualityStrAttachementList.push(attachementItem);
+                }
+                console.log(JSON.stringify(qualityStrAttachementList) + "1861------------------------------------------------------------------");
+            } else {
+                mui.toast("查询失败");
+            }
+        });
+        $('#constructionConfirmPerson').text(rectifyData.investigaterFullname);
+        $('#abarbeitungResponsablePerson').text(rectifyData.rectifierFullname);
+        $('#supervisorAuditPerson').text(rectifyData.supervisorFullname);
+        $('#reviewPerson').text(rectifyData.constructorName);
+        $('#inputPerson').text(rectifyData.inputerfullname);
+        $('#inputPersonPhone').text(rectifyData.inputPhone);
+        $('#inputDepartment').text(rectifyData.inputDepartmentFullname);
+        $('#inputDate').text(rectifyData.inputDate.split(" ")[0]);
+
+        submitCheckItems.nodeName = data.flowData.nodeName;
+        submitCheckItems.formPath = data.formPath;
+        submitCheckItems.buildUnitFullname = rectifyData.buildUnitFullname;
+        submitCheckItems.checkTeam = rectifyData.checkTeam;
+        submitCheckItems.investigater = rectifyData.investigater;
+        submitCheckItems.inputPhone = rectifyData.inputPhone;
+        submitCheckItems.delFlag = data.formData.delFlag;
+        submitCheckItems.checkUnitFullname = rectifyData.checkUnitFullname;
+        submitCheckItems.corpCode = data.formData.corpCode;
+        submitCheckItems.notifymethod = rectifyData.notifymethod;
+        submitCheckItems.prjCode = rectifyData.prjCode;
+        submitCheckItems.constructorName = rectifyData.constructorName;
+        submitCheckItems.inputerfullname = rectifyData.inputerfullname;
+        submitCheckItems.superviceUnitFullname = rectifyData.superviceUnitFullname;
+        submitCheckItems.rectifyTime = rectifyData.rectifyTime;
+        submitCheckItems.superviceUnit = rectifyData.superviceUnit;
+        submitCheckItems.state = data.formData.state;
+        submitCheckItems.inputDepartmentFullname = rectifyData.inputDepartmentFullname;
+        submitCheckItems.inputername = data.formData.inputername;
+        submitCheckItems.rectifierFullname = rectifyData.rectifierFullname;
+        submitCheckItems.rectifyFile = rectifyData.rectifyFile;
+        submitCheckItems.isStop = rectifyData.isStop;
+        submitCheckItems.rectifyUnitType = rectifyData.rectifyUnitType;
+        submitCheckItems.constructiorFullname = rectifyData.constructiorFullname;
+        submitCheckItems.buildUnit = rectifyData.buildUnit;
+        submitCheckItems.inputDate = rectifyData.inputDate;
+        submitCheckItems.createBy = data.formData.createBy;
+        submitCheckItems.inputDepartment = rectifyData.inputDepartment;
+        submitCheckItems.checkTime = rectifyData.checkTime;
+        submitCheckItems.createTime = data.formData.createTime;
+        submitCheckItems.investigaterFullname = rectifyData.investigaterFullname;
+        submitCheckItems.rectifier = rectifyData.rectifier;
+        submitCheckItems.guid = data.formData.guid;
+        submitCheckItems.checkTeamFullname = rectifyData.checkTeamFullname;
+        submitCheckItems.projectName = rectifyData.projectName;
+        submitCheckItems.projectId = rectifyData.projectId;
+        submitCheckItems.supervisor = rectifyData.supervisor;
+        submitCheckItems.supervisorFullname = rectifyData.supervisorFullname;
+        submitCheckItems.nodeId = data.flowData.nodeId;
+
+    }
+
+    function addrectifyNotifications(fileDatas) {
+        console.log("文件到了这里");
+        if (fileDatas != null) {
+            rectifyFiles = fileDatas;
+            var filesStr = "";
+            for (let i = 0; i < fileDatas.length; i++) {
+                var fileSize = fileDatas[i].uploadFile.fileSize;
+                var fileSizeText = '';
+                if (fileSize > 1024) {
+                    fileSize = fileSize / 1024;
+                    fileSizeText = fileSize.toFixed(2) + 'KB';
+                }
+                // 如果经过上面的if之后filesize还是大于1024，继续提升计量单位
+                if (fileSize > 1024) {
+                    fileSize = fileSize / 1024;
+                    fileSizeText = fileSize.toFixed(2) + 'MB';
+                }
+                switch (fileDatas[i].uploadFile.fileType.toLowerCase()) {
+                    case ".pdf":
+                        filesStr += '<div id="rectifyNotification' + i + '" class="mui-table-view-cell  attachementItem"' +
+                            'style="border-radius: 10px;border: 1px solid #EDEDED;width: 100%;margin-bottom: 10px" data-status="' + i + '">' +
+                            '<img src="../../../img/pptIcon.png" class="mui-media-object mui-pull-left"/>' +
+                            '<div class="mui-media-body" style="font-weight: bold;color: black;font-size: 14px">' +
+                            fileDatas[i].uploadFile.fileName +
+                            '<p class="mui-h6 mui-ellipsis">' + fileSizeText + '</p>'
+                        '</div>' +
+                        '</div>'
+                        break;
+                    case ".doc":
+                    case ".docx":
+                        filesStr += '<div id="rectifyNotification' + i + '" class="mui-table-view-cell  attachementItem"' +
+                            'style="border-radius: 10px;border: 1px solid #EDEDED;width: 100%;margin-bottom: 10px" data-status="' + i + '">' +
+                            '<img src="../../../img/wordIcon.png" class="mui-media-object mui-pull-left"/>' +
+                            '<div class="mui-media-body" style="font-weight: bold;color: black;font-size: 14px">' +
+                            fileDatas[i].uploadFile.fileName +
+                            '<p class="mui-h6 mui-ellipsis">' + fileSizeText + '</p>'
+                        '</div>' +
+                        '</div>'
+                        break;
+                    case ".jpg":
+                    case ".png":
+                    case ".jpeg":
+                        filesStr += '<div id="rectifyNotification' + i + '" class="mui-table-view-cell  attachementItem"' +
+                            'style="border-radius: 10px;border: 1px solid #EDEDED;width: 100%;margin-bottom: 10px" data-status="' + i + '">' +
+                            '<img src="../../../img/imageIcon.png" class="mui-media-object mui-pull-left"/>' +
+                            '<div class="mui-media-body" style="font-weight: bold;color: black;font-size: 14px">' +
+                            fileDatas[i].uploadFile.fileName +
+                            '<p class="mui-h6 mui-ellipsis">' + fileSizeText + '</p>'
+                        '</div>' +
+                        '</div>'
+                        break;
+                }
+                $("#notificationAndReplyFiles").html(filesStr);
+            }
+        }
+    }
+
+    // 提交点击
+    $('#submit').on('tap', function () {
+        for (let i = 0; i < qualityRectifyDetailList.length; i++) {
+            qualityRectifyDetailList[i].rectifyComment = $('#advise' + i).val();
+        }
+        submitCheckItems.taskComment = $('#taskComment').val();
+        submitCheckItems.projectQualityRectifyDetailList = qualityRectifyDetailList;
+        submitSafetyCheck({
+            strFlowData: JSON.stringify(strFlow),
+            strFormData: JSON.stringify(submitCheckItems),
+            strAttachment: JSON.stringify(qualityStrAttachementList)
+        }, function (data) {
+            if (data.success == true) {
+                // 提交成功
+                mui.toast('提交成功');
+                mui.back();
+            } else {
+                mui.toast('提交失败');
+            }
+        })
+    })
+
+    // 附件点击
+    $(document).on('click', '.attachementItem', function () {
+        var index = this.getAttribute("data-status");
+        // var id = this.getAttribute("id");
+        console.log("index:" + index);
+        var fileType = rectifyFiles[index].uploadFile.fileType.toLowerCase();
+        console.log("fileType:" + fileType);
+        var filePath = rectifyFiles[index].uploadFile.savePath;
+        console.log("filePath:" + filePath);
+        var fileId = rectifyFiles[index].uploadFile.fileName;
+        console.log("fileId:" + fileId);
+
+        var fileName = rectifyFiles[index].uploadFile.fileName;
+        console.log("fileName:" + fileName);
+        if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc") {
+            var extras = {
+                filePath: filePath,
+                fileId: fileId
+            };
+            // console.log(JSON.stringify(extras));
+            // view/conservation/showReform.html
+            // ./preview.html
+            app.openPage("../../conservation/preview.html", {
+                titleNView: {
+                    titleText: '文档预览',
+                    autoBackButton: true
+                }
+            }, extras);
+        } else if (fileType == '.jpg' || fileType == '.jpeg' || fileType == '.png') {
+            var extras = {
+                filePath: filePath,
+                fileId: fileId
+            };
+            app.openPage("../../mixed/preImg.html", {
+                titleNView: {
+                    titleText: '图片预览',
+                    autoBackButton: true
+                }
+            }, extras);
+        } else {
+            app.toast("此类型文件不支持预览");
+        }
+    })
+
+    function addCheckData(checkDatas) {
+        var itemStr = '';
+        var status = '';
+        for (let i = 0; i < checkDatas.length; i++) {
+            switch (checkDatas) {
+                case 0:
+                    status = '未整改';
+                    break;
+                case 1:
+                    status = '已整改';
+                    break;
+                case 2:
+                    status = '整改不合格';
+                    break;
+                default:
+                    status = '';
+            }
+            itemStr = itemStr + '<div class="shadow"><div class="content">' +
+                '<div class="info-bar-content">' +
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title" <!--style="color: #0493F3"-->' +
+                '检查项目：' +
+                '</div>' +
+                '<div class="mui-input-row item-input checkItemBtn" data-status="' + i + '">' +
+                '<span id="project-name' + i + '" class="" <!--style="color: #0493F3"-->>' + '' + '</span>' +
+                // '<img class="arrow-down-img" alt="1" src="../../../img/arrowDownBlue.png"/>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                // '</div>' +
+                // '</div>' +
+                '<div id="problem-detail" class="content">' +
+                '<div class="info-bar-content">' +
+                <!-- 一个item start -->
+                '<div id="checkContent' + i + '"><div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '问题描述：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="">' + checkDatas[i].problems + '</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '问题图片：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<img id="problemImg' + i + '" class="problem-img" src="" alt="">' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改要求：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="">' + checkDatas[i].rectifyRequest + '</span>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改状态：' +
+                '</div>' +
+                '<div class="mui-input-row item-input">' +
+                '<span class="incomplete-status">未完工</span>' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div style="text-align: left;padding: 0 15px;color: #888888;display: flex;justify-content: space-between">' +
+                '<div style="text-align: left;font-size: 13.5px;margin-left: 5px">' +
+                '整改后照片：' +
+                '</div>' +
+                '<div class="bor" style="text-align: right">' +
+                '<div id="updateClearAfterPhoto' + i + '" class="updateClearAfterPhoto" style="display: flex;flex-direction: column;padding: 10px" data-status="' + i + '">' +
+                '<img src="../../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">' +
+                '<span style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>' +
+                '</div>' +
+                '<img id="clearAfterPhoto' + i + '" class="arrow-down-img clearAfterPhoto" alt="1" src="" style="display: none;width: 80px;height: 80px">' +
+                '</div>' +
+                '</div>' +
+                <!-- 一个item end -->
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item">' +
+                '<div class="item-title">' +
+                '整改说明：' +
+                '</div>' +
+                // '<div class="mui-input-row item-input">' +
+                // '<span class="">' + checkDatas[i].rectifyComment + '</span>' +
+                // '</div>' +
+                '</div>' +
+                <!-- 一个item start -->
+                '<div class="info-bar-content-item" style="margin-right: 20px">' +
+                '<textarea id="advise' + i + '" required="true" placeholder="请输入审批意见(300字以内)" maxlength="300"' +
+                'style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0"></textarea>' +
+                '</div>' +
+                <!-- 一个item end -->
+                '</div></div></div></div>';
+
+            if (checkDatas[i].problemPhoto != null) {
+                getImg(checkDatas[i].problemPhoto, function (datas) {
+                    // 获取问题图片
+                    for (let i = 0; i < datas.length; i++) {
+                        var attachementItem = {
+                            groupId: datas[i].uploadFile.id,
+                            fileTokens: datas[i].fileToken,
+                            fieldName: "rectifyPhoto",
+                            tableName: "SAFETY_RECTIFY_DETAIL"
+                        }
+                        // qualityStrAttachementList.push(attachementItem);
+                    }
+                    $("#problemImg" + i).attr('src', config.urls.baseUrl + 'sys/common/view/' + datas[0].uploadFile.savePath);
+                })
+            }
+        }//整体图片上传（未完成的）
+        $("#checkList").on("tap", '.updateClearAfterPhoto', function () {
+            // if(tmpBtnStatus=='false'){ return;}
+            var index = $(this).attr('data-status');
+            console.log("上传图片点击：--------------------------------------------" + index)
+            plusSelectImage(function (data, path) {
+                console.log(JSON.stringify(data))
+                if (data.success) {
+                    // strAttachment[0].fileTokens = data.result.fileTokens;
+                    // var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+                    //     '" class="img_item">' +
+                    //     '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style=""  />' +
+                    //     '<span class=" myImgClose mui-icon mui-icon-closeempty" style="    font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+                    //     '	</div>';
+                    // $(".psh_img_list").append(html);
+
+                    // var count = $("#managePhoto").children(".img_item").length;
+                    // if (count >= 1) { //处理上传的数量
+                    $("#clearAfterPhoto" + index).show();
+                    $("#updateClearAfterPhoto" + index).hide();
+                    $("#clearAfterPhoto" + index).attr("src", path);
+                    qualityRectifyDetailList[index].rectifyPhoto = data.result.uploadFile.id;
+                    // }
+                } else app.toast(data.message)
+            });
+        });
+        $("#checkList").append(itemStr);
+        if (processParam.processDefinitionKey.search("quality") != -1) {
+            // 质量审批
+            for (let i = 0; i < checkDatas.length; i++) {
+                var totalPage = 2;
+                var haveItem = false;
+                do {
+                    getAllQualityCheckName(function (allCheckNames) {
+                        if (allCheckNames != null) {
+                            // console.log("checknames:"+JSON.stringify(allCheckNames));
+                            totalPage = allCheckNames.pages;
+                            for (let j = 0; j < allCheckNames.records.length; j++) {
+                                console.log("==================================================寻找对应检查项========================================================")
+                                if (checkDatas[i].checkItemId == allCheckNames.records[j].guid) {
+                                    // 找到了对应的检查项
+                                    haveItem = true;
+                                    $('#project-name' + i).text(allCheckNames.records[j].checkItemName + ' ');
+                                    break;
+                                }
+                            }
+                            if (!haveItem) {
+                                allCheckNameParam.pageNo++;
+                            }
+                        }
+                    })
+                } while ((allCheckNameParam.pageNo <= totalPage) && !haveItem);
+            }
+        } else if (processParam.processDefinitionKey.search("safety") != -1) {
+            // 安全审批
+            for (let i = 0; i < checkDatas.length; i++) {
+                var totalPage = 2;
+                var haveItem = false;
+                do {
+                    getAllSafetyCheckName(function (allCheckNames) {
+                        if (allCheckNames != null) {
+                            // console.log("checknames:"+JSON.stringify(allCheckNames));
+                            totalPage = allCheckNames.pages;
+                            for (let j = 0; j < allCheckNames.records.length; j++) {
+                                console.log("==================================================寻找对应检查项========================================================")
+                                if (checkDatas[i].checkItemId == allCheckNames.records[j].guid) {
+                                    // 找到了对应的检查项
+                                    haveItem = true;
+                                    $('#project-name' + i).text(allCheckNames.records[j].checkItemName + ' ');
+                                    break;
+                                }
+                            }
+                            if (!haveItem) {
+                                allCheckNameParam.pageNo++;
+                            }
+                        }
+                    })
+                } while ((allCheckNameParam.pageNo <= totalPage) && !haveItem);
+            }
+        }
+    }
+
+    function addApprovalProcessData(approvalDatas) {
+        if (approvalDatas != null) {
+            var approvalStr = '';
+            var endList = approvalDatas.taskListEnd;
+            var ingList = approvalDatas.taskListIng;
+            var unLastEnd = '<div class="left-line-bottom-blue"></div>';
+            var lastEnd = '<div class="left-line-bottom-gray"></div>';
+            // 用于修改线条颜色
+            var bgMainColorCss = 'style="background-color: #0493F3;"'
+            var bgEEEColorCss = 'style="background-color: #EEEEEE;"'
+            var displayBlock = 'style="display: block;"'
+            var displayInlineBlock = 'style="display: inline-block;"'
+            var displayNone = 'style="display: none;"'
+            var endListLen = endList.length;
+            for (let i = 0; i < endList.length; i++) {
+                approvalStr +=
+                    `<!-- div1 start -->
+                    <div class="approval-flow-container">
+                        <!--处理人 start -->
+                    <div class="approval-flow-first-left-operator">
+                    <span>处理人</span><br/>
+                    <span class="approval-flow-first-left-operator-username">${endList[i].assigneeFullname}</span>
+                    </div>
+                        <!--处理人 end -->
+                        <!--线条-->
+                    <div style="flex: 1;">
+                        <!--只有一条数据时 ，是第一个，也是最后一个，顶部线不要画-->
+                    <div class="approval-flow-first-line-top" ${(i == (endListLen - 1)) ? ((endListLen == 1 ? "" : bgMainColorCss)) : ""}></div>
+                    <div class="approval-flow-first-line-circle" ${(i == (endListLen - 1)) ? displayNone : displayBlock}></div>
+                        <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+                    <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img" ${(i == (endListLen - 1)) ? displayInlineBlock : displayNone} style="display: none"/>
+                    <div class="approval-flow-first-line-bottom" ${(i == (endListLen - 1)) ? bgEEEColorCss : ""}></div>
+                    </div>
+                        <!--详情-->
+                    <div class="approval-flow-first-right-container">
+                    <div class="approval-flow-first-right-status-container">
+                    <span class="approval-flow-first-right-status-node ">${endList[i].nodeName}</span>
+                    <span class="approval-flow-first-right-status">${endList[i].handleType}</span>
+                    </div>
+                    <div
+                    class="approval-flow-first-right-content-container">
+                    <span class="approval-flow-first-right-content">审批意见:</span>
+                        ${(endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment)}
+                    </div>
+                    <div class="approval-flow-first-right-date">${endList[i].endTime}</div>
+                    </div>
+                    </div>
+                        <!-- div1 end -->
+                    `
+            ;
+                        }
+
+                        var ingListLen = ingList.length;
+                        var bgEEEColorDisplayBlock = 'style="background-color: #EEEEEE;display: block;"'
+                        var bgEEEColorDisplayNone = 'style="background-color: #EEEEEE;display: none;"'
+                        for (let i = 0; i < ingList.length; i++) {
+                            approvalStr +=
+
+                `<!-- div3 start -->
+                <div class="approval-flow-container">
+                    <!--处理人-->
+                <div class="approval-flow-first-left-operator">
+                <span>处理人</span>
+                <span class="approval-flow-first-left-operator-username">${ingList[i].assigneeFullname}</span>
+                </div>
+                    <!--线条-->
+                <div style="flex: 1;text-align: center">
+                <div class="approval-flow-first-line-top" style="background-color: #EEEEEE;"></div>
+                <div class="approval-flow-first-line-circle" style="background-color: #DDEEFA;"></div>
+                    <!--最后一个隐藏-->
+                <div class="approval-flow-first-line-bottom" ${(i == (ingListLen - 1)) ? bgEEEColorDisplayNone : bgEEEColorDisplayBlock}></div>
+                </div>
+                    <!--详情-->
+                <div class="approval-flow-first-right-container">
+                <div class="approval-flow-first-right-status-container">
+                <span class="approval-flow-first-right-status-node">${ingList[i].nodeName}</span>
+                <span clas="approval-flow-first-right-status" style="color:#999999">${ingList[i].handleType}</span>
+                </div>
+                </div>
+                </div>
+                    <!-- div3 end -->
+                `
+            ;
+                        }
+                    }
+                    $("#tab2-content-ul").append(approvalStr);
+                }
+
+                // 测试区 ======================
+                // maskShow();
+                // addProxyCoverView();
+                // Html测试
+                // cBScroll.on('pullingUp', () => {
+                //   console.log("上拉加载更多-test");
+                //   addDataTmp();
+                // })
+                // addDataTmp();
+
+                // $('#slider').slider().stopped = true;
+
+                // function addDataTmp() {
+                //     approvalDatas = {
+                //         "businessKey": "072116fcaeb9488c8182a38cf55be6ca",
+                //         "taskListEnd": [
+                //             {
+                //                 "nodeName": "填写表单",
+                //                 "assigneeFullname": "ceshi",
+                //                 "handleType": "已提交",
+                //                 "assigneeName": "cwh01",
+                //                 "taskComment": "",
+                //                 "handleCode": "submit",
+                //                 "startTime": "2020-12-16 09:14:19",
+                //                 "endTime": "2020-12-16 09:14:20",
+                //                 "nodeId": "UserTask_0"
+                //             },
+                //             {
+                //                 "nodeName": "施工、监理确认",
+                //                 "assigneeFullname": "黄艺文",
+                //                 "handleType": "已通过",
+                //                 "assigneeName": "huang_yiwen",
+                //                 "taskComment": "12对d",
+                //                 "handleCode": "agree",
+                //                 "startTime": "2020-12-16 09:14:20",
+                //                 "endTime": "2020-12-16 10:52:21",
+                //                 "nodeId": "UserTask_1"
+                //             }
+                //         ],
+                //         "taskListIng": [
+                //             {
+                //                 "nodeName": "整改负责人审批",
+                //                 "assigneeFullname": "ceshi",
+                //                 "handleType": "处理中",
+                //                 "assigneeName": "cwh01",
+                //                 "startTime": "2020-12-16 10:52:21",
+                //                 "nodeId": "UserTask_2"
+                //             }
+                //         ]
+                //     }
+                //     if (approvalDatas != null) {
+                //         var approvalStr = '';
+                //         var endList = approvalDatas.taskListEnd;
+                //         var ingList = approvalDatas.taskListIng;
+                //         var unLastEnd = '<div class="left-line-bottom-blue"></div>';
+                //         var lastEnd = '<div class="left-line-bottom-gray"></div>';
+                //         for (let i = 0; i < endList.length; i++) {
+                //             approvalStr +=
+                //                 '<li class="mui-table-cell">' +
+                //                 '<div class="left-line-top-white" style="display: none"></div>' +
+                //                 (i == endList.length - 1 ? lastEnd : unLastEnd) +
+                //                 '<div class="approval-item">' +
+                //                 '<div style="display: flex;align-items: center;">' +
+                //                 '<img class="approval-circle" src="../../../img/approval-circle.png" alt="">' +
+                //                 '<span class="approval-username">' + endList[i].assigneeFullname + '</span>' +
+                //                 '<span class="approval-status">' + endList[i].handleType + '</span>' +
+                //                 '<span class="approval-date">' + endList[i].endTime + '</span>' +
+                //                 '</div>' +
+                //                 '<div class="approval-remark">' +
+                //                 (endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment) +
+                //                 '</div>' +
+                //                 '</div>' +
+                //                 '</li>'
+                //         }
+                //         for (let i = 0; i < ingList.length; i++) {
+                //             approvalStr +=
+                //                 '<li class="mui-table-cell">' +
+                //                 '<div class="left-line-top-gray" style="display: none"></div>' +
+                //                 '<div class="left-line-bottom-white"></div>' +
+                //                 '<div class="approval-item">' +
+                //                 '<div style="display: flex;align-items: center;">' +
+                //                 '<img class="approval-circle" src="../../../img/approval-gray-circle.png" alt="">' +
+                //                 '<span class="approval-username">' + ingList[i].assigneeName + '</span>' +
+                //                 '<span class="approval-status" style="color: #AEAEAE">' + ingList[i].handleType + '</span>' +
+                //                 '</div>' +
+                //                 '</div>' +
+                //                 '</li>'
+                //         }
+                //     }
+                //     $("#tab2-content-ul").append(approvalStr);
+                // }
+
+</script>
+
+</html>

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>对象选择</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+	<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<style>
+		.mui-scroll {
+			/* 	background: url(../img/temp_dt.png) no-repeat center;
+                background-size: 100% 100%; */
+			height: 100%;
+			width: 100%;
+		}
+
+		.search-bar {
+			background: none;
+			height: 80px;
+			line-height: 80px;
+		}
+
+		.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+			top: 12px;
+			width: 40px;
+			height: 40px;
+		}
+
+		.search-item {
+			background: #FFFFFF;
+			height: 40px;
+			border-radius: 0;
+
+		}
+
+		.search-input {
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.search-icon img {
+			top: 30%;
+		}
+
+		.add_btn{
+			position: fixed;
+			width: 70px;
+			bottom: 30%;
+			right: 0;
+			z-index: 100;
+			text-align: right;
+		}
+
+		.add_btn img{
+			width: 70px;
+		}
+
+		.bottom-item {
+			padding: 19px;
+			background: #FFFFFF;
+			position: fixed;
+			/*height: 192px;*/
+			/*height: 45vh;*/
+			height: 40vh;
+			width: 100%;
+			bottom: 0;
+			/*top:30vh;*/
+			z-index: 100;
+			border-top-left-radius: 30px;
+			border-top-right-radius: 30px;
+			text-align: left;
+		}
+
+		.bottom-item-title {
+			font-size:18px;
+			color:rgba(22,21,21,1);
+			font-weight: bold;
+		}
+
+		.bottom-item-info{
+			font-size:14px;
+			color:rgba(25,21,21,1);
+			line-height:21px;
+			/*height:21px;*/
+			padding: 6px 0px;
+		}
+
+		.bottom-item-btn {
+			display: flex;
+			background-color:#F4F4F4 ;
+			width:100%;
+			margin-top: 10px;
+
+			bottom: 0;
+			position: absolute;
+			left: 0;
+		}
+
+		.bottom-item-btn .item{
+			flex: 1;
+			margin: 16px 14px;
+			width: 50%;
+			text-align: center;
+		}
+
+		.bottom-item-btn .item div{
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.view-title{
+			font-size:14px;
+			color:#444444;
+			text-align: left;
+			/*padding:20px 0px 20px 0;*/
+
+		}
+		.search-tip {
+			/*display: block;*/
+			float: right;
+			color: #337BFC;
+		}
+		.search-tip img{
+			width: 14px;
+			height:12px;
+		}
+
+
+		th
+		{
+			background-color:#F0F0F0;
+			color:#888888;
+			font-family: PingFang-SC-Regular;
+			font-size: 12px;
+			border: 1px solid;
+			padding: 5px;
+		}
+
+		table{
+			text-align: center;
+			border-collapse:collapse;
+
+		}
+
+		tr {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+			font-family: PingFang-SC-Regular;
+			font-size: 14px;
+		}
+		td{
+			border:1px solid #ccc;
+			height: 30px;
+			line-height:35px;
+		}
+
+		.td input{
+			margin-left:10px;
+		}
+
+		.gun{
+			/*max-height: 8vh;*/
+			height: 16vh;
+			/*overflow-y: auto;*/
+			overflow: scroll;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.mui_rank {
+			position: absolute;
+			top: 0;
+			z-index: 1;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+			/*background: url(../../img/commom/tingwei.png) no-repeat center ;*/
+		}
+		.location_btn{
+			position: fixed;
+			width: 50px;
+			height: 50px;
+			bottom: 47%;
+			left: 10px;
+			z-index: 100;
+			text-align: center;
+			border-radius: 10px;
+			background: #FFFFFF;
+		}
+		.location_btn img{
+			width: 30px;
+			margin-top: 10px;
+		}
+		.triangle-down {
+			width: 0;
+			height: 0;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			/*border-top: 10px solid #f02e2e;*/
+			margin-bottom: 10px;
+		}
+		/*放大缩小btn*/
+		.mapboxgl-ctrl.mapboxgl-ctrl-group{
+			bottom: 55%;
+			left: 10px;
+			position: fixed;
+		}
+		html,body{-webkit-overflow-scrolling: touch;}
+		.no{
+			width: 39px;
+		}
+		.ra{
+			width: 65px;
+		}
+
+
+
+	</style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+	<div class="mui-view">
+		<div class="mui-navbar">
+		</div>
+		<div class="mui-pages">
+		</div>
+	</div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+	<!--页面标题栏开始-->
+	<!--<header class="mui-bar mui-bar-nav common-header">-->
+		<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+		<!--<h1 class="mui-title">对象选择</h1>-->
+	<!--</header>-->
+	<!--页面标题栏结束-->
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+
+				<div id="map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;z-index: -1;">
+
+
+
+				</div>
+
+				<!--添加图标-->
+				<div class="mui_rank">
+					<div class="triangle-down">
+					</div>
+				</div>
+				<div class="location_btn" id="location_btn">
+					<img src="../../img/commom/location.png" />
+				</div>
+
+				<div id="objContent" class="bottom-item" style="display: none;">
+					<div class="bottom-item-title">
+						地点位置
+						<div id ="reChoose" class="view-title search-tip">
+							<img src="../../img/local.png" />
+							<span>重新选点</span>
+						</div>
+
+					</div>
+
+					<div id="address" class="bottom-item-info">深圳市福田区保税区桃花路8号中天元物流大厦</div>
+					<!--<div style="background: #F4F4F4;height: 5px;"></div>-->
+
+					<div style="display: flex;">
+						<div  class="bottom-item-info" style="flex: 1;">
+							编号：1
+						</div>
+						<div  class="bottom-item-info" style="flex: 1;">
+							设施类型：<span class="objType"></span>
+							<input id="SYS_TYPE" style="display: none;"/>
+						</div>
+					</div>
+					<div style="display: flex;">
+						<div  class="bottom-item-info " style="flex: 1;">
+							普查编号:<span id="pcNo"></span>
+						</div>
+						<div  class="bottom-item-info " style="flex: 1;display: none">
+							Guid:<span id="ssNo"></span>
+						</div>
+					</div>
+
+					<!--<table>-->
+						<!--<thead>-->
+						<!--<tr>-->
+							<!--<th class="ra"></th>-->
+							<!--<th class="no">序号</th>-->
+							<!--<th id="typeName">类型</th>-->
+							<!--<th>普查编号</th>-->
+							<!--&lt;!&ndash;<th>设施编号</th>&ndash;&gt;-->
+						<!--</tr>-->
+						<!--</thead>-->
+					<!--</table>-->
+
+					<!--<div class="gun">-->
+						<!--<table>-->
+							<!--<tr >-->
+								<!--<td class="mui-radio mui-left ra">-->
+									<!--<input name="radio1" value="Item 1"  type="radio">-->
+								<!--</td>-->
+								<!--<td class="no">1</td>-->
+								<!--<td class="objType" id="type"></td>-->
+								<!--<td id="pcNo"></td>-->
+								<!--<td id="ssNo" style="display: none"></td>-->
+
+							<!--</tr>-->
+
+							<!--<tr>-->
+								<!--<td class="mui-radio mui-left ra">-->
+									<!--<input name="radio1" value="Item 1"  type="radio">-->
+								<!--</td>-->
+								<!--<td class="no">2</td>-->
+								<!--<td class="objType"></td>-->
+								<!--<td></td>-->
+								<!--&lt;!&ndash;<td></td>&ndash;&gt;-->
+
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td class="mui-radio mui-left ra">-->
+									<!--<input name="radio1" value="Item 1"  type="radio">-->
+								<!--</td>-->
+								<!--<td class="no">3</td>-->
+								<!--<td class="objType"></td>-->
+								<!--<td></td>-->
+								<!--&lt;!&ndash;<td></td>&ndash;&gt;-->
+
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td class="mui-radio mui-left ra">-->
+									<!--<input name="radio1" value="Item 1"  type="radio">-->
+								<!--</td>-->
+								<!--<td class="no">4</td>-->
+								<!--<td class="objType"></td>-->
+								<!--<td></td>-->
+								<!--&lt;!&ndash;<td></td>&ndash;&gt;-->
+
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td class="mui-radio mui-left ra">-->
+									<!--<input name="radio1" value="Item 1"  type="radio">-->
+								<!--</td>-->
+								<!--<td class="no">5</td>-->
+								<!--<td class="objType"></td>-->
+								<!--<td></td>-->
+								<!--&lt;!&ndash;<td></td>&ndash;&gt;-->
+
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<td class="mui-radio mui-left ra">-->
+									<!--<input name="radio1" value="Item 1"  type="radio">-->
+								<!--</td>-->
+								<!--<td class="no">6</td>-->
+								<!--<td class="objType"></td>-->
+								<!--<td></td>-->
+								<!--&lt;!&ndash;<td></td>&ndash;&gt;-->
+
+							<!--</tr>-->
+							<!--<tr>-->
+							<!--<td class="mui-radio mui-left">-->
+							<!--<input name="radio1" value="Item 1"  type="radio">-->
+							<!--</td>-->
+							<!--<td>5</td>-->
+							<!--<td>2</td>-->
+							<!--<td>3</td>-->
+							<!--<td>4</td>-->
+
+							<!--</tr>-->
+
+						<!--</table>-->
+
+					<!--</div>-->
+					<div class="bottom-item-btn" style="z-index: 200;">
+						<div class="item">
+							<div id="close" style="color: #337BFC;">关闭</div>
+						</div>
+						<div class="item">
+							<div id="confirm" style="background: #337BFC;color: #fff;">确定</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!--<div class="bottom-item-btn" style="z-index: 200">-->
+					<!--<div class="item mui-action-back">-->
+						<!--<div style="color: #337BFC;">关闭</div>-->
+					<!--</div>-->
+					<!--<div class="item mui-action-back">-->
+						<!--<div id="confirm" style="background: #337BFC;color: #fff;">确定</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			</div>
+		</div>
+		<!--页面主内容区结束-->
+	</div>
+
+</body>
+
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+
+<script src="../../js/qx.js"></script>
+<script src="../../js/position.js"></script>
+<script src="../../js/paishuihu.js"></script>
+
+<script>
+	var isTest = false;
+    mui.init({swipeBack:false});
+
+    const MobileContainer = window['mobile-lib'].MobileContainer;
+    const mobileContainer = new MobileContainer({
+        serverUrl: config.urls.serverDomain,options:{minZoom:10},style:'color'
+    });
+    const layerSelections = window['mobile-lib'].layerSelections;
+    mobileContainer.setSelection([layerSelections.小区, layerSelections.排水管线, layerSelections.点类信息]);
+
+	var OTId;             //接收传入的对象类型id
+	var OTName;           //接收传入的对象类型名
+    var pointCode = '';
+    var sureCode = '';
+    var i = 1;
+	var self1;
+    mui.plusReady(function() {
+
+        self1 = plus.webview.currentWebview();//获取父页面对象
+        OTId = self1.OTId;//设施类型
+        OTName = self1.OTName;//设施名
+		pointCode = self1.pointCode;
+
+        //判断设施类型是否为管渠
+        var reg = new RegExp("渠")
+        if(reg.test(OTName)){
+            console.log("guanqu")
+            i = 2;
+        }
+        // if(i == 2){
+        //     //动态文案
+        //     $("#typeName").html("规格")
+        // }
+		$(".objType").html(OTName)
+        // console.log("pointCode:"+pointCode)//040501
+        // console.log(OTId)
+        // console.log(OTName)
+        // mobileContainer.setQuery({ NAME: 'DEVICE_POINT_INFO',POINT_CODE:'040501'});
+        if(i == 1){
+            console.log(1)
+			console.log(pointCode)
+			// {"OTId":"1","OTName":"检查井","pointCode":"040501","commId":"re_area_1","xq":"万乘简易仓"}
+            mobileContainer.setQuery({ NAME: 'DEVICE_POINT_INFO',POINT_CODE:[pointCode]});
+
+            // mobileContainer.setQuery({ NAME: 'DEVICE_PS_LINE'});
+            // mobileContainer.setQuery({ NAME: 'DEVICE_POINT_INFO',POINT_CODE:040501});
+        }else if (i == 2){
+            console.log(2)
+            console.log(pointCode)
+            mobileContainer.setQuery({ NAME: 'DEVICE_PS_LINE'});
+        }
+
+
+
+        getCurrentPosition();
+    });
+    //重新选点
+	$("#reChoose").on("tap",function(){
+	    // $("#type").html("");
+        $("#pcNo").html("");
+        $("#ssNo").html("");
+	})
+
+   
+   $("#close").on("tap",function(){
+       $("#objContent").hide();
+   })
+   
+	//确定
+    $("#confirm").on("tap", function() {
+		console.log(self1.OTName)
+		console.log($(".objType").html())
+		if(self1.OTName=='' || self1.OTName == $(".objType").html()){
+			// var guid = $('input[name="radio1"]:checked').val();
+			     var guid = $("#ssNo").text();
+			     var name = $("#address").text();
+			     var pcNo = $("#ssNo").text();//展示的是普查编号，返回的是guid
+					var deviceName = $(".objType").html()
+			
+					if(guid == ""|| guid == null){
+					    app.toast("请选择设施对象")
+					    return;
+					}
+			
+					if (sureCode) {
+					    console.log("确定pointCode:"+pointCode)
+					    console.log("确定sureCode:"+sureCode)
+			
+						//检查井
+						// if(pointCode !="" && sureCode == pointCode){
+			//              if(OTName =="雨水检查井" || OTName == "污水检查井"){
+			//                  if(OTName!==$(".objType").text()){
+			//                      app.toast("请选择" + OTName + "设施对象")
+			//                      return;
+			//                  }
+			//              }
+						// }
+						// if (pointCode !="" && sureCode !== pointCode ) {
+						// 	app.toast("请选择" + OTName + "设施对象")
+						// 	return;
+						// }
+						// //渠类
+						// if(pointCode =="" && OTName!==$(".objType").text()){
+			//              app.toast("请选择" + OTName + "设施对象")
+			//              return;
+						// }
+					} else {
+						app.toast("请选择正确的设施对象")
+						return;
+					}
+			
+			     var params ={
+			         id:guid,
+			         name:name, //地点
+			         pcNo:pcNo,
+						deviceName: deviceName
+			     }
+			     //console.log("name",name);
+			     //获取当前页
+			     var selfPage = plus.webview.currentWebview();
+			     //获取父页面
+			     var openerPage = selfPage.opener();
+			     //自定义事件,事件名为changeCity
+			     mui.fire(openerPage,'getObject',{val:params});
+			
+			     //关闭页面
+			     mui.back();
+		}else{
+			app.toast("请选择"+OTName)
+			return;
+		}
+       
+    });
+
+    //重新定位
+    $("#location_btn").on("tap",function(){
+        getCurrentPosition();
+    });
+
+    //0813
+    var getCurrentPosition = function(){
+		if(self1.commId){
+			mobileContainer.fitToRegion({
+			  NAME: 'DEVICE_RE_AREA',
+			  GUID: self1.commId
+			})				
+		}else{
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+			    //坐标修正
+			    var point = coordtransform.gcj02towgs84(position.coords.longitude,position.coords.latitude);
+			
+			    var Lon = point[0]; //获取经度
+			    var Lat = point[1]; //获取纬度
+			
+			    setTimeout(function(){
+			        mobileContainer.flyTo([Lon, Lat], {
+			            zoom: 15
+			        });
+			        // mobileContainer.markAddress(Lon,Lat);
+			    },2000);
+			
+			
+			}, function(e) {
+				mui.toast("获取定位失败，请查看设备是否开启定位");
+			})
+		}
+    }
+
+
+
+    mobileContainer.getAddress(114.02, 22.550).then(function(res){
+        // //console.log(res.formatted_address);
+        //console.log(res);
+        //console.log(res.addressComponent.address);
+        $("#address").html(res.addressComponent.address);
+    });
+
+    mobileContainer.on('load', function(){
+        mobileContainer.enableCenterAddress(true);
+        mobileContainer.showAnnotation(true);//0816
+        var xq ={
+            NAME:'DEVICE_RE_AREA',
+            RE_NAME:self1.xq
+        }
+        mobileContainer.fitToRegion(xq);//跳到小区位置
+    });
+
+    mobileContainer.on('showInfo', function(data) {
+		$("#objContent").fadeIn();
+        console.log(JSON.stringify(data.info))
+        //console.log(data);
+		//console.log(data.info.GUID);//设施编号
+		//console.log(data.info.EXP_NO);//普查编号
+        $("#ssNo").html(data.info.GUID)
+		if (data.info.POINT_CODE) {
+			sureCode = data.info.POINT_CODE
+			var SYS_TYPE = data.info.SYS_TYPE			
+			var pointName = getPointName(sureCode)
+			// if(pointName =='检查井' && SYS_TYPE =='2'){
+            //     $(".objType").html('雨水检查井')
+			// }else if(pointName =='检查井' && SYS_TYPE =='3'){
+            //     $(".objType").html('污水检查井')
+			// }else{
+            //     $(".objType").html(pointName)
+			// }
+			// 点击确定时 ，会判断传入的名称与显示的名称是否匹配
+			$(".objType").html(pointName)
+
+		} else if(data.info.LINE_TYPE){
+            // 管渠类
+            sureCode = data.info.LINE_TYPE
+            $(".objType").html(getLineType(sureCode))
+
+		}else {
+			sureCode = ''
+			$(".objType").html('未知类型')
+		}
+		console.log("sureCode:"+sureCode);
+		// if(i == 1){
+         //    $("#pcNo").html(data.info.EXP_NO)
+         //    // console.log("非管渠")
+		// 	return;
+		// }if( i == 2){
+         //    var S_POINT_EXP_NO = data.info.S_POINT_EXP_NO == undefined?" ":data.info.S_POINT_EXP_NO;
+		// 	var E_POINT_EXP_NO = data.info.E_POINT_EXP_NO == undefined?" ":data.info.E_POINT_EXP_NO;
+         //    $("#pcNo").html(S_POINT_EXP_NO+" - "+E_POINT_EXP_NO)//lineCode 雨水管渠
+		// 	// console.log("管渠")
+		// 	return;
+		// }
+        if(data.info.LINE_TYPE){
+            var S_POINT_EXP_NO = data.info.S_POINT_EXP_NO == undefined?" ":data.info.S_POINT_EXP_NO;
+            var E_POINT_EXP_NO = data.info.E_POINT_EXP_NO == undefined?" ":data.info.E_POINT_EXP_NO;
+            $("#pcNo").html(S_POINT_EXP_NO+" - "+E_POINT_EXP_NO)//lineCode 雨水管渠
+            // console.log("管渠")
+            return;
+		}else{
+            $("#pcNo").html(data.info.EXP_NO)
+            // console.log("非管渠")
+            return;
+		}
+    });
+
+    mobileContainer.on('showAddress',function(data){
+        // console.log(JSON.stringify(data));
+        $("#address").html(data.formatted_address)
+    });
+
+    //点击地图 定位0813
+    mobileContainer.on('click', function (data) {
+
+    	console.log('点击 开始')
+		console.log(data)
+		console.log('点击 结束')
+        clearGlobalItem();
+        mobileContainer.enableCenterAddress(true);
+        // mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+        // mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);//红点
+
+        //console.log("1"+JSON.stringify(data.lngLat))
+        globalSetItem(GlobalKey.point,JSON.stringify(data.lngLat));//选中地图点
+	
+
+    });
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll({
+
+    });
+
+    if(isTest) {
+		// {"OTId":"1","OTName":"检查井","pointCode":"040501","commId":"re_area_1","xq":"万乘简易仓"}
+		//self1.xq = '万乘简易仓';
+		self1 = {
+			OTId: '1',
+			OTName: "检查井",
+			pointCode: "040501",
+			commId: "re_area_1",
+			xq: '万乘简易仓'
+		}
+		OTId = self1.OTId;//设施类型
+		OTName = self1.OTName;//设施名
+		pointCode = self1.pointCode;
+		mobileContainer.setQuery({ NAME: 'DEVICE_POINT_INFO',POINT_CODE:['040501']});
+		getCurrentPosition();
+	}
+</script>
+
+</html>

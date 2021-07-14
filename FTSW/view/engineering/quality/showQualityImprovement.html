@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>查看安全整改</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+		<style>
+			.bar-title{
+				font-size: 14px;
+				font-weight: 400;
+				color: #888888;
+			}
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 16px;
+			font-weight: 400;
+			color: #191515;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+		width: 16px;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 90%;
+			margin-left: 5%;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		
+		.uploadBtn{
+			padding-top: 2px;
+			display: inline-block;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 400;
+			color: #FFFFFF;
+			width: 83px;
+			height: 26px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.tip{
+			width: 100%;
+			text-align: left;
+			vertical-align: bottom;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			margin-top: 10px;
+		}
+		.fileContent{
+			padding:20px 0;
+			margin:0 20px;
+			border-bottom: 1px solid #eeeeee;
+		}
+		.fileContent-item{
+			width: 100%;
+			min-height: 60px;
+			background: #F4F7FE;
+			border-radius: 10px;
+			margin-bottom: 10px;
+		}
+		.fileContent-item:last-child{
+			margin-bottom: 0px;
+		}
+		.typeImg{
+			width: 30px;
+			height: 34px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.fileContent-item-title{
+			width: calc(100% - 90px);
+			height: 34px;
+			display: inline-block;
+			text-align: left;
+			margin-left: 10px;
+		}
+		.titleSpan{
+			width: 100%;
+			word-break: break-all;
+			font-size: 14px;
+			font-weight: 500;
+			color: #191515;
+			line-height: 14px;
+			display: block;		
+		}
+		.fileSize{
+			font-size: 12px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 14px;
+		}
+		.removeFile{
+			width: 18px;
+			height: 18px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.signDetail{
+			padding:30px 0 !important;
+/* 			font-size: 16px;
+			font-weight: 400;
+			color: #B1B1B1; */
+			line-height: 14px;
+		}
+		.input-email{
+			border-bottom:5px solid #F4F4F4;
+		}
+		.input-email:last-child{
+			border-bottom:none;
+		}
+		.addDiv{
+			width: 100%;
+			height: 40px;
+			text-align: center;
+			margin: 30px 0
+		}
+		.addBtn{
+			/* margin-left: 10%; */
+			width:80%;
+			line-height: 30px;
+			font-size: 16px;
+			font-weight: bold;
+			color: #FFFFFF;
+			border-radius: 40px;
+			background: #337BFC;
+			border: #fff
+		}
+		.mui-input-row .mui-input-clear~.mui-icon-clear{
+			top:20px
+		}
+		.paish .info-bar-content-item{
+			margin: 0
+		}
+		.img_item{
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			float: left;
+			margin-right: 20px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+		}
+		.img_item .img_close,#closeImg {
+			display: inline-block;
+			background-color: #1da1f2;
+			color: #FFF;
+		}
+		.isSelect{
+			margin-bottom:10px;
+			display: inline-block;
+			padding:0 10px;
+			color: rgba(0, 0, 0, 0.65);
+			background-color: #fafafa;
+			border: 1px solid #e8e8e8;
+			border-radius: 2px;
+			width:fit-content
+		}
+		.unSelect{
+			display: inline-block;
+			padding:0 10px;
+			background: #fff;
+			color:#337BFC ;
+			border:1px solid #337BFC;
+			border-radius: 2px;
+			width:fit-content
+		}
+		.closePerson{
+			line-height: 30px;
+			color: rgba(0, 0, 0, 0.45);
+			font-size: 22px;
+			font-weight: 300;
+		}
+		.empty{
+			line-height:40px;
+			width:100%;
+			text-align: left;
+			font-size: 16px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!-- 	<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item" id="submit">
+				<div style="background: #337BFC;color: #fff">发送</div>
+			</div>
+		</div> -->
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="info-bar-content" style="padding: 0 20px ">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目名称
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="projectId" required="true" readonly="true" type="text" class="inputCss" value="" placeholder="请输入项目id"
+										 maxlength="100" style="display: none;">
+										<input id="projectName" required="true" readonly="true" type="text" class="inputCss" value="" placeholder="请输入项目名称"
+										 maxlength="100">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="projectNo" readonly="true" required="true" type="text" class="inputCss" value="" placeholder="请输入项目编号"
+										 maxlength="500">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										监理单位
+									</div>
+									<input id="superviceUnit" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="superviceUnitFullname" required="true" readonly="true" type="text" value="" placeholder="请选择监理单位"
+										 class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										施工单位
+									</div>
+									<input id="buildUnit" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="buildUnitFullname" required="true" readonly="true" type="text" value="" placeholder="请选择施工单位"
+										 class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 80px;" id="rectifyUnitType">
+									<div class="item-title">
+										整改单位
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">施工单位</label>
+											<input name="rectifyUnitType" value="0" type="checkbox" disabled>
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">监理单位</label>
+											<input name="rectifyUnitType" value="1" type="checkbox" disabled>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										检查日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="checkTime" class="inputCss" required="true" readonly="readonly" type="text" placeholder="请选择检查日期"
+										 style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检查单位
+									</div>
+									<input id="inspectionUnit" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="inspectionUnitFullName" required="true" readonly="true" type="text" value=""
+										 placeholder="请选择检查单位" class="inputCss" style="width:calc(100% - 25px)">
+										<!-- <span class="mui-icon mui-icon-arrowright"></sapn> -->
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检查组成员
+									</div>
+									<input id="checkTeam" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="checkTeamFullname" required="true" readonly="true" type="text" class="inputCss" value=""
+										 placeholder="请选择检查组成员">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 80px;" id="supervisorOnduty">
+										<div class="item-title">
+											总监理工程师
+										</div>
+										<div class="item-checkbox">
+											<div class="mui-input-row mui-checkbox mui-left">
+												<label class="checkBoxCss">不在岗</label>
+												<input name=" supervisorOnduty" value="0" type="checkbox" disabled>
+											</div>
+											<div class="mui-input-row mui-checkbox mui-left">
+												<label class="checkBoxCss">在岗</label>
+												<input name="supervisorOnduty" value="1" type="checkbox"  disabled>
+											</div>
+										</div>
+									</div>
+								<div class="info-bar-content-item" style="height: 80px;" id="managerOnduty">
+									<div class="item-title">
+										项目经理
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">不在岗</label>
+											<input name=" managerOnduty" value="0" type="checkbox" disabled>
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">在岗</label>
+											<input name="managerOnduty" value="1" type="checkbox"  disabled>
+										</div>
+									</div>
+								</div>
+									<div class="info-bar-content-item" style="height: 80px;" id="chiefEngineerOnduty">
+										<div class="item-title">
+											项目总工
+										</div>
+										<div class="item-checkbox">
+											<div class="mui-input-row mui-checkbox mui-left">
+												<label class="checkBoxCss">不在岗</label>
+												<input name=" chiefEngineerOnduty" value="0" type="checkbox" disabled>
+											</div>
+											<div class="mui-input-row mui-checkbox mui-left">
+												<label class="checkBoxCss">在岗</label>
+												<input name="chiefEngineerOnduty" value="1" type="checkbox"  disabled>
+											</div>
+										</div>
+									</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										检查内容
+									</div>
+									<div class="mui-input-row item-input">
+										<input class="rectifyRequest" id="checkContent" readonly="true"  type="text" class="inputCss mui-input-clear" value=""
+										 placeholder="请输入检查内容" maxlength="1000" >
+									</div>
+								</div>
+								<div style="height: 5px;background: #F4F4F4;" class="splitDiv"></div>
+								<div class="info-bar-content-item" style="height: 120px;" id="checkStop">
+									<div class="item-title">
+										是否停工
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">否</label>
+											<input name="isStop" value="0" type="checkbox" disabled>
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">是</label>
+											<input name="isStop" value="1" type="checkbox" disabled>
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">部分停工</label>
+											<input name="isStop" value="2" type="checkbox" disabled>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 120px;" id="notifyMethod">
+									<div class="item-title">
+										新任务通知方式
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">邮件</label>
+											<input name="email" value="email" type="checkbox" disabled>
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">手机短信</label>
+											<input name="sms" value="sms" type="checkbox" disabled>
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left" style="width:100%">
+											<label class="checkBoxCss">站内消息(默认必选)</label>
+											<input name="message" value="message" type="checkbox" checked disabled>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										整改期限
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="rectifyTime" class="inputCss" required="true" readonly="readonly" type="text" placeholder="请选择整改期限"
+										 style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">
+									</div>
+								</div>
+
+							<!-- 	<div class="info-bar-content-item" id="attachDiv" style="height: 80px;">
+									<div class="item-title">
+										整改通知及答复
+									</div>
+									<div class="empty" id="empty">无</div>
+						
+								</div> -->
+						<!-- 		<div class="fileContent" id="fileDiv" style="display: none;margin:0">
+								</div> -->
+							</div>
+							<div class="bar-title">
+								整改明细
+							</div>
+							<div class="fileContent" style="padding-bottom: 0;border:none" id="items">
+								<div class="empty" style="margin-top:-20px">无</div>
+							</div>
+							<!--<div class="addDiv">
+									<button class="addBtn" id="addBtn">添加检查项</button>
+								</div>	 -->
+							<div class="bar-title">
+								审批流程
+							</div>
+							<div style="padding:20px;font-size: 14px;font-weight: 400;color: #444444;">
+								<div style="text-align: left;margin-bottom: 20px;">审批人（依次审批）</div>
+								<div style="text-align: left;" id="taskComment">
+					<!-- 				<div>
+										<div style="display: inline-block;font-size: 14px;font-weight: 400;text-align: center;width:20px;color: #FFFFFF;height: 20px;background: #337BFC;border-radius: 50%;">1</div>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;display: inline-block;width: 50px;">张三丰</span>
+										<span style="font-size: 14px;font-weight: 400;color: #29CC85;line-height: 14px;margin-left: 30px;">已同意</span>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;">11-17
+											16:21:34</span>
+									</div>
+									<div style="width: 1px;height: 30px;border: 1px solid #337BFC;margin:5px 0 5px 9px "></div>
+									<div>
+										<div style="display: inline-block;font-size: 14px;font-weight: 400;text-align: center;width:20px;color: #FFFFFF;height: 20px;background: #337BFC;border-radius: 50%;">2</div>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;display: inline-block;width: 50px;">李小龙</span>
+										<span style="font-size: 14px;font-weight: 400;color: #29CC85;line-height: 14px;margin-left: 30px;">已同意</span>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;">11-17
+											16:21:34</span>
+									</div>
+									<div style="width: 1px;height: 30px;border: 1px solid #E5E5E5;margin:5px 0 5px 9px "></div>
+									<div>
+										<div style="display: inline-block;font-size: 14px;font-weight: 400;text-align: center;width:20px;color: #FFFFFF;height: 20px;background: #C8CFD5;border-radius: 50%;">3</div>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;display: inline-block;width: 50px;">王刚</span>
+										<span style="font-size: 14px;font-weight: 400;color: #AEAEAE;line-height: 14px;margin-left: 30px;">待审核</span>
+									</div> -->
+								</div>
+							</div>
+						</div>
+						<div style="height: 5px;background: #F4F4F4;" class="splitDiv"></div>
+						<div class="info-bar-content" style="padding: 0 20px ">
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									填写人
+								</div>
+								<div class="mui-input-row item-input">
+									<input id="inputFullname" type="text" class="inputCss" readonly="true" value="" placeholder="请输入填写人">
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									联系方式
+								</div>
+								<div class="mui-input-row item-input">
+									<input id="inputPhone" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+								</div>
+							</div>
+							<div class="info-bar-content-item">
+								<div class="item-title">
+									填写部门
+								</div>
+								<div class="mui-input-row item-input">
+									<input id="inputDepartmentFullname" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+								</div>
+							</div>
+							<div class="info-bar-content-item" style="border: none;">
+								<div class="item-title">
+									填写日期
+								</div>
+								<div class="mui-input-row item-input">
+									<input id="inputDate" class="inputCss" type="text" readonly="true" placeholder="请选择填写日期" style="width: 90%;">
+									<img src="../../../img/commom/time.png" style="width:16px;height:16px"></img>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/conservation.js"></script>
+	<script src="../../../js/quality/quality.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/uploadimage.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/mui.previewimage.js"></script>
+
+	<script src="../../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({
+swipeBack:false
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,
+			style: 'color'
+		});
+
+
+		var self;
+		var ciParams = {
+			projectId: '',
+			column: 'createTime',
+			order: 'desc',
+			field: 'id,,,checkItemName,problems,checkTime,inputFullname,action',
+			pageNo: 1,
+			pageSize: 50
+		}	
+		var checkItemJSON = [];
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			ciParams.projectId = self.projectId
+			// console.log(ciParams)
+			getDailyQualityCheck(ciParams, function(data) {
+				console.log('ffafssa')
+				console.log(data)
+				if (data.success) {					
+					for (var i = 0; i < data.result.records.length; i++) {
+						var item = data.result.records[i];
+						checkItemJSON.push({
+							value: item.guid,
+							text: item.checkItemName
+						})
+					}
+				}	
+			});
+			//界面元素控制
+			initView();
+		});
+
+		//界面元素控制
+		var initView = function() {
+			// console.log(self);
+			queryQualityForm(self.guid, function(data) {
+				console.log(data)
+				// console.log(JSON.stringify(data))
+				if (data.success) {
+					var item = data.result;
+					$("#projectName").val(isEmp(self.projectName))
+					$("#projectNo").val(isEmp(self.projectNo))
+					$("#superviceUnitFullname").val(isEmp(item.superviceUnitFullname))
+					$("#buildUnitFullname").val(isEmp(item.buildUnitFullname))
+					$("#checkTime").val(isEmp(item.checkTime).substring(0, 10))
+					$("#checkTeamFullname").val(isEmp(item.checkTeamFullname))
+					$("#inputFullname").val(isEmp(item.inputerfullname))
+					$("#inputPhone").val(isEmp(item.inputPhone))
+					$("#inputDepartmentFullname").val(isEmp(item.inputDepartmentFullname))
+					$("#inputDate").val(isEmp(item.inputDate).substring(0, 10));
+					// $('#rectifyUnitType input').eq([item.rectifyUnitType]-1).prop('checked',"true");//整改单位
+					if (item.rectifyUnitType == '0') {
+						$("input[name='rectifyUnitType'][value=0]").prop("checked", true);
+					} else if (item.rectifyUnitType == '1') {
+						$("input[name='rectifyUnitType'][value=1]").prop("checked", true);
+					}
+					$('#supervisorOnduty input').eq([item.supervisorOnduty]).prop('checked',"true");//总监理工程师
+					$('#managerOnduty input').eq([item.managerOnduty]).prop('checked',"true");//项目经理
+					$('#chiefEngineerOnduty input').eq([item.chiefEngineerOnduty]).prop('checked',"true");//总工
+					$('#checkContent').val(isEmp(item.checkContent));//检查内容
+					$('#inspectionUnitFullName').val(isEmp(item.checkUnitFullname));//检查单位
+					if (item.isStop == '0') {
+						$("input[name='isStop'][value=0]").prop("checked", true);
+					} else if (item.isStop == '1') {
+						$("input[name='isStop'][value=1]").prop("checked", true);
+					} else if (item.isStop == '2') {
+						$("input[name='isStop'][value=2]").prop("checked", true);
+					}
+					// console.log(JSON.parse(item.notifymethod));
+					let notifyMethodArr = JSON.parse(item.notifymethod);
+					for(var k =0;k<$('#notifyMethod input').length;k++){
+						var myDom =$('#notifyMethod input').eq(k);
+						if(notifyMethodArr.indexOf(myDom.attr('name'))!=-1){
+							//包含
+							myDom.prop('checked',true)
+						}
+					}
+					// if (item.notifymethod.indexOf("message") != -1) {
+					// 	$("input[name='message'][value=message]").prop("checked", true);
+					// }
+					// if (item.notifymethod.indexOf("sms") != -1) {
+					// 	$("input[name='sms'][value=sms]").prop("checked", true);
+					// }
+					// if (item.notifymethod.indexOf("email") != -1) {
+					// 	$("input[name='email'][value=email]").prop("checked", true);
+					// }
+					$("#rectifyTime").val(isEmp(item.rectifyTime).substring(0, 10))
+
+					if (item.rectifyFile != null && item.rectifyFile != undefined && item.rectifyFile != "") {
+						findFilesByGroupId({
+							groupId: item.rectifyFile
+						}, function(data) {
+							if (data.success) {
+								if (data.result.length > 0) {
+									var str = '';
+									if (data.result[0].uploadFile.fileType == '.png' || data.result[0].uploadFile.fileType == '.jepg' || data
+										.result[0].uploadFile.fileType == '.jpg') {
+										// console.log(JSON.stringify(data.result[0]))
+										str =
+											"<img class='imgCss img_item' style='height:72px' data-preview-src='' data-preview-group='1' src='" +
+											config.urls.baseUrl +
+											"sys/common/view/" +
+											data.result[0].uploadFile.savePath + "'>";
+										$("#fileDiv").css("height", "130px");
+									} else {
+										str = `<div class="fileContent-item"` +
+											` data-token="` + data.result[0].fileToken + `"` +
+											`<div style="padding:12px 0 10px 0">
+														<div class="typeImg">`
+										if (data.result[0].uploadFile.fileType == '.pdf') {
+											str += `<img src="../../../img/commom/pdf.png" style="width: 30px;height: 34px;"></img>`;
+										}else if (data.result[0].uploadFile.fileType == '.xls' || data.result[0].uploadFile.fileType == '.xlsx') {
+											str += `<img src="../../../img/commom/xlsx.png" style="width: 30px;height: 34px;"></img>`
+										} else if (data.result[0].uploadFile.fileType == '.rar') {
+											str += `<img src="../../../img/commom/rar.png" style="width: 30px;height: 34px;"></img>`
+										} else if (data.result[0].uploadFile.fileType == '.zip') {
+											str += `<img src="../../../img/commom/zip.png" style="width: 30px;height: 34px;"></img>`
+										}else{
+											str += `<img src="../../../img/commom/doc.png" style="width: 30px;height: 34px;"></img>`
+										} 
+										str +=
+											`</div>
+														<div class="fileContent-item-title">
+															<span class="titleSpan">` +
+											data.result[0].uploadFile.fileName + `</span>
+																			<span class="fileSize">` + data.result[
+												0].uploadFile.fileSize + "KB" +
+											`</span>
+																		</div>										
+																	</div>
+																</div>`
+									}
+									$("#attachDiv").css("height", "30px");
+									$("#attachDiv").css("border", "none");
+									$("#fileDiv").html(str);
+									$("#empty").hide()
+									$("#fileDiv").show();
+								}
+							} else app.toast("附件查询失败")
+						});
+					}
+				} 
+
+				queryQualitycheckItem(self.guid, function(data) {
+					console.log('这里是检查项');
+					console.log(data);
+					console.log(checkItemJSON)
+					if (data.success) {
+						if (data.result.length > 0) {							
+							var items = data.result;
+							var html = '';
+							for(var i = 0 ; i < items.length;i++){
+								var cName = '';						
+								for(let j = 0;j<checkItemJSON.length;j++){		
+									if(checkItemJSON[j].value == items[i].checkItemId){
+										cName = checkItemJSON[j].text
+										break;
+									}
+								}
+								if(items[i].problemPhoto != '') loadProblemPhoto(i,items[i].problemPhoto);
+								if(items[i].rectifyPhoto != '') loadRectifyPhoto(i,items[i].rectifyPhoto);
+								
+								if(i!=0) html += `<div style="height: 5px;background: #F4F4F4;margin-bottom:20px" class="splitDiv"></div>	`;
+								html += `<div class="cItem" id="row_`+i+`">
+									<div class="item-title" style="text-align: left;">
+										检查项`+(i+1)+`
+									</div>
+									<div class="info-bar-content">
+										<div class="info-bar-content-item" id="row_`+i+`">
+											<div class="item-title">
+												检查项目
+											</div>
+											<div class="mui-input-row item-input">
+												<input class="checkItemId" id="checkItemId_`+i+`" style="display: none;" />
+												<input class="checkItemName" id="checkItemName_`+i+`" readonly="true" type="text" class="inputCss" value="`+cName+`"
+												 placeholder="请输入选择检查项" maxlength="100">
+											</div>
+										</div>
+										<div class="info-bar-content-item">
+											<div class="item-title">
+												问题描述
+											</div>
+											<div class="mui-input-row item-input">
+												<input class="problems" id="problems_`+i+`" readonly="true" type="text" class="inputCss" value="`+isEmp(items[i].problems)+`" placeholder="自动填写"
+												 maxlength="1000">
+											</div>
+										</div>
+										<div class="info-bar-content-item">
+											<div class="item-title">
+												问题/隐患照片
+											</div>											
+											<div class="img_list1" id="problemPhoto_`+i+`">
+												<div class="empty">无</div>
+											</div>
+										</div>
+										<div class="info-bar-content-item">
+											<div class="item-title">
+												整改要求
+											</div>
+											<div class="mui-input-row item-input">
+												<input class="rectifyRequest" id="rectifyRequest_`+i+`" readonly="true" type="text" class="inputCss"
+												 value="`+isEmp(items[i].rectifyRequest)+`" placeholder="" maxlength="1000">
+											</div>
+										</div>
+										<div class="info-bar-content-item">
+											<div class="item-title">
+												整改状态
+											</div>
+											<div class="mui-input-row item-input">
+												<input class="rectifyStatus" id="rectifyStatus_`+i+`" readonly="true" type="text" class="inputCss" value="`+getRectifyStatus(i,items[i].rectifyStatus)+`"
+												 placeholder="" maxlength="1000">
+											</div>
+										</div>
+										<div class="info-bar-content-item">
+											<div class="item-title">
+												整改后照片
+											</div>
+											<div class="img_list" id="rectifyPhoto_`+i+`">
+												<div class="empty">无</div>
+											</div>
+										</div>
+										<div class="info-bar-content-item">
+											<div class="item-title">
+												整改说明
+											</div>
+											<div class="mui-input-row item-input">
+												<input class="rectifyComment" id="rectifyComment_`+i+`" readonly="true" type="text" class="inputCss"
+												 value="`+isEmp(items[i].rectifyComment)+`" placeholder="" maxlength="1000">
+											</div>
+										</div>
+									</div>
+								</div>`
+							}
+							$("#items").html(html)
+						}
+					}
+				});
+			});
+
+
+			getTaskComment(self.guid, function(data) {
+				if (data.success) {										
+					var taskListEnd = data.result.taskListEnd;
+					var taskListIng = data.result.taskListIng;
+					var str = '';
+					var step = 0;
+					// console.log(JSON.stringify(taskListEnd))
+					for(let i = 0;i<taskListEnd.length;i++){
+						step ++;
+						var color = taskListEnd[i].handleType == '已退回'?'#FF5656':'#29CC85'
+						if(step != 1) str +=`<div style="width: 1px;height: 30px;border: 1px solid #337BFC;margin:5px 0 5px 9px "></div>`
+						str +=`	<div>
+										<div style="display: inline-block;font-size: 14px;font-weight: 400;text-align: center;width:20px;color: #FFFFFF;height: 20px;background: #337BFC;border-radius: 50%;">${step}</div>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;display: inline-block;width: 50px;">${taskListEnd[i].assigneeFullname}</span>
+										<span style="font-size: 14px;font-weight: 400;color:  `+color+`;line-height: 14px;margin-left: 30px;">${taskListEnd[i].handleType}</span>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;">${taskListEnd[i].endTime.substring(5,19)}</span></span>
+									</div>`
+					}
+					for(let j = 0;j<taskListIng.length;j++){
+						step ++;
+						if(step != 1) str +=`<div style="width: 1px;height: 30px;border: 1px solid #337BFC;margin:5px 0 5px 9px "></div>`
+						str +=`	<div>
+										<div style="display: inline-block;font-size: 14px;font-weight: 400;text-align: center;width:20px;color: #FFFFFF;height: 20px;background: #C8CFD5;border-radius: 50%;">${step}</div>
+										<span style="font-size: 14px;font-weight: 400;color: #444444;line-height: 14px;margin-left: 30px;display: inline-block;width: 50px;">${taskListIng[j].assigneeFullname}</span>
+										<span style="font-size: 14px;font-weight: 400;color: #AEAEAE;line-height: 14px;margin-left: 30px;">${taskListIng[j].handleType}</span>
+									</div>`
+					}
+					$("#taskComment").html(str)
+				}	
+			});
+			
+			//图片预览
+			$(document).on('tap', '.img_src', function() {
+				mui.previewImage();
+			});
+
+			//图片预览
+			$(document).on('tap', '.imgCss', function() {
+				mui.previewImage();
+			});
+		}
+		
+		function loadProblemPhoto(i,problemPhoto){
+			var str;
+			findFilesByGroupId({
+				groupId: problemPhoto
+			}, function(data) {					
+				if(data.success){											
+					if(data.result.length> 0){	
+							str = "<img class='imgCss img_item' data-preview-src='' data-preview-group='"+i+"' src='" + config.urls.baseUrl +
+							"sys/common/view/" +
+							data.result[0].uploadFile.savePath + "' style='height:72px;margin-top:10px'>";
+							$("#problemPhoto_"+i).html(str);
+							$("#problemPhoto_"+i).parent().css("height",'140px')
+					}
+				}
+			});
+		}
+		
+		function loadRectifyPhoto(i,rectifyPhoto){
+			var str2;
+			findFilesByGroupId({
+				groupId: rectifyPhoto
+			}, function(data) {					
+				if(data.success){					
+					if(data.result.length> 0){	
+						
+							str2 = "<img class='imgCss img_item' data-preview-src='' data-preview-group='"+i+"' src='" + config.urls.baseUrl +
+							"sys/common/view/" +
+							data.result[0].uploadFile.savePath + "' style='height:72px;margin-top:10px'>";
+							$("#rectifyPhoto_"+i).html(str2);
+							$("#rectifyPhoto_"+i).parent().css("height",'140px')
+					}
+				}
+			});
+		}
+		
+		function getRectifyStatus(i,type){
+			// console.log(type)
+			var text = '';
+			if(type == 0){
+				text = '未整改';
+			}else if(type == 1){
+				text = '已整改';
+			}else if(type == 2){
+				text = '整改不及格';
+			}else text = '无';
+			return text;
+		}
+	</script>
+
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>混接点管理-新增混接点</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.img_item{
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			float: left;
+			margin-right: 20px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+		}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 90%;
+			margin-left: 5%;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<!-- <div class="item" id="hold">
+				<div id="save" style="background: #fff;color:#337BFC ;border:1px solid #337BFC">暂存</div>
+			</div> -->
+			<div class="item" id="submit">
+				<div style="background: #337BFC;color: #fff">提交</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+		<div style="position:fixed;top:0;left:0;z-index: 99;width:100%;background: #ffffff;">
+			<ol class="steps">
+				<li class="step-active">
+					<div class="step-active">
+						<div class="step-num"></div>
+						<div class="step-text">项目基本情况</div>
+					</div>
+				</li>
+				<li class="step-active">
+					<div class="step-line"></div>
+					<div class="step-content">
+						<div class="step-num"></div>
+						<div class="step-text">水保方案</div>
+					</div>
+				</li>
+				<li class="step-active">
+					<div class="step-line"></div>
+					<div class="step-content">
+						<div class="step-num"></div>
+						<div class="step-text">检查计划</div>
+					</div>
+				</li>
+			</ol>
+			<div style="height: 5px;background: #F4F4F4;"></div>
+		</div>
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper"  style="margin-top: 90px;">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="padding-bottom: 20px;">
+							<div class="bar-title">
+								检查计划
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>检查计划次数</span>
+										<span style="color: red;margin-left: 3px;">*</span>
+										<span id="error" class="err-show" style="color: red;float: right;display:none">只允许输入正整数！</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="checkPlan" type="text" required="true" class="mui-input-clear" value="" onkeyup="validateNum(this)"
+										 placeholder="请输入检查计划次数" style="width:90%;" class="inputCss">
+									</div>
+								</div>
+								<div id="timeGroup">
+									<div class="info-bar-content-item isShow">
+										<div class="item-title">
+											计划日期1<span style="color: red;margin-left: 3px;">*</span>
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="surveyDate1" class="inputCss datePicker" required="true" readonly="readonly" type="text"
+											 placeholder="请选择项计划日期1" style="width: 90%;">
+											<img src="../../img/commom/time.png" style="width: 16px;height: 16px;float: right;margin-top: 8px;">
+										</div>
+									</div>
+								</div>
+
+								<div id="surveyItem" class="info-bar-content-item isShow">
+									<div class="item-title">
+										检查人员<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="surveyBy" type="text" style="display: none;">
+									<input id="surveyPerson_text" readonly="readonly" required="true" type="hidden" value="">
+									<div id="survey-box" class="mui-input-row item-input" style="margin-top:12px;">
+										<!-- <div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;">
+											<span class="surveyPerson">张三丰</span>
+											<span class="mui-icon mui-icon-closeempty"></span>
+										</div> -->
+										<input readonly="readonly" required="true" type="text" class="mui-input-clear" value="" placeholder="请选择调查人员"
+										 class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputById" type="hidden" value="">
+										<input id="inputerFullname" type="text" readonly placeholder="请输入填写人" class="inputCss">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputById" type="text" style="display: none;">
+										<input id="inputDate" type="text" readonly placeholder="请输入填写时间" class="inputCss">
+									</div>
+								</div>
+								<div id="bottom-div" style="height: 100px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		var vConsole = new VConsole();
+		mui.init({
+			swipeBack: false
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var opt = "add"; //操作类型
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+
+			//界面元素控制
+			initView();
+
+			// showData()
+
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了				
+					$("#bottom-item-btn").hide()
+				} else {
+
+					$("#bottom-item-btn").show()
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			$("#inputerFullname").val(app.userInfo().realname); //填写人
+			$("#inputDate").val((new Date()).Format("yyyy-MM-dd")); //填写时间
+
+			var self = plus.webview.currentWebview();
+
+
+			//日期选择
+			$("#timeGroup").on("tap", '.datePicker', function() {
+				var that = $(this);
+
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					that.val(d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2))
+				}, function(e) {
+					that.val("");
+				}, {
+					title: "请选择日期"
+				});
+				plusDate(function(data) {
+					that.val(data)
+				}, 1);
+			})
+
+
+			//调查人员
+			$("#survey-box").on("tap", function() {
+				var extras = {
+					multiSelect: true
+				}
+				app.openPage("../commom/organ.html", {
+					titleNView: {
+						titleText: '选择调查人员',
+						autoBackButton: true
+					}
+				}, extras);
+				//移除
+				window.removeEventListener('returnSelect', surveyPersonBack, false);
+				// 赋值
+				window.addEventListener('returnSelect', surveyPersonBack, false);
+
+			})
+			//调查人员回调
+			var surveyPersonBack = function(data) {
+				var oldVal = $("#surveyPerson_text").val();
+				var oldVal2 = $("#surveyBy").val();
+				console.log(oldVal + "===" + oldVal2)
+				console.log(JSON.stringify(data.detail)); //data.detail[0].realname
+				var v1 = oldVal.split(",")
+				var rn = '';
+				var un = '';
+				var flag = false;
+				var a = []
+				for (let i = 0; i < data.detail.length; i++) {
+					console.log(v1.indexOf(data.detail[i].realname))
+					if (v1.indexOf(data.detail[i].realname) == -1) { //避免重复
+						rn += data.detail[i].realname + ",";
+						un += data.detail[i].username + ",";
+					} else {
+						flag = true;
+						a.push(data.detail[i].realname)
+					}
+				}
+				if (flag) {
+					app.toast("已过滤重复项【" + a.toString() + "】")
+				}
+				rn = rn.slice(0, rn.length - 1);
+				un = un.slice(0, un.length - 1);
+				rn = oldVal != "" ? oldVal + "," + rn : rn;
+				un = oldVal2 != "" ? oldVal2 + "," + un : un;
+				$("#surveyPerson_text").val(rn);
+				console.log(rn + "--" + un); //data.detail[0].realname
+				// $("#surveyBy").val(data.detail[0].perId);
+				$("#surveyBy").val(un);
+				var perArr = rn.split(",")
+				var perArr2 = un.split(",")
+				var text = "";
+				for (let i = 0; i < perArr.length; i++) {
+					text +=
+						`<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+											<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+											<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+							</div>`;
+				}
+				text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+				if (perArr.length >= 4) {
+					var h = $("#surveyItem").height() + (perArr.length / 4) * 22;
+					$("#surveyItem").css("height", h)
+				}
+				$("#survey-box").html(text)
+				//移除
+				window.removeEventListener('returnSelect', surveyPersonBack, false);
+			}
+			//删除调查人员
+			$("#survey-box").on('tap', ".mui-icon-closeempty", function(e) {
+				e.stopPropagation() //阻止时间冒泡
+				var realname = $(this).attr("rname");
+				var username = $(this).attr("uname")
+				console.log(realname + "-" + username)
+				var that = $(this)
+				mui.confirm("确定要删除【" + realname + "】?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						var oldValArr = $("#surveyPerson_text").val().split(",").filter(item => {
+							return item != realname
+						});
+						var oldVal2Arr = $("#surveyBy").val().split(",").filter(item => {
+							return item != username
+						});
+						that.parent().remove()
+						console.log(oldValArr.toString() + "----" + oldVal2Arr.toString())
+						$("#surveyPerson_text").val(oldValArr.toString())
+						$("#surveyBy").val(oldVal2Arr.toString())
+						if (oldValArr.length == 0) {
+							var text =
+								`<input readonly="readonly" required="true" type="text" class="mui-input-clear" value=""
+												 placeholder="请选择调查人员" class="inputCss" style="width:90%;">
+												<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+							$("#survey-box").html(text)
+						}
+						if (oldValArr.length < 4) {
+							$("#surveyItem").css("height", 90)
+						}
+					}
+				})
+			})
+
+		}
+
+		//只允许小数
+		function clearNoNum(obj) {
+			obj.value = obj.value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
+			obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是.
+			obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的.
+			obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+		}
+
+		//暂存
+		$("#save").on("tap", function(event) {
+			saveProForm()
+			app.showLoaderWithMsg("正在暂存中，请稍后...")
+			setTimeout(function() {
+				app.hideLoader()
+				app.toast("暂存成功！")
+				mui.confirm("是否继续填写?", "提示", ['继续', '返回列表'], function(result) {
+					if (parseInt(result.index) == 1) {
+						plus.webview.currentWebview().opener().opener().close('none');
+						plus.webview.currentWebview().opener().close('none');
+						plus.webview.currentWebview().close('none');
+					}
+				})
+			}, 1000)
+		})
+
+		//提交
+		$("#submit").on("tap", function(event) {
+			if (validateRequiredFields()) {
+				//自定义校验
+				if (validateAttach()) {
+					//组装表单数据
+					saveProForm();
+					var pro = JSON.parse(localStorage.getItem("pro_form_data"));
+					console.log("新增项目提交参数信息:" + localStorage.getItem("pro_form_data"));
+					var params = JSON.parse(localStorage.getItem("pro_form_data"));
+					var url = config.urls.baseUrl + config.actions.addProject;
+
+
+					app.showLoaderWithMsg("正在提交中，请稍后...")
+					$.ajax(url, {
+						data: params, //.serialize(),
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						headers: {
+							"X-Access-Token": app.sessionId(),
+							"Content-Type": "application/x-www-form-urlencoded"
+						},
+						timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+						processData: false, // jQuery不要去处理发送的数据
+						contentType: false, // jQuery不要去设置Content-Type请求头
+						success: function(data) {
+							console.log("新增项目接口返回：" + JSON.stringify(data))
+							if (data.success) {
+								//清除本地缓存
+								localStorage.removeItem("pro_form_data")
+								globalDelItem(GlobalKey.fileProperty)
+								app.toast(data.message);
+								//触发列表页面刷新
+								var view = plus.webview.getWebviewById("view/conservation/projectList.html");;
+								mui.fire(view, 'return');
+								//关闭页面
+								setTimeout(function() {
+									app.hideLoader();
+									plus.webview.currentWebview().opener().opener().close('none');
+									plus.webview.currentWebview().opener().close('none');
+									plus.webview.currentWebview().close('none');
+								}, 1000)
+							} else {
+								app.toast(data.message);
+								app.hideLoader();
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							dealingWithErrorRequest(errorThrown);
+							app.hideLoader();
+							app.toast("网络异常,请稍后再试");
+						}
+					});
+				}
+			}
+		});
+		//重新加载
+		var reloadAddress = function(data) {
+			window.location.reload();
+		}
+		//自定义校验
+		var validateAttach = function() {
+			let errArr = $('.err-show:visible');
+			console.log($(errArr[0]).html(), errArr.length);
+			if (errArr.length != 0) { //自定义校验
+				let info = $(errArr[0]).prev().prev().html();
+				app.toast("请正确填写【" + info + "】字段");
+				return false;
+			}
+			return true;
+		}
+
+		//组装表单
+		function saveProForm(type) {
+			var pro_form = localStorage.getItem("pro_form_data");
+			try {
+				if (pro_form) {
+					pro_form = JSON.parse(pro_form)
+				}
+			} catch (err) {
+				console.log(err)
+			}
+			pro_form.checkPlan = $("#checkPlan").val(); //计划检查次数
+			pro_form.inputerFullname = $("#inputerFullname").val(); //填写人 
+			pro_form.inputDate = new Date().Format("yyyy-MM-dd hh:mm:ss"); //填写时间
+			pro_form.inspectors = $("#surveyPerson_text").val(); //检查人员
+			//检查日期
+			var checkDateStr = "";
+			for (let i = 0; i < $("#checkPlan").val(); i++) {
+				checkDateStr = checkDateStr + $("#surveyDate" + (i + 1)).val() + ";"
+			}
+			pro_form.planCheckDate = checkDateStr;
+
+			localStorage.setItem("pro_form_data", JSON.stringify(pro_form));
+			return true;
+		}
+
+		//加载暂存数据
+		function showData() {
+			var pro_form = localStorage.getItem("pro_form_data");
+			try {
+				if (pro_form) {
+					pro_form = JSON.parse(pro_form)
+				}
+			} catch (err) {
+				console.log(err)
+			}
+			//计划日期
+			var checkPlan = pro_form.checkPlan;
+			$("#checkPlan").val(checkPlan);
+			if (checkPlan != "" && checkPlan != 1) {
+				let dateArr = pro_form.planCheckDate.split(";");
+				let html = ""
+				for (var i = 0; i < checkPlan; i++) {
+					html +=
+						`<div class="info-bar-content-item isShow">
+								<div class="item-title">计划日期${i+1}<span style="color: red;margin-left: 3px;">*</span></div>
+								<div class="mui-input-row item-input">
+									<input id="surveyDate${i+1}" class="inputCss datePicker" required="true" readonly="readonly" type="text" class="mui-input-clear"
+											 placeholder="请选择项计划日期${i+1}" value=${dateArr[i]} style="width: 90%;">
+									<img src="../../img/commom/time.png" style="width: 16px;height: 16px;float: right;margin-top: 8px;">
+								</div>
+						</div>`
+				}
+				$("#timeGroup").html(html)
+			}
+			//检查人员
+			var inspectors = pro_form.inspectors;
+			if (inspectors != "" && inspectors.length > 0) {
+				let perArr = inspectors.split(",")
+				var text;
+				for (let i = 0; i < perArr.length; i++) {
+					text +=
+						`<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+											<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+											<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+							</div>`;
+				}
+				text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+				if (perArr.length >= 4) {
+					var h = $("#surveyItem").height() + (perArr.length / 4) * 22;
+					$("#surveyItem").css("height", h)
+				}
+				$("#survey-box").html(text)
+			}
+
+		}
+
+		// 对Date的扩展，将 Date 转化为指定格式的String
+		// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+		// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+		// 例子：
+		// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+		// (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+		// 格式化限制数字文本框输入，只能数字或者两位小数
+		function validateNum(obj) {
+			var reg = /(^[1-9]\d*$)/;
+			var html = "";
+			if (obj.value != null && !reg.test(obj.value)) {
+				// $("#error").show();
+				app.toast("只允许输入正整数")
+				obj.value = '';
+				html =
+					`<div class="info-bar-content-item isShow">
+									<div class="item-title">计划日期1<span style="color: red;margin-left: 3px;">*</span></div>
+									<div class="mui-input-row item-input">
+										<input id="surveyDate1" class="inputCss datePicker" required="true" readonly="readonly" type="text" class="mui-input-clear"
+												 placeholder="请选择项计划日期1" style="width: 90%;">
+										<img src="../../img/commom/time.png" style="width: 16px;height: 16px;float: right;margin-top: 8px;">
+									</div>
+							</div>`;
+			} else {
+				if (obj.value > 20) {
+					app.toast("最大为20！")
+					obj.value = obj.value.slice(0, 1);
+				}
+				$("#error").hide();
+				for (var i = 0; i < obj.value; i++) {
+					html +=
+						`<div class="info-bar-content-item isShow">
+								<div class="item-title">计划日期${i+1}<span style="color: red;margin-left: 3px;">*</span></div>
+								<div class="mui-input-row item-input">
+									<input id="surveyDate${i+1}" class="inputCss datePicker" required="true" readonly="readonly" type="text" class="mui-input-clear"
+											 placeholder="请选择项计划日期${i+1}" style="width: 90%;">
+									<img src="../../img/commom/time.png" style="width: 16px;height: 16px;float: right;margin-top: 8px;">
+								</div>
+						</div>`
+				}
+			}
+			$("#timeGroup").html(html)
+		}
+
+		//校验不通过焦点重置
+		function isErrFun(obj) {
+			if (!flag) {
+				obj.focus();
+			}
+		}
+	</script>
+
+</html>

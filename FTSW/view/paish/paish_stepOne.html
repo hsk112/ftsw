@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-popover {
+				height: 300px;
+			}
+			.mui-content {
+				padding: 10px;
+			}
+
+			.img_item{
+				margin-top:10px;
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				float: left;
+				margin-right: 20px;
+			}
+			.img_item img{
+				width: 72px;
+				height: 72px;
+			}
+			.img_item .img_close {
+				width: 16px;
+				height: 16px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">排水户登记</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div style="position:fixed;top:0;left:0;z-index: 99;width:100%;background: #ffffff;">
+				<ol class="steps">
+					<li class="step-active">
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">基本信息</div>
+						</div>
+					</li>
+					<li class="">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">证照信息</div>
+						</div>
+					</li>
+					<li class="">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">排口信息</div>
+						</div>
+					</li>
+				</ol>
+				<div style="height: 5px;background: #F4F4F4;"></div>
+			</div>
+
+			<!-- 			<div class="bottom-btn" style="position:absolute;bottom:0;left:0;z-index: 999;">
+				<div class="btn-item" id="step_save">
+					<button style="color: #337BFC;">暂存</button>
+				</div>
+				<div class="btn-item" id="next_step">
+					<div style="background: #337BFC;color: #fff;">下一步</div>
+				</div>
+			</div> -->
+			<div class="mui-page-content" style="height: 100vh">
+				<div class="mui-scroll-wrapper" style="margin-top: 90px;" id="wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title">
+								基本情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item" style="height: 120px;">
+									<div class="item-title">
+										门牌详细地址<span style="color: red;">*</span>
+										<!--<a id="fj_mp" style="float: right;font-size: 14px;color: #337BFC;">
+											<img src="../../img/commom/ss@2x.png" style="width: 14px;height: 14px;" />
+											<span style="font-size: 14px;color: #337BFC;">附近门牌</span>
+										</a>-->
+										<a id="dz_xz" style="float: right;font-size: 14px;color: #337BFC;">
+											<img src="../../img/commom/dz@2x.png" style="width: 14px;height: 14px;" />
+										</a>
+									</div>
+									<div class="mui-input-row item-input">
+										<div class="mui-row task-item">
+											<div class="mui-col-xs-12 task-item-title">
+												<textarea id="address" type="text" required="true" maxlength="51" rows="2" onkeyup="format_textarea(this)" placeholder="请输入门牌详细地址"
+													 style="border:none;padding-left: 0;width: calc(100% - 25px);"></textarea>
+													<span class="mui-icon mui-icon-closeempty" id="clear" style="position: relative;top: -50px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>												
+												<!-- <textarea id="address" rows="2" required="true" type="text" class="mui-input-clear" placeholder="请输入门牌详细地址"
+												 style="width: 100%;border: none;" maxlength="50" on></textarea> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										补充地址
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="replenishAddress" type="text"  style="width: 90%;" class="mui-input-clear" placeholder="如所在楼层、房号等信息" maxlength="101" onkeyup="format_input(1,this)">
+									</div>
+								</div>
+
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										是否排水小区<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="villageFlag" required="true" placeholder="请选择是否排水小区" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="villageFlag" required="true" placeholder="请选择是否排水小区" value="0" type="checkbox" checked>
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" id="sq_item_view">
+									<div class="item-title" id="sq_item_view_title">
+										所属小区<span style="color: red;">*</span>
+									</div>
+									<input id="smid" type="text" style="display: none;">
+									<input id="villageId" type="text" style="display: none;" value="re_area_1">
+									<input id="corpCode" type="text" style="display: none;" value="A01">
+									<div class="mui-input-row item-input">
+										<input id="village" required="true" placeholder="请选择排水小区" readonly="readonly" type="text" class="" value="">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										排水户名称<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="dischargerName" required="true" type="text" style="width: 90%;" class="mui-input-clear"
+										 placeholder="请输入排水户名称" maxlength="51" onkeyup="format_input(2,this)">
+									</div>
+								</div>
+								<div class="info-bar-content-item" id="level_item_view" style="height: 90px;">
+									<div class="item-title">
+										排水户级别<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>一级排水户</label>
+											<input name="userlevel" required="true" placeholder="请选择排水户级别" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>二级排水户</label>
+											<input name="userlevel" required="true" placeholder="请选择排水户级别" value="2" type="checkbox">
+										</div>
+									</div>
+									<div id="for_level_one" style="display: none;" disabled>
+										<div class="item-title">
+											对应一级排水户<span style="color: red;">*</span>
+										</div>
+										<input id="parentId" type="text" value="" style="display: none;">
+										<div class="item-title">
+											<input id="parentName" required="true" type="text" value="" placeholder="请选择一级排水户" readonly="readonly" style="border: none;background: none;color:#191515;font-size: 16px;" />
+										</div>
+									</div>
+								</div>
+
+								<div class="info-bar-content-item" style="display: none;">
+									<div class="item-title">
+										排水户编号<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="expNo" required="true" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入排水户编号">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 140px;">
+									<div class="item-title">
+										排水户照片
+										<a style="float: right;font-size: 14px;color: #337BFC;" href="#middlePopover">拍照须知</a>
+									</div>
+									<input id="pshPhotoInput" style="display: none;" />
+									<div class="psh_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="psh_photo" class="img_item">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										排水户性质<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="character" style="display: none;">
+										<input id="characterText" type="text" readonly placeholder="请选择排水户性质">
+									</div>					
+								</div>								
+<!-- 								<div class="info-bar-content-item">
+									<div class="item-title">
+										污水类别<span style="color: red;">*</span>
+										<a style="float: right;font-size: 14px;color: #337BFC;" href="#pollutematterPopover"><img src="../../img/commom/yw.png"
+											 style="width: 20px;" /> </a>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="pollutematter" style="display: none;">
+										<input id="pollutematter_dictText" type="text" readonly placeholder="请选择污水类别">
+									</div>					
+								</div> -->
+<!-- 								<div class="info-bar-content-item">
+									<div class="item-title">
+										排水户类型<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="usertype" style="display: none;">
+										<input id="usertype_dictText" type="text" readonly placeholder="排水户类型">
+									</div>
+								</div> -->
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										运维单位<span style="color: red;">*</span>
+									</div>
+									<input id="operatorId" type="text" value="100000004" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="operatorId_dictText" required="true" readonly="readonly" type="text" style="width: 90%;" 
+										 value="深圳市水务（集团）有限公司福田分公司" placeholder="请选择运维单位">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										所属流域<span style="color: red;">*</span>
+									</div>
+									<input id="basinId" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="basin" readonly="readonly" required="true" type="text" style="width: 90%;" 
+										 value="" placeholder="请选择所属流域">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										所属水务所<span style="color: red;">*</span>
+									</div>
+									<input id="stationId" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="stationId_dictText" readonly="readonly" required="true" type="text" style="width: 90%;" 
+										 value="" placeholder="请选择所属水务所">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										所属水务所联系人<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="stationContact" required="true" type="text" style="width: 90%;" class="mui-input-clear"
+										 placeholder="请输入所属水务所联系人" maxlength="17" onkeyup="format_input(6,this)">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										所属水务所联系电话<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="stationPhone" onblur="format_phone(this)" required="true" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入所属水务所联系电话">
+									</div>
+								</div>
+								<div class="info-bar-content-item" id="notifyMethod">
+									<div class="item-title">
+										新任务通知方式
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">邮件</label>
+											<input name="email" value="email" type="checkbox" checked disabled>
+										</div>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label class="checkBoxCss">手机短信</label>
+											<input name="msg" value="msg" type="checkbox">
+										</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										建筑面积(m²)
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="discArea" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+										 placeholder="请输入建筑面积" maxlength="17" onkeyup="format_number(1,this)" onblur="format_number(1,this)">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										管理单位
+										<a style="float: right;font-size: 14px;color: #337BFC;" href="#managerCompPopover"><img src="../../img/commom/yw.png"
+											 style="width: 20px;" /> </a>
+									</div>
+									<input id="managerComp" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="managerComp_dictText"   maxlength="17" onkeyup="format_input(7,this)" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入管理单位">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										管理单位联系人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="managerPer" type="text"  maxlength="17" onkeyup="format_input(6,this)" style="width: 90%;" class="mui-input-clear" placeholder="请输入管理单位联系人">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										管理单位联系电话
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="managerTel" onblur="format_phone(this)" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入管理单位联系电话">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										排水户联系人<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="pshContact" type="text" style="width: 90%;" required="true" class="mui-input-clear" placeholder="请输入排水户联系人"  maxlength="17" onkeyup="format_input(5,this)">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										排水户联系电话<span style="color: red;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="pshPhone"  onblur="format_phone(this)"  type="tel" style="width: 90%;" required="true" class="mui-input-clear" placeholder="请输入排水户联系电话">
+									</div>
+								</div>
+
+								<div id="more_info1" style="display: none;">
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											主要业务活动
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="business" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入主要业务活动"  maxlength="51" onkeyup="format_input(3,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											主要生产工艺
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="process" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入主要生产工艺" maxlength="51" onkeyup="format_input(4,this)">
+										</div>
+									</div>
+									<div id="hide_view1" class="info-bar-content-item more">
+										隐藏
+									</div>
+								</div>
+
+								<div id="show_view1" class="info-bar-content-item more">
+									更多选填
+								</div>
+							</div>
+						</div>
+						<div class="scroll-li">
+							<div class="bar-title">
+								用水信息
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item" style="height: 135px;">
+									<div class="item-title">
+										用水性质<span style="color: red;">*</span>
+									</div>
+									<div class="item-checkbox" id="ZHSW.DEVICE.WATERUSECLASS" data-id="ZHSW.DEVICE.WATERUSECLASS" data-field="waterType">
+										<!-- <div class="mui-input-row mui-checkbox mui-left">
+											<label>生产</label>
+											<input name="waterType" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>生活</label>
+											<input name="waterType" value="2" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>综合</label>
+											<input name="waterType" value="3" type="checkbox">
+										</div> -->
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水表编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input id='waterMetNu' type="text" style="width: 90%;" placeholder="扫码或手动输入" style="width: 90%;" maxlength="17" onkeyup="format_input(10,this)">
+										<img id="scanBtn" src="../../img/commom/sm@2x.png" style="width: 23px;vertical-align: middle;" />
+									</div>
+								</div>
+
+								<div id="more_info2" style="display: none;">
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											月用水量(m³)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterConsump" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')"
+											 class="mui-input-clear" placeholder="请输入月用水量" maxlength="15" onkeyup="format_number(2,this)" onblur="format_number(2,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											自备水量(m³)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterSelfDaily" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')"
+											 class="mui-input-clear" placeholder="请输入自备水量"  maxlength="15" onkeyup="format_number(3,this)" onblur="format_number(3,this)">
+										</div>
+									</div>
+									<div id="hide_view2" class="info-bar-content-item more">
+										隐藏
+									</div>
+								</div>
+								<div id="show_view2" class="info-bar-content-item more">
+									更多选填
+								</div>
+							</div>
+						</div>
+						<div class="scroll-li" id="scroll-li3">
+							<div class="bar-title">
+								排水情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item" id="ismatter_view_item">
+									<div class="item-title">
+										是否特殊物质用户<span style="color: red;">*</span>
+										<a style="float: right;font-size: 14px;color: #337BFC;" href="#ismatterPopover"><img src="../../img/commom/yw.png"
+											 style="width: 20px;" /> </a>
+
+									</div>
+									<div class="item-checkbox" id="ZHSW.DEVICE.ISMATTERUSER">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="ismatter" required="true" placeholder="请选择是否为特殊物质用户" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="ismatter" required="true" placeholder="请选择是否为特殊物质用户" value="0" type="checkbox" checked>
+										</div>
+									</div>
+									<div id="matterName_item" class="mui-input-row item-input" style="display: none;">
+										<input id="matterName" type="text" style="width: 90%;" required="true" class="mui-input-clear" placeholder="请输入特殊物质用户废水主要成分"
+										maxlength="51" onkeyup="format_input(11,this)">
+									</div>
+								</div>
+								<div class="info-bar-content-item" id="passTime_view_item">
+									<div class="item-title">
+										是否雨污分流<span style="color: red;">*</span>
+										<a style="float: right;font-size: 14px;color: #337BFC;" href="#passIdPopover"><img src="../../img/commom/yw.png"
+											 style="width: 20px;" /> </a>
+									</div>
+									<div class="item-checkbox">
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>是</label>
+											<input name="passId" required="true" placeholder="请选择是否雨污分流" value="1" type="checkbox">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>否</label>
+											<input name="passId" required="true" placeholder="请选择是否雨污分流" value="0" type="checkbox" checked>
+										</div>
+									</div>
+									<div id="passTime_item" class="mui-input-row item-input" style="display: none;">
+										<input id="passTime" required="true" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入雨污分流改造时间">
+									</div>
+								</div>
+
+								<div id="more_info3" style="display: none;">
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											总排水量(m³/d)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterAllQuanit" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')"
+											 class="mui-input-clear" placeholder="请输入总排水量"  maxlength="15" onkeyup="format_number(4,this)" onblur="format_number(4,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											生产污水量(m³/d)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="productWasterQuant" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')"
+											 class="mui-input-clear" placeholder="请输入生产污水量" maxlength="15" onkeyup="format_number(5,this)" onblur="format_number(5,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											生活污水量(m³/d)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="sanitaryWasterQuant" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')"
+											 class="mui-input-clear" placeholder="请输入生活污水量" maxlength="15" onkeyup="format_number(6,this)" onblur="format_number(6,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											工业废水主要成分
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="mainCont" type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入工业废水主要成分"  maxlength="51" onkeyup="format_input(9,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水总悬浮固体(mg/L)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterSs" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入排水总悬浮固体" maxlength="15" onkeyup="format_number(7,this)" onblur="format_number(7,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水生化需氧量(mg/L)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterBod5" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入排水生化需氧量" maxlength="15" onkeyup="format_number(8,this)" onblur="format_number(8,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水化学需氧量(mg/L)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterCodcr" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')"
+											 class="mui-input-clear" placeholder="请输入排水化学需氧量" maxlength="15" onkeyup="format_number(9,this)" onblur="format_number(9,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水总氮(mg/L)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterTn" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入排水总氮" maxlength="15" onkeyup="format_number(11,this)" onblur="format_number(11,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水氨氮(mg/L)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterNh3N" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入排水氨氮" maxlength="15" onkeyup="format_number(10,this)" onblur="format_number(10,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水总磷(mg/L)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterTp" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入排水总磷" maxlength="15" onkeyup="format_number(13,this)" onblur="format_number(13,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											排水温度(℃)
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterTemp" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入排水温度" maxlength="15" onkeyup="format_number(12,this)" onblur="format_number(12,this)">
+										</div>
+									</div>
+									<div class="info-bar-content-item">
+										<div class="item-title">
+											PH值
+										</div>
+										<div class="mui-input-row item-input">
+											<input id="waterPh" type="number" style="width: 90%;" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear"
+											 placeholder="请输入pH值" maxlength="15" onkeyup="format_number(14,this)" onblur="format_number(14,this)">
+										</div>
+									</div>
+
+									<div id="hide_view3" class="info-bar-content-item more">
+										隐藏
+									</div>
+								</div>
+								<div id="show_view3" class="info-bar-content-item more">
+									更多选填
+								</div>
+							</div>
+						</div>
+						<div class="bottom-btn">
+							<div class="btn-item" id="step_save">
+								<div style="color: #337BFC;">暂存</div>
+							</div>
+							<div class="btn-item" id="next_step">
+								<div style="background: #337BFC;color: #fff;">下一步</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+		<!--拍照须知-->
+		<div id="middlePopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#">现场图片拍照须知:</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">1、如手机有水印功能，请开启：【设置】->【水印】</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">2、平视图：手机正面对着门面，要能够看清楚整个门面及门面上面的排水户名称</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">3、楼栋图：手机仰视拍摄排水户所在的楼栋</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">4、方位图：手机竖直沿排水户所在街道的某一个方向拍摄</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">5、门牌图：如果有门牌挂牌，正门拍摄</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<!--  管理单位  -->
+		<div id="managerCompPopover" class="mui-popover" style="text-align: left;background: #FFFFFF;height: 70px;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#">管理单位：指水行政主管单位</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- 污水类别 -->
+		<div id="pollutematterPopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">1、生活排污类：居民住宅、机关事业单位等</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">2、餐饮排污类：餐饮店、酒店、大型食堂、农家乐等</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">3、沉淀排污类：洗车场、修车厂、建筑工地、农贸市场、美容美发、垃圾中转站等</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">4、有毒有害排污类：电镀、医疗、化工、机械加工等</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">5、混合排污类：商场、学校等</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 特殊物质 -->
+		<div id="ismatterPopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#">特殊物质用户释义:</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">&nbsp;&nbsp;&nbsp;&nbsp;指排放污水含《污水综合排放标准》第一类污染物的排水户，第一类污染物包括总汞，烷基汞，总镉，总铬，六价铬，总砷，总铅，总镍，苯并（a）芘，总铍，总银，总α放射性，总β放射性。</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 雨污分流 -->
+		<div id="passIdPopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#">雨污分流改造时间:</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">&nbsp;&nbsp;&nbsp;&nbsp;原雨污合流小区进行正本清源改造的，填报正本清源改造完工验收时间；设计建设即为雨污分流小区的，填写小区建设完工时间。</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		var self;
+		var pshData = '';
+		var oldStreet;
+		var oldCommuId;
+		var oldRoad;
+		var oldHouseNo;
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var upJSON;
+		var userPicker = new mui.PopPicker();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,
+			style: 'color'
+		});
+
+		mui.plusReady(function() {
+			// plus.webview.currentWebview().setStyle({
+			// 　　softinputMode: "adjustResize"  // 弹出软键盘时自动改变webview的高度
+			// });
+			// var originalHeight=document.documentElement.clientHeight || document.body.clientHeight;
+			//     window.onresize=function(){
+			//         var  resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
+			// 		console.log(originalHeight)
+			// 		console.log(resizeHeight)
+			//         //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+			//         if(resizeHeight*1<originalHeight*1){
+			//        　　  plus.webview.currentWebview().setStyle({
+			//              　　 height:originalHeight + 70
+			//           　});
+			//         }
+			//  }
+
+			self = plus.webview.currentWebview();
+			//界面元素控制
+			initView();
+
+			// 点击事件
+			initDownSelect();
+
+			// 页面选择
+			initPageSelect();
+
+			//初始化回调
+			initCallback();
+
+			// 初始化选项框状态
+			initCheckBox();
+		});
+
+		//界面元素控制
+		var initView = function() {	
+			
+			oldStreet = globalGetItem(GlobalKey.street);
+			
+			oldCommuId = globalGetItem(GlobalKey.commuId);
+			
+			oldRoad = globalGetItem(GlobalKey.road);
+		
+			oldHouseNo = globalGetItem(GlobalKey.houseNo);
+		
+			console.log(oldStreet+","+oldCommuId+","+oldRoad+","+oldHouseNo)
+			
+			// $("#pollutematter").val('life');
+			// $("#pollutematter_dictText").val('生活排污类');
+			// $("#usertype").val('residential');
+			// $("#usertype_dictText").val('居民住宅');
+			getCategoryTree({
+				dictId: 'd478d55a4831b293740abc1892f31f66'}, function(data) {
+					upJSON =data.result;	
+				});
+			
+			// 初始化选项枚举
+			$(".item-checkbox").each(function() {
+				if (typeof($(this).attr("data-id")) != "undefined" && typeof($(this).attr("data-field")) != "undefined") {
+					getDictItems($(this).attr("data-id"), function(data) {
+						var list = data.result;
+						var str = "";
+						for (var i = 0; i < list.length; i++) {
+							var item = list[i];
+							var checked = ""
+							if (i == 0) {
+								checked = "checked"; //第一个默认选中
+							}
+							str = str + '<div class="mui-input-row mui-checkbox mui-left">' +
+								'		<label>' + item.text + '</label>' +
+								'		<input name="' + $("div[data-id='" + data.key + "']").attr("data-field") + '" value="' + item.value +
+								'" type="checkbox" ' + checked + '>' +
+								'	</div>';
+						}
+
+						$("div[data-id='" + data.key + "']").html(str);
+						initCheckBox();
+					});
+				}
+			});
+
+			//是否小区
+			$("input[name='villageFlag']").change(function() {
+				$("#village").val("");
+				$("#villageId").val("");
+				$("#corpCode").val("");
+
+				if (parseInt($(this).val()) == 0) {
+					$('#dischargerName').attr("disabled", false);
+					$('#dischargerName').addClass("mui-input-clear");
+					$("input[name='userlevel']").attr("disabled", false);
+					//隐藏小区
+					// $("#sq_item_view").hide();
+					$("#sq_item_view_title").html("所属小区<span style='color: red;'>*</span>")
+
+					//判断选择的的地点，是否是排水户
+					var isSelectPsh = globalGetItem("isSelectPsh");
+					if (isSelectPsh == "false") {
+						//如果地图点不是排水户，那么新增的时候，默认就是一级排水户 且不能修改
+						$("input[name='userlevel'][value=2]").prop("checked", false);
+						$("input[name='userlevel'][value=1]").prop("checked", true);
+						$("input[name='userlevel']").attr("disabled", true);
+					}
+				} else if (parseInt($(this).val()) == 1) {
+					//显示小区
+					$("#sq_item_view_title").html("小区<span style='color: red;'>*</span>")
+
+					//默认一级排水户
+					$("input[name='userlevel'][value=2]").prop("checked", false);
+					$("input[name='userlevel'][value=1]").prop("checked", true);
+					$("input[name='userlevel']").attr("disabled", true);
+					$("#level_item_view").css("height", "90px");
+					$("#for_level_one").hide();
+
+					//排水户名称
+					$('#dischargerName').attr("disabled", true);
+					$("#dischargerName").val($("#village").val())
+				}
+			});
+
+			stitchAddress();
+
+			// 排水户修改
+			var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+			// console.log( plus.webview.currentWebview().type)
+			if (isSelectPsh == "true" && plus.webview.currentWebview().type != "add") {
+				$('#step_save').hide()
+				$('#next_step').css("width", "100%")
+				// console.log(globalGetItem(GlobalKey.psh));
+				var pshData = JSON.parse(globalGetItem(GlobalKey.psh));
+				$("#smid").val(pshData.smid);
+
+				if (pshData.pshPhoto) {
+					queryPhoto(pshData.pshPhoto, function(data) {
+						if (data.result && data.result.length) {
+							// console.log(JSON.stringify(data))
+							for (let i = 0; i < data.result.length; i++) {
+								let path = data.result[i].uploadFile.savePath;
+								let url = config.urls.baseUrl + 'sys/common/view/' + path;
+								var html = '<div id="' + data.result[i].uploadFile.id + '" data-token="' + data.result[i].fileToken +
+											'" class="img_item">' +
+											'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + url + '" style=""  />' +
+											'		<span class="img_close mui-icon mui-icon-closeempty" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+											'	</div>';
+								$(".psh_img_list").append(html);
+							}
+							$("#psh_photo").hide();
+						}
+					})
+				}
+				if (pshData.villageFlag) {
+					$("input[name='villageFlag'][value=0]").prop("checked", false);
+					$("input[name='villageFlag'][value=1]").prop("checked", true);
+				} else {
+					$("input[name='villageFlag'][value=0]").prop("checked", true);
+					$("input[name='villageFlag'][value=1]").prop("checked", false);
+				}
+				if (pshData.village) {
+					$("#villageId").val(pshData.village);
+					$("#corpCode").val(pshData.corpCode);
+					let param = {
+						guid: pshData.village,
+						rownum: 20
+					};
+					getPsXq(param, function(data) {
+						// console.log(JSON.stringify(data))
+						if (data.result && data.result.length > 0) $("#village").val(data.result[0].reName);
+						else $("#village").val(pshData.village);
+					})
+				}
+				$("#corpCode").val(pshData.corpCode);
+				if (pshData.dischargerName) $("#dischargerName").val(pshData.dischargerName);
+				// if (pshData.expNo) $("#expNo").val(pshData.expNo);
+				if (parseInt(pshData.userlevel) == 1) {
+					$("input[name='userlevel'][value=1]").prop("checked", true);
+					$("input[name='userlevel'][value=2]").prop("checked", false);
+					$("#level_item_view").css("height", "90px");
+					$("#for_level_one").hide();
+				} else {
+					
+					$("input[name='userlevel'][value=1]").prop("checked", false);
+					$("input[name='userlevel'][value=2]").prop("checked", true);
+					console.log(pshData.parentName)
+					$("#parentName").val(pshData.parentName);
+					$("#parentId").val(pshData.parentId);
+					$("#for_level_one").show();
+					$("#level_item_view").css("height", "145px");
+				}
+				if (parseInt(pshData.sort) == 1) {
+					$("input[name='sort'][value=1]").prop("checked", true);
+					$("input[name='sort'][value=2]").prop("checked", false);
+				} else {
+					$("input[name='sort'][value=1]").prop("checked", false);
+					$("input[name='sort'][value=2]").prop("checked", true);
+				}
+				// if (pshData.usertype) {
+				// 	console.log(111111111111)
+				// 	$("input[name='ZHSW.DEVICE.USERTYPE_POLLUTE']").parent().parent().find(":checkbox").each(function() {
+				// 		// $(this).prop('checked', false);
+				// 		// if($(this).val() == parseInt(pshData.usertype)) {
+				// 		// 	$(this).prop("checked", true);
+				// 		// }
+				// 	});
+				// }
+				if(pshData.notifymethod && pshData.notifymethod !=' '){
+					let notifyMethodArr = JSON.parse(pshData.notifymethod);
+					for(var k =0;k<$('#notifyMethod input').length;k++){
+						var myDom =$('#notifyMethod input').eq(k);
+						if(notifyMethodArr.indexOf(myDom.attr('name'))!=-1){
+							//包含
+							myDom.prop('checked',true)
+						}
+					}
+				}
+				
+				if (pshData.basin) {
+					getSSLY(function(data) {
+						// console.log(JSON.stringify(data))
+						for (var i = 0; i < data.result.length; i++) {
+							if (data.result[i].guid == pshData.basin) {
+								$("#basinId").val(pshData.basin);
+								$("#basin").val(data.result[i].basName);
+							}
+						}
+					});
+				}
+				if (pshData.replenishAddress) $("#replenishAddress").val(pshData.replenishAddress);
+				if (pshData.address) $("#address").val(pshData.address);
+				if (pshData.waterMetNu) $("#waterMetNu").val(pshData.waterMetNu);
+
+				if (pshData.pshPhoto) $("#pshPhotoInput").val(pshData.pshPhoto);
+				if (pshData.pshContact) $("#pshContact").val(pshData.pshContact);
+				if (pshData.pshPhone) $("#pshPhone").val(pshData.pshPhone);
+				if (pshData.operatorId) $("#operatorId").val(pshData.operatorId);
+				if (pshData.operatorId_dictText) $("#operatorId_dictText").val(pshData.operatorId_dictText);
+				// console.log(pshData.stationId)
+				if (pshData.stationId) {
+					getSSSS(function(data) {
+						for (var i = 0; i < data.result.length; i++) {
+							// console.log(JSON.stringify(data.result))
+							if (data.result[i].id == pshData.stationId) {
+								$("#stationId").val(data.result[i].id );
+								$("#stationId_dictText").val(data.result[i].departName);
+							}
+						}
+				})
+				}
+				// if (pshData.stationId) $("#stationId_dictText").val(pshData.stationId);
+				if (pshData.stationContact) $("#stationContact").val(pshData.stationContact);
+				if (pshData.stationPhone) $("#stationPhone").val(pshData.stationPhone);
+				if (pshData.discArea) $("#discArea").val(pshData.discArea);
+				if (pshData.managerComp) $("#managerComp").val(pshData.managerComp);
+				if (pshData.managerComp) $("#managerComp_dictText").val(pshData.managerComp);
+				if (pshData.managerPer) $("#managerPer").val(pshData.managerPer);
+				if (pshData.managerTel) $("#managerTel").val(pshData.managerTel);
+				if (pshData.business) $("#business").val(pshData.business);
+				if (pshData.process) $("#process").val(pshData.process);
+
+				if (pshData.waterConsump) $("#waterConsump").val(pshData.waterConsump);
+				if (pshData.waterSelfDaily) $("#waterSelfDaily").val(pshData.waterSelfDaily);
+				if (pshData.waterAllQuanit) $("#waterAllQuanit").val(pshData.waterAllQuanit);
+				if (pshData.productWasterQuant) $("#productWasterQuant").val(pshData.productWasterQuant);
+				if (pshData.sanitaryWasterQuant) $("#sanitaryWasterQuant").val(pshData.sanitaryWasterQuant);
+				if (pshData.mainCont) $("#mainCont").val(pshData.mainCont);
+				if (pshData.waterSs) $("#waterSs").val(pshData.waterSs);
+				if (pshData.waterBod5) $("#waterBod5").val(pshData.waterBod5);
+				if (pshData.waterCodcr) $("#waterCodcr").val(pshData.waterCodcr);
+				if (pshData.waterTn) $("#waterTn").val(pshData.waterTn);
+				if (pshData.waterNh3N) $("#waterNh3N").val(pshData.waterNh3N);
+				if (pshData.waterTp) $("#waterTp").val(pshData.waterTp);
+				if (pshData.waterTemp) $("#waterTemp").val(pshData.waterTemp);
+				if (pshData.waterPh) $("#waterPh").val(pshData.waterPh);
+				if (parseInt(pshData.waterType) == 1) {
+					$("input[name='waterType'][value=1]").prop("checked", true);
+					$("input[name='waterType'][value=2]").prop("checked", false);
+					$("input[name='waterType'][value=3]").prop("checked", false);
+				} else if (parseInt(pshData.waterType) == 2) {
+					$("input[name='waterType'][value=1]").prop("checked", false);
+					$("input[name='waterType'][value=2]").prop("checked", true);
+					$("input[name='waterType'][value=3]").prop("checked", false);
+				} else {
+					$("input[name='waterType'][value=1]").prop("checked", false);
+					$("input[name='waterType'][value=2]").prop("checked", false);
+					$("input[name='waterType'][value=3]").prop("checked", true);
+				}
+				if (parseInt(pshData.passId) == 1) {
+					$("input[name='passId'][value=1]").prop("checked", true);
+					$("input[name='passId'][value=0]").prop("checked", false);
+					$("#passTime_view_item").css("height", "130px");
+					$("#passTime_item").show();
+					if (pshData.passTime) $("#passTime").val(pshData.passTime);
+				} else {
+					$("input[name='passId'][value=1]").prop("checked", false);
+					$("input[name='passId'][value=0]").prop("checked", true);
+				}
+				// if (pshData.pollutematter || parseInt(pshData.pollutematter) == 0) {
+				// 	$("input[name='ZHSW.DEVICE.POLLUTEMATTER']").parent().find(":checkbox").each(function() {
+				// 		$(this).prop('checked', false);
+				// 		if ($(this).val() == parseInt(pshData.pollutematter)) {
+				// 			$(this).prop("checked", true);
+				// 		}
+				// 	});
+				// }
+				
+				console.log(JSON.stringify(pshData))
+				$("#character").val(pshData.character);
+				$("#characterText").val(pshData.characterText);
+				// $("#pollutematter").val(pshData.pollutematter);
+				// $("#pollutematter_dictText").val(pshData.pollutematter_dictText);
+				// $("#usertype").val(pshData.usertype);
+				// $("#usertype_dictText").val(pshData.usertype_dictText);
+				
+				if (parseInt(pshData.ismatter) == 1) {
+					$("input[name='ismatter'][value=1]").prop("checked", true);
+					$("input[name='ismatter'][value=0]").prop("checked", false);
+					$("#matterName_item").show();
+					$("#ismatter_view_item").css("height", "130px");
+					$("#matterName").val(pshData.matterName);
+				} else {
+					$("input[name='ismatter'][value=1]").prop("checked", false);
+					$("input[name='ismatter'][value=0]").prop("checked", true);
+				}
+				if (pshData.departName1) $("#operatorId_dictText").val(pshData.departName1);
+			}
+
+			// //1、默认是二级排水、允许修改
+			// $("input[name='userlevel'][value=2]").prop("checked", true);
+			// $("input[name='userlevel'][value=1]").prop("checked", false);
+			// // $("input[name='userlevel']").attr("disabled", false);
+			// $("#level_item_view").css("height", "145px");
+			// $("#for_level_one").show();
+
+			//2、判断选择的的地点，是否是排水户
+			// var isSelectPsh = globalGetItem("isSelectPsh");
+			if (isSelectPsh == "false") {
+				//如果地图点不是排水户，那么新增的时候，默认就是一级排水户 且不能修改
+				$("input[name='userlevel'][value=2]").prop("checked", false);
+				$("input[name='userlevel'][value=1]").prop("checked", true);
+				$("input[name='userlevel']").attr("disabled", true);
+				$("#level_item_view").css("height", "90px");
+				$("#for_level_one").hide();
+			}
+
+			// 3、排水户等级
+			$("input[name='userlevel']").change(function() {
+				if (parseInt($(this).val()) == 1) {
+					$("#level_item_view").css("height", "90px");
+					$("#for_level_one").hide();
+					$('#basin').attr("disabled", false);
+					$('#stationId_dictText').attr("disabled", false);
+					$("#parentName").val('');
+					$("#parentId").val('');
+					$("#address").attr("readonly", false);
+					$("#dz_xz").show()
+					//街道
+					globalSetItem(GlobalKey.street, oldStreet);
+					
+					//社区
+					globalSetItem(GlobalKey.commuId, oldCommuId);
+					
+					//街
+					globalSetItem(GlobalKey.road, oldRoad);
+					
+					//门牌
+					globalSetItem(GlobalKey.houseNo, oldHouseNo);
+					stitchAddress()
+				} else if (parseInt($(this).val()) == 2) {
+					if (parseInt($("input[name='villageFlag']:checked").val()) == 0) {
+
+					}
+					$("#dz_xz").hide()
+					$("#basin").val('');
+					$("#basinId").val('');
+					$("#stationId").val('');
+					$("#stationId_dictText").val('');
+					 $("#village").val('');
+					 $("#villageId").val('');
+					$("#address").val('');
+					$("#address").attr("readonly", true);
+					$('#basin').attr("disabled", true);
+					$('#stationId_dictText').attr("disabled", true);
+					$("#level_item_view").css("height", "145px");
+					$("#for_level_one").show();
+				}
+			});
+
+			//是否特殊物质
+			$("input[name='ismatter']").change(function() {
+				if (parseInt($(this).val()) == 0) {
+					$("#ismatter_view_item").css("height", "90px");
+					$("#matterName_item").hide();
+				} else if (parseInt($(this).val()) == 1) {
+					$("#ismatter_view_item").css("height", "130px");
+					$("#matterName_item").show();
+				}
+			});
+
+			//是否雨污分流
+			$("input[name='passId']").change(function() {
+				if (parseInt($(this).val()) == 0) {
+					$("#passTime_view_item").css("height", "90px");
+					$("#passTime_item").hide();
+				} else if (parseInt($(this).val()) == 1) {
+					$("#passTime_view_item").css("height", "130px");
+					$("#passTime_item").show();
+				}
+			});
+
+			//时间选择
+			$("#passTime").on("tap", function() {
+				var that = $(this);
+				plusDate(function(data) {
+					var date = new Date();				
+					plus.nativeUI.pickTime(function(e) {
+						var d = new Date(e.date)
+						var h = d.getHours()<=9?"0"+d.getHours():d.getHours();
+						var m = d.getMinutes()<=9?"0"+d.getMinutes():d.getMinutes();
+						var s = d.getSeconds()<=9?"0"+d.getSeconds():d.getSeconds();
+						var t =" "+ h+":"+m+":"+s;
+						that.val(data+t);
+					})
+				}, 1);
+			})
+		}
+
+		//扫码回调
+		function scaned(type, result, file) {
+			$("#waterMetNu").val("");
+			$("#waterMetNu").val(result);
+		}
+
+		//只允许小数
+		function clearNoNum(obj) {
+			obj.value = obj.value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
+			obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是.
+			obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的.
+			obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+		}
+
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".info-bar-content-item").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if ($(this).is(':checked')) {
+						$(this).parent().siblings().find(":checkbox").each(function() {
+							$(this).prop("checked",false)
+						});
+					}
+				});
+			});
+		}
+
+		//储存数据
+		function savePSH() {
+			var ps_dischargerStr = localStorage.getItem("ps_discharger");
+			if (!ps_dischargerStr) {
+				ps_dischargerStr = JSON.stringify(ps_discharger);
+			}
+			ps_discharger = JSON.parse(ps_dischargerStr);
+
+			ps_discharger.villageFlag = $("input[name='villageFlag']:checked").val();//否排水小区01
+			ps_discharger.village = $("#villageId").val();//所属小区的id 如：re_area_1
+			ps_discharger.corpCode = $("#corpCode").val();//门排
+			ps_discharger.dischargerName = $("#dischargerName").val();//排水户名称
+			// ps_discharger.expNo = $("#expNo").val();
+			ps_discharger.userlevel = $("input[name='userlevel']:checked").val();//排水户级别
+			if (parseInt(ps_discharger.userlevel) == 2) {
+				ps_discharger.parentName = $("#parentName").val();//对应上级排水户
+				ps_discharger.parentId = $("#parentId").val();//上级排水户id
+			}
+			// ps_discharger.sort = $("input[name='sort']:checked").val();
+
+			ps_discharger.district = "440304";
+			ps_discharger.basin = $("#basinId").val();//所属流域id
+			ps_discharger.basin_dictText = $("#basin").val();//所属流域
+			let street = globalGetItem(GlobalKey.street);
+			if (street && street != 'null') ps_discharger.street = street;//街道
+			else delete ps_discharger.street;
+			let commuId = globalGetItem(GlobalKey.commuId);
+			if (commuId && commuId != 'null') ps_discharger.commuId = commuId;//社区id
+			else delete ps_discharger.commuId;
+			let road = globalGetItem(GlobalKey.road);
+			if (road && road != 'null') ps_discharger.road = road;//路
+			else delete ps_discharger.road;
+			let houseNo = globalGetItem(GlobalKey.houseNo);
+			if (houseNo && houseNo != 'null') ps_discharger.houseNo = houseNo;//门牌
+			else delete ps_discharger.houseNo;
+			ps_discharger.replenishAddress = $("#replenishAddress").val();//补充地址
+			ps_discharger.address = $("#address").val();//地址
+			ps_discharger.waterMetNu = $("#waterMetNu").val();//水表编号
+
+			// ps_discharger.pshPhoto = $("#pshPhotoInput").val();
+			ps_discharger.pshContact = $("#pshContact").val();//排水户联系人
+			ps_discharger.pshPhone = $.trim($("#pshPhone").val());//排水户联系电话
+			ps_discharger.operatorId = $("#operatorId").val();//运维单位id
+			ps_discharger.operatorId_dictText = $("#operatorId_dictText").val();//运维单位
+			ps_discharger.stationId = $("#stationId").val();//所属水务所id
+			ps_discharger.stationId_dictText = $("#stationId_dictText").val();//所属水务所
+			ps_discharger.stationContact = $("#stationContact").val();//所属水务所联系人
+			ps_discharger.stationPhone = $.trim($("#stationPhone").val());//所属水务所联系人电话
+			ps_discharger.discArea = $("#discArea").val();//建筑面积
+			ps_discharger.managerComp = $("#managerComp_dictText").val();//管理单位
+			ps_discharger.managerComp_dictText = $("#managerComp_dictText").val();//管理单位
+			ps_discharger.managerPer = $("#managerPer").val();//管理单位联系人
+			ps_discharger.managerTel = $.trim($("#managerTel").val());//管理单位联系人电话
+			ps_discharger.business = $("#business").val();//主要业务活动
+			ps_discharger.process = $("#process").val();//主要生产工艺
+
+			ps_discharger.waterConsump = $("#waterConsump").val();//月用水量
+			ps_discharger.waterSelfDaily = $("#waterSelfDaily").val();//自备水量
+			ps_discharger.waterAllQuanit = $("#waterAllQuanit").val();//总排水量
+			ps_discharger.productWasterQuant = $("#productWasterQuant").val();//生产污水量
+			ps_discharger.sanitaryWasterQuant = $("#sanitaryWasterQuant").val();//生活污水量
+			ps_discharger.mainCont = $("#mainCont").val();//工业废水主要成分
+			ps_discharger.waterSs = $("#waterSs").val();//排水总悬浮固体
+			ps_discharger.waterBod5 = $("#waterBod5").val();//排水生化需氧量
+			ps_discharger.waterCodcr = $("#waterCodcr").val();//排水化学需氧量
+			ps_discharger.waterTn = $("#waterTn").val();//排水总氮
+			ps_discharger.waterNh3N = $("#waterNh3N").val();//排水氨氮
+			ps_discharger.waterTp = $("#waterTp").val();//排水总磷
+			ps_discharger.waterTemp = $("#waterTemp").val();//排水温度
+			ps_discharger.waterPh = $("#waterPh").val();//PH值
+
+			ps_discharger.inputerfullname = app.userInfo().realname;//填入人全名
+			ps_discharger.inputPhone = app.userInfo().personMobilePhone;//填入人手机
+			ps_discharger.inputDepart = app.depart() ? app.depart().departName : '';//填入人部门
+			ps_discharger.inputDate = getNowDate();//填写日期
+			ps_discharger.notifymethod = ["email"];//新任务通知方式
+			if ($("input[name='msg']:checked").val() == "msg") ps_discharger.notifymethod.push("msg")
+			ps_discharger.waterType = $("input[name='waterType']:checked").val();//用水性质
+			ps_discharger.rainSewageSeparated = $("input[name='passId']:checked").val();//是否雨污分流
+			ps_discharger.passTime = $("#passTime").val();//雨污分流改造时间
+			ps_discharger.character = $("#character").val();//排水户性质value
+			ps_discharger.characterText = $("#characterText").val();//排水户性质text
+			// ps_discharger.pollutematter = $("#pollutematter").val();
+			// ps_discharger.pollutematter_dictText = $("#pollutematter_dictText").val();
+			// ps_discharger.usertype = $("#usertype").val();
+			// ps_discharger.usertype_dictText = $("#usertype_dictText").val();
+
+			ps_discharger.ismatter = $("input[name='ismatter']:checked").val();//是否为特殊物质用户
+			if (parseInt(ps_discharger.ismatter) == 1) {
+				ps_discharger.matterName = $("#matterName").val();//特殊物质用户废水主要成分
+			}
+			ps_discharger.departName1 = $("#operatorId_dictText").val();//也是运维单位
+			ps_discharger.structures = "";
+			ps_discharger.disChargeLine = "";
+			ps_discharger.transportWell = "";
+			ps_discharger.hasPslCode = 0;
+			ps_discharger.hasDiscCode = 0;
+			ps_discharger.hasEslCode = 0;
+			var pointStr = globalGetItem(GlobalKey.point)
+			var point = JSON.parse(pointStr);
+			ps_discharger.longitude = point.lng;
+			ps_discharger.latitude = point.lat;
+			if (plus.webview.currentWebview().type == 'edit') {
+				ps_discharger.smid = $("#smid").val(); //smid
+				ps_discharger.guid = globalGetItem(GlobalKey.id); //选中排水户的id
+				console.log(globalGetItem(GlobalKey.id))
+			} else {
+				ps_discharger.guid = '';
+				ps_discharger.smid = '';
+			}
+			// console.log(JSON.stringify(ps_discharger.smid))
+			localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+			// return ps_discharger;
+
+		}
+
+		//附件
+		var attach = function() {
+			var imagefileTokens = '';
+			$("[data-token]").each(function(index) {
+				var imgID = $(this).attr("id");
+				var token = $(this).attr("data-token");
+				if (imagefileTokens) {
+					imagefileTokens = imagefileTokens + "," + token;
+				} else {
+					imagefileTokens = token;
+				}
+			});
+
+			var photoFile = globalGetItem(GlobalKey.photoJSON);
+
+			if (photoFile) {
+				photoJSON = JSON.parse(photoFile);
+			}
+			/*var groupId = guid().replace(new RegExp('-', 'g'), '');
+			$("#pshPhotoInput").val(groupId);*/
+			var ps_discharger = globalGetItem(GlobalKey.psh)
+			if (ps_discharger) {
+				ps_discharger = JSON.parse(ps_discharger);
+			}else ps_discharger = {};
+
+			photoJSON.forEach((img, index, array) => {
+				if (img.fieldName == 'pshPhoto') {
+					// let groupId = '';
+					if (ps_discharger.pshPhoto == '' || ps_discharger.pshPhoto == ' ' || ps_discharger.pshPhoto ==null ) {
+						img.groupId = getGroupId();
+						ps_discharger.pshPhoto = img.groupId;
+					} else img.groupId = ps_discharger.pshPhoto;
+
+					img.fileTokens = imagefileTokens;
+					console.log(JSON.stringify(ps_discharger.pshPhoto))
+					console.log(img.groupId)
+					console.log(imagefileTokens)
+					console.log("-------")
+				} else if (img.fieldName == 'discCodeAttachment') {
+					if (ps_discharger.discCodeAttachment == '' || ps_discharger.discCodeAttachment == ' ' || ps_discharger.discCodeAttachment ==null) {
+						console.log(1)
+						img.groupId = getGroupId();
+						ps_discharger.discCodeAttachment = img.groupId;
+					} else img.groupId = ps_discharger.discCodeAttachment;
+					console.log(ps_discharger.discCodeAttachment)
+				} else if (img.fieldName == 'pslCodeAttachment') {
+					if (ps_discharger.pslCodeAttachment == '' || ps_discharger.pslCodeAttachment == ' '|| ps_discharger.pslCodeAttachment ==null) {
+						img.groupId = getGroupId();
+						ps_discharger.pslCodeAttachment = img.groupId;
+					} else img.groupId = ps_discharger.pslCodeAttachment
+				} else if (img.fieldName == 'eslCodeAttachment') {
+					if (ps_discharger.eslCodeAttachment == '' || ps_discharger.eslCodeAttachment == ' '|| ps_discharger.eslCodeAttachment ==null) {
+						img.groupId = getGroupId();
+						ps_discharger.eslCodeAttachment = img.groupId;
+					} else img.groupId = ps_discharger.eslCodeAttachment
+				}
+			})
+			console.log( JSON.stringify(photoJSON))
+			globalSetItem(GlobalKey.photoJSON, JSON.stringify(photoJSON));
+			localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger))
+		}
+
+		// 点击事件
+		var initDownSelect = function() {
+			$("#characterText").on("tap", function() {
+				var that = $(this);
+				getDictItems('DEVICE.USERTYPE_CHARACTER', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#character").val(items[0].value);
+							$("#characterText").val(items[0].text);
+						});
+					}
+				})			
+			})
+			// $("#pollutematter_dictText").on("tap", function() {
+			// 	var resultJSON = [];
+			// 	console.log(JSON.stringify(upJSON))
+			// 	for (var i = 0; i < upJSON.length; i++) {
+			// 		var item = upJSON[i];
+			// 		resultJSON.push({
+			// 			text: item.title,
+			// 			value: item.code
+			// 		})
+			// 	}
+			// 	if ($(".mui-poppicker").hasClass("mui-active")) {
+			// 		userPicker.hide();
+			// 		return false;
+			// 	} else {
+			// 		userPicker.setData(resultJSON);
+			// 		userPicker.show(function(items) {
+			// 			$("#pollutematter").val(items[0].value);
+			// 			$("#pollutematter_dictText").val(items[0].text);
+			// 			$("#usertype").val('');
+			// 			$("#usertype_dictText").val('');
+			// 		});
+			// 	}				
+			// })
+			
+			// $("#usertype_dictText").on("tap", function() {
+			// 	var resultJSON = [];
+			// 	// console.log(JSON.stringify(upJSON))
+			// 	for (var i = 0; i < upJSON.length; i++) {
+			// 		if(upJSON[i].code == $("#pollutematter").val()){					
+			// 			for (var j = 0; j < upJSON[i].children.length; j++) {
+			// 				var item = upJSON[i].children[j];							
+			// 				resultJSON.push({
+			// 					text: item.title,
+			// 					value: item.code
+			// 				})
+			// 			}
+			// 		}
+			// 	}
+			// 	if ($(".mui-poppicker").hasClass("mui-active")) {
+			// 		userPicker.hide();
+			// 		return false;
+			// 	} else {
+			// 		userPicker.setData(resultJSON);
+			// 		userPicker.show(function(items) {
+			// 			$("#usertype").val(items[0].value);
+			// 			$("#usertype_dictText").val(items[0].text);
+			// 		});
+			// 	}				
+			// })
+			
+			//运维单位
+			$("#operatorId_dictText").on("tap", function() {
+				getYWDW(function(data) {
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							value: item.id,
+							text: item.title
+						})
+					}
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#operatorId_dictText").val(items[0].text);
+							$("#operatorId").val(items[0].value)
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+			})
+
+			//所属流域
+			$("#basin").on("tap", function() {
+				getSSLY(function(data) {
+					if (200 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							value: item.guid,
+							text: item.basName
+						})
+					}
+
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {
+						$("#basin").val(items[0].text);
+						$("#basinId").val(items[0].value);
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+					}
+				})
+			})
+
+			//所属水所
+			$("#stationId_dictText").on("tap", function() {
+				getSSSS(function(data) {
+					var resultJSON = [];
+					if (data.result.length > 0) {
+						for (var i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+							resultJSON.push({
+								value: JSON.stringify({
+									id: item.id,
+									mobile: item.mobile,
+									contactPerson: item.contactPerson
+								}),
+								text: item.departName
+							})
+						}
+						if ($(".mui-poppicker").hasClass("mui-active")) {
+							userPicker.hide();
+							return false;
+						} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#stationId_dictText").val(items[0].text);
+							$("#stationId").val(JSON.parse(items[0].value).id);
+							$("#stationContact").val(JSON.parse(items[0].value).contactPerson);
+							$("#stationPhone").val(JSON.parse(items[0].value).mobile);
+						});
+						}
+					} else {
+						app.toast('暂无数据');
+					}
+
+				})
+			})
+
+
+			//拍照
+			$("#psh_photo").on("tap", function() {
+				plusSelectImage(function(data, path) {
+					console.log(JSON.stringify(data))
+					if (data.success) {
+						var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+							'" class="img_item">' +
+							'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style=""  />' +
+							'		<span class="img_close mui-icon mui-icon-closeempty" style="position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+							'	</div>';
+						$(".psh_img_list").append(html);
+
+						var count = $(".psh_img_list").children(".img_item").length;
+						if (count == 1) { //处理上传的数量
+							$("#psh_photo").hide();
+						}
+					} else app.toast(data.message)
+				});
+			});
+			//删除图
+			$(document).on("tap", ".img_close", function() {
+				var that = $(this)
+				mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						that.parent().remove();
+						var count = $(".psh_img_list").children(".img_item").length;
+						if (count < 1) {
+							$("#psh_photo").show();
+						}
+					}
+				})
+			});
+
+			//暂存
+			$("#step_save").on("tap", function() {
+				let obj = {
+					// CORP_CODE: $('#corpCode').val()
+					CORP_CODE: 'A01'
+				};
+
+				// var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+				// // console.log(JSON.stringify(isSelectPsh))
+
+				// if (isSelectPsh == "true") {
+				// 	pshData = JSON.parse(globalGetItem(GlobalKey.psh));
+				// 	console.log(JSON.stringify(pshData))
+				// 	// localStorage.getItem("ps_discharger")
+				// 	obj.CORP_CODE = pshData.corpCode;
+				// }
+				var pointStr = globalGetItem(GlobalKey.point);
+				var point = JSON.parse(pointStr);
+
+				mapData.editPoint(
+					point.lng,
+					point.lat,
+					'ps_discharger',
+					obj).then((data) => {
+					// console.log(JSON.stringify(obj))
+					// console.log(JSON.stringify(data.result))
+					//组装附件 ============
+					attach();
+					//组装附件 ============
+					savePSH();
+					let psh = localStorage.getItem("ps_discharger")
+					let photoData = globalGetItem(GlobalKey.photoJSON);
+					psh = JSON.parse(psh);
+
+					psh.smid = $("#smid").val() == '' ? data.result[0] : $("#smid").val();
+					console.log(psh.smid)
+					psh = JSON.stringify(psh);
+					localStorage.setItem("ps_discharger", psh);
+					psh = localStorage.getItem("ps_discharger");
+					console.log("附件（排水户照片）：" + JSON.stringify(photoData))
+					console.log("第一步参数：" + localStorage.getItem("ps_discharger"))
+					temporaryPSH(psh, photoData, function(data) {
+						app.toast("暂存成功");
+						// clearGlobalItem();
+						globalSetItem(GlobalKey.photoJSON, '');
+						localStorage.setItem("ps_discharger", '');
+						plus.webview.currentWebview().opener().opener().reload()
+						plus.webview.currentWebview().opener().close('none')
+						plus.webview.currentWebview().close('none'); //本页面
+					});
+				}).catch();
+			});
+
+			//显示更多
+			$("#show_view1").on("tap", function() {
+				$("#more_info1").show();
+				$("#show_view1").hide();
+			})
+			$("#hide_view1").on("tap", function() {
+				$("#more_info1").hide();
+				$("#show_view1").show();
+			})
+
+			//显示更多
+			$("#show_view2").on("tap", function() {
+				$("#more_info2").show();
+				$("#show_view2").hide();
+			})
+			$("#hide_view2").on("tap", function() {
+				$("#more_info2").hide();
+				$("#show_view2").show();
+			})
+
+			//显示更多
+			$("#show_view3").on("tap", function() {
+				$("#more_info3").show();
+				$("#show_view3").hide();
+			})
+			$("#hide_view3").on("tap", function() {
+				mui("#wrapper").scroll().scrollTo(0,-2200,100)
+				$("#more_info3").hide();
+				$("#show_view3").show();
+			})
+		}
+
+		// 页面选择
+		var initPageSelect = function() {
+			// 一级排水户选择
+			$("#parentName").on("tap", function() {
+				getPshList({
+					pageNo: 1,
+					pageSize: 99999,
+					order: 'desc',
+					column: 'createTime',
+					userlevel: 1,
+					state: 2,
+					// basin: $("#basinId").val()
+				}, function(data) {
+					var resultJSON = [];
+					for (var i = 0; i < data.result.records.length; i++) {
+						var item = data.result.records[i];
+						resultJSON.push({
+							value: item.guid,
+							text: item.dischargerName
+						})
+					}
+					var extras = {
+						dataList: resultJSON,
+						multiSelect: false
+					}
+					app.openPage("../commom/select.html", {
+						titleNView: {
+							titleText: '排水户',
+							autoBackButton: true
+						}
+					}, extras);
+
+					//移除
+					window.removeEventListener('returnSelect', setParentPsh, false);
+					// 赋值
+					window.addEventListener('returnSelect', setParentPsh, false);
+				});
+
+			})
+
+			//上级排水户
+			var setParentPsh = function(data) {
+				$("#parentName").val(data.detail[0].text);
+				$("#parentId").val(data.detail[0].value);
+				$("#corpCode").val('A01');
+						
+				queryByGuid(data.detail[0].value,function(data){
+					$("#villageId").val(data.result.village);
+
+					getPsXq(data.result.village, function(data1) {
+						if (data1.result && data1.result.length > 0) $("#village").val(data1.result[0].reName);
+						else $("#village").val(data.result.village);
+					})
+					
+					getSSLY(function(data1) {
+						// console.log(JSON.stringify(data))
+						for (var i = 0; i < data1.result.length; i++) {
+							if (data1.result[i].guid == data.result.basin) {
+								$("#basin").val(data1.result[i].basName);
+							}
+						}
+					});
+					$("#basinId").val(data.result.basin);
+	
+					getSSSS(function(data1) {
+							for (var i = 0; i < data1.result.length; i++) {
+								// console.log(JSON.stringify(data.result))
+								if (data1.result[i].id == data.result.stationId) {
+									$("#stationId").val(data1.result[i].id );
+									$("#stationId_dictText").val(data1.result[i].departName);
+								}
+							}
+					})
+					$("#address").val(data.result.address);
+					//街道
+					globalSetItem(GlobalKey.street, data.result.street);
+					
+					//社区
+					globalSetItem(GlobalKey.commuId, data.result.commuId);
+					
+					//街
+					globalSetItem(GlobalKey.road, data.result.road);
+					
+					//门牌
+					globalSetItem(GlobalKey.houseNo, data.result.houseNo);
+					
+				})
+			}
+
+			//下一步
+			$("#next_step").on("tap", function(event) {
+				var isCheck = true;
+				// $('#step_save').trigger("tap");//暂存
+				if (validateRequiredFields()) {
+					var stationPhone = $("#stationPhone").val();
+                    stationPhone =$.trim(stationPhone)
+					if (stationPhone && isCheck) {
+						if (!checkPhone2(stationPhone)) {
+							app.toast("水所联系电话不正确")
+							isCheck = false;
+							return;
+						}
+					}
+
+					//管理者不是必填
+					var managerTel = $("#managerTel").val();
+                    managerTel =$.trim(managerTel)//清除空格
+					if (managerTel && isCheck) {
+						if (!checkPhone2(managerTel)) {
+							app.toast("管理联系电话不正确")
+							isCheck = false;
+							return;
+						}
+					}
+
+					var pshPhone = $("#pshPhone").val();
+                    pshPhone =$.trim(pshPhone)//清除空格
+					if (!checkPhone2(pshPhone) && isCheck) {
+						app.toast("排水户联系电话不正确")
+						isCheck = false;
+						return;
+					}
+
+					//检测排水是否重复
+					if (isCheck) {
+						var villageFlag = $("input[name='villageFlag']:checked").val();
+						var village = $("#villageId").val();
+						({
+							villageFlag: villageFlag,
+							village: village
+						}, function(data) {
+							if (!data.success) {
+								isCheck = false;
+								if (data.message) app.toast(data.message);
+							}
+						});
+					}
+
+					//排水名称检测
+					if (isCheck) {
+						var pshData = JSON.parse(globalGetItem(GlobalKey.psh))
+						var dischargerName = $("#dischargerName").val();
+
+						if (pshData == null || pshData.dischargerName != dischargerName) {
+							({
+								// villageFlag:villageFlag,
+								dischargerName: dischargerName
+							}, function(data) {
+								if (!data.success) {
+									isCheck = false;
+									if (data.message) app.toast(data.message);
+								}
+							});
+						}
+					}
+
+					//名称校验
+					if (!isCheck) {
+						return;
+					}
+
+					let obj = {};
+					var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+					if (plus.webview.currentWebview().type == 'edit') {
+						pshData = JSON.parse(globalGetItem(GlobalKey.psh));
+						obj.SMID = pshData.smid
+						// console.log(JSON.stringify(obj))
+					}else obj.CORP_CODE = 'A01'
+					var pointStr = globalGetItem(GlobalKey.point);
+					var point = JSON.parse(pointStr);
+					console.log(JSON.stringify(obj))
+					mapData.editPoint(
+						point.lng,
+						point.lat,
+						'ps_discharger',
+						obj
+					).then((data) => {
+						// console.log(JSON.stringify(data))
+						// 	//组装附件 ============
+						attach();
+						// 	//组装附件 ============
+						savePSH();
+						let psh = localStorage.getItem("ps_discharger")
+						psh = JSON.parse(psh);
+
+						if (plus.webview.currentWebview().type == 'add') {
+							console.log(1111111)
+							psh.smid = data.result[0];
+						}
+						console.log(psh.smid)
+						psh = JSON.stringify(psh);
+						localStorage.setItem("ps_discharger", psh);
+
+						console.log(psh)
+						console.log(globalGetItem(GlobalKey.photoJSON))
+						let extras = {
+							type: plus.webview.currentWebview().type
+						};
+						// console.log(plus.webview.currentWebview().type)
+						// let extras = { returnUrl: self.returnUrl };
+						app.openPage("paish_stepSec.html", {
+							titleNView: {
+								titleText: '排水户登记',
+								autoBackButton: true,
+							}
+						}, extras);
+					}).catch();
+
+				}
+			});
+
+			//附近门牌
+			$("#fj_mp").on("tap", function() {
+				var extras = {}
+				app.openPage("paish_selectAddress.html", {
+					titleNView: {
+						titleText: '附近门牌',
+						autoBackButton: true,
+					}
+				}, extras);
+
+				/**
+				 * 以下监听，是来自下下一个页面
+				 */
+				// 移除
+				window.removeEventListener('reloadAddress', reloadAddress, false);
+				// 赋值
+				window.addEventListener('reloadAddress', reloadAddress, false);
+			});
+
+			//附近门牌
+			$("#dz_xz").on("tap", function() {
+				var extras = {}
+				app.openPage("paish_locationAddress.html", {
+					titleNView: {
+						titleText: '地址定位',
+						autoBackButton: true,
+					}
+				}, extras);
+
+				/**
+				 * 以下监听，是来自下一个页面
+				 */
+				// 移除
+				window.removeEventListener('reloadAddress', reloadAddress, false);
+				// 赋值
+				window.addEventListener('reloadAddress', reloadAddress, false);
+			});
+
+			//重新加载
+			var reloadAddress = function(data) {
+				window.location.reload();
+			}
+
+			//附近所属小区选择
+			var villageList = [];
+			$("#village").on("tap", function() {
+				if (!(parseInt($("input[name='villageFlag']:checked").val()) == 0 && parseInt($(
+						"input[name='userlevel']:checked").val()) == 2)) {
+					var pointStr = globalGetItem(GlobalKey.point);
+					// console.log(pointStr)
+					var point = JSON.parse(pointStr);
+					
+					setTimeout(function() {
+						mapData.getFeaturesByBuffer([{
+							NAME: 'DEVICE_RE_AREA'
+						}], [point.lng, point.lat], 0.001).then(data => {							
+							var resultJSON = [];
+							for (var i = 0; i < data.features.length; i++) {
+								var item = data.features[i].properties;
+								resultJSON.push({
+									value: item.GUID,
+									text: item.RE_NAME,
+									flag: item.CORP_CODE,
+								})
+							}
+
+							var extras = {
+								dataList: resultJSON,
+								multiSelect: false
+							}
+							app.openPage("../commom/select.html", {
+								titleNView: {
+									titleText: '小区选择',
+									autoBackButton: true
+								}
+							}, extras);
+							// console.log(JSON.stringify(resultJSON))
+						});
+					}, 100)
+
+					//移除
+					window.removeEventListener('returnSelect', setVillage, false);
+					// 赋值
+					window.addEventListener('returnSelect', setVillage, false);
+				}
+
+			})
+			//排水户是小区
+			var setVillage = function(data) {
+				$("#village").val(data.detail[0].text);
+				$("#villageId").val(data.detail[0].value);
+				$("#corpCode").val('A01');
+
+				// console.log("小区：" + JSON.stringify(data.detail))
+
+				//流域
+				mapData.getFeaturesByBuffer([{
+					NAME: 'DEVICE_ATT_BAS_BASE',
+					BAS_GRAD: 2
+				}], {
+					NAME: 'DEVICE_RE_AREA',
+					GUID: data.detail[0].value
+				}, 1e-7).then(data => {
+					if (data.features[0].properties.BAS_NAME) {
+						$("#basin").val(data.features[0].properties.BAS_NAME);
+						$("#basinId").val(data.features[0].properties.GUID);
+					}
+				});
+
+				//水所
+				mapData.getFeaturesByBuffer([{
+					NAME: 'GIS_WATER_MANAGER'
+				}], {
+					NAME: 'DEVICE_RE_AREA',
+					GUID: data.detail[0].value
+				}, 1e-7).then(data => {
+					if (data.features[0].properties.NAME) {
+						$("#stationId").val(data.features[0].properties.ID);
+						$("#stationId_dictText").val(data.features[0].properties.NAME);
+
+						// $("#stationPhone").val(data.features[0].properties.MOBILE);
+						// $("#stationContact").val(data.features[0].properties.CONTACTPERSON);
+
+					}
+				});
+
+				//如果是小区，则排水户名称就是小区名称
+				if (parseInt($("input[name='villageFlag']:checked").val()) == 1) {
+					//排水户名称
+					$("#dischargerName").val($("#village").val());
+					$('#dischargerName').attr("disabled", true);
+					$('#dischargerName').removeClass("mui-input-clear");
+				} else {
+					$('#dischargerName').attr("disabled", false);
+					$('#dischargerName').addClass("mui-input-clear");
+				}
+
+				// 判断是否有门牌信息
+				var psh = JSON.parse(globalGetItem(GlobalKey.psh));
+				if (psh != null && !psh.street && !psh.commuId && !psh.road && !psh.houseNo) {
+					//街道、社区 查询
+					var pointStr = globalGetItem(GlobalKey.point);
+					var point = JSON.parse(pointStr);
+					var sqId = data.detail[0].value;
+					mapData.getFeaturesByBuffer([{
+						NAME: 'DEVICE_RE_AREA'
+					}], [point.lng, point.lat], 0.001).then(data => {
+						var item = "";
+						var STREET_ID = ""; //街道
+						var CON_ID = ""; //社区
+						var ROAD_ID = ""; //路
+						var RE_NO = ""; //门牌号
+
+						for (var i = 0; i < data.features.length; i++) {
+							item = data.features[i].properties;
+							if (item.GUID == sqId) {
+								STREET_ID = item.STREET_ID;
+								CON_ID = item.CON_ID;
+								ROAD_ID = item.ROAD_ID;
+								RE_NO = item.RE_NO;
+								break;
+							}
+						}
+						//街道
+						getJD(function(data) {
+							var resultJSON = [];
+							for (var i = 0; i < data.result.length; i++) {
+								var item = data.result[i];
+								if (item.guid == STREET_ID) {
+									globalSetItem(GlobalKey.street, item.guid);
+									globalSetItem(GlobalKey.street_dictText, item.adName);
+								}
+							}
+						});
+						// 社区
+						getSQ(STREET_ID, function(data) {
+							var resultJSON = [];
+							for (var i = 0; i < data.result.length; i++) {
+								var item = data.result[i];
+								if (item.guid == CON_ID) {
+									globalSetItem(GlobalKey.commuId, item.guid);
+									globalSetItem(GlobalKey.commuId_dictText, item.adName);
+								}
+							}
+						});
+
+						// 道路
+						getDL(function(data) {
+							var resultJSON = [];
+							for (var i = 0; i < data.result.length; i++) {
+								var item = data.result[i];
+								if (item.guid == ROAD_ID) {
+									//街
+									globalSetItem(GlobalKey.road, item.road);
+									globalSetItem(GlobalKey.road_dictText, item.road_dictText);
+								}
+							}
+						});
+
+						//门牌
+						globalSetItem(GlobalKey.houseNo, RE_NO);
+					});
+				}
+
+				//检测排水是否重复
+				var villageFlag = $("input[name='villageFlag']:checked").val();
+				if (parseInt(villageFlag) == 1) {
+					var village = $("#villageId").val();
+					({
+						villageFlag: villageFlag,
+						village: village
+					}, function(data) {
+						if (!data.success) {
+							app.toast(data.message);
+							return;
+						}
+					});
+				}
+			}
+
+		//清空textarea
+		$("#clear").on("tap", function(event) {
+			$("#address").val("");
+			$(this).hide()
+		});
+		
+			// 扫一扫
+			$("#scanBtn").on("tap", function() {
+				app.createWithoutTitle('../commom/barcode_scan.html', {
+					titleNView: {
+						type: 'float',
+						backgroundColor: 'rgba(215,75,40,0.3)',
+						titleText: '扫一扫',
+						titleColor: '#FFFFFF',
+						autoBackButton: true,
+					}
+				});
+			});
+		}
+
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+		mui(".psh_img_list").on('tap', '.imgCss', function() {
+			// $('#bottom-item-btn').hide();
+			mui.previewImage();
+		});
+		// 回调函数
+		var initCallback = function() {
+
+		}
+		
+		function format_textarea(obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length > 0) {
+				$("#clear").show();
+				if (obj.value.length >= 50) {
+					obj.value = obj.value.slice(0, 50);
+					app.toast("门牌详细地址不可大于50个字！")
+				}
+			} else $("#clear").hide();
+		}
+		
+		function format_input(type, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			var t;
+			var num;
+			switch (type){
+				case 1: 
+					t = '补充地址';
+					num = 100;
+					break
+				case 2:
+					t = '排水户名称';
+					num = 50;
+					break
+				case 3:
+					t = '主要业务活动';
+					num = 50;
+					break	
+				case 4:
+					t = '主要生产工艺';
+					num = 50;
+					break	
+				case 5:
+					t = '排水户联系人';
+					num = 16;
+					break	
+				case 6:
+					t = '所属水务所联系人';
+					num = 16;
+					break	
+				case 7:
+					t = '管理单位';
+					num = 16;
+					break	
+				case 8:
+					t = '管理单位联系人';
+					num = 16;
+					break	
+				case 9:
+					t = '工业废水主要成分';
+					num = 50;
+					break	
+				case 10:
+					t = '水表编号';
+					num = 16;
+					break
+				case 11:
+					t = '特殊物质用户废水主要成分';
+					num = 50;
+					break																																														
+			}
+			if (obj.value.length > num) {
+				obj.value = obj.value.slice(0, num);
+				// obj.focus();
+				app.toast(t + "不可大于" + num + "个字！")
+			}
+		}
+		
+		function format_phone(obj) {
+            obj.value = obj.value.replace(/\s*/g,"");//清除空格
+		    // console.log("pp:"+obj.value)
+			var tel = /^[0-9]{7}$/;
+			// console.log(!tel.test(obj.value))
+			var phone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			// var phone = /^(13|14|15|17|18)\d{9}$/;
+			if (obj.value!='' && !tel.test(obj.value) && !phone.test(obj.value)) {
+				obj.focus();
+				app.toast("请输入正确的电话号码格式！")
+			} 
+		}
+		
+		function format_number(type,obj){
+			var t;
+			var num;
+			switch (type){
+				case 1: 
+					t = '建筑面积';
+					num = 16;
+					break
+				case 2:
+					t = '月用水量';
+					num = 14;
+					break
+				case 3:
+					t = '自备水量';
+					num = 14;
+					break	
+				case 4:
+					t = '总排水量';
+					num = 14;
+					break	
+				case 5:
+					t = '生产污水量';
+					num = 14;
+					break	
+				case 6:
+					t = '生活污水量';
+					num = 14;
+					break	
+				case 7:
+					t = '排水总悬浮固体';
+					num = 14;
+					break	
+				case 8:
+					t = '排水生化需氧量';
+					num = 14;
+					break	
+				case 9:
+					t = '排水化学需氧量';
+					num = 14;
+					break
+				case 10:
+					t = '排水氨氮';
+					num = 14;
+					break																																										
+				case 11:
+					t = '排水总氮';
+					num = 14;
+					break				
+				case 12:
+					t = '排水温度';
+					num = 14;
+					break				
+				case 13:
+					t = '排水总磷';
+					num = 14;
+					break
+				case 14:
+					t = 'PH值';
+					num = 14;
+					break
+			}
+			var number = num == 14?/^(0(\.\d{1,3})?|[1-9]\d{0,13}|[1-9]\d{0,10}\.\d{1,3})$/:/^(0(\.\d{1,3})?|[1-9]\d{0,15}|[1-9]\d{0,12}\.\d{1,3})$/; //^[0-9]+([.]{1}[0-9]{0,3})?$
+			if (obj.value.length > num) {
+				obj.value = obj.value.slice(0, num);
+				app.toast(t+"不可大于" + num + "位！")
+			}else if (obj.value!='' && !number.test(obj.value)) {
+				obj.focus();
+				app.toast("请输入最多带三位小数的非负数！")
+			} 
+		}
+		
+		function stitchAddress(){
+			//组装地址
+			var qu = "福田区";
+			var address = globalGetItem("address") || ''; //地图点地址
+			var street_dictText = globalGetItem("street_dictText") || ''; //街道
+			var commuId_dictText = globalGetItem("commuId_dictText") || ''; //社区
+			var road_dictText = globalGetItem("road_dictText") || ''; //道路
+			var houseNo = globalGetItem("houseNo") || ''; //门牌号
+			var connectAddress = "/" + street_dictText + "/" + commuId_dictText + "/" + road_dictText + "/" + houseNo;
+			console.log(connectAddress)
+			if (checkEmp(street_dictText) && checkEmp(commuId_dictText) && checkEmp(road_dictText) && checkEmp(houseNo)) {
+				$("#address").val(qu + connectAddress);
+			} else {
+				$("#address").val(address);
+			}
+		}
+	</script>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="css/mui.min.css" rel="stylesheet"/>
+  <link href="css/common.css" rel="stylesheet"/>
+  <style>
+    .mui-icon img {
+      width: 24px;
+    }
+
+    /* 首页 */
+    .icon-sy {
+      background: url(img/sy.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    .mui-active .icon-sy {
+      background: url(img/sy_act.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    /* 统计 */
+    .icon-dbrw {
+      background: url(img/dbrw.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    .mui-active .icon-dbrw {
+      background: url(img/dbrw_act.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    /* 统计 */
+    .icon-txl {
+      background: url(img/txl.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    .mui-active .icon-txl {
+      background: url(img/txl_act.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    /* 地图 */
+    .icon-dt {
+      background: url(img/dt.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    .mui-active .icon-dt {
+      background: url(img/dt_act.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    /* 我的 */
+    .icon-wd {
+      background: url(img/wd.png) no-repeat center center;
+      background-size: 100%;
+    }
+
+    .mui-active .icon-wd {
+      background: url(img/wd_act.png) no-repeat center center;
+      background-size: 100%;
+    }
+  </style>
+</head>
+
+<body style="z-index:999">
+<div class="mui-content"></div>
+<!--菜单导航-->
+<nav class="mui-bar mui-bar-tab">
+  <a class="mui-tab-item">
+    <span class="mui-icon icon-sy"></span>
+    <span class="mui-tab-label"></span>
+  </a>
+  <a class="mui-tab-item">
+    <span class="mui-icon icon-dbrw"></span>
+    <span class="mui-tab-label"></span>
+  </a>
+  <a class="mui-tab-item">
+    <span class="mui-icon icon-txl"></span>
+    <span class="mui-tab-label"></span>
+  </a>
+  <a class="mui-tab-item">
+    <span class="mui-icon icon-dt"></span>
+    <span class="mui-tab-label"></span>
+  </a>
+  <a class="mui-tab-item">
+    <span class="mui-icon icon-wd"></span>
+    <span class="mui-tab-label"></span>
+  </a>
+</nav>
+<script src="js/mui.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/s4.js"></script>
+<script src="js/smutils.js"></script>
+<script src="js/byte&string.js"></script>
+<script src="js/ajaxhook.min.js"></script>
+<!-- <script src="js/vconsole.min.js"></script> -->
+<script type="text/javascript">
+    // var vConsole = new VConsole();
+    //mui初始化
+    mui.init();
+    var first = null;
+    mui.back = function () {
+        //首次按键，提示‘再按一次退出应用’
+        if (first == null) {
+            first = new Date().getTime();
+            app.toast('再按一次退出应用');
+            setTimeout(function () {
+                first = null;
+            }, 2000);
+        } else {
+            if (new Date().getTime() - first < 2000) {
+                plus.runtime.quit();
+            }
+        }
+        return false;
+    }
+    var subpage_style = {
+        top: '0',
+        bottom: '50px'
+    }
+
+    var subPages = [{
+        href: 'index.html',
+        id: 'index.html',
+        name: "首页"
+    },
+        {
+            href: 'view/workSpace/missionUncompleted/missionUncompleted.html',
+            id: "view/workSpace/missionUncompleted/missionUncompleted.html",
+            name: "待办任务"
+        },
+        {
+            href: 'view/workSpace/addressBook/addressBook.html',
+            id: "view/workSpace/addressBook/addressBook.html",
+            name: "通讯录"
+        },
+        {
+            href: 'map.html',
+            id: "map.html",
+            name: "地图"
+        },
+        {
+            href: 'setting.html',
+            id: "setting.html",
+            name: "我的"
+        }
+    ]
+    // 默认显示页面
+    var defaultPageIndex = 0;
+    var lastTab = null;
+    var isSimulateTap = false;
+    mui.plusReady(function () {
+        // 动态添加 href 和名称
+        var tabBarItems = document.getElementsByClassName('mui-tab-item');
+        for (var i = 0; i < tabBarItems.length; i++) {
+            var tabBarItem = tabBarItems[i];
+            // 设置目标页面
+            tabBarItem.setAttribute('href', subPages[i].href);
+            tabBarItem.setAttribute('name', subPages[i].name);
+            // 设置索引
+            tabBarItem.setAttribute('index', i);
+            tabBarItem.setAttribute('id', subPages[i].id);
+            // 设置文字标题
+            var tab_item_label = tabBarItem.querySelector('.mui-tab-label');
+            tab_item_label.innerHTML = subPages[i].name;
+            // 默认激活的 mui-tab-item
+            if (i == defaultPageIndex) {
+                tabBarItem.classList.add('mui-active');
+                lastTab = tabBarItem;
+            }
+        }
+        //获取当前第一个页面
+        var activeTab = subPages[defaultPageIndex];
+        var self = plus.webview.currentWebview();
+        self.getTitleNView().hide();
+        var sub = plus.webview.create(activeTab.id, activeTab.href, subpage_style);
+        self.append(sub);
+    });
+
+    var activeTabID = subPages[defaultPageIndex].id;
+    mui('.mui-bar-tab').on('tap', 'a', function (e) {
+        var targetTabHref = this.getAttribute('href');
+        var targetTabID = this.getAttribute('id');
+        var name = this.getAttribute('name');
+
+        if (targetTabID == activeTabID) {
+            return;
+        }
+
+        //获取当前窗口对象
+        var self = plus.webview.currentWebview();
+        //如果是第一个页面那么选择 第一个页面的样式 第一个页面底部有选项卡
+        //主页面 其余页面的样式 subpage_style
+        var statusBar = plus.navigator.getStatusbarHeight();
+        // if (name == '首页') {
+        //     subpage_style = {
+        //         top: '0',
+        //         bottom: '50px'
+        //     }
+        // } else {
+        //     subpage_style = {
+        //         top: statusBar,
+        //         bottom: '50px'
+        //     }
+        // }
+        plus.navigator.getStatusbarHeight();
+        var sub = plus.webview.create(targetTabID, targetTabHref, subpage_style);
+        //把子页面添加到当前窗口对象里
+        self.append(sub);
+        console.log(JSON.stringify(self));
+        //关闭当前窗口里面已经展示的页面
+        plus.webview.hide(activeTabID);
+        //更改当前活跃的选项卡
+        activeTabID = targetTabID;
+
+        // 检查 active 状态
+        $('.mui-bar-tab a').removeClass("mui-active");
+        $('.mui-bar-tab a[id="' + targetTabID + '"]').addClass("mui-active");
+
+        lastTab = document.querySelector('.mui-bar-tab a[id="' + targetTabID + '"]');
+    });
+</script>
+</body>
+
+</html>

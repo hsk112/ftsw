@@ -1,0 +1,3306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>项目管理-新增项目-项目详情</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../../css/mui.poppicker.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+    <style>
+        .mui-popover {
+            height: 300px;
+        }
+
+        .mui-content {
+            padding: 10px;
+        }
+
+        .bar-title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #888888;
+            background-color: #F4F4F4;
+            display: none;
+        }
+
+        .item-title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #444444;
+        }
+
+        .mui-icon-arrowright {
+            color: #62666E;
+            font-weight: 100 !important;
+        }
+
+        .inputCss {
+            font-size: 16px;
+            font-weight: 400;
+            color: #1A1616;
+            height: 30px;
+        }
+
+        .checkBoxCss {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000000;
+        }
+
+        .img_item {
+            text-align: left;
+            width: 72px;
+            height: 100px;
+            float: left;
+            margin-right: 20px;
+        }
+
+        .img_item img {
+            width: 72px;
+            height: 72px;
+        }
+
+
+        .file-item-box ul li {
+            height: 30px;
+            line-height: 30px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mui-table-view:after {
+            height: 0
+        }
+
+        .mui-table-view:before {
+            height: 0
+        }
+
+        .mui-table-view-cell:after {
+            height: 0
+        }
+
+        .mui-table-view-cell:before {
+            height: 0
+        }
+
+        .mui-table-view::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mui-table-view-cell {
+            width: 100%;
+            text-align: left;
+        }
+
+        .file_upload {
+            padding: 3px 0;
+            width: 90px;
+            /*background: #337BFC;*/
+            background: white;
+            border: none;
+            color: #0493F3;
+            text-align: right;
+            font-size: 16px;
+            /*border: 1px solid #337BFC;*/
+            /*border-radius: 26px;*/
+        }
+
+        .btn-label {
+            font-size: 12px;
+            font-weight: 400;
+            color: #B1B1B1;
+            line-height: 14px;
+        }
+
+        .file-name {
+            width: 85%;
+            margin-left: 5px;
+            box-sizing: border-box;
+            overflow: scroll;
+            color: blue;
+            float: left;
+            white-space: nowrap;
+        }
+
+        .file-name {
+            display: inline-block;
+        }
+
+        .file_close {
+            float: right;
+        }
+
+        .mui-numbox {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            /*width: 200px;*/
+            /*height: 35px;*/
+            height: 30px;
+            /*padding: 0 40px;*/
+            padding: 0;
+            vertical-align: top;
+            vertical-align: middle;
+            border: solid 1px white;
+            border-radius: 3px;
+            background-color: #efeff4;
+            /*background-color: white;*/
+            /*top: 10px;*/
+            /*left: -18%;*/
+
+        }
+
+        .info-bar-content {
+            background: #FFFFFF;
+        }
+
+        .mui-segmented-control {
+            background: #FFFFFF;
+            font-size: 16px;
+            font-weight: 400;
+            height: 50px;
+            /* border: none; */
+        }
+
+        .mui-control-item.mui-active {
+            font-size: 16px;
+            font-weight: bold;
+            color: #337BFC !important;
+            border-bottom: 2px solid #337BFC !important;
+        }
+
+        /* 自定义 */
+
+        /* 流程 */
+        /* step-num用于添加白色背景 */
+        .step-active .step-num {
+            width: 24px;
+            height: 14px;
+            margin-top: 0;
+            background: white;
+            /*background: none;*/
+            /*background-size: 14px 14px;*/
+
+            /*background-image: url(../../img/approval-circle.png);*/
+        }
+
+        .step-num {
+            width: 14px;
+            height: 14px;
+            margin-top: 3px;
+            background: white;
+        }
+
+        /*.step-num img {*/
+        /*	width: 14px;*/
+        /*	height: 14px;*/
+        /*}*/
+        .step-active .step-text {
+            color: #0493F3;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        .step-line {
+            background: #EEEEEE;
+            height: 1px;
+        }
+
+        .step-line-selected {
+            background: #0493F3;
+            height: 1px;
+        }
+
+        .step-margin-circle {
+            background: #EDEDED;
+            width: 6px;
+            height: 6px;
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
+        .step-margin-circle-selected {
+            background: #0493F3;
+        }
+
+        .step-active .step-line {
+            background: #0493F3;
+        }
+
+        .step-active .step-num .step-margin-circle {
+            /*display: none;*/
+            margin-left: 5px;
+            width: 14px;
+            height: 14px;
+
+            background-size: 14px 14px;
+            background-image: url(../../img/approval-circle.png);
+        }
+
+        .mui-icon {
+            font-size: 14px;
+        }
+
+        /* 列表	*/
+        .paish .info-bar-content-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 55px;
+            margin: 0;
+        }
+
+        .paish .info-bar-content-item .item-title {
+            width: 120px;
+            color: #262626;
+            font-size: 16px;
+            padding: 0;
+        }
+
+        .paish .info-bar-content-item .item-input input {
+            text-align: right;
+            font-size: 16px;
+            /*width: 80%;*/
+            /*padding-right: 32px;*/
+
+        }
+
+        .paish .info-bar-content-item .item-input input[onename='righttext'] {
+            /*padding-right: 32px;*/
+        }
+
+        .paish .mui-input-row {
+            height: 30px;
+            text-align: right;
+        }
+
+        input[type=text] {
+            height: 30px;
+        }
+
+        .clear-red-star {
+            margin-left: 16px;
+        }
+
+        .red-star {
+            color: red;
+            margin-left: 3px;
+            margin-right: 5px;
+        }
+
+        .mui-numbox [class*=numbox-btn] {
+            width: 0;
+        }
+
+        .mui-numbox .mui-numbox-input {
+            text-align: right;
+            border: none !important;
+            /*border-right: none !important;*/
+        }
+
+        .right-input-date {
+            display: flex;
+            align-items: center;
+        }
+
+        .right-input-date .inputCss {
+            width: 90%;
+            height: 20px;
+            margin-bottom: 0;
+            margin-right: 5px;
+        }
+
+        .right-input-date img {
+            width: 16px;
+            height: 16px;
+        }
+
+        /*水保方案*/
+        .file_item {
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 上一步、下一步	*/
+        .bottom-item-btn {
+            height: 100px;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            background: #f2f2f2;
+            bottom: 0px;
+            padding-top: 30px;
+            display: flex;
+        }
+
+        .bottom-item-btn .item {
+            width: 90%;
+            text-align: center;
+            padding: 0 14px;
+            display: inline-block;
+            /*border: 1px solid #337BFB;*/
+            border: 1px solid #0493F3;
+            border-radius: 4px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        #pre_step {
+            color: #0493F3;
+            background: white;
+        }
+
+        .mui-input-row .mui-input-clear~.mui-icon-clear,
+        .mui-input-row .mui-input-password~.mui-icon-eye,
+        .mui-input-row .mui-input-speech~.mui-icon-speech {
+            top: 5px;
+            right: -10px;
+            display: none;
+        }
+
+        /* 弹窗样式	*/
+        .mui-poppicker {
+            background-color: white;
+        }
+
+        .mui-picker {
+            background-color: white;
+        }
+
+        .mui-poppicker-body {
+            border-top: solid 1px white;
+        }
+
+        .mui-poppicker-header .mui-btn {
+            border: none;
+            background-color: white;
+            color: #0493F3;
+            font-size: 16px;
+        }
+
+        .mui-poppicker-header .mui-btn:first-child {
+            /*margin-right: 73%;*/
+            position: absolute;
+            left: 0;
+            color: #262626;
+
+        }
+    </style>
+</head>
+
+<body>
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <div class="bottom-item-btn" id="bottom-item-btn">
+        <div style="width: 50%;display: none;" id="preBtn">
+            <button id="pre_step" class="item" style="">上一步</button>
+        </div>
+        <div style="width: 50%;display: none;" id="nextBtn">
+            <button id="next_step" class="item" style="background: #0493F3;color: #fff">下一步</button>
+        </div>
+        <div style="width: 50%;display: none;" id="submitBtn">
+            <button id="submit" class="item" style="background: #0493F3;color: #fff">提交</button>
+        </div>
+        <div style="width: 100%;" id="nextBtn1">
+            <button id="next_step" class="item" style="background: #0493F3;color: #fff">下一步</button>
+        </div>
+    </div>
+    <!--页面主结构结束-->
+    <!--		邮箱地址不正确的 ，其他内容不可输入 -->
+    <!--单页面开始-->
+    <div id="mui-content" class="mui-page paish" style="background-color: #ffffff;">
+        <!--		mui-slider	-->
+        <div class="">
+            <!--				 -->
+            <div style="position:fixed;top:0;left:0;z-index: 99;width:100%;height: 97px;background: #ffffff;">
+                <ol class="steps">
+                    <li id="step-one-li" class="step-active">
+                        <div class="step-content">
+                            <div class="step-num">
+                                <div id="step-margin-circle-one" class="step-margin-circle"></div>
+                            </div>
+                            <div class="step-text">项目基本信息</div>
+                        </div>
+                    </li>
+                    <li class="" id="stepTwoLi">
+                        <div id="step-line-two" class="step-line"></div>
+                        <div class="step-content">
+                            <div class="step-num">
+                                <div id="step-margin-circle-two" class="step-margin-circle"></div>
+                            </div>
+                            <div class="step-text">水保方案</div>
+                        </div>
+                    </li>
+                    <!--	step-active 前面的li	，step-margin-circle后面 添加 step-margin-circle-selected	；step-line后面添加step-line-selected			-->
+                    <li class="" id="stepThreeLi">
+                        <div class="step-line"></div>
+                        <div class="step-content">
+                            <div class="step-num">
+                                <div class="step-margin-circle"></div>
+                            </div>
+                            <div class="step-text">检查计划</div>
+                        </div>
+                    </li>
+                </ol>
+                <div style="height: 5px;background: #F4F4F4;"></div>
+            </div>
+            <!--				mui-slider-group -->
+            <div id="scroll-container" style="height: calc(100vh - 197px);width: 100%;margin-top: 97px;">
+                <div class="" style="padding: 0 20px;">
+                    <div id="basicInfo" class="mui-slider-item mui-control-content mui-active"
+                        style="height: 1500px;border-bottom: none!important;">
+                        <div style="height:0px;" tabindex="0" id="top"></div>
+                        <div id="detail1">
+                            <div class="mainPage">
+                                <div class="bar-title">
+                                    项目基本情况
+                                </div>
+                                <div class="info-bar-content">
+
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>项目名称
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="prjName" onename='righttext' required="true" readonly type="text"
+                                                class="mui-input-clear" value="" placeholder="请输入项目名称" class="inputCss"
+                                                maxlength="21" onkeyup="format_input(1,this)" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>项目类型
+                                        </div>
+                                        <input id="prjType" type="text" style="display: none;">
+                                        <div class="mui-input-row item-input">
+                                            <input id="prjType_text" disabled readonly="readonly" required="true"
+                                                type="text" class="mui-input-clear" value="" placeholder="请选择项目类型"
+                                                class="inputCss" style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>项目来源
+                                        </div>
+                                        <input id="prjSource" type="text" style="display: none;" />
+                                        <div class="mui-input-row item-input">
+                                            <input id="prjSource_text" disabled required="true" readonly type="text"
+                                                class="mui-input-clear inputCss" value="" placeholder="请选择项目来源"
+                                                style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>项目性质
+                                        </div>
+                                        <input id="prjCharacter" type="text" style="display: none;" />
+                                        <div class="mui-input-row item-input">
+                                            <input id="prjCharacter_text" disabled required="true" readonly type="text"
+                                                class="mui-input-clear inputCss" value="" placeholder="请选择项目性质"
+                                                style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item " style="display:none;">
+                                        <!--										隐藏-->
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>所属行业
+                                        </div>
+                                        <input id="industry" type="text" style="display: none;" />
+                                        <div class="mui-input-row item-input">
+                                            <!--											required="true"-->
+                                            <input id="industry_text" readonly type="text"
+                                                class="mui-input-clear inputCss" value="" placeholder="请选择所属行业"
+                                                style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>
+                                            当前状态
+                                        </div>
+                                        <input id="conservationStatus" type="text" value="0" style="display: none;" />
+                                        <div class="mui-input-row item-input">
+                                            <input id="conservationStatus_text" disabled readonly="readonly"
+                                                required="true" type="text" class="inputCss" value="新开工"
+                                                placeholder="请选择当前状态" style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 新添加项目级别 1-->
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>项目级别
+                                        </div>
+                                        <input id="projectLevel" type="text" style="display: none;">
+                                        <div class="mui-input-row item-input">
+                                            <input id="projectLevel_text" required="true" disabled readonly="readonly"
+                                                type="text" class="mui-input-clear" value="" placeholder="请选择项目级别"
+                                                class="inputCss" style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- 新添加建设用地面积(hm2) ,限制使用数字 2-->
+                                    <div class="info-bar-content-item ">
+                                        <!--											<div class="item-title" style="width: 270px;">-->
+                                        <!--												<span class="clear-red-star" ></span>建设用地(hm<sup>2</sup>)-->
+                                        <!--											</div>-->
+                                        <!--											<div class="mui-input-row item-input" >-->
+                                        <!--	&lt;!&ndash;											required="true"  maxlength="21" onkeyup="format_input(2,this)" &ndash;&gt;-->
+                                        <!--												<input id="buildLandArea" readonly class="mui-input-clear inputCss"  placeholder="请输入建设用地"-->
+                                        <!--													   />-->
+                                        <!--											</div>-->
+                                        <div class="item-title" style="width: 270px;">
+                                            <span class="clear-red-star"></span><span>建设用地(hm<sup>2</sup>)</span>
+                                            <span id="error4" class="err-show"
+                                                style="color: red;float: right;display:none">格式不合法！</span>
+                                        </div>
+                                        <div id="buildLandArea" class="mui-numbox" data-numbox-step='0.0001'
+                                            data-numbox-min='0.0000' data-numbox-max='999999.0000'>
+                                            <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                            <input class="mui-numbox-input"
+                                                onchange="buildLandAreaChanged('buildLandArea',4)" readonly
+                                                type="number" id="buildLandArea_input" />
+                                            <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>详细地址
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input type="hidden" name="" id="smid" value="" />
+                                            <input id="prjLocation" type="text" disabled required="true" value=""
+                                                placeholder="请选择具体位置" style="width:90%;" class="inputCss"
+                                                readonly="true" />
+                                            <img id="toLocation" src="../../img/nearIcon.png"
+                                                style="width: 16px;height: 15px;line-height: 15px;vertical-align:middle;margin-right: 10px" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item">
+                                        <div class="item-title" style="width: 190px;">
+                                            <span class="clear-red-star"></span>项目所属位置
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input readonly="true" class="inputCss" name="" id="prjLocationDistrict"
+                                                value="福田区" style="width:40%" />
+                                            <input readonly="true" class="inputCss" name="" id="prjLocationStreet"
+                                                value="" style="width:50%;display: none;" required="true"
+                                                placeholder="请选择项目所属街道" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span><span>经度</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <!--												smx用 longitude ; smy用 latitude-->
+                                            <input readonly="true" class="inputCss" name="" id="longitude" value=""
+                                                placeholder="根据详细地址自动填写" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span><span>纬度</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input readonly="true" class="inputCss" name="" id="latitude" value=""
+                                                placeholder="根据详细地址自动填写" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>建设单位
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="constructionUnit" readonly class="mui-input-clear inputCss"
+                                                required="true" placeholder="请输入建设单位" maxlength="21"
+                                                onkeyup="format_input(2,this)" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 240px;">
+                                            <span class="red-star">*</span>建设单位联系人
+
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="conContacts" readonly class="mui-input-clear inputCss"
+                                                required="true" class="mui-input-clear" placeholder="请输入建设单位联系人"
+                                                maxlength="21" onkeyup="format_input(3,this)" style=" width: 100%;" />
+                                        </div>
+                                    </div>
+
+                                    <!-- 新添加建设单位联系电话 3-->
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 270px;">
+                                            <span class="red-star">*</span>建设单位联系电话
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <!--											required="true" onkeyup="format_input(3,this)" -->
+                                            <input id="constructionUnitPhone" required="true" readonly
+                                                onblur="validata_constructionUnitPhone(this)"
+                                                class="mui-input-clear inputCss" class="mui-input-clear"
+                                                placeholder="请输入建设单位联系电话" maxlength="21" style="width: 100%" />
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item " id="email_div_container">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span><span>电子邮箱</span>
+
+                                            <span id="email_error" class="err-show"
+                                                style="color: red;float: right;display:none">邮箱格式不合法！</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="email" class="mui-input-clear inputCss" maxlength="32"
+                                                class="mui-input-clear" onename='righttext' placeholder="请输入电子邮箱"
+                                                style="" onblur="validata_email(this)" />
+                                            <!--                                                <input id="email" class="mui-input-clear inputCss"  class="mui-input-clear" onblur="validata_email(this)" onename='righttext'-->
+                                            <!--                                                       placeholder="请输入电子邮箱" style=""  />-->
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span><span>施工单位</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="buildUnit" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" placeholder="请输入施工单位" onename='righttext'
+                                                maxlength="21" onkeyup="format_input(4,this)" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 250px;">
+                                            <span class="clear-red-star"></span><span>施工单位联系人</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="buildContacts" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" placeholder="请输入施工单位联系人" onename='righttext'
+                                                maxlength="21" onkeyup="format_input(5,this)" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <!-- 新添加施工单位联系电话 4-->
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 270px;">
+                                            <span class="clear-red-star"></span>施工单位联系电话
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <!--											required="true" onkeyup="format_input(3,this)" -->
+                                            <input id="buildUnitPhone" readonly class="mui-input-clear inputCss"
+                                                onblur="validata_phone(this)" class="mui-input-clear"
+                                                placeholder="请输入施工单位联系电话" maxlength="21" style="width: 100%" />
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span><span>监理单位</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="supervisoryUnit" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" placeholder="请输入监理单位" maxlength="21"
+                                                onkeyup="format_input(6,this)" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 250px;">
+                                            <span class="clear-red-star"></span><span>监理单位联系人</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="supervisoryContacts" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" placeholder="请输入监理单位联系人" maxlength="21"
+                                                onkeyup="format_input(7,this)" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <!-- 新添加监理单位联系电话 5-->
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 270px;">
+                                            <span class="clear-red-star"></span>监理单位联系电话
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <!--											required="true" onkeyup="format_input(3,this)" -->
+                                            <input id="supervisoryUnitPhone" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" onblur="validata_phone(this)"
+                                                placeholder="请输入监理单位联系电话" maxlength="21" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 200px;">
+                                            <span class="clear-red-star"></span><span>主体设计单位</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="designUnit" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" placeholder="请输入主体设计单位" maxlength="21"
+                                                onkeyup="format_input(8,this)" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 380px;">
+                                            <span class="clear-red-star"></span><span>主体设计单位联系人</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="designContacts" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" placeholder="请输入主体设计单位联系人" maxlength="21"
+                                                onkeyup="format_input(9,this)" style="width: 100%" />
+                                        </div>
+                                    </div>
+
+                                    <!-- 新添加主体设计单位联系电话 6-->
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 400px;">
+                                            <span class="clear-red-star"></span>主体设计单位联系电话
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <!--											required="true" onkeyup="format_input(3,this)"-->
+                                            <input id="designUnitPhone" readonly class="mui-input-clear inputCss"
+                                                class="mui-input-clear" onblur="validata_phone(this)"
+                                                placeholder="请输入主体设计单位联系电话" maxlength="21" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 200px;">
+                                            <span class="red-star">*</span>项目开工日期
+                                        </div>
+                                        <!--											mui-input-row -->
+                                        <div class=" item-input right-input-date">
+                                            <!--												required="true" -->
+                                            <input id="startDate" disabled class="inputCss" required="true"
+                                                readonly="readonly" type="text" class="mui-input-clear"
+                                                placeholder="请选择项目开工日期" style="" />
+                                            <img src="../../img/commom/time.png" style="width: 16px;height: 16px;" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item ">
+                                        <div class="item-title" style="width: 200px;">
+                                            <span class="red-star">*</span>计划完工日期
+                                        </div>
+                                        <!--											mui-input-row-->
+                                        <div class="item-input right-input-date">
+                                            <!--												required="true"-->
+                                            <input id="planEndDate" disabled class="inputCss" required="true"
+                                                readonly="readonly" type="text" class="mui-input-clear"
+                                                placeholder="请选择项目计划完工日期" />
+                                            <img src="../../img/commom/time.png" style="width: 16px;height: 16px;" />
+                                        </div>
+                                    </div>
+                                    <!--									移动到第二个tab - 水保方案-->
+                                    <div id="bottom-div" style="height: 40px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="soilConservationScheme" style="height: 700px;display: none;"
+                        class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+                        <div style="height:0px" tabindex="0" id="top"></div>
+                        <div id="detail2">
+                            <div class="mainPage">
+                                <div class="scroll-li" style="padding-bottom: 20px;">
+                                    <div class="bar-title">
+                                        水保方案
+                                    </div>
+                                    <div class="info-bar-content">
+                                        <!--										由第一个tab中移动过来的 ，附件之前 -->
+
+                                        <div class="info-bar-content-item " style="">
+                                            <div class="item-title" style="width: 200px;">
+                                                <span
+                                                    class="clear-red-star"></span><span>防治责任范围面积(km<sup>2</sup>)</span>
+                                                <span id="error3" class="err-show"
+                                                    style="color: red;float: right;display:none">格式不合法！</span>
+                                            </div>
+                                            <div id="preventionArea" class="mui-numbox" data-numbox-step='0.01'
+                                                data-numbox-min='0.00' data-numbox-max='9999.00'>
+                                                <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                                <input class="mui-numbox-input"
+                                                    onchange="buildLandAreaChanged('preventionArea',2)" type="number" />
+                                                <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="info-bar-content-item" style="">
+                                            <div class="item-title" style="width: 150px;">
+                                                <span class="clear-red-star"></span><span>土建投资（万元）</span>
+                                                <span id="error1" class="err-show"
+                                                    style="color: red;float: right;display:none">格式不合法！</span>
+                                            </div>
+                                            <div id="civilInvestment" class="mui-numbox" data-numbox-step='0.0001'
+                                                data-numbox-min='0.0000' data-numbox-max='999999.0000'>
+                                                <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                                <input class="mui-numbox-input"
+                                                    onchange="buildLandAreaChanged('civilInvestment',4)"
+                                                    type="number" />
+                                                <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="info-bar-content-item" style="">
+                                            <div class="item-title" style="width: 150px;">
+                                                <span class="clear-red-star"></span><span>总投资（万元）</span>
+                                                <span id="error2" class="err-show"
+                                                    style="color: red;float: right;display:none">格式不合法！</span>
+                                            </div>
+                                            <div id="totalInvestment" class="mui-numbox" data-numbox-step='0.0001'
+                                                data-numbox-min='0.0000' data-numbox-max='999999.0000'>
+                                                <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                                <input class="mui-numbox-input"
+                                                    onchange="buildLandAreaChanged('totalInvestment',4)"
+                                                    type="number" />
+                                                <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 新添加设计挖填方总量(万m3) 7-->
+                                        <div class="info-bar-content-item" style="">
+                                            <div class="item-title" style="width: 180px;">
+                                                <span class="clear-red-star"></span><span>设计挖填方总量(万m<sup>3</sup>)</span>
+                                                <span id="error5" class="err-show"
+                                                    style="color: red;float: right;display:none">格式不合法！</span>
+                                            </div>
+                                            <div id="designCutfill" class="mui-numbox" data-numbox-step='0.0001'
+                                                data-numbox-min='0.0000' data-numbox-max='999999.0000'>
+                                                <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                                <input class="mui-numbox-input"
+                                                    onchange="buildLandAreaChanged('designCutfill',4)" type="number" />
+                                                <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="info-bar-content-item">
+                                            <div class="item-title">
+                                                <span class="red-star">*</span>方案类型
+                                            </div>
+                                            <input id="programmeType" type="text" style="display: none;" />
+                                            <div class="mui-input-row item-input">
+                                                <input id="programmeType_text" required="true" readonly="readonly"
+                                                    type="text" value="" placeholder="请选择方案类型" class="inputCss"
+                                                    style="width:90%;" />
+                                                <span class="mui-icon mui-icon-arrowright"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="info-bar-content-item upload-file-box isShow" id="fileUploadBox">
+                                            <div class="item-title">
+                                                <!--													<span class="red-star" id="isRequire">*</span>-->
+                                                <span class="clear-red-star"></span>方案附件
+                                                <!--												<span style="color: red;margin-left: 3px;" id="isRequire">*</span>-->
+                                            </div>
+                                            <input id="programme" type="hidden" value="" />
+                                            <div id="file3" class="file_item">
+                                                <button type="button" name="file" id="upload_file"
+                                                    class="file_upload mui-btn mui-btn-primary">添加附件</button>
+                                                <span class="btn-label" style="display: none;">只能上传.doc .docx
+                                                    .pdf文件!</span>
+                                                <img src="../../img/attachment-icon.png"
+                                                    style="width: 16px;height: 16px; margin-left: 5px;" alt="">
+                                            </div>
+                                            <div class="" id="fileBoxItem" style="display: none;">
+                                                <!-- 底下已经控制数据 -->
+                                                <input type="hidden" name="" id="fileToken" value="" />
+                                                <div class="file-item-box"
+                                                    style="background: #F4F7FE;text-align: left;margin: 10px 0;border-radius: 5px;">
+                                                    <img id="file_type" src="../../img/commom/doc.png"
+                                                        style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px">
+                                                    <div id=""
+                                                        style="display: inline-block;vertical-align: middle;margin: 12px 0 0 10px;width:70%">
+                                                        <p id="file_name"
+                                                            style="font-weight:500;color: #191515;word-break: break-all;">
+                                                        </p>
+                                                        <p id="file_size" style="font-weight:400;color: #191515;"></p>
+                                                    </div>
+                                                    <img class="file_close" src="../../img/commom/close@2x.png"
+                                                        style="width: 20px;height: 20px; float: right;vertical-align: top;margin: 10px 10px 0 0;">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- 新添加编制单位 8-->
+                                        <div class="info-bar-content-item isShow">
+                                            <div class="item-title">
+                                                <span class="clear-red-star"></span>编制单位
+                                            </div>
+                                            <div class="mui-input-row item-input">
+                                                <input id="preparationUnit" type="text" class="mui-input-clear" value=""
+                                                    placeholder="请输入编制单位" style="width:90%;" class="inputCss"
+                                                    maxlength="21" onkeyup="format_input(10,this)" />
+                                            </div>
+                                        </div>
+
+                                        <div class="info-bar-content-item isShow">
+                                            <div class="item-title">
+                                                <span class="clear-red-star"></span>审批文号
+                                            </div>
+                                            <div class="mui-input-row item-input">
+                                                <input id="approvalNumber" type="text" class="mui-input-clear" value=""
+                                                    placeholder="请输入审批文号" style="width:90%;" class="inputCss"
+                                                    maxlength="21" onkeyup="format_input(10,this)" />
+                                            </div>
+                                        </div>
+                                        <div class="info-bar-content-item isShow">
+                                            <div class="item-title">
+                                                <span class="clear-red-star"></span><span>审批部门</span>
+                                            </div>
+                                            <div class="mui-input-row item-input">
+                                                <input id="approvalDep" class="mui-input-clear inputCss"
+                                                    style="width:90%;" placeholder="请输入审批部门" maxlength="21"
+                                                    onkeyup="format_input(11,this)" />
+                                            </div>
+                                        </div>
+                                        <div class="info-bar-content-item isShow">
+                                            <div class="item-title">
+                                                <span class="clear-red-star"></span>审批日期
+                                            </div>
+                                            <!--												mui-input-row -->
+                                            <div class="item-input right-input-date">
+                                                <input id="approvalDate" class="inputCss" readonly="readonly"
+                                                    type="text" class="mui-input-clear" placeholder="请选择审批日期" />
+                                                <img src="../../img/commom/time.png"
+                                                    style="width: 16px;height: 16px;" />
+                                            </div>
+                                        </div>
+
+                                        <!-- 新添加收文日期 9-->
+                                        <div class="info-bar-content-item isShow">
+                                            <div class="item-title">
+                                                <span class="clear-red-star"></span>收文日期
+                                            </div>
+                                            <!--												mui-input-row -->
+                                            <div class=" item-input right-input-date">
+                                                <input id="receiptTime" class="inputCss" readonly="readonly" type="text"
+                                                    class="mui-input-clear" placeholder="请选择收文日期" />
+                                                <img src="../../img/commom/time.png"
+                                                    style="width: 16px;height: 16px;" />
+                                            </div>
+                                        </div>
+
+                                        <div id="bottom-div" style="height: 40px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="checkPlanPage" style="height: 400px; display: none;"
+                        class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+                        <div style="height:0px" tabindex="0" id="top"></div>
+                        <div id="detail3">
+                            <div class="mainPage">
+                                <div class="bar-title">
+                                    检查计划
+                                </div>
+                                <div class="info-bar-content">
+                                    <div class="info-bar-content-item">
+                                        <div class="item-title" style="width: 200px;">
+                                            <span class="red-star">*</span><span>检查计划次数</span>
+
+                                            <span id="error" class="err-show"
+                                                style="color: red;float: right;display:none">只允许输入正整数！</span>
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="checkPlan" type="text" required="true" class="mui-input-clear"
+                                                value="" onkeyup="validateNum(this)" placeholder="请输入检查计划次数"
+                                                class="inputCss" style="width:90%;" />
+                                        </div>
+                                    </div>
+                                    <div id="timeGroup">
+                                        <!-- 根据次数新增 ，覆盖这里-->
+                                        <div class="info-bar-content-item">
+                                            <div class="item-title">
+                                                <span class="red-star">*</span>计划日期
+                                            </div>
+                                            <div class="mui-input-row item-input right-input-date">
+                                                <input id="surveyDate1" class="inputCss datePicker" required="true"
+                                                    readonly="readonly" type="text" placeholder="请选择项计划日期" />
+                                                <img src="../../img/commom/time.png"
+                                                    style="width: 16px;height: 16px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="surveyItem" class="info-bar-content-item">
+                                        <div class="item-title">
+                                            <span class="red-star">*</span>检查人员
+                                        </div>
+                                        <input id="surveyBy" type="text" style="display: none;" />
+                                        <input id="surveyPerson_text" readonly="readonly" required="true" type="hidden"
+                                            value="" />
+                                        <div id="survey-box" class="mui-input-row item-input" style="">
+                                            <input readonly="readonly" required="true" type="text"
+                                                class="mui-input-clear" value="" placeholder="请选择检查人员" class="inputCss"
+                                                style="width:90%;" />
+                                            <span class="mui-icon mui-icon-arrowright"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-bar-content-item">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span>填写人
+                                        </div>
+                                        <div class="mui-input-row item-input">
+                                            <input id="inputById" type="hidden" value="" />
+                                            <input id="inputerFullname" type="text" readonly placeholder="填写人"
+                                                class="inputCss" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div class="info-bar-content-item">
+                                        <div class="item-title">
+                                            <span class="clear-red-star"></span>填写日期
+                                        </div>
+                                        <div class="mui-input-row item-input right-input-date">
+                                            <input id="inputById" type="text" style="display: none;" />
+                                            <input id="inputDate" type="text" readonly placeholder="请输入填写时间"
+                                                class="inputCss" style="width: 100%" />
+                                            <img src="../../img/commom/time.png" style="width: 16px;height: 16px;" />
+                                        </div>
+                                    </div>
+
+                                    <div id="bottom-div" style="height: 40px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/conservation.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/uploadimage.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/mui.previewimage.js"></script>
+<script src="../../js/numberBox.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script src="js/helper.js"></script>
+<script>
+    // var vConsole = new VConsole();
+    // 测试环境
+    var isTest = false;
+    var operatorType = "add" // 默认 add ； 添加add ，修改 edit，查看show
+
+    mui.init({
+        swipeBack: false,
+        gestureConfig: {
+            swipe: true, //默认为true
+        }
+    });
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    // var flag = false;
+    var isUpload = true;
+
+
+    // 下拉 - 防止多次点击，频繁请求网络
+    // 项目类型数据
+    var projectTypePickerData = {}
+    // 项目性质
+    var prjCharacterPickerData = {}
+    // 项目来源
+    var prjSourcePickerData = {}
+    // 所属行业
+    var industryPickerData = {}
+    //方案类型
+    var programmeTypePickerData = {}
+
+    //初始化单页的区域滚动
+    // mui('.mui-scroll-wrapper').scroll();
+    var userPicker = new mui.PopPicker();
+
+    var rankBox = document.getElementById("scroll-container"); // slider
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+    });
+
+    const mapData = window['mobile-lib'].MapData({
+        serverUrl: config.urls.serverDomain
+    });
+
+    mui.plusReady(function () {
+        console.log("==plusReady==");
+        var winHeight = window.screen.height;
+
+        console.log(winHeight)
+        $("#detail1").height(winHeight - 130);
+        $("#detail2").height(winHeight - 130);
+        $("#detail3").height(winHeight - 130);
+        //禁止选项卡自带滑动，手动监听
+        initView()
+        // mui('.mui-slider').slider().stopped = true;
+        console.log("initView OK")
+        initViewPage3()
+        console.log("initViewPage3 OK")
+        // 点击事件
+        initDownSelect();
+        console.log("initDownSelect OK")
+        initDownSelectPage2();
+        console.log("initDownSelectPage2 OK")
+        //获取暂存信息 - 新增 ，不需要显示暂存信息
+        // showData()
+
+        var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        window.onresize = function () {
+            var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+            if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了				
+                $("#bottom-item-btn").hide()
+            } else {
+
+                $("#bottom-item-btn").show()
+            }
+        }
+    });
+
+    //界面元素控制
+    var initView = function () {
+        var self = plus.webview.currentWebview();
+        console.log("self.proData:" + self.proData)
+        if (self.proData != undefined) {
+            console.log("self.proData:" + self.proData)
+            var proData = JSON.parse(self.proData);
+            // 默认 add ； 添加add ，修改 edit，查看show
+            operatorType = self.operatorType
+            showProjectDataWithType(operatorType, proData);
+        }
+
+        // if (self.isEdit) { //是否查看项目
+        // 	$("#bottom-item-btn").hide()
+        // 	$("#toLocation").hide()
+        // 	$("#bottom-item-btn2").show()
+        // 	$("input").css("backgroundColor", "white")
+        // 	$("input").attr('disabled', 'disabled')
+        // }
+
+        //日期选择 - 项目开工时间、项目计划结束时间
+        $("#startDate,#planEndDate").on("tap", function () {
+            var that = $(this);
+
+            // plus.nativeUI.pickDate(function(e) {
+            // 	var d = e.date;
+            // 	var date1 = d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2)
+            // 	plus.nativeUI.pickTime(function(e) {
+            // 		var d2 = e.date;
+            // 		var time = preZero(d2.getHours(), 2) + ":" + preZero(d2.getMinutes(), 2) + ":" + preZero(d2.getSeconds(),
+            // 			2)
+            // 		that.val(date1 + " " + time)
+            // 	}, function(e) {
+            // 		that.val("");
+            // 	}, {
+            // 		title: "请选择时间"
+            // 	});
+            // }, function(e) {
+            // 	that.val("");
+            // }, {
+            // 	title: "请选择日期"
+            // });
+            plusDate(function (data) {
+                if (that.attr("id") == "startDate" && $("#planEndDate").val() != '' && $("#planEndDate").val() < data) {
+                    app.toast("项目开工时间不得晚于项目计划结束时间")
+                } else if (that.attr("id") == "planEndDate" && $("#startDate").val() != '' && $("#startDate").val() > data) {
+                    app.toast("项目计划结束时间不得早于项目开工时间")
+                } else that.val(data)
+            });
+        })
+
+        //日期选择 - 审批日期
+        $("#approvalDate").on("tap", function () {
+            var that = $(this);
+            plus.nativeUI.pickDate(function (e) {
+                var d = e.date;
+                var date1 = d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2)
+                plus.nativeUI.pickTime(function (e) {
+                    var d2 = e.date;
+                    var time = preZero(d2.getHours(), 2) + ":" + preZero(d2.getMinutes(), 2) + ":" + preZero(d2.getSeconds(),
+                        2)
+                    //that.val(date1 + " " + time)
+                    // console.log("选择完日期了")
+
+                    if ($("#receiptTime").val() != '' &&
+                        firstBigThanSecondDate((date1 + " " + time), $("#receiptTime").val())) {
+                        app.toast("审批日期不得晚于收文日期")
+                        that.val('')
+                    } else {
+                        //that.val(data)
+                        that.val(date1 + " " + time)
+                    }
+
+                }, function (e) {
+                    that.val("");
+                }, {
+                    title: "请选择时间"
+                });
+            }, function (e) {
+                that.val("");
+            }, {
+                title: "请选择日期"
+            });
+            // plusDate(function(data) {
+            // 	// that.val(data)
+            // 	if (that.attr("id") == "approvalDate" && $("#receiptTime").val() != '' && $("#receiptTime").val() < data) {
+            // 		app.toast("审批日期不得晚于收文日期")
+            // 		that.val('')
+            // 	} else that.val(data)
+            // }, 1); // 1是限制当天日期
+            // 这个是弹出窗时显示 ，耐用data为null？-没有
+            plusDate(function (data) {
+                that.val(data)
+                // console.log('picker date' + data);
+                //
+                // if (that.attr("id") == "approvalDate" &&
+                // 		$("#receiptTime").val() != '' &&
+                // 		firstBigThanSecondDate(data, $("#receiptTime").val()))
+                // {
+                // 	app.toast("审批日期不得晚于收文日期")
+                // 	that.val('')
+                // } else {
+                // 	that.val(data)
+                // }
+            });
+        })
+        // 收文日期选择
+        $("#receiptTime").on("tap", function () {
+            var that = $(this);
+            plus.nativeUI.pickDate(function (e) {
+                var d = e.date;
+                var date1 = d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2)
+                plus.nativeUI.pickTime(function (e) {
+                    var d2 = e.date;
+                    var time = preZero(d2.getHours(), 2) + ":" + preZero(d2.getMinutes(), 2) + ":" + preZero(d2.getSeconds(),
+                        2)
+                    // that.val(date1 + " " + time)
+                    if ($("#approvalDate").val() != '' &&
+                        firstBigThanSecondDate($("#approvalDate").val(), (date1 + " " + time))) {
+                        app.toast("收文日期不得早于审批日期")
+                        that.val('')
+                    } else {
+                        that.val(date1 + " " + time)
+                    }
+
+                }, function (e) {
+                    that.val("");
+                }, {
+                    title: "请选择时间"
+                });
+            }, function (e) {
+                that.val("");
+            }, {
+                title: "请选择日期"
+            });
+            // plusDate(function(data) {
+            // 	// that.val(data)
+            // 	if (that.attr("id") == "receiptTime" && $("#approvalDate").val() != '' && $("#approvalDate").val() > data) {
+            // 		app.toast("收文日期不得早于审批日期")
+            // 		that.val('')
+            // 	} else that.val(data)
+            // }, 1);
+            plusDate(function (data) {
+                that.val(data)
+
+                // if (that.attr("id") == "receiptTime" &&
+                // 		$("#approvalDate").val() != '' &&
+                // 		firstBigThanSecondDate($("#approvalDate").val(), data))
+                // {
+                // 	app.toast("收文日期不得早于审批日期")
+                // 	that.val('')
+                // } else {
+                // 	that.val(data)
+                // }
+            });
+        })
+
+    }
+    function firstBigThanSecondDate(date1, date2) {
+        console.log("date1:" + date1)
+        console.log("date2:" + date2)
+        var oDate1 = new Date(date1);
+        var oDate2 = new Date(date2);
+        if (oDate1.getTime() > oDate2.getTime()) {
+            //console.log('第一个大');
+            return true;
+        } else {
+            //console.log('第二个大');
+            return false;
+        }
+    }
+
+    var initViewPage3 = function () {
+
+        $("#inputerFullname").val(app.userInfo().realname); //填写人
+        $("#inputDate").val((new Date()).Format("yyyy-MM-dd")); //填写时间
+
+        var self = plus.webview.currentWebview();
+
+
+        //日期选择
+        $("#timeGroup").on("tap", '.datePicker', function () {
+            var that = $(this);
+
+            plus.nativeUI.pickDate(function (e) {
+                var d = e.date;
+                that.val(d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2))
+            }, function (e) {
+                that.val("");
+            }, {
+                title: "请选择日期"
+            });
+            plusDate(function (data) {
+                that.val(data)
+            }, 1);
+        })
+
+
+        //调查人员
+        $("#survey-box").on("tap", function () {
+            // 查看详情 ，不能修改
+            if (operatorType == "show") return;
+            var extras = {
+                multiSelect: true
+            }
+            app.openPage("../commom/organ.html", {
+                titleNView: {
+                    titleText: '选择调查人员',
+                    autoBackButton: true
+                }
+            }, extras);
+            //移除
+            window.removeEventListener('returnSelect', surveyPersonBack, false);
+            // 赋值
+            window.addEventListener('returnSelect', surveyPersonBack, false);
+
+        })
+        //调查人员回调
+        var surveyPersonBack = function (data) {
+            var oldVal = $("#surveyPerson_text").val();
+            var oldVal2 = $("#surveyBy").val();
+            console.log(oldVal + "===" + oldVal2)
+            console.log(JSON.stringify(data.detail)); //data.detail[0].realname
+            var v1 = oldVal.split(",")
+            var rn = '';
+            var un = '';
+            var flag = false;
+            var a = []
+            for (let i = 0; i < data.detail.length; i++) {
+                console.log(v1.indexOf(data.detail[i].realname))
+                if (v1.indexOf(data.detail[i].realname) == -1) { //避免重复
+                    rn += data.detail[i].realname + ",";
+                    un += data.detail[i].username + ",";
+                } else {
+                    flag = true;
+                    a.push(data.detail[i].realname)
+                }
+            }
+            if (flag) {
+                app.toast("已过滤重复项【" + a.toString() + "】")
+            }
+            rn = rn.slice(0, rn.length - 1);
+            un = un.slice(0, un.length - 1);
+            rn = oldVal != "" ? oldVal + "," + rn : rn;
+            un = oldVal2 != "" ? oldVal2 + "," + un : un;
+            $("#surveyPerson_text").val(rn);
+            console.log(rn + "--" + un); //data.detail[0].realname
+            // $("#surveyBy").val(data.detail[0].perId);
+            $("#surveyBy").val(un);
+            var perArr = rn.split(",")
+            var perArr2 = un.split(",")
+            var text = "";
+            for (let i = 0; i < perArr.length; i++) {
+                text +=
+                    `<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 2px 5px 0;">
+							<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+							<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+						</div>`;
+            }
+            // text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+
+            if (perArr.length > 4) {
+                var h = 100 + (Math.floor(perArr.length / 4)) * 30;
+                console.log(h)
+                $("#surveyItem").css("height", h)
+            }
+            $("#survey-box").html(text)
+            //移除
+            window.removeEventListener('returnSelect', surveyPersonBack, false);
+        }
+        //删除调查人员
+        $("#survey-box").on('tap', ".mui-icon-closeempty", function (e) {
+            e.stopPropagation() //阻止时间冒泡
+            var realname = $(this).attr("rname");
+            var username = $(this).attr("uname")
+            console.log(realname + "-" + username)
+            var that = $(this)
+            mui.confirm("确定要删除【" + realname + "】?", "提示", ['确定', '取消'], function (result) {
+                if (parseInt(result.index) == 0) {
+                    var oldValArr = $("#surveyPerson_text").val().split(",").filter(item => {
+                        return item != realname
+                    });
+                    var oldVal2Arr = $("#surveyBy").val().split(",").filter(item => {
+                        return item != username
+                    });
+                    that.parent().remove()
+                    console.log(oldValArr.toString() + "----" + oldVal2Arr.toString())
+                    $("#surveyPerson_text").val(oldValArr.toString())
+                    $("#surveyBy").val(oldVal2Arr.toString())
+                    if (oldValArr.length == 0) {
+                        var text =
+                            `<input readonly="readonly" required="true" type="text" class="mui-input-clear" value=""
+												 placeholder="请选择调查人员" class="inputCss" style="width:90%;">
+												<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+                        $("#survey-box").html(text)
+                    }
+
+                    console.log(oldValArr.length)
+                    if (oldValArr.length > 4) {
+                        var h = 100 + (Math.floor(oldValArr.length / 4)) * 30;
+                        console.log(h)
+                        $("#surveyItem").css("height", h)
+                    } else $("#surveyItem").css("height", 100)
+                }
+            })
+        })
+
+    }
+    //只允许小数
+    function clearNoNum(obj) {
+        obj.value = obj.value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
+        obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是.
+        obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的.
+        obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+    }
+    // 邮箱输入实时监听
+    function inputChange() {
+        //console.log("email input timing");
+        baseInfoCanInput(false);
+    }
+    function buildLandAreaChanged(obj, floatNo) {
+        // var buildLandArea = mui("#buildLandArea").numbox().getValue()
+        // mui("#buildLandArea").numbox().setValue(getFloat(buildLandArea,4))
+        var buildLandArea = mui("#" + obj).numbox().getValue()
+        mui("#" + obj).numbox().setValue(getFloat(buildLandArea, floatNo))
+
+    }
+
+    var getFloat = function (number, n) {
+        n = n ? parseInt(n) : 0;
+        if (n <= 0) {
+            return Math.round(number);
+        }
+        number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n); //四舍五入
+        number = Number(number).toFixed(n); //补足位数
+        return number;
+    }
+
+
+    function isEmptyDictObj(obj) {
+        for (var key in obj) {
+            return false;
+        }
+        return true;
+    }
+
+    // 点击事件
+    var initDownSelect = function () {
+        //项目类型 - 防止多次点击
+        $("#prjType_text").on("tap", function () {
+            //var that = $(this);
+            if(!isEmptyDictObj(projectTypePickerData)) {
+                showPrjTypePicker(projectTypePickerData)
+                return;
+            }
+            getDictItems('project_type', function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                projectTypePickerData = data;
+                showPrjTypePicker(projectTypePickerData);
+            })
+        })
+
+        // 项目级别 - 下拉数据写固定
+        $("#projectLevel_text").on("tap", function () {
+            var that = $(this);
+            // getDictItems('project_type', function(data) {
+            // 	if (206 != parseInt(data.code)) {
+            // 		app.toast(data.message);
+            // 		return;
+            // 	}
+
+            var data = ['市级及以上', '区级'];
+            var resultJSON = [];
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                resultJSON.push({
+                    text: item,
+                    value: (i + 1)
+                })
+            }
+            if ($(".mui-poppicker").hasClass("mui-active")) {
+                userPicker.hide();
+                return false;
+            } else {
+                userPicker.setData(resultJSON);
+                userPicker.show(function (items) {
+                    $("#projectLevel_text").val(items[0].text);
+                    $("#projectLevel").val(items[0].value);
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }
+            // })
+        })
+
+        //选择项目所在位置 、 详细地址 - 跳转页面
+        $("#prjLocation,#toLocation").on("tap", function () {
+            var extras = {}
+            console.log('选择项目所在位置 、 详细地址');
+            app.openPage("selectAreaLocation.html", {
+                titleNView: {
+                    titleText: '项目位置选择',
+                    autoBackButton: true,
+                }
+            }, extras);
+            //移除
+            window.removeEventListener('reloadAddress', reloadAddressInfo, false);
+            // 赋值
+            window.addEventListener('reloadAddress', reloadAddressInfo, false);
+        });
+        //重新加载
+        var reloadAddressInfo = function (data) {
+            console.log("地点选择后回调的参数：" + JSON.stringify(data.detail));
+            $("#prjLocation").val(data.detail.address)
+            $("#longitude").val(data.detail.lng)
+            $("#latitude").val(data.detail.lat)
+            $("#prjLocationStreet").val(data.detail.street)
+            $("#smid").val(data.detail.smid);
+            //	console.log(data.detail.street)
+        }
+
+
+        //项目性质 - 防止多次点击
+        $("#prjCharacter_text").on("tap", function () {
+            var that = $(this);
+            if(!isEmptyDictObj(prjCharacterPickerData)) {
+                showPrjCharacterPicker(prjCharacterPickerData);
+                return;
+            }
+            getDictItems('project_character', function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+
+                prjCharacterPickerData = data;
+                showPrjCharacterPicker(prjCharacterPickerData);
+
+            })
+        })
+
+
+        //项目来源 - 防止多次点击
+        $("#prjSource_text").on("tap", function () {
+            var that = $(this);
+
+            if(!isEmptyDictObj(prjSourcePickerData)) {
+                showPrjSourcePicker(prjSourcePickerData)
+                return;
+            }
+            getDictItems('project_source', function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                prjSourcePickerData = data;
+                showPrjSourcePicker(prjSourcePickerData)
+
+            })
+        })
+        //项目状态
+        // $("#conservationStatus_text").on("tap", function() {
+        // 	var that = $(this);
+        // 	getDictItems('project_status', function(data) {
+        // 		if (206 != parseInt(data.code)) {
+        // 			app.toast(data.message);
+        // 			return;
+        // 		}
+        // 		var resultJSON = [];
+        // 		for (var i = 0; i < data.result.length; i++) {
+        // 			var item = data.result[i];
+        // 			resultJSON.push({
+        // 				text: item.text,
+        // 				value: item.value
+        // 			})
+        // 		}
+        // 		//普通示例
+        // 		if ($(".mui-poppicker").hasClass("mui-active")) {
+        // 			userPicker.hide();
+        // 			return false;
+        // 		} else {
+        // 			userPicker.setData(resultJSON);
+        // 			userPicker.show(function(items) {
+        // 				$("#conservationStatus").val(items[0].value);
+        // 				$("#conservationStatus_text").val(items[0].text);
+        // 			});
+        // 		}
+        // 	})
+        // })
+
+        //所属行业 - 防止多次点击
+        $("#industry_text").on("tap", function () {
+            var that = $(this);
+            if(!isEmptyDictObj(industryPickerData)) {
+                showIndustryPicker(industryPickerData)
+                return;
+            }
+            getDictItems('project_industry', function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+
+                industryPickerData = data;
+                showIndustryPicker(industryPickerData);
+
+            })
+        })
+    }
+
+    // 显示项目类型下拉框
+    function showPrjTypePicker(data)
+    {
+        var resultJSON = [];
+        for (var i = 0; i < data.result.length; i++) {
+            var item = data.result[i];
+            resultJSON.push({
+                text: item.text,
+                value: item.value
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function (items) {
+                $("#prjType_text").val(items[0].text);
+                $("#prjType").val(items[0].value);
+                //返回 false 可以阻止选择框的关闭
+                //return false;
+            });
+        }
+    }
+    // 显示项目性质下拉框
+    function showPrjCharacterPicker(data) {
+        var resultJSON = [];
+        for (var i = 0; i < data.result.length; i++) {
+            var item = data.result[i];
+            resultJSON.push({
+                text: item.text,
+                value: item.value
+            })
+        }
+        //普通示例
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function (items) {
+                $("#prjCharacter").val(items[0].value);
+                $("#prjCharacter_text").val(items[0].text);
+                //返回 false 可以阻止选择框的关闭
+                //return false;
+            });
+        }
+
+    }
+    // 显示项目来源下拉框
+    function showPrjSourcePicker(data) {
+        var resultJSON = [];
+        for (var i = 0; i < data.result.length; i++) {
+            var item = data.result[i];
+            resultJSON.push({
+                text: item.text,
+                value: item.value
+            })
+        }
+        //普通示例
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function (items) {
+                $("#prjSource").val(items[0].value);
+                $("#prjSource_text").val(items[0].text);
+                //返回 false 可以阻止选择框的关闭
+                //return false;
+            });
+        }
+    }
+
+    // 显示所属行业下拉框
+    function showIndustryPicker(data) {
+        var resultJSON = [];
+        for (var i = 0; i < data.result.length; i++) {
+            var item = data.result[i];
+            resultJSON.push({
+                text: item.text,
+                value: item.value
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function (items) {
+                $("#industry_text").val(items[0].text);
+                $("#industry").val(items[0].value);
+            });
+        }
+    }
+    // 显示方案类型下拉框
+    function showProgrammeTypePicker(data) {
+        var resultJSON = [];
+        for (var i = 0; i < data.result.length; i++) {
+            var item = data.result[i];
+            resultJSON.push({
+                text: item.text,
+                value: item.value
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function (items) {
+                $("#programmeType_text").val(items[0].text);
+                $("#programmeType").val(items[0].value);
+
+                if (items[0].text == '无') {
+                    $(".isShow").hide()
+                } else {
+                    $(".isShow").fadeIn()
+                }
+            });
+        }
+    }
+
+
+    var initDownSelectPage2 = function () {
+        //方案类型
+        $("#programmeType_text").on("tap", function () {
+            console.log('选择方案类型 on click');
+            var that = $(this);
+            if(!isEmptyDictObj(programmeTypePickerData)) {
+                showProgrammeTypePicker(programmeTypePickerData)
+                return;
+            }
+            getDictItems('programme_type', function (data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                programmeTypePickerData = data;
+                showProgrammeTypePicker(programmeTypePickerData)
+            })
+        })
+
+
+
+        //文件上传
+        $("#upload_file").on("tap", function () {
+            console.log("upload_file")
+            if (operatorType == "show") return;
+            if (isUpload) {
+                isUpload = false;
+                let fileSuffix = 'doc、docx、pdf';
+                var that = $(this);
+                plusSelectFile(fileSuffix, function (data, path) {
+                    console.log(path)
+                    console.log(JSON.stringify(data))
+                    var suffix = path.substring(path.lastIndexOf(".") + 1, path.length);
+                    var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+                    var iconPath = "";
+                    console.log(suffix)
+                    switch (suffix) {
+                        case 'doc':
+                        case 'docx':
+                            iconPath = '../../img/commom/doc.png';
+                            break;
+                        // case 'xlsx':
+                        // case 'xls':
+                        // 	iconPath = '../../img/commom/xlsx.png';
+                        // 	break;
+                        case 'pdf':
+                            iconPath = '../../img/commom/pdf.png';
+                            break;
+                        default:
+                            app.toast("只能上传.doc .docx .pdf文件！")
+                            return;
+                    }
+                    if (data.success) {
+                        app.toast("文件上传成功");
+                        document.getElementById('detail2').scrollTop = 0;
+                        $("#fileUploadBox").css("height", 180)
+                        $("#soilConservationScheme").css("height", 825)
+                        $("#fileBoxItem").fadeIn()
+                        that.attr("disabled", true)
+                        $("#file_type").attr('src', iconPath)
+                        $("#file_name").html(name)
+                        $("#programme").val(data.result.fileTokens)
+                        $("#fileToken").val(data.result.fileTokens)
+
+                        plus.io.resolveLocalFileSystemURL(path, function (entry) {
+                            entry.file(function (file) {
+                                let fileSize = Math.floor(file.size / 1024);
+                                console.log(file.size + "===" + fileSize)
+                                $("#file_size").html(fileSize + "KB")
+                                var fileProperty = {
+                                    fileName: name,
+                                    fileType: iconPath,
+                                    fileSize: file.size,
+                                    fileToken: data.result.fileTokens
+                                }
+                                globalSetItem(GlobalKey.fileProperty, JSON.stringify(fileProperty))
+                            });
+                        }, function (e) {
+                            alert("文件获取失败:" + e.message);
+                        });
+                    } else {
+                        app.toast(data.message);
+                    }
+                })
+            }
+            setTimeout(function () {
+                isUpload = true
+            }, 1000)
+        });
+
+
+        $(document).on('tap', '.img_src', function () {
+            mui.previewImage();
+        });
+        //删除文件
+        $(document).on("tap", ".file_close", function () {
+            var that = $(this)
+            mui.confirm("移除该文件?", "提示", ['确定', '我再想想'], function (result) {
+                if (parseInt(result.index) == 0) {
+                    $("#fileUploadBox").css("height", 100)
+                    $("#fileBoxItem").hide()
+                    $("#upload_file").attr("disabled", false)
+                    $("#fileToken").val("")
+                    $("#programme").val('')
+                    globalDelItem(GlobalKey.fileProperty)
+                }
+            })
+        });
+    }
+    //暂存
+    $("#save").on("tap", function (event) {
+        saveProForm()
+        app.showLoaderWithMsg("正在暂存中，请稍后...")
+        setTimeout(function () {
+            app.hideLoader()
+            app.toast("暂存成功！")
+            mui.confirm("是否继续?", "提示", ['下一步', '取消', '返回列表'], function (result) {
+                if (parseInt(result.index) == 0) { //下一步
+                    if (validateRequiredFields()) {
+                        if (myValidate()) {
+                            app.openPage("addProject_stepTwo.html", {
+                                titleNView: {
+                                    titleText: '新增项目',
+                                    autoBackButton: true,
+                                }
+                            }, {});
+                        }
+                    }
+                } else if (parseInt(result.index) == 1) { //取消
+
+                } else if (parseInt(result.index) == 2) { //返回列表
+                    plus.webview.currentWebview().close('none');
+                }
+            })
+        }, 1000)
+    })
+
+    //上一步
+    $("#pre_step").on("tap", function (event) {
+        if ($("#soilConservationScheme").css("display") != 'none') {
+            $("#soilConservationScheme").css("display", "none") // 隐藏第二个tab，显示第一个tab
+            $("#stepTwoLi").removeClass("step-active")
+            // $("#basicInfo").css("display", "inline-block")
+            $("#basicInfo").css("display", "block")
+
+            // 新添加
+            $("#step-one-li").addClass("step-active");
+            $("#step-margin-circle-one").removeClass("step-margin-circle-selected")
+            $("#step-line-two").removeClass("step-line-selected")
+
+            $("#preBtn").hide();
+            $("#nextBtn").hide();
+            $("#submitBtn").hide();
+            $("#nextBtn1").show();
+            $("#preBtn").css('width', '50%');
+
+        } else if ($("#checkPlanPage").css("display") != 'none') {
+            $("#checkPlanPage").css("display", "none") // 隐藏第三个tab ，显示第二个tab
+            //$("#soilConservationScheme").css("display", "inline-block")
+            $("#soilConservationScheme").css("display", "block")
+            $("#stepThreeLi").removeClass("step-active")
+
+            // 新添加
+            $("#stepTwoLi").addClass("step-active")
+            $("#step-one-li").removeClass("step-active");
+            $("#step-line-two").addClass("step-line-selected")
+            $("#step-margin-circle-two").removeClass("step-margin-circle-selected")
+
+            $("#preBtn").show();
+            $("#nextBtn").show();
+            $("#submitBtn").hide();
+            $("#preBtn").css('width', '50%');
+        }
+        cBScroll.refresh()
+        scrollTop()
+    })
+
+    //下一步
+    $("#next_step,#next_step1").on("tap", function (event) {
+        console.log('########下一步');
+        // if(isTest) {// 测试提交
+        // 	//var params = `{"prjName":"TT","prjSource":"0","prjType":"0","prjCharacter":"0","industry":"","conservationStatus":"0","prjLocationDistrict":"福田区","prjLocationStreet":"福保街道","prjLocation":"深圳市福田区菩提路118西南方向80米新桂花村边检宿舍停车场","longitude":"114.05565826000259","latitude":"22.51600634326519","constructionUnit":"uuu","conContacts":"ytr","email":"","buildUnit":"","buildContacts":"","supervisoryUnit":"","supervisoryContacts":"","designUnit":"","designContacts":"","startDate":"2021-05-28 00:00:00","planEndDate":"2021-05-29 00:00:00","projectLevel":"1","buildLandArea":0,"constructionUnitPhone":"18028390999","buildUnitPhone":"","supervisoryUnitPhone":"","designUnitPhone":"","smid":"164","programmeType":"0","preventionArea":0,"totalInvestment":0,"civilInvestment":0,"designCutfill":0,"preparationUnit":"","receiptTime":"","approvalNumber":"","approvalDep":"","approvalDate":"","programme":"0bfe4ae8d89c46bfafbf2a2b95674cac","strAttachment":"[{\\"groupId\\":\\"0bfe4ae8d89c46bfafbf2a2b95674cac\\",\\"fileTokens\\":\\"b4e03d46de3565e31ca2dc2da72f22f2\\",\\"fieldName\\":\\"programme\\",\\"tableName\\":\\"conservation_project_list\\"}]","checkPlan":"1","inputerFullname":"ceshi","inputDate":"2021-05-28 10:54:11","inspectors":"颜福","planCheckDate":"2021-05-28;"}`;
+        // 	var params = `{"prjName":"TT","prjSource":"0","prjType":"0","prjCharacter":"0","industry":"","conservationStatus":"0","prjLocationDistrict":"福田区","prjLocationStreet":"福保街道","prjLocation":"深圳市福田区菩提路118西南方向80米新桂花村边检宿舍停车场","longitude":"114.05565826000259","latitude":"22.51600634326519","constructionUnit":"uuu","conContacts":"ytr","email":"","buildUnit":"","buildContacts":"","supervisoryUnit":"","supervisoryContacts":"","designUnit":"","designContacts":"","startDate":"2021-05-28 00:00:00","planEndDate":"2021-05-29 00:00:00","projectLevel":"1","buildLandArea":0,"constructionUnitPhone":"18028390999","buildUnitPhone":"","supervisoryUnitPhone":"","designUnitPhone":"","smid":"164","programmeType":"0","preventionArea":0,"totalInvestment":0,"civilInvestment":0,"designCutfill":0,"preparationUnit":"","receiptTime":"","approvalNumber":"","approvalDep":"","approvalDate":"","programme":"0bfe4ae8d89c46bfafbf2a2b95674cac","strAttachment":"","checkPlan":"1","inputerFullname":"ceshi","inputDate":"2021-05-28 10:54:11","inspectors":"颜福","planCheckDate":"2021-05-28;"}`;
+        // 	saveFormToServer(params)
+        // 	return;
+        // }
+
+        // if(operatorType == "show")
+        if (operatorType != "show" && !validateRequiredFields()) {
+            cBScroll.refresh()
+            return;
+        }
+        //console.log("联系电话:" + obj.value)
+        if (operatorType != "show" && $("#basicInfo").css("display") != 'none') {
+            var phone = $("#constructionUnitPhone").val().trim()
+            if (!checkPhoneOrTel(phone)) {
+                app.toast("请输入正确的联系电话")
+                //$("#constructionUnitPhone").val();
+                return;
+            }
+        }
+
+
+        //if (validateRequiredFields()) {
+        //组装表单数据
+        if (operatorType != "show") {
+            saveProForm();
+        }
+
+        if ($("#basicInfo").css("display") != 'none') {
+            $("#basicInfo").css("display", "none") // 隐藏第一个tab ，显示第二个tab
+            //$("#soilConservationScheme").css("display", "inline-block")
+            $("#soilConservationScheme").css("display", "block")
+            $("#stepTwoLi").addClass("step-active")
+            // 新添加
+            $("#step-one-li").removeClass("step-active");
+            $("#step-margin-circle-one").addClass("step-margin-circle-selected")
+            $("#step-line-two").addClass("step-line-selected")
+            $("#step-margin-circle-two").removeClass("step-margin-circle-selected")
+
+            $("#preBtn").show();
+            $("#nextBtn").show();
+            $("#nextBtn1").hide();
+
+            $("#preBtn").css('width', '50%');
+
+        } else if ($("#soilConservationScheme").css("display") != 'none') {
+
+            // 方案附件 非必填
+            // if(operatorType != "show") {
+            // 	if ($("#programmeType_text").val() != '无' && $("#programme").val() == '') {
+            // 		app.toast("请上传方案附件")
+            // 		return;
+            // 	}
+            // }
+
+            $("#soilConservationScheme").css("display", "none") // 隐藏第二个tab ，显示第三个tab
+            //$("#checkPlanPage").css("display", "inline-block")
+            $("#checkPlanPage").css("display", "block")
+            $("#stepThreeLi").addClass("step-active")
+            // 新添加
+            $("#stepTwoLi").removeClass("step-active")
+            $("#step-margin-circle-two").addClass("step-margin-circle-selected")
+
+            $("#preBtn").show();
+            $("#nextBtn").hide();
+            $("#submitBtn").show();
+
+            $("#preBtn").css('width', '50%');
+            if (operatorType == "show") {
+                $("#submitBtn").hide();
+                $("#preBtn").css('width', '100%');
+            }
+        }
+        scrollTop()
+        //}
+
+        cBScroll.refresh()
+
+    })
+
+    //提交
+    $("#submit").on("tap", function (event) {
+        if (validateRequiredFields()) {
+            // 方案附件 非必填
+            // if ($("#programmeType_text").val() != '无' && $("#programme").val() == '') {
+            // 	app.toast("请上传方案附件")
+            // 	return;
+            // }
+            //组装表单数据
+            saveProForm();
+
+            var pro = JSON.parse(localStorage.getItem("pro_form_data"));
+            // guid	业务主键
+            /*
+            var strFormData = {
+                prjName: pro.pro,
+                prjSource: pro.prjSource,
+                prjType: pro.prjType,
+                prjCharacter: pro.prjCharacter,
+                industry: pro.industry,
+                conservationStatus: pro.conservationStatus,
+                prjLocationDistrict: pro.prjLocationDistrict,
+                prjLocationStreet: pro.prjLocationStreet,
+                prjLocation: pro.prjLocation,
+                longitude: pro.longitude,
+                latitude: pro.latitude,
+                constructionUnit: pro.constructionUnit,
+                conContacts: pro.conContacts,
+                email: pro.email,
+                buildUnit: pro.buildUnit,
+                buildContacts: pro.buildContacts,
+                supervisoryUnit: pro.supervisoryUnit,
+                supervisoryContacts: pro.supervisoryContacts,
+                designUnit: pro.designUnit,
+                designContacts: pro.designContacts,
+                startDate: pro.startDate,
+                planEndDate: pro.planEndDate,
+                buildLandArea: pro.buildLandArea,
+                constructionUnitPhone: pro.constructionUnitPhone,
+                buildUnitPhone: pro.buildUnitPhone,
+                supervisoryUnitPhone: pro.supervisoryUnitPhone,
+                designUnitPhone: pro.designUnitPhone,
+                programmeType: pro.programmeType,
+                preventionArea: pro.preventionArea,
+                totalInvestment: pro.totalInvestment,
+                civilInvestment: pro.civilInvestment,
+                designCutfill: pro.designCutfill,
+                preparationUnit: pro.preparationUnit,
+                receiptTime: pro.receiptTime,
+                approvalNumber: pro.approvalNumber,
+                approvalDep: pro.approvalDep,
+                approvalDate: pro.approvalDate,
+                programme: pro.programme,
+                checkPlan: pro.checkPlan,
+                inputerFullname: pro.inputerFullname,
+                inputDate: pro.inputDate,
+                inspectors: pro.inspectors,
+                planCheckDate: pro.planCheckDate,
+                smid: pro.smid
+            }
+
+            // 附件单独传
+            var strAttachment =  pro.strAttachment
+            //附件
+            var strAttachment = [{
+                "groupId": "",
+                "fileTokens": "",
+                "fieldName": "programme",
+                "tableName": "device_project" // web: device_project ,old: conservation_project_list
+            }]
+            var groupId = getGroupId();
+            if ($("#programmeType_text").val() == '无') {
+                strAttachment[0].groupId = groupId;
+            } else {
+                var ftoken = $("#fileToken").val()
+                if (ftoken != "") {
+                    strAttachment[0].groupId = groupId;
+                    strAttachment[0].fileTokens = $("#fileToken").val()
+                }
+            }
+            let params = {
+                strFormData: JSON.stringify(strFormData),
+                strAttachment: JSON.stringify(strAttachment)
+            };
+            //var params = pro; //JSON.parse(localStorage.getItem("pro_form_data"));
+            console.log("新增项目提交参数信息:");
+            console.log(JSON.stringify(params))
+            saveFormToServer(params)
+            */
+            console.log("新增项目提交参数信息:");
+            console.log(JSON.stringify(pro))
+            saveFormToServer(pro)
+        }
+    });
+
+    // 提交到服务器
+    function saveFormToServer(params) {
+
+        app.showLoaderWithMsg("正在提交中，请稍后...")
+        var url = config.urls.baseUrl + config.actions.addProject;
+        /*
+        baseUrl: 'https://zhswtest.hdec.com/ecidi-cmp/',
+   // baseUrl: 'http://192.168.0.75:9000',
+         */
+        // var url = 'http://192.168.1.103:9000/ecidi-cmp/ft-emergency/projectlist/projectList/addData';// + config.actions.addProject;
+        //var url = 'http://192.168.1.103:9000/ecidi-cmp/ft-emergency/projectlist/projectList/add'
+        $.ajax(url, {
+            data: params, //.serialize(),
+            dataType: 'json', //服务器返回json格式数据
+            type: 'post', //HTTP请求类型
+            headers: {
+                // "X-Access-Token": app.sessionId(),
+                // "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Access-Token": app.sessionId()
+            },
+            timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+            success: function (data) {
+                // console.log("新增项目接口返回：" + JSON.stringify(data))
+                if (data.success) {
+                    //清除本地缓存
+                    localStorage.removeItem("pro_form_data")
+                    globalDelItem(GlobalKey.fileProperty)
+                    app.toast(data.message);
+                    //触发列表页面刷新
+                    var view = plus.webview.getWebviewById("view/conservation/projectList.html");;
+                    mui.fire(view, 'return');
+                    // //关闭页面
+                    setTimeout(function () {
+                        app.hideLoader();
+                        plus.webview.currentWebview().close('none');
+                    }, 500)
+                } else {
+                    deleteFeatureWhenSubmitFail();
+                    app.toast(data.message);
+                    app.hideLoader();
+                }
+            },
+            error: function (xhr, type, errorThrown) {
+                deleteFeatureWhenSubmitFail()
+                dealingWithErrorRequest(errorThrown);
+                app.hideLoader();
+                app.toast("网络异常,请稍后再试");
+            }
+        });
+
+    }
+    //提交失败 ，调用 gis 的删除接口
+    function deleteFeatureWhenSubmitFail() {
+        console.log('删除smid：' + $("#smid").val())
+        mapData.deleteFeature(
+            'device_project',
+            [$("#smid").val()]
+        ).then(res => {
+            console.log('gis删除接口成功')
+        }).catch(ex => {
+            //app.toast(ex)
+            console.log('gis删除接口异常')
+        });
+    }
+    //重新加载
+    var reloadAddress = function (data) {
+        window.location.reload();
+    }
+    //自定义校验
+    var myValidate = function () {
+        //校验图片是否上传
+        let errArr = $('.err-show:visible');
+        console.log($(errArr[0]).html() + "," + errArr.length);
+        if (errArr.length != 0) { //自定义校验
+            let info = $(errArr[0]).prev().html();
+            app.toast("请正确填写【" + info + "】字段");
+            return false;
+        }
+        return true;
+    }
+
+    //自定义校验
+    var validateAttach = function () {
+        let errArr = $('.err-show:visible');
+        console.log($(errArr[0]).html(), errArr.length);
+        if (errArr.length != 0) { //自定义校验
+            let info = $(errArr[0]).prev().prev().html();
+            app.toast("请正确填写【" + info + "】字段");
+            return false;
+        }
+        return true;
+    }
+
+    //组装项目表单 - 新添加的字段，这里修改 2/2
+    function saveProForm() {
+        var pro_form = null;
+        var pro_form_data = localStorage.getItem("pro_form_data");
+        if (pro_form_data == null) {
+            pro_form = {};
+        } else {
+            pro_form = JSON.parse(pro_form_data)
+        }
+        // console.log($("#basicInfo").css("display") != 'none')
+        if ($("#basicInfo").css("display") != 'none') { // 基本信息
+            pro_form.prjName = $("#prjName").val();
+            pro_form.prjSource = $("#prjSource").val();
+            pro_form.prjType = $("#prjType").val();
+            pro_form.prjCharacter = $("#prjCharacter").val();
+            pro_form.industry = $("#industry").val();
+            pro_form.conservationStatus = $("#conservationStatus").val();
+            pro_form.prjLocationDistrict = $("#prjLocationDistrict").val();
+            pro_form.prjLocationStreet = $("#prjLocationStreet").val();
+            pro_form.prjLocation = $("#prjLocation").val();
+            pro_form.longitude = $("#longitude").val();
+            pro_form.latitude = $("#latitude").val();
+            pro_form.constructionUnit = $("#constructionUnit").val();
+            pro_form.conContacts = $("#conContacts").val();
+            pro_form.email = $("#email").val();
+            pro_form.buildUnit = $("#buildUnit").val();
+            pro_form.buildContacts = $("#buildContacts").val();
+            pro_form.supervisoryUnit = $("#supervisoryUnit").val();
+            pro_form.supervisoryContacts = $("#supervisoryContacts").val();
+            pro_form.designUnit = $("#designUnit").val();
+            pro_form.designContacts = $("#designContacts").val();
+            pro_form.startDate = $("#startDate").val() + " 00:00:00"
+            pro_form.planEndDate = $("#planEndDate").val() + " 00:00:00";
+            // 移动到第二个tab
+            // pro_form.preventionArea = mui("#preventionArea").numbox().getValue() // 防治责任范围面积
+            // pro_form.totalInvestment = mui("#totalInvestment").numbox().getValue() // 总投资（万元）
+            // pro_form.civilInvestment = mui("#civilInvestment").numbox().getValue() // 土建投资（万元）
+            // pro_form.checkPlan = $("#checkPlan").val();
+            // hgshh 2021-04-25 新添加
+            //<!-- 新添加项目级别 1 -->
+            pro_form.projectLevel = $("#projectLevel").val();
+
+            //<!-- 新添加建设用地面积(hm2) ,限制使用数字 2-->
+            //pro_form.buildLandArea = $("#buildLandArea").val();
+            pro_form.buildLandArea = mui("#buildLandArea").numbox().getValue()
+
+            // 新添加建设单位联系电话 3
+            pro_form.constructionUnitPhone = $("#constructionUnitPhone").val();
+            // <!-- 新添加施工单位联系电话 4-->
+            pro_form.buildUnitPhone = $("#buildUnitPhone").val();
+            // <!-- 新添加监理单位联系电话 5-->
+            pro_form.supervisoryUnitPhone = $("#supervisoryUnitPhone").val();
+            // <!-- 新添加主体设计单位联系电话 6 -->
+            pro_form.designUnitPhone = $("#designUnitPhone").val();
+
+
+        } else if ($("#soilConservationScheme").css("display") != 'none') { // 水保方案
+            pro_form.programmeType = $("#programmeType").val();
+
+            // 之前在第一个tab
+            pro_form.preventionArea = mui("#preventionArea").numbox().getValue(); // 防治责任范围面积
+            pro_form.totalInvestment = mui("#totalInvestment").numbox().getValue(); // 总投资（万元）
+            pro_form.civilInvestment = mui("#civilInvestment").numbox().getValue(); // 土建投资（万元）
+
+            // <!-- 新添加设计挖填方总量(万m3) 限制使用数字 7-->
+            pro_form.designCutfill = mui("#designCutfill").numbox().getValue()
+            // <!-- 新添加编制单位 8-->
+            pro_form.preparationUnit = $("#preparationUnit").val();
+            // <!-- 新添加收文日期 9 -->
+            pro_form.receiptTime = $("#receiptTime").val();
+
+            //附件
+            var attachment = [{
+                "groupId": "",
+                "fileTokens": "",
+                "fieldName": "programme",
+                "tableName": "conservation_project_list",
+            }]
+
+            var groupId = getGroupId();
+            if ($("#programmeType_text").val() == '无') {
+                pro_form.approvalNumber = '';
+                pro_form.approvalDep = '';
+                pro_form.approvalDate = '';
+
+                pro_form.programme = groupId;
+                attachment[0].groupId = groupId;
+                pro_form.strAttachment = JSON.stringify(attachment)
+                // pro_form.strAttachment = "" //attachment;
+            } else {
+                pro_form.approvalNumber = $("#approvalNumber").val();
+                pro_form.approvalDep = $("#approvalDep").val();
+                pro_form.approvalDate = $("#approvalDate").val();
+
+                var ftoken = $("#fileToken").val()
+                if (ftoken != "") {
+                    pro_form.programme = groupId;
+                    attachment[0].groupId = groupId;
+                    attachment[0].fileTokens = $("#fileToken").val()
+                }
+                pro_form.strAttachment = JSON.stringify(attachment)
+                // pro_form.strAttachment = "";//attachment;
+            }
+        } else if ($("#checkPlanPage").css("display") != 'none') {
+            pro_form.checkPlan = $("#checkPlan").val(); //计划检查次数
+            pro_form.inputerFullname = $("#inputerFullname").val(); //填写人 
+            pro_form.inputDate = new Date().Format("yyyy-MM-dd hh:mm:ss"); //填写时间
+            pro_form.inspectors = $("#surveyPerson_text").val(); //检查人员
+            //检查日期
+            var checkDateStr = "";
+            for (let i = 0; i < $("#checkPlan").val(); i++) {
+                checkDateStr = checkDateStr + $("#surveyDate" + (i + 1)).val() + ";"
+            }
+            pro_form.planCheckDate = checkDateStr;
+        }
+
+        // 选择地图返回smid ？
+        pro_form.smid = $("#smid").val() //"164";
+        localStorage.setItem("pro_form_data", JSON.stringify(pro_form));
+        //console.log("oneStep=======" + localStorage.getItem("pro_form_data"));
+        return true;
+    }
+
+    // 新增 ，不需要显示暂存信息
+    function showData() {
+        var pro_form = null;
+        var self = plus.webview.currentWebview();
+        // console.log(self.isEdit)
+        if (self.isEdit) { //查看项目
+            pro_form = JSON.parse(self.proData);
+        } else { //新增
+            var pro_form_data = localStorage.getItem("pro_form_data");
+            if (pro_form_data == null) {
+                pro_form = pro_form;
+            } else {
+                pro_form = JSON.parse(pro_form_data)
+            }
+        }
+        console.log(pro_form)
+        $("#prjName").val(pro_form.prjName);;
+        $("#prjSource").val(pro_form.prjSource);
+        getDicTextByIdAndKey(pro_form.prjSource, 'project_source', function (data) {
+            if (data != '无') {
+                $("#prjSource_text").val(data)
+            }
+        });
+        $("#prjType").val(pro_form.prjType)
+        getDicTextByIdAndKey(pro_form.prjType, 'project_type', function (data) {
+            if (data != '无') {
+                $("#prjType_text").val(data)
+            }
+        });
+        $("#prjCharacter").val(pro_form.prjCharacter); // 项目性质
+        getDicTextByIdAndKey(pro_form.prjCharacter, 'project_character', function (data) {
+            if (data != '无') {
+                $("#prjCharacter_text").val(data)
+            }
+        });
+        $("#industry").val(pro_form.industry);
+        getDicTextByIdAndKey(pro_form.industry, 'project_industry', function (data) {
+            if (data != '无') {
+                $("#industry_text").val(data)
+            }
+        });
+        // ========= 新增 ，不需要显示暂存信息 ，这里不用设置
+        // // 新添加 - 建设用地
+        // if (pro_form.buildLandArea) mui("#buildLandArea").numbox().setValue(pro_form.buildLandArea)
+        // // 新添加 - 项目级别
+        // $("#projectLevel").val(pro_form.projectLevel);
+        // getProjectLevelDicTextById(pro_form.projectLevel, function(data) {
+        // 	if (data != "") {
+        // 		$("#projectLevel_text").val(data)
+        // 	}
+        // });
+
+        // $("#conservationStatus").val(pro_form.conservationStatus);
+        // getDicTextByIdAndKey(pro_form.conservationStatus, 'project_status', function(data) {
+        // 	if (data != '无') {
+        // 		$("#conservationStatus_text").val(data)
+        // 	}
+        // });
+        // $("#prjLocationDistrict").val(pro_form.prjLocationDistrict);
+        $("#prjLocationStreet").val(pro_form.prjLocationStreet);
+        $("#prjLocation").val(pro_form.prjLocation);
+        $("#longitude").val(pro_form.longitude);
+        $("#latitude").val(pro_form.latitude);
+        $("#constructionUnit").val(pro_form.constructionUnit);
+        $("#conContacts").val(pro_form.conContacts);
+        $("#email").val(pro_form.email);
+        $("#buildUnit").val(pro_form.buildUnit);
+        $("#buildContacts").val(pro_form.buildContacts);
+        $("#supervisoryUnit").val(pro_form.supervisoryUnit);
+        $("#supervisoryContacts").val(pro_form.supervisoryContacts);
+        $("#designUnit").val(pro_form.designUnit);
+        $("#designContacts").val(pro_form.designContacts);
+        $("#startDate").val(pro_form.startDate.substring(0, 10));
+        $("#planEndDate").val(pro_form.planEndDate.substring(0, 10));
+        // $("#preventionArea").val(pro_form.preventionArea);
+        // $("#totalInvestment").val(pro_form.totalInvestment);
+        // $("#civilInvestment").val(pro_form.civilInvestment);
+
+        if (pro_form.preventionArea) mui("#preventionArea").numbox().setValue(pro_form.preventionArea)
+        if (pro_form.totalInvestment) mui("#totalInvestment").numbox().setValue(pro_form.totalInvestment)
+        if (pro_form.civilInvestment) mui("#civilInvestment").numbox().setValue(pro_form.civilInvestment)
+        // $("#checkPlan").val(pro_form.checkPlan);
+
+    }
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+    Date.prototype.Format = function (fmt) { // author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+                o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    //获取项目级别字典枚举对应的text
+    function getProjectLevelDicTextById(sid, callback) {
+        var data = ['市级及以上', '区级'];
+        var resultJSON = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            resultJSON.push({
+                text: item,
+                value: (i + 1)
+            })
+        }
+
+        for (var i in resultJSON) {
+            if (sid == parseInt(resultJSON[i].value)) {
+                callback(resultJSON[i].text);
+                return;
+            }
+        }
+        return "";
+    }
+
+    function validata_phone(obj) {
+        console.log("联系电话:" + obj.value)
+        if (!checkPhoneOrTel(obj.value)) {
+            app.toast("请输入正确的联系电话")
+            $(obj).val('');
+        }
+
+        // if(checkPhone2(obj.value)) {
+        // 	app.toast("请输入正确的联系电话")
+        // 	$("#constructionUnitPhone").val('');
+        // }
+    }
+    // 验证手机 - 建设单位联系电话
+    function validata_constructionUnitPhone(obj) {
+        console.log("联系电话:" + obj.value)
+        if (!checkPhoneOrTel(obj.value)) {
+            app.toast("请输入正确的联系电话")
+            // $("#constructionUnitPhone").val('');
+        }
+
+        // if(checkPhone2(obj.value)) {
+        // 	app.toast("请输入正确的联系电话")
+        // 	$("#constructionUnitPhone").val('');
+        // }
+    }
+    function checkPhoneOrTel(phone) {
+        // 手机号码
+        // var phoneResult = true
+        // if(!(/^1(3|4|5|6|7|8|9)d{9}$/.test(phone))){
+        // //if(!(/^1[3456789]d{9}$/.test(phone))) {
+        // 	// alert("手机号码有误，请重填");
+        // 	// app.toast("请输入正确的联系电话")
+        // 	// $("#constructionUnitPhone").val('');
+        // 	// return true;
+        // 	phoneResult = false;
+        // }
+        // //var tel = document.getElementById('tel').value;
+        // // 固定电话
+        // if(!phoneResult) {
+        // 	if(!/^((d{3,4})|d{3,4}-|s)?d{7,14}$/.test(phone)){
+        // 		// app.toast("请输入正确的联系电话")
+        // 		// $("#constructionUnitPhone").val('');
+        // 		phoneResult = false
+        // 	}
+        // }
+        //
+        // return phoneResult;
+        return checkPhone2(phone)
+    }
+
+    // email验证 - 非必填 ，不用验证
+    function validata_email(obj) {
+        var reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+
+        if (obj.value != null && obj.value.trim() > 0 && !reg.test(obj.value)) {
+            app.toast("请输入正确的邮箱地址")
+            $("#email").val('');
+        } else {
+            $("#email_error").hide();
+        }
+
+        // if (obj.value != null && !reg.test(obj.value)) {
+        //
+        // 	app.toast("请输入正确的邮箱地址")
+        // 	// obj.focus();
+        // 	flag = false;
+        // 	// console.log("leave email input")
+        //
+        // 	baseInfoCanInput(false);
+        // 	// cBScroll.refresh()
+        // 	//cBScroll.scrollToElement(document.getElementById("email_div_container"), 0, 0);
+        //
+        // } else {
+        // 	$("#email_error").hide();
+        // 	//$("#prjName").removeAttr("readonly");
+        // 	baseInfoCanInput(true);
+        // 	flag = true;
+        // }
+    }
+    // 基本信息需要先填写正确的邮箱地址 ，才可以填写其他内容 ; 新添加的字段，这里修改 1/2
+    function baseInfoCanInput(can) {
+        if (can) {
+            // 项目名称
+            $("#prjName").removeAttr("readonly");
+            // 项目类型
+            $("#prjType_text").removeAttr("disabled");
+
+            // <!-- 新添加项目级别 1-->
+            // 项目级别
+            $("#projectLevel_text").removeAttr("disabled");
+
+            // 项目来源
+            $("#prjSource_text").removeAttr("disabled");
+            // 项目性质
+            $("#prjCharacter_text").removeAttr("disabled");
+
+            // <!-- 新添加建设用地面积(hm2) ,限制使用数字 2-->
+            // 请输入建设用地面积
+            // $("#buildLandArea").removeAttr("readonly");
+            $("#buildLandArea_input").removeAttr("readonly");
+
+            // 当前状态
+            $("#conservationStatus_text").removeAttr("disabled");
+            // 详细地址
+            $("#prjLocation").removeAttr("disabled");
+            // 建设单位
+            $("#constructionUnit").removeAttr("readonly");
+            // 建设单位联系人
+            $("#conContacts").removeAttr("readonly");
+
+            // <!-- 新添加建设单位联系电话 3-->
+            // 建设单位联系电话
+            $("#constructionUnitPhone").removeAttr("readonly");
+            // 施工单位
+            $("#buildUnit").removeAttr("readonly");
+            // 施工单位联系人
+            $("#buildContacts").removeAttr("readonly");
+
+            // <!-- 新添加施工单位联系电话 4-->
+            $("#buildUnitPhone").removeAttr("readonly");
+
+            // 监理单位
+            $("#supervisoryUnit").removeAttr("readonly");
+            // 监理单位联系人
+            $("#supervisoryContacts").removeAttr("readonly");
+
+            // <!-- 新添加监理单位联系电话 5-->
+            $("#supervisoryUnitPhone").removeAttr("readonly");
+
+            // 主体设计单位
+            $("#designUnit").removeAttr("readonly");
+            // 主体设计单位联系人
+            $("#designContacts").removeAttr("readonly");
+
+            // 新添加主体设计单位联系电话 6
+            // 主体设计单位联系电话
+            $("#designUnitPhone").removeAttr("readonly");
+
+            // 项目开工日期
+            $("#startDate").removeAttr("disabled");
+            // 计划完工日期
+            $("#planEndDate").removeAttr("disabled");
+            // 上传方案附件
+            $("#upload_file").attr("disabled", false)
+        } else {
+            // 项目名称
+            $("#prjName").attr("readonly", "readonly");
+            // 项目类型
+            $("#prjType_text").attr("disabled", true);
+
+            // <!-- 新添加项目级别 1-->
+            // 项目级别
+            $("#projectLevel_text").attr("disabled", true);
+            // 项目来源
+            $("#prjSource_text").attr("disabled", true);
+            // 项目性质
+            $("#prjCharacter_text").attr("disabled", true);
+
+            // <!-- 新添加建设用地面积(hm2) ,限制使用数字 2-->
+            // 请输入建设用地面积
+            //$("#buildLandArea").attr("readonly","readonly");
+            $("#buildLandArea_input").attr("readonly", "readonly");
+
+            // 当前状态
+            $("#conservationStatus_text").attr("disabled", true);
+            // 详细地址
+            $("#prjLocation").attr("disabled", true);
+            // 建设单位
+            $("#constructionUnit").attr("readonly", "readonly");
+            // 建设单位联系人
+            $("#conContacts").attr("readonly", "readonly");
+
+            // <!-- 新添加建设单位联系电话 3-->
+            // 建设单位联系电话
+            $("#constructionUnitPhone").attr("readonly", "readonly")//.attr("readonly");
+            // 施工单位
+            $("#buildUnit").attr("readonly", "readonly") //.attr("readonly");
+            // 施工单位联系人
+            $("#buildContacts").attr("readonly", "readonly")//.attr("readonly");
+
+            // <!-- 新添加施工单位联系电话 4-->
+            $("#buildUnitPhone").attr("readonly", "readonly")
+
+            // 监理单位
+            $("#supervisoryUnit").attr("readonly", "readonly");
+            // 监理单位联系人
+            $("#supervisoryContacts").attr("readonly", "readonly");
+
+            // <!-- 新添加监理单位联系电话 5-->
+            $("#supervisoryUnitPhone").attr("readonly", "readonly")
+
+            // 主体设计单位
+            $("#designUnit").attr("readonly", "readonly");
+            // 主体设计单位联系人
+            $("#designContacts").attr("readonly", "readonly");
+
+            // <!-- 新添加主体设计单位联系电话 6-->
+            // 主体设计单位联系电话
+            $("#designUnitPhone").attr("readonly", "readonly");
+
+            // 项目开工日期
+            $("#startDate").attr("disabled", true);
+            // 计划完工日期
+            $("#planEndDate").attr("disabled", true);
+            // 上传方案附件
+            $("#upload_file").attr("disabled", true)
+        }
+    }
+
+    //校验不通过焦点重置
+    function isErrFun(obj) {
+        console.log($(obj).parent().prev().find(".err-show").is(":visible"))
+        if ($(obj).parent().prev().find(".err-show").is(":visible")) {
+            obj.focus();
+        }
+    }
+
+    function format_int(obj) {
+        obj.value = obj.value.replace(/^(0+)|[^\d]+/g, '')
+        if (obj.value.length > 20) {
+            obj.value = obj.value.slice(0, 20);
+            app.toast("请输入20位以内正整数")
+        }
+    }
+
+    function format_input(type, obj) {
+        if (/^\s+$/gi.test(obj.value)) {
+            obj.value = '';
+        }
+        var t;
+        var num;
+        switch (type) {
+            case 1:
+                t = '项目名称';
+                num = 20;
+                break
+            case 2:
+                t = '建设单位';
+                num = 20;
+                break
+            case 3:
+                t = '建设单位联系人';
+                num = 20;
+                break
+            case 4:
+                t = '施工单位';
+                num = 20;
+                break
+            case 5:
+                t = '施工单位联系人';
+                num = 20;
+                break
+            case 6:
+                t = '监理单位';
+                num = 20;
+                break
+            case 7:
+                t = '监理单位联系人';
+                num = 20;
+                break
+            case 8:
+                t = '主体设计单位';
+                num = 20;
+                break
+            case 9:
+                t = '主体设计单位联系人';
+                num = 20;
+            case 10:
+                t = '审批文号'; // 批复文号
+                num = 20;
+                break
+            case 11:
+                t = '审批部门';
+                num = 20;
+                break
+        }
+        if (obj.value.length > num) {
+            obj.value = obj.value.slice(0, num);
+            // obj.focus();
+            app.toast(t + "不可大于" + num + "个字！")
+        }
+    }
+
+    //监听列表区域滑动
+    // document.getElementById('soilConservationScheme').addEventListener("swipeleft", function() {
+    // 	scrollTop()
+    // 	$('#page2').removeClass("mui-active")
+    // 	$('#page3').addClass("mui-active")
+    // 	$("#submit").attr("disabled",false);
+    // 	$("#next_step").attr("disabled",true);
+    // 	$("#pre_step").attr("disabled",false);
+    // 	var gallery = mui('.mui-slider');
+    // 	gallery.slider().gotoItem(2);
+    // });
+    // document.getElementById('basicInfo').addEventListener("swipeleft", function() {
+    // 	scrollTop()
+    // 	$('#page1').removeClass("mui-active")
+    // 	$('#page2').addClass("mui-active")
+    // 	$("#submit").attr("disabled",true);
+    // 	$("#next_step").attr("disabled",false);
+    // 	$("#pre_step").attr("disabled",false);
+    // 	var gallery = mui('.mui-slider');
+    // 	gallery.slider().gotoItem(1);
+    // });
+
+    // document.getElementById('soilConservationScheme').addEventListener("swiperight", function() {
+    // 	scrollTop()
+    // 	$('#page2').removeClass("mui-active")
+    // 	$('#page1').addClass("mui-active")
+    // 	$("#submit").attr("disabled",true);
+    // 	$("#next_step").attr("disabled",false);
+    // 	$("#pre_step").attr("disabled",true);
+    // 	var gallery = mui('.mui-slider');
+    // 	gallery.slider().gotoItem(0);
+    // });
+    // document.getElementById('checkPlanPage').addEventListener("swiperight", function() {
+    // 	scrollTop()
+    // 	$('#page3').removeClass("mui-active")
+    // 	$('#page2').addClass("mui-active")
+    // 	$("#submit").attr("disabled",true);
+    // 	$("#next_step").attr("disabled",false);
+    // 	$("#pre_step").attr("disabled",false);
+    // 	var gallery = mui('.mui-slider');
+    // 	gallery.slider().gotoItem(1);
+    // });
+
+    //回到顶部		
+    function scrollTop() {
+        // document.getElementById('detail1').scrollTop = 0;
+        // document.getElementById('detail2').scrollTop = 0;
+        // document.getElementById('detail3').scrollTop = 0;
+        cBScroll.scrollTo(0, 0)
+    }
+
+    mui(".mui-segmented-control").on('tap', '.mui-control-item', function () {
+        scrollTop();
+        var id = $(this).attr("id")
+        if (id == "page1") {
+            $("#submit").attr("disabled", true);
+            $("#next_step").attr("disabled", false);
+            $("#pre_step").attr("disabled", true);
+        } else if (id == "page2") {
+            $("#submit").attr("disabled", true);
+            $("#next_step").attr("disabled", false);
+            $("#pre_step").attr("disabled", false);
+        } else if (id == "page3") {
+            $("#submit").attr("disabled", false);
+            $("#next_step").attr("disabled", true);
+            $("#pre_step").attr("disabled", false);
+        }
+    });
+
+    // 格式化限制数字文本框输入，只能数字或者两位小数
+    function validateNum(obj) {
+        var reg = /(^[1-9]\d*$)/;
+        var html = "";
+        if (obj.value != null && !reg.test(obj.value)) {
+            // $("#error").show();
+            app.toast("只允许输入正整数")
+            obj.value = '';
+            html =
+                `<div class="info-bar-content-item isShow">
+									<div class="item-title"><span class="red-star">*</span>计划日期1</div>
+									<div class="mui-input-row item-input right-input-date">
+										<input id="surveyDate1" class="inputCss datePicker" required="true" readonly="readonly" type="text" class="mui-input-clear"
+												 placeholder="请选择项计划日期1" >
+										<img src="../../img/commom/time.png" style="width: 16px;height: 16px;" />
+									</div>
+							</div>`;
+        } else {
+            if (obj.value > 20) {
+                app.toast("最大为20！")
+                obj.value = obj.value.slice(0, 1);
+            }
+            $("#error").hide();
+            for (var i = 0; i < obj.value; i++) {
+                html +=
+                    `<div class="info-bar-content-item isShow">
+								<div class="item-title"><span class="red-star">*</span>计划日期${i + 1}</div>
+								<div class="mui-input-row item-input right-input-date">
+									<input id="surveyDate${i + 1}" class="inputCss datePicker" required="true" readonly="readonly" type="text" class="mui-input-clear"
+											 placeholder="请选择项计划日期${i + 1}" >
+									<img src="../../img/commom/time.png" style="width: 16px;height: 16px;" />
+								</div>
+						</div>`
+            }
+        }
+        // checkPlanPage 原高度 ：400
+        // 一个60
+        var newHeight = 400 + obj.value * 60;
+        console.log('newHeight:' + newHeight)
+        $("#checkPlanPage").css('height', newHeight);
+        $("#timeGroup").html(html)
+        cBScroll.refresh()
+    }
+
+    //生成groupId
+    function getGroupId() {
+        return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    // email验证,获取焦点
+    // $('#email').focus();
+    cBScroll.refresh()
+    // cBScroll.scrollToElement(document.getElementById("email_div_container"), 0, 0);
+
+    // 查看
+    function showProjectDataWithType(paramOperatorType, proData) {
+        // var proData = JSON.parse(plus.webview.currentWebview().proData);
+        operatorType = paramOperatorType
+        if (operatorType == "show") {
+            // bottom-item-btn 是上一步、下一步、提交的按钮容器
+            //$("#bottom-item-btn").hide()
+            // 详细地址
+            $("#toLocation").hide()
+            //$("#bottom-item-btn2").show()
+            $("input").css("backgroundColor", "white")
+            $("input").attr('disabled', 'disabled')
+
+            baseInfoCanInput(false);
+
+            // ===== 基本信息tab =====
+            //1,项目名称
+            $("#prjName").val(isEmp(proData.prjName));
+            //2,项目类型
+            $("#prjType").val(proData.prjType)
+            getDicTextByIdAndKey(proData.prjType, 'project_type', function (data) {
+                $("#prjType_text").val(data)
+            });
+            //3,项目来源
+            $("#prjSource").val(isEmp(proData.prjSource));
+            getDicTextByIdAndKey(proData.prjSource, 'project_source', function (data) {
+                $("#prjSource_text").val(data)
+            });
+            //4,项目性质
+            $("#prjCharacter").val(proData.prjCharacter);
+            getDicTextByIdAndKey(proData.prjCharacter, 'project_character', function (data) {
+                $("#prjCharacter_text").val(data)
+            });
+            //5,当前状态
+            $("#conservationStatus").val(proData.conservationStatus);
+            getDicTextByIdAndKey(proData.conservationStatus, 'project_status', function (data) {
+                if (data != '无') {
+                    $("#conservationStatus_text").val(data)
+                }
+            });
+            //6,项目级别
+            $("#projectLevel").val(proData.projectLevel);
+            getProjectLevelDicTextById(proData.projectLevel, function (data) {
+                if (data != "") {
+                    $("#projectLevel_text").val(data)
+                }
+            });
+            //7,建设用地
+            if (proData.buildLandArea) {
+                mui("#buildLandArea").numbox().setValue(proData.buildLandArea)
+            }
+            //8,详细地址
+            $("#prjLocation").val(isEmp(proData.prjLocation));
+            //9, 项目所属位置 - 福田区
+            $("#prjLocationDistrict").val(isEmp(proData.prjLocationDistrict));
+            // 项目所属位置 -  福田街道 - 隐藏
+            $("#prjLocationStreet").val(isEmp(proData.prjLocationStreet));
+            //10,经度
+            $("#longitude").val(isEmp(proData.longitude));
+            //$("#longitude").val(isEmp(proData.smx));
+            //11,纬度
+            $("#latitude").val(isEmp(proData.latitude));
+            //$("#latitude").val(isEmp(proData.smy));
+            //12,建设单位
+            $("#constructionUnit").val(isEmp(proData.constructionUnit));
+            //13,建设单位联系人
+            $("#conContacts").val(isEmp(proData.conContacts));
+            //14,建设单位联系电话
+            $("#constructionUnitPhone").val(isEmp(proData.constructionUnitPhone));
+            //15,电子邮箱
+            $("#email").val(isEmp(proData.email));
+            //16,施工单位
+            $("#buildUnit").val(isEmp(proData.buildUnit));
+            //17,施工单位联系人
+            $("#buildContacts").val(isEmp(proData.buildContacts));
+            //18,施工单位联系电话
+            $("#buildUnitPhone").val(isEmp(proData.buildUnitPhone));
+            //19,监理单位
+            $("#supervisoryUnit").val(isEmp(proData.supervisoryUnit));
+            //20,监理单位联系人
+            $("#supervisoryContacts").val(isEmp(proData.supervisoryContacts));
+            //21,监理单位联系电话
+            $("#supervisoryUnitPhone").val(isEmp(proData.supervisoryUnitPhone));
+            //22,主体设计单位
+            $("#designUnit").val(isEmp(proData.designUnit));
+            //23,主体设计单位联系人
+            $("#designContacts").val(isEmp(proData.designContacts));
+            //24,主体设计单位联系电话
+            $("#designUnitPhone").val(isEmp(proData.designUnitPhone));
+            //25,项目开工日期
+            $("#startDate").val(isEmp(proData.startDate).substring(0, 10));
+            //26,计划完工日期
+            $("#planEndDate").val(isEmp(proData.planEndDate).substring(0, 10));
+
+            // ===== 水保方案tab =====
+
+            // 1,防治责任范围面积
+            if (proData.preventionArea) {
+                mui("#preventionArea").numbox().setValue(proData.preventionArea)
+            }
+            //2,土建投资（万元）
+            if (proData.civilInvestment) {
+                mui("#civilInvestment").numbox().setValue(proData.civilInvestment)
+            }
+            //3,总投资（万元）
+            if (proData.totalInvestment) {
+                mui("#totalInvestment").numbox().setValue(proData.totalInvestment)
+            }
+            //4,设计挖填方总量(万m3) 限制使用数字
+            if (proData.designCutfill) {
+                mui("#designCutfill").numbox().setValue(proData.designCutfill)
+            }
+            //5,方案类型
+            if (proData.programmeType != "") {
+                $("#programmeType").val(proData.programmeType);;
+                getDicTextByIdAndKey(proData.programmeType, 'programme_type', function (data) {
+                    $("#programmeType_text").val(data)
+                    if (data == '无') {
+                        $(".isShow").hide()
+                    }
+                });
+            }
+            //6,方案附件
+            if (proData.programme != null && proData.programme != undefined && proData.programme != "") {
+                if (!isTest) {
+                    findFilesByGroupId({
+                        groupId: proData.programme
+                    }, function (data) {
+                        var item = data.result[0]
+                        let suffix = item.uploadFile.fileType.substring(1, item.uploadFile.fileType.length)
+                        let iconPath = '';
+                        switch (suffix) {
+                            case 'doc':
+                            case 'docx':
+                                iconPath = '../../img/commom/doc.png';
+                                break;
+                            case 'pdf':
+                                iconPath = '../../img/commom/pdf.png';
+                                break;
+                        }
+
+                        $("#fileUploadBox").css("height", 150)
+                        $("#fileBoxItem").fadeIn()
+                        $("#no-file").hide()
+                        // that.attr("disabled", true)
+                        $("#file_type").attr('src', iconPath)
+
+                        $("#file_name").html(item.uploadFile.fileName)
+                        $("#file_size").html(item.uploadFile.fileSize + "KB")
+                        $("#programme").val(item.fileToken)
+                        $("#fileToken").val(item.fileToken)
+                    });
+                }
+            }
+            //7,编制单位
+            $("#preparationUnit").val(isEmp(proData.preparationUnit));
+
+            //8,审批文号
+            $("#approvalNumber").val(isEmp(proData.approvalNumber));
+            //9,审批部门
+            $("#approvalDep").val(isEmp(proData.approvalDep));
+            //10,审批日期
+            $("#approvalDate").val(isEmp(proData.approvalDate).substring(0, 10));
+            //11,收文日期
+            $("#receiptTime").val(isEmp(proData.receiptTime).substring(0, 10));
+
+            //所属行业 - 隐藏
+            // $("#industry").val(isEmp(proData.industry));
+            // getDicTextByIdAndKey(proData.industry, 'project_industry', function(data) {
+            // 	$("#industry_text").val(data)
+            // });
+
+            // ===== 检查计划tab =====
+
+            var checkPlan = proData.checkPlan;
+            //1,检查计划次数
+            $("#checkPlan").val(checkPlan);
+            //2,计划日期
+            if (checkPlan != "") {
+                let dateArr = proData.planCheckDate.split(";");
+                console.log(dateArr)
+                let html = ""
+                for (var i = 0; i < checkPlan; i++) {
+                    html +=
+                        `<div class="info-bar-content-item">
+								<div class="item-title">计划日期${i + 1}</div>
+								<div class="mui-input-row item-input">
+									<input id="surveyDate${i + 1}" class="inputCss datePicker" required="true" readonly="readonly" type="text"
+											 placeholder="请选择项计划日期${i + 1}" value=${isEmp(dateArr[i])} disabled="disabled" style="width: 90%;">
+									<img src="../../img/commom/time.png" style="width: 16px;height: 16px;float: right;margin-top: 8px;">
+								</div>
+						</div>`
+                }
+                $("#timeGroup").html(html)
+            }
+            //3,检查人员
+            var inspectors = proData.inspectors;
+            if (inspectors && inspectors != "" && inspectors.length > 0) {
+                let perArr = inspectors.split(",")
+                var text = '';
+                for (let i = 0; i < perArr.length; i++) {
+                    text +=
+                        `<div style="display:inline-block;padding:0 5px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+								<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+							</div>`;
+                }
+                text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+                if (perArr.length >= 5) {
+                    var h = $("#surveyItem").height() + (perArr.length / 4) * 22;
+                    $("#surveyItem").css("height", h)
+                }
+                $("#survey-box").html(text)
+            } else $("#survey-box").html('无')
+
+
+
+            //4,填写人
+            $("#inputerFullname").val(isEmp(proData.inputerFullname));
+            //5,填写时间
+            $("#inputDate").val(isEmp(proData.inputDate).substring(0, 10));
+
+        }
+
+    }
+
+    // 放开输入 ，电子邮箱改为非必填
+    baseInfoCanInput(true);
+    scrollTop();
+
+    // 平板样式调整
+    function padCheckCss() {
+        // screenWidth:1024
+        const screenWidth = document.documentElement.clientWidth;
+        // screenHeight:1366
+        const screenHeight = document.documentElement.clientHeight;
+        if (screenWidth > 1000) {
+            //  判断为平板
+            // === 字体大小 ===
+            // 平板字体 ，是App字体 + 4px ；
+            setupDynamicCss('body', 'font-size', 20)
+            setupDynamicCss('.search-input input', 'font-size', 20)
+            setupDynamicCss('.view-content-item .view-title', 'font-size', 18)
+            setupDynamicCss('.ulCss .liCss .span2', 'font-size', 20)
+            setupDynamicCss('.ulCss .liCss .span1', 'font-size', 18)
+
+            setupDynamicCss('.step-active .step-text', 'font-size', 18)
+            setupDynamicCss('.step-text', 'font-size', 18)
+            setupDynamicCss('.paish .info-bar-content-item .item-title', 'font-size', 20)
+            setupDynamicCss('.paish .info-bar-content-item .item-input input', 'font-size', 20)
+            setupDynamicCss('.file_upload', 'font-size', 20)
+            setupDynamicCss('.bottom-item-btn .item', 'font-size', 20)
+
+            // .bottom-item-btn .item
+
+            // .step-active .step-text
+
+            // // === 宽、高 ===
+            setupDynamicCss('.view-content-item .view-title img', 'width', 17)
+            setupDynamicCss('.view-content-item .view-title img', 'height', 18)
+        }
+    }
+    function setupDynamicCss(pTarget, pAttr, pVal) {
+        $(pTarget).css(pAttr, pVal + 'px');
+    }
+
+    padCheckCss();
+
+    //测试区
+    if (isTest) {
+        initDownSelect();
+    }
+    // 测试区
+    function setupInit() {
+        // ==== 项目基本信息 必填项  ====
+        // 电子邮箱
+        $('#email').val('piei@163.com');
+        // 项目名称
+        $('#prjName').val('prjName')
+        // 项目类型
+        $('#prjType_text').val('项目类型1')
+        $('#prjType').val('1')
+        // 项目来源
+        $('#prjSource_text').val('来源1')
+        $('#prjSource').val('1')
+        //项目性质
+        $('#prjCharacter_text').val('项目性质1')
+        $('#prjCharacter').val('1')
+
+        //6,项目级别
+        $("#projectLevel").val("2");
+        getProjectLevelDicTextById("2", function (data) {
+            if (data != "") {
+                $("#projectLevel_text").val(data)
+            }
+        });
+        //详细地址
+        $('#prjLocation').val('具体位置1')
+        //建设单位
+        $('#constructionUnit').val('建设单位1')
+        //建设单位联系人
+        $('#conContacts').val('建设单位联系人1')
+        //建设单位联系电话
+        $('#constructionUnitPhone').val('18028390499')
+        $('#startDate').val('2021-05-26')
+        $('#planEndDate').val('2021-05-27')
+
+        // ==== 水保方案 必填项  ====
+        //方案类型
+        $('#programmeType').val('1')
+        $('#programmeType_text').val('方案类型1')
+        // 上传方案附件 - 非必填
+        //	$("#programme").val("12")
+
+        // ==== 检查计划 必填项  ====
+        // 检查计划次数
+        $('#checkPlan').val('1')
+        // 计划日期1
+        $('#surveyDate1').val('2021-05-25 00:00:00')
+        //检查人员
+        $('#surveyBy').val('1')
+        $('#surveyPerson_text').val('2')
+
+        var text =
+            `<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 2px 5px 0;">
+							<span class="surveyPerson" style="color:#337BFC">surveyPerson</span>
+							<span class="mui-icon mui-icon-closeempty" rname="realName" uname="userName" style="color:#337BFC"></span>
+						</div>`;
+
+        $("#survey-box").html(text)
+        flag = true;
+    }
+    if (isTest) {
+        setupInit();
+        proDataTemp();
+        console.log('mapData:' + mapData)
+    }
+    function proDataTemp() {
+        var dataStr = `{"prjType":"0","approvalDate":null,"buildContacts":"","prjCharacter":"0","supervisoryContacts":"","industry":"0","planCheckDate":"2021-03-25;","delFlag":0,"corpCode":"A01","prjCode":null,"conContacts":"11","preventionArea":"0","inputName":null,"checkPlan":"1","updateBy":null,"programmeType":"2","supervisoryUnit":"","designContacts":"","constructionUnit":"12","designUnit":"","planEndDate":"2021-03-25 00:00:00","programme":"611be5bed9084e41bac2b6b5d470db58","smy":22.5327886,"email":"183@qq.com","smx":114.0540631,"conservationStatus":"2","prjSource":"0","prjLocationStreet":"福田街道","updateTime":null,"approvalNumber":"","buildUnit":"","prjName":"项目","inputDate":"2021-03-25 10:45:45","inputerFullname":"曹锡森                                                                                                                                                                                                  ","createBy":"cao_xs","approvalDep":"","checkTime":2,"createTime":"2021-03-25 10:41:54","inspectors":"杨润锋,杨慕","guid":"0b858861a5cc1196e5c3490e56481cca","prjLocationDistrict":"福田区","totalInvestment":0,"civilInvestment":0,"startDate":"2021-03-25 00:00:00","prjLocation":"深圳市福田区福华三路111深圳会展中心1展馆13号门"}`;
+        var data = JSON.parse(dataStr);
+        showProjectDataWithType("show", data);
+        // showProjectDataWithType("add",data);
+
+    }
+		//initDownSelect();
+
+
+
+
+
+</script>
+
+</html>

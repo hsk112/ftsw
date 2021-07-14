@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>分享</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right{
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-slider{
+				height: 100vh;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+		   .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+		        transform: rotate(90deg);
+		        margin-left: 5px;
+		      }
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+				border-bottom: 0;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active +.titleleft{
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+			.ul-mar-bottom{
+				margin-bottom: -18px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn){
+				margin: 0;
+				padding:0;
+			}
+			.mui-table-view-cell.mui-active{
+				background: #fff;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt{
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+				    border-top: 7px solid #F4F4F4
+			}
+			.color888{
+				color: #888888;
+			}
+			.mui-table-view-cell{
+				padding: 0!important;
+			}
+
+			#select_ul span{
+				padding: 0;
+			}
+			
+			.mapboxgl-ctrl-bottom-left {
+				bottom: -999px;
+				left: 0;
+			}
+
+			#riverMap0,#riverMap1{
+				width: 60px;
+				height: 60px;
+				position: absolute;
+				left: 82%;
+				top: 3%;
+				z-index: 1;
+			}
+
+			#lakeMap1,#lakeMap0{
+				width: 60px;
+				height: 60px;
+				position: absolute;
+				left: 82%;
+				top: 13%;
+				z-index: 1;
+			}
+
+			.btn-outlined{
+				border:1px solid #337BFC;
+				color: #337BFC;
+			}
+			.mui-btn.mui-active:enabled{
+				background: #337BFC;
+			}
+			#meetTitle{
+				margin: 0 20px 10px 20px;
+				padding-top: 20px;
+				display: flex;
+				align-items: center;
+				
+			}
+			
+			.meeting{
+				font-size: 16px;
+				font-weight: bold;
+				/*width: 85%;*/
+				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.info{
+				text-align: left;
+				margin: 0 20px;
+				font-size: 14px;
+			}
+			
+			.info div,.info span{
+				padding: 0;
+				height: 30px;
+				line-height: 30px;
+				color: #888888;
+			}
+			
+			.meetInfo{
+				background-color: #FFFFFF;
+				border-top: 5px solid #F4F4F4;
+				padding-bottom: 10px;
+			}
+			
+			#meetWrapper{
+				background-color: #FFFFFF;
+				padding-bottom: 20px;
+			}
+			
+			#sign-wrapper{
+				z-index: 999;
+				position: fixed;
+				bottom: 30px;
+				width: 100%;
+			}
+			
+			.signin-btn{
+				width: 280px;
+				height: 40px;
+				border-radius: 20px;
+				font-size: 16px;
+				margin: 0 auto;
+			}
+
+			.signin-btn2{
+				width: 280px;
+				height: 40px;
+				border-radius: 20px;
+				font-size: 16px;
+				margin: 0 auto;
+			}
+			
+			.mui-input-row{
+				height: auto!important;
+				border-bottom: 1px solid #EDEDED;
+			}
+			
+			.mui-input-row:last-child{
+				border-bottom: none;
+			}
+			
+			.mui-input-row div{
+				font-size: 14px;
+				color: #444444;
+				text-align: left;
+				padding-top: 10px;
+			}
+			
+			.mui-input-row input{
+				font-size: 16px;
+				color: #161515;
+				padding: 0;
+			}
+			
+			.mui-input-group{
+				padding: 0px 20px;
+			}
+			
+			.mui-input-group .mui-input-row:after{
+				background-color: transparent;
+				left: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div id="meetWrapper"></div>
+						</div>
+					</div>
+				</div>
+				<div id="sign-wrapper">
+					<button type="button" class="mui-btn mui-btn-primary signin-btn2">保存到相册</button>
+				</div>
+			</div>
+		</div>
+		<!--页面主内容区结束-->
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/util/jquery.qrcode.min.js"></script>
+	<script src="../../../js/util/timeUtil.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/mixed.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/position.js"></script>
+	<script src="../../../js/vconsole.min.js"></script>
+	<script src="../../../js/infoQuery/mixedList.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/mui.previewimage.js"></script>
+
+
+	<script>
+        // 二维码测试
+        function qrCode(url) {
+            //用qrcode做一个二维码
+            var qrcode = $("#qrCode").qrcode({
+                render: "canvas",
+                width: 200,
+                height: 200,
+                text: url,
+            }).hide();        //qrcode里边为扫描进入的地址
+            var canvas = qrcode.find('canvas').get(0);
+            //把canvas的二维码转换为图片
+            // console.log("canvas的二维码转换为图片src:"+canvas.toDataURL('image/jpg'))
+            $("#imgOne").attr("src",canvas.toDataURL('image/png'));
+
+			// console.log('url:'+url)
+            // $('#qrCode').qrcode({
+             //    render: "canvas",
+             //    width: 200,
+             //    height: 200,
+             //    text: url,
+            //
+			// });
+        }
+		mui('.mui-scroll-wrapper').scroll();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		// var vConsole = new VConsole();
+		mui.init({
+			swipeBack: true,
+		});
+
+		var meetData = [];
+		var loadFlag = false;
+
+		var pageNo = '1';
+		var pageSize = '100';
+		var searchPageNo = '1';
+		var searchPageSize = '20';
+		var isShow = true;
+		var mask = mui.createMask();
+		var extras = {
+			openNum: 0
+		}
+		
+		mui.plusReady(function() {
+		
+			var self = plus.webview.currentWebview();
+			// console.log(JSON.stringify(self))
+			var listData = self.Data
+			initList(listData)
+		});
+		
+		// methods
+		var initDestoryData = function(data, callback) {
+			for (let key in data) {
+				if (data[key] == '' || data[key] == null) {
+					data[key] = '未知'
+				}
+			}
+			callback(data);
+		}
+
+		function initList(listData) {
+			var str = ``;
+			var signUrl ='';//跳转H5的url
+			console.log("1", JSON.stringify(listData))
+			initDestoryData(listData, function(Data) {
+				console.log("加载会议信息："+JSON.stringify(Data))
+				let startTime = Data.startTime.split(' ');
+				let endTime = Data.endTime.split(' ');
+				let holdDate = Data.conferenceTime.split(' ')
+				let continueTime = holdDate[0] + ' ' + startTime[1] + '-' + endTime[1]
+
+				// 会议人数
+				let memberNum = Data.participant.split(',').length;
+				let guid = Data.guid;
+				let projectId = Data.projectId;
+				let projectNo = Data.projectNo;
+                let prjCode = Data.prjCode;
+                startTime = Data.startTime.substring(0,16)
+                endTime = Data.endTime.substring(0,16)
+				let conferenceTitle = toUtf8(Data.conferenceTitle);//转码
+                // console.log('conferenceTitle1:'+ Data.conferenceTitle)
+                // console.log('conferenceTitle2:'+ conferenceTitle)
+				signUrl =config.urls.web + config.actions.signOut
+					+'?guid='+guid
+					+'&prjCode='+prjCode
+					+'&projectId='+projectId
+					+'&projectNo='+projectNo
+					+'&startTime='+startTime
+					+'&endTime='+endTime
+					+'&title='+conferenceTitle;
+				console.log("二维码信息："+signUrl)
+                startTime = Data.startTime.substring(0,16)
+                endTime = Data.endTime.substring(0,16)
+                var dur = DateDifference(startTime,endTime)//时间间隔
+
+				str +=
+					`<div id="meetTitle" class="mui-row">
+									<div style="width: 95%; display: flex; text-align: left;">
+										<span class="icon-css" style="width: 8%;">
+											<img src="../../../img/commom/xl.png" class="arrow_right" style="width: 7px;" alt="">
+										</span>
+										<div class="meeting">
+											${Data.conferenceTitle}
+										</div>
+									</div>
+								</div>
+								<div class="info" style="margin-bottom: 15px;">
+									<span>ID: ${Data.projectNo}</span>
+								</div>
+								<div class="info open-details" style="border-top: 1px solid #EDEDED;">
+									<div class="mui-row" style="margin-top: 20px;">
+										<div class="mui-col-sm-4 mui-col-xs-4">
+											会议开始时间：
+										</div>
+										<div class="mui-col-sm-8 mui-col-xs-8">
+											`+startTime+`
+										</div>
+									</div>
+									<div class="mui-row">
+										<div class="mui-col-sm-4 mui-col-xs-4">
+											会议结束时间：
+										</div>
+										<div class="mui-col-sm-8 mui-col-xs-8">
+											`+endTime+`
+										</div>
+									</div>
+									<div class="mui-row">
+										<div class="mui-col-sm-4 mui-col-xs-4">
+											会议时长：
+										</div>
+										<div class="mui-col-sm-8 mui-col-xs-8">
+											`+dur+`
+										</div>
+									</div>
+								</div>
+								<div id="qrCode" style="margin-top: 20px">
+									
+								</div>
+								<img id="imgOne" src="" style="margin-top: 20px"/>
+								`
+								
+			})
+			$('#meetWrapper').html(str);
+			qrCode(signUrl);
+		}
+		// JQ
+		$('.signin-btn').on('tap', function() {
+			app.openPage('./success.html', {
+				titleNView: {
+					titleText: '会议签到',
+					autoBackButton: true,
+					closePage: true,
+				}
+			})
+		})
+
+		$("#sign-wrapper").on('tap',function(){
+            // plus.nativeUI.showWaiting();//转圈
+            var src = $("#imgOne").attr("src")//base64字符串
+            bitmapSavePic(src)
+            // downloadClick();
+		})
+
+		//安卓：保存二维码到相册
+        function bitmapSavePic(src){
+
+            var bm = new  plus.nativeObj.Bitmap("barcode")//path: ( String ) 可选 Bitmap对象自动加载图片的地址
+			bm.loadBase64Data( src, bmloadSuccessCB, bmloadErrorCB );//加载base64为数据到bm实例对象
+            console.log("bm:"+JSON.stringify(bm))
+			// var ran = Math.floor(Math.random()*10000);
+            var num = '';
+            // for(var i=0;i<3;i++)
+            // {
+            //     num+=Math.floor(Math.random()*10);
+            // }
+            var path ="file:///storage/emulated/0/DCIM/project_barcode.png";
+            // var options = {"overwrite":true,"format":"jpg","quality":50}
+            var options = {}
+            bm.save( path, options, bmSaveSuccessCB, bmSaveErrorCB );//将图片保存到指定的路径（仅支持本地文件系统）
+            //保存到相册后，回收Bitmap图片内存
+            bm.recycle();
+        }
+        var bmloadSuccessCB = function (e){
+            console.log("加载base64数据成功")
+        }
+        var bmloadErrorCB = function (err){
+            console.log("加载base64数据失败")
+            console.log(err)
+        }
+        var bmSaveSuccessCB = function (e){
+            console.log(JSON.stringify(e))
+            console.log("保存成功")
+            console.log("保存地址："+e.target)
+            saveToGallery(e.target)
+        }
+        var bmSaveErrorCB = function (error){
+            plus.nativeUI.toast("保存失败,建议截屏保存")
+            console.log("code："+error.code+";msg:"+error.message);
+        }
+        function saveToGallery(path){
+            console.log(path)
+            plus.gallery.save( path, function(e){
+                var successI18n = $("#successI18n").html();
+                plus.nativeUI.toast(successI18n)
+                console.log(JSON.stringify(e));
+				app.toast("已保存到相册")
+            },function(err){
+                var failedI18n = $("#failedI18n").html();
+                plus.nativeUI.toast(err.message+failedI18n)
+                console.log("保存到相册失败："+JSON.stringify(err));
+                app.toast("保存失败，建议截屏保存")
+            });
+        }
+
+        //转码，有必要的话放到util
+        toUtf8 = function(str) {
+            var out, i, len, c;
+            out = "";
+            len = str.length;
+            for (i = 0; i < len; i++) {
+                c = str.charCodeAt(i);
+                if ((c >= 0x0001) && (c <= 0x007F)) {
+                    out += str.charAt(i);
+                } else if (c > 0x07FF) {
+                    out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                    out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                } else {
+                    out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                }
+            }
+            return out;
+        }
+
+		window.addEventListener('backInspection', function(e) { //执行刷新
+			// location.reload();
+			getList(pageNo, pageSize);
+			getMapList();
+			mui('#scroll1').scroll().scrollTo(0, 0, 0);
+			mui('#contentList').scroll().scrollTo(0, 0, 0);
+		});
+		
+		var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+		window.onresize = function() {
+			var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+			if (resizeHeight * 1 < originalHeight * 1) { 
+				$(".signin-btn").hide()
+			} else {
+				$(".signin-btn").show()
+			}
+		}
+	</script>
+
+</html>

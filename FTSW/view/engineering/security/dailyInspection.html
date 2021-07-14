@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>日常巡检</title>
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link href="../../../css/ps.css" rel="stylesheet"/>
+		<style type="text/css">
+
+			
+			.header a,
+			.header h1 {
+				color: #fff;
+			}
+			
+
+			
+			.mui-table-view-cell img {
+				width: 7px;
+				height: 12px;
+				float: right;
+			}
+			
+
+			
+			.table-bnt p {
+				color: #000;
+				width: 45%;
+				margin-bottom: 10px;
+			}
+			
+			.table-bnt p span {
+				color: #888888;
+			}
+
+			
+			.menu_bottom button {
+				width: 120px;
+				height: 40px;
+			}
+
+			.zt span{
+				font-size: 12px;
+			}
+			.mui-table-view-cell p{
+				display: inline-block;
+			}
+			/*遮罩*/
+			.mark{
+				/*z-index: 9998;*/
+				z-index: 9;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				background: rgba(0,0,0,0.5);
+				display: none;
+			}
+			.box-shadow{
+				margin-left: 5%;
+				width: 90%;
+				height: 100px;
+				background-color: #FFF;
+				box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+				border-radius: 5px;
+				-moz-border-radius: 25px;
+				margin: 5%;
+			}
+
+			/*.info-bar-content-item .item-input input {*/
+			/*	border: none;*/
+			/*	padding: 0;*/
+			/*	!* text-align: right; *!*/
+			/*	font-size: 14px;*/
+			/*	font-weight: 400;*/
+			/*	color: #191515;*/
+			/*	margin-bottom: 10px;*/
+			/*	!* padding-right: 30px; *!*/
+			/*}*/
+
+			.info-bar-content-item .item-title {
+				text-align: left;
+				padding: 0px 0px 0px 0px;
+				color: #444444;
+				display: inline-block;
+				vertical-align: top;
+				line-height: 20px;
+			}
+
+</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--右侧栏内容-->
+		<div id="leftLan" class="side" style="position:fixed;z-index: 10;width:270px;height: 100vh;right:-270px;">
+			<div class="mui-scroll" style="height:100vh;background-color: white;color: black;width: 270px;">
+				<!--侧栏具体展示内容-->
+				<p style="padding: 5px 20px;margin-bottom: 20px;"></p>
+
+				<div class="info-bar-content-item">
+					<div class="item-title">
+						任务名称：
+					</div>
+					<div class="mui-input-row item-input">
+						<input id="task_name" style="text-align: left" required="true" placeholder="请输入任务名称"/>
+					</div>
+				</div>
+				<div class="info-bar-content-item">
+					<div class="item-title">
+						检查人：
+					</div>
+					<div class="mui-input-row item-input">
+						<input id="examiner" style="text-align: left" required="true" placeholder="请输入检查人"/>
+					</div>
+				</div>
+				<div class="info-bar-content-item">
+					<div class="item-title">
+						填写人：
+					</div>
+					<div class="mui-input-row item-input">
+						<input id="completed_by" style="text-align: left" required="true" placeholder="请输入填写人"/>
+					</div>
+				</div>
+				<div class="info-bar-content-item" style="height: 51px">
+					<div class="item-title" style="width: 50%">
+						检查开始时间：
+					</div>
+					<div class="mui-input-row item-input">
+						<span id="processingDemands1">请选择时间</span>
+						<img id="processingDemandsImg1" src="../../../img/cal.png"
+							 style="width: 16px;height: 16px;margin: auto 0px auto 5px"/>
+					</div>
+				</div>
+				<div class="info-bar-content-item" style="height: 51px">
+					<div class="item-title" style="width: 50%">
+						检查结束时间：
+					</div>
+					<div class="mui-input-row item-input" style="">
+						<span id="processingDemands2">请选择时间</span>
+						<img id="processingDemandsImg2" src="../../../img/cal.png"
+							 style="width: 16px;height: 16px;margin: auto 0px auto 5px"/>
+					</div>
+				</div>
+				<!--分隔-->
+
+				<div class="but1" style="bottom:30px;display: flex;justify-content: space-around; margin-top: 50vh;">
+						<button id="redo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined mui-btn-block" style="width:46%;float:left;padding: 5px 20px;margin-right: 5px">重 置</button>
+						<button id="searchByFactor" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="width:46%;float:left;padding: 5px 20px;">搜 索</button>
+				</div>
+
+			</div>
+		</div>
+		<!-- 遮罩 -->
+		<div class="mark"></div>
+
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content" style="background: #FFF;">
+				<div id="openFactor" >
+					<div class="view-title search-tip" style="display: flex;padding: 20px 0px 0px 0px;">
+						<div style="width: 70%">
+							<img src="../../../img/fujin-icon.png" style="width: 16px;height: 15px;line-height: 15px;vertical-align:middle;margin-left: -80px" />
+							<span id="label" style="line-height: 16px;">任务清单</span>
+							<span id="num" style="color: #337BFC;font-weight:bold;margin-left: 10px;">0</span>
+						</div>
+						<div style="width: 30%">
+							<img id="moreFactor" style="width: 20px" src="../../../img/commom/sideLan.png" />
+						</div>
+					</div>
+				</div>
+
+				<div class="dailyList">
+<!--					<div>-->
+<!--						<div class="box-shadow" style="display: flex;flex-direction: column">-->
+<!--							<div style="height: 49%;display: flex">-->
+<!--								<div style="width: 70%;padding: 13px 0px 0px 24px;text-align: left"><span style='width:120px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;'>1名称任务</span></div>-->
+<!--								<div style="width: 30%;padding: 13px 0px 0px 30px;">-->
+<!--									<img class="arrow quality-arrow" style="width: 10px"  src="../../../img/project_supervise/arrow2x.png">-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div style="border-bottom: 1px solid rgb(0 0 0 / 20%)"></div>-->
+<!--							<div style="height: 49%;display: flex">-->
+<!--								<div style="width: 40%;font-size: 13px;padding: 14px 0px 0px 10px;">检查人：李斯基</div>-->
+<!--								<div style="width: 60%;font-size: 13px;padding: 14px;">检查日期：2020-01-11</div>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+				</div>
+
+
+			</div>
+		</div>
+
+	</body>
+
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/security.js"></script>
+	<script src="../../../js/update.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<script src="../../../js/vconsole.min.js"></script>
+	<script src="../../../js/inspection/dailyInspection.js"></script>
+	<script type="text/javascript">
+		//初始化单页view
+
+		var height = document.documentElement.clientHeight
+		$('.but1').css('margin-top',(height-300)+'px')
+
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		// mui.ready(function() {});
+		mui.init({
+			swipeBack:false,
+		});
+
+		var requestParam = {
+			taskName:'',
+			projectId: '',
+			maxStartTime: '',
+			minStartTime: '',
+			inputFullname: '',
+			checkPersonFullname: '',
+			column: 'createTime',
+			order: 'desc',
+		}
+
+		var projectInfo = "";//存储上一次查看的信息：包括项目信息
+
+
+
+		//时间选择
+		$('#processingDemandsImg1,#processingDemandsImg2').on('tap',function () {
+			var that = $(this);
+			plusDate(function(data) {
+
+				console.log(JSON.stringify(data))
+				if (that.attr("id") == "processingDemandsImg1"){
+					$('#processingDemands1').text(data)
+					requestParam.minStartTime = data+' 00:00:00'
+				}else if(that.attr("id") == "processingDemandsImg2"){
+					$('#processingDemands2').text(data)
+					requestParam.maxStartTime = data+' 23:59:59'
+				}
+
+				if (that.attr("id") == "processingDemandsImg1" && $("#processingDemands2").val() != '' && $("#processingDemands2").val() < data) {
+					app.toast("检查开始时间不得晚于检查结束时间")
+				} else if (that.attr("id") == "processingDemandsImg2" && $("#processingDemands1").val() != '' && $("#processingDemands1").val() > data) {
+					app.toast("检查结束时间不得晚于检查开始时间")
+				} else that.val(data)
+			});
+		})
+
+		mui.plusReady(function() {
+
+			var curr = plus.webview.currentWebview();
+
+			projectInfo=JSON.parse(localStorage.getItem("projectInfo"))
+			console.log('ass'+JSON.stringify(projectInfo))
+
+			requestParam.projectId = projectInfo.prjId
+			getDailyInspectionListMain(requestParam)
+
+
+			curr.setStyle({
+				titleNView: {
+					buttons: [{
+						float: 'right',
+						width: '60',
+						fontSize: '25',
+						text: '＋',
+						onclick: function() {
+							let extras={ type:"add"}
+							app.openPage("addDailyInspectionForm.html", {
+								titleNView: {
+									titleText: '新增日常巡检表单',
+									autoBackButton: true,
+								}
+							},extras);
+						}
+					}]
+				}
+			});
+
+		})
+
+		//侧栏点击显示
+		$("#moreFactor").on('tap',function () {
+			$('.mark').fadeIn();
+			$('.side').css('right',0);
+		})
+
+		// 点击页面遮罩和侧栏消失
+		$('.mark').click(function(){
+			$('.mark').fadeOut();
+			$('.side').css('right',-270);
+		})
+
+		//进入详情页面
+		$('.dailyList').on('tap','.arrow',function () {
+			var arrow_id = $(this).attr("id")
+			var pj_id = arrow_id.substring(5,arrow_id.length);
+			console.log(pj_id)
+			var pj_guid = $('#pj_guid'+pj_id+'').val()
+			var taskName = $('#taskName'+pj_id+'').text()
+			taskName = taskName.substring(2,taskName.length)
+			console.log(pj_guid)
+			let extras = {
+				guid:pj_guid,
+				projectId: projectInfo.prjId
+			}
+			app.openPage("showDailyInspectionForm.html", {
+				titleNView: {
+					titleText: '查看'+taskName,
+					autoBackButton: true,
+				}
+			},extras);
+		})
+		$('.dailyList').on('tap','.safety-son',function () {
+			var arrow_id = $(this).attr("id")
+			var pj_id = arrow_id.substring(5,arrow_id.length);
+			console.log(pj_id)
+			var pj_guid = $('#pj_guid'+pj_id+'').val()
+			var taskName = $('#taskName'+pj_id+'').text()
+			taskName = taskName.substring(2,taskName.length)
+			console.log(pj_guid)
+			let extras = {
+				guid:pj_guid,
+				projectId: projectInfo.prjId
+			}
+			app.openPage("showDailyInspectionForm.html", {
+				titleNView: {
+					titleText: '查看'+taskName,
+					autoBackButton: true,
+				}
+			},extras);
+		})
+
+		//日常巡检列表
+		function getDailyInspectionListMain(param) {
+			getDailyInspectionList(param,function (data) {
+				console.log(JSON.stringify(data))
+				addDataList(data.result.records)
+			})
+		}
+
+		//重置按钮
+		$('#redo').on('tap',function () {
+
+			$('#processingDemands1').text('请选择时间')
+			$('#processingDemands2').text('请选择时间')
+			requestParam.minStartTime = ''
+			requestParam.maxStartTime = ''
+			$('#completed_by').val('')
+			$('#examiner').val('')
+			$('#task_name').val('')
+
+		})
+
+		//搜索按钮
+		$('#searchByFactor').on('tap',function () {
+			requestParam.taskName = '*'+$('#task_name').val()+'*'
+			requestParam.checkPersonFullname = '*' + $('#examiner').val()+'*'
+			requestParam.inputFullname = '*'+ $('#completed_by').val()+'*';
+			getDailyInspectionListMain(requestParam)
+			$('.mark').fadeOut();
+			$('.side').css('right',-270);
+		})
+
+		//动态拼接数据
+		function addDataList(data) {
+
+			var html = ''
+
+			console.log(JSON.stringify(data))
+			console.log(data.length)
+
+			for (let i = 0; i < data.length; i++) {
+
+				html +='<div id="s-son'+(i+1)+'" class="safety-son">\n' +
+						'   <div class="box-shadow" style="display: flex;flex-direction: column">\n' +
+						'       <div style="height: 49%;display: flex">\n' +
+						'       <div style="width: 70%;padding: 13px 0px 0px 24px;text-align: left;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;"><span id="taskName'+(i+1)+'"  style=\'width:120px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;\'>'+(i+1)+' '+data[i].taskName+'</span></div>\n' +
+						'       <div style="width: 30%;padding: 13px 0px 0px 30px;">\n' +
+						'       <img id="arrow'+(i+1)+'" class="arrow quality-arrow" style="width: 10px"  src="../../../img/project_supervise/arrow2x.png">\n' +
+						'   </div>\n' +
+						'  </div>\n' +
+						'       <div style="border-bottom: 1px solid rgb(0 0 0 / 20%)"></div>\n' +
+						'       <div style="height: 49%;display: flex">\n' +
+						'       <div style="width: 40%;font-size: 13px;padding: 14px 0px 0px 10px;">检查人：'+data[i].checkPersonFullname+'</div>\n' +
+						'       <div style="width: 60%;font-size: 13px;padding: 14px;">检查日期：'+data[i].createTime.substring(0,11)+'</div>\n' +
+						'       <input id="pj_guid'+(i+1)+'" type="text" value="'+data[i].guid+'" style="display: none">\n' +
+						'        </div>\n' +
+						'   </div>\n' +
+						'</div>'
+
+			}
+			if(data.length==0){
+				var html2 = '<div style="padding: 40px; height: 80px;">\n' +
+						'\t\t\t\t\t\t暂无数据\n' +
+						'\t\t\t\t\t</div>'
+				$('.dailyList').html(html2)
+			}else {
+				$('.dailyList').html(html)
+			}
+			$('#num').text(data.length)
+
+		}
+
+
+		//在父页面添加一个reload刷新事件
+
+		window.addEventListener('refresh', function(e){//执行刷新
+			location.reload();
+		});
+
+
+		//测试区
+
+		var isTestTrue = false
+		var TestData = '[\n' +
+				'      {\n' +
+				'        "cheackType": "1",\n' +
+				'        "checkContent": "测试0620",\n' +
+				'        "inputPhone": "15606080299",\n' +
+				'        "delFlag": 0,\n' +
+				'        "corpCode": "A01",\n' +
+				'        "prjCode": "prj150",\n' +
+				'        "checkUnitFullname": "中国电建集团华东勘测设计研究院有限公司",\n' +
+				'        "inputName": null,\n' +
+				'        "cheackTime": "2021-06-18 09:59:40",\n' +
+				'        "attachment": "8624c569a4be43bd82a0346ef67df3e0",\n' +
+				'        "updateBy": null,\n' +
+				'        "inputDepartmentFullname": "深圳市水务(集团)有限公司 ",\n' +
+				'        "rectificationDescription": "测试",\n' +
+				'        "checkPerson": "lin_yr",\n' +
+				'        "checkPersonFullname": "林燕如",\n' +
+				'        "updateTime": null,\n' +
+				'        "checkUnit": "100000060",\n' +
+				'        "inputDate": "2021-06-20 09:59:10",\n' +
+				'        "rectificationResult": "0",\n' +
+				'        "createBy": "lin_w",\n' +
+				'        "inputDepartment": "",\n' +
+				'        "inputFullname": "林蔚",\n' +
+				'        "createTime": "2021-06-20 10:01:51",\n' +
+				'        "guid": "ab7ee5263b948a1eb45ddd001208e237",\n' +
+				'        "taskName": "测试",\n' +
+				'        "projectName": "挖地球",\n' +
+				'        "projectId": "2fb5873bd1660907506c2d4a053bcbe5"\n' +
+				'      },\n' +
+				'      {\n' +
+				'        "cheackType": "3",\n' +
+				'        "checkContent": "",\n' +
+				'        "inputPhone": "18011808576",\n' +
+				'        "delFlag": 0,\n' +
+				'        "corpCode": "A01",\n' +
+				'        "prjCode": "prj150",\n' +
+				'        "checkUnitFullname": "深圳市水务(集团)有限公司 ",\n' +
+				'        "inputName": "曹锡森",\n' +
+				'        "cheackTime": "2021-02-23 08:00:00",\n' +
+				'        "attachment": "b089cf85f07a4b2ebbe4298d061df4d6",\n' +
+				'        "updateBy": null,\n' +
+				'        "inputDepartmentFullname": "深圳市福田区水务局.华东数字",\n' +
+				'        "rectificationDescription": "",\n' +
+				'        "checkPerson": "yang_m",\n' +
+				'        "checkPersonFullname": "杨慕",\n' +
+				'        "updateTime": null,\n' +
+				'        "checkUnit": "100000001",\n' +
+				'        "inputDate": "2021-02-23 17:37:15",\n' +
+				'        "rectificationResult": "0",\n' +
+				'        "createBy": "cao_xs",\n' +
+				'        "inputDepartment": "100000060003",\n' +
+				'        "inputFullname": "曹锡森",\n' +
+				'        "createTime": "2021-02-23 17:33:58",\n' +
+				'        "guid": "ce50cec9194ec99cd2c0f6558a6d395c",\n' +
+				'        "taskName": "任务名称",\n' +
+				'        "projectName": "挖地球",\n' +
+				'        "projectId": "2fb5873bd1660907506c2d4a053bcbe5"\n' +
+				'      }\n' +
+				'    ]'
+		
+		if(isTestTrue){
+			addDataList(JSON.parse(TestData))
+		}
+
+
+	</script>
+
+</html> 

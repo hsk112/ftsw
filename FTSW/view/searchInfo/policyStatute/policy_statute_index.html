@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>政策法规</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+    <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+    <link href="../../../css/common.css" rel="stylesheet"/>
+    <style>
+        .view-content-item {
+            height: auto;
+            margin: 0px 20px;
+            border-bottom: 1px solid #EDEDED;
+        }
+
+        .view-content-item .view-title {
+            font-size: 14px;
+            color: #444444;
+            text-align: left;
+            padding: 10px 0px 10px 0;
+
+        }
+
+
+        .btn-item2 div {
+            margin: 0 auto;
+            border: 1px solid #337BFC;
+            width: 85%;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50px;
+            margin-top: 30px;
+
+        }
+
+        .search-tip {
+            display: block;
+        }
+
+        .search-tip span {
+            font-size: 14px;
+            color: rgba(51, 123, 252, 1);
+        }
+
+        .search-tip img {
+            width: 14px;
+        }
+
+        .select-query-list {
+            border-bottom: 1px solid #eee;
+            height: 40px;
+            margin-top: 15px;
+        }
+
+        .select-query-list-title {
+            width: 100%;
+            float: left;
+            /*text-align: left;*/
+        }
+
+        .select-query-list-img-status {
+            width: 30%;
+            float: right;
+        }
+
+        .select-query-list-img-status img {
+            width: 50px;
+        }
+
+        .def-font {
+            color: #888888;
+            font-size: small;
+        }
+
+        .item-title {
+            text-align: left;
+            padding: 15px 0px 0px 0px;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .paish .btn-item {
+            width: 100%;
+        }
+
+        .radios {
+            float: left;
+            text-align: left;
+            bottom: 7px
+        }
+
+        .spanLim {
+            text-align: left;
+            display: inline-block;
+            width: 85%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+        }
+
+        .spanLim2 {
+            width: 50%;
+            float: left;
+            text-align: left;
+        }
+
+        .spanStatus {
+            display: inline-block;
+            width: 15%;
+            text-align: center;
+            font-size: 12px;
+            vertical-align: top;
+        }
+
+        .delete-icon1 {
+            position: absolute;
+            top: 6px;
+            right: 20px;
+            z-index: 10;
+            display: none;
+            line-height: 16px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            color: #FFFFFF;
+            border-radius: 50%;
+            background: #999999;
+        }
+
+        .delete-icon {
+            position: absolute;
+            top: 12px;
+            right: 10px;
+            z-index: 10;
+            display: none;
+            line-height: 16px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            color: #FFFFFF;
+            border-radius: 50%;
+            background: #999999;
+        }
+
+        /*隐藏底部*/
+        /*.mui-pull-bottom-pocket {*/
+        /*display: none !important;*/
+        /*}*/
+        .row-title {
+            display: inline-block;
+            width: 20%;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .info-bar-content-item {
+            height: 55px !important;
+        }
+
+        /*遮罩*/
+        .mark {
+            z-index: 9;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .test {
+            border: 1px solid red
+        }
+
+
+        .search-item-new {
+            background: #FFFFFF;
+            height: 40px;
+            width: 90%;
+            margin: 0 auto;
+            position: relative;
+            top: 15%;
+        }
+
+        .search-bar-new {
+            width: 100%;
+            height: 123px;
+            line-height: 52px;
+            background: #F4F4F4;
+        }
+
+        .wen-dang {
+            float: left;
+            margin-top: 25px;
+            margin-left: 20px;
+        }
+
+        .search-icon-new {
+            width: 10%;
+            height: 27px;
+            line-height: 35px;
+            float: left;
+        }
+
+        .search-icon-new img {
+            width: 14px;
+            position: relative;
+            top: 14%;
+        }
+
+
+        .search-input input {
+            line-height: 30px;
+            width: 100%;
+            height: 30px;
+            padding: 10px 15px;
+            -webkit-user-select: text;
+            border-radius: 3px;
+            outline: 0;
+            background-color: #fff;
+            -webkit-appearance: none;
+            border: none;
+            margin-bottom: 0
+        }
+
+        /* 弹窗日期样式修改 */
+        .mui-dtpicker-header {
+            height: 50px;
+        }
+
+        .mui-dtpicker-header button {
+            border: none;
+            background-color: white;
+            color: #0493F3;
+            font-size: 16px;
+        }
+
+        .mui-dtpicker-header button:first-child {
+            /*margin-right: 73%;*/
+            position: absolute;
+            left: 0;
+            color: #262626;
+
+        }
+
+        /* 弹窗日期样式修改 */
+        .mui-dtpicker {
+            background-color: white;
+        }
+
+        .mui-dtpicker-title {
+            display: none;
+        }
+
+        .mui-dtpicker .mui-picker {
+            background-color: white;
+        }
+
+        .mui-table-view-cell {
+            position: relative;
+            overflow: hidden;
+            padding: 15px 15px;
+            -webkit-touch-callout: none;
+        }
+
+        .mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after {
+            display: none;
+        }
+
+        .wen-header {
+            float: left;
+            text-align: left;
+            margin-top: -16px;
+            width: 150px;
+        }
+
+        .wen-cen {
+            color: black;
+            margin-left: 115px;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-navbar">
+        </div>
+        <div class="mui-pages">
+        </div>
+    </div>
+</div>
+
+
+<div class="mark"></div>
+
+<div id="mui-content" class="mui-page paish">
+    <div class="mui-page-content">
+        <div id="ALL" class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <div class="scroll-li">
+                    <div class="info-bar-content">
+                        <div class="search-bar-new">
+                            <div class="search-item-new" style="width: 90%">
+                                <div class="search-icon-new">
+                                    <img src="../../../img/commom/search1@2x.png"/>
+                                </div>
+                                <div class="search-input">
+                                    <div class="mui-input-row" style="text-align: left;top: -2px">
+                                        <input id="search_input" value="" type="text" style="width: 90%;margin-top: 7px"
+                                               placeholder="请输入文档名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wen-dang">
+                                <img id="ico" style="width: 17px" src="../../../img/fujin-icon.png"/>
+                                <span style="color: black;margin-left: 5px">文档个数：</span>
+                                <span id="qxNum">0</span>
+                            </div>
+                            <div id="dateSelect" class="monthWrapper" style="margin-top: 25px;margin-right: -45px">
+                                <input id="selDate" readonly="readonly" placeholder="2021下半年"
+                                       style="width: 88px; border: none;margin-left: 20px;background-color: transparent;line-height: 30px;"/>
+                                <img src="../../../img/arrowDownBlack.png" style="width: 9px;height: 7px;" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-li">
+                    <div class="view-content">
+                        <div id="content">
+                           <ul id="OA_task_1" class="mui-table-view">
+<!--                                <li class="mui-table-view-cell mui-collapse" id="mui-li1">-->
+<!--                                    <a class="mui-navigate-right wen-header" href="#">1 dhsdpfhsodfhpsfshfpsfjhsjf</a>-->
+<!--                                    <div style="text-align: right;" id="div_img_1">-->
+<!--                                        <a class="wen-cen">2019-02-16</a>-->
+<!--                                        <img id="img-li1" value="0" class="photo-img" src="../../../img/isopen.png" style="width: 9px;height: 7px;" alt="">-->
+<!--                                    </div>-->
+<!--                                    <div class="mui-collapse-content">-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档类型</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="egwoirhwerhower">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">子类型</label>-->
+<!--                                            <input type="text" style="text-align: center" readonly="readonly"-->
+<!--                                                   class="mui-input-clear" value="报告">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档日期</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="2019-02-16">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档描述</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="sgfofhsodfhosdfoshdfohsdofhsdohfshofho">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档单位</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="dyhwiowehowehowehowehorh">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mui-table-view-cell mui-collapse" id="mui-li2">-->
+<!--                                    <a class="mui-navigate-right wen-header" href="#">1 dhsdpfhsodfhpsfshfpsfjhsjf</a>-->
+<!--                                    <div style="text-align: right;" id="div1">-->
+<!--                                        <a class="wen-cen">2019-02-16</a>-->
+<!--                                        <img id="img-li2" value="0"  class="photo-img" src="../../../img/isopen.png" style="width: 9px;height: 7px;" alt="">-->
+<!--                                    </div>-->
+<!--                                    <div class="mui-collapse-content">-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档类型</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="egwoirhwerhower">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">子类型</label>-->
+<!--                                            <input type="text" style="text-align: center" readonly="readonly"-->
+<!--                                                   class="mui-input-clear" value="报告">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档日期</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="2019-02-16">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档描述</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="sgfofhsodfhosdfoshdfohsdofhsdohfshofho">-->
+<!--                                        </div>-->
+<!--                                        <div class="mui-input-row">-->
+<!--                                            <label style="color: #777777;">文档单位</label>-->
+<!--                                            <input type="text" style="text-align: center" class="mui-input-clear"-->
+<!--                                                   readonly="readonly" value="dyhwiowehowehowehowehorh">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+
+</body>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+
+
+<script src="../../../js/config.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/qx.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/vconsole.min.js"></script>
+<script src="../../../js/workSpace/notification.js"></script>
+<script src="../../../js/standardPolicy/standard.js"></script>
+<script type="text/javascript">
+    var pages = 1;//页码
+    var sum = 1; //总数
+    mui.init({
+        swipeBack: false
+    });
+
+    (function ($) {
+        $(".mui-scroll-wrapper").scroll({});
+    })(mui);
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    //注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+    // mui('.mui-scroll-wrapper').scroll();
+
+
+    var dtPicker = "";
+    mui.plusReady(function () {
+        self = plus.webview.currentWebview();
+        var curr = new Date();
+        currentYear = curr.getFullYear();
+        currentMonth = curr.getMonth() + 1;
+        dtPicker = new mui.DtPicker({
+            type: 'month',
+            beginDate: new Date(2019, 00), //设置开始日期
+            endDate: new Date(currentYear, currentMonth - 1), //设置结束日期
+            customData: {
+                m: [
+                    {value: 'fyear', text: '上半年'},
+                    {value: 'syear', text: '下半年'}
+                ]
+            }
+        });
+
+        var minStartTime = curr.getFullYear() + '-01-01 00:00:00'
+        var maxEndTime = curr.getFullYear() + '-06-30 23:59:59'
+        var nodeId = '15f9f2f6cafc13d2b66549877166b4b3';
+        if (currentMonth > 6) {
+            minStartTime = curr.getFullYear() + '-07-01 00:00:00'
+            maxEndTime = curr.getFullYear() + '-12-31 23:59:59'
+        }
+
+        getStandardListTest({
+            minStartTime,
+            maxEndTime,
+            nodeId
+        })
+
+
+        self.setStyle({});
+
+    })
+
+    // 选择日期
+    $("#selDate").click(function () { // selDate , dateSelect
+        dtPicker.show(function (selectItems) {
+            var y = selectItems.y.text; //获取选择的年
+            var m = selectItems.m.text; //获取选择的月
+            var date = y + " " + m;
+            Year = y;
+            $("#selDate").val(date);
+            selectMonth(y,m);
+        })
+    });
+    var selectMonth = function (y,month) {
+        var minStartTime = ''
+        var maxEndTime = ''
+        if(month=='下半年'){
+            minStartTime = y+'-07-01 00:00:00'
+            maxEndTime = y+'-12-31 23:59:59'
+        }else if(month=='上半年'){
+            minStartTime = y+'-01-01 00:00:00'
+            maxEndTime = y+'-06-30 23:59:59'
+        }
+        var nodeId = '15f9f2f6cafc13d2b66549877166b4b3';
+        $("#selDate").val(Year + "" + month);
+
+        getStandardListTest({
+            minStartTime,
+            maxEndTime,
+            nodeId
+        })
+    }
+
+    var text = document.querySelector("#search_input");
+    text.addEventListener('input', function () {
+        var docName = this.value
+        var minStartTime = ''
+        var maxEndTime = ''
+        var nodeId = '15f9f2f6cafc13d2b66549877166b4b3';
+        if(docName=='') {
+            var name = $("#selDate").val();
+            if(name.substring(4,name.length)=='上半年'){
+                minStartTime = name.substring(0,4)+'-01-01 00:00:00'
+                maxEndTime = name.substring(0,4)+'-06-30 23:59:59'
+                getStandardListTest({
+                    minStartTime,
+                    maxEndTime,
+                    nodeId
+                })
+            }else if (name.substring(4,name.length)=='下半年') {
+                minStartTime = name.substring(0,4)+'-07-01 00:00:00'
+                maxEndTime = name.substring(0,4)+'-12-31 23:59:59'
+                getStandardListTest({
+                    minStartTime,
+                    maxEndTime,
+                    nodeId
+                })
+            }
+
+        }else if (docName != '') {
+            // $('#content').html('')
+            getStandardListTest({
+                docName,
+                nodeId
+            })
+        }
+    })
+
+
+    // 附件点击
+    $(document).on('click', '.attachementItem', function () {
+        var id = this.getAttribute("id");
+        console.log("id:" + id)
+        var fileType = $("#fileType" + id).val();
+        console.log("fileType:" + fileType);
+        var filePath = $("#filePath" + id).val();
+        console.log("filePath:" + filePath);
+        var fileId = $("#fileId" + id).val();
+        console.log("fileId:" + fileId);
+
+        var fileName = $("#fileName" + id).val();
+        console.log("fileName:" + fileName);
+
+        if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc") {
+            var extras = {
+                filePath: filePath,
+                fileId: fileId
+            };
+            app.openPage("../../conservation/preview.html", {
+                titleNView: {
+                    titleText: '文档预览',
+                    autoBackButton: true
+                }
+            }, extras);
+        } else if (fileType == '.jpg' || fileType == '.jpeg' || fileType == '.png') {
+            var extras = {
+                filePath: filePath,
+                fileId: fileId
+            };
+            app.openPage("../../mixed/preImg.html", {
+                titleNView: {
+                    titleText: '图片预览',
+                    autoBackButton: true
+                }
+            }, extras);
+        } else {
+            app.toast("此类型文件不支持预览");
+        }
+
+    })
+
+    $('#OA_task_1').on('tap', '.mui-table-view-cell', function () {
+
+        console.log("进来点击事件")
+        var liId = $(this).attr('id')
+        var imgId = $('#'+liId+' img').attr('id');
+        var value_img = $('#'+imgId+'').attr('value');
+        if(value_img=='0'){
+            $('#'+imgId+'').css('transform','rotate(180deg)');
+            $('#'+imgId+'').attr('value','1')
+        }else if(value_img=='1'){
+            $('#'+imgId+'').css('transform','rotate(0deg)');
+            $('#'+imgId+'').attr('value','0')
+        }
+
+    })
+
+
+    //    test area
+
+    function initTmpData() {
+        var curr = new Date();
+        currentYear = curr.getFullYear();
+        currentMonth = curr.getMonth() + 1;
+        dtPicker = new mui.DtPicker({
+            type: 'month',
+            beginDate: new Date(2019, 00), //设置开始日期
+            endDate: new Date(currentYear, currentMonth - 1), //设置结束日期
+            customData: {
+                m: [
+                    {value: 'fyear', text: '上半年'},
+                    {value: 'syear', text: '下半年'}
+                ]
+            }
+        });
+    }
+
+    initTmpData();
+
+    function getPhotoFile(groupId, num) {
+        console.log("调用getPhotoFile")
+        let attachementParam = {
+            groupId: groupId,
+        }
+        getNotificationAttachment(attachementParam, function (caseAttachementData) {
+            if (caseAttachementData.success) {
+                console.log(caseAttachementData.result)
+                addData('', caseAttachementData.result, num);
+            } else {
+                app.toast("附件查询失败")
+            }
+        })
+    }
+
+
+    function addData(data, caseAttachements, num) {
+        console.log("=========  data ======")
+        // console.log(JSON.stringify(data));
+        console.log("=========  caseAttachements ======")
+        // console.log(JSON.stringify(caseAttachements));
+
+
+        var content = '';
+        if (caseAttachements.length > 0) {
+            content = content +
+                '<div style="margin-top: 20px;">' +
+                '<div class="mui-table-view attachement" style="float: left;margin-left: -130px;">'
+
+            for (let i = 0; i < caseAttachements.length; i++) {
+                var caseItem = caseAttachements[i];
+                var fileSize = caseAttachements[i].uploadFile.fileSize;
+                var fileSizeText = '';
+                if (fileSize > 1024) {
+                    fileSize = fileSize / 1024;
+                    fileSizeText = fileSize.toFixed(2) + 'KB';
+                }
+                // 如果经过上面的if之后filesize还是大于1024，继续提升计量单位
+                if (fileSize > 1024) {
+                    fileSize = fileSize / 1024;
+                    fileSizeText = fileSize.toFixed(2) + 'MB';
+                }
+
+                var hideInputs = '<input id="fileType' + caseAttachements[i].uploadFile.id + '" value="' + caseAttachements[i].uploadFile.fileType + '" style="display:none"> ' +
+                    '<input id="filePath' + caseAttachements[i].uploadFile.id + '" value="' + caseAttachements[i].uploadFile.savePath + '" style="display:none">' +
+                    '<input id="fileId' + caseAttachements[i].uploadFile.id + '" value="' + caseAttachements[i].uploadFile.id + '" style="display:none">' +
+                    '<input id="fileName' + caseAttachements[i].uploadFile.id + '" value="' + caseAttachements[i].uploadFile.fileName + '" style="display:none">';
+
+                var fileContent = '<div class="mui-media-body">' +
+                    caseAttachements[i].uploadFile.fileName +
+                    '<p class="mui-h6 mui-ellipsis">' + fileSizeText + '</p>' +
+                    '</div>' + hideInputs +
+                    '</div>';
+
+                switch (caseAttachements[i].uploadFile.fileType) {
+                    case ".pdf":
+                        content = content + '<div id="' + caseAttachements[i].uploadFile.id + '" class="mui-table-view-cell mui-media attachementItem">' +
+                            '<img src="../../../img/pptIcon.png" class="mui-media-object mui-pull-left" />'
+                            + fileContent
+                        break;
+                    case ".doc":
+                    case ".docx":
+                        content = content + '<div id="' + caseAttachements[i].uploadFile.id + '" class="mui-table-view-cell mui-media attachementItem">' +
+                            '<img src="../../../img/wordIcon.png" class="mui-media-object mui-pull-left" />'
+                            + fileContent
+                        break;
+                    case ".jpg":
+                    case ".png":
+                    case ".jpeg":
+                        content = content + '<div id="' + caseAttachements[i].uploadFile.id + '" class="mui-table-view-cell mui-media  attachementItem">' +
+                            '<img src="../../../img/imageIcon.png" class="mui-media-object mui-pull-left" />'
+                            + fileContent
+                        break;
+                }
+
+            }
+
+            content = content +
+                '</div>' +
+                '</div>'
+        }
+        content = content +
+            <!-- 附件结束 -->
+            '</div>';
+        $('#notificationDetail' + num + '').html(content);
+    }
+
+    function getDataTmp() {
+        var dataStr = `{"guid":"e850b149c7ec5f0d98be2393af8daa24","createBy":"liu_qw","createTime":"2021-03-26 17:38:53","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"isEmphasis":0,"imageAttachment":"8362baace91642e1857a4ed1e5a90055","caseTitle":"辽宁发布7号令！应急响应从一级调整为三级，传递重要信号发现","caseSource":"发现新闻网","caseContent":"<p><span style=\\"color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\">辽宁省医管局委网址2月22日发布《辽宁省新式狗狗细小病毒感柒的肺炎病疫情防治总指挥部令第7号》，公布将辽宁省</span><a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\" title=\\"查看更多关于 新冠肺炎 的文章\\" href=\\"https://www.fxda.com/tags/6207.html\\" target=\\"_blank\\" rel=\\"noopener\\">新冠肺炎</a><span style=\\"color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\">一级</span><a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\" title=\\"查看更多关于 应急响应 的文章\\" href=\\"https://www.fxda.com/tags/234.html\\" target=\\"_blank\\" rel=\\"noopener\\">应急响应</a><span style=\\"color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; font-size: 16px; background-color: #ffffff;\\">调节为省部级三级应急响应。</span></p>\\n<p><img src=\\"https://www.fxda.com/zb_users/upload/2020/02/202002221582372050100992.png\\" alt=\\"辽宁发布7号令！应急响应从一级调整为三级，传递重要信号  中心 应急响应 肺炎 病例 新冠 辽宁省 第1张\\" /></p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">下列为总指挥部令全篇：</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">各<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 市委市政府 的文章\\" href=\\"https://www.fxda.com/tags/5392.html\\" target=\\"_blank\\" rel=\\"noopener\\">市委市政府</a>、市人民政府，<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 沈抚新区 的文章\\" href=\\"https://www.fxda.com/tags/8564.html\\" target=\\"_blank\\" rel=\\"noopener\\">沈抚新区</a>管委，省总指挥部各<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 领导小组 的文章\\" href=\\"https://www.fxda.com/tags/3589.html\\" target=\\"_blank\\" rel=\\"noopener\\">领导小组</a>，省（中）直各企业：</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">由省新冠肺炎病疫情防治总指挥部科学研究决策，下发指令以下：</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\">依据相关法律法规相关法律法规要求和辽宁省新冠肺炎病疫情发展趋势局势，自<a class=\\"tooltip-trigger tin\\" style=\\"outline: none; -webkit-tap-highlight-color: transparent; color: #4796d8;\\" title=\\"查看更多关于 2020年 的文章\\" href=\\"https://www.fxda.com/tags/6313.html\\" target=\\"_blank\\" rel=\\"noopener\\">2020年</a>2月22日9时起，将我国新冠肺炎病疫情防治应急响应级別由一级应急响应调节为省部级三级应急响应。</p>\\n<p style=\\"margin: 0px 0px 20px; padding: 0px; font-size: 16px; line-height: 1.75em; color: #333333; font-family: 'Microsoft Yahei', Arial, tahoma; background-color: #ffffff;\\"><img src=\\"https://www.fxda.com/zb_users/upload/2020/02/202002221582372051496646.png\\" alt=\\"辽宁发布7号令！应急响应从一级调整为三级，传递重要信号  中心 应急响应 肺炎 病例 新冠 辽宁省 第3张\\" /></p>","caseReleaseTime":"2021-03-26 05:39","caseAttachment":"8640ccd581dd40bbbf9de6b54231ca99","attachmentStr":null,"caseType":1,"planType":null,"policyLawType":null,"policyLawLevel":null,"caseStatus":0,"isFavorites":0,"caseIndex":1,"createByModel":{"guid":"fb2581f1960a7d6cc92fa20847227959","username":"liu_qw","realname":"刘庆伟","corpName":"深圳市水务(集团)有限公司 ","deptName":null,"mobilePhone":"17333287625"}}`;
+        var data = JSON.parse(dataStr);
+
+        // var attachmentStr = `[{"fileToken":"fe0810c5f40517731a5c2557694c6a4a","uploadFile":{"fileName":"2020年度全国勘察设计注册工程师执业资格考试报考须知.docx","inRecycleBin":null,"updateTime":null,"readOnly":null,"collected":null,"uploadTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"uploadUser":"刘庆伟","createBy":"liu_qw","fileSize":24699,"createTime":"2021-03-26 17:37:33","updateBy":null,"savePath":"ecidi/b5c86aa38dc7434cac785e2e8c89608d.docx","downloadTimes":0,"fileUsage":"0","id":"fe0810c5f40517731a5c2557694c6a4a","fileType":".docx","md5":""}}]`;
+        var attachmentStr = '[{"fileToken":"23e7249baa7d3b1c61a6e5b2a56ebc6e","uploadFile":{"fileName":"1.docx","inRecycleBin":null,"updateTime":null,"readOnly":null,"collected":null,"uploadTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"uploadUser":"管理员一","createBy":"A01admin","fileSize":11626,"createTime":"2020-06-22 09:57:59","updateBy":null,"savePath":"ecidi/487c33183a40461c9709ccda44213d26.docx","downloadTimes":0,"fileUsage":"0","id":"23e7249baa7d3b1c61a6e5b2a56ebc6e","fileType":".docx","md5":""}},{"fileToken":"fe823d82d98dc8d203b230d8fb9e23d8","uploadFile":{"fileName":"1.png","inRecycleBin":null,"updateTime":null,"readOnly":null,"collected":null,"uploadTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"uploadUser":"管理员一","createBy":"A01admin","fileSize":242828,"createTime":"2020-06-22 09:58:02","updateBy":null,"savePath":"ecidi/f3ce2d3a21c74017ad274a19ad707756.png","downloadTimes":0,"fileUsage":"0","id":"fe823d82d98dc8d203b230d8fb9e23d8","fileType":".png","md5":""}},{"fileToken":"2b318f2d3702d80a136d02f75bedc681","uploadFile":{"fileName":"2.png","inRecycleBin":null,"updateTime":null,"readOnly":null,"collected":null,"uploadTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"uploadUser":"管理员一","createBy":"A01admin","fileSize":821179,"createTime":"2020-06-22 09:58:04","updateBy":null,"savePath":"ecidi/9ff0555656a043178dc3b10b7a51e446.png","downloadTimes":0,"fileUsage":"0","id":"2b318f2d3702d80a136d02f75bedc681","fileType":".png","md5":""}}]'
+        var attachment = JSON.parse(attachmentStr);
+
+        addData(attachment);
+
+    }
+
+    //标准规范数据动态加载
+    function addStandard(total, standardData) {
+        console.log("====进入数据动态绑定====")
+        var contentStr = '';
+
+        if (standardData.length > 0) {
+
+            $('#qxNum').text(total)
+
+            // contentStr += '<ul id="OA_task_1" class="mui-table-view">'
+
+            var testData = '[{"docCorporationId":"100000002","docType":1007,"description":null,"updateTime":null,"docDate":"2021-04-06","delFlag":0,"corpCode":"A01","prjCode":null,"docSmallType":"3","createBy":"lin_w","docName":"规章制度有","docDepartId":null,"docStatus":"1","docType_dictText":"规章制度","fileGroupId":"a5bb77ce14c94619bfa711eaed566cb2","createTime":"2021-04-12 10:11:21","updateBy":null,"guid":"5903c143721cf300a8e8e8e1be5e2583"},{"docCorporationId":null,"docType":1007,"description":null,"updateTime":null,"docDate":"2021-04-15","delFlag":0,"corpCode":"A01","prjCode":null,"docSmallType":"2","createBy":"xiao_z","docName":"测试","docDepartId":null,"docStatus":"1","docType_dictText":"规章制度","fileGroupId":"661dadc8b04843ee82cf7ebd57f733cc","createTime":"2021-04-15 17:43:04","updateBy":null,"guid":"3ac64a483ee2ee26bf7db7178dd15f07"}]';
+            var testArr = JSON.parse(testData);
+            console.log(testArr.length)
+            console.log(JSON.stringify(standardData))
+            // standardData = testArr
+            for (var i = 0; i < standardData.length; i++) {
+
+                console.log(JSON.stringify(standardData[i]))
+
+
+                contentStr += '<li class="mui-table-view-cell mui-collapse" id="mui-li'+(i+1)+'">\n' +
+                    '                                    <a class="mui-navigate-right wen-header" href="#">' + (i + 1) + ' ' + standardData[i].docName  + '</a>\n' +
+                    '                                    <div style="text-align: right;" >\n' +
+                    '                                    <a class="wen-cen">' + standardData[i].docDate + '</a>\n' +
+                    '                                    <img id="img-li'+(i+1)+'" value="0" src="../../../img/isopen.png" style="width: 9px;height: 7px;" alt="">\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="mui-collapse-content">\n' +
+                    '                                        <div class="mui-input-row">\n' +
+                    '                                            <label style="color: #777777;">文档类型</label>\n' +
+                    '                                            <input type="text" style="text-align: center" class="mui-input-clear"  readonly="readonly" value="' + standardData[i].docType_dictText + '">\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="mui-input-row">\n' +
+                    '                                            <label style="color: #777777;">子类型</label>\n' +
+                    '                                            <input type="text" style="text-align: center" readonly="readonly" class="mui-input-clear" value="报告">\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="mui-input-row">\n' +
+                    '                                            <label style="color: #777777;">文档日期</label>\n' +
+                    '                                            <input type="text" style="text-align: center" class="mui-input-clear" readonly="readonly" value="' + standardData[i].docDate + '">\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="mui-input-row">\n' +
+                    '                                            <label style="color: #777777;">文档描述</label>\n' +
+                    '                                            <input type="text" style="text-align: center" class="mui-input-clear" readonly="readonly" value="' + standardData[i].description + '">\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="mui-input-row">\n' +
+                    '                                            <label style="color: #777777;">文档单位</label>\n' +
+                    '                                            <input type="text"  style="text-align: center" class="mui-input-clear" readonly="readonly" value="' + standardData[i].docCorporationId + '">\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="mui-input-row">\n' +
+                    '                                            <label style="color: #777777;">文档附件</label>\n' +
+                    '                                            <div id="notificationDetail' + (i + 1) + '" class="wen-dang-enclosure">\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>\n' +
+                    '                                    </div>\n' +
+                    '                                </li>'
+            }
+            // contentStr += ' </ul>'
+            $("#OA_task_1").html(contentStr);
+
+            for (let j = 0; j < standardData.length; j++) {
+                var groupId = standardData[j].fileGroupId
+                var num = j + 1
+                getPhotoFile(groupId, num)
+            }
+
+        } else {
+            $('#qxNum').text(0)
+            $("#OA_task_1").html("暂无数据");
+        }
+
+    }
+
+    function getStandardListTest(param) {
+        getStandardList(param, function (data) {
+            if (data.success) {
+                console.log("标准" + JSON.stringify(data.result))
+                console.log("=====" + data.result.records)
+                addStandard(data.result.total, data.result.records)
+            }
+        })
+    }
+
+    // getDataTmp();
+    getPhotoFile()
+    //测试
+    // var testData = '[{"docCorporationId":"100000002","docType":1007,"description":null,"updateTime":null,"docDate":"2021-04-06","delFlag":0,"corpCode":"A01","prjCode":null,"docSmallType":"3","createBy":"lin_w","docName":"规章制度有","docDepartId":null,"docStatus":"1","docType_dictText":"规章制度","fileGroupId":"a5bb77ce14c94619bfa711eaed566cb2","createTime":"2021-04-12 10:11:21","updateBy":null,"guid":"5903c143721cf300a8e8e8e1be5e2583"},{"docCorporationId":null,"docType":1007,"description":null,"updateTime":null,"docDate":"2021-04-15","delFlag":0,"corpCode":"A01","prjCode":null,"docSmallType":"2","createBy":"xiao_z","docName":"测试","docDepartId":null,"docStatus":"1","docType_dictText":"规章制度","fileGroupId":"661dadc8b04843ee82cf7ebd57f733cc","createTime":"2021-04-15 17:43:04","updateBy":null,"guid":"3ac64a483ee2ee26bf7db7178dd15f07"}]';
+    // var total = 1
+    // addStandard(total,testData);
+
+
+</script>
+
+</html>

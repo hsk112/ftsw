@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>深圳水务</title>
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="css/mui.min.css" rel="stylesheet"/>
+  <link href="css/common.css" rel="stylesheet"/>
+  <style>
+    .home-item {
+      /* height: 210px; */
+      /* height: 350px; */
+      /*border-bottom: 6px solid #f6f4f7;*/
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 15px 10px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+    .home-item-title .title-more {
+      font-size: 14px;
+      color: #8C8C8C;
+      width: 50px;
+      float: right;
+      margin-top: -18px;
+      font-weight: 400;
+      text-align: right;
+    }
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      /* height: 77px; */
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 24%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 25px;
+
+    }
+
+    .home-item-list .item img {
+      height: 30px;
+      width: 30px;
+      /* border-radius: 40px; */
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mui-control-content {
+      margin-bottom: 50px;
+    }
+
+    .notice-tip {
+      color: #191515;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .notice-tip::after {
+      font-size: 18px;
+      color: #000;
+    }
+
+    .notice-tip span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mui-icon-forward:before {
+      content: '';
+    }
+
+    .mui-icon-forward::after {
+      content: '\e470';
+      font-size: 15px;
+    }
+
+    .db-item {
+      width: 100%;
+      float: left;
+      height: 80px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .db-item-text {
+      padding: 8px 9px;
+      width: 100%;
+      height: 100%;
+      font-weight: bold;
+    }
+
+    .text-title {
+      text-overflow: -o-ellipsis-lastline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .text-date {
+      font-size: 12px;
+    }
+
+    .notice-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(136, 136, 136, 1);
+      padding-left: 22px;
+    }
+
+    .notice-title.active {
+      font-size: 16px;
+      font-weight: bold;
+      color: #337BFC;
+      padding-left: 22px;
+    }
+
+    .notice-tzgg {
+      background: url(img/commom/tz2@2x.png) no-repeat center center;
+      background-size: 18px;
+      background-position: left;
+    }
+
+    .notice-tzgg.active {
+      background: url(img/commom/tz@2x.png) no-repeat center center;
+      background-size: 18px;
+      background-position: left;
+    }
+
+    .notice-xwgg {
+      background: url(img/commom/gg2@2x.png) no-repeat center center;
+      background-size: 18px;
+      background-position: left;
+    }
+
+    .notice-xwgg.active {
+      background: url(img/commom/gg@2x.png) no-repeat center center;
+      background-size: 18px;
+      background-position: left;
+    }
+
+    .home-item-list ul {
+      padding: 0 18px;
+    }
+
+    .home-item-list ul li {
+      height: 60px;
+      line-height: 60px;
+      border-top: 1px solid #EDEDED;
+      text-align: left;
+    }
+
+    .home-item-list .home-list-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #191515;
+      font-size: 14px;
+    }
+
+    .home-item-list .home-list-date {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: right;
+      color: #888888;
+      font-size: 12px;
+    }
+
+
+    #weather_content {
+      position: absolute;
+      top: 126px;
+      /*left: 5%;*/
+      /*width: 90%;*/
+      left: 10px;
+      width: calc(100vw - 20px);
+      z-index: 5000;
+      height: 56px;
+      line-height: 60px;
+      background: #6699FF;
+      border-radius: 15px;
+      border: 1px solid #6699FF;
+    }
+
+    .cac_bder {
+      width: 0;
+      border-bottom: 8px solid #6699FF;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      position: absolute;
+      bottom: 54px;
+      /*left: 55%;*/
+      left: 200px;
+      z-index: 1;
+
+    }
+
+    .home_top_icon {
+      width: 28px;
+      height: 28px;
+    }
+    .home_top_ftw_txt {
+      width: 112px;
+      height: 23px;
+      margin: 0 10px;
+    }
+                                                                                                                                                                                                               .cac_bg {
+      width: 0;
+      border-bottom: 19px solid #6699FF;
+      border-left: 19px solid transparent;
+      border-right: 19px solid transparent;
+      position: absolute;
+      bottom: 54px;
+      left: 226px;
+      z-index: 2;
+
+    }
+    .weather-container {
+      display: flex;
+      font-size: 12px;
+      margin-left: 5px;
+      flex-wrap: wrap;
+      flex-direction: column;
+      padding-left: 8px;
+      text-align: left;
+    }
+    #message {
+      width: 20px;
+      height: 20px;
+    }
+    #scan {
+      width: 20px;
+      height: 20px;
+      margin-left: 20px;
+    }
+    /*脱离文档流 ，需要固定高度 ，pad动态修改*/
+    #business-list {
+      height: 200px;
+    }
+
+    .content-list {
+      width: 90%;
+      background: #FFFFFF;
+      box-shadow: 0px 1px 46px 0px rgba(0, 0, 0, 0.06);
+      border-radius: 10px;
+      margin-left:5%;
+
+    }
+    .home-top-info-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+  /*  isTest = true */
+  /*  .mui-scroll-wrapper {*/
+  /*    position: unset;*/
+  /*  }*/
+
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <!-- 			<div class="mui-navbar">
+      </div> -->
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page" style="background: white;">
+  <!--页面标题栏开始-->
+  <!-- <header class="mui-bar mui-bar-nav common-header">
+      <h1 class="mui-title">福田水务</h1>
+    </header> -->
+  <!--页面标题栏结束-->
+  <!--底部导航栏-->
+  <!-- <nav class="mui-bar mui-bar-tab">
+      <a class="mui-tab-item mui-active" href="#tabbar">
+        <span class="mui-icon mui-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+      </a>
+      <a class="mui-tab-item" href="#tabbar-with-chat">
+        <span class="mui-icon mui-icon-email"></span>
+        <span class="mui-tab-label">智慧管理</span>
+      </a>
+      <a class="mui-tab-item" href="#tabbar-with-contact">
+        <span class="mui-icon mui-icon-contact"></span>
+        <span class="mui-tab-label">智慧服务</span>
+      </a>
+      <a class="mui-tab-item" href="#tabbar-with-map">
+        <span class="mui-icon mui-icon-gear"></span>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav> -->
+  <!--底部导航栏-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div id="mainTitle" style="position: relative;">
+<!--      <img src="img/xx.png" id="message" alt="" width="20" height="20" style="position: absolute; top: 7%;right: 5%;">-->
+<!--      <img src="img/scan.png" id="scan" alt="" width="21" height="20" style="position: absolute; top: 7%;right: 16%;">-->
+<!--      <img src="img/mainBg@2x.png" id="mainBg" style="width: 100%;"/>-->
+<!--      <div id="weather" data-status="0"-->
+<!--           style="position: absolute; top: 6%;left: 48%;font-size: 13px;color: #fff;border-left: 1px solid #eee;">-->
+<!--        &lt;!&ndash;							<div style="border-left:1px solid #ffffff"></div>&ndash;&gt;-->
+<!--        <div style="display: flex;margin-left: 5px;flex-wrap: wrap;flex-direction: column;padding-left: 8px">-->
+<!--          <div id="temperature" style="flex: 1">25/31℃</div>-->
+<!--          <div id="weath_str" style="text-align: left;flex: 1">多云<img src="img/down.png"-->
+<!--                                                                             style="width: 9px;margin: auto 7px" alt="">-->
+<!--          </div>-->
+
+<!--        </div>-->
+
+<!--      </div>-->
+<!--      <div class="content" style="display: none" id="weather_content">-->
+<!--        &lt;!&ndash;							<div class="cac_bg"></div>&lt;!&ndash; 背景三角 &ndash;&gt;&ndash;&gt;-->
+<!--        <div class="cac_bder"></div>&lt;!&ndash; 边框三角 &ndash;&gt;-->
+<!--        <textarea id="weatherstatus"-->
+<!--                  style="background: #6699FF;height: 53px;border: 0px solid #6699FF;border-radius: 20px;color: white;font-size: 10px;resize:none;overflow:hidden" disabled>多云，有雷阵雨，部分时间雨势较大；气温26-33℃；南风2-3级。沿海·高地和海区阵6-7级；相对湿度60%-95%</textarea>-->
+<!--      </div>-->
+      <img src="img/home_top_bg.png" id="mainBg" style="width: 100%;"/>
+      <div class="home-top-info-container" style="">
+        <div style="display: flex; align-items: center; margin-left: 10px;">
+          <img src="img/home_top_icon.png" class="home_top_icon" alt="">
+          <img src="img/home_top_ftw_txt.png" class="home_top_ftw_txt" alt="">
+          <div id="weather" data-status="0"
+               style="width: 100px;font-size: 13px;color: #fff; position: relative;">
+            							<div style="width: 1px;height: 25px;position:absolute; top:5px; left: 0; border-left:1px solid #eee"></div>
+            <div class="weather-container">
+              <div id="temperature" style="height: 15px;">25/31℃</div>
+              <div id="weath_str" style="text-align: left;height: 15px;">多云<img src="img/down.png"
+                                                                          style="width: 9px;margin: auto 7px" alt="">
+              </div>
+
+            </div>
+
+          </div>
+          <div class="content" style="display: none;" id="weather_content">
+            <!--							<div class="cac_bg"></div>&lt;!&ndash; 背景三角 &ndash;&gt;-->
+            <div class="cac_bder"></div><!-- 边框三角 -->
+            <textarea id="weatherstatus"
+                      style="background: #59ACFF;height: 53px;border: 0px solid #59ACFF;border-radius: 15px;color: white;font-size: 10px;resize:none;overflow:hidden" disabled>多云，有雷阵雨，部分时间雨势较大；气温26-33℃；南风2-3级。沿海·高地和海区阵6-7级；相对湿度60%-95%</textarea>
+          </div>
+        </div>
+        <div style="width: 100px;display: flex;align-items: center;justify-content: flex-end; margin-right: 20px;">
+          <img src="img/xx.png" id="message" alt="">
+          <img src="img/scan.png" id="scan" alt="">
+        </div>
+
+
+
+      </div>
+    </div>
+    <div id="mainContent" class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <div id="business-list">
+
+          <!--						<div style="position: absolute; top: 90px;left: 55px;font-size: 16px;color: #fff;display: flex;width: 199px;justify-content: space-between;">-->
+          <!--							<span>方便</span>-->
+          <!--							<span>|</span>-->
+          <!--							<span>快捷</span>-->
+          <!--							<span>|</span>-->
+          <!--							<span>高效</span>-->
+          <!--							<span>|</span>-->
+          <!--							<span>易用</span>-->
+          <!--						</div>-->
+
+
+          <div class="home-item"
+               style="width: 100%;background: #FFFFFF;">
+            <div class="home-item-list" id="business_item">
+              <!--旧的-->
+
+
+              <!--<div class="item" id="psh_gl">-->
+              <!--<img src="img/commom/pshgl@2x.png">-->
+              <!--<span>排水户管理</span>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+        <div class="content-list"
+             id="db-view">
+          <div class="home-item-title" id="db-more">
+							<span style="display: inline-block;width: 4px;
+								height: 18px;
+								background: #0493F3;margin-right:5px"></span>
+            <span>通知公告</span>
+            <!-- <div class="span-bg"></div> -->
+            <div class="title-more mui-icon <!--mui-icon-forward-->" style="margin-top:0;">更多</div>
+          </div>
+          <div class="home-item-list" id="db-list">
+            <div style="padding: 15px 10px;text-align: left;padding-bottom: 15px;border-bottom: 1px solid #ededed;">
+            </div>
+          </div>
+          <div id="moreNotification" style="padding: 5px">
+            <img id="moreNotificationImg" src="img/home_more_icon@2x.png" style="width: 9px">
+          </div>
+        </div>
+
+        <div class="home-item"
+             style="margin-top: 10px;width: 90%;background: #FFFFFF;box-shadow: 0px 1px 46px 0px rgba(0, 0, 0, 0.06);border-radius: 10px;margin-left:5%;"
+             id="db-view-1">
+          <div class="home-item-title" id="db-more-2">
+							<span style="display: inline-block;width: 4px;
+								height: 18px;
+								background: #0493F3;margin-right:5px"></span>
+            <span>工作动态</span>
+            <!-- <div class="span-bg"></div> -->
+            <div class="title-more mui-icon <!--mui-icon-forward-->" style="margin-top:0;">更多</div>
+          </div>
+          <div class="home-item-list" id="db-list-2">
+          </div>
+
+          <div id="moreWork" style="padding: 5px">
+            <img id="moreWorkImg" src="img/home_more_icon@2x.png" style="width: 9px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--页面主内容区结束-->
+  </div>
+  <div class='progress_wrap' style="display: none;">
+    <div class='progress'>
+      <!-- <div class='progressStep'><span>0%</span></div> -->
+      <div class='progressStep'><span>25%</span></div>
+      <div class='progressStep'><span>50%</span></div>
+      <div class='progressStep'><span>75%</span></div>
+      <div class='progressStep' style="border-right: none; "><span>100%</span></div>
+      <div class='progress_background nice_background'></div>
+    </div>
+    <div class="pagesFix"></div>
+    <div style="    top: 40px;
+				position: relative;
+				font-size: 19px;
+				color: black;font-weight: bold;">正在下载<span id='baifen'>80</span>%...
+    </div>
+  </div>
+</div>
+</body>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.view.js"></script>
+<script src="js/mui.locker.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/paishuihu.js"></script>
+<script src="js/update.js"></script>
+<script src="js/helper.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/s4.js"></script>
+<script src="js/smutils.js"></script>
+<script src="js/byte&string.js"></script>
+<script src="js/ajaxhook.min.js"></script>
+<script src="js/checkUpdate.js"></script>
+<!-- <script src="js/vconsole.min.js"></script> -->
+<script type="text/javascript">
+    // var vConsole = new VConsole();
+
+    var isTest = false;
+    var navlistKey = app.userInfo().username + '-navlist'
+
+    mui.init({swipeBack: false});
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    var showMoreNotification = false;
+    var notificationDatas = null;
+    var showMoreWork = false;
+    var workDatas = false;
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll({
+        bounce: false
+    });
+    mui.ready(function () {
+        /*var baseUrl = config.urls.baseUrl;
+        ah.proxy({
+          onRequest: (config, handler) => {
+            if (config.url.indexOf(baseUrl) !== -1) {
+              let genKey = localStorage.getItem("pro__Current-GenKey");
+              if (genKey) {
+                let arr = [];
+                arr = config.url.split("?");
+                if (arr.length > 1) {
+                  let data = {};
+                  let arrItem = arr[1].split("&");
+                  for (let i = 0; i < arrItem.length; i++) {
+                    if (arrItem[i]) {
+                      let item = arrItem[i].split("=");
+                      data[item[0]] = item[1];
+                    }
+                  }
+                  var sm4 = new Sm4utils(JSON.parse(genKey).value);
+                  data._t = Date.parse(new Date()) / 1000;
+                  data = sm4.encryptData_ECB(JSON.stringify(data));
+                  config.url = arr[0] + '?data=' + data;
+                }
+              }
+            }
+            handler.next(config);
+          }
+        });*/
+    });
+
+    mui.plusReady(function () {
+        // checkUpdating(false);
+
+        plus.navigator.setStatusBarStyle("light");
+        var check = new checkUpdate();
+
+        // $("#mainBg").css('margin-top',statusHeight);
+        // check.checkNewFn();//开启检查
+
+        setupTopBg();
+        $.oldBack = mui.back;
+        var backButtonPress = 0;
+        $.back = function (event) {
+            backButtonPress++;
+            if (backButtonPress > 1) {
+                plus.runtime.quit();
+            } else {
+                plus.nativeUI.toast('再按一次退出应用');
+            }
+            setTimeout(function () {
+                backButtonPress = 0;
+            }, 1000);
+            return false;
+        };
+        //预先获取当前经纬度
+        plus.geolocation.getCurrentPosition(function (position) {
+        }, function (e) {
+        })
+
+        //待办任务
+        getTasks();
+        //获取天气
+        weather();
+
+    })
+
+    function setupTopBg() {
+      $("#mainContent").css("top", $("#mainTitle").css("height"));//125px
+      console.log('$("#mainTitle").css("height") :' + $("#mainTitle").css("height"))
+      // 天气提示的位置
+      var mainTitleHeight = $("#mainTitle").css("height")
+
+      var topContentPaddingTop = 20;
+      // screenWidth:1024
+      const screenWidth = document.documentElement.clientWidth;
+      // screenHeight:1366
+      const screenHeight = document.documentElement.clientHeight;
+
+      if(screenWidth > 1000) {
+        topContentPaddingTop = 40;
+      }
+
+      var weatherTip = ((mainTitleHeight.replace('px','')) * 0.5 + (topContentPaddingTop + 10))
+      console.log('weatherTip:' + weatherTip)
+      $("#weather_content").css("top",weatherTip + 'px');
+
+    }
+
+    // 要放到plusReady中 ，没浏览器可以放开
+    //  setupTopBg();
+    if(isTest) {
+      setupTopBg();
+    }
+   // setupTopBg();
+    /**
+     * 排水户登记
+     */
+    // $("#psh_dj").on('tap', function() {
+    // 	clearGlobalItem();
+    // 	app.openPage("view/paish/paish_map.html", {
+    // 		titleNView: {
+    // 			titleText: '门牌查看',
+    // 			autoBackButton: true,
+    // 		}
+    // 	});
+    // });
+
+    /**
+     * 排水户管理2.0
+     */
+
+        //二级菜单权限 id ，
+        // xxcx:"monitor,rivers,leaderList,emergency,waterRisk,paishuihu,overflow,shuiwu,policy,standard,operContract,mixed"
+    var subMmenuDictFirstIdForSubId = {};
+
+    //获取待办任务
+    var getTasks = function () {
+        gettzgglist({
+            caseType: '1',
+            pageNo: 1,
+            pageSize: 3,
+            'field': 'caseReleaseTime',
+            'order': 'desc'
+        }, function (data) {
+            // var item1 = '';
+            // var item2 = '';
+          // c/onsole.log('获取待办任务 - start')
+          // c/onsole.log(JSON.stringify(data));
+          // c/onsole.log('获取待办任务 - end')
+            notificationDatas = data.result.records;
+            addNotificationData(data);
+        });
+
+        getgzdtlist({
+            caseType: '2',
+            pageNo: 1,
+            pageSize: 3,
+            'field': 'caseReleaseTime',
+            'order': 'desc'
+        }, function (data) {
+            var item1 = '';
+            var item2 = '';
+          // c/onsole.log('获取工作动态 - start')
+          // c/onsole.log(JSON.stringify(data));
+          // c/onsole.log('获取工作动态 - end')
+          //   c/onsole.log(JSON.stringify(data.result.records))
+            workDatas = data.result.records;
+            addWorkData(workDatas);
+        });
+    }
+
+    function addNotificationData() {
+        var str = ``;
+        if (showMoreNotification) {
+            for (let i = 0; i < notificationDatas.length; i++) {
+                str += `<div style="padding: 15px 10px;text-align: left;padding-bottom: 15px;border-top: 1px solid #ededed;" name='tzgg' guid=${notificationDatas[i].guid}>
+								<span style="word-break: keep-all;text-overflow: ellipsis;overflow: hidden;width: 100%;display: inline-block;">${notificationDatas[i].caseTitle}</span>
+								<span style="color: #8C8C8C">${notificationDatas[i].caseReleaseTime}</span>
+							</div>`
+            }
+        } else {
+            str += `<div style="padding: 15px 10px;text-align: left;padding-bottom: 15px;border-top: 1px solid #ededed;" name='tzgg' guid=${notificationDatas[0].guid}>
+								<span style="word-break: keep-all;text-overflow: ellipsis;overflow: hidden;width: 100%;display: inline-block;">${notificationDatas[0].caseTitle}</span>
+								<span style="color: #8C8C8C">${notificationDatas[0].caseReleaseTime}</span>
+              </div>`
+        }
+        $("#db-list").html(str);
+
+        $("div[name='tzgg']").on('tap', function () {
+            //获取id
+            var id = this.getAttribute("guid");
+            //c/onsole.log("点击item ：" + id);
+            // 跳转详情页
+            var recordInfo = {
+                // opera:"add",
+                nid: id
+            };
+            app.openPage("view/workSpace/notification/notificationDetail.html", {
+                titleNView: {
+                    titleText: "通知公告详情",
+                    autoBackButton: true,
+                }
+            }, recordInfo);
+
+
+            // app.toast("记录新增")
+
+            //传值给详情页面，通知加载新数据
+            // mui.fire(detail,'getDetail',{id:id});
+            // //打开新闻详情
+            // mui.openWindow({
+            //   id:'detail',
+            //   url:'detail.html'
+            // });
+        })
+    }
+
+    //滑动
+    document.querySelector('.mui-scroll-wrapper' ).addEventListener('scroll', function (e ) {
+      $('#weather_content').hide();
+    })
+
+
+
+    function addWorkData(data) {
+        var str = ``;
+        if (showMoreWork) {
+            for (let i = 0; i < workDatas.length; i++) {
+                str += `<div style="padding: 15px 10px;text-align: left;padding-bottom: 15px;border-top: 1px solid #ededed;" name='gzdt' guid=${workDatas[i].guid}>
+								<span style="word-break: keep-all;text-overflow: ellipsis;overflow: hidden;width: 100%;display: inline-block;">${workDatas[i].caseTitle}</span>
+								<span style="color: #8C8C8C">${workDatas[i].caseReleaseTime}</span>
+							</div>`
+            }
+        } else {
+            str += `<div style="padding: 15px 10px;text-align: left;padding-bottom: 15px;border-top: 1px solid #ededed;" name='gzdt' guid=${workDatas[0].guid}>
+								<span style="word-break: keep-all;text-overflow: ellipsis;overflow: hidden;width: 100%;display: inline-block;">${workDatas[0].caseTitle}</span>
+								<span style="color: #8C8C8C">${workDatas[0].caseReleaseTime}</span>
+							</div>`
+        }
+        $("#db-list-2").html(str);
+        $("div[name='gzdt']").on('tap', function () {
+            //获取id
+            var id = this.getAttribute("guid");
+            //c/onsole.log("点击item ：" + id);
+            // 跳转详情页
+            var recordInfo = {
+                // opera:"add",
+                nid: id
+            };
+            app.openPage("view/workSpace/workingDynamic/workingDynamicDetail.html", {
+                titleNView: {
+                    titleText: "工作动态详情",
+                    autoBackButton: true,
+                }
+            }, recordInfo);
+
+
+            // app.toast("记录新增")
+
+            //传值给详情页面，通知加载新数据
+            // mui.fire(detail,'getDetail',{id:id});
+            // //打开新闻详情
+            // mui.openWindow({
+            //   id:'detail',
+            //   url:'detail.html'
+            // });
+        })
+    }
+
+    function getSubMenuAuthWithID(idStr) {
+        var subMenuAuth = ''
+        if (idStr != undefined && subMmenuDictFirstIdForSubId != undefined && subMmenuDictFirstIdForSubId[idStr] != undefined) {
+            subMenuAuth = subMmenuDictFirstIdForSubId[idStr]
+        }
+        return subMenuAuth;
+    }
+
+    var sjbd = function () {
+        // 扫一扫
+        $("#scan").on("tap", function() {
+            app.createWithoutTitle('view/commom/barcode_scan.html', {
+                titleNView: {
+                    type: 'float',
+                    backgroundColor: 'rgba(215,75,40,0.3)',
+                    titleText: '扫一扫',
+                    titleColor: '#FFFFFF',
+                    autoBackButton: true,
+                }
+            });
+        });
+
+        $("#message").on('tap', function () {
+            app.openPage("view/homeMessage/messageList.html", {
+                titleNView: {
+                    titleText: "消息通知",
+                    autoBackButton: true,
+                }
+            })
+            // app.openPage("signWrite.html",{
+            //     // titleNView:{
+            //     //     titleText:"测试",
+            //     //     autoBackButton:true,
+            //     // }
+            // })
+        })
+
+        /**
+         * 缺陷管理
+         */
+        $("#qxgl").on('tap', function () {
+
+            var extras = {menuAuth: getSubMenuAuthWithID("qxgl")}
+            app.openPage("view/defects/qx_manage_list_v2.html", {
+                titleNView: {
+                    titleText: '缺陷管理列表',
+                    autoBackButton: true,
+                }
+            }, extras);
+
+            // app.openPage("view/defects/qx_manage_list_v2.html", {
+            // 	titleNView: {
+            // 		titleText: '缺陷管理列表',
+            // 		autoBackButton: true,
+            // 	}
+            // });
+        });
+        $("#psxq").on('tap', function () {
+            // app.toast("功能开发中")
+            // return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("psxq")}
+            app.openPage("view/psxq/index.html", {
+                titleNView: {
+                    titleText: '排水小区',
+                    autoBackButton: true,
+                }
+            }, extras);
+
+            // app.openPage("", {
+            // 	titleNView: {
+            // 		titleText: '排水小区',
+            // 		autoBackButton: true,
+            // 	}
+            // });
+        });
+        $("#pshgl").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("pshgl")}
+            app.openPage("view/ps/index.html", {
+                titleNView: {
+                    titleText: '排水户管理',
+                    autoBackButton: true,
+                }
+            }, extras);
+            // app.openPage("view/ps/index.html", {
+            // 	titleNView: {
+            // 		titleText: '排水户管理',
+            // 		autoBackButton: true,
+            // 	}
+            // });
+        });
+        $("#sjgl").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("sjgl")}
+            app.openPage("view/incident/index.html", {
+                titleNView: {
+                    titleText: '事件管理',
+                    autoBackButton: true,
+                }
+            }, extras);
+            // app.openPage("view/ps/index.html", {
+            // 	titleNView: {
+            // 		titleText: '排水户管理',
+            // 		autoBackButton: true,
+            // 	}
+            // });
+        });
+
+        $("#cjyb").on('tap', function () {
+            // app.toast("功能开发中")
+            // return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("cjyb")}
+            app.openPage("view/monthlyReport/index.html", {
+                titleNView: {
+                    titleText: '抽检月报',
+                    autoBackButton: true,
+                }
+            }, extras);
+
+            // app.openPage("view/monthlyReport/index.html", {
+            // 	titleNView: {
+            // 		titleText: '抽检月报',
+            // 		autoBackButton: true,
+            // 	}
+            // });
+        });
+
+        $("#xxcx").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("xxcx")}
+            //c/onsole.log(extras)
+            app.openPage("view/searchInfo/index.html", {
+                titleNView: {
+                    titleText: '信息查询',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+
+        $("#sbjc").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("sbjc")}
+            app.openPage("view/conservation/projectList.html", {
+                titleNView: {
+                    titleText: '项目列表',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+        $("#gcjg").on('tap', function () {
+            clearGlobalItem();
+            //c/onsole.log("工程建管")
+            var extras = {menuAuth: getSubMenuAuthWithID("gcjg")}
+            app.openPage("view/engineering/projectList2.html", {
+                titleNView: {
+                    titleText: '工程建管',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+        $("#jsdgl").on('tap', function () {
+			//c/onsole.log('-------------养护管理jsdgl');
+            app.toast("功能开发中")
+            return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("jsdgl")}
+            app.openPage("", {
+                titleNView: {
+                    titleText: '积水点管理',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+        $("#zbgl").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("zbgl")}
+            app.openPage("view/schedulingManage/schedulingPlan.html", {
+                titleNView: {
+                    titleText: '值班管理',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+
+        //工单管理
+        $("#gdgl").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("gdgl")}
+            app.openPage("view/workorder/workorder.html", {
+                titleNView: {
+                    titleText: '工单管理',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+
+        $("#yhgl").on('tap', function () {
+            // app.toast("功能开发中")
+            // return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("yhgl")};
+			//c/onsole.log(JSON.stringify(extras));
+            app.openPage("view/maintenance/cycle/cycle_index.html", {
+                titleNView: {
+                    titleText: '周期养护',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+        // 运维监督
+        $("#ywjd").on('tap', function () {
+			//c/onsole.log('-------------养护管理ywjd');
+            app.toast("功能开发中")
+            return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("ywjd")}
+            app.openPage("运维监督", {
+         // app.openPage("view/supervision/index.html", { // 以前指向 ，现在不知道
+                titleNView: {
+                    titleText: '',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+        $("#zajg").on('tap', function () {
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("zajg")}
+            app.openPage("view/qualityControl/dailyControl/index.html", {
+                titleNView: {
+                    titleText: '质安监管',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+        // 运维抽查 , 以前是 运维考核 - ywkh
+        $("#ywcc").on('tap', function () {
+            // app.toast("功能开发中")
+            // return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("ywcc")}
+            app.openPage("view/operationInspection/inspection.html", {
+                titleNView: {
+                    titleText: '运维抽查',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+        $("#kpi").on('tap', function () {
+            // app.toast("功能开发中")
+            // return;
+            clearGlobalItem();
+            var extras = {menuAuth: getSubMenuAuthWithID("kpi")}
+            app.openPage("view/kpi/kpi_index.html", {
+                titleNView: {
+                    titleText: 'KPI考核',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+
+        // 	/**
+        // 	 * 小区档案
+        // 	 */
+        // 	$("#xqda").on('tap', function() {
+        // 		app.openPage("view/defects/archives.html", {
+        // 			titleNView: {
+        // 				titleText: '',
+        // 				autoBackButton: true,
+        // 			}
+        // 		});
+
+
+        // 		function whdl_shareProc() {}
+        // 	});
+        // 	// 巡检管理 - 是排水巡检？
+        // 	$("#psh_xj").on('tap', function() {
+        // 		app.openPage("view/inspection/inspection.html", {
+        // 			titleNView: {
+        // 				titleText: '',
+        // 				autoBackButton: true,
+        // 			},
+        // 		});
+        // 	});
+
+        // 排水巡检
+        $("#psxj").on('tap', function () {
+            var extras = {menuAuth: getSubMenuAuthWithID("psxj")}
+            app.openPage("view/inspection/inspection.html", {
+                titleNView: {
+                    titleText: '',
+                    autoBackButton: true,
+                },
+            }, extras);
+        });
+
+        // 	// 养护管理
+        // 	$("#maintain,#maintain2").on('tap', function() {
+        // 		app.openPage("view/maintenance/maintain_index.html", {
+        // 			titleNView: {
+        // 				titleText: '',
+        // 				autoBackButton: true,
+        // 			},
+        // 		});
+        // 	});
+
+        // 	// 运维监督
+        // 	$("#supervision").on('tap', function() {
+        // 		app.openPage("view/supervision/index.html", {
+        // 			titleNView: {
+        // 				titleText: '',
+        // 				autoBackButton: true,
+        // 			},
+        // 		});
+        // 	});
+
+        // 	// 工程监管 改为 工程建管
+        // 	$("#engineering").on('tap', function() {
+        // 		app.openPage("view/engineering/index.html", {
+        // 			titleNView: {
+        // 				titleText: '工程建管',
+        // 				autoBackButton: true,
+        // 			},
+        // 		});
+        // 	});
+
+        // 	/**
+        // 	 * 信息查询
+        // 	 */
+        // 	$("#information").on('tap',function(){
+        // 		app.openPage("view/searchInfo/index.html",{
+        // 			titleNView: {
+        // 				titleText:'信息查询',
+        // 				autoBackButton: true
+        // 			}
+        // 		})
+        // 	})
+
+        // 	// 水保检查
+        // 	$("#conservation").on('tap', function() {
+        // 		app.openPage("view/conservation/projectList.html", {
+        // 			titleNView: {
+        // 				titleText: '项目列表',
+        // 				autoBackButton: true,
+        // 			},
+        // 		});
+        // 	});
+
+        // 	// 混接点管理
+        // 	$("#mix_man,#mix_man2").on('tap', function() {
+        // 		app.openPage("view/mixed/mixed_map.html", {
+        // 			titleNView: {
+        // 				titleText: '查找混接点',
+        // 				autoBackButton: true,
+        // 			},
+        // 		});
+        // 	});
+
+        // 	/**
+        // 	 * 月报
+        // 	 */
+        // 	$("#monthlyReport").on('tap',function(){
+        // 		app.openPage("view/monthlyReport/index.html",{
+        // 			titleNView: {
+        // 				titleText:'月报',
+        // 				autoBackButton: true
+        // 			}
+        // 		})
+        // 	})
+        //     // qualityControlI质安监管
+        //     $("#qualityControl").on('tap',function(){
+        //         app.toast("功能开发中")
+        // 		return;
+        //         app.openPage("view/qualityControl/dailyControl/index.html",{
+        //         // app.openPage("view/qualityControl/dailyControl/questionList.html",{
+        //             titleNView: {
+        //                 titleText:'日常监督',
+        //                 autoBackButton: true
+        //             }
+        //         })
+        //     })
+
+
+        // 	// 待办
+        $("#db-more").on("tap", function () {
+            app.openPage("view/workSpace/notification/notification.html", {
+                titleNView: {
+                    titleText: '通知公告',
+                    autoBackButton: true,
+                },
+            });
+        });
+        $("#db-more-2").on("tap", function () {
+            app.openPage("view/workSpace/workingDynamic/workingDynamic.html", {
+                titleNView: {
+                    titleText: '工作动态',
+                    autoBackButton: true,
+                },
+            });
+        });
+
+        // // workSpaceI工作台
+        // $("#workSpace").on('tap', function () {
+        //     app.openPage("view/workSpace/index.html", {
+        //         // app.openPage("view/qualityControl/dailyControl/questionList.html",{
+        //         titleNView: {
+        //             titleText: '工作台',
+        //             autoBackButton: true
+        //         }
+        //     })
+        // })
+
+        $("#more").on('tap', function () {
+          var extras = {
+            subMmenuDictFirstIdForSubId: subMmenuDictFirstIdForSubId
+          }
+            app.openPage("navlist.html", {
+                // app.openPage("view/qualityControl/dailyControl/questionList.html",{
+                titleNView: {
+                    titleText: '全部应用',
+                    autoBackButton: true
+                }
+            }, extras)
+        })
+    }
+
+    var getnavlist = function () {
+        // 添加完之后注释
+        // localStorage.setItem(navlistKey,'1,3,5,9,4,6,15')
+      //c//onsole.log('navlistKey:' + navlistKey)
+        menuAuthCheck();
+        if (!localStorage.getItem(navlistKey)) {
+            // 排水巡检:15, HuangShiHui 2021-05-06添加 - 测试，正式删除？
+            localStorage.setItem(navlistKey, '1,3,5,9,4,6,15')
+        }
+        var navarr = localStorage.getItem(navlistKey).split(',');
+        navallarr = config.navlist
+        if (navarr.length <= 4) {
+            $('.tzgg').css('marginTop', '25px')
+        }
+        if ((navarr == 'null') || (navarr.length && !navarr[0])) {
+            var navstr = '';
+            // 显示更多按钮
+            navstr = `<div class="item" id="more">
+				<img src="img/more.png">
+				<span>更多</span>
+			</div>`;
+            $("#business_item").html(navstr);
+
+            sjbd();
+            return
+        }
+
+        var navstr = '';
+        console.log('navallarr:' + JSON.stringify(navallarr))
+        for (let i = 0; i < navarr.length; i++) {
+          // id="${navallarr[(navarr[i] - 1)].id}"
+          if(navallarr && navallarr[(navarr[i] - 1)]) {
+            navstr += `<div class="item" onclick="gotoview('${navallarr[(navarr[i] - 1)].id}')">
+					<img src="img/${navallarr[(navarr[i] - 1)].id}.png"">
+					<span>${navallarr[(navarr[i] - 1)].name}</span>
+					</div>`
+          }
+
+        }
+
+        // 显示更多按钮
+        navstr += `<div class="item" id="more">
+			<img src="img/more.png">
+			<span>更多</span>
+		</div>`
+        $("#business_item").html(navstr);
+
+        sjbd()
+    }
+    getnavlist()
+    // 点击跳转 , 更多不在这里 ，单独的
+    function gotoview(id){
+
+        //console.log('非编辑 。。。')
+        console.log('跳转到：' + id)
+        let navdicturl = config.navdicturl
+        let navdicturltitle = config.navdicturltitle
+        if(navdicturl && navdicturl[id]) {
+          let url = navdicturl[id]
+          var pageTitle = ''
+          if(navdicturltitle && navdicturltitle[id]) {
+            pageTitle = navdicturltitle[id];
+          }
+          var extras = {menuAuth: this.getSubMenuAuthWithID(id)}
+          app.openPage(url, {
+            titleNView: {
+              titleText: pageTitle,
+              autoBackButton: true,
+            }
+          }, extras);
+        }else{
+          app.toast('功能开发中...')
+        }
+
+    }
+    window.addEventListener('refresh', function (e) {//执行刷新
+        location.reload();
+    });
+
+
+    $('#weather').on('tap', function () {
+        var status = $("#weather").attr("data-status")
+        if (status == '0') {
+            $('#weather_content').show();
+            $("#weather").attr("data-status", '1');
+        } else if (status == '1') {
+            $('#weather_content').hide();
+            $("#weather").attr("data-status", '0');
+        }
+
+    });
+
+    $("#moreNotification").on('tap', function () {
+        // 消息通知更多点击
+        if (!showMoreNotification) {
+            // 未显示更多情况下
+            showMoreNotification = true;
+            $("#moreNotificationImg").attr("src", "img/home_pack_up_icon@2x.png")
+        } else {
+            showMoreNotification = false;
+            $("#moreNotificationImg").attr("src", "img/home_more_icon@2x.png")
+        }
+        addNotificationData(notificationDatas);
+    });
+    $("#moreWork").on('tap', function () {
+        // 消息通知更多点击
+        if (!showMoreWork) {
+            // 未显示更多情况下
+            showMoreWork = true;
+            $("#moreWorkImg").attr("src", "img/home_pack_up_icon@2x.png")
+        } else {
+            showMoreWork = false;
+            $("#moreWorkImg").attr("src", "img/home_more_icon@2x.png")
+        }
+        addWorkData(workDatas);
+    });
+
+    function weather() {
+        var userData = {
+            "keyId": "zZsUKhjwcJEvHHjb",
+            "keySecret": "32425d95e8702905fc6fa4f13dad8bbc"
+        }
+        getWeatherData(userData, function (data) {
+          // c/onsole.log('weather start')
+          // c/onsole.log(JSON.stringify(data))
+          // c/onsole.log('weather end')
+            var dataArr = data.data
+            var w_data = dataArr[1]
+            var temperature = w_data.min_temper + "/" + w_data.max_temper + "℃";
+            $('#temperature').text(temperature);
+            var weatherstatus = w_data.weatherstatus;
+            var weath_str = weatherstatus.substring(0, 2);
+            $('#weath_str').text(weath_str)
+            $('#weath_str').html(weath_str + '<img src="img/down.png" style="width: 9px;margin: auto 7px" alt="">')
+            $('#weatherstatus').text(weatherstatus)
+
+        })
+    }
+
+    // 平板样式调整
+    function padCheckCss() {
+      // screenWidth:1024
+      const screenWidth = document.documentElement.clientWidth;
+      // screenHeight:1366
+      const screenHeight = document.documentElement.clientHeight;
+      if(screenWidth > 1000) {
+        //  判断为平板
+        // === 字体大小 ===
+        // 平板字体 ，是App字体 + 4px ；
+        setupDynamicCss('body', 'font-size', 20)
+        setupDynamicCss('#business_item .item span', 'font-size',17)
+        setupDynamicCss('.weather-container', 'font-size', 16)
+
+        // 通知公告 、工作动态
+        setupDynamicCss('.home-item-title', 'font-size', 23)
+        // 更多
+        setupDynamicCss('.home-item-title .title-more', 'font-size', 18)
+
+        // === 宽、高 ===
+        // 顶部的item图标、文字大小
+        setupDynamicCss('#business_item .item img', 'width', 64)
+        setupDynamicCss('#business_item .item img', 'height', 64)
+        setupDynamicCss('#business-list', 'height', 250) // 280
+        setupDynamicCss('#message', 'width', 24)
+        setupDynamicCss('#message', 'height', 24)
+        setupDynamicCss('#scan', 'width', 24)
+        setupDynamicCss('#scan', 'height', 24)
+
+        // 图标与文字
+        setupDynamicCss('.home_top_icon', 'width', 56)
+        setupDynamicCss('.home_top_icon', 'height', 56)
+        setupDynamicCss('.home_top_ftw_txt', 'width', 224)
+        setupDynamicCss('.home_top_ftw_txt', 'height', 46)
+
+        setupDynamicCss('.home-top-info-container', 'padding-top', 40)
+        // .cac_bder 170 + 30; , 310 + 30
+        setupDynamicCss('.cac_bder','left', 340)
+      }
+    }
+    function setupDynamicCss(pTarget,pAttr, pVal)
+    {
+      $(pTarget).css(pAttr, pVal + 'px');
+    }
+
+    padCheckCss();
+
+
+    function menuAuthCheck() {
+        // 权限控制 ，先注释
+
+      //
+        // localStorage.setItem(navlistKey, null);
+        // var navstr = getMenuAuthDataTmp();
+        // localStorage.setItem(navlistKey, navstr);
+    }
+
+    // 测试区域 - 把 config对应的 name - id 都写到这里
+    function getMenuAuthDataTmp() {
+        var dataAllStr = `{"success":true,"message":"查询成功","result":{"menu":[{"name":"缺陷管理","id":"qxgl","children":[]},{"name":"排水小区","id":"psxq","children":[]},{"name":"排水户管理","id":"pshgl","children":[]},{"name":"抽检月报","id":"cjyb","children":[]},{"name":"信息查询","id":"xxcx","children":[{"id":"monitor","name":"监测信息"},{"id":"rivers","name":"河湖档案"},{"id":"leaderList","name":"河湖长名录"},{"id":"emergency","name":"应急资源"},{"id":"waterRisk","name":"积水风险点"},{"id":"paishuihu","name":"排水户"},{"id":"overflow","name":"冒溢点"},{"id":"shuiwu","name":"水务设施"},{"id":"policy","name":"政策法规"},{"id":"standard","name":"标准规范"},{"id":"operContract","name":"运维合同"},{"id":"mixed2","name":"混接点"}]},{"name":"水保检查","id":"sbjc","children":[]},{"name":"工程建管","id":"gcjg","children":[]},{"name":"积水点管理","id":"jsdgl","children":[]},{"name":"值班管理","id":"zbgl","children":[]},{"name":"养护管理","id":"yhgl","children":[]},{"name":"运维监督","id":"ywjd","children":[]},{"name":"质安监管","id":"zajg","children":[]},{"name":"运维考核","id":"ywkh","children":[]},{"name":"KPI考核","id":"kpi","children":[]},{"name":"排水巡检","id":"psxj","children":[]}]},"timestamp":1620352743274,"code":200}`;
+        // 缺陷管理:1,排水户管理:3,信息查询:5,值班管理:9,抽检月报:4,水保检查:6,排水巡检:15')
+        /*首页的item
+        {"name":"缺陷管理","id":"qxgl","children":[]},
+        {"name":"排水小区","id":"psxq","children":[]},
+        {"name":"排水户管理","id":"pshgl","children":[]},
+        {"name":"抽检月报","id":"cjyb","children":[]},
+        {"name":"信息查询","id":"xxcx","children":[……]},
+        {"name":"水保检查","id":"sbjc","children":[]},
+        {"name":"工程建管","id":"gcjg","children":[]},
+        {"name":"积水点管理","id":"jsdgl","children":[]},
+        {"name":"值班管理","id":"zbgl","children":[]},
+        {"name":"养护管理","id":"yhgl","children":[]},
+        {"name":"运维监督","id":"ywjd","children":[]},
+        {"name":"质安监管","id":"zajg","children":[]},
+        {"name":"运维考核","id":"ywkh","children":[]},
+        {"name":"KPI考核","id":"kpi","children":[]},
+        {"name":"排水巡检","id":"psxj","children":[]}
+        */
+        /* 信息查询的 children item
+        {"id":"monitor","name":"监测信息"},
+                {"id":"rivers","name":"河湖档案"},
+                {"id":"leaderList","name":"河湖长名录"},
+                {"id":"emergency","name":"应急资源"},
+                {"id":"waterRisk","name":"积水风险点"},
+         */
+        var dataStr = `{"success":true,"message":"查询成功","result":{"menu":[
+		{"name":"缺陷管理","id":"qxgl","children":[]},
+			{"name":"排水户管理","id":"pshgl","children":[]},
+			{"name":"信息查询","id":"xxcx","children":[
+						{"id":"paishuihu","name":"排水户"},
+						{"id":"overflow","name":"冒溢点"},
+						{"id":"shuiwu","name":"水务设施"},
+						{"id":"policy","name":"政策法规"},
+						{"id":"standard","name":"标准规范"},
+						{"id":"operContract","name":"运维合同"},
+						{"id":"mixed","name":"混接点"}
+			]},
+			{"name":"值班管理","id":"zbgl","children":[]},
+			{"name":"抽检月报","id":"cjyb","children":[]},
+			{"name":"水保检查","id":"sbjc","children":[]},
+			{"name":"养护管理","id":"yhgl","children":[]},
+			{"name":"排水巡检","id":"psxj","children":[]}
+		]},"timestamp":1620352743274,"code":200}`;
+        var data = JSON.parse(dataStr);
+        var menu = data.result.menu;
+
+        var navallarrConfig = config.navlist
+        // id ：索引
+        var menuAllDictIdForIndex = {}
+        for (var i = 0; i < navallarrConfig.length; i++) {
+            menuAllDictIdForIndex[navallarrConfig[i].id] = navallarrConfig[i].index;
+        }
+        var navstr = '';
+
+        var subMmenuDictFirstIdForSubIdTmp = {};
+        for (let i = 0; i < menu.length; i++) {
+            var objTmp = menu[i];
+            if (menuAllDictIdForIndex[objTmp.id] != undefined) {
+                if (navstr.length > 0) {
+                    navstr = navstr + ',';
+                }
+                navstr = navstr + menuAllDictIdForIndex[menu[i].id];
+                //c/onsole.log('menuIndex:' + menuAllDictIdForName[objTmp.id]);
+                if (objTmp.children != undefined && (objTmp.children + '') != 'null' && objTmp.children.length > 0) {
+                    var subIdStr = ''
+                    for (var j = 0; j < objTmp.children.length; j++) {
+                        if (subIdStr.length > 0) {
+                            subIdStr = subIdStr + ',';
+                        }
+                        subIdStr = subIdStr + objTmp.children[j].id
+                    }
+                    subMmenuDictFirstIdForSubIdTmp[objTmp.id] = subIdStr;
+                }
+            }
+        }
+        subMmenuDictFirstIdForSubId = subMmenuDictFirstIdForSubIdTmp
+        // xxcx:"monitor,rivers,leaderList,emergency,waterRisk,paishuihu,overflow,shuiwu,policy,standard,operContract,mixed"
+        //c/onsole.log(subMmenuDictFirstIdForSubId);
+
+        return navstr;
+    }
+
+    //getMenuAuthDataTmp();
+    //获取待办任务
+     function testGetTasks() {
+        var dataStr = `
+        [{"caseContent":"","attachmentStr":null,"planType":null,"createByModel":null,"policyLawType":null,"caseIndex":1,"caseStatus":0,"caseTitle":"测试0608-4","caseAttachment":"6517f5fd7e764dae96ad1680ed9712ab","updateTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"caseSource":"测试","imageAttachment":null,"caseType":1,"policyLawLevel":null,"createBy":"cao_xs","caseReleaseTime":"2021-06-08 10:48","createTime":"2021-06-08 10:51:57","updateBy":null,"guid":"571e732e6b4c4c8ca26c5b18f789efd8","isFavorites":1,"isEmphasis":null},{"caseContent":"<p><img src=\\"../ecidi-cmp/sys/common/view/ecidi/b4eaa76632324ca6a4bf4af7b407e9ef.jpg\\" alt=\\"\\" width=\\"900\\" height=\\"1318\\" /></p>","attachmentStr":null,"planType":null,"createByModel":null,"policyLawType":null,"caseIndex":1,"caseStatus":0,"caseTitle":"测试0608-3","caseAttachment":"826133e23e6a45538089caf565378767","updateTime":null,"delFlag":0,"corpCode":"A01","prjCode":null,"caseSource":"测试","imageAttachment":null,"caseType":1,"policyLawLevel":null,"createBy":"cao_xs","caseReleaseTime":"2021-06-08 10:43","createTime":"2021-06-08 10:43:55","updateBy":null,"guid":"f36fb69859d88b9761926bbc5e4cdfda","isFavorites":1,"isEmphasis":null},{"caseContent":"<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\"><span style=\\"color: #731717 !important;\\"><span style=\\"font-weight: 800 !important;\\">人民支持是胜利之源</span></span></p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　<span style=\\"color: #731717 !important;\\"><span style=\\"font-weight: 800!important;\\">【精神坐标】</span></span></p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　逶迤八百里沂蒙，巍巍七十二崮。沂蒙革命老区为中国革命胜利作出了重要贡献。当时沂蒙根据地420万人口，其中120多万人拥军支前，10万多名英烈血洒疆场。</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<div class=\\"img_wrapper\\" style=\\"margin: 0px; padding: 0px; text-align: center; color: #4d4f53; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; font-size: 18px; letter-spacing: 1px; background-color: #ffffff;\\"><img id=\\"1\\" style=\\"margin: 0px auto; padding: 0px; border: 0px none; vertical-align: top; display: block; max-width: 640px;\\" src=\\"../ecidi-cmp/sys/common/view/ecidi/3fea73bf60904366aea78011dc69bc40.jpg\\" alt=\\"这是4月13日在华东革命烈士陵园拍摄的革命烈士纪念塔。新华社记者王凯摄\\" width=\\"900\\" height=\\"1318\\" /><span class=\\"img_descr\\" style=\\"margin: 5px auto; padding: 6px 0px; line-height: 20px; font-size: 16px; display: inline-block; zoom: 1; text-align: left; font-weight: bold;\\"><span style=\\"font-size: 18px; color: #171773 !important; text-align: center !important;\\">这是4月13日在华东革命烈士陵园拍摄的革命烈士纪念塔。新华社记者王凯摄</span></span></div>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　<span style=\\"color: #731717 !important;\\"><span style=\\"font-weight: 800 !important;\\">【力量之源】</span></span></p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　　&ldquo;生活大变样了！&rdquo;91岁的王克昌感慨。战争硝烟早已散去，朱村旧貌换新颜：白墙黑瓦，松柏常青，一栋栋二层小楼在林中掩映。</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">&nbsp;</p>\\n<p style=\\"margin: 0px 0px 18px; padding: 0px; font-size: 18px; font-family: 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', SimSun, '宋体', Arial; letter-spacing: 1px; background-color: #ffffff;\\">　</p>","attachmentStr":null,"planType":null,"createByModel":null,"policyLawType":null,"caseIndex":1,"caseStatus":0,"caseTitle":"测试0608-2","caseAttachment":"a3b6faadbe0f4e4098059718d679d2be","updateTime":"2021-06-08 10:42:44","delFlag":0,"corpCode":"A01","prjCode":null,"caseSource":"测试","imageAttachment":null,"caseType":1,"policyLawLevel":null,"createBy":"cao_xs","caseReleaseTime":"2021-06-08 10:39","createTime":"2021-06-08 10:40:08","updateBy":"cao_xs","guid":"a99ec6dbb9a740c6d989eebec3c46c11","isFavorites":1,"isEmphasis":null}]
+        `;
+        var data = JSON.parse(dataStr);
+        notificationDatas = data //.result.records;
+        addNotificationData();
+
+        var workDataStr = `
+        {"success":true,"message":"成功","code":200,"result":{"records":[{"caseContent":"<p style=\\"box-sizing: inherit; margin: 34px 0px; padding: 0px; text-align: justify; color: #404040; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif; font-size: 18px;\\">&ldquo;微雨众卉新，一雷惊蛰始。田家几日闲,耕种从此起。&rdquo;惊蛰过后，虽然此时仍春寒料峭，但一年一度的春耕备耕时节已到。随着天气逐渐转暖，临清所清水收费站组织职工开展&ldquo;春耕进行时&rdquo;活动，进一步增强了职工情谊，大力激发了队伍活力。</p>\\n<p class=\\"f_center\\" style=\\"box-sizing: inherit; margin: 34px 0px 0px; padding: 0px; text-align: center; line-height: 20px; font-size: 16px; color: #666666; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;\\">　　<img style=\\"box-sizing: inherit; border: 0px; max-width: 100%; margin-bottom: 10px;\\" src=\\"https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0326%2F33bbaa33j00qqjtap0034c000hs00npc.jpg&amp;thumbnail=650x2147483647&amp;quality=80&amp;type=jpg\\" /></p>\\n<p style=\\"box-sizing: inherit; margin: 34px 0px; padding: 0px; text-align: justify; color: #404040; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif; font-size: 18px;\\">　　参与春耕人员因地制宜，对蔬菜种植区土地进行合理规划后，将人员合理分工，清理耕地及绿化区的杂草，并对土地翻整、施肥、育苗、灌溉，全力做好&ldquo;春耕&rdquo;工作，大家忙得不可开交。</p>\\n<p class=\\"f_center\\" style=\\"box-sizing: inherit; margin: 34px 0px 0px; padding: 0px; text-align: center; line-height: 20px; font-size: 16px; color: #666666; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;\\">　　<img style=\\"box-sizing: inherit; border: 0px; max-width: 100%; margin-bottom: 10px;\\" src=\\"https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0326%2F81b42af0j00qqjtap001ic000hs00c4c.jpg&amp;thumbnail=650x2147483647&amp;quality=80&amp;type=jpg\\" /></p>\\n<p style=\\"box-sizing: inherit; margin: 34px 0px; padding: 0px; text-align: justify; color: #404040; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif; font-size: 18px;\\">　　&ldquo;春耕&rdquo;不仅降低了职工伙食成本、改善职工生活，同时还丰富了职工业余生活。极大地增强了职工间的向心力、凝聚力和战斗力，使职工体会到&ldquo;一粥一饭，当思来之不易&rdquo;，培养了职工勤俭节约意识，真所谓&ldquo;小菜园&rdquo;，&ldquo;大收获&rdquo;。</p>\\n<p style=\\"box-sizing: inherit; margin: 34px 0px; padding: 0px; text-align: justify; color: #404040; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif; font-size: 18px;\\">　　供稿｜霍 东（清水收费站）</p>\\n<p style=\\"box-sizing: inherit; margin: 34px 0px; padding: 0px; text-align: justify; color: #404040; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif; font-size: 18px;\\">　　编辑｜韩 娜</p>\\n<p style=\\"box-sizing: inherit; margin: 34px 0px; padding: 0px; text-align: justify; color: #404040; font-family: Arial, 'Hiragino Sans GB', STHeiti, 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif; font-size: 18px;\\">　　审核｜帅振钽</p>","attachmentStr":null,"planType":null,"createByModel":null,"policyLawType":null,"caseIndex":1,"caseStatus":0,"caseTitle":"人勤春光好，春耕备耕忙","caseAttachment":"1484dab23e6546f09082a3496a5dd2e0","updateTime":"2021-03-26 17:48:16","delFlag":0,"corpCode":"A01","prjCode":null,"caseSource":"网易新闻","imageAttachment":null,"caseType":2,"policyLawLevel":null,"createBy":"liu_qw","caseReleaseTime":"2021-03-26 05:50","createTime":"2021-03-26 17:47:52","updateBy":"liu_qw","guid":"77c2d32f1242a83af2d9a0c1e3bfd2f4","isFavorites":1,"isEmphasis":null}],"total":1,"size":3,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1},"timestamp":1624336290932}
+        `;
+       var workData = JSON.parse(workDataStr);
+      // c/onsole.log(JSON.stringify(workData.result.records))
+       workDatas = workData.result.records;
+       addWorkData(workDatas);
+     }
+    function testWeather() {
+      var dataStr = `
+      {"code":0,"message":"success","data":[{"rain":5,"min_temper":"27","minwind":"2","weatherpic":"13.png","weatherstatus":"多云，有（雷）阵雨；气温27-32℃；西南风2-3级，雷雨时伴有7-8级短时大风；相对湿度65%-100%。","winddirect":"西南","max_temper":"32","ddatetime":"2021-06-21 16:00:00","forecastdate":"2021-06-21","maxwind":"3"},{"rain":15,"min_temper":"25","minwind":"3","weatherpic":"05.png","weatherstatus":"阴天间多云，白天仍有间歇性（雷）阵雨；气温25-29℃；西南风3级，沿海、高地和海区阵风7级左右；相对湿度70%-100%。","winddirect":"西南","max_temper":"29","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-22","maxwind":"3"},{"rain":25,"min_temper":"24","minwind":"3","weatherpic":"10.png","weatherstatus":"阴天，有暴雨，雷雨时伴有8级短时大风","winddirect":"西南","max_temper":"29","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-23","maxwind":"4"},{"rain":15,"min_temper":"25","minwind":"3","weatherpic":"09.png","weatherstatus":"阴天，有大雨到暴雨，雷雨时伴有7-8级短时大风","winddirect":"南","max_temper":"30","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-24","maxwind":"4"},{"rain":3,"min_temper":"26","minwind":"3","weatherpic":"06.png","weatherstatus":"多云间阴天，有雷阵雨","winddirect":"南","max_temper":"31","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-25","maxwind":"3"},{"rain":1,"min_temper":"27","minwind":"2","weatherpic":"04.png","weatherstatus":"多云，有分散（雷）阵雨","winddirect":"西南","max_temper":"32","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-26","maxwind":"3"},{"rain":3,"min_temper":"28","minwind":"2","weatherpic":"04.png","weatherstatus":"多云，有（雷）阵雨","winddirect":"西南","max_temper":"33","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-27","maxwind":"3"},{"rain":3,"min_temper":"29","minwind":"3","weatherpic":"04.png","weatherstatus":"多云，有（雷）阵雨","winddirect":"西南","max_temper":"33","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-28","maxwind":"3"},{"rain":3,"min_temper":"28","minwind":"3","weatherpic":"04.png","weatherstatus":"多云，有（雷）阵雨","winddirect":"西南","max_temper":"32","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-29","maxwind":"4"},{"rain":1,"min_temper":"28","minwind":"3","weatherpic":"04.png","weatherstatus":"多云，有分散（雷）阵雨","winddirect":"西南","max_temper":"32","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-06-30","maxwind":"4"},{"rain":1,"min_temper":"28","minwind":"3","weatherpic":"04.png","weatherstatus":"多云，有分散（雷）阵雨","winddirect":"西南","max_temper":"32","ddatetime":"2021-06-22 11:00:00","forecastdate":"2021-07-01","maxwind":"4"}]}
+      `;
+      var data = JSON.parse(dataStr);
+        var dataArr = data.data
+        var w_data = dataArr[1]
+        var temperature = w_data.min_temper + "/" + w_data.max_temper + "℃";
+        $('#temperature').text(temperature);
+        var weatherstatus = w_data.weatherstatus;
+        var weath_str = weatherstatus.substring(0, 2);
+        $('#weath_str').text(weath_str)
+        $('#weath_str').html(weath_str + '<img src="img/down.png" style="width: 9px;margin: auto 7px" alt="">')
+        $('#weatherstatus').text(weatherstatus)
+
+    }
+     if(isTest) {
+
+       testGetTasks()
+      testWeather()
+     }
+
+</script>
+
+</html>

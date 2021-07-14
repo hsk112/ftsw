@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>日常监督</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <style>
+    .view-content-item {
+      height: auto;
+      margin: 0px 20px;
+    }
+
+    .view-content-item .view-title {
+      font-size: 14px;
+      color: #444444;
+      text-align: left;
+      /* padding: 20px 0px 20px 0; */
+
+    }
+
+    #label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1A1616;
+    }
+
+
+    #OA_task_1 .mui-table-view-cell .span2, .span1, .span4 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #191515;
+      line-height: 24px;
+      display: inline-block;
+      box-sizing: border-box;
+      overflow: scroll;
+      white-space: nowrap;
+      /* border: 1px solid red; */
+    }
+
+    .mui-table-view-cell::-webkit-scrollbar {
+      display: none;
+    }
+
+    .content {
+      width: 100%;
+      background: #FFFFFF;
+    }
+
+    .ulCss {
+      width: 100%;
+      padding: 0 20px;
+      margin: 0;
+    }
+
+    .ulCss .liCss {
+      list-style-type: none;
+      width: 100%;
+      border-bottom: 1px solid #DEDEDE;
+      display: inline-block;
+      height: auto;
+      padding: 20px 0
+    }
+
+    .ulCss .liCss .span1 {
+      font-size: 14px;
+      font-weight: 400;
+      color: #191515;
+      width: 20px;
+      line-height: 18px;
+      vertical-align: top;
+      display: inline-block;
+    }
+
+    .ulCss .liCss .span2 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #191515;
+      line-height: 18px;
+      width: calc(100% - 80px);
+      display: inline-block;
+      vertical-align: top;
+      word-break: break-all;
+      text-align: left;
+      margin-left: 20px;
+    }
+    .engNames-list{
+        height: 55px;
+        text-align: left;
+        line-height: 55px;
+        padding-left:22px;
+        font-weight: bold;
+        border-bottom: 0.5px solid #EDEDED;
+    }
+    .eng-item{
+        height:55px;
+        line-height: 55px;
+        border-bottom: 0.5px solid #EDEDED;
+        display: flex;
+        justify-content : space-between
+    }
+    .eng-item-list{
+        text-align: left;
+        padding-left: 23px;
+        padding-right: 20px;
+        
+    }
+    .text-ellipsis {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .engName{
+        width: 200px;
+    }
+    .empty{
+        line-height:200px;
+        width:100%;
+        text-align: center;
+        font-size: 16px;
+        color: #BBBBBB;
+    }
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!-- <header class="mui-bar mui-bar-nav common-header">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">缺陷管理列表</h1>
+  </header> -->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div id="ALL" class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <div class="scroll-li">
+          <div class="view-content">
+            <div class="info-bar-content">
+              <div class="search-bar">
+                <div class="search-item">
+                  <div class="search-icon">
+                    <img src="../../../img/commom/search1@2x.png"/>
+                  </div>
+                  <div class="search-input">
+                    <div class="mui-input-row" style="text-align: left">
+                      <input id="search_input" value="" type="search" style="width: 90%;" placeholder="请输入工程名称">
+                      <!-- <span class="mui-icon mui-icon-close delete-icon1" onclick="deleteDate('search_input')"></span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="view-content-item" style="line-height: 53.5px;">
+              <div id="openFactor" style="display: flex;justify-content: space-between;">
+                <div class="view-title search-tip">
+                  <img src="../../../img/fujin-icon.png"
+                       style="width: 13px;height: 14px;line-height: 14px;vertical-align:middle;margin-top: -2px"/>
+                  <span id="label" style="line-height: 16px;">项目总量</span><span id="num"
+                                                                               style="color: #337BFC;font-weight:bold;margin-left: 10px;">0</span>
+                </div>
+                <!-- 	<div id="toOverview">
+                        <img src="../../../img/overview-tubiao.png" style="width: 16px;height: 16px;line-height: 16px;vertical-align:middle;" />
+                        <span id="label" style="display:inline-block;line-height: 16px;color: #337BFC;font-weight:bold;">概览图表</span>
+                    </div> -->
+              </div>
+            </div>
+
+            <div id="content">
+                <div class="engNames-list">
+                    <div>工程名称</div>
+                </div>
+                <div class="eng-item-list ">
+                    <!-- <div class="eng-item">
+                        <div class="engName">回归1号</div>
+                        <div class="to-detail">质安监管 <span class="mui-icon mui-icon-arrowright"></span></div>
+                    </div>
+                    <div class="eng-item">
+                        <div class="engName">福田通水渠</div>
+                        <div class="to-detail">质安监管 <span class="mui-icon mui-icon-arrowright"></span></div>
+                    </div>
+                    <div class="eng-item">
+                        <div class="engName">水井通水</div>
+                        <div class="to-detail">质安监管 <span class="mui-icon mui-icon-arrowright"></span></div>
+                    </div> -->
+                </div>
+              <!-- <ul id="OA_task_1" class="mui-table-view"> -->
+                <!-- <li class="mui-table-view-cell">
+                    <div id="" style="margin: 10px 0;padding: 0;display: flex;justify-content: space-between;">
+                        <span class="span2" style="display:inline-block;width:30%;font-weight: 500;color: #191515;margin-left: 15px;">HJD-2D312...</span>
+                        <span class="span4">未完工</span>
+                        <span class="span2" style="display:inline-block;width:30%;margin-left:10px;font-weight: 500;color: #191515;">格特图地点打开就封ID</span>
+                    </div>
+                </li> -->
+
+              <!-- </ul> -->
+            </div>
+            <!-- <div id="no-data" style="display: none;padding:50px 0;">暂无数据</div> -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+
+</body>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+
+
+<script src="../../../js/config.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/qualityControl/qualityControl.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script>
+    mui.init({
+      // swipeBack: false,
+			// 	// 0818 上拉加载
+			// 	pullRefresh: {
+			// 		container: '#ALL', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			// 		//下拉刷新
+			// 		down: {
+			// 			style: 'circle',
+			// 			auto: true,
+			// 			callback: function() {
+			// 				//c/onsole.log("触发刷新")
+			// 				page = 1;
+			// 				pulldownRefresh();
+			// 			}
+			// 		},
+			// 		//上拉加载
+			// 		// up: {
+			// 		// 	// auto: true, // 可选,默认false.自动上拉加载一次
+			// 		// 	height: 50, //触发上拉加载拖动距离
+			// 		// 	contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+			// 		// 	contentnomore: '暂无更多数据', //可选，请求完毕若没有更多数据时显示的提醒内容；
+			// 		// 	callback: function() {
+			// 		// 		upLoadMore();
+			// 		// 	} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			// 		// }
+
+			// 	}
+    });
+            //初始化单页view
+            var viewApi = mui('#app').view({
+                defaultPage: '#mui-content'
+            });
+            //初始化单页的区域滚动
+            mui('.mui-scroll-wrapper').scroll();
+
+            mui.plusReady(function(){
+                var type = 'get'
+                var params={
+                }
+                var url = config.urls.baseUrl + config.actions.getProjectListName;
+                app.showLoader()
+                getProject(url,params,type,function(data){
+                  if(data.success){
+                    var data = data.result.records
+                    console.log(JSON.stringify(data))
+                    $(".eng-item-list").empty($(".eng-item"))
+                    listDataAnalyze(data)
+                    $(".eng-item-list").children().each(function(index){
+                        $(this).on('tap',function(e){
+                          var extras = {
+                            projectName:data[index].projectModel.projectName,
+                            dataIndex:data[index]
+                          }
+                          app.openPage("quality-tab.html", {
+                            titleNView: {
+                              titleText: '质安监管',
+                              autoBackButton: true,										
+                            }
+                          },extras);
+                        })
+                    })
+                  }else{
+                    app.toast('网络异常，请稍后再试')
+                  }
+			          })
+             
+                $("#search_input").on('input',function(){
+                  var params = {}
+                  if($("#search_input").val()==''){
+                    params = {}
+                  }else{
+                    params = {
+                      projectName:$("#search_input").val()
+                    }
+                  }
+                    getProject(url,params,type,function(data){
+                          if(data && data.result.records.length != 0){
+                            data = data.result.records
+                            $(".eng-item-list").empty($(".eng-item"))
+                            listDataAnalyze(data)
+                          }else{
+                            $(".eng-item-list").html("<div class='empty'>暂无数据</div>")
+                          }
+
+                          $(".eng-item-list").children().each(function(index){
+                              $(this).on('tap',function(e){
+                                var extras = {
+                                  projectName:data[index].projectModel.projectName,
+                                  dataIndex:data[index]
+                                }
+                                app.openPage("quality-tab.html", {
+                                  titleNView: {
+                                    titleText: '质安监管',
+                                    autoBackButton: true,										
+                                  }
+                                },extras);
+                              })
+                          })
+                          
+                      })
+                })
+            })
+            function listDataAnalyze(data){
+                $("#num").html(data.length)
+                var listDetail = null
+                for(var i=0;i<data.length;i++){
+                    listDetail = `
+                        <div class="eng-item">
+                                    <div class="engName text-ellipsis">${data[i].projectModel.projectName}</div>
+                                    <div class="to-detail"><span class="mui-icon mui-icon-arrowright"></span></div>
+                        </div>
+                    `
+                    $(".eng-item-list").append(listDetail)
+                }
+            }            
+</script>
+
+</html>

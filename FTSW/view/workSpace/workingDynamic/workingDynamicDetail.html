@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>工作动态详情</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <style>
+    .mui-col-xs-6 {
+      text-align: left;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-control-content .mui-loading {
+      margin-top: 50px;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-table-view-cell:after {
+      left: 1px;
+      background-color: #F4F4F4;
+      height: 10px;
+    }
+
+    .mui-table-view-cell > a:not(.mui-btn) {
+      margin: 0;
+      padding: 10px;
+    }
+
+    .mui-table-view-cell div {
+      margin-bottom: 10px;
+    }
+
+    .mui-table-view-cell .item-first {
+      display: flex;
+      font-size: 16px;
+      color: #191515;
+      margin-top: 10px
+    }
+
+    .fanwei {
+      white-space: nowrap;
+      display: inline-block;
+      width: 280px;
+      margin-left: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left
+    }
+
+
+    .object {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .in-obj {
+      font-weight: 400;
+      color: #888888;
+      margin-right: 7px;
+    }
+
+    .obj-title {
+      color: #444444;
+    }
+
+    .bgc-white {
+      background-color: white;
+    }
+
+    .bgc-grey {
+      background-color: #F4F4F4;
+    }
+
+    .mui-navigate-r {
+      background: #fff;
+    }
+
+    .icon-css {
+      display: inline-block;
+      padding: 8px 0 0;
+      vertical-align: top;
+    }
+
+    .task_title {
+      display: inline-block;
+      padding: 8px 0;
+      color: #191515;
+      font-size: 15px;
+      font-weight: 500;
+      width: 50%;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    .sec-line {
+      color: #878787;
+      font-size: 14px;
+    }
+
+    /* 	.arrow_right{
+      transform: rotate(90deg);
+    } */
+    .ul-mar-bottom {
+      margin-bottom: -18px;
+    }
+
+
+    .color888 {
+      color: #888888;
+    }
+
+    .ibh {
+      display: inline-block;
+      line-height: 28px;
+    }
+
+    .no-data {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      display: inline-block;
+      font-size: 20px;
+      color: #999;
+      transform: translateX(-50%);
+    }
+
+    .showMore {
+      display: inline-block;
+    }
+
+    #listTitle span {
+      padding: 0;
+      color: #888888;
+    }
+
+    #listTitle {
+      width: 100%;
+      height: 40px;
+      padding-left: 20px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+
+    #selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+    #selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span {
+      padding: 0;
+    }
+
+    .mui-table-view-cell:after {
+      left: 4%;
+      height: 2px;
+      width: 92%;
+    }
+
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 300px;
+      background: #FFFFFF
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #search_input1, #search_input2, #search_input3 {
+      margin: 0;
+      width: 90%;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      padding-left: 35px;
+    }
+
+    #search {
+      padding: 10px 0;
+      background: #F4F4F4;
+      /*border-bottom: 7px solid #F4F4F4;*/
+      position: relative;
+    }
+
+
+    #search_icon img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      left: 9%;
+      top: 30%;
+    }
+
+    #del_icon1 img, #del_icon2 img, #del_icon3 img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 9%;
+      top: 33%;
+    }
+
+    .btn-outlined {
+      border: 1px solid #337BFC;
+      color: #337BFC;
+    }
+
+    .mui-btn.mui-active:enabled {
+      background: #337BFC;
+    }
+
+    #foldTitle {
+      height: 40px;
+      line-height: 40px;
+      background: #F0F0F0;
+    }
+
+    #whichRiver {
+      padding-left: 20px;
+      background-color: #FFFFFF;
+      height: 40px;
+      line-height: 40px;
+      color: #191515;
+      display: none;
+    }
+
+    #whichRiver span {
+      padding: 0;
+    }
+
+    #whichLake {
+      padding-left: 20px;
+      background-color: #FFFFFF;
+      height: 40px;
+      line-height: 40px;
+      color: #191515;
+      display: none;
+    }
+
+    #whichLake span {
+      padding: 0;
+    }
+
+    #highest {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #leader {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #details {
+      margin: 0 20px;
+    }
+
+    #viewMore {
+      border-top: 5px solid #F4F4F4;
+      display: flex;
+      align-items: center;
+      color: #337BFC;
+      height: 40px;
+      padding-left: 20px;
+    }
+
+    #viewLakeMore {
+      border-top: 5px solid #F4F4F4;
+      display: flex;
+      align-items: center;
+      color: #337BFC;
+      height: 40px;
+      padding-left: 20px;
+    }
+
+    * {
+      touch-action: none;
+    }
+
+    /* 自定义的css */
+    .mui-page {
+      background-color: #FFFFFF;
+    }
+
+    .mui-page-content {
+      background-color: #FFFFFF;
+    }
+
+    .noti-content {
+      margin: 20px 0;
+    }
+
+    .noti-content p {
+      text-indent: 2em;
+      color: #000000;
+    }
+
+    .mui-table-view-divider {
+      background-color: #FFFFFF;
+      padding-left: 0;
+    }
+
+    .mui-table-view:before {
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view-cell {
+      background-color: #F4F7FE;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #191515;
+      border-radius: 5px;
+    }
+
+    .mui-h6 {
+      color: #191515;
+    }
+
+    .mui-table-view-divider {
+      font-weight: normal;
+    }
+
+    /* 自定义 tost */
+    .mui-toast-container {
+      bottom: 50% !important;
+    }
+
+    .mui-toast-message {
+      background: url(../../../img/star-collected-cancel.png) no-repeat center 10px #000;
+      background-size: 41px 39px;
+      /*opacity: 0.35;*/
+      color: #fff;
+      width: 180px;
+      padding: 55px 5px 10px 5px;
+      /*padding: 70px 5px 10px 5px;*/
+    }
+
+    .collection-bg {
+      background: url(../../../img/star-collected.png) no-repeat center 10px #000;
+      background-size: 41px 39px;
+    }
+
+    .cancel-collection-bg {
+      background: url(../../../img/star-collected-cancel.png) no-repeat center 10px #000;
+      background-size: 41px 39px;
+    }
+
+    .mui-backdrop {
+      position: fixed;
+      z-index: 998;
+      top: 40%;
+      right: 20%;
+      bottom: 40%;
+      left: 20%;
+      background-color: rgba(0, 0, 0, 1);
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mui-table-view-divider:after {
+      height: 0;
+      background-color: transparent;
+    }
+
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <div id="scroll1" class="mui-scroll-wrapper" style="overflow-y: scroll;height: 100vh; padding-bottom:50px">
+          <div id="notificationDetail">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+</body>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/maintain.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+
+<script src="../../../js/workSpace/notification.js"></script>
+
+<script>
+    mui.init({
+        swipeBack: false
+    });
+    // caseType 1通知公告；2工作动态；3规划计划；4应急管理；5应急动态；6应急预案；7政策文件
+    let param = {
+      caseType: 2,
+      guid: ''
+    }
+
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        curr.close('slide-out-right');
+    }
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+
+    var extras = {
+        openNum: 0
+    }
+
+    mui.plusReady(function () {
+
+        //禁止选项卡自带滑动
+        // mui('.mui-slider').slider().stopped = true;
+        var self = plus.webview.currentWebview();
+        param.guid = self.nid; // 获取前页面传递的参数
+        console.log('id:' + self.nid)
+        extras.openNum = self.openNum + 1; //初始化打开页面数量
+
+        notificationDetail();
+        self.setStyle({
+            titleNView: {
+                // bgTopClear , bgTop
+                backgroundImage: "../../../img/bgTopClear.png",
+                backgroundRepeat: 'no-repeat',
+                buttons: [{
+                    float: 'right',
+                    width: '70',
+                    fontSize: '17',
+                    text: '',
+                    onclick: function () {
+
+                    }
+                }],
+            }
+        });
+    });
+
+
+
+    window.addEventListener('backInspection', function (e) { //执行刷新
+        // location.reload();
+        // getDirectories('river',riverPageNo,riverPageSize);
+        mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        mui('#contentList').scroll().scrollTo(0, 0, 0);
+    });
+
+    (function ($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+    })(mui);
+
+    //详情明细查询
+    function notificationDetail() {
+      param.personUsername = app.userInfo().username;
+        getNotificationDetail(param, function (data) {
+            if (data.success) {
+              addData(data.result);
+            } else {
+                app.toast("通告公告详情查询失败")
+            }
+        })
+    }
+
+
+
+    function addData(data) {
+      var content = '';
+      var imgStr = ''
+        content = content + '<div class="" style="text-align: left;padding: 20px;">' +
+            '<div style="display: flex; align-items: center;">' +
+            '<h4 class="mui-ellipsis" style="flex: 1;">' + data.caseTitle + '</h4>' + imgStr +
+            '</div>' +
+            '<h5 class="mui-h5" style="margin: 18px 0;">' + '来源：' + data.caseSource + '  时间：' + data.caseReleaseTime + '</h5>' +
+            '<div class="mui-table-view-divider">' +
+            '<div class="noti-content">' +
+            '<p style="color: #000000;">' +
+            data.caseContent +
+            '</p>' +
+            '</div>' +
+            '</div>';
+
+        content = content +
+            '</div>';
+        $("#notificationDetail").html(content);
+    }
+
+    // 测试区
+    function getDataTmp() {
+      var dataStr = `{"guid":"73d37c2eb63bd2018732e91bb7608afd","createBy":"cao_xs","createTime":"2021-04-14 13:58:53","updateBy":"cao_xs","updateTime":"2021-04-14 16:30:34","corpCode":"A01","prjCode":null,"delFlag":0,"isEmphasis":1,"imageAttachment":"938e117ec4024307b84be565604e6cd3","caseTitle":"通知公告测试0414-002","caseSource":"通知公告测试0414-002","caseContent":"<div class=\\"index-module_textWrap_3ygOc\\" style=\\"font-family: arial; font-size: 12px; background-color: #ffffff;\\">\\n<p style=\\"margin: 0px; padding: 0px; font-size: 16px; line-height: 24px; color: #333333; text-align: justify;\\"><span class=\\"bjh-p\\">中新网4月14日电 据国家卫健委网站消息，4月13日0&mdash;24时，31个省(自治区、直辖市)和新疆生产建设兵团报告新增确诊病例12例，其中境外输入病例11例(上海5例，广东3例，天津1例，福建1例，四川1例)，本土病例1例(在云南)；无新增死亡病例；新增疑似病例2例，均为境外输入病例(均在上海)。</span></p>\\n</div>\\n<div class=\\"index-module_textWrap_3ygOc\\" style=\\"margin-top: 22px; font-family: arial; font-size: 12px; background-color: #ffffff;\\">\\n<p style=\\"margin: 0px; padding: 0px; font-size: 16px; line-height: 24px; color: #333333; text-align: justify;\\"><span class=\\"bjh-p\\">当日新增治愈出院病例7例，解除医学观察的密切接触者293人，重症病例较前一日增加2例。</span></p>\\n</div>\\n<div class=\\"index-module_textWrap_3ygOc\\" style=\\"margin-top: 22px; font-family: arial; font-size: 12px; background-color: #ffffff;\\">\\n<p style=\\"margin: 0px; padding: 0px; font-size: 16px; line-height: 24px; color: #333333; text-align: justify;\\"><span class=\\"bjh-p\\">境外输入现有确诊病例214例(其中重症病例5例)，现有疑似病例2例。累计确诊病例5454例，累计治愈出院病例5240例，无死亡病例。</span></p>\\n</div>\\n<div class=\\"index-module_textWrap_3ygOc\\" style=\\"margin-top: 22px; font-family: arial; font-size: 12px; background-color: #ffffff;\\">\\n<p style=\\"margin: 0px; padding: 0px; font-size: 16px; line-height: 24px; color: #333333; text-align: justify;\\"><span class=\\"bjh-p\\">截至4月13日24时，据31个省(自治区、直辖市)和新疆生产建设兵团报告，现有确诊病例298例(其中重症病例6例)，累计治愈出院病例85513例，累计死亡病例4636例，累计报告确诊病例90447例，现有疑似病例2例。累计追踪到密切接触者1000434人，尚在医学观察的密切接触者10840人。</span></p>\\n</div>\\n<div class=\\"index-module_textWrap_3ygOc\\" style=\\"margin-top: 22px; font-family: arial; font-size: 12px; background-color: #ffffff;\\">\\n<p style=\\"margin: 0px; padding: 0px; font-size: 16px; line-height: 24px; color: #333333; text-align: justify;\\"><span class=\\"bjh-p\\">31个省(自治区、直辖市)和新疆生产建设兵团报告新增无症状感染者12例(均为境外输入)；当日转为确诊病例2例(均为境外输入)；当日解除医学观察16例(境外输入12例)；尚在医学观察的无症状感染者293例(境外输入272例)。</span></p>\\n</div>\\n<div class=\\"index-module_textWrap_3ygOc\\" style=\\"margin-top: 22px; font-family: arial; font-size: 12px; background-color: #ffffff;\\">\\n<p style=\\"margin: 0px; padding: 0px; font-size: 16px; line-height: 24px; color: #333333; text-align: justify;\\"><span class=\\"bjh-p\\">累计收到港澳台地区通报确诊病例12718例。其中，香港特别行政区11607例(出院11227例，死亡208例)，澳门特别行政区49例(出院48例)，台湾地区1062例(出院1027例，死亡11例)。<img src=\\"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201412%2F03%2F20141203230557_VERYC.thumb.700_0.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621060358&t=692f2ba9c923bc6b4164e93f110697e3\\" alt=\\"a\\" /></span></p>\\n</div>","caseReleaseTime":"2021-04-14 02:03","caseAttachment":"3f4a8e5d32fd495286afa6fa6b49c8ee","attachmentStr":null,"caseType":1,"planType":null,"policyLawType":null,"policyLawLevel":null,"caseStatus":0,"isFavorites":1,"caseIndex":1,"createByModel":{"guid":"ca02a7f207648b11a6e68bd1459c3384","username":"cao_xs","realname":"曹锡森","corpName":"深圳市福田区水务局","deptName":"华东数字","mobilePhone":"18011808576"}}`;
+      var data = JSON.parse(dataStr);
+
+      addData(data);
+
+    }
+   // getDataTmp();
+
+</script>
+
+</html>

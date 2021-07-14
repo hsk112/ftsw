@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>系统设置</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="./css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+
+			.mui-views,
+			.mui-view,
+			.mui-pages,
+			.mui-page,
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #efeff4;
+			}
+
+			.mui-pages {
+				/* top: 46px; */
+				height: auto;
+			}
+
+			.mui-scroll-wrapper,
+			.mui-scroll {
+				background-color: #efeff4;
+			}
+
+			.mui-page.mui-transitioning {
+				-webkit-transition: -webkit-transform 200ms ease;
+				transition: transform 200ms ease;
+			}
+
+			.mui-page-left {
+				-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+			}
+
+			.mui-ios .mui-page-left {
+				-webkit-transform: translate3d(-20%, 0, 0);
+				transform: translate3d(-20%, 0, 0);
+			}
+
+			.mui-navbar {
+				position: fixed;
+				right: 0;
+				left: 0;
+				z-index: 10;
+				height: 44px;
+				background-color: #f7f7f8;
+			}
+
+			.mui-navbar .mui-bar {
+				position: absolute;
+				background: transparent;
+				text-align: center;
+			}
+
+			.mui-android .mui-navbar-inner.mui-navbar-left {
+				opacity: 0;
+			}
+
+			.mui-ios .mui-navbar-left .mui-left,
+			.mui-ios .mui-navbar-left .mui-center,
+			.mui-ios .mui-navbar-left .mui-right {
+				opacity: 0;
+			}
+
+			.mui-navbar .mui-btn-nav {
+				-webkit-transition: none;
+				transition: none;
+				-webkit-transition-duration: .0s;
+				transition-duration: .0s;
+			}
+
+			.mui-navbar .mui-bar .mui-title {
+				display: inline-block;
+				position: static;
+				width: auto;
+			}
+
+			.mui-page-shadow {
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 16px;
+				height: 100%;
+				z-index: -1;
+				content: '';
+			}
+
+			.mui-page-shadow {
+				background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+				background: linear-gradient(to right, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+			}
+
+			.mui-navbar-inner.mui-transitioning,
+			.mui-navbar-inner .mui-transitioning {
+				-webkit-transition: opacity 200ms ease, -webkit-transform 200ms ease;
+				transition: opacity 200ms ease, transform 200ms ease;
+			}
+
+			.mui-page {
+				display: none;
+			}
+
+			.mui-pages .mui-page {
+				display: block;
+			}
+
+			.mui-page .mui-table-view:first-child {
+				margin-top: 15px;
+			}
+
+			.mui-page .mui-table-view:last-child {
+				margin-bottom: 30px;
+			}
+
+			.mui-table-view {
+				margin-top: 20px;
+			}
+
+			.mui-table-view:after {
+				height: 0;
+			}
+
+			.mui-table-view span.mui-pull-right {
+				color: #999;
+			}
+
+			.mui-table-view-divider {
+				background-color: #efeff4;
+				font-size: 14px;
+			}
+
+			.mui-table-view-divider:before,
+			.mui-table-view-divider:after {
+				height: 0;
+			}
+
+			.mui-content-padded {
+				margin: 10px 0px;
+			}
+
+			.mui-locker {
+				margin: 35px auto;
+				display: none;
+			}
+
+			.mui-table-view {
+				margin-top: 11px;
+			}
+			.setting-bg{
+				position: relative;
+			}
+			.username{
+				font-size: 24px;
+				line-height: 24px;
+				font-weight: 600;
+				color: #fff;
+				position: absolute;
+				left: 20px;
+				bottom: 80px;
+			}
+			.companyName{
+				font-size: 14px;
+				padding-top: 20px;
+				color: #fff;
+				position: absolute;
+				left: 20px;
+				bottom: 46px;
+				
+			}
+			.department{
+				font-size: 14px;
+				padding-top: 5px;
+				color: #fff;
+				position: absolute;
+				left: 20px;
+				bottom: 28px;
+			}
+			.mui-scroll-wrapper, .mui-scroll{
+				background-color:#F4F4F4;
+			}
+			.userInfo{
+				margin-top: 10px;
+			}
+			.change-password{
+				margin-top: 10px;
+			}
+			.change-password:active{
+				background: #eee;
+			}
+			.logout-btn{
+				margin-top: 10px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				background-color: #fff;
+			}
+			.logout-btn:active{
+				
+				background-color: #eee;
+			}
+			.userInfo-item{
+				height: 50px;
+				line-height: 50px;
+				box-sizing: border-box;
+				border: 1px solid #EEEEEE;
+				background-color: #fff;
+				position: relative;
+				font-size: 16px;
+			}
+			.right-text{
+				float: right;
+				padding-right: 20px;
+				text-align: right;
+				vertical-align: middle;
+				color:#888888;
+			}
+			.icon-phone{
+				background: url("./img/me/phone.png")no-repeat;
+				background-size:100% auto;
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 15px;
+				margin-right: 5px;
+				height: 30px;
+				width: 30px;
+			}
+			.icon-eamil{
+				background: url("./img/me/email.png")no-repeat;
+				background-size:100% auto;
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 15px;
+				margin-right: 5px;
+				height: 30px;
+				width: 30px;
+			}
+			.icon-password{
+				background: url("./img/me/password.png")no-repeat;
+				background-size:100% auto;
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 15px;
+				margin-right: 5px;
+				height: 30px;
+				width: 30px;
+			}
+			.icon-next{
+				background: url("./img/me/next.png")no-repeat;
+				background-size:100% auto;
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 15px;
+				margin-right: 5px;
+				height: 30px;
+				width: 30px;
+				position: absolute;
+				right: 10px;
+				top: 10px;
+			}
+
+		</style>
+		
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<!-- <div class="mui-navbar">
+				</div> -->
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="setting" class="mui-page">
+			<!--页面标题栏开始-->
+<!-- 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" style="margin-left: 10px;position: fixed;left: 0;" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					关闭
+				</button>
+				<h1 class="mui-center mui-title">设置</h1>
+			</div> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+                    <div style="background-color: white" id="statusBarHeight"></div>
+					<div class="setting-bg">
+						<img src="img/me/bg.png"  width="100%"/>
+						<div class="username">名字</div>
+						<div class="companyName">
+							
+						</div>
+						<div class="department">
+							
+						</div>
+					</div>
+					<div class="userInfo">
+					  <div class="userInfo-item">
+						  <i class="icon-phone"></i>
+						  <span >手机</span>
+						  <div class="right-text" id="phone"></div>
+					  </div>
+					  <div class="userInfo-item">
+						  <i class="icon-eamil"></i>
+						  <span >邮箱</span>
+						  <div class="right-text" id="email"></div>
+					  </div>
+					
+					</div>
+<!-- 					<div class="change-password">
+					  <div class="userInfo-item" id="updatePwd" >
+						  <i class="icon-password"></i>
+						   <span >修改密码</span>
+						   <i class="icon-next"></i>
+					  </div>
+					
+					</div> -->
+					<div class="logout-btn">
+						<div id='exit'>退出</div>
+					</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+	</body>
+	<script src="./js/mui.min.js"></script>
+	<script src="./js/mui.view.js"></script>
+	<script src="./js/mui.locker.js"></script>
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/app.js"></script>
+	<script src="./js/helper.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/config.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	    var userInfo = {};
+		mui.init();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#setting'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		//分享操作
+		var shares = {};
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+		// 	self.getTitleNView().hide();
+  //       plus.navigator.setStatusBarStyle("light");
+  //       var statusBarHeight = plus.navigator.getStatusbarHeight();
+  //       $("#statusBarHeight").css("padding-top", statusBarHeight);
+		// debugger
+		userInfo = app.userInfo()
+		   $('.username').text(userInfo['realname']);
+		   $('.companyName').text(userInfo['companyName']);
+			$('.department').text(userInfo['departName']);
+			$('#phone').text(userInfo['personMobilePhone']);
+			$('#email').text(userInfo['personEmail']);
+			 
+		
+		});
+
+		$("#updatePwd").on("tap",function(){
+			var extras = {}
+			app.openPage("./updatePwd.html", {
+			    titleNView: {
+			        titleText: '修改密码',
+			        autoBackButton: true
+			    }
+			}, extras);
+		});
+
+
+
+		//退出操作******************
+		document.getElementById('exit').addEventListener('tap', function() {
+			mui.confirm("注销当前账号?", "提示", ['确定', '取消'], function(result) {
+				if (parseInt(result.index) == 0) {
+					app.setState({});
+					plus.runtime.restart();
+				}
+			})
+		}, false);
+
+
+	</script>
+
+</html>

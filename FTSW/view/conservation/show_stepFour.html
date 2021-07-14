@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-查看现场检查纪录-总体评价</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+		width: 16px;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 50%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<div class="item" id="preStep">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">上一页</div>
+			</div>
+			<div class="item" id="back">
+				<div style="background: #337BFC;color: #fff">返回</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper" style="margin-bottom: 100px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title">
+								总体评价
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水土流失隐患等级
+									</div>
+									<input id="soilErosionLevel" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="soilErosionLevel_text" readonly="true" required="true" type="text" value=""
+										 placeholder="请选择水土流失隐患等级" class="inputCss" >
+										
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水土流失隐患风险等级
+									</div>
+									<input id="soilErosionRiskLevel" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="soilErosionRiskLevel_text" type="text" required="true" maxlength="10" readonly="true" class="inputCss"
+										 placeholder="请选择水土流失隐患风险等级" readonly="true">
+										
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										水土流失隐患及危害具体评价
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="soilErosionHarm"  type="text" class=" inputCss" value=""
+										 placeholder="不超过500字" maxlength="500" readonly="true">
+									</div>
+								</div>		
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										整改要求
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="rectifyRequired" required="true" readonly="true" type="text" class=" inputCss" value=""
+										 placeholder="请输入整改要求" maxlength="200" >
+									</div>
+								</div>	
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										当前状态
+									</div>
+									<input id="conservationStatus" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="conservationStatus_text" name="conservationStatus_text" readonly type="text" class=" inputCss"
+										 placeholder="请选择当前状态" >
+										
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="display: none;" id="selComDate">
+									<div class="item-title">
+										要求完成日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="comDate" class="inputCss" readonly="true" required="true" type="text" 
+										 placeholder="请选择要求完成日期" style="width: 90%;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>								
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="create_by" type="text" class=" inputCss" value=""
+										 placeholder="请输入填写人" readonly="true">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										联系方式
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="phonenum" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写部门
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDepart" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>																
+								<div class="info-bar-content-item" style="border: none;">
+									<div class="item-title">
+										填写时间
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="createTime" class="inputCss" type="text" 
+										 placeholder="请选择填写时间" style="width: 90%;" readonly="true">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({swipeBack:false});
+		var self;
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var opt = "add"; //操作类型
+		var id = "";
+		var flag = false;
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			//界面元素控制
+			initView();
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			self = plus.webview.currentWebview();
+
+			var sceneDataStr = self.data;
+	
+			if (sceneDataStr != null) {
+				$("#createTime").val(isEmp(sceneDataStr.createTime.substring(0,10)));
+				$("#create_by").val(isEmp(sceneDataStr.createBy));
+				$("#phonenum").val(isEmp(sceneDataStr.phonenum));
+				$("#inputDepart").val(isEmp(sceneDataStr.inputDepart));	
+				getDicTextByIdAndKey(sceneDataStr.soilErosionLevel, "soil_erosion_level", function(data) {
+					$('#soilErosionLevel_text').val(isEmp(data)); //水土流失隐患等级
+					$("#soilErosionLevel").val(sceneDataStr.soilErosionLevel)
+				})
+				getDicTextByIdAndKey(sceneDataStr.soilErosionRiskLevel, "soil_erosion_risk_level", function(data) {
+					$('#soilErosionRiskLevel_text').val(isEmp(data)); //水土流失隐患风险等级
+					$("#soilErosionRiskLevel").val(sceneDataStr.soilErosionRiskLevel)
+				})	
+				$('#soilErosionHarm').val(isEmp(sceneDataStr.soilErosionHarm));//水土流失隐患及危害具体评价				
+				$('#rectifyRequired').val(isEmp(sceneDataStr.rectifyRequired));//整改要求
+				getDicTextByIdAndKey(sceneDataStr.conservationStatus, "conservation_status", function(data) {
+					$('#conservationStatus_text').val(isEmp(data)); //当前状态
+					$("#conservationStatus").val(sceneDataStr.conservationStatus)
+					if(sceneDataStr.conservationStatus == 1){
+						$('#comDate').val(isEmp(sceneDataStr.comDate).substring(0,10));//要求完成日期	
+						$('#selComDate').show();
+					}
+				})											
+			}
+}
+			
+
+		//上一页
+		$("#preStep").on("tap", function(event) {
+			mui.back();
+				// var extras = {data: self.data}
+				// app.openPage("./show_stepOne.html", {
+				// 	titleNView: {
+				// 		titleText: '查看现场检查纪录',
+				// 		autoBackButton: true
+				// 	}
+				// }, extras);
+		});
+		
+		//返回
+		$("#back").on("tap", function(event) {
+				mui.fire( plus.webview.getWebviewById('proDetail.html') ,'reload1');
+				popToTarget('proDetail.html');
+		});
+	</script>
+
+</html>

@@ -1,0 +1,3646 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>排水户管理-查看排水户详情-要可以修改</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../../css/mui.poppicker.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link href="../../css/ps.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+    <style>
+        .mui-icon-arrowright{
+            color:#62666E;
+            font-weight: 100 !important;
+            width: 16px;
+            padding-top: 7px;
+        }
+        .mui-input-row .mui-input-clear~.mui-icon-clear{
+            display: none;
+        }
+        /*border-bottom 线条长度 */
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+            /*color: #007aff;*/
+            border-bottom: 2px solid #007aff;
+            background: 0 0;
+            content: '';
+            width: 24px;
+            display: block;
+            margin: 0 auto;
+        }
+        .mui-segmented-control.mui-scroll-wrapper .mui-control-item
+        {
+            padding: 0 10px;
+        }
+    /*    关联排水户*/
+        .relation-psh-item {
+            background: #FFFFFF;
+            border-radius: 5px;
+            margin: 0px 10px 10px 10px;
+            padding: 0 20px;
+            text-align: left;
+            color: #8C8C8C;
+        }
+        .relation-psh-item-header {
+            padding: 10px 0;
+            border-bottom: 1px solid #EDEDED;
+            color: #262626;
+            font-size: 16px;
+        }
+        .relation-psh-item-header-num {
+            color: #354052;
+            margin-right: 10px;
+        }
+        .relation-psh-item-info {
+            padding: 10px 0;
+            font-size: 14px;
+        }
+        .relation-psh-item-info-line {
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+        .relation-psh-item-info-line-flex {
+            justify-content: space-between;
+        }
+        .relation-psh-item-info-value {
+            color: #444444;
+        }
+
+        .no-data {
+            position: absolute;
+            top: 10rem;
+            left: 50%;
+            display: inline-block;
+            font-size: 20px;
+            color: #999;
+            transform: translateX(-50%);
+        }
+        /*	单选框 */
+        .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+            color: #0493F3;
+            font-size: 22px;
+        }
+        .mui-radio input[type='radio']:checked:before{
+            content:'\e442';
+            color: #0493F3;
+            font-size: 22px;
+        }
+        .radio_inline {
+            display: flex;
+        }
+        .radio-item {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            text-align: right;
+        }
+
+        .radio_inline label{
+            /*width: 20%;*/
+            /*padding-left: 40px;*/
+            /*padding-right: 20px;*/
+            padding: 0;
+            /*width: 22px;*/
+            height: 22px;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+        .radio_inline input[type=radio]{
+            /*width: 15%;*/
+            width: 22px;
+            right: auto;
+        }
+        /*隐藏输入框的删除*/
+        .mui-input-row .mui-input-clear~.mui-icon-clear {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-navbar">
+        </div>
+        <div class="mui-pages">
+        </div>
+    </div>
+</div>
+<div class="bottom-item-btn" id="bottom-item-btn" style="display: none;">
+    <div style="width: 50%;display: none;" id="preBtn">
+        <button id="pre_step" class="item" style="color: #0493F3">上一页</button>
+    </div>
+    <div style="width: 50%;display: none;" id="nextBtn">
+        <button id="next_step" class="item" style="background: #0493F3;color: #fff">下一页</button>
+    </div>
+    <div style="width: 50%;display: none;" id="submitBtn">
+        <button id="submit" class="item" style="background: #0493F3;color: #fff">退 出</button>
+    </div>
+    <div style="width: 100%;" id="nextBtn1">
+        <button id="next_step1" class="item" style="background: #0493F3;color: #fff">下一页</button>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+<!--    不要滚动： mui-slider -->
+    <div class="" id="slider">
+        <div style="position: fixed;height: 60px;bottom: 10px; left: 10px; right: 10px;background: transparent;z-index: 5;">
+            <button onclick="submitChange()" style="background: #0493F3;color: white;width: 100%;height: 44px;border-radius: 4px;border: none;">提交</button>
+        </div>
+        <div>
+            <!--排水户-->
+            <div id="hjList" class="mui-scroll-wrapper" style="height: 100vh;top:20px; z-index: unset;">
+                <div  id="contentList"  class="mui-slider-indicator mui-segmented-control  mui-segmented-control-inverted mui-scroll-wrapper"
+                      style="position: fixed;top: 0;padding-top: 10px; padding-bottom: 50px;background-color: white;border-bottom: 10px solid #F4F4F4;">
+                    <!--tab切 id:sliderSegmentedControl ,class: -->
+<!--                    可以横向滚动菜单栏-->
+                    <div class="mui-scroll" style="background-color: white;">
+                        <a id="item1" class="mui-control-item  mui-active" href="#basicInfo" >
+                            基本信息
+                        </a>
+                        <a id="item2" class="mui-control-item" href="#certificateInfo" >
+                            证照信息
+                        </a>
+                        <a id="item3" class="mui-control-item" href="#drainageInfo" >
+                            给排水信息
+                        </a>
+                        <a id="item4" class="mui-control-item" href="#expandInfo" >
+                            拓展信息
+                        </a>
+                        <a id="item5" class="mui-control-item" href="#relationPSH" >
+                            关联排水户
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+<!--        这个没有用-->
+        <div style="display: none; position:fixed;top:0;left:0;z-index: 99;width:100%;background: #ffffff;">
+            <ol class="steps">
+                <li class="step-active step-current" id="stepOneLi">
+                    <div class="step-content">
+                        <div class="step-num"></div>
+                        <div class="step-text">基本信息</div>
+                    </div>
+                </li>
+                <li class="" id="stepTwoLi">
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-num"></div>
+                        <div class="step-text">证照信息</div>
+                    </div>
+                </li>
+                <li class="" id="stepThreeLi">
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-num"></div>
+                        <div class="step-text">给排水信息</div>
+                    </div>
+                </li>
+                <li class="" id="stepFourLi">
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-num"></div>
+                        <div class="step-text">拓展信息</div>
+                    </div>
+                </li>
+            </ol>
+            <div style="height: 10px;background: #F4F4F4;"></div>
+        </div>
+        <div class="mui-slider-group">
+            <div id="basicInfo" class="mui-slider-item mui-control-content mui-active" style="border-bottom: none!important;">
+                <div style="height: 70px" tabindex="0" ></div>
+                <div id="detail1" style="overflow-y: auto;">
+                    <div class="mainPage">
+                        <div class="info-bar-content">
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水户级别
+                                </div>
+                                <div class="item-checkbox">
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>一级</label>
+                                        <input name="userlevel" required="true"  placeholder="请选择排水户级别" value="1" type="checkbox"  checked disabled>
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>二级</label>
+                                        <input name="userlevel" required="true"  placeholder="请选择排水户级别" value="2" type="checkbox" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 选择二级时，显示上级排水户名称的选择-->
+                            <div class="info-bar-content-item" id="parentPSH" style="display: none;">
+                                <div class="item-title">
+                                    <span>*</span>上级排水户名称
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="parentId" required="true" style="display: none;">
+                                    <input id="parentName" required="true" type="text" readonly placeholder="请选择上级排水户名称" style="width: 88%;">
+                                    <div class="mui-icon mui-icon-arrowright"></div>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水户名称
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="dischargerName" required="true" type="text" class="mui-input-clear" placeholder="请输入排水户名称" readonly
+                                           maxlength="51" onkeyup="format_input(1,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水户性质
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="character" style="display: none;">
+                                    <input id="characterText" type="text" readonly placeholder="请选择排水户性质" style="width: 88%;">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>所属小区
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="smid" type="text" style="display: none;">
+                                    <input id="corpCode" type="text" style="display: none;" value="A01">
+                                    <input id="villageId" type="text" style="display: none;" >
+                                    <input id="village" required="true" readonly="readonly" style="width: 88%;" type="text" placeholder="请选择所属小区">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>所属行政区名
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="district" required="true" readonly="readonly" style="width: 88%;" type="text" value="福田区"
+                                           placeholder="请选择所属行政区名">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    所属流域
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="basinId" style="display: none;" />
+                                    <input id="basin" required="true" readonly="readonly" style="width: 88%;" type="text" placeholder="选择详细地址后自动回填">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    所属水务所
+                                </div>
+                                <input id="stationId" type="text" style="display: none;">
+                                <div class="mui-input-row item-input">
+                                    <input id="stationId_dictText" required="true" readonly="readonly" style="width: 88%;" type="text" placeholder="选择所属小区后自动回填">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    所属街道
+                                </div>
+                                <!--street的guid-->
+                                <input id="street" type="text" style="display: none;">
+                                <div class="mui-input-row item-input">
+                                    <input id="street-text" required="true" readonly="readonly" style="width: 88%;" type="text" placeholder="选择所属社区后自动回填">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>所属社区
+                                </div>
+                                <input id="commuId" type="text" style="display: none;">
+                                <div class="mui-input-row item-input">
+                                    <input id="community" required="true" readonly="readonly" style="width: 88%;" type="text" placeholder="选择所属街道后自动回填">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>门牌详细地址
+                                </div>
+                                <textarea id="address" type="text" maxlength="200" rows="2" placeholder="福田区××街道××社区(村)××路(巷)××号"
+                                          style="border:none;width: 50%;padding-right: 0px;" readonly="readonly"></textarea>
+                                <a id="dz_xz" style="float: right;font-size: 14px;color: #337BFC;padding-top: 10px;margin-right: 20px;">
+                                    <img src="../../img/commom/dz@2x.png" style="width: 18px;20height: 18px;" />
+                                </a>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>排水户编号
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="expNo" type="text" class="mui-input-clear" placeholder="请输入排水户编号" maxlength="51" readonly onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+
+                            <!-- 新增：排水等级-->
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水等级
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="importanceLevel" style="display: none;">
+                                    <input id="importanceLevelText" type="text" readonly placeholder="请选择排水等级" style="width: 88%;">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>水表编号
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterMeterNo " type="text" class="mui-input-clear" placeholder="请输入水表编号" maxlength="51" readonly disabled onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>排水户面积(m²)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="discArea" type="text" class="mui-input-clear" placeholder="请输入排水户面积" maxlength="51" readonly onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>污水去向
+                                </div>
+                                <!--01-->
+                                <input id="sewageWhereabouts" type="text" style="display: none;">
+                                <div class="mui-input-row item-input">
+                                    <input id="sewageWhereabouts-text" required="true" style="width: 88%;" readonly="readonly" type="text"  placeholder="请选择污水去向">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>是否雨污分流
+                                </div>
+                                <div class="item-checkbox">
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>是</label>
+                                        <input name="rainSewageSeparated" required="true"  placeholder="请选择是否雨污分流" value="1" type="checkbox" disabled readonly>
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>否</label>
+                                        <input name="rainSewageSeparated" required="true"  placeholder="请选择是否雨污分流" value="0" type="checkbox" checked disabled readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>是否经营排水户
+                                </div>
+                                <div class="item-checkbox">
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>是</label>
+                                        <input name="businessDrainageHousehold" required="true"  placeholder="请选择经营排水户" value="1" type="checkbox" disabled readonly>
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>否</label>
+                                        <input name="businessDrainageHousehold" required="true" placeholder="请选择经营排水户"  value="0" type="checkbox" checked disabled readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水户联系人
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="pshContact" required="true" type="text" class="mui-input-clear" placeholder="请输入排水户联系人" readonly
+                                           maxlength="51" onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水户联系电话
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="pshPhone" required="true" type="text" class="mui-input-clear" placeholder="请输入排水户联系电话" readonly
+                                           maxlength="51" onkeyup="format_input(5,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水户照片
+                                </div>
+                                <input id="pshPhotoInput" style="display: none;" />
+                                <div class="psh_photo_list">
+                                    <!--排水户照片-->
+                                </div>
+                                <div id="psh_photo" class="img_item">
+                                    <img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>填写人
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="inputerfullname" type="text" readonly="true" value="" placeholder="请输入填写人" readonly>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>联系方式
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="inputPhone" readonly="true" type="text" value="" placeholder="请输入联系方式" readonly>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>填写部门
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="inputDepartmentFullname" readonly="true" type="text" value="" placeholder="请输入填写部门" readonly>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>填写日期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="inputDate" type="text" readonly="true" placeholder="请选择填写日期" readonly>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item" style="border:none;">
+                                <div class="item-title">
+                                    <span class="marginRight"></span>新任务通知方式
+                                </div>
+                                <div class="item-checkbox" style="width: 60%;text-align: right;padding-left: 20px;">
+                                    <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                                        <label>站内消息(默认必选)</label>
+                                        <input name="notifymethod" value="message" type="checkbox" checked disabled="" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item" style="padding-top: 0px;">
+                                <div class="item-title" style="width: 40px;">
+
+                                </div>
+                                <div class="item-checkbox" style="width: 60%;text-align: right;padding-left: 20px;">
+                                    <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                                        <label>手机短信</label>
+                                        <input name="sms" value="sms" type="checkbox" disabled readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item" style="border:none">
+                                <div class="item-title">
+                                    <span>*</span>审核人
+                                </div>
+                                <input id="approverUsername" style="display: none;" />
+                                <div class="mui-input-row item-input">
+                                    <input id="approverFullname" required="true" type="text" readonly="readonly" class=""  value="" placeholder="请选择审批人">
+                                </div>
+                            </div>
+                            <div id="bottom-di" style="height: 100px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            style="display: none;" -->
+            <div id="certificateInfo"  class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+                <div style="height:70px" tabindex="0" ></div>
+                <div id="detail2" style="overflow-y: auto;">
+                    <div class="mainPage">
+                        <div class="info-bar-content">
+                            <div id="for_hasDiscCode" class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    是否取得营业执照
+                                </div>
+                                <div class="item-checkbox">
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>是</label>
+                                        <input name="hasDiscCode" placeholder="是否取得营业执照" value="1" type="checkbox" disabled readonly>
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>否</label>
+                                        <input name="hasDiscCode" placeholder="是否取得营业执照" value="0" type="checkbox" checked disabled readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-bar-content" id="hasDiscCodeShow" style="display: none;">
+                            <!--<div class="info-bar-content-item paddingLeft">-->
+                            <!--<div class="item-title">-->
+                            <!--<span>*</span>营业执照照片-->
+                            <!--</div>-->
+                            <!--<div class="dis_img_list"></div>-->
+                            <!--<div id="discCodeAttachment_img">-->
+                            <!--<div class="img_item">-->
+                            <!--<img id="discCodeAttachment" class="img_src" data-token='' style="width: 72px;height: 72px;float: left;"-->
+                            <!--src="../../img/commom/pz@2x.png" />-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>营业执照照片
+                                </div>
+                                <input id="discCodeAttachmentInput" style="display: none;" />
+                                <div class="discCodeAttachment_list">
+                                    <!--营业执照照片-->
+                                </div>
+                                <div id="discCodeAttachment" class="img_item">
+                                    <img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title item-label">
+                                    <span>*</span>营业执照统一社会信用代码
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="discCode" type="text" class="mui-input-clear" placeholder="请输入统一社会信用代码" maxlength="51" readonly
+                                           onkeyup="format_input(2,this)" onblur="disCodeReg(this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    <span>*</span>营业执照核发日期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="discDate" readonly="readonly" type="text" class="mui-input-clear" placeholder="请选择营业执照核发日期">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    <span>*</span>营业执照有效期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="discExpired" readonly="readonly" type="text" class="mui-input-clear" placeholder="请选择营业执照有效期">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-bar-content-item paddingLeft">
+                            <div class="item-title">
+                                所需排水许可
+                            </div>
+                            <div class="item-checkbox" style="width: 65%;">
+                                <div class="mui-input-row mui-checkbox mui-left" style="width: 37%;margin-left: 5%;">
+                                    <label>备案</label>
+                                    <input name="hasPslCode" placeholder="备案" value="1" type="checkbox" checked disabled readonly>
+                                </div>
+                                <div class="mui-input-row mui-checkbox mui-left" style="width: 58%;">
+                                    <label>排水许可证</label>
+                                    <input name="hasPslCode" placeholder="排水许可证" value="0" type="checkbox" disabled readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-bar-content-item paddingLeft">
+                            <div class="item-title">
+                                是否备案
+                            </div>
+                            <div class="item-checkbox">
+                                <div class="mui-input-row mui-checkbox mui-left">
+                                    <label>是</label>
+                                    <input name="recordNot" placeholder="是否取得营业执照" value="1" type="checkbox" checked disabled readonly>
+                                </div>
+                                <div class="mui-input-row mui-checkbox mui-left">
+                                    <label>否</label>
+                                    <input name="recordNot" placeholder="是否取得营业执照" value="0" type="checkbox" disabled readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="info-bar-content-item paddingLeft">-->
+                        <!--<div class="item-title">-->
+                        <!--是否需办排水许可证-->
+                        <!--</div>-->
+                        <!--<div class="item-checkbox">-->
+                        <!--<div class="mui-input-row mui-checkbox mui-left">-->
+                        <!--<label>是</label>-->
+                        <!--<input name="hasPslCode" required="true" placeholder="是否需办排水许可证" value="1" type="checkbox">-->
+                        <!--</div>-->
+                        <!--<div class="mui-input-row mui-checkbox mui-left">-->
+                        <!--<label>否</label>-->
+                        <!--<input name="hasPslCode" required="true" placeholder="是否需办排水许可证" value="0" type="checkbox" checked>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <div class="info-bar-content XKZ" id="hasPslCodeShow" style="display: none">
+                            <!--<div class="info-bar-content-item paddingLeft">-->
+                            <!--<div class="item-title">-->
+                            <!--<span>*</span>排水许可证照片-->
+                            <!--</div>-->
+                            <!--<div class="psl_img_list"></div>-->
+                            <!--<div id="pslCodeAttachment_img">-->
+                            <!--<div class="img_item">-->
+                            <!--<img id="pslCodeAttachment" data-token='' style="width: 72px;height: 72px;float: left;" src="../../img/commom/pz@2x.png" />-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排水许可证照片
+                                </div>
+                                <input id="pslCodeAttachmentInput" style="display: none;" />
+                                <div class="pslCodeAttachment_list">
+                                    <!--排水许可证照片-->
+                                </div>
+                                <div id="pslCodeAttachment" class="img_item">
+                                    <img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft" >
+                                <div class="item-title">
+                                    <span>*</span>排水许可证号
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="pslCode" maxlength="16" onkeyup="format_input(12,this)" type="text" class="mui-input-clear" readonly
+                                           placeholder="请输入排水许可证号">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft" >
+                                <div class="item-title item-label">
+                                    <span>*</span>排水许可证核发日期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="pslBeginDate" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排水许可证核发日期" readonly>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft" >
+                                <div class="item-title">
+                                    <span>*</span>排水许可证有效期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="pslEndDate" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排水许可证有效期" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="for_hasEslCode" class="info-bar-content-item paddingLeft">
+                            <div class="item-title">
+                                是否取得排污许可证
+                            </div>
+                            <div class="item-checkbox">
+                                <div class="mui-input-row mui-checkbox mui-left">
+                                    <label>是</label>
+                                    <input name="hasEslCode" placeholder="是否取得排污许可证" value="1" type="checkbox" disabled readonly>
+                                </div>
+                                <div class="mui-input-row mui-checkbox mui-left">
+                                    <label>否</label>
+                                    <input name="hasEslCode" placeholder="是否取得排污许可证" value="0" type="checkbox" checked disabled readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="for_input_hasEslCode" class="PWXKZ" style="display: none">
+                            <!--<div id="permit-photo3" class="info-bar-content-item paddingLeft ">-->
+                            <!--<div class="item-title">-->
+                            <!--<span>*</span>-->
+                            <!--排污许可证照片-->
+                            <!--</div>-->
+                            <!--<div class="esl_img_list"></div>-->
+                            <!--<div id="eslCodeAttachment_img">-->
+                            <!--<div class="img_item ">-->
+                            <!--<img id="eslCodeAttachment" data-token='' style="width: 72px;height: 72px;float: left;" src="../../img/commom/pz@2x.png" />-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="info-bar-content-item">
+                                <div class="item-title">
+                                    <span>*</span>排污许可证照片
+                                </div>
+                                <input id="eslCodeAttachmentInput" style="display: none;" />
+                                <div class="eslCodeAttachment_list">
+                                    <!--排污许可证照片-->
+                                </div>
+                                <div id="eslCodeAttachment" class="img_item">
+                                    <img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft ">
+                                <div class="item-title">
+                                    <span>*</span>
+                                    排污许可证号
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="eslCode" maxlength="16" onkeyup="format_input(13,this)" type="text" class="mui-input-clear" readonly
+                                           placeholder="请输入排污许可证号(最多16位)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft ">
+                                <div class="item-title item-label">
+                                    <span>*</span>
+                                    排污许可证核发日期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="eslBeginDate" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排污许可证核发日期">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft " style="border: none;">
+                                <div class="item-title">
+                                    <span>*</span>
+                                    排污许可证有效期
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="eslEndDate" readonly="readonly" type="text" class="mui-input-clear" placeholder="请输入排污许可证有效期">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bottom-div" style="height: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+<!--            style="display: none;"-->
+            <div id="drainageInfo"  class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+                <div style="height:70px" tabindex="0"></div>
+                <div id="detail3" style="overflow-y: auto;">
+                    <div class="mainPage">
+                        <div class="info-bar-content">
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    用水性质
+                                </div>
+                                <input id="waterType" style="display: none" value="">
+                                <div class="mui-input-row item-input">
+                                    <input id="waterType_dictText" readonly="readonly" style="width: 88%;" type="text" placeholder="请选择用水性质">
+                                    <span class="mui-icon mui-icon-arrowright"></span>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    水表编号
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterMetNu" type="text" class="mui-input-clear" placeholder="请输入水表编号" maxlength="51" readonly onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    月用水量(m³)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterConsump" type="text" class="mui-input-clear" placeholder="请输入月用水量" maxlength="51" readonly disabled onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    自备水量(m³)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterSelfDaily" type="text" class="mui-input-clear" placeholder="请输入自备水量" maxlength="51" readonly disabled onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    工业废水主要成分
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="mainCont" type="text" class="mui-input-clear" placeholder="请输入工业废水主要成分" maxlength="51" readonly disabled
+                                           onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    总排水量(m³/d)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterAllQuanit" type="text" class="mui-input-clear" placeholder="请输入总排水量" maxlength="51" readonly disabled onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    生产污水量(m³/d)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="productWasterQuant" type="text" class="mui-input-clear" placeholder="请输入生产污水量" maxlength="51" readonly disabled onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    生活污水量(m³/d)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="sanitaryWasterQuant" type="text" class="mui-input-clear" placeholder="请输入生活污水量" maxlength="51" readonly disabled onkeyup="format_input(2,this)">
+                                </div>
+                            </div>
+                            <div id="" class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    是否特殊物质用户
+                                </div>
+                                <div class="item-checkbox">
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>是</label>
+                                        <input name="ismatter" value="1" type="checkbox" disabled readonly>
+                                    </div>
+                                    <div class="mui-input-row mui-checkbox mui-left">
+                                        <label>否</label>
+                                        <input name="ismatter" value="0" type="checkbox" checked disabled readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title item-label">
+                                    特殊物质用户废水主要成分
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="matterName" readonly="true" type="text" class="mui-input-clear" readonly placeholder="请输入主要成分" maxlength="51" disabled onkeyup="format_input(11,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title item-label">
+                                    排水总悬浮固体(mg/L)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterSs" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" readonly
+                                           placeholder="请输入排水总悬浮固体" maxlength="15" onkeyup="format_number(7,this)" onblur="format_number(7,this)" disabled>
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title item-label">
+                                    排水生化需氧量(mg/L)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterBod5" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入排水生化需氧量" maxlength="15" onkeyup="format_number(8,this)" onblur="format_number(8,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title item-label">
+                                    排水化学需氧量(mg/L)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterCodcr" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入排水化学需氧量" maxlength="15" onkeyup="format_number(9,this)" onblur="format_number(9,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    排水总氮(mg/L)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterTn" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入排水总氮" maxlength="15" onkeyup="format_number(11,this)" onblur="format_number(11,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    排水氨氮(mg/L)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterNh3N" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入排水氨氮" maxlength="15" onkeyup="format_number(10,this)" onblur="format_number(10,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    排水总磷(mg/L)
+                                </div>
+                                <div class="mui-input-row item-input paddingLeft">
+                                    <input id="waterTp" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入排水总磷" maxlength="15" onkeyup="format_number(13,this)" onblur="format_number(13,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft">
+                                <div class="item-title">
+                                    排水温度(℃)
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterTemp" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入排水温度" maxlength="15" onkeyup="format_number(12,this)" onblur="format_number(12,this)">
+                                </div>
+                            </div>
+                            <div class="info-bar-content-item paddingLeft" style="border: none;">
+                                <div class="item-title">
+                                    PH值
+                                </div>
+                                <div class="mui-input-row item-input">
+                                    <input id="waterPh" type="number" min="0" oninput="value=value.replace('-', '')" class="mui-input-clear" disabled readonly
+                                           placeholder="请输入pH值" maxlength="15" onkeyup="format_number(14,this)" onblur="format_number(14,this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bottom-div3" style="height: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+<!--            style="display: none;"-->
+            <div id="expandInfo"  class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+                <div style="height:70px;background: #F4F4F4;" tabindex="0"></div>
+                <div id="detail4" style="overflow-y: auto;background: #F4F4F4;height: 100vh;">
+                    <div class="mainPage">
+                        <!--预处理设施-->
+                        <div id="ycl" class="card">
+                            <div id="yclLab" class="card-header">
+                                <div class="card-header-title">预处理设施</div>
+                                <div id="yclAdd" class="card-header-btn" style="display: none;">+ 新增</div>
+                            </div>
+                            <!--信息卡片-->
+                            <!--<div class="card-div">-->
+                            <!--<span id="delDevice_1_1" class="img_close mui-icon mui-icon-closeempty delDevice"></span>-->
+                            <!--<div class="card-body">-->
+                            <!--<div class="card-body-content">-->
+                            <!--<div class="card-body-content-num">1</div>-->
+                            <!--<div class="card-body-content-name">设施类型名称</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-content-name">-->
+                            <!--<span>XX泵站</span>-->
+                            <!--<span class="mui-icon mui-icon-arrowdown card-icon"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-info">-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>设施编号</div>-->
+                            <!--<div class="moreText">5</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>备注</div>-->
+                            <!--<div class="moreText">52333333333333333333333333333333</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-div">-->
+                            <!--<span id="delDevice_1_2" class="img_close mui-icon mui-icon-closeempty delDevice"></span>-->
+                            <!--<div class="card-body">-->
+                            <!--<div class="card-body-content">-->
+                            <!--<div class="card-body-content-num">2</div>-->
+                            <!--<div class="card-body-content-name">设施类型名称</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-content-name">-->
+                            <!--<span>XX泵站</span>-->
+                            <!--<span class="mui-icon mui-icon-arrowdown card-icon card-icon-up"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-info">-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>设施编号</div>-->
+                            <!--<div class="moreText">5</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>备注</div>-->
+                            <!--<div class="moreText">52333333333333</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <!--接驳管信息-->
+                        <div id="jbg" class="card">
+                            <div id="jbgLab" class="card-header">
+                                <div class="card-header-title">接驳管信息</div>
+                                <div id="jbgAdd" class="card-header-btn" style="display: none;">+ 新增</div>
+                            </div>
+                            <!--信息卡片-->
+                            <!--<div class="card-div">-->
+                            <!--<span id="delDevice_2_1" class="img_close mui-icon mui-icon-closeempty delDevice"></span>-->
+                            <!--<div class="card-body">-->
+                            <!--<div class="card-body-content">-->
+                            <!--<div class="card-body-content-num">1</div>-->
+                            <!--<div class="card-body-content-name">管线种类名称</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-content-name">-->
+                            <!--<span>111111111111</span>-->
+                            <!--<span class="mui-icon mui-icon-arrowdown card-icon card-icon-up"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-info">-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>管线编号</div>-->
+                            <!--<div class="moreText">XB1231111111</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>起点管线编号</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>终点管线编号</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>断面尺寸（mm）</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>材质</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-div">-->
+                            <!--<span id="delDevice_2_2" class="img_close mui-icon mui-icon-closeempty delDevice"></span>-->
+                            <!--<div class="card-body">-->
+                            <!--<div class="card-body-content">-->
+                            <!--<div class="card-body-content-num">2</div>-->
+                            <!--<div class="card-body-content-name">管线种类名称</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-content-name">-->
+                            <!--<span>111111111111</span>-->
+                            <!--<span class="mui-icon mui-icon-arrowdown card-icon card-icon-up"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-info">-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>管线编号</div>-->
+                            <!--<div class="moreText">XB1231111111</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>起点管线编号</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>终点管线编号</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>断面尺寸（mm）</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>材质</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <!--接驳井信息-->
+                        <div id="jbj" class="card">
+                            <div id="jbjLab" class="card-header">
+                                <div class="card-header-title">接驳井信息</div>
+                                <!--<div id="jbjAdd" class="card-header-btn">+ 新增</div>-->
+                            </div>
+                            <!--信息卡片-->
+                            <!--<div class="card-div">-->
+                            <!--<span id="delDevice_3_1" class="img_close mui-icon mui-icon-closeempty delDevice"></span>-->
+                            <!--<div class="card-body">-->
+                            <!--<div class="card-body-content">-->
+                            <!--<div class="card-body-content-num">1</div>-->
+                            <!--<div class="card-body-content-name">管点种类</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-content-name">-->
+                            <!--<span>XXXXXXXXXX</span>-->
+                            <!--<span class="mui-icon mui-icon-arrowdown card-icon"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-info">-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>接驳井编号</div>-->
+                            <!--<div class="moreText">XB1231111111</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>井盖尺寸（mm）</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>井盖材质</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>井深（m）</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>接入管数</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-div">-->
+                            <!--<span id="delDevice_3_2" class="img_close mui-icon mui-icon-closeempty delDevice"></span>-->
+                            <!--<div class="card-body">-->
+                            <!--<div class="card-body-content">-->
+                            <!--<div class="card-body-content-num">2</div>-->
+                            <!--<div class="card-body-content-name">管点种类</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-content-name">-->
+                            <!--<span>XXXXXXXXXX</span>-->
+                            <!--<span class="mui-icon mui-icon-arrowdown card-icon card-icon-up"></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-info">-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>接驳井编号</div>-->
+                            <!--<div class="moreText">XB1231111111</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>井盖尺寸（mm）</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>井盖材质</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>井深（m）</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--<div class="card-body-raw">-->
+                            <!--<div>接入管数</div>-->
+                            <!--<div class="moreText">123456</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <div id="bottom-div4" style="height: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="relationPSH" class="mui-slider-item mui-control-content">
+                <div style="height:70px;background: #F4F4F4;" tabindex="0"></div>
+                <div id="detail5" style="overflow-y: auto;background: #F4F4F4; height: 100vh;">
+                    <div class="mainPage"  id="relation-psh-li" >
+                        <!--item start-->
+                        <div class="relation-psh-item">
+                            <div class="relation-psh-item-header">
+                                <span class="relation-psh-item-header-num">1</span><span>万乘简易仓(二）</span>
+                            </div>
+                            <div  class="relation-psh-item-info">
+                                <div class="relation-psh-item-info-line">排水户性质：<span class="relation-psh-item-info-value">生活类</span></div>
+                                <div class="relation-psh-item-info-line relation-psh-item-info-line-flex">
+                                    <div>联系人:<span class="relation-psh-item-info-value">小张</span></div>
+                                    <div>联系电话:<span class="relation-psh-item-info-value">18028333333</span></div>
+                                </div>
+                                <div class="relation-psh-item-info-line">是否办理排水许可证: <span class="relation-psh-item-info-value">是</span></div>
+                            </div>
+                        </div>
+                        <!--item start-->
+                        <!--item start-->
+                        <div class="relation-psh-item">
+                            <div class="relation-psh-item-header">
+                                <span class="relation-psh-item-header-num">2</span><span>万乘简易仓(三）</span>
+                            </div>
+                            <div  class="relation-psh-item-info">
+                                <div class="relation-psh-item-info-line">排水户性质：<span class="relation-psh-item-info-value">生活类</span></div>
+                                <div class="relation-psh-item-info-line relation-psh-item-info-line-flex">
+                                    <div>联系人:<span class="relation-psh-item-info-value">小张</span></div>
+                                    <div>联系电话:<span class="relation-psh-item-info-value">18028333333</span></div>
+                                </div>
+                                <div class="relation-psh-item-info-line">是否办理排水许可证: <span class="relation-psh-item-info-value">是</span></div>
+                            </div>
+                        </div>
+                        <!--item start-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/paishuihu.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/uploadimage.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/mui.previewimage.js"></script>
+<script src="../../js/numberBox.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script>
+    // var vConsole = new VConsole();
+
+    var isTest = false // false;//true
+
+    var drainageArr = [];
+    var dischargeArr = [];
+    var wellArr = [];
+    var mid='';
+
+    var parentId = null;// data中的userlevel， 一级排水户是guid，二级排水户传parentId
+    //  排水性质
+    var characterPickerData = {}
+    //污水去向
+    var sewageWhereaboutsPickerData = {}
+    // 用水性质
+    var waterTypePickerData = {}
+
+    mui.init({
+        swipeBack: false,
+        gestureConfig: {
+            swipe: true, //默认为true
+        }
+    });
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    const mapData = window['mobile-lib'].MapData({
+        serverUrl: config.urls.serverDomain,style:'color'
+    });
+
+    var userPicker = new mui.PopPicker();
+    mui.plusReady(function() {
+        // console.log("id:"+plus.webview.currentWebview().id)
+        var winHeight = window.screen.height;
+
+        $("#detail1").height(winHeight - 130);
+        $("#detail2").height(winHeight - 130);
+        $("#detail3").height(winHeight - 130);
+        $("#detail4").height(winHeight - 130);
+        //禁止选项卡自带滑动，手动监听
+        // mui('.mui-slider').slider().stopped = true;
+        // initView()
+        //
+        // // 点击事件
+         initDownSelect();
+        //
+        // // 初始化选项框状态
+         initCheckBox();
+
+        /*
+        * showPic
+        *showData
+        *checkYCL()
+        *checkJBG()
+        *checkJBJ()
+        *getGx()
+        *makePhoto
+        *查看主要用到以上，其他是以防加上编辑功能时做调整
+        * */
+
+        self = plus.webview.currentWebview();
+        var dataPsh = self.data;
+
+        parentId = null;// data中的userlevel， 一级排水户是guid，二级排水户传parentId
+        var userLevel = 2 ;// 二级排水户查看上级的排水户
+        if(dataPsh && dataPsh.data && dataPsh.data.userlevel) {
+            if(dataPsh.data.userlevel == 2) {
+                // 这是二级排水户 ，查看的关联排水户是上级排水户
+                parentId = dataPsh.data.parentId;
+                userLevel = 1;
+            }else{
+                // 这是一级排水户 ，查看的关联排水户是二级排水户，parentId传本身的guid
+                parentId = dataPsh.data.guid;
+                userLevel = 2;
+            }
+        }
+
+
+        getRelationPSH(userLevel, parentId);
+        getGX();
+        //填充数据
+        showData();
+        showPic();
+
+        var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        window.onresize = function() {
+            var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+            if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+                $("#bottom-item-btn").hide()
+            } else {
+
+                $("#bottom-item-btn").show()
+            }
+        }
+    });
+
+    //界面元素控制
+    var initView = function() {
+        self = plus.webview.currentWebview();
+
+        var date = new Date();
+        var now = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate()
+
+        $("#projectId").val(self.projectId);
+        $("#projectName").val(self.projectName);
+        $("#projectNo").val(self.projectNo);
+        $("#inputDate").val(now);
+        $("#inputerfullname").val(isEmp(app.userInfo().realname));
+        $("#inputPhone").val(isEmp(app.userInfo().personMobilePhone));
+        $("#inputDepartmentFullname").val(isEmp(app.userInfo().companyName) + "." + isEmp(app.userInfo().departName));
+
+        getDicTextByIdAndKey(1, "DEVICE.USERTYPE_CHARACTER", function(data) {
+            $("#character").val('1');
+            $("#characterText").val(isEmp(data));
+        })
+
+        // 初始化排水等级
+        // var data = {result: [{'value':0,'text':'重点'}, {'value':1,'text':'重要'}, {'value':2,'text':'一般'}]}
+        $("#importanceLevel").val('0');
+        $("#importanceLevelText").val('重点');
+
+
+
+        //图片组
+        var a = '#psh_photo,#discCodeAttachment,#pslCodeAttachment,#eslCodeAttachment'
+
+        $(a).on('tap', imgFun);
+        function imgFun() {
+            var imgID = $(this).attr("id");
+
+            plusSelectImage(function(res, path) {
+                console.log(JSON.stringify(res))
+                if (res.success) {
+                    //图片识别
+                    plus.io.resolveLocalFileSystemURL(path, function(entry) {
+                        entry.file(function(file) {
+                            let reader = null;
+                            reader = new plus.io.FileReader();
+                            reader.onload = function(e) {};
+                            reader.readAsDataURL(file);
+                            reader.onloadend = function(e) {
+                                let dataBase = e.target.result;
+                                //图像识别
+                                if (imgID == "discCodeAttachment") { //营业执照
+                                    bizLicenseOCR(dataBase, function(data) {
+                                        if (!data.success) {
+                                            console.log(JSON.stringify(data))
+                                            app.toast("营业执照照片识别失败，请重新上传")
+                                            return;
+                                        }
+                                        else{
+                                            makePhoto(imgID,res,path,"img2")
+                                        }
+                                    });
+                                } else if (imgID == "pslCodeAttachment") { //排水
+                                    generalBasicOCR(dataBase, function(data) {
+                                        console.log(JSON.stringify(data))
+                                        if (!data.success) {
+                                            app.toast("排水许可证照片识别失败，请重新上传")
+                                            return;
+                                        }
+                                        else{
+                                            makePhoto(imgID,res,path,"img3")
+                                        }
+                                    });
+                                } else if (imgID == "eslCodeAttachment") { //排污
+                                    generalBasicOCR(dataBase, function(data) {
+                                        console.log(JSON.stringify(data))
+                                        if (!data.success) {
+                                            app.toast("排污许可证照片识别失败，请重新上传")
+                                            return;
+                                        }
+                                        else{
+                                            makePhoto(imgID,res,path,"img4")
+                                        }
+                                    });
+                                }else{
+                                    makePhoto(imgID,res,path,"img1")
+                                }
+
+                            };
+                        });
+                    })
+
+
+                    // var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+                    //     '" class="img_item">' +
+                    //     '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style=""  />' +
+                    //     '		<span class="img_close mui-icon mui-icon-closeempty delPhoto"></span>' +
+                    //     '	</div>';
+                    // // $(".psh_img_list").append(html);
+                    // $("."+imgID+"_list").append(html);
+                    //
+                    // var count = $("."+imgID+"_list").children(".img_item").length;
+                    // if (count == 1) { //处理上传的数量
+                    //     $("#"+ imgID).hide();
+                    // }
+                } else app.toast(data.message)
+            });
+
+        }
+
+
+
+        //共用删除图
+        $(document).on("tap", ".img_close", function() {
+            console.log()
+            var that = $(this)
+            var imgID = $(this).parent().parent().next().attr("id");
+            // console.log(imgID)
+            mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+                if (parseInt(result.index) == 0) {
+                    that.parent().remove();
+                    // var count = $(".psh_img_list").children(".img_item").length;
+                    var count = $("."+imgID+"_list").children(".img_item").length;
+                    if (count < 1) {
+                        // $("#psh_photo").show();
+                        $("#"+imgID).show();
+                    }else{
+                        console.log(count)
+                    }
+                }
+            })
+        });
+
+        //删除图
+        // $(document).on("tap", ".img_close", function() {
+        //     var that = $(this)
+        //     mui.confirm("移除图片?", "提示", ['确定', '取消'], function(result) {
+        //         if (parseInt(result.index) == 0) {
+        //             console.log(that.id)
+        //             if (that.attr("id") != undefined) {
+        //                 that.prev().on('tap', imgFun);
+        //                 that.prev().attr("src", "../../img/commom/pz@2x.png");
+        //                 that.prev().attr("data-token", "");
+        //                 that.hide();
+        //             } else {
+        //                 let type = that.attr("type");
+        //                 console.log(that.parent().parent().attr("class"))
+        //                 that.parent().parent().html("");
+        //                 $("#" + type + "_img").show();
+        //                 $('#' + type).attr("data-token", "");
+        //             }
+        //
+        //         }
+        //     })
+        // });
+
+        //审批人
+        $("#approverFullname").on("tap", function() {
+            var extras = {
+                multiSelect: false
+            }
+            app.openPage("../commom/organ.html", {
+                titleNView: {
+                    titleText: '选择审核人',
+                    autoBackButton: true
+                }
+            }, extras);
+            //移除
+            window.removeEventListener('returnSelect', setApprovalUser, false);
+            // 赋值
+            window.addEventListener('returnSelect', setApprovalUser, false);
+        })
+        var setApprovalUser = function(data) {
+            //加上防治跟其他监听冲突
+            if(data.detail[0].realname == undefined){
+                return;
+            }
+            $("#approverFullname").val(data.detail[0].realname);
+            $("#approverUsername").val(data.detail[0].username);
+        }
+
+        //营业执照
+        $("input[name='hasDiscCode']").on("change", function() {
+            if ($(this).val() == "1") {
+                $("#hasDiscCodeShow").show();
+            } else {
+                $("#hasDiscCodeShow").hide();
+            }
+        });
+    }
+
+    //
+    function getRelationPSH(paramUserLevel, paramParentId) {
+        if(!paramParentId) {
+            getRelationPSHReturnData(null)
+            return;
+        }
+        var params = {
+            pageNo: 1,
+            pageSize: 100,
+            userlevel: paramUserLevel, //  如果是二级排水户 ，查看的是上级排水户
+            parentId: paramParentId
+        }
+        getPshByParentId(params, function(data) {
+
+            // console.log('getPshByParentId start')
+            // console.log(JSON.stringify(data))
+            // console.log('getPshByParentId end')
+
+            // if(data.success) {
+            //     if(data.result && data.result.records && data.result.records.length) {
+            //         var len = data.result.records.length;
+            //         //console.log('==== len:' + len)
+            //         for(var i = 0; i < len; i++) {
+            //             var item = data.result.records[i];
+            //             if(item.guid) {
+            //                 parentPSHDictGuidForDischargerNameTmp[item.guid] = item.dischargerName
+            //             }
+            //         }
+            //     }
+            // }
+
+            //parentPSHDictGuidForDischargerName = parentPSHDictGuidForDischargerNameTmp
+            //console.log(parentPSHDictGuidForDischargerName)
+            getRelationPSHReturnData(data)
+        });
+    }
+
+    mui(".psh_photo_list").on('tap', '.imgCss', function() {
+        // $('#bottom-item-btn').hide();
+        mui.previewImage();
+    });
+
+    // var getRelationPSH = function(paramParentId) {
+    //
+    //     var pid = paramParentId
+    //     if(pid != null && (pid + '') != 'null' && pid != '' && pid.length > 0) {
+    //         getPshByParentId(pid, function(data) {
+    //             getRelationPSHReturnData(data);
+    //         })
+    //     }else{
+    //         getRelationPSHReturnData(2)
+    //     }
+    //
+    // }
+    function getRelationPSHReturnData(data)
+    {
+        var relationPSHHtml = '';
+        if(data && data.success) {
+            if(data.result && data.result.records && data.result.records.length) {
+                var len = data.result.records.length;
+                for(var i = 0; i < len; i++) {
+                    var item = data.result.records[i];
+                    relationPSHHtml += `
+                    <!--item start-->
+                    <div class="relation-psh-item">
+                    <div class="relation-psh-item-header">
+                    <span class="relation-psh-item-header-num">${i + 1}</span><span>${item.dischargerName}</span>
+                    </div>
+                    <div  class="relation-psh-item-info">
+                    <div class="relation-psh-item-info-line">排水户性质：<span class="relation-psh-item-info-value">${item.characterText}</span></div>
+                    <div class="relation-psh-item-info-line relation-psh-item-info-line-flex">
+                    <div>联系人:<span class="relation-psh-item-info-value">${item.inputPhone}</span></div>
+                    <div>联系电话:<span class="relation-psh-item-info-value">${item.inputerfullname}</span></div>
+                    </div>
+                    <div class="relation-psh-item-info-line">是否办理排水许可证: <span class="relation-psh-item-info-value">${item.recordNot}</span></div>
+                    </div>
+                    </div>
+                        <!--item end-->
+                    `;
+                }
+            }
+        } else{
+            // relation-psh-li
+            relationPSHHtml = '<div class="no-data">暂无数据</div>';
+        }
+        $('#relation-psh-li').html(relationPSHHtml)
+    }
+
+
+    // 排水性质下拉框
+    function showCharacterPicker(data) {
+        var resultJSON = [];
+        for (var i = 0; i < data.result.length; i++) {
+            var item = data.result[i];
+            resultJSON.push({
+                text: item.text,
+                value: item.value
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function(items) {
+                $("#character").val(items[0].value);
+                $("#characterText").val(items[0].text);
+            });
+        }
+    }
+    //污水去向
+    function showSewageWhereaboutsPicker(data) {
+            var resultJSON = [];
+            for (var i = 0; i < data.result.length; i++) {
+                var item = data.result[i];
+                resultJSON.push({
+                    text: item.text,
+                    value: item.value
+                })
+            }
+            if ($(".mui-poppicker").hasClass("mui-active")) {
+                userPicker.hide();
+                return false;
+            } else {
+                userPicker.setData(resultJSON);
+                userPicker.show(function(items) {
+                    $("#sewageWhereabouts").val(items[0].value);
+                    $("#sewageWhereabouts-text").val(items[0].text);
+                });
+            }
+        }
+    // 用水性质
+    function showWaterTypePicker(data) {
+            var resultJSON = [];
+            for (var i = 0; i < data.result.length; i++) {
+                var item = data.result[i];
+                resultJSON.push({
+                    text: item.text,
+                    value: item.value
+                })
+            }
+            if ($(".mui-poppicker").hasClass("mui-active")) {
+                userPicker.hide();
+                return false;
+            } else {
+                userPicker.setData(resultJSON);
+                userPicker.show(function(items) {
+                    $("#waterType").val(items[0].value);
+                    $("#waterType_dictText").val(items[0].text);
+                });
+            }
+        }
+    function isEmptyDictObj(obj) {
+        for (var key in obj) {
+            return false;
+        }
+        return true;
+    }
+    // 点击事件
+    var initDownSelect = function() {
+        // 排水性质
+        $("#characterText").on("tap", function() {
+            // console.log("排水性质")
+            var that = $(this);
+            if(!isEmptyDictObj(characterPickerData)) {
+                showCharacterPicker(characterPickerData)
+                return;
+            }
+            getDictItems('DEVICE.USERTYPE_CHARACTER', function(data) {
+                // console.log("排水性质"+JSON.stringify(data))
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                characterPickerData = data
+                showCharacterPicker(characterPickerData)
+
+            })
+        })
+        // 排水等级
+        $("#importanceLevelText").on("tap", function() {
+            // console.log("排水性质")
+            var that = $(this);
+            //getDictItems('DEVICE.USERTYPE_CHARACTER', function(data) {
+            var data = {result: [{'value':0,'text':'重点'}, {'value':1,'text':'重要'}, {'value':2,'text':'一般'}]}
+
+                var resultJSON = [];
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+                    resultJSON.push({
+                        text: item.text,
+                        value: item.value
+                    })
+                }
+                if ($(".mui-poppicker").hasClass("mui-active")) {
+                    userPicker.hide();
+                    return false;
+                } else {
+                    userPicker.setData(resultJSON);
+                    userPicker.show(function(items) {
+                        $("#importanceLevel").val(items[0].value);
+                        $("#importanceLevelText").val(items[0].text);
+                    });
+                }
+            //})
+        })
+        //门排地址
+        $("#dz_xz,#address").on("tap", function() {
+            if($("#village").val() == ''){
+                app.toast("请先选择所属小区")
+                return;
+            }
+            let xq = $("#village").val();
+            var extras = {
+                xq:xq
+            }
+            app.openPage("paish_locationAddress.html", {
+                titleNView: {
+                    titleText: '地址选择',
+                    autoBackButton: true,
+                }
+            }, extras);
+        });
+
+        //污水去向
+        $("#sewageWhereabouts-text").on("tap", function() {
+            var that = $(this);
+            if(!isEmptyDictObj(sewageWhereaboutsPickerData)) {
+                showSewageWhereaboutsPicker(sewageWhereaboutsPickerData)
+                return;
+            }
+            getDictItems('POLUTION_WATER_TO', function(data) {
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                sewageWhereaboutsPickerData = data
+                showSewageWhereaboutsPicker(sewageWhereaboutsPickerData)
+            })
+        })
+        //获取小区web端50个
+        $("#village").on("tap",function () {
+            var param = {name:'',rownum:50};
+            // getXqByStreet(param,function (data) {
+            getPsXq({streetId:'',rownum:20},function (data) {
+                if (200 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    console.log(data.message)
+                    return;
+                }
+                var resultJSON =[];
+                // console.log("小区信息："+JSON.stringify(data.result[0]))
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+
+                    resultJSON.push({
+                        text: item.reName,//小区名
+                        value: item.guid //小区guid
+                    })
+                }
+                var extras = {
+                    dataList: resultJSON,//内容
+                    multiSelect:false,
+                    module: 'com'
+                }
+                app.openPage("../commom/select.html", {
+                    titleNView: {
+                        titleText: '选择小区',
+                        autoBackButton: true
+                    }
+                }, extras);
+                //移除
+                window.removeEventListener('returnSelect',setComm,false);
+                // 赋值
+                window.addEventListener('returnSelect',setComm,false);
+            })
+
+        })
+
+        var setComm = function(data) {
+            //加上防治跟其他监听冲突
+            if(data.detail[0].value == undefined || data.detail[0].text == undefined){
+                return;
+            }
+            console.log("commId:" +data.detail[0].value); //小区guid
+            console.log("commName:" +data.detail[0].text);
+            $("#village").val(data.detail[0].text)
+            $("#villageId").val(data.detail[0].value)
+            let name = data.detail[0].text;
+            var param = {name:name,rownum:10};
+            getPsXq(param,function (data) {
+                if(data.success == true){
+                    // console.log("xq:"+JSON.stringify(data))
+                    let streetId = data.result[0].streetId;
+                    let stationId = data.result[0].stationId;
+                    let conId = data.result[0].conId
+                    console.log("streetId:"+ streetId);
+                    console.log("stationId:"+ stationId)
+                    console.log("conId:"+ conId)
+                    //街道回填
+                    if(streetId != null || streetId != ''){
+                        $("#street").val(streetId)
+                        $("#street-text").val("无")
+                        getStreet(streetId,function(data){
+                            if(data.success == true){
+                                // console.log("街道："+data.result.adName);
+                                if(data.result.adName){
+                                    $("#street-text").val(data.result.adName)
+                                }
+                            }
+                        })
+                    }else{
+                        $("#street").val("")
+                        $("#street-text").val("无")
+                    }
+                    //社区回填
+                    if(conId != null || conId !=""){
+                        $("#commuId").val(conId);
+                        $("#community").val("无");
+                        getSQ(streetId,function(data){
+                            if(data.success == true){
+                                // console.log("comm:"+JSON.stringify(data))
+                                if(data.result.length>0){
+                                    for(let i=0;i<data.result.length;i++){
+                                        let item = data.result[i];
+                                        if(item.guid == conId){
+                                            $("#community").val(item.adName);
+                                            console.log("社区:"+item.adName);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                    }else{
+                        $("#commuId").val("");
+                        $("#community").val("无");
+                    }
+                    //水务所回填
+                    if(stationId != null || stationId != ""){
+                        $("stationId").val(stationId)
+                        $("stationId_dictText").val("无")
+                        getDictItems('WATER_AFFAIRS_OFFICE', function(data) {
+                            if (206 != parseInt(data.code)) {
+                                app.toast(data.message);
+                                return;
+                            }
+                            // console.log(JSON.stringify(data))
+                            if(data.result.length > 0){
+                                for(let i=0;i<data.result.length;i++){
+                                    let item = data.result[i];
+                                    // console.log(item.value+","+stationId)
+                                    if(item.value == stationId){
+                                        $("#stationId").val(stationId);
+                                        $("#stationId_dictText").val(item.text);
+                                        break;
+                                    }
+                                }
+                            }
+
+                        })
+                    }else{
+                        $("stationId").val("")
+                        $("stationId_dictText").val("无")
+                    }
+                }
+            })
+        }
+
+        // 用水性质
+        $("#waterType_dictText").on('tap',function (data) {
+
+            if(!isEmptyDictObj(waterTypePickerData)) {
+                showWaterTypePicker(waterTypePickerData)
+                return;
+            }
+            getDictItems('ZHSW.DEVICE.WATERUSECLASS', function(data) {
+                // console.log("排水性质"+JSON.stringify(data))
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                waterTypePickerData = data;
+                showWaterTypePicker(waterTypePickerData)
+            })
+        })
+    }
+
+    //选择地址回填
+    window.addEventListener('backShowInfo', function(e) {
+        $("#basin").val(globalGetItem(GlobalKey.basin))
+        $("#basinId").val(globalGetItem(GlobalKey.basinId))
+        $("#address").val(globalGetItem(GlobalKey.address))
+    })
+
+    // 初始化选项框状态
+    var initCheckBox = function() {
+        $(".info-bar-content-item").find(":checkbox").each(function() {
+            $(this).click(function() {
+                if ($(this).is(':checked')) {
+                    $(this).parent().siblings().find(":checkbox").each(function() {
+                        $(this).prop("checked", false)
+                    });
+                }
+            });
+        });
+    }
+    // 详情使用tab点击切换 ，不用上一步与下一步
+    $("#stepTwoLi").on("tap", function(event) {
+        console.log('stepTwoLi')
+        $("#drainageInfo").css("display", "none")
+        $("#certificateInfo").css("display", "inline-block")
+    })
+
+    //上一步
+    $("#pre_step").on("tap", function(event) {
+        if ($("#expandInfo").css("display") != 'none') {
+            $("#expandInfo").css("display", "none")
+            $("#stepFourLi").removeClass("step-active step-current")
+            $("#stepThreeLi").addClass("step-current")
+            $("#drainageInfo").css("display", "inline-block")
+            $("#preBtn").show();
+            $("#nextBtn").show();
+            $("#submitBtn").hide();
+            $("#nextBtn1").hide();
+        } else if ($("#drainageInfo").css("display") != 'none') {
+            $("#drainageInfo").css("display", "none")
+            $("#certificateInfo").css("display", "inline-block")
+            $("#stepThreeLi").removeClass("step-active step-current")
+            $("#stepTwoLi").addClass("step-current")
+            $("#preBtn").show();
+            $("#nextBtn").show();
+            $("#submitBtn").hide();
+        } else if ($("#certificateInfo").css("display") != 'none') {
+            $("#certificateInfo").css("display", "none")
+            $("#stepTwoLi").removeClass("step-active step-current")
+            $("#stepOneLi").addClass("step-current")
+            $("#basicInfo").css("display", "inline-block")
+            $("#preBtn").hide();
+            $("#nextBtn").hide();
+            $("#submitBtn").hide();
+            $("#nextBtn1").show();
+        }
+    })
+
+    //下一步
+    $("#next_step,#next_step1").on("tap", function(event) {
+        // 必填项校验
+        // if (validateRequiredFields()) {
+        if ($("#basicInfo").css("display") != 'none') {
+            $("#basicInfo").css("display", "none")
+            $("#certificateInfo").css("display", "inline-block")
+            $("#stepTwoLi").addClass("step-active step-current")
+            $("#stepOneLi").removeClass("step-current")
+            $("#preBtn").show();
+            $("#nextBtn").show();
+            $("#nextBtn1").hide();
+            attach();
+            savePSH();
+        } else if ($("#certificateInfo").css("display") != 'none') {
+            $("#certificateInfo").css("display", "none")
+            $("#drainageInfo").css("display", "inline-block")
+            $("#stepThreeLi").addClass("step-active step-current")
+            $("#stepTwoLi").removeClass("step-current")
+            $("#preBtn").show();
+            $("#nextBtn").show();
+            $("#nextBtn1").hide();
+            attach();
+            savePSH();
+        } else if ($("#drainageInfo").css("display") != 'none') {
+            $("#drainageInfo").css("display", "none")
+            $("#expandInfo").css("display", "inline-block")
+            $("#stepFourLi").addClass("step-active step-current")
+            $("#stepThreeLi").removeClass("step-current")
+            $("#preBtn").show();
+            $("#nextBtn").hide();
+            $("#submitBtn").show();
+            attach();
+            savePSH();
+        }
+        // }
+    })
+
+    //退出
+    $("#submit").on("tap", function(event) {
+        mui.back();
+        // if (validateRequiredFields()) {
+        //     savePSH();
+        //     var ps = localStorage.getItem("ps_discharger");
+        //     var psh = JSON.parse(localStorage.getItem("ps_discharger"));
+        //     var photoJSON = globalGetItem(GlobalKey.photoJSON);
+        //
+        //     if(psh.smid == "" || psh.smid == undefined ||psh.smid == null){
+        //         app.toast("排水户缺少SMID值！")
+        //         return;
+        //     }
+        //     //新增
+        //     if (self.type == 'add') {
+        //         addPSH(ps, photoJSON, function(data) {
+        //             if (data.success) {
+        //                 app.toast("新增成功");
+        //                 globalSetItem(GlobalKey.photoJSON, '');
+        //                 localStorage.setItem("ps_discharger", '');
+        //                 plus.webview.currentWebview().close('none'); //本页面
+        //             }else app.toast("新增失败");
+        //         })
+        //     }
+        // }
+    });
+
+    //移除设施
+    $("body").delegate(".delDevice", "tap", function(e) {
+        e.stopPropagation(); //  阻止事件冒泡
+        var that = $(this)
+        var btnArray = ['确定', '取消'];
+        mui.confirm('确定要删除这 1 项吗?', btnArray, function(e) {
+            if (e.index == 0) {
+                that.parent().remove()
+                let sGuid = that.parent().attr("data-guid");
+                deleteData(drainageArr,sGuid);
+                $('.card').each(function(i){
+                    console.log(i)
+                    $(this).find(".card-body-content-num").each(function(index) {
+                        $(this).text(index+1)
+                    });
+                })
+            }
+        })
+    })
+
+    //移除接驳管/井
+    $("body").delegate(".delDevice2", "tap", function(e) {
+        e.stopPropagation(); //  阻止事件冒泡
+        var that = $(this)
+        var btnArray = ['确定', '取消'];
+        mui.confirm('确定要删除这 1 项吗?', btnArray, function(e) {
+            if (e.index == 0) {
+                that.parent().remove()//移除接驳管
+                let expNo = that.attr("data-exp");
+                console.log("del:"+ expNo)
+                $("#"+expNo).remove();//移除接驳井
+                //移除guid
+                let gGuid = that.parent().attr("data-guid");
+                let jGuid = $("#"+expNo).attr("data-guid");
+                deleteData(dischargeArr,gGuid);
+                deleteData(wellArr,jGuid);
+
+                $('.card').each(function(i){
+                    console.log(i)
+                    $(this).find(".card-body-content-num").each(function(index) {
+                        $(this).text(index+1)
+                    });
+                })
+            }
+        })
+    })
+    //删除数组对应元素
+    var deleteData = function(arr, id){
+        if (arr && arr.length > 0) {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] === id) {
+                    arr.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    //展开或收起
+    $("body").delegate(".card-icon", "tap", function(e) {
+        e.stopPropagation(); //  阻止事件冒泡
+        $(this).toggleClass("card-icon-up")
+        $(this).parent().parent().next().toggle()
+    })
+
+    //重新加载
+    var reloadAddress = function(data) {
+        window.location.reload();
+    }
+
+    $("#discDate,#eslBeginDate,#pslBeginDate").on("tap", function() {
+        var that = $(this);
+        plusDate(function(data) {
+            that.val(data);
+        }, 1);
+    })
+
+    //结束时间
+    $("#discExpired,#eslEndDate,#pslEndDate").on("tap", function() {
+        var that = $(this);
+        plusDate(function(data) {
+            that.val(data);
+        }, 2);
+    })
+
+    var savePSH = function(){
+        // var ps_discharger={};
+        var ps_dischargerStr = localStorage.getItem("ps_discharger");
+        if (!ps_dischargerStr) {
+            ps_dischargerStr = JSON.stringify(ps_discharger);
+        }
+        ps_discharger = JSON.parse(ps_dischargerStr);
+        //基本信息
+        ps_discharger.dischargerName = $("#dischargerName").val();  //排水户名称
+        ps_discharger.character = $("#character").val();            //排水户性质value
+        ps_discharger.characterText = $("#characterText").val();    //排水户性质text
+        ps_discharger.importanceLevel = $("#importanceLevel").val();            //排水等级value
+        ps_discharger.importanceLevelText = $("#importanceLevelText").val();    //排水等级text
+        ps_discharger.village = $("#villageId").val();              //所属小区的id 如：re_area_1
+        ps_discharger.basin = $("#basinId").val();                  //所属流域id
+        ps_discharger.basin_dictText = $("#basin").val();           //所属流域
+        ps_discharger.stationId = $("#stationId").val();            //所属水务所id
+        ps_discharger.stationId_dictText = $("#stationId_dictText").val();//所属水务所
+        ps_discharger.street = $("#street").val();            //街道id
+        ps_discharger.commuId = $("#commuId").val();          //社区id
+        ps_discharger.address = $("#address").val();          //地址
+        ps_discharger.expNo = $("#expNo").val();              //排水户编号
+        ps_discharger.waterMeterNo = $("#waterMeterNo").val();    //水表编号-基本信息
+        ps_discharger.discArea = $("#discArea").val();        //排水户面积
+        ps_discharger.sewageWhereabouts = $("#sewageWhereabouts").val();//污水去向
+        ps_discharger.userlevel = $("input[name='userlevel']:checked").val();//排水户级别
+        ps_discharger.userlevel_dictText = $("input[name='userlevel']:checked").val() ==1?'一级':'二级';//排水户级别
+        ps_discharger.rainSewageSeparated = $("input[name='rainSewageSeparated']:checked").val();            //是否雨污分流
+        ps_discharger.businessDrainageHousehold = $("input[name='businessDrainageHousehold']:checked").val();//是否经营排水户
+        ps_discharger.pshContact = $("#pshContact").val();//排水户联系人
+        ps_discharger.pshPhone = $.trim($("#pshPhone").val());//排水户联系电话
+        ps_discharger.inputerfullname = app.userInfo().realname;//填入人全名
+        ps_discharger.inputPhone = app.userInfo().personMobilePhone;//填入人手机
+        ps_discharger.inputDepart = app.depart() ? app.depart().departName : '无所属部门';//所属部门
+        ps_discharger.inputDate = $("#inputDate").val();//填写日期
+        ps_discharger.notifymethod = ["email"];//新任务通知方式1
+        if ($("input[name='sms']:checked").val() == "sms") ps_discharger.notifymethod.push("sms") //新任务通知方式2
+        ps_discharger.approverUsername = $("#approverUsername").val();//审核人
+        ps_discharger.approverFullname = $("#approverFullname").val();//审核人
+        if(ps_discharger.smid == "" || ps_discharger.smid == undefined ||ps_discharger.smid == null){
+            console.log("ps_discharger.smid:"+ps_discharger.smid)
+            dealSmid();
+            ps_discharger.smid = mid//smid赋值
+        }
+        localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+        // console.log("baseInfo:"+(localStorage.getItem("ps_discharger")))
+
+        //证件信息
+        //1.营业执照
+        ps_discharger.hasDiscCode = $("input[name='hasDiscCode']:checked").val();//是否取得营业执照
+        if (ps_discharger.hasDiscCode == "1") {
+            ps_discharger.discCode = $("#discCode").val();//请输入营业执照统一社会信用代码
+            ps_discharger.discDate = $("#discDate").val();//营业执照核发日期
+            ps_discharger.discExpired = $("#discExpired").val();//营业执照有效期
+            //组装附件
+            // fileTokens("discCodeAttachment");
+        } else {
+            ps_discharger.discCode = "";
+            ps_discharger.discDate = "";
+            ps_discharger.discExpired = "";
+            ps_discharger.discCodeAttachment = ''; //清空附件
+        }
+        //2.排水许可
+        ps_discharger.hasPslCode = $("input[name='hasPslCode']:checked").val();//是否取得排水许可证
+        if (ps_discharger.hasPslCode == '1') {
+            ps_discharger.pslCode = $("#pslCode").val();//排水许可证号
+            ps_discharger.pslBeginDate = $("#pslBeginDate").val();//排水许可证核发日期
+            ps_discharger.pslEndDate = $("#pslEndDate").val();//排水许可证有效期
+            // fileTokens("pslCodeAttachment");
+        } else {
+            ps_discharger.pslCode = "";
+            ps_discharger.pslBeginDate = "";
+            ps_discharger.pslEndDate = "";
+            ps_discharger.pslCodeAttachment = ''; //清空附件
+        }
+
+        //3.排污
+        ps_discharger.hasEslCode = $("input[name='hasEslCode']:checked").val();//是否取得排污许可证
+        if (ps_discharger.hasEslCode == '1') {
+            ps_discharger.eslCode = $("#eslCode").val();//排污许可证号
+            ps_discharger.eslBeginDate = $("#eslBeginDate").val();//排污许可证核发日期
+            ps_discharger.eslEndDate = $("#eslEndDate").val();//排污许可证有效期
+            // fileTokens("eslCodeAttachment");
+        } else {
+            ps_discharger.eslCode = "";
+            ps_discharger.eslBeginDate = "";
+            ps_discharger.eslEndDate = "";
+            ps_discharger.eslCodeAttachment = ''; //清空附件
+        }
+        localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+        //给排水信息
+        ps_discharger.waterType = $("#waterType").val();;  //用水性质va
+        ps_discharger.waterType_dictText = $("#waterType_dictText").val();;  //用水性质tx
+        ps_discharger.waterMetNu = $("#waterMetNu").val();;   //水表编号
+        ps_discharger.waterConsump = $("#waterConsump").val();; //月用水量
+        ps_discharger.waterSelfDaily = $("#waterSelfDaily").val();; //自备水量
+        ps_discharger.mainCont = $("#mainCont").val();; //工业废水主要成分
+        ps_discharger.waterAllQuanit = $("#waterAllQuanit").val();; //总排水量
+        ps_discharger.productWasterQuant = $("#productWasterQuant").val();; //生产污水量
+        ps_discharger.sanitaryWasterQuant = $("#sanitaryWasterQuant").val();;//生活污水量
+        ps_discharger.ismatter = $("input[name='ismatter']:checked").val();//是否为特殊物质用户
+        if (parseInt(ps_discharger.ismatter) == 1) {
+            ps_discharger.matterName = $("#matterName").val();//特殊物质用户废水主要成分
+        }
+        ps_discharger.waterSs = $("#waterSs").val();//排水总悬浮固体
+        ps_discharger.waterBod5 = $("#waterBod5").val();//排水生化需氧量
+        ps_discharger.waterCodcr = $("#waterCodcr").val();//排水化学需氧量
+        ps_discharger.waterTn = $("#waterTn").val();//排水总氮
+        ps_discharger.waterNh3N = $("#waterNh3N").val();//排水氨氮
+        ps_discharger.waterTp = $("#waterTp").val();//排水总磷
+        ps_discharger.waterTemp = $("#waterTemp").val();//排水温度
+        ps_discharger.waterPh = $("#waterPh").val();//PH值
+        localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+        //扩展信息
+        //构筑物
+        var drainageStr = '';
+        if (drainageArr.length > 0) {
+            for(let i = 0;i<drainageArr.length;i++){
+                drainageStr += drainageArr[i]+",";
+            }
+            ps_discharger.structures = drainageStr.substring(0,drainageStr.length-1);
+        }
+        //接驳管
+        var dischargeStr = '';
+        if (dischargeArr.length > 0){
+            for(let i = 0;i<dischargeArr.length;i++){
+                dischargeStr += dischargeArr[i]+",";
+            }
+            ps_discharger.disChargeLine = dischargeStr.substring(0,dischargeStr.length-1);
+        }
+        //接驳井
+        var wellStr = '';
+        if (wellArr.length > 0) {
+            for(let i = 0;i<wellArr.length;i++){
+                wellStr += wellArr[i]+",";
+            }
+            ps_discharger.transportWell = wellStr.substring(0,wellStr.length-1);
+        }
+        localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+        //其他
+        var pointStr = globalGetItem(GlobalKey.point)//坐标
+        ps_discharger.longitude = point.lng;
+        ps_discharger.latitude = point.lat;
+
+
+        localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+        console.log("baseInfo:"+(localStorage.getItem("ps_discharger")))
+
+    }
+
+    //附件(基本信息照片用)
+    var attach = function() {
+        var imagefileTokens = '';
+        $("[data-token]").each(function(index) {
+            var imgID = $(this).attr("id");
+            var token = $(this).attr("data-token");
+            if (imagefileTokens) {
+                imagefileTokens = imagefileTokens + "," + token;
+            } else {
+                imagefileTokens = token;
+            }
+        });
+
+        var photoFile = globalGetItem(GlobalKey.photoJSON);
+
+        if (photoFile) {
+            photoJSON = JSON.parse(photoFile);
+        }
+        /*var groupId = guid().replace(new RegExp('-', 'g'), '');
+        $("#pshPhotoInput").val(groupId);*/
+        var ps_discharger = globalGetItem(GlobalKey.psh)
+        if (ps_discharger) {
+            ps_discharger = JSON.parse(ps_discharger);
+        }else ps_discharger = {};
+
+        photoJSON.forEach((img, index, array) => {
+            if (img.fieldName == 'pshPhoto') {
+            // let groupId = '';
+            if (ps_discharger.pshPhoto == '' || ps_discharger.pshPhoto == ' ' || ps_discharger.pshPhoto ==null ) {
+                img.groupId = getGroupId();
+                ps_discharger.pshPhoto = img.groupId;
+            } else img.groupId = ps_discharger.pshPhoto;
+
+            // img.fileTokens = imagefileTokens;
+            img.fileTokens = $(".psh_photo_list").children(":first").attr("data-token");
+            // console.log("token:"+$(".psh_photo_list").children(":first").attr("data-token"))
+            console.log(JSON.stringify(ps_discharger.pshPhoto))
+            console.log(img.groupId)
+            console.log(imagefileTokens)
+            console.log("-------")
+        } else if (img.fieldName == 'discCodeAttachment') {
+            if (ps_discharger.discCodeAttachment == '' || ps_discharger.discCodeAttachment == ' ' || ps_discharger.discCodeAttachment ==null) {
+                console.log(1)
+                img.groupId = getGroupId();
+                img.fileTokens = $(".discCodeAttachment_list").children(":first").attr("data-token");
+                ps_discharger.discCodeAttachment = img.groupId;
+            } else img.groupId = ps_discharger.discCodeAttachment;
+            console.log(ps_discharger.discCodeAttachment)
+        } else if (img.fieldName == 'pslCodeAttachment') {
+            if (ps_discharger.pslCodeAttachment == '' || ps_discharger.pslCodeAttachment == ' '|| ps_discharger.pslCodeAttachment ==null) {
+                img.groupId = getGroupId();
+                img.fileTokens = $(".pslCodeAttachment_list").children(":first").attr("data-token");
+                ps_discharger.pslCodeAttachment = img.groupId;
+            } else img.groupId = ps_discharger.pslCodeAttachment
+        } else if (img.fieldName == 'eslCodeAttachment') {
+            if (ps_discharger.eslCodeAttachment == '' || ps_discharger.eslCodeAttachment == ' '|| ps_discharger.eslCodeAttachment ==null) {
+                img.groupId = getGroupId();
+                img.fileTokens = $(".eslCodeAttachment_list").children(":first").attr("data-token");
+                ps_discharger.eslCodeAttachment = img.groupId;
+            } else img.groupId = ps_discharger.eslCodeAttachment
+        }
+    })
+        console.log("photoJSON:"+ JSON.stringify(photoJSON))
+        globalSetItem(GlobalKey.photoJSON, JSON.stringify(photoJSON));
+        localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger))
+    }
+
+
+    function getGroupId() {
+        return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    // 组装smid
+    var dealSmid = function(){
+        let obj = {};
+
+        if (plus.webview.currentWebview().type == 'edit') {
+            obj.SMID = pshData.smid
+        }else{
+            obj.CORP_CODE = 'A01'
+        }
+        var pointStr = globalGetItem(GlobalKey.point);//选门牌地址的时候设置的
+        var point = JSON.parse(pointStr);
+        mapData.editPoint(
+            point.lng,
+            point.lat,
+            'ps_discharger',
+            obj
+        ).then((data) => {
+            if (plus.webview.currentWebview().type == 'add') {
+            console.log("smid赋值:"+data.result[0])
+            mid = data.result[0];
+        }else{
+            mid ='';
+        }
+    })
+    }
+
+    //组装项目表单
+    function saveProForm() {
+
+    }
+
+    //*****************查看用到的方法start****************************
+    //图片填充
+    var makePhoto = function(imgID,data,path,group){
+        console.log(JSON.stringify(data))
+        var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileTokens +
+            '" class="img_item" name="${group}">' +
+            '		<img class="img_src imgCss" data-preview-src="" data-preview-group="${group}" src="' + path + '" style=""  />' +
+            '	</div>';
+        // $(".psh_img_list").append(html);
+        $("."+imgID+"_list").append(html);
+
+        var count = $("."+imgID+"_list").children(".img_item").length;
+        if (count == 1) { //处理上传的数量
+            $("#"+ imgID).hide();
+        }
+    }
+    //展示图片
+    function showPic() {
+        self = plus.webview.currentWebview();
+        var item = self.data;
+        //排水户照片
+        if (item.pshPhoto) {
+            queryPhoto(item.pshPhoto, function (data) {
+                // console.log("pic:"+JSON.stringify(data))
+                if (data.result && data.result.length && data.result[0].uploadFile) {
+                    for (let i = 0; i < data.result.length; i++) {
+                        let path = data.result[i].uploadFile.savePath;
+                        let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                        makePhoto("psh_photo",data,url,"img1")
+                    }
+                }
+            })
+        }
+        //营业执照
+        if (item.discCodeAttachment) {
+            queryPhoto(item.discCodeAttachment, function (data) {
+                // console.log("pic:"+JSON.stringify(data))
+                if (data.result && data.result.length && data.result[0].uploadFile) {
+                    for (let i = 0; i < data.result.length; i++) {
+                        let path = data.result[i].uploadFile.savePath;
+                        let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                        makePhoto("discCodeAttachment",data,url,"img2")
+                    }
+                }
+            })
+        }
+        //排水许可证照片
+        if (item.pslCodeAttachment) {
+            queryPhoto(item.pslCodeAttachment, function (data) {
+                // console.log("pic:"+JSON.stringify(data))
+                if (data.result && data.result.length && data.result[0].uploadFile) {
+                    for (let i = 0; i < data.result.length; i++) {
+                        let path = data.result[i].uploadFile.savePath;
+                        let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                        makePhoto("pslCodeAttachment",data,url,"img3")
+                    }
+                }
+            })
+        }
+        //排污许可证照片
+        if (item.eslCodeAttachment) {
+            queryPhoto(item.eslCodeAttachment, function (data) {
+                // console.log("pic:"+JSON.stringify(data))
+                if (data.result && data.result.length && data.result[0].uploadFile) {
+                    for (let i = 0; i < data.result.length; i++) {
+                        let path = data.result[i].uploadFile.savePath;
+                        let url = config.urls.baseUrl + 'sys/common/view/' + path;
+                        makePhoto("eslCodeAttachment",data,url,"img4")
+                    }
+                }
+            })
+        }
+
+    }
+    //展示数据
+    function showData() {
+
+        self = plus.webview.currentWebview();
+        var item = self.data;
+        //基本信息
+        //排水户级别，不是2级的都默认1级
+        if (item.userlevel == '2') {
+            $("input[name='userlevel'][value=1]").prop("checked", false);
+            $("input[name='userlevel'][value=2]").prop("checked", true);
+
+            // 如果是2级 ，显示上级排水户级别
+            $("#parentPSH").css("display", "flex");
+            $("#parentId").val(item.parentId)
+            $("#parentName").val(item.parentName)
+
+        }else{
+            $("input[name='userlevel'][value=1]").prop("checked", true);
+            $("input[name='userlevel'][value=2]").prop("checked", false);
+
+            $("#parentPSH").css("display", "none");
+
+        }
+        $("#dischargerName").val(item.dischargerName);  //排水户名称
+        $("#character").val(item.character);            //排水户性质value
+        $("#characterText").val(item.characterText);    //排水户性质text
+        $("#importanceLevel").val(item.importanceLevel);            //排水等级value
+        $("#importanceLevelText").val(item.importanceLevelText);    //排水等级text
+        $("#villageId").val(item.village);              //所属小区的id 如：re_area_1
+        //小区回填
+        getPsXq({guid:item.village,rownum:1},function (data) {
+            // console.log("psxq:"+JSON.stringify(data))
+            $("#village").val("无")
+            if(data.success == true){
+                $("#village").val(data.result[0].reName)
+            }
+        })
+        $("#basinId").val(item.basin);                  //所属流域id
+        $("#basin").val(item.basin_dictText);           //所属流域
+        //流域回填
+        getSSLY(function(data1) {
+            $("#basin").val("无")
+            if(data1.success != true){return;}
+            if(data1.result.length>0){
+                for (var i = 0; i < data1.result.length; i++) {
+                    if (data1.result[i].guid == item.basin) {
+                        $("#basin").val(data1.result[i].basName);
+                    }
+                }
+            }
+        });
+        $("#stationId").val(item.stationId);            //所属水务所id
+        $("#stationId_dictText").val(item.stationId_dictText);//所属水务所
+        $("#street").val(item.street);            //街道id
+        //街道回填
+        getStreet(self.data.street,function(data){
+            $("#street-text").val("无")
+            if(data.success == true){
+                $("#street-text").val(data.result.adName)
+            }
+        })
+        $("#commuId").val(item.commuId);          //社区id
+        //社区信息回填
+        getSQ(item.street,function(data){
+            if(data.success == true){
+                if(data.result.length>0){
+                    for(let i=0;i<data.result.length;i++){
+                        if(data.result[i].guid == item.commuId){
+                            $("#community").val(data.result[i].adName);
+                            break;
+                        }
+                    }
+                }
+            }
+        })
+
+        $("#address").val(item.address);          //地址
+        $("#expNo").val(item.expNo);              //排水户编号
+        $("#waterMeterNo").val(item.waterMeterNo);    //水表编号-基本信息
+        $("#discArea").val(item.discArea);        //排水户面积
+        $("#sewageWhereabouts").val(item.sewageWhereabouts);//污水去向
+        //污水去向回填
+        getDictItems('POLUTION_WATER_TO', function(data) {
+            console.log("qu_xiang:"+JSON.stringify(data))
+            $("#sewageWhereabouts-text").val("无")
+            if(data.success == true){
+                if(data.result.length>0){
+                    for(let i=0;i<data.result.length;i++){
+                        let e = data.result[i];
+                        if(e.value == item.sewageWhereabouts){
+                            $("#sewageWhereabouts-text").val(e.text)
+                        }
+                    }
+                }
+            }
+        })
+        //是否雨污分流
+        if (item.rainSewageSeparated == '1') {
+            $("input[name='rainSewageSeparated'][value=0]").prop("checked", false);
+            $("input[name='rainSewageSeparated'][value=1]").prop("checked", true);
+        }else{
+            $("input[name='rainSewageSeparated'][value=0]").prop("checked", true);
+            $("input[name='rainSewageSeparated'][value=1]").prop("checked", false);
+        }
+        //是否经营排水户
+        if (item.businessDrainageHousehold == '1') {
+            $("input[name='businessDrainageHousehold'][value=0]").prop("checked", false);
+            $("input[name='businessDrainageHousehold'][value=1]").prop("checked", true);
+        }else{
+            $("input[name='businessDrainageHousehold'][value=0]").prop("checked", true);
+            $("input[name='businessDrainageHousehold'][value=1]").prop("checked", false);
+        }
+
+        $("#pshContact").val(item.pshContact);//排水户联系人
+        $("#pshPhone").val(item.pshPhone);//排水户联系电话
+        $("#inputerfullname").val(item.inputerfullname);//填入人全名
+        $("#inputPhone").val(item.inputPhone)//填入人手机
+        $("#inputDepartmentFullname").val(item.inputDepart);//所属部门
+        $("#inputDate").val(item.inputDate);//填写日期
+
+        // ps_discharger.notifymethod = ["email"];//新任务通知方式1
+        // if ($("input[name='sms']:checked").val() == "sms") ps_discharger.notifymethod.push("sms") //新任务通知方式2
+        //新任务通知方式-手机短信
+        if (item.notifymethod && item.notifymethod.indexOf("sms") != -1) {
+            $("input[name='sms'][value='sms']").prop("checked", true);
+        }else{
+            $("input[name='sms'][value='sms']").prop("checked", false);
+        }
+
+        $("#approverUsername").val(item.approverUsername);//审核人
+        $("#approverFullname").val(item.approverFullname);//审核人
+
+        $("#smid").val(item.smid)
+
+        //证件信息
+        //1.营业执照 是1 否0
+        if (item.hasDiscCode == "1") {
+            $("input[name='hasDiscCode'][value=0]").prop("checked", false);
+            $("input[name='hasDiscCode'][value=1]").prop("checked", true);//是，展开
+            $("#hasDiscCodeShow").show();
+        }else{
+            $("input[name='hasDiscCode'][value=0]").prop("checked", true);
+            $("input[name='hasDiscCode'][value=1]").prop("checked", false);
+            $("#hasDiscCodeShow").hide();
+        }
+        if (item.hasDiscCode == "1") {
+            $("#discCode").val(item.discCode);//请输入营业执照统一社会信用代码
+            $("#discDate").val(item.discDate);//营业执照核发日期
+            $("#discExpired").val(item.discExpired);//营业执照有效期
+        } else {
+            $("#discCode").val("无");//请输入营业执照统一社会信用代码
+            $("#discDate").val("无");//营业执照核发日期
+            $("#discExpired").val("无");//营业执照有效期
+        }
+        //2.排水许可
+        if (item.hasPslCode == "1") {
+            $("input[name='hasPslCode'][value=0]").prop("checked", false);
+            $("input[name='hasPslCode'][value=1]").prop("checked", true);
+            $(".XKZ").show()
+        }else{
+            $("input[name='hasPslCode'][value=0]").prop("checked", true);
+            $("input[name='hasPslCode'][value=1]").prop("checked", false);
+            $(".XKZ").hide()
+        }
+        // 是否备案
+        if (item.recordNot == "1") {
+            $("input[name='recordNot'][value=0]").prop("checked", false);
+            $("input[name='recordNot'][value=1]").prop("checked", true);
+            $(".XKZ").show()
+        }else{
+            $("input[name='recordNot'][value=0]").prop("checked", true);
+            $("input[name='recordNot'][value=1]").prop("checked", false);
+            $(".XKZ").hide()
+        }
+        if (item.hasPslCode == '1') {
+            $("#pslCode").val(item.pslCode);//排水许可证号
+            $("#pslBeginDate").val(item.pslBeginDate);//排水许可证核发日期
+            $("#pslEndDate").val(item.pslEndDate);//排水许可证有效期
+        } else {
+            $("#pslCode").val("无");//排水许可证号
+            $("#pslBeginDate").val("无");//排水许可证核发日期
+            $("#pslEndDate").val("无");//排水许可证有效期
+        }
+
+
+        //3.排污
+        if (item.hasEslCode == "1") {
+            $("input[name='hasEslCode'][value=0]").prop("checked", false);
+            $("input[name='hasEslCode'][value=1]").prop("checked", true);
+            $(".PWXKZ").show()
+        }else{
+            $("input[name='hasEslCode'][value=0]").prop("checked", true);
+            $("input[name='hasEslCode'][value=1]").prop("checked", false);
+            $(".PWXKZ").hide();
+        }
+        if (item.hasEslCode == '1') {
+            $("#eslCode").val(item.eslCode);//排污许可证号
+            $("#eslBeginDate").val(item.eslBeginDate);//排污许可证核发日期
+            $("#eslEndDate").val(item.eslEndDate);//排污许可证有效期
+        } else {
+            $("#eslCode").val("无");//排污许可证号
+            $("#eslBeginDate").val("无");//排污许可证核发日期
+            $("#eslEndDate").val("无");//排污许可证有效期
+        }
+        //给排水信息
+        $("#waterType").val(item.waterType);  //用水性质va
+        $("#waterType_dictText").val(item.waterType_dictText);  //用水性质tx
+        $("#waterMetNu").val(item.waterMetNu);   //水表编号
+        $("#waterConsump").val(item.waterConsump);//月用水量
+        $("#waterSelfDaily").val(item.waterSelfDaily); //自备水量
+        $("#mainCont").val(item.mainCont); //工业废水主要成分
+        $("#waterAllQuanit").val(item.waterAllQuanit); //总排水量
+        $("#productWasterQuant").val(item.productWasterQuant); //生产污水量
+        $("#sanitaryWasterQuant").val(item.sanitaryWasterQuant);//生活污水量
+        ps_discharger.ismatter = $("input[name='ismatter']:checked").val();//是否为特殊物质用户
+        if (item.ismatter == 1) {
+            $("#matterName").val(item.matterName);//特殊物质用户废水主要成分
+        }else{
+            $("#matterName").val("无");
+        }
+        $("#waterSs").val(item.waterSs);//排水总悬浮固体
+        $("#waterBod5").val(item.waterBod5);//排水生化需氧量
+        $("#waterCodcr").val(item.waterCodcr);//排水化学需氧量
+        $("#waterTn").val(item.waterTn);//排水总氮
+        $("#waterNh3N").val(item.waterNh3N);//排水氨氮
+        $("#waterTp").val(item.waterTp);//排水总磷
+        $("#waterTemp").val(item.waterTemp);//排水温度
+        $("#waterPh").val(item.waterPh);//PH值
+
+        //构筑物信息回填
+        getPshConn(item.guid,function(data){
+            console.log(item.guid)
+            console.log("getPshConn:"+JSON.stringify(data));
+            var html1 = '';
+            var html2 = '';
+            var html3 = '';
+
+
+            if(data.success == true){
+                if(data.result.structures.length>0){
+                    for(let i=0;i<data.result.structures.length;i++){
+                        var e = data.result.structures[i];
+                        var da ={};
+                        da.subtype_dictText = e.subtype_dictText;//设施名称
+                        da.expNo = e.expNo;//设施编号
+                        checkYCL(da);
+                    }
+                }
+
+                if(data.result.disChargeLine.length>0){
+                    for(let i=0;i<data.result.disChargeLine.length;i++){
+                        var e = data.result.disChargeLine[i];
+                        var da = {};
+                        da.guid = e.guid;
+                        da.spec = e.spec;//断面尺寸
+                        da.lineType_textValue = e.lineType_textValue;//管线种类
+                        da.lineMaterialText = e.lineMaterial_dictText;//管线材质
+                        da.lineId = e.ePointExpNo;//管线编号
+                        da.ePointExpNo = e.ePointExpNo;//终点管线编号
+                        da.sPointExpNo = e.sPointExpNo;//起点管线编号
+                        da.lineType_textValue = e.lineType_textValue;//管线种类
+                        checkJBG(da);
+                    }
+                }
+
+                if(data.result.transportWell.length>0){
+                    var gx = getGX();
+                    for(let i=0;i<data.result.transportWell.length;i++){
+                        var e = data.result.transportWell[i];
+                        let pointType = e.pointType;//管点种类
+                        let pointType_text='无';
+                        if(gx.length>0){
+                            for(let j=0;j<gx.length;j++){
+                                if(gx[j].value == pointType){
+                                    pointType_text = gx[j].text;
+                                    break;
+                                }
+                            }
+                        }
+
+                        var da = {};
+                        da.guid = e.guid;
+                        da.expNo = e.expNo;//接驳井编号
+                        da.sysType_dictText = pointType_text;//管点种类
+                        da.pointSize = e.pointSize;//井盖尺寸
+                        da.materialType_dictText = e.materialType_dictText;//井盖材质
+                        da.pointDepth = e.pointDepth;//井深
+                        da.pointPipes = e.pointPipes;//接入管数
+                        checkJBJ(da);
+
+                    }
+
+                }
+            }
+        })
+
+    }
+    //设施填充
+    var checkYCL = function(data){
+        console.log("checkYCL")
+        var sum = $("#yclLab").siblings();//获取兄弟元素个数
+        // 获取编号
+        let no = sum.length+1;
+        var html =`
+		    	<div class="card-div" data-guid="${data.guid}">
+					<div class="card-body">
+						<div class="card-body-content">
+							<div class="card-body-content-num">`+ no +`</div>
+							<div class="card-body-content-name">设施类型名称</div>
+						</div>
+						<div class="card-body-content-name">
+							<span>`+ data.subtype_dictText +`</span>
+							<span class="mui-icon mui-icon-arrowdown card-icon"></span>
+						</div>
+					</div>
+					<div class="card-body-info">
+						<div class="card-body-raw">
+							<div>设施编号</div>
+							<div class="moreText2">`+ data.expNo +`</div>
+						</div>
+						<div class="card-body-raw">
+							<div>备注</div>
+							<div class="moreText"></div>
+						</div>
+					</div>
+				</div>
+		    `;
+        //获取最后一个兄弟元素
+        if(sum.length == 0){
+            $("#yclLab").after(html);
+        }else{
+            var lastFactor = $("#yclLab").siblings().last();
+            lastFactor.after(html);
+        }
+    }
+    //接驳管填充
+    var checkJBG = function(data){
+        console.log("checkJBG")
+        var sum = $("#jbgLab").siblings();//获取兄弟元素个数
+        // 编号
+        let no = sum.length+1;
+        var html =`
+            	<div class="card-div" data-guid="${data.guid}">
+					<div class="card-body">
+						<div class="card-body-content">
+							<div class="card-body-content-num">`+ no +`</div>
+							<div class="card-body-content-name">管线种类</div>
+						</div>
+						<div class="card-body-content-name">
+							<span>${data.lineType_textValue}</span>
+							<span class="mui-icon mui-icon-arrowdown card-icon card-icon-up"></span>
+						</div>
+					</div>
+					<div class="card-body-info">
+						<div class="card-body-raw">
+							<div>管线编号</div>
+							<div class="moreText2">${data.lineId}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>起点管线编号</div>
+							<div class="moreText2">${data.sPointExpNo}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>终点管线编号</div>
+							<div class="moreText2">${data.ePointExpNo}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>断面尺寸（mm）</div>
+							<div class="moreText2">${data.spec}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>材质</div>
+							<div class="moreText2">${data.lineMaterialText}</div>
+						</div>
+					</div>
+				</div>
+            `;
+        //获取最后一个兄弟元素
+        if(sum.length == 0){
+            $("#jbgLab").after(html);
+        }else{
+            var lastFactor = $("#jbgLab").siblings().last();
+            lastFactor.after(html);
+        }
+
+
+    }
+    //接驳井填充
+    var checkJBJ = function(item){
+        console.log("checkJBJ")
+        var sum = $("#jbjLab").siblings();//获取兄弟元素个数
+        // 编号
+        let no = sum.length+1;
+        var html=`
+                <div id="${item.expNo}" class="card-div" data-guid="${item.guid}">
+                    <div class="card-body">
+                        <div class="card-body-content">
+                            <div class="card-body-content-num">`+ no +`</div>
+                            <div class="card-body-content-name">管点种类</div>
+                        </div>
+                        <div class="card-body-content-name">
+                            <span>${item.sysType_dictText}</span>
+                            <span class="mui-icon mui-icon-arrowdown card-icon"></span>
+                        </div>
+                    </div>
+                    <div class="card-body-info">
+                        <div class="card-body-raw">
+                            <div>接驳井编号</div>
+                            <div class="moreText">${item.expNo}</div>
+                        </div>
+                        <div class="card-body-raw">
+                            <div>井盖尺寸（mm）</div>
+                            <div class="moreText">${item.pointSize}</div>
+                        </div>
+                        <div class="card-body-raw">
+                            <div>井盖材质</div>
+                            <div class="moreText">${item.materialType_dictText}</div>
+                        </div>
+                        <div class="card-body-raw">
+                            <div>井深（m）</div>
+                            <div class="moreText">${item.pointDepth}</div>
+                        </div>
+                        <div class="card-body-raw">
+                            <div>接入管数</div>
+                            <div class="moreText">${item.pointPipes}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        //获取最后一个兄弟元素
+        if(sum.length == 0){
+            $("#jbjLab").after(html);
+        }else{
+            var lastFactor = $("#jbjLab").siblings().last();
+            lastFactor.after(html);
+        }
+
+    }
+    //获取管线字典
+    function getGX() {
+        var gx =[];
+        getDictItems('PIPELINE_TYPE',function(data){
+            if(data.success == true){
+                if (206 != parseInt(data.code)) {
+                    app.toast(data.message);
+                    return;
+                }
+                for (var i = 0; i < data.result.length; i++) {
+                    var item = data.result[i];
+                    gx.push({
+                        text: item.text,
+                        value: item.value
+                    })
+                }
+            }
+        })
+        return gx;
+    }
+    //****************查看用到的方法end*******************************
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+    Date.prototype.Format = function(fmt) { // author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+                o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+
+
+    //回到顶部
+    function scrollTop() {
+        document.getElementById('detail1').scrollTop = 0;
+        document.getElementById('detail2').scrollTop = 0;
+        document.getElementById('detail3').scrollTop = 0;
+        document.getElementById('detail4').scrollTop = 0;
+    }
+
+    //限定输入字数
+    function format_input(type, obj) {
+        if (/^\s+$/gi.test(obj.value)) {
+            obj.value = '';
+        }
+        var t;
+        var num;
+        switch (type){
+            case 1:
+                t = '排水户名称';
+                num = 50;
+                break
+            case 2:
+                t = '';
+                num = 50;
+                break
+            case 3:
+                t = '主要业务活动';
+                num = 50;
+                break
+            case 4:
+                t = '主要生产工艺';
+                num = 50;
+                break
+            case 5:
+                t = '排水户联系人';
+                num = 16;
+                break
+            case 6:
+                t = '所属水务所联系人';
+                num = 16;
+                break
+            case 7:
+                t = '管理单位';
+                num = 16;
+                break
+            case 8:
+                t = '管理单位联系人';
+                num = 16;
+                break
+            case 9:
+                t = '工业废水主要成分';
+                num = 50;
+                break
+            case 10:
+                t = '水表编号';
+                num = 16;
+                break
+            case 11:
+                t = '特殊物质用户废水主要成分';
+                num = 50;
+                break
+            case 12:
+                t = '排水许可证号';
+                num = 16;
+                break
+            case 13:
+                t = '排污许可证号';
+                num = 16;
+                break
+        }
+        if (obj.value.length > num) {
+            obj.value = obj.value.slice(0, num);
+            // obj.focus();
+            app.toast(t + "不可大于" + num + "个字！")
+        }
+    }
+    // 所需排水许可证
+    $("input[name='hasPslCode']").on("change", function() {
+        if ($(this).val() == "1") {
+            // app.toast("备案")
+            $(".XKZ").hide()
+        } else {
+            // app.toast("排水许可证")
+            $(".XKZ").show()
+        }
+    });
+    // 是否备案
+    $("input[name='recordNot']").on("change", function() {
+        if ($(this).val() == "1") {
+            $(".XKZ").show()
+        } else {
+            $(".XKZ").hide()
+        }
+    });
+
+    //是否取得排污许可证
+    $("input[name='hasEslCode']").on("change", function() {
+        if ($(this).val() == "1") {
+            //是
+            $(".PWXKZ").show()
+        } else {
+            //否
+            $(".PWXKZ").hide()
+        }
+    });
+
+    //是否特殊物质用户
+    $("input[name='ismatter']").on("change", function() {
+        if ($(this).val() == "1") {
+            //是
+            $("#matterName").removeAttr("readonly");
+        } else {
+            //否
+            $("#matterName").attr("readonly",'true');
+
+        }
+    });
+
+    //预处理
+    $("#yclAdd").on('tap',function(){
+        let title = "排水构造物";
+        let code = [
+            '040517', //化粪池
+            '040518', //隔油池
+            '040519', //沉淀池
+            '040533', //沉沙池
+        ];
+        let deviceName = 'DEVICE_POINT_INFO';
+        let number = 1;
+        var extras = {
+            code: code,
+            deviceName: deviceName,
+            number: number
+        }
+        openDevice(title,extras)
+    })
+
+    //接驳管
+    $("#jbgAdd").on('tap',function(){
+        let title = "接驳管";
+        let code = '';
+        let deviceName = 'DEVICE_PS_LINE';
+        let number = 2;
+        var extras = {
+            code: code,
+            deviceName: deviceName,
+            number: number
+        }
+        openDevice(title,extras)
+    })
+
+    //接驳井
+    $("#jbjAdd").on('tap',function(){
+        let title = "接驳井";
+        let code = ['040501'];
+        let deviceName = 'DEVICE_POINT_INFO';
+        let number = 3;
+        var extras = {
+            code: code,
+            deviceName: deviceName,
+            number: number
+        }
+        openDevice(title,extras)
+    })
+
+    //跳转到地图选中页面
+    var openDevice = function(title,extras){
+        extras.xq = $("#village").val();
+        app.openPage("paish_device.html", {
+            titleNView: {
+                titleText: title,
+                autoBackButton: true,
+            }
+        }, extras);
+    }
+
+
+    window.addEventListener('backInfo', function(ev) {
+        var e = ev.detail
+        console.log("addEventListener_backInfo")
+        console.log(e.num)
+        //构筑物新增
+        if(e.num == 1){
+            addYCL(e.DEVICE_POINT_INFO);
+        }else if(e.num == 2){
+            // 接驳管新增
+            addJBG(e.DEVICE_PS_LINE);
+        }else{
+
+        }
+    })
+    var arSsType =['无','沉沙池','化粪池','毛发收集池','隔油沉沙池','隔油池'];
+    var addYCL = function(data){
+        console.log("addYCL")
+        drainageArr.push(data.guid);
+        // console.log("编号："+data.expNo)
+        // console.log("设施类型："+data.subtype)
+        // console.log("设施类型text："+arSsType[data.subtype])
+        var sum = $("#yclLab").siblings();//获取兄弟元素个数
+        // console.log(sum.length)
+        // 获取编号
+        let no = sum.length+1;
+        var html =`
+		    	<div class="card-div" data-guid="${data.guid}">
+					<span id="delDevice_1_`+ no +`" class="img_close mui-icon mui-icon-closeempty delDevice"></span>
+					<div class="card-body">
+						<div class="card-body-content">
+							<div class="card-body-content-num">`+ no +`</div>
+							<div class="card-body-content-name">设施类型名称</div>
+						</div>
+						<div class="card-body-content-name">
+							<span>`+ arSsType[data.subtype] +`</span>
+							<span class="mui-icon mui-icon-arrowdown card-icon"></span>
+						</div>
+					</div>
+					<div class="card-body-info">
+						<div class="card-body-raw">
+							<div>设施编号</div>
+							<div class="moreText2">`+ data.expNo +`</div>
+						</div>
+						<div class="card-body-raw">
+							<div>备注</div>
+							<div class="moreText"></div>
+						</div>
+					</div>
+				</div>
+		    `;
+        //获取最后一个兄弟元素
+        if(sum.length == 0){
+            $("#yclLab").after(html);
+        }else{
+            var lastFactor = $("#yclLab").siblings().last();
+            lastFactor.after(html);
+        }
+    }
+
+    var arLineType =['无','雨污合流','雨水','污水','截流']
+    //这个要求华东提供中文字段了0407
+    var arLineMaterial =['无','混凝土','钢筋混凝土','陶土','PE（聚乙烯）','HDPE（高密度聚乙烯）','UPVC','铸铁','玻璃钢夹砂','钢管','石棉水泥','土','砖砌','石碶','混凝土块砌;钢筋混凝土块砌','其他']
+    var addJBG = function(data){
+        addJBJ(data.ePointExpNo);
+        console.log("addJBG")
+        dischargeArr.push(data.guid);
+        // console.log("管线种类："+data.lineType)
+        // console.log("管线种类text："+arLineType[data.lineType])
+        // // console.log("管线编号："+data.lineId)
+        // console.log("起点管线编号："+data.sPointExpNo) //web端用终点
+        // console.log("终点管线编号："+data.ePointExpNo)
+        // console.log("断面尺寸："+data.spec)
+        // console.log("管线材质："+data.lineMaterial)
+        // console.log("管线材质text："+arLineMaterial[data.lineMaterial])
+        // console.log("管线材质text："+data.lineMaterialText)
+        var sum = $("#jbgLab").siblings();//获取兄弟元素个数
+        // console.log(sum.length)
+        // 编号
+        let no = sum.length+1;
+        var html =`
+            	<div class="card-div" data-guid="${data.guid}">
+					<span id="delDevice_2_`+ no +`" data-exp="${data.ePointExpNo}" class="img_close mui-icon mui-icon-closeempty delDevice2"></span>
+					<div class="card-body">
+						<div class="card-body-content">
+							<div class="card-body-content-num">`+ no +`</div>
+							<div class="card-body-content-name">管线种类</div>
+						</div>
+						<div class="card-body-content-name">
+							<span>${arLineType[data.lineType]}</span>
+							<span class="mui-icon mui-icon-arrowdown card-icon card-icon-up"></span>
+						</div>
+					</div>
+					<div class="card-body-info">
+						<div class="card-body-raw">
+							<div>管线编号</div>
+							<div class="moreText2">${data.lineId}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>起点管线编号</div>
+							<div class="moreText2">${data.sPointExpNo}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>终点管线编号</div>
+							<div class="moreText2">${data.ePointExpNo}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>断面尺寸（mm）</div>
+							<div class="moreText2">${data.spec}</div>
+						</div>
+						<div class="card-body-raw">
+							<div>材质</div>
+							<div class="moreText2">${data.lineMaterialText}</div>
+						</div>
+					</div>
+				</div>
+            `;
+        //获取最后一个兄弟元素
+        if(sum.length == 0){
+            $("#jbgLab").after(html);
+        }else{
+            var lastFactor = $("#jbgLab").siblings().last();
+            lastFactor.after(html);
+        }
+
+
+    }
+
+    var addJBJ = function(expNo){
+        console.log("addJBJ")
+        getManholesByExpNo(expNo, function(data) {
+            if(data.success == true){
+                // console.log("接驳井："+JSON.stringify(data));
+                var item = data.result.records[0];
+                // console.log("管点种类:"+item.sysType_dictText)
+                // console.log("接驳井编号:"+item.expNo)
+                // console.log("井盖尺寸:"+item.pointSize)
+                // console.log("井盖材质:"+item.materialType_dictText)
+                // console.log("井深:"+item.pointDepth)
+                // console.log("接入管数:"+item.pointPipes)
+                wellArr.push(item.guid);
+
+                var sum = $("#jbjLab").siblings();//获取兄弟元素个数
+                // 编号
+                let no = sum.length+1;
+                var html=`
+						<div id="${expNo}" class="card-div" data-guid="${item.guid}">
+							<div class="card-body">
+								<div class="card-body-content">
+									<div class="card-body-content-num">`+ no +`</div>
+									<div class="card-body-content-name">管点种类</div>
+								</div>
+								<div class="card-body-content-name">
+									<span>${item.sysType_dictText}</span>
+									<span class="mui-icon mui-icon-arrowdown card-icon"></span>
+								</div>
+							</div>
+							<div class="card-body-info">
+								<div class="card-body-raw">
+									<div>接驳井编号</div>
+									<div class="moreText">${item.expNo}</div>
+								</div>
+								<div class="card-body-raw">
+									<div>井盖尺寸（mm）</div>
+									<div class="moreText">${item.pointSize}</div>
+								</div>
+								<div class="card-body-raw">
+									<div>井盖材质</div>
+									<div class="moreText">${item.materialType_dictText}</div>
+								</div>
+								<div class="card-body-raw">
+									<div>井深（m）</div>
+									<div class="moreText">${item.pointDepth}</div>
+								</div>
+								<div class="card-body-raw">
+									<div>接入管数</div>
+									<div class="moreText">${item.pointPipes}</div>
+								</div>
+							</div>
+						</div>
+					`;
+
+                //获取最后一个兄弟元素
+                if(sum.length == 0){
+                    $("#jbjLab").after(html);
+                }else{
+                    var lastFactor = $("#jbjLab").siblings().last();
+                    lastFactor.after(html);
+                }
+            }
+        })
+    }
+
+    $("#submitBtn").on('tap',function(){
+        if (validateRequiredFields()) {
+            savePSH()
+
+            var ps = localStorage.getItem("ps_discharger");
+            var psh = JSON.parse(localStorage.getItem("ps_discharger"));
+            console.log(psh.smid)
+            if(psh.smid == "" || psh.smid == undefined ||psh.smid == null){
+                app.toast("排水户缺少SMID值！")
+                return;
+            }
+            var photoJSON = globalGetItem(GlobalKey.photoJSON);
+            console.log("formdata："+ JSON.stringify(ps))
+            console.log("附件：", photoJSON);
+            if (self.type == 'add') {
+                addPSH(ps, photoJSON, function(data) {
+                    console.log("psh_add_success:"+JSON.stringify(data))
+                    if (data.success == true) {
+                        app.toast("新增成功");
+                        globalSetItem(GlobalKey.photoJSON, '');
+                        localStorage.setItem("ps_discharger", '');
+
+                    } else app.toast("新增失败");
+                });
+            }
+        }
+
+    })
+    function submitChange() {
+        console.log('ss')
+        if (validateRequiredFields()) {
+        //     savePSH()
+        //
+        //     var ps = localStorage.getItem("ps_discharger");
+        //     var psh = JSON.parse(localStorage.getItem("ps_discharger"));
+        //     console.log(psh.smid)
+        //     if(psh.smid == "" || psh.smid == undefined ||psh.smid == null){
+        //         app.toast("排水户缺少SMID值！")
+        //         return;
+        //     }
+        //     var photoJSON = globalGetItem(GlobalKey.photoJSON);
+        //     console.log("formdata："+ JSON.stringify(ps))
+        //     console.log("附件：", photoJSON);
+        //     if (self.type == 'add') {
+        //         addPSH(ps, photoJSON, function(data) {
+        //             console.log("psh_add_success:"+JSON.stringify(data))
+        //             if (data.success == true) {
+        //                 app.toast("新增成功");
+        //                 globalSetItem(GlobalKey.photoJSON, '');
+        //                 localStorage.setItem("ps_discharger", '');
+        //
+        //             } else app.toast("新增失败");
+        //         });
+        //     }
+        }
+
+    }
+
+    if(isTest) {
+        initDownSelect()
+        var dataStr = `{"data":{"guid":"ps_discharger_1","createBy":null,"createTime":"2021-03-24 14:50:27","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"state":"2","inputername":"曾汶僖","inputerfullname":null,"notifymethod":null,"smid":1,"dischargerName":"益田点彩人家（益田花园二期）","expNo":"F4403040100050024636","dischargerRecordNo":"7657","longitude":null,"latitude":null,"userlevel":"1","userlevel_dictText":"一级","parentId":null,"parentName":null,"ownerComp":null,"ownerPer":null,"ownerTel":null,"managerComp":null,"managerComp_dictText":null,"managerPer":null,"managerTel":null,"operatorId":null,"operatorId_dictText":null,"usertype":"","usertype_dictText":null,"character":"12","characterText":"居民住宅类","sort":null,"sort_dictText":null,"discArea":160000,"business":null,"process":null,"district":"440304","street":"440304010","commuId":"440304010005","commitId":"440304010005","road":null,"houseNo":"216号","stationId":"100000004003","stationId_dictText":"福中所","stationContact":null,"stationPhone":null,"basin":"HD180000a6","address":"福田区福保福保菩提路216号(益田花园二期)","inputPhone":null,"inputDepart":null,"inputDate":null,"approverUsername":null,"approverFullname":null,"waterType":null,"waterType_dictText":null,"waterMetNu":"1131360004（113123-1120）|1131920187（113123-4）|1131360002（113123-15）|1131360001（113123-9）|1131920170（113123-20）","waterConsump":null,"waterSelfDaily":null,"pollutematter":null,"pollutematter_dictText":null,"mainCont":null,"waterAllQuanit":null,"productWasterQuant":null,"sanitaryWasterQuant":null,"ismatter":null,"matterName":null,"waterSs":null,"waterBod5":null,"waterCodcr":null,"waterNh3N":null,"waterTn":null,"waterTp":null,"waterTemp":null,"waterPh":null,"passId":null,"passTime":null,"isIllegal":null,"discCode":"9144030019227219XB","discDate":null,"discExpired":null,"hasDiscCode":1,"discCodeAttachment":null,"pslCode":null,"pslBeginDate":null,"pslEndDate":null,"pslCodeAttachment":null,"eslCode":null,"eslBeginDate":null,"eslEndDate":null,"hasEslCode":null,"eslCodeAttachment":null,"streetPer":null,"streetTel":null,"businessPer":null,"businessTel":null,"cityAdmPer":null,"cityAdmTel":null,"structures":null,"disChargeLine":null,"transportWell":null,"replenishAddress":null,"code":"040532","pointId":null,"villageFlag":1,"village":"re_area_107","villageText":null,"pshPhoto":"","pshContact":"颜犁","pshPhone":"13924601131","sewageWhereabouts":null,"rainSewageSeparated":null,"businessDrainageHousehold":null,"drainagePermit":"0","recordNot":"0","waterMeterNo":null,"smx":114.053055,"smy":22.51526,"smlibtileid":211,"smuserid":0,"connList":[],"importanceLevel":null,"hasPslCode":0},"returnUrl":"view/ps/index.html","type":"check"}`
+       var data = JSON.parse(dataStr)
+        console.log(data.data.guid)
+        console.log(data.data.userlevel)
+        if(!data.data.parentId) {
+            console.log('parentId为null')
+        }else{
+            console.log(data.data.parentId)
+        }
+      //  getRelationPSH(1)
+        testPassData()
+        /*
+        *  guid: ps_discharger_1
+污水去向
+* {"success":true,"message":"操作成功!","code":206,"result":[{"text":"福田水质净化厂","title":"福田水质净化厂","value":"1"},{"text":"滨河水质净化厂","title":"滨河水质净化厂","value":"2"}],"timestamp":1624950585024,"key":"POLUTION_WATER_TO"}
+        * */
+
+    }
+    function testPassData() {
+        var dataStr = `
+        {"guid":"ps_discharger_166","createBy":null,"createTime":"2021-03-24 14:50:27","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"state":"2","inputername":"李建辉","inputerfullname":null,"notifymethod":null,"smid":166,"dischargerName":"金领假日公寓","expNo":"F4403040040370021548","dischargerRecordNo":"7727","longitude":null,"latitude":null,"userlevel":"2","userlevel_dictText":"二级","parentId":"null","parentName":"null","ownerComp":null,"ownerPer":null,"ownerTel":null,"managerComp":null,"managerComp_dictText":null,"managerPer":null,"managerTel":null,"operatorId":null,"operatorId_dictText":null,"usertype":null,"usertype_dictText":null,"character":"10","characterText":"综合商业服务类","sort":null,"sort_dictText":null,"discArea":200,"business":null,"process":null,"district":"440304","street":"440304004","commuId":"440304004037","commitId":"440304004037","road":null,"houseNo":"福田南路40号","stationId":"100000004003","stationId_dictText":"福中所","stationContact":null,"stationPhone":null,"basin":"HD180000a5","address":"福田区福田口岸滨河大道与福田南路交汇处福田南路40号(深物业金领假日公寓工地)","inputPhone":null,"inputDepart":null,"inputDate":null,"approverUsername":null,"approverFullname":null,"waterType":null,"waterType_dictText":null,"waterMetNu":"01290190100338|01290181207047","waterConsump":1000,"waterSelfDaily":null,"pollutematter":null,"pollutematter_dictText":null,"mainCont":null,"waterAllQuanit":null,"productWasterQuant":null,"sanitaryWasterQuant":null,"ismatter":null,"matterName":null,"waterSs":null,"waterBod5":null,"waterCodcr":null,"waterNh3N":null,"waterTn":null,"waterTp":null,"waterTemp":null,"waterPh":null,"passId":null,"passTime":null,"isIllegal":null,"discCode":"914403001921848000","discDate":null,"discExpired":null,"hasDiscCode":1,"discCodeAttachment":null,"pslCode":null,"pslBeginDate":null,"pslEndDate":null,"pslCodeAttachment":null,"eslCode":null,"eslBeginDate":null,"eslEndDate":null,"hasEslCode":null,"eslCodeAttachment":null,"streetPer":null,"streetTel":null,"businessPer":null,"businessTel":null,"cityAdmPer":null,"cityAdmTel":null,"structures":null,"disChargeLine":null,"transportWell":null,"replenishAddress":null,"code":"040532","pointId":null,"villageFlag":1,"village":"re_area_457","villageText":null,"pshPhoto":null,"pshContact":"张先生","pshPhone":"13530269911","sewageWhereabouts":null,"rainSewageSeparated":null,"businessDrainageHousehold":null,"waterMeterNo":null,"smx":114.07089,"smy":22.53091,"smlibtileid":211,"smuserid":0,"connList":[],"importanceLevel":null,"drainagePermit":"0","recordNot":"0","drainagePermitType":"0","hasPslCode":0}
+        `;
+        var dataPsh = JSON.parse(dataStr); //self.data;
+
+        parentId = null;// data中的userlevel， 一级排水户是guid，二级排水户传parentId
+        var userLevel = 2 ;// 二级排水户查看上级的排水户
+        if(dataPsh && dataPsh.data && dataPsh.data.userlevel) {
+            if(dataPsh.data.userlevel == 2) {
+                // 这是二级排水户 ，查看的关联排水户是上级排水户
+                parentId = dataPsh.data.parentId;
+                userLevel = 1;
+            }else{
+                // 这是一级排水户 ，查看的关联排水户是二级排水户，parentId传本身的guid
+                parentId = dataPsh.data.guid;
+                userLevel = 2;
+            }
+        }
+
+
+     //   getRelationPSH(userLevel, parentId);
+
+        getRelationPSHReturnData(null)
+        testShowData(dataPsh)
+    }
+    function testShowData(dataPsh) {
+       // self = plus.webview.currentWebview();
+        var self = {
+            data: dataPsh
+        }
+        var item = self.data;
+        //基本信息
+        //排水户级别，不是2级的都默认1级
+        if (item.userlevel == '2') {
+            $("input[name='userlevel'][value=1]").prop("checked", false);
+            $("input[name='userlevel'][value=2]").prop("checked", true);
+            // 如果是2级 ，显示上级排水户级别
+            $("#parentPSH").css("display", "flex");
+
+            $("#parentId").val(item.parentId)
+            $("#parentName").val(item.parentName)
+
+        }else{
+            $("input[name='userlevel'][value=1]").prop("checked", true);
+            $("input[name='userlevel'][value=2]").prop("checked", false);
+            $("#parentPSH").css("display", "none");
+        }
+
+
+
+        $("#dischargerName").val(item.dischargerName);  //排水户名称
+        $("#character").val(item.character);            //排水户性质value
+        $("#characterText").val(item.characterText);    //排水户性质text
+        $("#importanceLevel").val(item.importanceLevel);            //排水等级value
+        $("#importanceLevelText").val(item.importanceLevelText);    //排水等级text
+
+        $("#villageId").val(item.village);              //所属小区的id 如：re_area_1
+        // //小区回填
+        // getPsXq({guid:item.village,rownum:1},function (data) {
+        //     // console.log("psxq:"+JSON.stringify(data))
+        //     $("#village").val("无")
+        //     if(data.success == true){
+        //         $("#village").val(data.result[0].reName)
+        //     }
+        // })
+        $("#basinId").val(item.basin);                  //所属流域id
+        $("#basin").val(item.basin_dictText);           //所属流域
+        // //流域回填
+        // getSSLY(function(data1) {
+        //     $("#basin").val("无")
+        //     if(data1.success != true){return;}
+        //     if(data1.result.length>0){
+        //         for (var i = 0; i < data1.result.length; i++) {
+        //             if (data1.result[i].guid == item.basin) {
+        //                 $("#basin").val(data1.result[i].basName);
+        //             }
+        //         }
+        //     }
+        // });
+        $("#stationId").val(item.stationId);            //所属水务所id
+        $("#stationId_dictText").val(item.stationId_dictText);//所属水务所
+        $("#street").val(item.street);            //街道id
+        // //街道回填
+        // getStreet(self.data.street,function(data){
+        //     $("#street-text").val("无")
+        //     if(data.success == true){
+        //         $("#street-text").val(data.result.adName)
+        //     }
+        // })
+        $("#commuId").val(item.commuId);          //社区id
+        // //社区信息回填
+        // getSQ(item.street,function(data){
+        //     if(data.success == true){
+        //         if(data.result.length>0){
+        //             for(let i=0;i<data.result.length;i++){
+        //                 if(data.result[i].guid == item.commuId){
+        //                     $("#community").val(data.result[i].adName);
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // })
+
+        $("#address").val(item.address);          //地址
+        $("#expNo").val(item.expNo);              //排水户编号
+        $("#waterMeterNo").val(item.waterMeterNo);    //水表编号-基本信息
+        $("#discArea").val(item.discArea);        //排水户面积
+        $("#sewageWhereabouts").val(item.sewageWhereabouts);//污水去向
+        // //污水去向回填
+        // getDictItems('POLUTION_WATER_TO', function(data) {
+        //     console.log("qu_xiang:"+JSON.stringify(data))
+        //     $("#sewageWhereabouts-text").val("无")
+        //     if(data.success == true){
+        //         if(data.result.length>0){
+        //             for(let i=0;i<data.result.length;i++){
+        //                 let e = data.result[i];
+        //                 if(e.value == item.sewageWhereabouts){
+        //                     $("#sewageWhereabouts-text").val(e.text)
+        //                 }
+        //             }
+        //         }
+        //     }
+        // })
+        //是否雨污分流
+        if (item.rainSewageSeparated == '1') {
+            $("input[name='rainSewageSeparated'][value=0]").prop("checked", false);
+            $("input[name='rainSewageSeparated'][value=1]").prop("checked", true);
+        }else{
+            $("input[name='rainSewageSeparated'][value=0]").prop("checked", true);
+            $("input[name='rainSewageSeparated'][value=1]").prop("checked", false);
+        }
+        //是否经营排水户
+        if (item.businessDrainageHousehold == '1') {
+            $("input[name='businessDrainageHousehold'][value=0]").prop("checked", false);
+            $("input[name='businessDrainageHousehold'][value=1]").prop("checked", true);
+        }else{
+            $("input[name='businessDrainageHousehold'][value=0]").prop("checked", true);
+            $("input[name='businessDrainageHousehold'][value=1]").prop("checked", false);
+        }
+
+        $("#pshContact").val(item.pshContact);//排水户联系人
+        $("#pshPhone").val(item.pshPhone);//排水户联系电话
+        $("#inputerfullname").val(item.inputerfullname);//填入人全名
+        $("#inputPhone").val(item.inputPhone)//填入人手机
+        $("#inputDepartmentFullname").val(item.inputDepart);//所属部门
+        $("#inputDate").val(item.inputDate);//填写日期
+
+        // ps_discharger.notifymethod = ["email"];//新任务通知方式1
+        // if ($("input[name='sms']:checked").val() == "sms") ps_discharger.notifymethod.push("sms") //新任务通知方式2
+        //新任务通知方式-手机短信
+        if (item.notifymethod && item.notifymethod.indexOf("sms") != -1) {
+            $("input[name='sms'][value='sms']").prop("checked", true);
+        }else{
+            $("input[name='sms'][value='sms']").prop("checked", false);
+        }
+
+        $("#approverUsername").val(item.approverUsername);//审核人
+        $("#approverFullname").val(item.approverFullname);//审核人
+
+        $("#smid").val(item.smid)
+
+        //证件信息
+        //1.营业执照 是1 否0
+        if (item.hasDiscCode == "1") {
+            $("input[name='hasDiscCode'][value=0]").prop("checked", false);
+            $("input[name='hasDiscCode'][value=1]").prop("checked", true);//是，展开
+            $("#hasDiscCodeShow").show();
+        }else{
+            $("input[name='hasDiscCode'][value=0]").prop("checked", true);
+            $("input[name='hasDiscCode'][value=1]").prop("checked", false);
+            $("#hasDiscCodeShow").hide();
+        }
+        if (item.hasDiscCode == "1") {
+            $("#discCode").val(item.discCode);//请输入营业执照统一社会信用代码
+            $("#discDate").val(item.discDate);//营业执照核发日期
+            $("#discExpired").val(item.discExpired);//营业执照有效期
+        } else {
+            $("#discCode").val("无");//请输入营业执照统一社会信用代码
+            $("#discDate").val("无");//营业执照核发日期
+            $("#discExpired").val("无");//营业执照有效期
+        }
+        //2.排水许可
+        if (item.hasPslCode == "1") {
+            $("input[name='hasPslCode'][value=0]").prop("checked", false);
+            $("input[name='hasPslCode'][value=1]").prop("checked", true);
+            $(".XKZ").show()
+        }else{
+            $("input[name='hasPslCode'][value=0]").prop("checked", true);
+            $("input[name='hasPslCode'][value=1]").prop("checked", false);
+            $(".XKZ").hide()
+        }
+        // 是否备案
+        if (item.recordNot == "1") {
+            $("input[name='recordNot'][value=0]").prop("checked", false);
+            $("input[name='recordNot'][value=1]").prop("checked", true);
+            $(".XKZ").show()
+        }else{
+            $("input[name='recordNot'][value=0]").prop("checked", true);
+            $("input[name='recordNot'][value=1]").prop("checked", false);
+            $(".XKZ").hide()
+        }
+        if (item.hasPslCode == '1') {
+            $("#pslCode").val(item.pslCode);//排水许可证号
+            $("#pslBeginDate").val(item.pslBeginDate);//排水许可证核发日期
+            $("#pslEndDate").val(item.pslEndDate);//排水许可证有效期
+        } else {
+            $("#pslCode").val("无");//排水许可证号
+            $("#pslBeginDate").val("无");//排水许可证核发日期
+            $("#pslEndDate").val("无");//排水许可证有效期
+        }
+
+
+        //3.排污
+        if (item.hasEslCode == "1") {
+            $("input[name='hasEslCode'][value=0]").prop("checked", false);
+            $("input[name='hasEslCode'][value=1]").prop("checked", true);
+            $(".PWXKZ").show()
+        }else{
+            $("input[name='hasEslCode'][value=0]").prop("checked", true);
+            $("input[name='hasEslCode'][value=1]").prop("checked", false);
+            $(".PWXKZ").hide();
+        }
+        if (item.hasEslCode == '1') {
+            $("#eslCode").val(item.eslCode);//排污许可证号
+            $("#eslBeginDate").val(item.eslBeginDate);//排污许可证核发日期
+            $("#eslEndDate").val(item.eslEndDate);//排污许可证有效期
+        } else {
+            $("#eslCode").val("无");//排污许可证号
+            $("#eslBeginDate").val("无");//排污许可证核发日期
+            $("#eslEndDate").val("无");//排污许可证有效期
+        }
+        //给排水信息
+        $("#waterType").val(item.waterType);  //用水性质va
+        $("#waterType_dictText").val(item.waterType_dictText);  //用水性质tx
+        $("#waterMetNu").val(item.waterMetNu);   //水表编号
+        $("#waterConsump").val(item.waterConsump);//月用水量
+        $("#waterSelfDaily").val(item.waterSelfDaily); //自备水量
+        $("#mainCont").val(item.mainCont); //工业废水主要成分
+        $("#waterAllQuanit").val(item.waterAllQuanit); //总排水量
+        $("#productWasterQuant").val(item.productWasterQuant); //生产污水量
+        $("#sanitaryWasterQuant").val(item.sanitaryWasterQuant);//生活污水量
+        ps_discharger.ismatter = $("input[name='ismatter']:checked").val();//是否为特殊物质用户
+        if (item.ismatter == 1) {
+            $("#matterName").val(item.matterName);//特殊物质用户废水主要成分
+        }else{
+            $("#matterName").val("无");
+        }
+        $("#waterSs").val(item.waterSs);//排水总悬浮固体
+        $("#waterBod5").val(item.waterBod5);//排水生化需氧量
+        $("#waterCodcr").val(item.waterCodcr);//排水化学需氧量
+        $("#waterTn").val(item.waterTn);//排水总氮
+        $("#waterNh3N").val(item.waterNh3N);//排水氨氮
+        $("#waterTp").val(item.waterTp);//排水总磷
+        $("#waterTemp").val(item.waterTemp);//排水温度
+        $("#waterPh").val(item.waterPh);//PH值
+
+
+
+    }
+
+</script>
+
+</html>

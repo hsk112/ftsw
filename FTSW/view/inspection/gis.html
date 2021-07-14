@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>巡检管理</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+	<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+
+	<!-- 		<script>
+		  (function () {
+		    var random = Math.random();
+		    //处理请求JS文件缓存
+		    var element = document.getElementsByTagName("script");
+		    for (var i = 0; i < element.length; i++) {
+		      if (element[i].src) {
+		        if (element[i].src.indexOf('?') > -1) {
+		          element[i].src = element[i].src + '&timestreap=' + random;
+		        } else {
+		          element[i].src = element[i].src + '?timestreap=' + random;
+		        }
+		      }
+		    };
+		    //处理CSS文件缓存
+		    var link = document.getElementsByTagName("link");
+		    for (var i = 0; i < link.length; i++) {
+		      if (link[i].href) {
+		        link[i].href = link[i].href + '?timestreap=' + random;
+		      }
+		    }
+		  })()
+		</script> -->
+	<style>
+		.marker {
+			width: 0;
+			height: 0;
+		}
+
+		.marker span {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+			width: 30px;
+			height: 30px;
+			color: #fff;
+			background: #693;
+			border: solid 2px;
+			border-radius: 0 70% 70%;
+			box-shadow: 0 0 2px #000;
+			cursor: pointer;
+			transform-origin: 0 0;
+			transform: rotateZ(-135deg);
+		}
+
+		.marker b {
+			transform: rotateZ(135deg)
+		}
+
+		.mui-col-xs-6 {
+			text-align: left;
+		}
+
+		.mui-table-view {
+			padding-bottom: 80px;
+		}
+
+		.mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+			transform: rotate(90deg);
+			margin-left: 5px;
+		}
+
+		.mui-control-content .mui-loading {
+			margin-top: 50px;
+		}
+
+		.mui-slider {
+			height: 100vh;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			border-bottom: 2px solid #337BFC;
+			color: #337BFC;
+		}
+
+		.mui-table-view-cell.mui-collapse.mui-active+.www .arrow_right {
+			transform: rotate(90deg);
+			margin-left: 5px;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+			border-bottom: 0;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			/* border-bottom: 0; */
+			font-weight: bold;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active+.titleleft {
+			border-bottom: solid 2px #337BFC;
+			display: inline-block;
+		}
+
+		.mui-segmented-control .mui-control-item {
+			line-height: 43px;
+		}
+
+		.mui-table-view-cell:after {
+			left: 1px;
+			background-color: #F4F4F4;
+			height: 10px;
+		}
+
+		.mui-scroll {
+			background: #FFFFFF;
+		}
+
+		.task-ul {
+			padding: 0;
+		}
+
+		.task-li {
+			border-bottom: 5px solid #F4F4F4;
+			height: 110px;
+			padding: 0 20px;
+		}
+
+		.task-item {
+			/* height: 50px; */
+			line-height: 50px;
+			/* padding: 0 5px; */
+		}
+
+		.task-item-btn {
+			width: 50%;
+			float: left;
+			text-align: right;
+			white-space: nowrap;
+			padding: 0 0 0 5px;
+		}
+
+		.task-item-btn span {
+			padding: 5px 15px;
+			border: 1px solid #347CFC;
+			color: #347CFC;
+			border-radius: 21px;
+			font-size: 12px;
+		}
+
+		.task-item-title {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		.task-item-title span {
+			text-align: left;
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		.task-item-tip {
+			color: #989898;
+			font-size: 14px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			text-align: left;
+		}
+
+		.task-item-running {
+			color: #FF5656;
+			font-size: 13px;
+			text-align: right;
+			/* margin-right: 20px; */
+		}
+
+		.task-item-finished {
+			color: #29CC85;
+			font-size: 13px;
+			text-align: right;
+			/* margin-right: 20px; */
+		}
+
+		.task-item-ischange {
+			color: #FF7800;
+			font-size: 13px;
+			text-align: right;
+			/* margin-right: 20px; */
+		}
+
+		.task-item_status {
+			position: absolute;
+			top: 8px;
+			right: 15px;
+		}
+
+		.bottom-item {
+			background: #FFFFFF;
+			position: absolute;
+			height: 400px;
+			width: 100%;
+			bottom: 0;
+			z-index: 100;
+			text-align: left;
+		}
+
+		.bottom-item-btn-list {
+			height: 200px;
+			width: 98%;
+			position: absolute;
+		}
+
+		.fanwei {
+			white-space: nowrap;
+			display: inline-block;
+			width: 280px;
+			margin-left: 0px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			text-align: left
+		}
+
+		.bottom-item-btn-list .bottom-item-btn-list-top {
+			width: 100%;
+
+		}
+
+		.item1 {
+			position: absolute;
+			top: 4px;
+			z-index: 10;
+			left: 56%;
+			text-align: center;
+			line-height: 24px;
+			vertical-align: bottom;
+			padding: 0 14px;
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 26px;
+			font-size: 12px;
+		}
+
+		.item2 {
+			position: absolute;
+			top: 4px;
+			z-index: 10;
+			right: 0px;
+			text-align: center;
+			line-height: 24px;
+			vertical-align: bottom;
+			padding: 0 14px;
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 26px;
+			font-size: 12px;
+		}
+
+		.item3 {
+			position: absolute;
+			top: 4px;
+			z-index: 10;
+			right: 84px;
+			text-align: center;
+			line-height: 24px;
+			vertical-align: bottom;
+			padding: 0 7px;
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 26px;
+			font-size: 12px;
+		}
+
+		.item3-2 {
+			position: absolute;
+			top: 4px;
+			z-index: 10;
+			right: 10px;
+			text-align: center;
+			line-height: 24px;
+			vertical-align: bottom;
+			padding: 0 7px;
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 26px;
+			font-size: 12px;
+		}
+
+		.item4 {
+			position: absolute;
+			top: 4px;
+			z-index: 10;
+			left: 60%;
+			text-align: center;
+			line-height: 24px;
+			vertical-align: bottom;
+			padding: 0 14px;
+			border: 1px solid #337BFC;
+			border-radius: 20px;
+			height: 26px;
+			font-size: 12px;
+		}
+
+		.mui-navigate-left:after {
+			content: '\e472';
+			left: 5px;
+			bottom: 50px;
+		}
+
+		.object {
+			display: flex;
+			justify-content: space-between;
+			margin: 8px 0;
+		}
+
+		.li-item {
+			background-color: white;
+		}
+
+		.li-item-pull {
+			background-color: #F4F4F4 !important;
+		}
+
+		.li-margin {
+			margin-bottom: 13px;
+			border-bottom: 1px solid #EDEDED;
+			padding-bottom: 0px;
+			font-size: 13px;
+		}
+
+		.in-obj {
+			font-weight: 400;
+			color: #888888;
+			margin-right: 7px;
+		}
+
+		.obj-title {
+			color: #444444;
+		}
+
+		.bgc-white {
+			background-color: white;
+		}
+
+		.bgc-grey {
+			background-color: #F4F4F4;
+		}
+
+		.mui-navigate-r {
+			background: #fff;
+		}
+
+		.icon-css {
+			display: inline-block;
+			padding: 8px 0 0;
+			vertical-align: top;
+		}
+
+		.task_title {
+			display: inline-block;
+			padding: 8px 0;
+			color: #191515;
+			font-size: 15px;
+			font-weight: 500;
+			width: 50%;
+			word-break: break-all;
+			white-space: pre-wrap;
+		}
+
+		.sec-line {
+			color: #878787;
+			font-size: 14px;
+		}
+
+		/* 	.arrow_right{
+				transform: rotate(90deg);
+			} */
+		.ul-mar-bottom {
+			margin-bottom: -18px;
+		}
+
+		.mui-table-view-cell>a:not(.mui-btn) {
+			margin: 0;
+			padding: 0;
+		}
+
+		.mui-table-view-cell.mui-active {
+			background: #fff;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft {
+			border-bottom: solid 3px #337BFC;
+			display: inline-block;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+			border-bottom: solid 3px #337BFC;
+			display: inline-block;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+			border-bottom: solid 3px #337BFC;
+			display: inline-block;
+			font-weight: bold;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+			border-bottom: solid 3px #337BFC;
+			display: inline-block;
+			font-weight: bold;
+		}
+
+		.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+			border-top: 7px solid #F4F4F4 display:none;
+		}
+
+		.color888 {
+			color: #888888;
+		}
+
+		.ibh {
+			display: inline-block;
+			line-height: 28px;
+		}
+
+		.no-data {
+			position: absolute;
+			top: 10rem;
+			left: 50%;
+			display: inline-block;
+			font-size: 20px;
+			color: #999;
+			transform: translateX(-50%);
+		}
+
+		.mapboxgl-ctrl-bottom-left {
+			margin-bottom: 25vh
+		}
+
+		.isactive {
+			display: block;
+		}
+
+		.inspection_dialog {
+			background: rgba(0, 0, 0, 0.3);
+			width: 100vw;
+			height: 100vh;
+			position: fixed;
+			left: 0;
+			top: 0;
+			text-align: left;
+			z-index: 20;
+		}
+
+		.inspection_dialog_title {
+			text-align: center;
+			margin-bottom: 0px;
+		}
+
+		.item-title {
+			margin-bottom: 5px;
+		}
+
+		.info-bar-content {
+			position: fixed;
+			left: 10vw;
+			top: 50%;
+			bottom: 0;
+			margin-top: -280px;
+			width: 80vw;
+			height: 535px;
+			background: #fff;
+			padding: 15px;
+			z-index: 999;
+		}
+
+		.mui-radio.mui-left {
+			display: inline-block;
+			width: 30%;
+		}
+
+		.mui-radio.mui-left label {
+			line-height: 8px;
+		}
+
+		.mui-checkbox.mui-left input[type=checkbox],
+		.mui-radio.mui-left input[type=radio] {
+			left: 0;
+		}
+
+		.mui-checkbox input[type=checkbox]:before,
+		.mui-radio input[type=radio]:before {
+			font-size: 24px;
+		}
+
+		.mui-radio.mui-left label {
+			padding-left: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<!--页面主结构开始-->
+	<div id="app" class="mui-views">
+		<div class="mui-view">
+			<div class="mui-navbar">
+			</div>
+			<div class="mui-pages">
+			</div>
+		</div>
+	</div>
+	<!--页面主结构结束-->
+	<!--单页面开始-->
+	<div id="mui-content" class="mui-page">
+		<!--页面标题栏开始-->
+		<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">巡检管理</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/nfc@2x.png" />
+					<img src="../img/download@2x.png" />
+				</div>
+			</header> -->
+		<!--页面标题栏结束-->
+		<!--页面主内容区开始-->
+
+		<div class="mui-page-content">
+			<div id="map" class="mapboxgl-map"
+				style="position: absolute;left: 0;top: 0; z-index: 10;height: 90vh;width: 100%;"></div>
+			<div style="position: absolute;width:100%;height:20vh;bottom:0;z-index:11;">
+				<div class="mui-scroll-wrapper" style="height: 100%;">
+					<div class="mui-scroll" style="height: 100%;">
+						<div style="text-align: left;padding-left: 20px;padding-top: 20px;padding-right:20px;">
+							<img src="./../../img/psicon.png" alt="" width="29" height="39"
+								style="vertical-align: middle;">
+							<span>我的位置</span>
+						</div>
+						<div style="text-align: left;padding-left: 50px;">
+							<p>编号：WS1238726663</p>
+						</div>
+						<div id="isclose"
+							style="width: 90%;height: 48px;margin-left:5%;line-height:48px;background: #0493F3;border-radius: 8px;font-family: PingFang SC;font-weight: 400;color: #FFFFFF;">
+							确定
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<!--页面主内容区结束-->
+		</div>
+		<!--  -->
+
+
+
+</body>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/inspect.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/timer.js"></script>
+<!--<script src="../../js/vconsole.min.js"></script>-->
+
+
+<script>
+
+	mui.init({
+		swipeBack: false
+	});
+
+
+	const MobileContainer = window['mobile-lib'].MobileContainer;
+	const mobileContainer = new MobileContainer({
+		serverUrl: config.urls.serverDomain,
+		options: {
+			minZoom: 10
+		},
+		style: 'color'
+	});
+	// var vConsole = new VConsole();
+	$("#isclose").click(function () {
+
+		
+		if (true) {
+			var view = plus.webview.currentWebview().opener();
+			mui.fire(view, 'returngis', [{'id':'123',text:'文本'}]);
+			// mui.back();
+			plus.webview.currentWebview().close('none'); //正确
+		} else {
+			if (!unSelect) {
+				app.toast("你没选择任何记录");
+			} else {
+				var view = plus.webview.currentWebview().opener();
+				mui.fire(view, 'returngis', [{'id':'123',text:'文本'}]);
+				// mui.back();
+				plus.webview.currentWebview().close('none'); //正确
+			}
+		}
+	});
+
+	mui.plusReady(function () {
+
+	});
+</script>
+
+</html>

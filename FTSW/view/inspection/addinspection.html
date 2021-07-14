@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>巡检管理</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+
+		<!-- 		<script>
+		  (function () {
+		    var random = Math.random();
+		    //处理请求JS文件缓存
+		    var element = document.getElementsByTagName("script");
+		    for (var i = 0; i < element.length; i++) {
+		      if (element[i].src) {
+		        if (element[i].src.indexOf('?') > -1) {
+		          element[i].src = element[i].src + '&timestreap=' + random;
+		        } else {
+		          element[i].src = element[i].src + '?timestreap=' + random;
+		        }
+		      }
+		    };
+		    //处理CSS文件缓存
+		    var link = document.getElementsByTagName("link");
+		    for (var i = 0; i < link.length; i++) {
+		      if (link[i].href) {
+		        link[i].href = link[i].href + '?timestreap=' + random;
+		      }
+		    }
+		  })()
+		</script> -->
+		<style>
+			.marker {
+				width: 0;
+				height: 0;
+			}
+
+			.marker span {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				box-sizing: border-box;
+				width: 30px;
+				height: 30px;
+				color: #fff;
+				background: #693;
+				border: solid 2px;
+				border-radius: 0 70% 70%;
+				box-shadow: 0 0 2px #000;
+				cursor: pointer;
+				transform-origin: 0 0;
+				transform: rotateZ(-135deg);
+			}
+
+			.marker b {
+				transform: rotateZ(135deg)
+			}
+
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+
+			.mui-slider {
+				height: 100vh;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-table-view-cell.mui-collapse.mui-active+.www .arrow_right {
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				/* border-bottom: 0; */
+				font-weight: bold;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active+.titleleft {
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-table-view-cell:after {
+				/*left: 1px;*/
+				/*background-color: #F4F4F4;*/
+				/*height: 10px;*/
+				left: 1px;
+				background-color: transparent;
+				height: 0px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				/* height: 50px; */
+				line-height: 50px;
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #347CFC;
+				color: #347CFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 14px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: #FF5656;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: #29CC85;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: #FF7800;
+				font-size: 13px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item_status {
+				position: absolute;
+				top: 8px;
+				right: 15px;
+			}
+
+			.bottom-item {
+				background: #FFFFFF;
+				position: absolute;
+				height: 400px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				text-align: left;
+			}
+
+			.bottom-item-btn-list {
+				height: 200px;
+				width: 98%;
+				position: absolute;
+			}
+
+			.fanwei {
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+
+			.bottom-item-btn-list .bottom-item-btn-list-top {
+				width: 100%;
+
+			}
+
+			.item1 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				left: 56%;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item2 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				right: 0px;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item3 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				right: 84px;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 7px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+			.item3-2 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				right: 10px;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 7px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+			.item4 {
+				position: absolute;
+				top: 4px;
+				z-index: 10;
+				left: 60%;
+				text-align: center;
+				line-height: 24px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.mui-navigate-left:after {
+				content: '\e472';
+				left: 5px;
+				bottom: 50px;
+			}
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+
+			.li-item {
+				background-color: white;
+			}
+
+			.li-item-pull {
+				background-color: #F4F4F4 !important;
+			}
+
+			.li-margin {
+				margin-bottom: 13px;
+				border-bottom: 1px solid #EDEDED;
+				padding-bottom: 0px;
+				font-size: 13px;
+			}
+
+			.in-obj {
+				font-weight: 400;
+				/*color: #888888;*/
+				color: #262626;
+				font-size: 16px;
+				margin-right: 7px;
+				display: flex;justify-content: space-between;align-items: center;
+			}
+
+			.obj-title {
+				color: #444444;
+			}
+
+			.bgc-white {
+				background-color: white;
+			}
+
+			.bgc-grey {
+				background-color: #F4F4F4;
+			}
+
+			.mui-navigate-r {
+				background: #fff;
+			}
+
+			.icon-css {
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+
+			.task_title {
+				display: inline-block;
+				padding: 8px 0;
+				color: #191515;
+				font-size: 15px;
+				font-weight: 500;
+				width: 50%;
+				word-break: break-all;
+				white-space: pre-wrap;
+			}
+
+			.sec-line {
+				color: #878787;
+				font-size: 14px;
+			}
+
+			/* 	.arrow_right{
+				transform: rotate(90deg);
+			} */
+			.ul-mar-bottom {
+				margin-bottom: -18px;
+			}
+
+			.mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+				/*padding: 0;*/
+				padding: 10px 0;
+			}
+
+			.mui-table-view-cell.mui-active {
+				background: #fff;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleleft {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-top: 7px solid #F4F4F4 display:none;
+			}
+
+			.color888 {
+				color: #888888;
+			}
+
+			.ibh {
+				display: inline-block;
+				line-height: 28px;
+			}
+
+			.no-data {
+				position: absolute;
+				top: 10rem;
+				left: 50%;
+				display: inline-block;
+				font-size: 20px;
+				color: #999;
+				transform: translateX(-50%);
+			}
+
+			.mapboxgl-ctrl-bottom-left {
+				margin-bottom: 25vh
+			}
+
+			.isactive {
+				display: block;
+			}
+			.inspection_dialog{
+				background: rgba(0,0,0,0.3);
+				width: 100vw;
+				height: 100vh;
+				position: fixed;
+				left: 0;
+				top: 0;
+				text-align: left;
+				z-index: 20;
+			}
+			.inspection_dialog_title{
+				text-align: center;
+				margin-bottom: 0px;
+			}
+			.item-title{
+				margin-bottom: 5px;
+			}
+			.info-bar-content{
+				position: fixed;
+				left: 10vw;
+				top: 50%;
+				bottom: 0;
+				margin-top: -280px;
+				width: 80vw;
+				height: 535px;
+				background: #fff;
+				padding: 15px;
+				z-index: 999;
+			}
+			.mui-radio.mui-left{
+				display: inline-block;
+				width: 30%;
+			}
+			
+			.mui-radio.mui-left label{
+				line-height: 8px;
+			}
+			.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]{
+				left: 0;
+			}
+			.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{
+				font-size: 24px;
+			}
+			
+			.mui-radio.mui-left label{
+				padding-left: 20px;
+			}
+		/* hgshh 2021-05-12	新添加样式*/
+			.mui-table-view{
+				-webkit-box-shadow: 0px 1px 34px 2px rgba(0, 0, 0, 0.08);
+				border-radius: 5px;
+				margin:5px;
+			}
+			.mui-table-view:before {
+				background-color: white;
+				height: 0;
+			}
+			.mui-table-view:after {
+				background-color: white;
+				height: 0;
+			}
+			/* 箭头 */
+			.mui-navigate-right:after, .mui-push-right:after{
+				right: 0px;
+				color: #0493F3;
+			}
+			.collapse-content-item {
+				padding:15px 0;
+				border-bottom:1px solid #EDEDED;
+			}
+			.collapse-content-item-text {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				border: 1px solid #354052;
+				border-radius: 50%;
+				text-align:center;
+				line-height:16px;
+				margin-right: 5px;
+			}
+			.bottom-btn-item {
+				width:41%;
+				display:inline-block;
+				height: 48px;
+				line-height: 48px;
+				border-radius: 4px;
+				overflow: hidden;
+				background: #0493F3;
+			}
+			.bottom-btn-item-1 {
+				background: #FFFFFF;
+				margin-left: 6%;
+				margin-right: 6%;
+				border: 1px solid #0493F3;
+			}
+			.add-new-red {
+				color:red;
+				margin-top: 3px;
+				margin-right: 5px;
+			}
+			.add-new-bottom-btn {
+				width:50%;
+				border-width:0;
+				font-size:18px;
+				color:#262626;
+				font-weight: 400;
+			}
+			.mui-table-view-cell > .mui-slider-right {
+				height: 98%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page" style="background-color: white;">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">巡检管理</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/nfc@2x.png" />
+					<img src="../img/download@2x.png" />
+				</div>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content" style="padding-top:15px;height: 90vh;overflow: scroll;background: white;">
+					<div style="display: flex;color: #262626;font-size: 16px;margin: 0 20px;border-bottom: 1px solid #EDEDED">
+						<div style="display: flex;width: 130px;height: 40px;line-height: 40px;">
+							<div style="color: red;margin: 3px 5px 0 0px;">*</div>
+							<div>任务名称</div>
+						</div>
+
+						<input id="task_name" type="text" maxlength="15" style="text-align: right;border: 0;margin-bottom:0;padding: 10px 0;"
+						placeholder="请输入任务名称">
+					</div>
+<!--					<div style="width: 90%;margin-left:5%;height: 1px;background: #EDEDED;"></div>-->
+					<div style="display: flex;margin:15px 0;justify-content: space-between;padding :0 20px;font-size: 14px;">
+						<span><img src="./../../img/wenjian.png" alt="" width="13" height="14" style="vertical-align: middle; margin-right: 8px;">对象列表: <span id="listnumber">1</span></span>
+						<span onclick="openadd()" style="font-size: 13px;">新增对象<img src="./../../img/addobject.png" width="12" height="12" alt="" style="vertical-align: middle;margin-left: 5px;"></span>
+					</div>
+<!--					<div style="width: 90%;margin-left:5%;height: 1px;background: #EDEDED;"></div>-->
+					
+					<div>
+						 <ul class="mui-table-view"> 
+							<li class="mui-table-view-cell mui-collapse" style="text-align: left;">
+								<a class="mui-navigate-right" href="#">
+									<span class="collapse-content-item-text" style="border: none; color: #FFFFFF;background: #354052;margin-right:10px;">
+										1
+									</span>
+									面板1
+								</a>
+<!--								<div class="mui-collapse-content" id="collapse-container">-->
+<!--									<div class="collapse-content-item">检查内容</div>-->
+<!--									<div class="collapse-content-item"><span class="collapse-content-item-text">1</span>井底积泥高度</div>-->
+<!--									<div class="collapse-content-item"><span class="collapse-content-item-text">2</span>井底积泥高度</div>-->
+<!--									<div class="collapse-content-item"><span class="collapse-content-item-text">3</span>井底积泥高度</div>-->
+<!--									<div class="collapse-content-item"><span class="collapse-content-item-text">4</span>井底积泥高度</div>-->
+<!--									<div class="collapse-content-item"><span class="collapse-content-item-text">5</span>井底积泥高度</div>-->
+<!--									<div class="collapse-content-item"><span class="collapse-content-item-text">6</span>井底积泥高度</div>-->
+<!--								</div>-->
+								<div class="mui-collapse-content" >
+									<div class="collapse-content-item">检查内容</div>
+									<ul id="collapse-container">
+<!--										<li class="mui-table-view-cell collapse-content-item">-->
+<!--											<div class="mui-slider-right mui-disabled">-->
+<!--												<a class="mui-btn mui-btn-red handQx" data-status="1" style="width: 70px;padding-left:20px;text-align:center;">删除</a>-->
+<!--											</div>-->
+<!--											<div class="mui-slider-handle enterQx" style="padding: 5px 10px;" data-status="1">-->
+<!--												<span class="collapse-content-item-text">1</span>井底积泥高度-->
+<!--											</div>-->
+<!--										</li>-->
+<!--										<li class="collapse-content-item"><span class="collapse-content-item-text">2</span>井底积泥高度</li>-->
+<!--										<li class="collapse-content-item"><span class="collapse-content-item-text">3</span>井底积泥高度</li>-->
+<!--										<li class="collapse-content-item"><span class="collapse-content-item-text">4</span>井底积泥高度</li>-->
+<!--										<li class="collapse-content-item"><span class="collapse-content-item-text">5</span>井底积泥高度</li>-->
+<!--										<li class="collapse-content-item"><span class="collapse-content-item-text">6</span>井底积泥高度</li>-->
+									</ul>
+
+								</div>
+							</li>
+						</ul>
+						<div style="text-align: left;margin:0 20px;padding: 20px 0;font-size: 16px;border-bottom: 1px solid #ededed;">
+							备注
+						</div>
+<!--						<div style="width: 90%;margin-left:5%;height: 1px;background: #EDEDED;"></div>-->
+						<textarea id="remark" rows="3" type="text" class="inputCss" style="margin-bottom: 0;height: 100px;border: none;margin-top: 5px;"
+								  placeholder="请输入相关内容（300字以内）" value="" maxlength="300" onkeyup="format_input('备注',100,this)">
+
+						</textarea>
+
+<!--						<textarea id="projectProgress" rows="3" type="text" class="mui-input-clear inputCss" value="" -->
+<!--								  style="margin-left: 10px;margin-bottom: 0;height: 138px;border: none;padding-left: 0;"-->
+<!--								  placeholder="请输入相关内容（100字以内）" maxlength="100" onkeyup="format_input('项目建设进展情况',100,this)">-->
+<!--							-->
+<!--						</textarea>-->
+
+						<div style="width: 90%;margin-left:5%;height: 1px;background: #EDEDED;"></div>
+
+
+					</div>
+
+					<div id="forward" class="inspection_dialog" style="display: none;">
+						<div class="info-bar-content" style="height:300px;margin-top: -150px; border-radius: 5px;">
+							<h5 class="inspection_dialog_title"
+								style="font-size: 18px;font-weight: bold;color: #000000;padding-bottom: 15px;" id="forwardtitle">
+								新增对象
+							</h5>
+<!--							<div style="width: 100%;height: 1px;background: #EDEDED;"></div>-->
+							<div class="info-bar-content-item" style="border-bottom: 1px solid #EDEDED;">
+								<div class="item-title in-obj" style="">
+<!--									<span style="color:red;">*</span>对象类型-->
+									<div style="display: flex"><div class="add-new-red">*</div><div>对象类型</div></div>
+
+									<select id="patroltype" onchange="patrolTypeSelectChanged(this.value)" style="width: 60%;direction:rtl;margin-bottom:0;" >
+										<option value ="排水井">排水井</option>
+										<option value ="排水井">排水井</option>
+										<option value ="排水井">排水井</option>
+										<option value ="排水井">排水井</option>
+									</select>
+								</div>
+
+							</div>
+						
+							
+							<div class="info-bar-content-item" style="margin-top:10px; border-bottom: 1px solid #EDEDED;padding: 10px 0;">
+								<div class="item-title in-obj" style="">
+<!--									<span><span style="color:red;">*</span>对象编号</span>-->
+									<div style="display: flex;"><div class="add-new-red">*</div><div>对象编号</div></div>
+									
+<!--									<div onclick="fnopengis()" style="display: flex;align-items: center;justify-content: space-between;width: 60%">-->
+<!--&lt;!&ndash;										<span id="opengis">自动输入</span>&ndash;&gt;-->
+<!--										<input id="opengis" readonly required="true" placeholder="请选择对象编号" style="width: 89%;text-align: right;border: none;" />-->
+<!--										<img src="./../../img/gis.png" alt="" width="14" height="14" style="vertical-align: middle;">-->
+<!--									</div>-->
+									<select id="patrolNumber" onchange="patrolNumberSelectChanged(this.value)" style="width: 60%;direction:rtl;margin-bottom:0;" >
+										<option value ="排水井">排水井</option>
+										<option value ="排水井">排水井</option>
+										<option value ="排水井">排水井</option>
+										<option value ="排水井">排水井</option>
+									</select>
+
+								</div>
+<!--								<div style="width: 100%;height: 1px;background: #EDEDED;margin-top: 5px;"></div>-->
+							</div>
+
+							<div style="position: absolute;bottom: 0;left: 0;right: 0;height: 55px;border-top: 1px solid #ededed;">
+									<div class="info-bar-content-item" style="display: flex;height: 100%; margin: 0 5px;">
+										<button class="add-new-bottom-btn" id="forward_hidden"
+												style="border-right: 1px solid #ededed;border-radius: 0;">
+											取消
+										</button>
+										<button class="add-new-bottom-btn" id="add_new_object_confirm"
+												style="color:#0493F3;">确定</button>
+									</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="texthtml" style="position: fixed;z-index: 9;bottom:0px;width: 100%;
+					border-top: 1px solid #ededed;padding-top: 15px;margin-bottom:15px;">
+						  <div class="bottom-btn" style="font-size: 16px;display: flex;">
+							<div class="bottom-btn-item bottom-btn-item-1" style="">
+								<div id="closenow" style="color: #337BFC;width:90%;margin: 0 auto;">取消</div>
+							</div>
+							<div class="bottom-btn-item" style="">
+								<div id="formtijiao" style="background: #0493F3;color: #fff;width:90%;">提交</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/inspect.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/timer.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+
+
+	<script>
+		var isTest = false;
+
+		var newopen=null;
+		mui.init({
+			swipeBack: false
+		});
+		// 新增对象数组
+		var newObjectContentJSON = [];
+		// 对象类型guid ：对象类型数据
+		var objectTypeDictIdForObj = {}
+		// 对象编号guid ：对象编号数据
+		var objectNumberDictIdForObj = {}
+		var objectTypeContentList = [];
+
+		function openadd(){
+			$('#forward').css('display', 'block');
+		}
+
+		// 新增巡检的表单参数
+		var paramForm = {
+
+		}
+		// 新增对象的表单参数
+		var paramAddPator = {
+			roadId: null,						// ": null,
+			tableNameGis:"",						// ": "DEVICE_POINT_INFO",
+			expNo:"",						// ": "JL2020040050100019",
+			name:"",						// ": "point_info_jl_22检查井",
+			modleType:"",						// ": "1",
+			deviceTypeName:"",						// ": "检查井",
+			streetId:"",						// ": "440304005",
+			commuId: null,						// ": null,
+			stationId:"",						// ": "100000004004",
+			basId:"",						// ": "HD180000a8",
+			oneId:"",						// ": "",
+			sewageSysId:"",						// ": "A0100000009",
+			deviceType:"",						// ": "1",
+			codeX:"",						// ": "114.01701630888459",
+			codeY:"",						// ": "22.53097419034604",
+			pointCode:"",						// ": "040501",
+			deviceBugAssociated: "",						// ": "jcj",
+			reAddress:null,						// ": null,
+			samplingCount: 0,						// ": 0,
+			projectId:"",						// 传的是对象编号的expNo，"JL2020040050100019",
+			objectModel:"",						// 传的是对象类型接口的guid ， "019763b99f8e804c305da5e0f75b9a65",
+			relateObjectId:"",						// 传的是对象编号的guid ， "point_info_jl_22",
+			isPhoto:"1",						// ": "1",
+			isNfc:"0",						// ": "0",
+			runStatus: 1,						// ": 1,
+			contentList: [],						// ":
+		}
+		
+		
+		// 不用这个，调用接口
+		function fnopengis() {
+			var extras = {
+				multiSelect: true
+			}
+			app.openPage("./gis.html", {
+				titleNView: {
+					titleText: '排水任务巡检',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returngis', inspectPersonBack, false);
+			// 赋值
+			window.addEventListener('returngis', inspectPersonBack, false);
+		
+		}
+		//巡检人员回调
+		var inspectPersonBack = function(data) {
+			console.log(JSON.stringify(data.detail[0])); //data.detail[0].realname
+			$('#opengis').val(data.detail[0].id)
+		}
+
+		// 对象类型选择事件
+		function patrolTypeSelectChanged(objVal) {
+			console.log('对象类型：' + objVal);
+			// contentList 的内容
+			// var objTypeData = objectTypeDictIdForObj[objGuid];
+			getTmpInspectTaskObjContentList(objVal)
+
+			// ecidi-cmp/ft-inspect/inspect/object/infrastructure/list
+			// 获取 对象编号列表内容 ，1万多数据 ？
+		}
+		// 对象编号选择事件
+		function patrolNumberSelectChanged(objVal) {
+			console.log('对象编号 - guid：' + objVal);
+			if(objectNumberDictIdForObj != null) {
+				var patrolNumberObj = objectNumberDictIdForObj[objVal];
+				if(patrolNumberObj != null) {
+					paramAddPator.roadId = patrolNumberObj.roadId;
+					paramAddPator.tableNameGis = patrolNumberObj.tableNameGis				//:"",						// ": "DEVICE_POINT_INFO",
+					paramAddPator.expNo = patrolNumberObj.expNo; 				//:"",						// ": "JL2020040050100019",
+					paramAddPator.name = patrolNumberObj.name; 				//,						// ": "point_info_jl_22检查井",
+					paramAddPator.modleType = patrolNumberObj.modleType; 				//:"",						// ": "1",
+					paramAddPator.deviceTypeName = patrolNumberObj.deviceTypeName; 				//:"",						// ": "检查井",
+					paramAddPator.streetId = patrolNumberObj.streetId; 				//:"",						// ": "440304005",
+					paramAddPator.commuId = patrolNumberObj.commuId; 				//:"",						// ": null,
+					paramAddPator.stationId = patrolNumberObj.stationId; 				//:"",						// ": "100000004004",
+					paramAddPator.basId = patrolNumberObj.basId; 				//:"",						// ": "HD180000a8",
+					paramAddPator.oneId = patrolNumberObj.oneId; 				//:"",						// ": "",
+					paramAddPator.sewageSysId = patrolNumberObj.sewageSysId; 				//:"",						// ": "A0100000009",
+					paramAddPator.deviceType = patrolNumberObj.deviceType; 				//:"",						// ": "1",
+					paramAddPator.codeX = patrolNumberObj.codeX; 				//:"",						// ": "114.01701630888459",
+					paramAddPator.codeY = patrolNumberObj.codeY; 				//:"",						// ": "22.53097419034604",
+					paramAddPator.pointCode = patrolNumberObj.pointCode; 				//:"",						// ": "040501",
+					paramAddPator.deviceBugAssociated = patrolNumberObj.deviceBugAssociated; 				//:"",						// ": "jcj",
+					paramAddPator.reAddress = patrolNumberObj.reAddress; 				//:"",						// ": null,
+					paramAddPator.samplingCount = patrolNumberObj.samplingCount; 				//:"",						// ": 0,
+					paramAddPator.projectId = patrolNumberObj.expNo; 				// 传的是对象编号的expNo， "JL2020040050100019",
+					// 对象类型选择时赋值 , 这里不用传
+					// paramAddPator.objectModel = ""; 			// 传的是对象类型接口的guid , "019763b99f8e804c305da5e0f75b9a65",
+					paramAddPator.relateObjectId = patrolNumberObj.guid; 			// 传的是对象编号的guid, "point_info_jl_22",
+					paramAddPator.isPhoto = "1"; 				//:"",						// ": "1",
+					paramAddPator.isNfc = "0"; 				//:"",						// ": "0",
+					paramAddPator.runStatus = "1"; 				//:"",						// ": 1,
+					// 对象类型选择时查询接口赋值 , 这里不用传
+					// paramAddPator.contentList = ""; 				//:"",						// ":
+				}
+			}
+		}
+
+		// 新增对象 - 取消
+		$("#forward_hidden").on("tap", function() {
+			$('#forward').css('display', 'none');
+			console.log("新增对象 - 取消")
+		});
+		// 新增对象 - 确认
+		$("#add_new_object_confirm").on("tap", function() {
+			console.log("新增对象确认")
+			return;
+
+			var objGuid = $("#patroltype").val();
+			var objNumber = $("#opengis").val();
+
+			if(objGuid == null || objGuid.length < 1) {
+				app.toast('请选择对象类型')
+				return;
+			}
+			if(objNumber == null || objNumber.length < 1) {
+				app.toast('请选择对象编号')
+				return;
+			}
+			newObjectContentJSON.push({
+				guid: objGuid,
+				objName: objectTypeDictIdForObj[objGuid].name,
+				num: objNumber
+			})
+			// 关闭弹窗
+			$('#forward').css('display', 'none');
+			checkContentList(newObjectContentJSON)
+		})
+
+		// 取消 新增临时巡检
+		$("#closenow").on("tap", function() {
+			mui.back()
+		});
+		$("#remark").val("")
+
+		mui.plusReady(function() {
+
+			// 新增对象 - 对象类型数据
+			getTaskObjectType();
+		});
+		// 获取当天日期
+		function getNowFormatDate() {
+			var date = new Date();
+			var seperator1 = "-";
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var strDate = date.getDate();
+			if (month >= 1 && month <= 9) {
+				month = "0" + month;
+			}
+			if (strDate >= 0 && strDate <= 9) {
+				strDate = "0" + strDate;
+			}
+			var currentdate = year + seperator1 + month + seperator1 + strDate;
+			return currentdate;
+		}
+		function format_input(type, num, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length >= num) {
+				obj.value = obj.value.slice(0, num);
+				// obj.focus();
+				app.toast(type + "不可大于" + num + "个字！")
+			}
+		}
+		// 网络请求
+		// 确定 新增临时巡检
+		$("#formtijiao").on("tap", function() {
+			// alert('提交服务器……')
+
+
+			// var curDate = getNowFormatDate() //获取当前日期
+			// console.log("curDate:" + curDate);
+
+			//return;
+
+			// console.log("新增临时巡检 - 提交")
+			saveInspectionForm()
+
+			var params = JSON.parse(localStorage.getItem("inspection_form_data"));
+			console.log("新增临时巡检提交参数信息:" + localStorage.getItem("inspection_form_data"));
+
+			var url = config.urls.baseUrl + config.actions.addProject;
+			console.log(JSON.stringify(params))
+			//app.showLoaderWithMsg("正在提交中，请稍后...")
+
+			var kk = 1;
+			if(kk == 1) {
+				return;
+			}
+			createTmpInspectTaskServer(params, function(data) {
+				localStorage.removeItem("inspection_form_data")
+				globalDelItem(GlobalKey.fileProperty)
+				app.toast(data.message);
+				//console.log(plus.webview.getWebviewById('proDetail.html'))
+				/*
+				var list = plus.webview.currentWebview().opener();
+				//refresh是A页面自定义事件
+				mui.fire(list, 'backInspection');
+				//返回true,继续页面关闭逻辑
+				return true;
+				 */
+				mui.fire(plus.webview.getWebviewById('inspection.html'), 'backInspection');
+				app.openPage("../inspection/addok.html", {
+					titleNView: {
+						titleText: '新增临时巡检',
+						autoBackButton: true,
+					}
+				},{});
+			});
+		});
+		// 检查内容删除
+		mui("#collapse-container").on('tap', '.handQx', function (event) {
+			event.stopPropagation();
+			var index = $(this).attr('data-status');
+			// console.log("检查内容删除")
+			//	console.log(JSON.stringify(event))
+			console.log("index:" + index);
+
+			// var index = $(this).attr('data-status');
+			// var datas = index.split('|');
+			// delegationParam.taskId = datas[3];
+			// $("#id").val()
+			//
+			// // mask.show();
+			// maskShow();
+			// addProxyCoverView(datas);
+
+			if(index < newObjectContentJSON.length) {
+				newObjectContentJSON = removeArrWithIndex(newObjectContentJSON, index);
+				// var delObj = newObjectContentJSON[index];
+				// newObjectContentJSON = newObjectContentJSON.remove(delObj)
+				// //console.log(newObjectContentJSON)
+				// //检查内容
+				checkContentList(newObjectContentJSON)
+			}
+
+
+		})
+		function saveInspectionForm() {
+			var inspection_form = null
+			var inspection_form_data = localStorage.getItem("inspection_form_data");
+			 if (inspection_form_data == null) {
+				 inspection_form = {};
+			 } else {
+				 inspection_form = JSON.parse(inspection_form_data)
+			 }
+			 // ---- 内容 start
+			// 负责人
+			inspection_form.principal = app.userInfo().perId
+			// 创建人
+			inspection_form.createByUsername = app.userInfo().perId;
+			 // 负创建人,汉字名
+			inspection_form.principalRealName = app.userInfo().realname;
+			// 负创建人,汉字名
+			inspection_form.createRealName = app.userInfo().realname;
+
+			inspection_form.createType = "1";
+			// 巡检类型 字典ZHSW.INSPECT.SERVE_SCOPE
+			inspection_form.inspectType = "3";
+			// 巡检名称
+			inspection_form.name = $('#task_name').val();
+			// 任务开始日期
+			inspection_form.startTime = getNowFormatDate();
+			// 结束日期
+			inspection_form.endTime = getNowFormatDate();
+			// 是否信息提醒
+			inspection_form.isAttention = "1";
+			// 备注
+			inspection_form.remark = $('#remark').val();
+			// 新的对象数组
+			var person_forms = [];
+			for(var i = 0; i < 5; i++) {
+				person_forms.push({
+					"objectGuid": "5a248ae526834780a58b14664863f22" + i, // 对象guid
+					"sorting": (i + 1), // 排序
+					"objectType": "" + (i + 1) // 对象类型
+				});
+			}
+			inspection_form.resultDetailsDtos = person_forms;
+
+			// ---- 内容 end
+			localStorage.setItem("inspection_form_data", JSON.stringify(inspection_form));
+		}
+
+		// 请求对象类型数据 - 请求
+		function getTaskObjectType(someparam={}) {
+
+			// 对象类型
+
+			// getTmpInspectTaskObjType(Object.assign(someparam,{
+			// 	taskStatus:2,
+			// 	pageNo: 1,
+			// 	pageSize: 100,
+			// }), function(data) {
+			// 	inspectTaskListReturnData(data);
+			// });
+			getTmpInspectTaskObjType(someparam, function(data) {
+				// c/onsole.log("getTmpInspectTaskObjType(someparam, function(data) start")
+				// c/onsole.log(JSON.stringify(data));
+				// c/onsole.log("getTmpInspectTaskObjType(someparam, function(data) end")
+				getTmpInspectTaskObjTypeReturnData(data);
+			});
+		}
+		//  对象类型 , 选择之后请求 ，新增对象点击确定要传这个 - contentList - 请求
+		function getTmpInspectTaskObjContentList(objGuid) {
+
+			paramAddPator.contentList = [];
+			paramAddPator.objectModel = objGuid;
+			var someparam = {
+				// _t: 1621941264,
+				modeId: objGuid,
+				pageSize: 100000,
+				pageNo: 1
+			}
+			if(isTest) {
+				testPatorNumber();
+				paramAddPator.contentList = data.records;
+			}else{
+				getTmpInspectTaskObjContentListServer(someparam, function(data) {
+					paramAddPator.contentList = data.records;
+					getTmpInspectTaskObjNumberList(objGuid);
+				});
+			}
+
+		}
+		function getTmpInspectTaskObjNumberList(objGuid) {
+			// deviceType ：对象类型的 relateObjectType
+			// commuId ： 所属小区的
+			var objTypeData = objectTypeDictIdForObj[objGuid];
+
+			var someparam = {
+				// _t: 1621941264,
+				deviceType: objTypeData.relateObjectType,
+				commuId: 're_area_1',
+				pageSize: 100000,
+				pageNo: 1
+			}
+			getTmpInspectTaskObjNumberListServer(someparam, function(data) {
+				// c/onsole.log("==== getTmpInspectTaskObjNumberListServer start ====")
+				// c/onsole.log(JSON.stringify(data));
+				// c/onsole.log("==== getTmpInspectTaskObjNumberListServer end ====")
+				getTmpInspectTaskObjNumberReturnData(data);
+			});
+
+		}
+		// 请求数据返回 - 对象类型
+		function getTmpInspectTaskObjTypeReturnData(data) {
+			var selectHtml = '<option value ="">选择对象类型</option>'
+			$('#patroltype').empty();
+			if(data != null && data.result != null) {
+				var records = data.result.records;
+				if(records != null) {
+					for (let i = 0; i < records.length; i++) {
+					//for(let item in records) {
+						var item = records[i];
+						selectHtml += '<option value ="'+item.guid+'">'+item.name+'</option>';
+						// companyDictIdForName[objTmp.companyId] = companyName
+						objectTypeDictIdForObj[item.guid] = item; //item.name;
+					}
+				}
+			}
+			$('#patroltype').html(selectHtml);
+			// 清空对象编号
+			$('#patrolNumber').html('<option value ="">选择对象编号</option>');
+		}
+		// patrolNumber
+		// 请求数据返回 - 对象编号
+		function getTmpInspectTaskObjNumberReturnData(data) {
+			var selectHtml = '<option value ="">选择对象编号</option>'
+			$('#patrolNumber').empty();
+			if(data != null && data.result != null) {
+				var records = data.result.records;
+				if(records != null) {
+					for (let i = 0; i < records.length; i++) {
+						//for(let item in records) {
+						var item = records[i];
+						selectHtml += '<option value ="'+item.guid+'">'+item.expNo+'</option>';
+						// companyDictIdForName[objTmp.companyId] = companyName
+						 objectNumberDictIdForObj[item.guid] = item;
+					}
+				}
+			}
+			$('#patrolNumber').html(selectHtml);
+		}
+		// 面板检查内容
+		function checkContentList(data) {
+			$('#collapse-container').empty();
+			var htmlStr = ''
+			if(data != null && data.length > 0 ) {
+					for (let i = 0; i < data.length; i++) {
+						//for(let item in records) {
+						//var item = data[i];
+						//htmlStr += '<option value ="'+item.guid+'">'+item.name+'</option>';
+						//htmlStr += '<div class="collapse-content-item"><span class="collapse-content-item-text">'+(i + 1)+'</span>'+data[i].objName+'</div>';
+						htmlStr += `
+						<li id="${data[i].guid}" class="mui-table-view-cell collapse-content-item">
+							<div class="mui-slider-right mui-disabled">
+								<a class="mui-btn mui-btn-red handQx" data-status="${i}" style="width: 70px;padding-left:20px;text-align:center;">删除</a>
+							</div>
+							<div class="mui-slider-handle enterQx" style="padding: 5px 10px;" data-status="1">
+								<span class="collapse-content-item-text">${(i + 1)}</span>${data[i].objName}
+							</div>
+						</li>
+						`;
+						// companyDictIdForName[objTmp.companyId] = companyName
+						//objectTypeDictIdForName[item.guid] = item.name;
+					}
+
+			}
+
+			$('#collapse-container').html(htmlStr);
+		}
+
+		// 移除数组中指定索引的元素
+		function removeArrWithIndex(array,index){
+			// if(index<=(array.length-1)){
+			// 	for(var i=index;i<array.length;i++){
+			// 		array[i]=array[i+1];
+			// 	}
+			// }
+			// else{
+			// 	throw new Error('超出最大索引！');
+			// }
+			// array.length=array.length-1;
+			if(index < array.length){
+				array.splice(index,1)
+			}
+			return array;
+		}
+
+
+		// 测试区域
+		// 对象类型-测试数据
+		function testTaskObjectTypeTmpData() {
+			var dataStr = `{"success":true,"message":"查询成功","result":{"records":[{"guid":"019763b99f8e804c305da5e0f75b9a65","createBy":"hrz_dev","createTime":"2020-11-13 16:47:18","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"检查井","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"1","projectId":null,"remark":null},{"guid":"80a7feb960ff277f202a393375c3b3af","createBy":"he_guiqiang","createTime":"2020-11-18 11:23:11","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"雨水口","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"2","projectId":null,"remark":null},{"guid":"d17bc2a587df43cdda6e3126435f0bd1","createBy":"he_guiqiang","createTime":"2020-11-18 11:53:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"排放口","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"3","projectId":null,"remark":null},{"guid":"ff4fd8a2d7dd10bfb998163e95bce1e6","createBy":"yang_m","createTime":"2020-12-04 10:00:17","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"闸门","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"5","projectId":null,"remark":null},{"guid":"4317f80c110ad7f75433f15d212e492e","createBy":"he_guiqiang","createTime":"2020-11-18 11:45:19","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"泵站","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"7","projectId":null,"remark":null},{"guid":"75ad7bb5500098bbf7c545018ab250f4","createBy":"dong_jl","createTime":"2021-03-26 11:28:40","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"调蓄设施","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"8","projectId":null,"remark":null},{"guid":"b59c51f5431a9c3c64e3310cdee8608f","createBy":"dong_jl","createTime":"2021-03-26 11:53:20","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"污水处理设施","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"9","projectId":null,"remark":null},{"guid":"4ac782ccd53a10c449366b758147551f","createBy":"he_guiqiang","createTime":"2020-11-18 11:50:10","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"积水点","alias":"排水设施","inGroup":"1","modelType":"1","relateObjectType":"19","projectId":null,"remark":null},{"guid":"d6fb565b32625dc49fb364531c284449","createBy":"yang_m","createTime":"2021-03-24 17:41:20","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"断面","alias":"水利设施","inGroup":"2","modelType":"1","relateObjectType":"32","projectId":null,"remark":null},{"guid":"e7cec2f8acf19a744b0c7abe38d25834","createBy":"he_guiqiang","createTime":"2020-11-18 11:56:52","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"水闸","alias":"水利设施","inGroup":"2","modelType":"1","relateObjectType":"35","projectId":null,"remark":null},{"guid":"6134876a82f0e2036c3b198ee066c733","createBy":"yang_m","createTime":"2021-03-24 17:40:13","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"湖泊","alias":"水利设施","inGroup":"2","modelType":"1","relateObjectType":"37","projectId":null,"remark":null},{"guid":"a94ef86e7051a3af55c1d72adc1a1e91","createBy":"he_guiqiang","createTime":"2020-11-18 12:01:41","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"监测站点","alias":"监测设施","inGroup":"3","modelType":"1","relateObjectType":"12","projectId":null,"remark":null},{"guid":"fed0d6cd3dad16ca8c1fb711f7fc81a1","createBy":"hrz_dev","createTime":"2020-11-13 16:52:08","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"name":"小区","alias":"其他设施","inGroup":"4","modelType":"1","relateObjectType":"22","projectId":null,"remark":null}],"total":13},"timestamp":1620872763976,"code":200}`;
+			var data = JSON.parse(dataStr);
+			getTmpInspectTaskObjTypeReturnData(data);
+			//$('#opengis').val(1233)
+
+
+			// newObjectContentJSON =
+			// 		[
+			// 		{
+			// 			"guid": "019763b99f8e804c305da5e0f75b9a65",
+			// 			"objName": "检查井",
+			// 			"num": "123"
+			// 		},
+			// 				{
+			// 					"guid": "d17bc2a587df43cdda6e3126435f0bd1",
+			// 					"objName": "排放口",
+			// 					"num": "123"
+			// 				},
+			// 				{
+			// 					"guid": "4317f80c110ad7f75433f15d212e492e",
+			// 					"objName": "泵站",
+			// 					"num": "123"
+			// 				}
+			// 		]
+			//newObjectContentJSON = removeArrWithIndex(newObjectContentJSON, 1);
+			//console.log(newObjectContentJSON)
+			//检查内容
+			// checkContentList(newObjectContentJSON)
+		}
+		// 对象编号接口
+		function testPatorNumber() {
+			var dataStr = `
+			{"success":true,"message":"查询成功","result":{"total":27,"records":[{"roadId":null,"guid":"point_info_ws_7474","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316923","name":"point_info_ws_7474检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.04949720607254","codeY":"22.503750765596365","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7475","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316924","name":"point_info_ws_7475检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.04953099555574","codeY":"22.503770369223545","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7476","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316925","name":"point_info_ws_7476检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.04986677493973","codeY":"22.503702926007847","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7477","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316926","name":"point_info_ws_7477检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.0501765604563","codeY":"22.503647103274403","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7478","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316927","name":"point_info_ws_7478检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05048736346698","codeY":"22.503610541453124","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7479","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316928","name":"point_info_ws_7479检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05085841603659","codeY":"22.503608880551088","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7480","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316929","name":"point_info_ws_7480检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.0511296856836","codeY":"22.50373877815362","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_7481","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100316930","name":"point_info_ws_7481检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05125574900437","codeY":"22.503714988165658","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_8340","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100317852","name":"point_info_ws_8340检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05109518163","codeY":"22.50415565004697","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_8341","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100317853","name":"point_info_ws_8341检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05110233053401","codeY":"22.504117918803434","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ws_8342","tableNameGis":"DEVICE_POINT_INFO","expNo":"WS2020040100317854","name":"point_info_ws_8342检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05119363327226","codeY":"22.50412937647489","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66455","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100309969","name":"point_info_ys_66455检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05127381401363","codeY":"22.50420992012991","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66458","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100309972","name":"point_info_ys_66458检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05287106251951","codeY":"22.50446445823976","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66459","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100309973","name":"point_info_ys_66459检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05299867389608","codeY":"22.50403887718184","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66467","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100309981","name":"point_info_ys_66467检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05268030718317","codeY":"22.50422364407345","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66468","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100309982","name":"point_info_ys_66468检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05267176155482","codeY":"22.50426761584288","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66469","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100309983","name":"point_info_ys_66469检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05265760532266","codeY":"22.504329767623133","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66527","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100310041","name":"point_info_ys_66527检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05127569348215","codeY":"22.504061875292134","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_66528","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100310042","name":"point_info_ys_66528检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05118842417922","codeY":"22.504050669236502","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0},{"roadId":null,"guid":"point_info_ys_67413","tableNameGis":"DEVICE_POINT_INFO","expNo":"YS2020040100310929","name":"point_info_ys_67413检查井","modleType":"1","deviceTypeName":"检查井","streetId":"440304010","commuId":"re_area_1","stationId":"100000004003","basId":"HD180000a7","oneId":"","sewageSysId":"A0100000009","deviceType":"1","codeX":"114.05109747090971","codeY":"22.504249601514346","pointCode":"040501","deviceBugAssociated":"jcj","reAddress":null,"samplingCount":0}]},"timestamp":1622689790477,"code":200}
+			`;
+			var data = JSON.parse(dataStr);
+			getTmpInspectTaskObjNumberReturnData(data);
+		}
+		if(isTest) {
+			testTaskObjectTypeTmpData();
+			// testPatorNumber();
+		}
+
+
+
+		
+	</script>
+</html>

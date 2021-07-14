@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水小区首页</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+			/*遮罩*/
+			.mark{
+				z-index: 9;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				background: rgba(0,0,0,0.5);
+				display: none;
+			}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+			background-color: #F4F4F4;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.img_item{
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			float: left;
+			margin-right: 20px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+		}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+			display: flex;
+		}
+		.bottom-item-btn .item {
+			width: 90%;
+			text-align: center;
+			padding: 0 14px;
+			display: inline-block;
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		.mui-numbox {
+			position: relative;
+			display: inline-block;
+			overflow: hidden;
+			width: 200px;
+			height: 35px;
+			padding: 0 40px;
+			vertical-align: top;
+			vertical-align: middle;
+			border: solid 1px #bbb;
+			border-radius: 3px;
+			background-color: #efeff4;
+			top: 10px;
+			left: -18%;
+	}
+	.info-bar-content{
+		background: #FFFFFF;
+	}
+	.mui-segmented-control {
+		background: #FFFFFF;
+		font-size: 16px;
+		font-weight: 400;
+		height: 50px;
+	}
+	
+	.mui-control-item.mui-active {
+			font-size: 16px;
+			font-weight: bold;
+			color: #337BFC !important;
+			position: relative;
+			/*border-bottom: 2px solid #337BFC !important;*/
+		}
+
+		.mui-active::after {
+			content: '';
+			height: 2px;
+			background: #337BFC;
+			position: absolute;
+			left: 0;
+			bottom: 1px;
+			width: 20px;
+			margin-left: 92px;
+
+		}
+		.base-item{
+			border-radius: 5px;
+			background-color: white;
+			height: 110px;
+			/*width: 95%;*/
+			width: calc(100vw - 20px);
+			display: inline-block;
+			margin-bottom: 10px;
+			padding: 0 10px;
+			/*padding: 10px 0px 0px 0px;*/
+		}
+		.base-item-tab-info {
+			height: 221px;
+
+		}
+		.base-item-top {
+			border-bottom: 1px solid #EDEDED;
+			/*padding-bottom: 20px;*/
+			height: 56px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.base-item-content {
+			/*padding-top: 20px;*/
+			/*padding-bottom: 20px;*/
+			color: #8C8C8C;
+			height: 54px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.base-item-content-tab-info {
+			height: 119px;
+			border-bottom: 1px solid #EDEDED;
+			flex-direction: column;
+			align-items: unset;
+			text-align: left;
+			justify-content: space-around;
+			padding: 10px 0;
+		}
+		.detail{
+			/*margin-left: 20px;*/
+		}
+		.dang-an{
+			background-color: #0493F3;
+			color: white;
+			margin-top: 5px;
+			border: none;
+			border-radius: 5px;
+			height: 26px;
+			width: 74px;
+			line-height: 26px;
+			padding: 0;
+		}
+			.gui-dang{
+				background-color: #0493F3;
+				color: white;
+				margin-top: 5px;
+				border: none;
+				border-radius: 5px;
+				height: 26px;
+				width: 74px;
+				line-height: 26px;
+				padding: 0;
+
+			}
+
+		.mainPage{
+			height: calc(100vh - 104px);
+			margin-top: 104px;
+			padding-top: 20px;
+			overflow-y: scroll;
+			box-sizing: border-box;
+		}
+		.mui-views,
+		.mui-view {
+			position: relative;
+			width: 100vw;
+			height: 100vh;
+			overflow: hidden;
+		}
+		.arrow-icon{
+			width: 9px !important;
+			height: 6px !important;
+			max-height: 10px  !important;
+			max-width: 8px  !important;
+			transition: transform .5s;
+		}
+		.jumpDetail-info{
+			display: flex;
+			line-height: 45px;
+			align-items: center;
+			justify-content: space-between;
+		}
+		.info-bar-content-item{
+			height: 40px;
+		}
+		.display-flex {
+			display: flex;
+		}
+		.widthHalfPercent {
+			width: 50%;
+		}
+
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+
+
+
+		<!--侧栏内容-->
+		<div id="leftLan" class="side" style="top:0;position:fixed;z-index: 10;width:285px;height: 100%;right:-285px;">
+			<div class="mui-scroll" style="height:100%;background-color: white;color: black;width: 285px;">
+				<!--侧栏具体展示内容-->
+				<p style="padding: 5px 15px;margin-bottom: 5px;"></p>
+				<!--水务所-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">所属水所</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="sws" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择所属水务所">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="swsClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--街道-->
+				<div style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">所属街道</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="street" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择所属街道">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="streetClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin: 0 20px;"></div>
+				<!--待签约-->
+				<div id="signState" style="margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">签约状态</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="sign" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择签约状态">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="signClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<div style="display: none;margin-bottom: 10px;margin-top: 10px;height: 40px">
+					<div style="float:left;font-size: 18px;padding-left: 10px;text-align: left;width:30%;margin: 10px;font-weight: bold;">签约状态</div>
+					<div class="info-bar-content-item isShow" style="float: left;width: 60%;text-align: left">
+						<input id="dangan" readonly="readonly" type="text" style="border:none;width: 85%;" value="" placeholder="请选择签约状态">
+						<span class="mui-icon mui-icon-closeempty itemClear" id="danganClear" style="position: relative;left:88%;top: -45px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+					</div>
+				</div>
+				<!--分隔-->
+				<div style="background-color:#EDEDED;height:2px;margin-bottom: 20px"></div>
+				<div style="margin-top: 400px">
+					<p style="padding: 5px 20px;margin-bottom: 20px;">
+						<button id="redo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined mui-btn-block" style="border: 0.5px solid #347CFC; width:48%;float:left;padding: 5px 20px;margin-right: 5px">重 置</button>
+						<button id="search" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="width:48%;float:left;padding: 5px 20px;">确认</button>
+					</p>
+				</div>
+
+			</div>
+		</div>
+		<!-- 遮罩 -->
+		<div class="mark"></div>
+
+		<div id="mui-content" class="mui-page paish" style="background-color: #F4F4F4;">
+			<div class="mui-slider" id="slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="position: fixed;z-index: 99;">
+					<div class="info-bar-content">
+						<div class="search-bar">
+							<div class="search-item" style="width: 80%">
+								<div class="search-icon">
+									<img src="../../img/commom/search1@2x.png" />
+								</div>
+								<div class="search-input">
+									<div class="mui-input-row" style="text-align: left">
+<!--										请输入小区编号或小区名称 -->
+										<input id="search_input" value="" type="text" style="width: 90%;" placeholder="请输入小区名称">
+									</div>
+								</div>
+							</div>
+							<div style="position:absolute;top:2px;right:14px;float: right">
+								<img id="moreFactor" style="width: 18px;" src="../../img/commom/sideLan.png" />
+							</div>
+						</div>
+						<div>
+							<a class="mui-control-item mui-active" id="page1" href="#basicInfo" style="background: #FFFFFF;color: #888888;line-height: 50px;">信息查询</a>
+							<a class="mui-control-item" id="page2" href="#soilConservationScheme" style="background: #FFFFFF;color: #888888;line-height: 50px;">一区一档</a>
+						</div>
+					</div>
+				</div>
+				<div style="position: fixed;top: 50px;z-index: 99;width:100%;height: 5px;background-color: #F4F4F4;"></div>
+				<div class="mui-slider-group">
+					<div id="basicInfo" class="mui-slider-item mui-control-content mui-active" style="border-bottom: none!important;">
+						<div id="detail1">
+							<div id="adata" class="mainPage">
+								<div id="sco">
+									<div id="showData" style="padding-top: 10px;">
+									</div>
+								</div>
+								<!--<div class="base-item">-->
+									<!--<div style="margin: 10px 0px 10px 5px;border-bottom: 1px solid #EDEDED;">-->
+										<!--<div style="padding-bottom: 10px;width: 50%;display: inline-block;text-align: left;">-->
+											<!--<span style="font-size: 16pt;line-height: 40px">-->
+												<!--宏利德环境产业有限公司大大大阿萨德爱仕达大所-->
+											<!--</span>-->
+										<!--</div>-->
+										<!--<div style="width: 50%;display: inline">-->
+											<!--<button style="background-color: #0493F3;color: white;margin-top: 5px">-->
+												<!--历史档案-->
+											<!--</button>-->
+										<!--</div>-->
+									<!--</div>-->
+
+									<!--<div style="padding-top:10px;margin-left: 20px;padding-bottom: 15px;border-bottom: 1px solid #EDEDED;">-->
+										<!--<div style="text-align: left;padding-bottom: 5px">-->
+											<!--<span style="color: #B2B2B2">小区编号:</span>-->
+											<!--<span>FB-HG-FD-1423-13</span>-->
+										<!--</div>-->
+										<!--<div style="text-align: left;">-->
+											<!--<div style="text-align: left;display: inline-block;width: 40%;padding-bottom: 5px">-->
+											<!--<span style="color: #B2B2B2">-->
+												<!--所在水所:-->
+											<!--</span>-->
+											<!--<span>-->
+													<!--福中所-->
+												<!--</span>-->
+										<!--</div>-->
+
+											<!--<div style="width: 50%;display: inline">-->
+											<!--<span style="color: #B2B2B2;">-->
+												<!--所在街道:-->
+											<!--</span>-->
+												<!--<span>-->
+													<!--福保街道-->
+												<!--</span>-->
+											<!--</div>-->
+										<!--</div>-->
+
+										<!--<div style="text-align: left;">-->
+											<!--<div style="display: inline-block;width: 40%">-->
+											<!--<span style="color: #B2B2B2;">-->
+												<!--联系人:-->
+											<!--</span>-->
+												<!--<span>-->
+													<!--哈哈哈-->
+												<!--</span>-->
+											<!--</div>-->
+											<!--<div style="width: 50%;display: inline">-->
+													<!--<span style="color: #B2B2B2">-->
+														<!--联系电话:-->
+													<!--</span>-->
+												<!--<span>-->
+													<!--13587485478-->
+												<!--</span>-->
+											<!--</div>-->
+										<!--</div>-->
+									<!--</div>-->
+									<!---->
+									<!--<div>-->
+										<!--<div style="justify-content: space-between;display: flex;line-height: 50px">-->
+											<!--<span style="margin-left: 20px;">-->
+												<!--详细信息-->
+											<!--</span>-->
+											<!--<span style="color: #F4F4F4;margin-right: 20px;font-size: 16px;font-weight: bold">-->
+												<!--&gt;-->
+											<!--</span>-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							</div>
+						</div>
+					</div>
+					<div id="soilConservationScheme" class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+						<div id="detail2">
+							<div id="yData" class="mainPage">
+								<div  class="scroll-li">
+									<div style="text-align: left;">
+										<div id="achList" style="display: inline-block;width: 120px;">
+											<!--<select id="select" onchange="checkSelect()" style="background-color:#F4F4F4;">-->
+												<!--<option value=729c5926a5f04ea994d9990d7bceea50>2020年</option>-->
+												<!--<option value=1186bf7e90dc27b05c534fd619872a8a>2019年下半年</option>-->
+												<!--<option value=dcb025fd909eb426dc096289757d8aed>2020年下半年</option>-->
+												<!--<option value=e5fddf192cfbdcb10a4dd520066884aa>2021年</option>-->
+											<!--</select>-->
+										</div>
+<!--										inline-block-->
+										<div style="display: none;">
+											<img class="arrow-icon" src="../../img/arrowDownBlack.png" alt="">
+										</div>
+									</div>
+
+									<div id="yqydSco">
+										<div id="yqydData">
+											<!--<div style="border-bottom: 1px solid #EDEDED;padding-bottom: 20px">-->
+											<!--<div style="padding-bottom: 10px;width: 60%;display: inline-block;text-align: left;">-->
+											<!--<span style="font-size: 16pt;line-height: 40px">-->
+											<!--${res[i].managerId}-->
+											<!--</span>-->
+											<!--</div>-->
+											<!--<div style="width: 50%;display: inline">-->
+											<!--<button style="background-color: #0493F3;color: white;margin-top: 5px">-->
+											<!--历史档案-->
+											<!--</button>-->
+											<!--</div>-->
+											<!--</div>-->
+											<!--<div style="padding-top: 20px;padding-bottom: 20px">-->
+											<!--<div style="text-align: left;display: inline-block;margin-right: 50px">-->
+											<!--<span style="color: #B2B2B2">检测：</span><span style="color: #0493F3">3</span><span style="color: #B2B2B2">(条)</span>-->
+											<!--</div>-->
+											<!--<div style="margin-right: 50px;display: inline-block">-->
+											<!--<span style="color: #B2B2B2">清疏：</span><span style="color: #0493F3">3</span><span style="color: #B2B2B2">(条)</span>-->
+											<!--</div>-->
+											<!--<span style="color: #B2B2B2">缺陷：</span><span style="color: #0493F3">3</span><span style="color: #B2B2B2">(条)</span>-->
+											<!--</div>-->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<script src="../../js/numberBox.js"></script>
+	<script src="../../js/bscroll.js"></script>
+	<!-- <script src="../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+
+		var isTest = false
+		var timeStamp =  Date.parse(new Date())/1000
+
+		mui.init({
+			swipeBack: false,
+			gestureConfig: {
+				swipe: true, //默认为true
+			}
+		});
+
+		var rankBox = document.getElementById("adata"); // slider
+		var cBScroll = new BScroll(rankBox, {
+			click: true, // 主要控制非button元素的点击事件
+			probeType: 3,
+			pullUpLoad: true
+		});
+		//
+		var ydyqRankBox = document.getElementById("yData"); // slider
+		var ydyqCBScroll = new BScroll(ydyqRankBox, {
+			click: true, // 主要控制非button元素的点击事件
+			probeType: 3,
+			pullUpLoad: true
+		});
+
+		//小区信息查询参数
+		var param = {
+			_t: Date.parse(new Date())/1000,
+			column: "createTime",
+			order: "desc",
+			field: "id___reName_stationName_managerId_managerPer_tel_streetName_reCode_issign_action",
+			pageNo: 1,
+			pageSize: 20,
+		}
+
+		//小区上拉加载
+		function upLoadMore() {
+			param.pageNo = param.pageNo + 1
+			console.log("小区上拉加载")
+			getAreaData(param)
+		}
+
+		//一区一档上拉加载
+		function yqydUpLoadMore() {
+			yqydParam.pageNo = yqydParam.pageNo + 1
+			console.log("一区一档上拉加载")
+			getYqydData(yqydParam)
+		}
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		$("#moreFactor").on('tap',function(){
+			if ($("#page1").hasClass("mui-active")) {
+				$("#signState").css("display","block")
+			}
+
+			if ($("#page2").hasClass("mui-active")) {
+				$("#signState").css("display","none")
+			}
+			// app.toast("leftlan")
+			$('.mark').fadeIn();
+			$('.side').css('right',0);
+		})
+
+		// 点击页面遮罩和侧栏消失
+		$('.mark').click(function(){
+			// app.toast("消失")
+			$('.mark').fadeOut();
+			$('.side').css('right',-285);
+		})
+
+		mui.plusReady(function() {
+			var winHeight = window.screen.height;
+			$("#detail1").height(winHeight - 130);
+			$("#detail2").height(winHeight - 130);
+			$("#detail3").height(winHeight - 130);
+			//禁止选项卡自带滑动，手动监听
+			// mui('.mui-slider').slider().stopped = true;
+
+			//小区上拉加载
+			cBScroll.on('pullingUp', () => {
+				console.log("小区上拉加载更多");
+				upLoadMore();
+			})
+
+			ydyqCBScroll.on('pullingUp', () => {
+				console.log("一区一档上拉加载更多");
+				yqydUpLoadMore();
+			})
+
+			//获取信息
+			// showData()
+			getAreaData(param)
+			getArchList()
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了				
+					$("#bottom-item-btn").hide()
+				} else {
+
+					$("#bottom-item-btn").show()
+				}
+			}
+
+			//上一步
+			$("#pre_step").on("tap", function(event) {
+				var gallery = mui('.mui-slider');
+				if ($("#page2").hasClass("mui-active")) {
+					gallery.slider().gotoItem(0);
+					$('#page2').removeClass("mui-active")
+					$('#page1').addClass("mui-active")
+					$("#next_step").attr("disabled", false);
+					$("#pre_step").attr("disabled", true);
+				} else if ($("#page3").hasClass("mui-active")) {
+					gallery.slider().gotoItem(1);
+					$('#page3').removeClass("mui-active")
+					$('#page2').addClass("mui-active")
+					$("#next_step").attr("disabled", false);
+					$("#pre_step").attr("disabled", false);
+				}
+				scrollTop()
+			})
+
+			//下一步
+			$("#next_step").on("tap", function(event) {
+				var gallery = mui('.mui-slider');
+				if ($("#page1").hasClass("mui-active")) {
+					gallery.slider().gotoItem(1);
+					$('#page1').removeClass("mui-active")
+					$('#page2').addClass("mui-active")
+					$("#next_step").attr("disabled", false);
+					$("#pre_step").attr("disabled", false);
+				} else if ($("#page2").hasClass("mui-active")) {
+					gallery.slider().gotoItem(2);
+					$('#page2').removeClass("mui-active")
+					$('#page3').addClass("mui-active")
+					$("#next_step").attr("disabled", true);
+					$("#pre_step").attr("disabled", false);
+				}
+				scrollTop()
+			})
+
+			//监听列表区域滑动
+			document.getElementById('soilConservationScheme').addEventListener("swipeleft", function() {
+				scrollTop()
+				$('#page2').removeClass("mui-active")
+				$('#page3').addClass("mui-active")
+				$("#next_step").attr("disabled", true);
+				$("#pre_step").attr("disabled", false);
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(2);
+			});
+			document.getElementById('basicInfo').addEventListener("swipeleft", function() {
+				scrollTop()
+				$('#page1').removeClass("mui-active")
+				$('#page2').addClass("mui-active")
+				$("#next_step").attr("disabled", false);
+				$("#pre_step").attr("disabled", false);
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(1);
+			});
+
+			document.getElementById('soilConservationScheme').addEventListener("swiperight", function() {
+				scrollTop()
+				$('#page2').removeClass("mui-active")
+				$('#page1').addClass("mui-active")
+				$("#next_step").attr("disabled", false);
+				$("#pre_step").attr("disabled", true);
+				var gallery = mui('.mui-slider');
+				gallery.slider().gotoItem(0);
+			});
+			// document.getElementById('checkPlanPage').addEventListener("swiperight", function() {
+			// 	scrollTop()
+			// 	$('#page3').removeClass("mui-active")
+			// 	$('#page2').addClass("mui-active")
+			// 	$("#next_step").attr("disabled", false);
+			// 	$("#pre_step").attr("disabled", false);
+			// 	var gallery = mui('.mui-slider');
+			// 	gallery.slider().gotoItem(1);
+			// });
+
+
+			//回到顶部		
+			function scrollTop() {
+				document.getElementById('detail1').scrollTop = 0;
+				document.getElementById('detail2').scrollTop = 0;
+				// 没有 detail3
+				// document.getElementById('detail3').scrollTop = 0;
+			}
+			mui(".mui-segmented-control").on('tap', '.mui-control-item', function() {
+				scrollTop();
+				var id = $(this).attr("id")
+				if (id == "page1") {
+					$("#next_step").attr("disabled", false);
+					$("#pre_step").attr("disabled", true);
+				} else if (id == "page2") {
+					$("#next_step").attr("disabled", false);
+					$("#pre_step").attr("disabled", false);
+				} else if (id == "page3") {
+					$("#next_step").attr("disabled", true);
+					$("#pre_step").attr("disabled", false);
+				}
+			});
+		})
+
+		function showData() {
+			var proData = JSON.parse(plus.webview.currentWebview().proData);
+
+			$("#prjName").val(isEmp(proData.prjName));
+			$("#prjSource").val(isEmp(proData.prjSource));
+			getDicTextByIdAndKey(proData.prjSource, 'project_source', function(data) {
+				$("#prjSource_text").val(data)
+			});
+			$("#prjType").val(proData.prjType)
+			getDicTextByIdAndKey(proData.prjType, 'project_type', function(data) {
+				$("#prjType_text").val(data)
+			});
+			$("#prjCharacter").val(proData.prjCharacter);
+			getDicTextByIdAndKey(proData.prjCharacter, 'project_character', function(data) {
+				$("#prjCharacter_text").val(data)
+			});
+			$("#industry").val(isEmp(proData.industry));
+			getDicTextByIdAndKey(proData.industry, 'project_industry', function(data) {
+				$("#industry_text").val(data)
+			});
+			$("#prjLocationStreet").val(isEmp(proData.prjLocationStreet));
+			$("#prjLocation").val(isEmp(proData.prjLocation));
+			$("#smx").val(isEmp(proData.smx));
+			$("#smy").val(isEmp(proData.smy));
+			$("#constructionUnit").val(isEmp(proData.constructionUnit));
+			$("#conContacts").val(isEmp(proData.conContacts));
+			$("#email").val(isEmp(proData.email));
+			$("#buildUnit").val(isEmp(proData.buildUnit));
+			$("#buildContacts").val(isEmp(proData.buildContacts));
+			$("#supervisoryUnit").val(isEmp(proData.supervisoryUnit));
+			$("#supervisoryContacts").val(isEmp(proData.supervisoryContacts));
+			$("#designUnit").val(isEmp(proData.designUnit));
+			$("#designContacts").val(isEmp(proData.designContacts));
+			$("#startDate").val(isEmp(proData.startDate).substring(0, 10));
+			$("#planEndDate").val(isEmp(proData.planEndDate).substring(0, 10));
+
+			if (proData.preventionArea) mui("#preventionArea").numbox().setValue(proData.preventionArea)
+			if (proData.totalInvestment) mui("#totalInvestment").numbox().setValue(proData.totalInvestment)
+			if (proData.civilInvestment) mui("#civilInvestment").numbox().setValue(proData.civilInvestment)
+
+			if (proData.programmeType != "") {
+				$("#programmeType").val(proData.programmeType);;
+				getDicTextByIdAndKey(proData.programmeType, 'programme_type', function(data) {
+					$("#programmeType_text").val(data)
+					if (data == '无') {
+						$(".isShow").hide()
+					}
+				});
+			}
+
+			$("#approvalNumber").val(isEmp(proData.approvalNumber));
+			$("#approvalDep").val(isEmp(proData.approvalDep));
+			$("#approvalDate").val(isEmp(proData.approvalDate).substring(0, 10));
+
+			if (proData.programme != null && proData.programme != undefined && proData.programme != "") {
+				findFilesByGroupId({
+					groupId: proData.programme
+				}, function(data) {
+					var item = data.result[0]
+					let suffix = item.uploadFile.fileType.substring(1, item.uploadFile.fileType.length)
+					let iconPath = '';
+					switch (suffix) {
+						case 'doc':
+						case 'docx':
+							iconPath = '../../img/commom/doc.png';
+							break;
+						case 'pdf':
+							iconPath = '../../img/commom/pdf.png';
+							break;
+					}
+
+					$("#fileUploadBox").css("height", 150)
+					$("#fileBoxItem").fadeIn()
+					$("#no-file").hide()
+					// that.attr("disabled", true)
+					$("#file_type").attr('src', iconPath)
+
+					$("#file_name").html(item.uploadFile.fileName)
+					$("#file_size").html(item.uploadFile.fileSize + "KB")
+					$("#programme").val(item.fileToken)
+					$("#fileToken").val(item.fileToken)
+				});
+			}
+
+			//计划日期
+			var checkPlan = proData.checkPlan;
+			$("#checkPlan").val(checkPlan);
+			if (checkPlan != "") {
+				let dateArr = proData.planCheckDate.split(";");
+				console.log(dateArr)
+				let html = ""
+				for (var i = 0; i < checkPlan; i++) {
+					html +=
+						`<div class="info-bar-content-item">
+								<div class="item-title">计划日期${i+1}</div>
+								<div class="mui-input-row item-input">
+									<input id="surveyDate${i+1}" class="inputCss datePicker" required="true" readonly="readonly" type="text"
+											 placeholder="请选择项计划日期${i+1}" value=${isEmp(dateArr[i])} style="width: 90%;">
+									<img src="../../img/commom/time.png" style="width: 16px;height: 16px;float: right;margin-top: 8px;">
+								</div>
+						</div>`
+				}
+				$("#timeGroup").html(html)
+			}
+			//检查人员
+			var inspectors = proData.inspectors;
+			if (inspectors && inspectors != "" && inspectors.length > 0) {
+				let perArr = inspectors.split(",")
+				var text = '';
+				for (let i = 0; i < perArr.length; i++) {
+					text +=
+						`<div style="display:inline-block;padding:0 5px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+								<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+							</div>`;
+				}
+				text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></span>`;
+				if (perArr.length >= 5) {
+					var h = $("#surveyItem").height() + (perArr.length / 4) * 22;
+					$("#surveyItem").css("height", h)
+				}
+				$("#survey-box").html(text)
+			} else $("#survey-box").html('无')
+
+			$("#inputerFullname").val(isEmp(proData.inputerFullname)); //填写人
+			$("#inputDate").val(isEmp(proData.inputDate).substring(0, 10)); //填写时间
+		}
+
+        var yqydParam = {
+            "_t": timeStamp,
+            "column": "createTime",
+            "order": "desc",
+            "field": "id___reCode_reName_stationName_streetName_checkCount_dredgCount_bugCount_doc_action",
+            "pageNo": 1,
+            "pageSize": 20
+        }
+
+		//获取归档节点列表
+		function getArchList() {
+			// var url = "https://zhswtest.hdec.com/ecidi-cmp/ft-device/area/arch/tree?_t=1620973498";
+			var url = config.urls.baseUrl + config.actions.tree
+			$.ajax(url,{
+				// data: param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get',
+				// async:false,//HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+				},
+				timeout: config.settings.requestTimeOut,
+				success: function(data) {
+					console.log('getArchList start')
+					console.log(JSON.stringify(data))
+					console.log('getArchList end')
+					getArchListReturn(data);
+
+				},
+				error:function(data) {
+				    console.log("发生错误")
+				    console.log(JSON.stringify(data))
+                }
+			})
+		}
+		function getArchListReturn(data) {
+			if (data.code==200){
+				var res = data.result
+				// var archHtml = `<select id="select" onchange="checkSelect()" style="background-color:#F4F4F4;">
+				// 						<option value=729c5926a5f04ea994d9990d7bceea50>2020年</option>
+				// 						<option value=1186bf7e90dc27b05c534fd619872a8a>2019年下半年</option>
+				// 						<option value=dcb025fd909eb426dc096289757d8aed>2020年下半年</option>
+				// 						<option value=e5fddf192cfbdcb10a4dd520066884aa>2021年</option>
+				// 					</select>`
+				var archHtml = `<select id="select" onchange="checkSelect()" style="background-color:#F4F4F4;
+ background: url(../../img/arrowDownBlack.png) no-repeat scroll right center transparent;
+    background-size: 9px 6px;">`
+				if(res.length>0){
+					for (var i = 0; i < res.length; i++) {
+						archHtml += `<option value=${res[i].value}>${res[i].text}</option>`
+					}
+					archHtml += `</select>`
+				}
+				//	console.log(archHtml)
+				$("#achList").html(archHtml)
+				yqydParam.archId = res[0].value
+				getYqydData(yqydParam)
+			}
+		}
+
+		var yqydHtml = ``
+
+		// 获取归档节点列表 getArchList()后调用
+		// 一区一档 tab
+		function getYqydData(param) {
+			if(isTest) return;
+
+			app.showLoader()
+			yqydParam.archId = param.archId
+			// var url = "https://zhswtest.hdec.com/ecidi-cmp/ft-device/arch/main/getList"
+			var url = config.urls.baseUrl + config.actions.archlist
+			console.log("一区一档页数"+yqydParam.pageNo)
+			$.ajax(url,{
+				data: yqydParam,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get',
+				// async:false,//HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA2Mzk0ODYsInVzZXJuYW1lIjoibGluX3lyIn0.jbfz77pV9s71skRHyoKe_U0v9ZQnl6nkFJeHtZuy38o"
+				},
+				timeout: config.settings.requestTimeOut,
+				success: function(data) {
+					//console.log("一区一档："+ JSON.stringify(data))
+					app.hideLoader();
+
+					if(data.code==200){
+						getYqydDataReturn(data);
+					}
+					ydyqCBScroll.refresh()
+					ydyqCBScroll.finishPullUp()
+				},
+                error:function(data) {
+					app.hideLoader();
+                    console.log("发生错误")
+                    console.log(JSON.stringify(data))
+                }
+
+			})
+		}
+		// 一区一档 tab
+		function getYqydDataReturn(data) {
+			//console.log("查詢一檔一區成功")
+			//console.log("一区一档页数"+yqydParam.pageNo)
+			var res = data.result.records;
+			// yqydHtml = "";
+			if(res.length>0){
+				for (var i = 0; i < res.length; i++){
+					var dataJson = JSON.stringify(res[i]);
+					yqydHtml+= `
+									<div class="base-item">
+										<div class="base-item-top">
+											<div>
+											<span style="font-size: 16px;color: #262626;line-height: 40px">
+												${res[i].reName}
+											</span>
+											</div>
+											<div>
+												<input onchange="fileSelected()" id="uploadFile" style="display: none" type="file"/>
+												<button class="gui-dang">
+													${res[i].archivedAttachment!=null?"已归档":"未归档"}
+												</button>
+												<div style="display: none">${dataJson}</div>
+											</div>
+										</div>
+										<div class="base-item-content">
+											<div>
+												<span>检测：</span><span style="color: #0493F3">${res[i].checkCount}</span><span>(条)</span>
+											</div>
+											<div>
+												<span>清疏：</span><span style="color: #0493F3">${res[i].dredgCount}</span><span>(条)</span>
+											</div>
+											<div>
+												<span>缺陷：</span><span style="color: #0493F3">${res[i].bugCount}</span><span>(条)</span>
+											</div>
+
+										</div>
+									</div>`
+				}
+				$("#yqydData").html(yqydHtml)
+			}else if (yqydParam.pageNo==1){
+				$("#yqydData").html(`<div>无数据</div>`)
+			}
+		}
+
+		var areaHtml = ``
+		// 信息查询
+		function getAreaData(param,isSearch){
+			app.showLoader()
+			// var url = "https://zhswtest.hdec.com/ecidi-cmp/ft-device/reArea/list";
+			var url =  config.urls.baseUrl + config.actions.reAreaList
+			$.ajax(url,{
+				data: param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get',
+				// async:false,//HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+				},
+				timeout: config.settings.requestTimeOut,
+				success: function(data) {
+					 //console.log("小区当前页数"+param.pageNo)
+					// console.log('getAreaData(param,isSearch) start')
+                    // console.log(JSON.stringify(data))
+					// console.log('getAreaData(param,isSearch) end')
+					getAreaDataReturn(data, isSearch);
+
+					app.hideLoader()
+					cBScroll.refresh()
+					cBScroll.finishPullUp()
+				},
+			})
+		}
+
+		//  信息查询 tab
+		function getAreaDataReturn(data, isSearch) {
+			if(data.code==200){
+				var res = data.result.records;
+				if (res.length > 0){
+					if(isSearch){
+						areaHtml = ``
+						$("#showData").empty();
+					}
+					for (var i = 0; i < res.length; i++) {
+						var dataJson = JSON.stringify(res[i]);
+						areaHtml += `
+								<div class="base-item base-item-tab-info" id="${res[i].guid}">
+									<!-- base-item-top start -->
+									<div class="base-item-top">
+										<div>
+											<span style="font-size: 16px;color: #262626;line-height: 40px">
+												${res[i].reName!=null?res[i].reName:"无"}
+											</span>
+										</div>
+										<div>
+											<button class="dang-an">
+												历史档案
+											</button>
+											<div style="display:none">${dataJson}</div>
+										</div>
+									</div>
+									<!-- base-item-top end -->
+
+									<!-- base-item-content start -->
+									<div class="base-item-content base-item-content-tab-info">
+										<div>
+											<span style="color: #B2B2B2">小区编号:</span>
+											<span>${res[i].reCode != null ? res[i].reCode : "无"}</span>
+										</div>
+										<div class="display-flex">
+											<div class="widthHalfPercent">
+												<span style="color: #B2B2B2">
+													所在水所:
+												</span>
+												<span>
+														${res[i].stationName != null ? res[i].stationName : "无"}
+												</span>
+											</div>
+											<div class="widthHalfPercent">
+												<span style="color: #B2B2B2;">
+													所在街道:
+												</span>
+												<span>
+													${res[i].streetName != null ? res[i].streetName : "无"}
+												</span>
+											</div>
+										</div>
+
+										<div class="display-flex">
+											<div class="widthHalfPercent">
+												<span style="color: #B2B2B2;">
+													联系人:
+												</span>
+												<span>
+													${res[i].managerPer != null ? res[i].managerPer : "无"}
+												</span>
+											</div>
+											<div class="widthHalfPercent">
+												<span style="color: #B2B2B2">
+													联系电话:
+												</span>
+												<span>
+													${res[i].tel != null ? res[i].tel : "无"}
+												</span>
+											</div>
+										</div>
+									</div>
+									<!-- base-item-content end -->
+
+
+									<div class="jumpDetail">
+										<div class="jumpDetail-info">
+											<span class="detail">
+												详细信息
+											</span>
+											<img src="../../img/arrow-right-gray.png" style="width: 7px; height: 12px;">
+										</div>
+									</div>
+									<div style="display:none">${dataJson}</div>
+								</div>`
+
+						$("#showData").html(areaHtml)
+
+					}
+				}else if (param.pageNo==1) {
+					$("#showData").html("<div>无数据</div>");
+				}
+			}
+		}
+
+		//详细信息跳转
+		$("#showData").on(`tap`,".jumpDetail",function (e) {
+			console.log($(this).next().html())
+			var extras = {
+				proData:$(this).next().html()
+			}
+			app.openPage("detail.html", {
+				titleNView: {
+					// titleText: "查看"+$(this).prev().html()+"项目",
+					autoBackButton: true,
+				}
+			},extras);
+		})
+
+		//输入框搜索
+		$("#search_input").on("input",function () {
+			let reName = ""
+			if ($("#search_input").val().trim() != "") {
+				console.log("*" + $("#search_input").val().trim() + "*")
+				reName = "*" + $("#search_input").val().trim() + "*";
+			} else {
+				reName = "";
+			}
+
+			if ($("#page1").hasClass("mui-active")) {
+				param.pageNo=1;
+				param.reName = reName
+				$("#showData").empty();
+				getAreaData(param,true)
+				console.log("查询信息查询")
+			}
+
+			if ($("#page2").hasClass("mui-active")) {
+				yqydParam.pageNo=1;
+				yqydParam.reName = $("#search_input").val()
+				yqydHtml = ""
+				$("#yqydData").empty();
+				getYqydData(yqydParam,true)
+				console.log("一区一档查询")
+			}
+
+		})
+
+		var streetId = ""
+		var stationId = ""
+		var sign = ""
+
+		//获取水务所数据
+		function getSwsData(){
+			app.showLoader()
+			// var url = "https://zhswtest.hdec.com/ecidi-cmp/sysdepart/sysDepart/listByPid?pid=100000004&departType=sws&_t=1620790488"
+			var url = config.urls.baseUrl +  config.actions.getSSSS
+			$.ajax(url,{
+				data: param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get',
+				// async:false,//HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+				},
+				timeout: config.settings.requestTimeOut,
+				success: function(data) {
+					console.log(data)
+					if (200 != parseInt(data.code)) {
+						app.toast(data.message);
+						console.log(data.message)
+						return;
+					}
+					var resultJSON =[];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.departName,//水务所名
+							value: item.id //id
+						})
+					}
+					var userPicker = new mui.PopPicker();
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					}
+					userPicker.setData(resultJSON);
+					userPicker.show(function(items) {
+						$("#sws").val(items[0].text);
+						stationId = items[0].value;
+
+						$("#sws").next().css('display', 'block');
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+					app.hideLoader()
+				}
+			})
+		}
+
+
+		$("#sws").on("tap",function () {
+			getSwsData();
+		})
+
+		//获取街道
+		$("#street").on("tap",function(){
+			app.showLoader()
+			getJD(function (data) {
+				if (200 != parseInt(data.code)) {
+					app.toast(data.message);
+					console.log(data.message)
+					return;
+				}
+				var resultJSON =[];
+				for (var i = 0; i < data.result.length; i++) {
+					var item = data.result[i];
+					resultJSON.push({
+						text: item.adName,//街道名
+						value: item.guid //guid
+					})
+				}
+				var userPicker = new mui.PopPicker();
+				if ($(".mui-poppicker").hasClass("mui-active")) {
+					userPicker.hide();
+					return false;
+				}
+				userPicker.setData(resultJSON);
+				userPicker.show(function(items) {
+					$("#street").val(items[0].text);
+					streetId = items[0].value;
+
+					$("#street").next().css('display', 'block');
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+				app.hideLoader()
+			})
+		})
+
+		//签约
+		$("#sign").on("tap",function(){
+			var resultJSON = [
+				{
+					text: "已签约",
+					value: 1
+				},{
+					text: "未签约",
+					value: 0
+				},{
+					text:"待确认",
+					value: 2
+				}
+			]
+			var userPicker = new mui.PopPicker();
+			if ($(".mui-poppicker").hasClass("mui-active")) {
+				userPicker.hide();
+				return false;
+			}
+			userPicker.setData(resultJSON);
+			userPicker.show(function(items) {
+				$("#sign").val(items[0].text);
+				sign = items[0].value;
+
+				$("#sign").next().css('display', 'block');
+				//返回 false 可以阻止选择框的关闭
+				//return false;
+			});
+		})
+
+		//重置
+		$("#redo").on('tap',function(){
+			$('#street').val("")
+            $("#sign").val("")
+            $("#sws").val("")
+            stationId = ""
+            streetId = ""
+            sign = ""
+			$(".itemClear").css("display","none");
+		})
+
+		//清除按钮
+		$(".itemClear").on('tap',function(){
+			var a = $(this);
+			a.prev().val("");
+			a.css("display","none");
+		})
+
+		//点击搜索（条件）
+		$("#search").on("tap",function (data){
+			if ($("#page1").hasClass("mui-active")) {
+				param.stationId = stationId
+				param.streetId = streetId
+				param.issign = sign
+				param.pageNo = 1
+
+				$("#showData").empty();
+				getAreaData(param,true)
+				console.log("查询信息查询")
+			}
+
+			if ($("#page2").hasClass("mui-active")) {
+				yqydParam.pageNo=1;
+				yqydParam.stationId = stationId
+				yqydParam.streetId = streetId
+				yqydHtml = ``
+				$("#yqydData").empty();
+				getYqydData(yqydParam,true)
+				console.log("一区一档查询")
+			}
+
+			$('.mark').fadeOut();
+			$('.side').css('right',-285);
+		});
+
+		var isUpload = true;
+		//档案按钮
+		$("#showData").on(`tap`,".dang-an",function (e) {
+			var jsonString = $(this).next().html()
+			var data =  JSON.parse(jsonString)
+			var guid = data.guid
+			var danAnParams = {
+				"_t" : timeStamp,
+				"guid": guid
+			}
+			getDangAn(danAnParams)
+		})
+
+		var archId = ""
+
+		//获取档案信息
+		function getDangAn(param) {
+			app.showLoader()
+			// var url = "https://zhswtest.hdec.com/ecidi-cmp/ft-device/reArea/view"
+			var url = config.urls.baseUrl + config.actions.reaAreaView
+			$.ajax(url,{
+				data: param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get',
+				// async:false,//HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+					// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+				},
+				timeout: config.settings.requestTimeOut,
+				success: function(data) {
+					console.log(data)
+					if(data.code==200){
+						var res = data.result
+						if(res!=null){
+							var resultJSON =[];
+							for (var i = 0; i < res.length; i++) {
+								var item = data.result[i];
+								resultJSON.push({
+									text: item.archName,//节点名字
+									value: item.guid //id
+								})
+							}
+							var userPicker = new mui.PopPicker();
+							if ($(".mui-poppicker").hasClass("mui-active")) {
+								userPicker.hide();
+								return false;
+							}
+							userPicker.setData(resultJSON);
+
+							//点击确认获取档案节点信息
+							userPicker.selectionChanged = function(select){
+								console.log(JSON.stringify(select))
+								let archId = select[0].value;
+								let guid = param.guid
+								// let url = "https://zhswtest.hdec.com/ecidi-cmp/ft-device/reArea/getAttachment"
+								let url = config.urls.baseUrl + config.actions.getAttachment
+								var archParam = {
+									"guid" : guid,
+									"archId" : archId,
+									"_t": timeStamp
+								}
+								$.ajax(url,{
+									data: archParam,
+									dataType: 'json', //服务器返回json格式数据
+									type: 'get',
+									// async:false,//HTTP请求类型
+									headers: {
+										"Content-Type": "application/x-www-form-urlencoded",
+										"X-Access-Token": app.sessionId()
+										// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+									},
+									timeout: config.settings.requestTimeOut,
+									success: function(data) {
+										console.log(JSON.stringify(data))
+										if(data.code==200){
+											// var groupUrl = "https://zhswtest.hdec.com/ecidi-cmp/file/cmpFileGroup/findFilesByGroupId"
+											var groupUrl = config.urls.baseUrl + config.actions.findFilesByGroupId
+											var groupParam = {"_t":timeStamp,"groupId":data.result.archivedAttachment}
+											$.ajax(groupUrl,{
+												data: groupParam,
+												dataType: 'json', //服务器返回json格式数据
+												type: 'get',
+												// async:false,//HTTP请求类型
+												headers: {
+													"Content-Type": "application/x-www-form-urlencoded",
+													"X-Access-Token": app.sessionId()
+													// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+												},
+												timeout: config.settings.requestTimeOut,
+												success: function(data) {
+													console.log(JSON.stringify(data))
+													if (data.code = 200){
+														if (data.result.length<=0){
+															app.toast("查询附件失败")
+														} else {
+															let archivedAttachment = {"arch": data.result[0].fileToken}
+															var extras = {
+																proData: JSON.stringify(archivedAttachment)
+															}
+															app.openPage("preview.html", {
+																titleNView: {
+																	// titleText: "查看"+$(this).prev().html()+"项目",
+																	autoBackButton: true,
+																}
+															},extras);
+														}
+													}
+												}
+											})
+										}
+									}
+								})
+
+							}
+							userPicker.show(function(items) {
+								$("#dangan").val(items[0].text);
+								archId = items[0].value;
+
+								$("#dangan").next().css('display', 'block');
+								//返回 false 可以阻止选择框的关闭
+								//return false;
+							});
+
+
+						}else {
+							app.toast(data.message);
+						}
+					}
+					app.hideLoader()
+				}
+			})
+		}
+
+		// 上传文件与归档
+		function fileSelected(param){
+			// console.log("选择文件成功")
+			// var file = $("#uploadFile")[0].files
+			// console.log(file)
+			app.showLoader()
+			if (isUpload) {
+				isUpload = false;
+				let fileSuffix = 'doc、docx、pdf';
+				var that = $(this);
+				plusSelectFile(fileSuffix, function(data, path) {
+					console.log(path)
+					console.log(JSON.stringify(data))
+					var suffix = path.substring(path.lastIndexOf(".") + 1, path.length);
+					var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+					var iconPath = "";
+					console.log(suffix)
+					switch (suffix) {
+						case 'doc':
+						case 'docx':
+							iconPath = '../../img/commom/doc.png';
+							break;
+							// case 'xlsx':
+							// case 'xls':
+							// 	iconPath = '../../img/commom/xlsx.png';
+							// 	break;
+						case 'pdf':
+							iconPath = '../../img/commom/pdf.png';
+							break;
+						default:
+							app.toast("只能上传.doc .docx .pdf文件！")
+							return;
+					}
+					if (data.success) {
+						let fileTokens = data.result.fileTokens
+						// let archId = data.result.savePath
+						// archId = archId.match(/ecidi\/(\S*)\./)[1];
+						let archId = yqydParam.archId
+						// ecidi/de3531cca5ca4a22ba6a05ec5330663c.docx
+						let strAttachment = [{"fieldName":"archivedAttachment",
+							"groupId":"fileTokens",
+							"fileTokens": fileTokens,
+							"tableName":"device_area_arch_main"}]
+						let achParam = {
+							"conId": param.conId,
+							"stationId": param.stationId,
+							"stormSysId": param.stormSysId,
+							"archivedAttachment": fileTokens,
+							"reType": param.reType,
+							"guid": param.guid,
+							"streetId": param.streetId,
+							"dredgCount": param.dredgCount,
+							"conId_dictText": param.conId_dictText,
+							"streetName": param.streetName,
+							"stationName": param.streetName,
+							"reName": param.reName,
+							"bugCount": param.bugCount,
+							"checkCount": param.checkCount,
+							"archId": archId,
+							"sewageSysId" : param.sewageSysId,
+							"reCode" : param.reCode,
+							"strAttachment": JSON.stringify(strAttachment)
+						}
+						// var archUrl = "https://zhswtest.hdec.com/ecidi-cmp/ft-device/arch/main/archive"
+						var archUrl = config.urls.baseUrl + config.actions.archive
+						$.ajax(archUrl,{
+							data: achParam,
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post',
+							processData:true,
+							contentType:false,
+							// async:false,//HTTP请求类型
+							headers: {
+								"Content-Type": "application/x-www-form-urlencoded",
+								"X-Access-Token": app.sessionId()
+								// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjA3ODk5MDEsInVzZXJuYW1lIjoibGluX3lyIn0.GNRkC_i0U6LnnoNOE0W_CAOz1YYOfKvKy36SnucNvFA"
+							},
+							timeout: config.settings.requestTimeOut,
+							success: function(data) {
+								console.log("归档成功"+JSON.stringify(data))
+								app.toast("归档成功")
+								getYqydData(yqydParam)
+								app.hideLoader()
+							},
+							error: function(data) {
+								console.log("归档错误"+JSON.stringify(data))
+							}
+						})
+
+						// app.toast("文件上传成功");
+						// document.getElementById('detail2').scrollTop = 0;
+						// $("#fileUploadBox").css("height", 180)
+						// $("#fileBoxItem").fadeIn()
+						// that.attr("disabled", true)
+						// $("#file_type").attr('src', iconPath)
+						// $("#file_name").html(name)
+						// $("#programme").val(data.result.fileTokens)
+						// $("#fileToken").val(data.result.fileTokens)
+						//
+						// plus.io.resolveLocalFileSystemURL(path, function(entry) {
+						// 	entry.file(function(file) {
+						// 		let fileSize = Math.floor(file.size / 1024);
+						// 		console.log(file.size + "===" + fileSize)
+						// 		$("#file_size").html(fileSize + "KB")
+						// 		var fileProperty = {
+						// 			fileName: name,
+						// 			fileType: iconPath,
+						// 			fileSize: file.size,
+						// 			fileToken: data.result.fileTokens
+						// 		}
+						// 		globalSetItem(GlobalKey.fileProperty, JSON.stringify(fileProperty))
+						// 	});
+						// }, function(e) {
+						// 	alert("文件获取失败:" + e.message);
+						// });
+					} else {
+						app.toast(data.message);
+					}
+				})
+			}
+			setTimeout(function() {
+				isUpload = true
+			}, 1000)
+
+
+		}
+
+		//归档按钮
+		$("#yqydData").on(`tap`,".gui-dang",function (e) {
+			var proData = JSON.parse($(this).next().html());
+			console.log(JSON.stringify(proData) )
+			if (proData.archivedAttachment==null){
+				// fileSelected(proData)
+				app.toast("尚未归档，请移至网页端归档")
+			}else {
+				var groupUrl = config.urls.baseUrl + config.actions.findFilesByGroupId
+				var groupParam = {"_t":timeStamp,"groupId":proData.archivedAttachment}
+				$.ajax(groupUrl,{
+					data: groupParam,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get',
+					// async:false,//HTTP请求类型
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded",
+						"X-Access-Token": app.sessionId()
+					},
+					timeout: config.settings.requestTimeOut,
+					success: function(data) {
+						console.log(JSON.stringify(data))
+						if (data.code = 200){
+							if (data.result.length<=0){
+								app.toast("查询附件失败")
+							} else {
+								let archivedAttachment = {"arch": data.result[0].fileToken}
+								var extras = {
+									proData: JSON.stringify(archivedAttachment)
+								}
+								app.openPage("preview.html", {
+									titleNView: {
+										// titleText: "查看"+$(this).prev().html()+"项目",
+										autoBackButton: true,
+									}
+								},extras);
+							}
+						}
+					}
+				})
+			}
+		})
+
+		//选择一档一区节点
+		function checkSelect() {
+			var oV=$("select").val();
+			console.log(oV)
+            yqydParam.archId = oV
+            getYqydData(yqydParam)
+		}
+
+		//清除器
+		$("#streetClear").on(`tap`,function(){
+			streetId = ""
+		})
+
+		$("#swsClear").on(`tap`,function(){
+			stationId = ""
+		})
+
+		$("#signClear").on(`tap`,function(){
+			sign = ""
+		})
+
+		// getAreaData(param)
+		// getArchList()
+
+		// 测试区
+		if(isTest) {
+			testInitData()
+		}
+		function testInitData() {
+			testGetAreaData();
+			testGetArchList();
+		}
+
+		function testGetAreaData() {
+			var dataStr = `
+			{"success":true,"message":"操作成功!","code":200,"result":{"records":[{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":"13755654872","corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304008006","tel":null,"inputDepartmentFullname":null,"stationId":"100000004004","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":null,"archivedAttachment":null,"inputDate":"2021-04-23","checkSupervision":null,"reType":"2","guid":"re_area_2496","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304008","smid":2503,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"紫荆社区","streetName":"莲花街道","updateBy":"xu_mao","faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"香蜜所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区深圳市福田区深圳特区报印刷大楼6楼戈仕皮肤管理专家深圳总店","reName":"万乘简易仓","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":"2021-04-23 20:13:17","archId":null,"disChargeLine":null,"managerId":"b","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":null,"inputDepartment":null,"inputFullname":"徐茂","createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-130","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"罗军","roadId":null,"inputPhone":"","corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"83252680","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_1","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":1,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":"nie_zm","faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622622,point_info_sz_new_622621,point_info_sz_new_622620","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市宝安区钟屋物流园区G栋","reName":"万乘简易仓","drainageBasin":"","culvertsBasin":"","bugCount":null,"checkCount":null,"updateTime":"2021-05-14 14:52:08","archId":null,"disChargeLine":null,"managerId":"深圳市深福保物业发展有限公司万乘仓库物业管理处","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":"","createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-130","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"陈文斌","roadId":"road_156","inputPhone":"","corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13538162569","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_2","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":2,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":"cheng_hx","faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622620","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区保税区红棉道2号","reName":"富宝物流","drainageBasin":"","culvertsBasin":"","bugCount":null,"checkCount":null,"updateTime":"2021-05-19 15:16:40","archId":null,"disChargeLine":null,"managerId":"富宝物流（深圳）有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":"","createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-017","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"陈文斌","roadId":null,"inputPhone":"","corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13538162569","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":"chx","updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_3","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":3,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":"15846618920","delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":"cheng_hx","faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区红棉道105-B泰全威平","reName":"华宝物流","drainageBasin":"","culvertsBasin":"","bugCount":null,"checkCount":null,"updateTime":"2021-05-14 10:12:11","archId":null,"disChargeLine":null,"managerId":"华宝物流","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":"","createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-111","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"邓炳镇","roadId":null,"inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"18819548876","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_4","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":4,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622623","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区福田保税区桃花路17号","reName":"江贸工贸仓储楼","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳市江贸工贸有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-042","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"洪学明","roadId":"road_318","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13302980110","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_5","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":5,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622622","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区槟榔道1号吉虹研发大楼","reName":"吉虹创意设计产业园","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳吉虹电子科技有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-033","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"郝峰","roadId":null,"inputPhone":"","corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13760485765","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_6","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":6,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":"cheng_hx","faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622622","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区福田保税区桃花路15号","reName":"嘉里福田物流","drainageBasin":"","culvertsBasin":"","bugCount":null,"checkCount":null,"updateTime":"2021-05-14 10:21:27","archId":null,"disChargeLine":null,"managerId":"嘉里福保仓储（深圳)有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":"","createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-107","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"邓炳镇","roadId":"road_351","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":"0","drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"18819548876","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"4","guid":"re_area_7","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":7,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622623","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区桃花路19号保税区1341-8363-503号","reName":"兴旺废品收购站","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳市江贸工贸有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-041","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"刘先生","roadId":"road_318","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13510012996","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_8","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":8,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622622,point_info_sz_new_622621","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区福田保税区槟榔道2号","reName":"伟光联国际物流","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"伟光联国际物流（深圳）有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-028","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"周苑忠","roadId":"road_156","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13760228278","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_9","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":9,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622620,point_info_sz_new_622619","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区红棉道4号","reName":"智立方创新园","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳市佳禾企业管理有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-018","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"谢嘉莲","roadId":"road_133","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13692148608","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_10","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":10,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622621","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区蓝花道3号","reName":"兴达物流大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳兴达物流有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-027","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"陈先生","roadId":"road_351","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":"自创","drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13510970385","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_11","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":11,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622621","rePass":1,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区桃花路11号附近","reName":"诚联物流","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳诚联物流有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-029","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"黄立环","roadId":null,"inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":"自创","drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13692124792","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_12","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":12,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622621,point_info_sz_new_622620","rePass":1,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区福田保税区桃花路9号腾邦物流大厦","reName":"腾邦物流大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳市腾邦物业管理有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-030","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"胡先生","roadId":"road_351","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":"自创","drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13714984719","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_13","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":13,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622620","rePass":1,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区福田区保税区桃花路5号","reName":"能源物流","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"深圳市能源物流有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-025","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"熊向明","roadId":"road_351","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"0755-23638288","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_14","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":14,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622619","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区桃花路3号","reName":"顺通大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"朗美达物业公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-016","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"黄先生","roadId":"road_351","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"13410466686","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_15","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":15,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622621","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区桃花路12号赛格储运大厦","reName":"赛格储能大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"腾邦物业管理有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-065","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"李妙贞","roadId":"road_133","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"15820471282","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_16","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":16,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622622","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区蓝花道5号","reName":"福兴大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"福兴综合物流（深圳）有限公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-034","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"物业公司","roadId":"road_318","inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"15919880867","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_17","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":17,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区槟榔道3号","reName":"深港国际科技园（广田国际）","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":"北京世邦魏理仕物业管理服务有限公司深圳分公司","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-122","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":"孙工","roadId":null,"inputPhone":"","corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":"15815558656","inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_18","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":18,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":"1","conId_dictText":"福保社区","streetName":"福保街道","updateBy":"cheng_hx","faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622623,point_info_sz_new_622622","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":"深圳市福田区桃花路2号马格纳西餐厅","reName":"289数字半岛（铭可达）","drainageBasin":"","culvertsBasin":"","bugCount":null,"checkCount":null,"updateTime":"2021-05-14 11:55:03","archId":null,"disChargeLine":null,"managerId":"深圳市金地物业管理有限公司数字半岛物业管理服务中心","cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":"","createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":"FT-FB-1005-128","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":"A01","prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":null,"guid":"re_area_19","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":19,"dredgCount":null,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":0,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":"point_info_sz_new_622619","rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"国电科技现代物流中心大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":null,"checkCount":null,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":"2021-01-25 20:45:27","dredgeSupervision":null,"reCode":null,"stationConcatPerson":null,"checkRun":null}],"total":2470,"size":20,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":124},"timestamp":1624023640002}
+			`;
+			var data = JSON.parse(dataStr)
+			getAreaDataReturn(data, false)
+		}
+		function testGetArchList() {
+			var dataStr = `
+			{"success":true,"message":"ok","code":200,"result":[{"year":"2020","label":"2020年","title":"2020年","isLeaf":true,"yearPhase":"N","children":null,"dataIndex":null,"text":"2020年","beginTime":"2020-01-01","endTime":"2020-12-31","value":"729c5926a5f04ea994d9990d7bceea50","key":"729c5926a5f04ea994d9990d7bceea50","archContent":""},{"year":"2019","label":"2019年下半年","title":"2019年下半年","isLeaf":true,"yearPhase":"X","children":null,"dataIndex":null,"text":"2019年下半年","beginTime":"2019-07-01","endTime":"2019-12-31","value":"1186bf7e90dc27b05c534fd619872a8a","key":"1186bf7e90dc27b05c534fd619872a8a","archContent":"2019下半年"},{"year":"2020","label":"2020年下半年","title":"2020年下半年","isLeaf":true,"yearPhase":"X","children":null,"dataIndex":null,"text":"2020年下半年","beginTime":"2020-07-01","endTime":"2020-12-31","value":"dcb025fd909eb426dc096289757d8aed","key":"dcb025fd909eb426dc096289757d8aed","archContent":""},{"year":"2021","label":"2021年","title":"2021年","isLeaf":true,"yearPhase":"N","children":null,"dataIndex":null,"text":"2021年","beginTime":"2021-01-01","endTime":"2021-12-31","value":"e5fddf192cfbdcb10a4dd520066884aa","key":"e5fddf192cfbdcb10a4dd520066884aa","archContent":"test测试"},{"year":"2020","label":"档案测试","title":"档案测试","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"档案测试","beginTime":"2020-01-01","endTime":"2020-12-31","value":"66f19023d827a4ad084aa6a6ae621482","key":"66f19023d827a4ad084aa6a6ae621482","archContent":null},{"year":"2020","label":"测试节点","title":"测试节点","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"测试节点","beginTime":"2020-01-01","endTime":"2020-12-31","value":"e3a3dfe097d3006f13afd165a0b20fa3","key":"e3a3dfe097d3006f13afd165a0b20fa3","archContent":null},{"year":"2020","label":"测试","title":"测试","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"测试","beginTime":"2020-01-01","endTime":"2020-12-31","value":"83d32925cb9ab7b232b1aa4c51582528","key":"83d32925cb9ab7b232b1aa4c51582528","archContent":null},{"year":"2021","label":"测试","title":"测试","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"测试","beginTime":"2021-01-01","endTime":"2021-12-31","value":"c27f89cd270666aba96bf36a95ef1398","key":"c27f89cd270666aba96bf36a95ef1398","archContent":null},{"year":"2021","label":"测试节点","title":"测试节点","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"测试节点","beginTime":"2021-01-01","endTime":"2021-12-31","value":"6c3a83580155c5e161dac7f3b9f207dc","key":"6c3a83580155c5e161dac7f3b9f207dc","archContent":null},{"year":"2021","label":"刚刚新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过","title":"刚刚新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"刚刚新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过","beginTime":"2021-01-20","endTime":"2021-01-22","value":"b95f8e189df6106bf2d3bb1a28872c8b","key":"b95f8e189df6106bf2d3bb1a28872c8b","archContent":"新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得"},{"year":"2022","label":"新增","title":"新增","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"新增","beginTime":"2022-01-01","endTime":"2022-12-31","value":"308d525c0f28b63c0bbf6435b20fdd8a","key":"308d525c0f28b63c0bbf6435b20fdd8a","archContent":"111"},{"year":"2021","label":"节点","title":"节点","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"节点","beginTime":"2021-01-26","endTime":"2021-01-30","value":"61042b8652b78310505ea17612604e28","key":"61042b8652b78310505ea17612604e28","archContent":"新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公司上班新增问题还是去公司上班时间过得真快新增问题还是去公司上班时间过得真快新增问题还是去公"},{"year":"2021","label":"节点图","title":"节点图","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"节点图","beginTime":"2021-01-01","endTime":"2021-12-31","value":"f5c2f785b3b6832462a0d4ebb08c99e6","key":"f5c2f785b3b6832462a0d4ebb08c99e6","archContent":""},{"year":"2021","label":"二十四名称","title":"二十四名称","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"二十四名称","beginTime":"2021-01-01","endTime":"2021-12-31","value":"6a8b29b6a41fa503c90dd648c7d01152","key":"6a8b29b6a41fa503c90dd648c7d01152","archContent":"描述"},{"year":"2021","label":"241","title":"241","isLeaf":true,"yearPhase":"","children":null,"dataIndex":null,"text":"241","beginTime":"2021-01-01","endTime":"2021-12-31","value":"127baa683252819c209a50cb873c9a24","key":"127baa683252819c209a50cb873c9a24","archContent":""},{"year":"2021","label":"111","title":"111","isLeaf":true,"yearPhase":null,"children":null,"dataIndex":null,"text":"111","beginTime":"2021-01-01","endTime":"2021-12-31","value":"84921386d0d9299baa81859c0b1d379d","key":"84921386d0d9299baa81859c0b1d379d","archContent":null}],"timestamp":1624023640017}
+			`;
+			var data = JSON.parse(dataStr)
+			getArchListReturn(data)
+
+			testGetYqydData();
+		}
+		// 获取归档节点列表 getArchList()后调用
+		function testGetYqydData() {
+			var dataStr = `
+			{"success":true,"message":"查询成功！","code":200,"result":{"records":[{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"da1db87df3fb9b19c87655032709c582","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_1","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":1,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"万乘简易仓","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-130","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_156","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"4af2fcfe4e3096d34a050e391e1fe1f7","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_2","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"富宝物流","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-017","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":"a638aa23fa934c29b15c0ea2273ca742","passType":null,"drainNum":null,"dredgeRun":"bddd76af0a8249919b5bdaeab8bcc18a","conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"1f3728ff0c45447db289cc97ea90d04e","inputDate":null,"checkSupervision":"06f1d56f7a2d4af6a787468d63bdb198","reType":"2","guid":"re_area_3","fixRun":"f73704fc3d0e4e7e9f0067e7b8505f8a","fixPmc":"cb100d0bcea74d75b5c9a3b5602ba852","usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":"c6339818dfdf4ba98f0869c40afa2308","signature":"e60b82cf6b6942dbbef453f76ade4479","remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":"3a30215a86ed4a65ae65ee2e0f8bee86","stationName":"福中所","priceRun":"6bee557666f74fceac93b82822037247","elevation":null,"reNo":null,"reAddress":null,"reName":"华宝物流","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":"d877e2fa4c31481fa9c7ea47d1d537dd","fixSupervision":"2f47122ceb6b4c7580680a540727fa77","createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":"268f7c2936cb41369d22b54ac757157a","reCode":"FT-FB-1005-111","stationConcatPerson":null,"checkRun":"6a0260301a5b44c4be51ddc37d08623f"},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"eddd7cbc2534768b89dec612d367387e","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_4","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"江贸工贸仓储楼","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-042","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_318","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"c378b3727857655d45c81cda62394ca3","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_5","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"吉虹创意设计产业园","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-033","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_6","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":1,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"嘉里福田物流","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-107","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_351","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"4","guid":"re_area_7","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"兴旺废品收购站","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-041","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_318","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_8","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"伟光联国际物流","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-028","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_156","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"6b53dd50c79fea0c33324ddc92465034","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_9","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"智立方创新园","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-018","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_133","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_10","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"兴达物流大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-027","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_351","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_11","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"诚联物流","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-029","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_12","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"腾邦物流大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-030","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_351","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"7b826ef941802610262cb779812d9797","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_13","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"能源物流","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-025","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_351","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_14","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"顺通大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-016","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_351","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_15","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"赛格储能大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-065","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_133","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_16","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"福兴大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-034","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_318","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_17","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"深港国际科技园（广田国际）","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-122","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_18","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"289数字半岛（铭可达）","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-128","stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":null,"inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":null,"inputDate":null,"checkSupervision":null,"reType":null,"guid":"re_area_19","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"国电科技现代物流中心大厦","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":null,"stationConcatPerson":null,"checkRun":null},{"isillegalDa":null,"managerPer":null,"roadId":"road_351","inputPhone":null,"corpCode":null,"prjCode":null,"priceConsult":null,"passType":null,"drainNum":null,"dredgeRun":null,"conId":"440304010005","tel":null,"inputDepartmentFullname":null,"stationId":"100000004003","isillegal":null,"unitName":null,"updateArea":null,"stormSysId":"A0100000105","archivedAttachment":"474639e70fdc34a54e18561a175a794e","inputDate":null,"checkSupervision":null,"reType":"2","guid":"re_area_20","fixRun":null,"fixPmc":null,"usedName":null,"objList":null,"isback":null,"streetId":"440304010","smid":null,"dredgCount":0,"checkPmc":null,"signature":null,"remark":null,"unitPhone":null,"delFlag":null,"transportWell":null,"inputName":null,"issign":null,"conId_dictText":"福保社区","streetName":"福保街道","updateBy":null,"faciltyMap":null,"reArea":null,"outfallCode":null,"rePass":null,"fixJianli":null,"stationName":"福中所","priceRun":null,"elevation":null,"reNo":null,"reAddress":null,"reName":"保税区创意保税园","drainageBasin":null,"culvertsBasin":null,"bugCount":0,"checkCount":0,"updateTime":null,"archId":null,"disChargeLine":null,"managerId":null,"cityVillage":null,"stationMobile":null,"dredgePmc":null,"fixSupervision":null,"createBy":null,"sewageSysId":"A0100000009","inputDepartment":null,"inputFullname":null,"createTime":null,"dredgeSupervision":null,"reCode":"FT-FB-1005-108","stationConcatPerson":null,"checkRun":null}],"total":2470,"size":10,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":247},"timestamp":1624022504226}
+			`;
+			var data = JSON.parse(dataStr)
+			getYqydDataReturn(data);
+		}
+
+
+	</script>
+</html>

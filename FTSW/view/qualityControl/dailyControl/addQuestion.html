@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../../css/common.css" rel="stylesheet" />
+    <link href="../../../css/mui.picker.min.css" rel="stylesheet" />    
+	<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+    <link href="../../../css/mui.imageviewer.css" rel="stylesheet" />
+    <title>新增问题</title>
+    <style>
+        .addQuestion{
+            padding:10px 20px 10px 20px;
+        }
+        .inputRow{
+            border-bottom: 1px solid #EDEDED;
+            
+        }
+        .recordInp{
+            text-align: right;
+            margin-right:0px ;
+        }
+        .label{
+            text-align: left !important;
+            padding:11px 15px 11px 0px !important;
+            height: 55px;
+        }
+        .myImgClose{
+            position: absolute;
+            right: 4px;
+        }
+        .img_item{
+            position: relative;
+        }
+        .img_item>img{
+            width: 72px;
+            height: 72px;
+            border-radius: 5px;
+            margin-right: 2px;
+            margin-bottom: 2px;
+
+        }
+        .about-pic {
+            height: 55px;
+            text-align: left;
+            line-height: 55px;
+            padding: 0 15px;
+
+        }
+
+        .about-pic div {
+            border-bottom: solid 0.5px #EDEDED;
+            border-top: solid 0.5px #EDEDED;
+        }
+
+        .more-text {
+            padding: 0 15px;
+
+        }
+
+        .uplode {
+            padding: 15px 0 15px 15px;
+            display: flex;
+            flex-wrap: wrap;
+            
+        }
+
+        #qs_photo {
+            width: 78px;
+            height: 78px;
+        }
+        #qs_photo img{
+            width:78px ;
+            height: 78px;
+        }
+        .qua_img_list{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .footer-btn{
+                height: 98px;
+                background: #F4F4F4;
+                line-height: 98px;
+                background: #fff;
+            }
+        .footer-btn .btn-sub{
+            width: 100%;
+            height: 48px;
+            background: #0493F3;
+            color:#fff;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 4px;
+            margin: 0 auto;
+            vertical-align:middle;
+            line-height: 48px;
+            display: inline-block;
+        }
+    </style>
+<body>
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--页面主结构结束-->
+    <!-- 单页面主要内容开始 -->
+    <div id="mui-content" class="mui-page" style="background: #fff;">
+        <div class="mui-page-content">
+            <div class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <div class="addQuestion">
+                        <div class="mui-input-row input-row-item inputRow">
+                            <label class="lable">检查类型</label>
+                            <input type="text" class=" recordInp mui-input-clear check_TY" readonly="readonly"  placeholder="请选择检查类型">
+                        </div>                       
+                        <div class="mui-input-row input-row-item inputRow">
+                            <label class="lable">检查结果</label>
+                            <input type="text" class=" recordInp mui-input-clear check_RS" readonly="readonly" placeholder="请选择检查结果">
+                        </div>
+                        <div class="mui-input-row input-row-item inputRow">
+                            <label class="lable">整改要求</label>
+                            <input type="text" class=" recordInp constructionUnitName" readonly="readonly">
+                        </div>
+                        <div class="more-text" style="border-bottom: 1px solid #EDEDED;">
+                            <textarea name="rectify" id="rectify" maxlength=200 placeholder="请输入整改要求(200字以内)"
+                                style="height: 144px;padding: 15px 10px 0 10px;border: none;"></textarea>
+                        </div>
+                        <div class="mui-input-row input-row-item inputRow" style="">
+                            <label class="lable">相关图片</label>
+                            <input type="text" class=" recordInp constructionUnitName" readonly="readonly">
+                        </div>
+                        <div class="uplode">
+                            <div class="qua_img_list img_item" style="">
+            
+                            </div>
+                            <div id="qs_photo" >
+                                <img class="img_src" src="../../../img/commom/pz@2x.png" style="" />
+                            </div>
+                        </div>
+                        <div class="footer-btn">
+                            <div class="btn-sub">提交</div>
+                        </div>
+
+                        <!-- <ul class="mui-table-view">
+                            <div class="mui-input-row input-row-item menu-list-item" style="background: #fff;border-bottom: 1px solid #EDEDED;">
+                                <label class="lable-text">问题类型</label>
+                                <input type="text" class="mui-input-clear proInp check_TY" readonly="readonly" placeholder="请选择检查类型">
+                            </div>
+                            
+                            <div class="mui-input-row input-row-item menu-list-item" style="background: #fff;border-bottom: 1px solid #EDEDED;">
+                                <label class="lable-text">检查结果</label>
+                                <input type="text" class="mui-input-clear proInp check_RS" readonly="readonly" placeholder="请选择检查结果">
+                            </div>
+                            
+                            <li class="mui-table-view-cell">
+                                <div>整改要求</div>
+                            </li>
+                        </ul>
+                        <div class="more-text">
+                            <textarea name="rectify" id="rectify" maxlength=200 placeholder="请输入整改要求(200字以内)"
+                                style="height: 144px;padding: 15px 10px 0 10px;border: none;"></textarea>
+                        </div>
+                        <div class="about-pic">
+                            <div>相关图片</div>
+                        </div>
+                        <div class="uplode">
+                            <div class="qua_img_list img_item">
+            
+                            </div>
+                            <div id="qs_photo" class="img_item">
+                                <img class="img_src" src="../../../img/commom/pz@2x.png" style="" />
+                            </div>
+                        </div>
+                        <div class="bottom-btn">
+                            <div class="cancel">取消</div>
+                            <div class="confirm">确认</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/qualityControl/qualityControl.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/mui.previewimage.js"></script>
+<script>
+        mui.init({});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+        var strAttachment = [{
+			groupId:'',
+			fileTokens:'',
+			fieldName:"checkFile",
+			tableName:"PROJECT_DAILY_INSPECTION"
+        }]
+        var self
+        var ques_key = []
+        var ques_item = []
+        var piackerArr = []
+        var piackerArr_item = {}
+        var index = null
+        var questionText = null
+        var standardId = ''
+		mui.plusReady(function() {
+            self = plus.webview.currentWebview()
+            
+            var type = 'get'
+            var params={}
+            var url = config.urls.baseUrl + config.actions.getCheckStandardList
+            app.showLoader()
+            getProject(url,params,type,function(data){
+                        data = data.result
+                        // console.log('id='+JSON.stringify(data))
+                        for(var i=0;i<data.length;i++){
+                            var paramsType = {guid:data[i].key}
+                            var urlType = config.urls.baseUrl + config.actions.questionType
+                            app.showLoader()
+                            getProject(urlType,paramsType,type,function(dataT){
+                                dataT = dataT.result
+                                // console.log('dataT='+JSON.stringify(dataT))
+                                var j =0
+                                for(key in dataT){
+                                    if(key == ''){
+                                        key = ' '
+                                    }
+                                    ques_key.push(key)
+                                    ques_item.push(dataT[key])
+                                    piackerArr_item = {value:j,text:key}
+                                    j = j + 1
+                                    piackerArr.push(piackerArr_item)
+                                }
+                            })
+                        }
+            })
+            
+        })
+        $(".check_TY").on('tap',function(){
+            var pickerType = new mui.PopPicker();
+            pickerType.setData(piackerArr);
+            pickerType.show(function (selectItems) {
+                if(selectItems[0].text == null ){
+                    selectItems[0].text = ''
+                }
+                $(".check_TY").val(selectItems[0].text)
+                questionText = selectItems[0].text
+                // console.log(JSON.stringify())
+            })
+        })
+        $(".check_RS").on('tap',function(){
+            var pickerObj={}
+            var check_RSArr = []
+            if(questionText == ' '){
+                pickerObj.value = '0'
+                pickerObj.text = ' '
+                
+                check_RSArr.push(pickerObj)
+            }else{
+
+                index = ques_key.indexOf(questionText)
+                console.log(JSON.stringify(index))
+                if( index == -1){
+                    app.toast('请选择问题类型')
+                    return 
+                }
+                // console.log(index)
+                var resultArr = ques_item[index]
+                // console.log(JSON.stringify(resultArr))
+                    for(var i=0;i<resultArr.length;i++){
+                        pickerObj = {value:i,text:resultArr[i].detailCheckContent}
+                        // console.log(pickerobj,'???')
+                        if(pickerObj.text == ''){
+                            pickerObj.text = ' '
+                        }
+                        check_RSArr.push(pickerObj)
+                    }
+            }
+                console.log('pickerobj='+JSON.stringify(check_RSArr))
+                getPicker(check_RSArr,$(".check_RS"))
+            
+        })     
+        //选择图片和拍照
+        $("#qs_photo").on("tap", function() {
+            plusSelectImage(function(data, path) {
+                // console.log(JSON.stringify(data))
+				if (data.success) {
+                    strAttachment[0].groupId = data.result.uploadFile.id
+                    strAttachment[0].fileTokens = strAttachment[0].fileTokens + data.result.fileTokens + ',';
+
+					var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens +
+                    '" class="img_item">' +
+                    '		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style="width:78px;height:78px;"  />' +
+                    '<span class=" myImgClose mui-icon mui-icon-closeempty" style="    font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"position:absolute;right:0px;></span>'+
+                    '	</div>';
+                    
+					$(".qua_img_list").append(html);
+                    
+					// var count = $(".qua_img_list").children(".img_item").length;
+					// if (count == 3) { //处理上传的数量
+					// 	$("#qs_photo").hide();
+					// }                    
+                    $(".myImgClose").each(function(index){
+                        $(this).on('tap',function(e){
+                            $(this).parent().hide()
+                            if(count == 2){
+                                $("#qs_photo").show()
+                            }
+                        })
+                    
+                    })
+				} else app.toast(data.message)
+			});
+		});
+
+        //弹框提交按钮
+        $(".btn-sub").on('tap',function(){
+            // console.log(ques_item.length)
+            // console.log(index)
+            // console.log('ques_item='+(ques_item[index].length))
+            if($(".check_TY").val().trim() == ''){
+                app.toast('请输入检查类型')
+                return
+            }
+            if($(".check_RS").val().trim() == ''){
+                app.toast('请输入检查结果')
+                return
+            }
+            if($("#rectify").val().trim() == ''){
+                app.toast('请输入整改要求')
+                return
+            }
+            ques_item[index]
+            for(var i=0;i<ques_item[index].length;i++){
+                if(ques_item[index][i].detailCheckContent == $(".check_RS").val()){
+                    standardId = ques_item[index][i].guid
+                    console.log('quesi='+JSON.stringify(ques_item[index]))
+                }
+            }
+            console.log(standardId)
+           
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var nowDate = year + "-" + month + "-" + day;
+        
+        var stateText = localStorage.getItem('$state') || "{}";
+        stateText = JSON.parse(stateText)
+        // console.log(JSON.stringify(stateText).userInfo.realname)
+        if(strAttachment[0].groupId == ''){
+            strAttachment[0].groupId = uuid()
+        }
+            var type = 'post'
+            var params={
+                checkDate:nowDate,
+                createByName:stateText.userInfo.realname,
+                projectId:self.dataIndex.projectGuid,
+                projectName:self.dataIndex.projectModel.projectName,
+                recordId:self.dataIndex.guid,
+                checkResults:[
+                    {
+                        detailCheckProject:$(".check_TY").val(),
+                        detailCheckContent:$(".check_RS").val(),
+                        correctRequirement:$("#rectify").val(),
+                        strAttachment:JSON.stringify(strAttachment),
+                        attachment:strAttachment[0].groupId,
+                        checkStandardName:ques_item[index][0].checkStandardName,
+                        standardId:standardId,
+                    },
+                    
+                ],    
+                
+            }
+            console.log(JSON.stringify(params),'-------------------------')
+          
+            
+            // console.log(JSON.stringify(self.dataIndex),'-----------------')
+            
+            // console.log(JSON.stringify(ques_item),'------------------------')
+            var url = config.urls.baseUrl + config.actions.addQuestion
+            app.showLoader()
+            getProjectPost(url,params,type,function(data){
+                if(data.success){
+                    app.toast(data.message)
+                    plus.webview.currentWebview().opener().reload();
+                    app.showLoader()
+                    mui.back()
+                    // plus.webview.currentWebview().opener().reload();
+                    // var params = {
+                    //     projectName:self.projectName,
+                    //     pageNo:1,
+                    //     pageSize:100,
+                    // }
+                    // var type = 'get'
+                    // var url = config.urls.baseUrl + config.actions.getProblemList
+                    // var dataProblemList = null
+                    
+                    // app.showLoader()
+                    // getProject(url,params,type,function(data){
+                    //     data = data.result.records
+                    //     dataProblemList = data
+                    //     var getProblem = null
+                    //     $('.switch-main-page').html('')
+                    //     getALLProblem(data)
+                        
+                    // })
+                    // $(".check_TY").val('')
+                    // $(".check_RS").val('')
+                    // $("#rectify").val('')
+                    // $(".qua_img_list").empty()
+                }else{
+                    app.toast('添加失败')
+                }
+            })
+            
+        })
+        //图片预览
+        $(document).on('tap', '.img_src', function() {
+		    mui.previewImage();
+		});
+</script>

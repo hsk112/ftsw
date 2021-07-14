@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>事件管理</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/incidents/incident.css">
+    <link rel="stylesheet" href="../../css/mui.picker.css">
+    <link rel="stylesheet" href="../../css/mui.poppicker.css">
+    <link href="../../css/mui.picker.min.css" rel="stylesheet" />
+    <style>
+        .mui-scroll {
+            padding: 0 20px;
+        }
+
+        input[type=text] {
+            padding: 0;
+            margin: 0;
+        }
+
+        .mui-input-row1 {
+            display: flex;
+            justify-content: space-between;
+            height: 55px;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .mui-input-row1 .lebals {
+            flex: 3;
+            text-align: left;
+            color: #262626;
+            font-size: 16px;
+        }
+/* 1 */
+        .mui-input-row1 .xuanze {
+            flex: 4;
+            display: flex;
+            align-items: center;
+        }
+
+        .mui-input-row1 .xuanze button {
+            color: #B1B1B1;
+            border: none;
+            text-align: right;
+        }
+
+        .button_btn {
+            width: 255px;
+            display: flex;
+            justify-content: space-evenly;
+            position: fixed;
+            bottom: 40px;
+        }
+
+        .btns {
+            width: 110px;
+            height: 40px;
+
+        }
+
+        .mui-btn .mui-btn-block {
+            padding: 0;
+            font-size: 17px;
+        }
+
+        .mui-btn-block {
+            font-size: 17px;
+            margin-bottom: 0px;
+            padding: 0;
+            text-align: right;
+        }
+
+        .zt {
+            /* position: absolute;
+				top: 10px;
+				left: 140px; */
+            display: inline-block;
+            font-size: 12px;
+            /* border: 1px solid #ff7800; */
+            /* color: #ff7800; */
+            width: 46px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+        }
+
+        .zt span {
+            font-size: 12px;
+        }
+
+        /* 遮罩层 */
+        .mark {
+            /*z-index: 9998;*/
+            z-index: 9;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .mui-input-row .mui-input-clear~.mui-icon-clear,
+        .mui-input-row .mui-input-password~.mui-icon-eye,
+        .mui-input-row .mui-input-speech~.mui-icon-speech {
+            font-size: 20px;
+            position: absolute;
+            z-index: 1;
+            top: 10px;
+            right: 60px;
+            width: 38px;
+            height: 38px;
+            text-align: center;
+            color: #999;
+        }
+
+
+        .img-right-arrow {
+            width: 7px;
+            height: 12px;
+            margin-left: 5px;
+        }
+        .empty{
+            line-height:200px;
+            width:100%;
+            text-align: center;
+            font-size: 16px;
+            color: #BBBBBB;
+        }
+
+        /* 日期弹出框样式 */
+        .mui-dtpicker-header {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+
+<body>
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--右侧栏内容-->
+    <!-- 筛选页面 -->
+    <div id="leftLan" class="side" style="position:fixed;z-index: 10;width:275px;height: 100%;right:-275px;">
+        <div class="mui-scroll" style="height:100%;background-color: white;color: black;width: 275px;">
+            <!--侧栏具体展示内容-->
+            <!-- <p style="padding: 5px 20px;margin-bottom: 5px;"></p> -->
+            <!-- <div class="mui-scroll screen"> -->
+            <!-- 主界面具体展示内容 -->
+            <div class="mui-input-row1">
+                <label class="lebals">事件来源</label>
+                <div class="xuanze">
+                    <button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>请选择事件来源</button>
+                    <img src="../../img/arrow-right-gray.png" class="img-right-arrow"/>
+                </div>
+            </div>
+            <div class="mui-input-row1">
+                <label class="lebals">事件类型</label>
+                <div class="xuanze">
+                    <button id='showUserPicker2' class="mui-btn mui-btn-block" type='button'>请选择事件类型</button>
+                    <img src="../../img/arrow-right-gray.png" class="img-right-arrow"/>
+                </div>
+
+            </div>
+            <div class="mui-input-row1">
+                <label class="lebals">处理情况</label>
+                <div class="xuanze">
+                    <button id='showUserPicker4' class="mui-btn mui-btn-block" type='button'>请选择处理情况</button>
+                    <img src="../../img/arrow-right-gray.png" class="img-right-arrow"/>
+                </div>
+
+            </div>
+            <div class="mui-input-row1">
+            <label class="lebals">发生开始日期</label>
+            <div class="xuanze">
+                <input id="xuanzeIpt1" type="text" readonly="readonly" class="mui-input-clear recordInp dateSelect"
+                       style="border: none; text-align: right; color: #B1B1B1;" placeholder="请选择开始日期" /><img
+                    src="../../img/commom/time.png" style="width: 16px;height: 16px;margin-left: 6px; "
+                    id="data_time1" />
+            </div>
+
+        </div>
+            <div class="mui-input-row1">
+                <label class="lebals">发生结束日期</label>
+                <div class="xuanze">
+                    <input id="xuanzeIpt2" type="text" readonly="readonly" class="mui-input-clear recordInp dateSelect"
+                           style="border: none; text-align: right; color: #B1B1B1;" placeholder="请选择结束日期" /><img
+                        src="../../img/commom/time.png" style="width: 16px;height: 16px;margin-left: 6px; "
+                        id="data_time2" />
+                </div>
+
+            </div>
+
+
+            <div class="button_btn">
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-outlined btns reset" style="margin-left: -20px;">重置</button>
+                <button id="search" type="button" class="mui-btn mui-btn-primary btns">确认</button>
+            </div>
+
+            <!-- </div> -->
+
+        </div>
+    </div>
+    <!-- 遮罩 -->
+    <div class="mark"></div>
+    <!--页面主结构结束-->
+    <!--单页面开始-->
+    <div id="mui-content" class="mui-page">
+        <!--页面主内容区开始-->
+        <div class="mui-page-content">
+            <div class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+
+                    <!-- 搜索栏 -->
+                    <!-- <div class="aa"></div> -->
+                    <div id="searchBar" class="mui-input-row"
+                        style="position: relative; z-index: 6;height: 40px; width: 355px;border-radius: 5px ;margin:20px auto;">
+                        <img src="../../img/commom/search1@2x.png" alt="" id="search_icon"
+                            style="width: 14px;height: 14px; position: absolute;top: 12px;left: 18.5px;">
+                        <input
+                            style="border: none;width: 290px;float: left;border-radius: 10px; height: 40px; text-indent: 41.5px; line-height: 40px; font-size: 14px;"
+                            class="" type="text" placeholder="事件管理" name="" id="searchInput" value="" />
+                        <!--侧栏点击入口-->
+
+                        <img id="moreFactor"
+                            style="width: 21.5px;height: 21.5px; float: left;  margin-top: 10px; margin-left: 10px; z-index: 999;"
+                            src="../../img/commom/sideLan.png" />
+
+                    </div>
+
+                    <!-- 测试高位溢流点频次统计 -->
+                    <div class="administration">
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束 -->
+    </div>
+</body>
+<script>
+    options = {
+        scrollY: true, //是否竖向滚动
+        scrollX: false, //是否横向滚动
+        startX: 0, //初始化时滚动至x
+        startY: 0, //初始化时滚动至y
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+        bounce: true //是否启用回弹
+    }
+</script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/timer.js"></script>
+<!--<script src="../../js/vconsole.min.js"></script>-->
+<script src="../../js/incident/incident.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/helper.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+
+
+
+<script>
+    // var vConsole = new VConsole();
+    mui.init({
+        swipeBack:false,
+    });
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    var userPicker = new mui.PopPicker();
+
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var currentDayObj
+    mui.plusReady(function () {
+
+        let testParam = {
+            pageNo:1,
+            pageSize:200
+        }
+        queryEventList(testParam,function (data) {
+            data = data.result.records
+            currentDayObj = data
+            addDataList(data)
+        })
+
+        var curr = plus.webview.currentWebview();
+        curr.setStyle({
+            titleNView: {
+                buttons: [{
+                    float: 'right',
+                    width: '60',
+                    fontSize: '25',
+                    text: '＋',
+                    onclick: function () {
+                        let extras = {
+                            type: "add",
+                            currentDayObj:currentDayObj
+                         }
+                        app.openPage("./added.html", {
+                            titleNView: {
+                                titleText: '新增事件',
+                                autoBackButton: true,
+                            }
+                        }, extras);
+                    }
+                }]
+            }
+        });
+        var url = config.urls.baseUrl + config.actions.getsjkist
+        var params = {
+            // guid: 'guid',
+        }
+        // getWork(url, params, 'get', function (data) {
+        //     console.log(392, data.result.records[1].eventName)
+        //     data = data.result.records
+        //     addDataList(data)
+        // })
+    });
+
+    $('.quality-tab').children().each(function (index) {
+        $(this).click(function (e) {
+            $(this).addClass('color').siblings().removeClass('color')
+            $('.switch').children().eq(index).css('display', 'block').siblings().css('display', 'none')
+            $('.issues-text').html($(this).text())
+        })
+    })
+    $('.item-probably-bot').on('click', function () {
+        $('.dynamic').toggleClass('text-ellipsis')
+        $('.cut1').toggleClass('hidden')
+        $('.cut2').toggleClass('hidden')
+        $('.corner1').toggleClass('hidden')
+        $('.corner2').toggleClass('hidden')
+    })
+    //禁止关闭遮罩
+    // window.addEventListener('tap', function (e) {
+    //     e.target.className == 'mui-backdrop mui-active' && e.stopPropagation();
+    // }, true);
+
+    // 侧滑菜单开关
+    $(".screen_quality").on('tap', function () {
+        console.log('？？')
+        // mui('.mui-off-canvas-wrap').offCanvas('show');
+    });
+    //重置按钮
+    $(".reset").on('tap', function () {
+        reset()
+    })
+    function reset() {
+        $('#showUserPicker').text('请选择事件来源')
+        $('#showUserPicker2').text('请选择事件类型')
+        $('#showUserPicker4').text('请选择处理情况')
+        $("#xuanzeIpt1").val('')
+        $("#xuanzeIpt2").val('')
+         requestParam.eventSource =''
+         requestParam.eventType = ''
+         requestParam.handlingState = ''
+         requestParam.startTime = ''
+         requestParam.endTime = ''
+         requestParam.eventName = ''
+    }
+
+
+
+    function addDataList(data, events = '') {
+        $('.administration').off('tap', '.statistical_table')
+        for (var i = 0; i < data.length; i++) {
+            var constData = data
+            // let img = ''
+            // switch (data[i].handlingState) {
+            //     case '0':
+            //         img = '../../img/incident/wcl.png'
+            //         break;
+            //     case '1':
+            //         img = '../../img/commom/zxz.png'
+            //         break;
+            //     case '2':
+            //         img = '../../img/commom/ywc.png'
+            //         break;
+            //     case '':
+
+            //         break;
+
+            //     //  <div><img src="${img}" alt="" style="padding-top: 2px; width: 46px;height: 16px;"></div>
+
+            // }
+            // var state = ["未处理", "处理中", "已完成",]
+            var color = ["#FF5656", "#FF7D09", "#2ECD88",]
+            // var datatype=["","积水","逆流","冒溢"]
+            var state = {"0":"未处理","1": "处理中","2": "已完成",}
+            var stater = ''
+            if(state[data[i].handlingState]){
+                stater=state[data[i].handlingState]
+            }
+            // ${state[data[i].handlingState]}
+            var datatypeDictIndexForValue = {"1":"积水","2":"溢流","3":"冒溢"}
+            var bg = ["#FF5656", "#FF7D09", "#2ECD88",]
+            var datatypeStr = ''
+            if(datatypeDictIndexForValue[data[i].eventType]) {
+                datatypeStr = datatypeDictIndexForValue[data[i].eventType]
+            }
+            var isDisplay = 'none'
+            // if(data[i].handlingState==0){
+            //     isDisplay = 'block'
+            // }
+            events = `
+                    <div class="statistical_table">
+                        <div style="display: flex">
+                        <div class="state_title" style="width: 80%">
+                            <div style="margin-right: 10px; ">${data[i].eventName}</div>
+                            <div class="zt" style="color: ${color[data[i].handlingState]}; border: 1px solid ${color[data[i].handlingState]};"><span>${data[i].handlingState?state[data[i].handlingState]:''}</span>
+							</div>
+                        </div>
+                        <div style="display: ${isDisplay}"><button type="button" id="buttonid${(i)}" class="mui-btn mui-btn-primary submit" style="float:right;height: 24px;line-height: 10px;margin-top: 16px;">处理</button></div>
+                        </div>
+
+                        <div class="state_pag">
+                            <div class="state_pag_son">
+                                <div>数据类型:<span> ${datatypeStr}</span></div>
+                                <div>发生时间: <span>${data[i].occurTime}</span></div>
+                            </div>
+
+                            <div class="state_site">时间地点: <span style="width=184px">${data[i].eventLocation}</span></div>
+                        </div>
+
+                        <div class="state_btn" id="table_id${(i)}">
+                            <span style="color: #444444; font-size: 14px;">详情信息</span><i
+                                class="mui-icon mui-icon-arrowright" style="color: #C5C5C5;"></i>
+                        </div>
+                    </div>`
+            $('.administration').append(events)
+            events = ''
+            // 跳转事件详情
+            $('.administration').on('tap', '.state_btn', function () {
+                var extras
+                var this_id =$(this).attr('id')
+                // console.log(this_id.substring(8,this_id.length))
+                var i = this_id.substring(8,this_id.length)//获取点击的下表
+                // console.log("i-->"+i)
+                // console.log(438, data);
+                var params = constData[i]
+                // console.log(JSON.stringify(params))
+                var extras = {
+                    params:params
+                }
+                app.openPage("eventDetail.html", {
+                    titleNView: {
+                        titleText: '事件详情',
+                        autoBackButton: true,
+                    }
+                },extras);
+
+            })
+
+            //跳转新增
+            $('.administration').on('tap', '.submit', function () {
+                var extras
+                var this_id =$(this).attr('id')
+                console.log(this_id.substring(8,this_id.length))
+
+                var i = this_id.substring(8,this_id.length)//获取点击的下表
+                console.log("i-->"+i)
+                // console.log(438, data);
+                var params = constData[i]
+                // console.log(JSON.stringify(params))
+                var extras = {
+                    params:params
+                }
+                app.openPage("handleForm.html", {
+                    titleNView: {
+                        titleText: '处理',
+                        autoBackButton: true,
+                    }
+                },extras);
+
+            })
+        }
+    }
+
+    $('.add').on('tap', function () {
+        //跳转新增页面
+        mui.openWindow({
+            url: './added.html'
+        })
+    })
+
+
+    
+    $("#searchInput").on('input',function(){
+        onSearch()
+    })
+    function onSearch() {
+        let seachVal = $('#searchInput').val() || '';
+        if(seachVal != ''){
+            var params = {
+                eventName:seachVal,
+                pageNo: 1,
+                pageSize: 200,
+            }
+
+        }else{
+            var params = {
+                pageNo: 1,
+                pageSize: 200,
+            }
+        }
+        var url = config.urls.baseUrl + config.actions.getsjkist
+
+        queryEventList(params,function (data) {
+            if(data.success){
+                if(data.result.records.length != 0){
+                    data = data.result.records
+                    $('.administration').html('')
+                    console.log(524);
+                    addDataList(data)
+                }else{
+                    $('.administration').html("<div class='empty'>暂无数据</div>")
+                }
+            }
+        })
+    }
+
+
+    let requestParam = {
+        startTime: '',
+        endTime: '',
+        eventName: '',
+        eventSource: '',
+        eventType: '',
+        handlingState: '',
+        pageNo:1,
+        pageSize:20
+    }
+
+    //事件来源筛选
+    $("#showUserPicker").on("tap", function() {
+        var that = $(this);
+        var data = ['巡检','投诉','第三方'];
+        var resultJSON = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            resultJSON.push({
+                text: item,
+                value: (i+1)
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function(items) {
+                $("#showUserPicker").text(items[0].text);
+                requestParam.eventSource=items[0].value
+            });
+        }
+        // })
+    })
+    //事件类型筛选
+    $("#showUserPicker2").on("tap", function() {
+        var that = $(this);
+        var data = ['积水','逆流','冒溢'];
+        var resultJSON = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            resultJSON.push({
+                text: item,
+                value: (i+1)
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function(items) {
+                $("#showUserPicker2").text(items[0].text);
+                requestParam.eventType=items[0].value
+            });
+        }
+        // })
+    })
+    //处理情况筛选
+    $("#showUserPicker4").on("tap", function() {
+        var that = $(this);
+        var data = ['未处理','处理中','处理完成'];
+        var resultJSON = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            resultJSON.push({
+                text: item,
+                value: (i)
+            })
+        }
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+            userPicker.hide();
+            return false;
+        } else {
+            userPicker.setData(resultJSON);
+            userPicker.show(function(items) {
+                $("#showUserPicker4").text(items[0].text);
+               requestParam.handlingState=items[0].value
+            });
+        }
+        // })
+    })
+
+    //时间选择
+    $('#data_time1,#data_time2').on('tap',function () {
+        var that = $(this);
+        console.log("+++++++==")
+        plusDate(function(data) {
+
+            console.log(JSON.stringify(data))
+            if (that.attr("id") == "data_time1"){
+                $('#xuanzeIpt1').val(data)
+                requestParam.startTime = data+' 00:00:00'
+            }else if(that.attr("id") == "data_time2"){
+                $('#xuanzeIpt2').val(data)
+                requestParam.endTime = data+' 23:59:59'
+            }
+
+            if (that.attr("id") == "data_time1" && $("#xuanzeIpt2").val() != '' && $("#xuanzeIpt2").val() < data) {
+                app.toast("发生开始时间不得晚于发生结束时间")
+            } else if (that.attr("id") == "data_time2" && $("#xuanzeIpt1").val() != '' && $("#xuanzeIpt1").val() > data) {
+                app.toast("发生结束时间不得晚于发生开始时间")
+            } else that.val(data)
+        });
+    })
+
+
+
+
+    function searchByParams(eventName = '') {
+
+        // var eventsourceList = ['', '巡检', '投诉', '第三方']
+        // var eventSourceIndex = eventsourceList.indexOf($('#showUserPicker').text())
+        // var eventSource = eventSourceIndex > 0 ? eventSourceIndex : ''
+        //
+        //
+        // var eventTypeList = ['', '积水', '逆流', '冒溢']
+        // var eventTypeIndex = eventTypeList.indexOf($('#showUserPicker2').text())
+        // var eventType = eventTypeIndex > 0 ? eventTypeIndex : ''
+        //
+        // var handlingStateList = ['', '处理中', '已完成', '未处理']
+        // var handlingStateIndex = handlingStateList.indexOf($('#showUserPicker4').text())
+        // var handlingState = handlingStateIndex > 0 ? handlingStateIndex : ''
+        //
+        // var startTime = $('#xuanzeIpt').val().includes('请选择') ? '' : $('#xuanzeIpt').val()
+        var url = config.urls.baseUrl + config.actions.getsjkist
+        var eventSource = requestParam.eventSource
+        var eventType = requestParam.eventType
+        var handlingState = requestParam.handlingState
+        var startTime = requestParam.startTime
+        var endTime = requestParam.endTime
+        var eventName = requestParam.eventName
+        var params = {
+            // guid: 'guid',
+            eventSource,
+            eventType,
+            handlingState,
+            startTime,
+            endTime,
+            eventName
+        }
+
+        var tets = {
+            eventSource: eventSource ,
+            pageNo: 1,
+            pageSize: 200,
+            eventType:eventType,
+            startTime: startTime,
+            // endTime:endTime,
+            handlingState:handlingState
+        }
+        if(requestParam.endTime!=''){
+            tets.endTime = requestParam.endTime
+        }
+
+        console.log(JSON.stringify(requestParam))
+        console.log(JSON.stringify(tets))
+        queryEventList(tets,function (data) {
+            data = data.result.records
+            $('.administration').html('')
+            console.log(524);
+            addDataList(data)
+        })
+        // getWork(url, params, 'get', function (data) {
+        //     data = data.result.records
+        //     $('.administration').html('')
+        //     console.log(524);
+        //     addDataList(data)
+        // })
+        $('#search').click(function () {
+            console.log(6666666);
+            $('.mark').fadeOut();
+            $('.side').css('right', -275);
+        })
+    }
+
+    //点击搜索（条件）
+    $("#search").on("tap", function (data) {
+        searchByParams();
+    });
+
+
+    mui("body").on("tap", ".mui-icon-clear", function () {
+        console.log("clear");
+        level1Num = 0;
+        level2Num = 0;
+        $("#redo").trigger("tap"); //侧栏也重置
+        setZero(); //滞空
+        // getAllPS(3)
+        getList();
+
+    })
+    //侧栏点击显示
+    $("#moreFactor").on('tap', function () {
+        $('.mark').fadeIn();
+        $('.side').css('right', 0);
+    })
+
+    // 点击页面遮罩和侧栏消失
+    $('.mark').click(function () {
+        $('.mark').fadeOut();
+        $('.side').css('right', -275);
+    })
+
+
+    //在父页面添加一个reload刷新事件
+
+    // window.addEventListener('refresh', function(e){//执行刷新
+    //     location.reload();
+    // });
+
+
+
+
+</script>
+
+</html>

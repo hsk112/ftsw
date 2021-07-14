@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-门牌地址搜索</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+
+			.view-content-item{
+				height: auto;
+				margin: 0px 20px;
+				border-bottom: 1px solid #EDEDED;
+			}
+
+			.view-content-item .view-title{
+				font-size:14px;
+				color:#444444;
+				text-align: left;
+				padding:20px 0px 20px 0;
+					
+			}
+			
+			 .bottom-btn{
+				width: 100%;
+				height: 100px;
+				background: #f6f4f7;
+					line-height: 100px;
+			}
+			 .btn-item{
+				width: 100%;
+				float: left;
+				
+			}
+			
+			 .btn-item div{
+				margin: 0 auto;
+				border: 1px solid #337BFC;
+				width: 85%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 50px;
+				margin-top: 30px;
+				
+			}
+			
+			.view-select{
+				text-align: left;
+				color: #191515;
+				font-size: 16px;
+				margin-bottom: 21px;
+			}
+			
+			.search-tip {
+				display: block;
+			}
+			
+			.search-tip span{
+				font-size:14px;
+				color:rgba(51,123,252,1);
+			}
+			
+			.search-tip img{
+				width: 14px;
+			}
+			
+			.select-query-list{
+				border-bottom: 1px solid #eee;
+				height: 60px;
+				margin-top: 15px;
+			}
+			
+			.select-query-list-title{
+				text-align: left;
+				color: #191515;
+				font-size: 16px;
+				
+			}
+			
+
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">门牌地址搜索</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="search-bar">
+							<div class="search-item">
+								<div class="search-icon">
+									<img src="../../img/commom/search1@2x.png" />
+								</div>
+								<div class="search-input">
+									<div class="mui-input-row" style="text-align: left">
+										<input type="text" style="width: 90%;" class="mui-input-clear" placeholder="请输入排水户名称">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="scroll-li">
+							<div class="view-content">
+								<div class="view-content-item">
+									<div class="view-title search-tip">
+										<img src="../../img/commom/dz@2x.png" />
+										<span>
+											附近门牌地址共有：0
+										</span>
+									</div>
+									<div id="all_list">
+										<!-- <div class="select-query-list">
+											<div class="select-query-list-title">
+												
+											</div>
+										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="bottom-btn" id="mp_add">
+							<div class="btn-item">
+								<div style="background: #337BFC;color: #fff;">新建门牌地址</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		var pshList = ""; //附近排水户;
+
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.plusReady(function() {
+			//接受参数
+			var pointStr = globalGetItem(GlobalKey.point);
+			var point = JSON.parse(pointStr);
+
+			const mapData = window['mobile-lib'].MapData({
+				serverUrl: config.urls.serverDomain,style:'color'
+			});
+			mapData.getFeaturesByBuffer([{
+				NAME: 'DEVICE_POINT_INFO',
+				POINT_CODE: '040532'
+			}], [point.lng, point.lat], 0.005).then(data => {
+				var EXP_NO = "";
+				for (var i = 0; i < data.features.length; i++) {
+					var item = data.features[i];
+					EXP_NO = EXP_NO + item.properties.EXP_NO + ",";
+				}
+				console.log(EXP_NO);
+				getPshByExpNo(EXP_NO, function(data) {
+					var str = "";
+					if (data.result) {
+						pshList = data.result;
+						$(".search-tip span").html("附近门牌地址共有:" + data.result.length);
+						for (var i = 0; i < data.result.length; i++) {
+							var item = data.result[i];
+							if (!item.address) {
+								continue;
+							}
+							str = str + '<div class="select-query-list">' +
+								'	<div class="select-query-list-title" onclick="initPsh('+ JSON.stringify(item).replace(/\"/g, "'") + ')">' +
+								(i + 1) + "、" +
+								"&nbsp;&nbsp;" + item.address +
+								'	</div>' +
+								'</div>'
+						}
+						$("#all_list").html(str);
+					}
+				});
+			});
+		});
+
+		//新增门牌
+		$("#mp_add").on("tap", function() {
+			var extras = {}
+			app.openPage("paish_locationAddress.html", {
+				titleNView: {
+					titleText: '门牌地址定位',
+					autoBackButton: true,
+				}
+			}, extras);
+		});
+
+		//点击地址，选中排水户
+		var initPsh = function(pshItem) {
+			clearGlobalItem();
+			
+			globalSetItem(GlobalKey.psh,JSON.stringify(pshItem))
+			globalSetItem(GlobalKey.isSelectPsh,"true");
+			globalSetItem(GlobalKey.address,pshItem.address);
+			
+			var point = {
+				'lng':pshItem.longitude,
+				'lat':pshItem.latitude
+			}
+			globalSetItem(GlobalKey.point,JSON.stringify(point));//附近门牌的坐标
+			
+			//街道
+			globalSetItem(GlobalKey.street,pshItem.street);
+			globalSetItem(GlobalKey.street_dictText, pshItem.street_dictText);
+			//社区
+			globalSetItem(GlobalKey.commuId, pshItem.commuId);
+			globalSetItem(GlobalKey.commuId_dictText,pshItem.commuId_dictText);
+			//街
+			globalSetItem(GlobalKey.road_dictText,pshItem.road);
+			globalSetItem(GlobalKey.road_dictText,pshItem.road_dictText);
+			//门牌
+			globalSetItem(GlobalKey.houseNo,pshItem.houseNo);
+			
+			var view = plus.webview.currentWebview().opener();
+			mui.fire(view, 'reloadAddress');
+			mui.back();
+		}
+	</script>
+
+</html>

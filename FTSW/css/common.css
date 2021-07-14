@@ -1,0 +1,391 @@
+* {
+	-webkit-user-select: none;
+	-ms-touch-select: none;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: PingFang-SC-Regular;
+	/*font-weight: 200;*/
+	font-size: 16px;
+	color: #000000;
+	background-color: #FFF;
+	text-align: center;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-text-size-adjust: none;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+
+li {
+	list-style-type: none;
+}
+
+ol {
+	list-style: none;
+	padding: 0;
+
+}
+
+.mui-bar {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+
+.mui-views,
+.mui-view,
+.mui-pages,
+.mui-page,
+.mui-content {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #f6f4f7;
+}
+
+.mui-pages {
+	/* top: 44px; */
+	height: auto;
+}
+
+.mui-scroll {
+	background: #FFFFFF;
+}
+
+.common-header {
+	background: #337BFC;
+}
+
+.common-header h1 {
+	color: #FFFFFF;
+	font-weight: 400;
+	font-size: 18px;
+	font-family: PingFang-SC-Regular;
+}
+
+.common-header a {
+	color: #FFFFFF;
+}
+
+.common-header .header-btn img {
+	width: 23px;
+	float: left;
+	margin: 11px 10px;
+}
+
+
+/* 输入框 */
+input::-webkit-input-placeholder{
+	color:#B1B1B1;
+	font-size: 16px;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+	color:#B1B1B1;
+	font-size: 16px;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+	color:#B1B1B1;
+	font-size: 16px;
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+	color:#B1B1B1;
+	font-size: 16px;
+}
+/* 输入框 */
+
+/* 搜索框 */
+.search-bar{
+	width: 100%;
+	height: 52px;
+	line-height: 52px;
+	background: #F4F4F4;
+}
+
+.search-icon {
+	width: 10%;
+	height: 27px;
+	line-height: 27px;
+	float: left;
+}
+
+.search-icon img{
+	width: 14px;
+	position: relative;
+	top: 14%;
+}
+
+.search-input {
+	width: 90%;
+	height: 32px;
+	line-height: 32px;
+	float: left;
+}
+
+.search-item{
+	background: #FFFFFF;
+	height: 30px;
+	width: 90%;
+	border-radius: 100px;
+	margin: 0 auto;
+	position: relative;
+	top: 20%;
+}
+
+.search-input input{
+	line-height: 30px;
+	width: 100%;
+	height: 30px;
+	padding: 10px 15px;
+	-webkit-user-select: text;
+	border-radius: 3px;
+	outline: 0;
+	background-color: #fff;
+	-webkit-appearance: none;
+	border: none;
+	margin-bottom:0
+}
+
+.search-input .mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech {
+	font-size: 17px;
+	top: 8px;
+	width: 30px;
+	height: 30px;
+}
+/* 搜索框 */
+
+/* 过度栏 */
+.bar-title {
+	height: 40px;
+	background: #F4F4F4;
+	font-size: 14px;
+	text-align: left;
+	color: #888888;
+	line-height: 40px;
+	padding: 0 18px;
+}
+
+
+/* 排水户 步骤 */
+.steps {
+	height: 60px;
+	line-height: 40px;
+	padding-top: 7px;
+}
+
+.step-line {
+	width: 33%;
+	height: 6px;
+	background: #EDEDED;
+	position: fixed;
+	margin-left: -16%;
+	margin-top: 6px;
+	z-index: -1;
+}
+
+
+.step-num {
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	background: #EDEDED;
+	margin: 0 auto;
+}
+
+.step-text {
+	color: #888888;
+	font-size: 14px;
+}
+
+.step-active .step-line {
+	background: #337BFC;
+}
+
+.step-active .step-num {
+	background: #337BFC;
+	background-image: url(../img/ck.png);
+	background-size: 55%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.step-active .step-text {
+	color: #337BFC;
+	font-size: 16px;
+}
+
+.paish ol li {
+	width: 33%;
+	float: left;
+	font-size: 14px;
+}
+
+.paish .mui-input-row {
+	position: relative;
+	float: left;
+	width: 100%;
+	text-align: left;
+	clear:none;
+}
+
+.paish .mui-input-row.mui-checkbox.mui-left{
+	position: relative;
+	float: left;
+	width: 50%;
+	text-align: left;
+	clear:none;
+}
+
+.paish .mui-checkbox input[type=checkbox]:before{
+	font-size: 22px;
+}
+
+.paish .mui-checkbox.mui-left input[type=checkbox]{
+	left: 0px;
+	top:9px
+}
+
+.paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+	padding-left: 28px;
+	font-size: 16px;
+	color: #000000;
+}
+
+.paish .info-bar-content-item{
+	height: 90px;
+	margin: 0px 20px;
+	border-bottom: 1px solid #EDEDED;
+}
+
+.paish .info-bar-content-item .item-title{
+	text-align: left;
+	padding: 15px 0px 0px 0px;
+	font-size: 14px;
+	color: #444444;
+}
+
+.paish .info-bar-content-item.more{
+	/* width: 110px; */
+	height: 70px;
+	line-height: 70px;
+	color: rgba(51,123,252,1);
+	/* line-height: 14px; */
+	font-size: 14px;
+}
+
+.paish .info-bar-content-item .item-input input{
+	border: none;
+	padding:0;
+}
+
+.paish .bottom-btn{
+	width: 100%;
+	height: 100px;
+	background: #f6f4f7;
+	line-height: 100px;
+}
+.paish .btn-item{
+	width: 50%;
+	float: left;
+}
+.paish .btn-item2{
+	width: 33%;
+	float: left;
+}
+
+.paish .btn-item div{
+	margin: 0 auto;
+	border: 1px solid #337BFC;
+	width: 85%;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 50px;
+	margin-top: 30px;
+
+}
+
+.paish .img_close{
+	background-color: #EEEEEE;
+	text-align: center;
+	color: #FFFFFF;
+	width: 72px;
+}
+
+/* 排水户 步骤 */
+
+
+
+/*拓展 loading*/
+/*----------------mui.showLoading---------------*/
+.mui-show-loading {
+    position: fixed;
+    padding: 5px;
+    width: 120px;
+    min-height: 120px;
+    top: 45%;
+    left: 50%;
+    margin-left: -60px;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    border-radius: 5px;
+    color: #FFFFFF;
+    visibility: hidden;
+    margin: 0;
+    z-index: 2000;
+
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    opacity: 0;
+    -webkit-transform: scale(0.9) translate(-50%, -50%);
+    transform: scale(0.9) translate(-50%, -50%);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+.mui-show-loading.loading-visible {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: scale(1) translate(-50%, -50%);
+    transform: scale(1) translate(-50%, -50%);
+}
+.mui-show-loading .mui-spinner{
+    margin-top: 24px;
+    width: 36px;
+    height: 36px;
+}
+.mui-show-loading .text {
+    line-height: 1.6;
+    font-family: -apple-system-font,"Helvetica Neue",sans-serif;
+    font-size: 14px;
+    margin: 10px 0 0;
+    color: #fff;
+}
+
+.mui-show-loading-mask {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.mui-show-loading-mask-hidden{
+    display: none !important;
+}
+/*拓展loading*/

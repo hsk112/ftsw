@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>安全教育</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.imageviewer.css" rel="stylesheet"/>
+  <style>
+    .view-content-item {
+      height: auto;
+      margin: 0px 20px;
+    }
+
+    .view-content-item .view-title {
+      font-size: 14px;
+      color: #444444;
+      text-align: left;
+      /* padding: 20px 0px 20px 0; */
+
+    }
+
+    #label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1A1616;
+    }
+
+
+    #OA_task_1 .mui-table-view-cell .span2, .span1, .span4 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #191515;
+      line-height: 24px;
+      display: inline-block;
+      box-sizing: border-box;
+      overflow: scroll;
+      white-space: nowrap;
+      /* border: 1px solid red; */
+    }
+
+    .mui-table-view-cell::-webkit-scrollbar {
+      display: none;
+    }
+ 
+    .text-ellipsis {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    
+    .empty{
+        line-height:200px;
+        width:100%;
+        text-align: center;
+        font-size: 16px;
+        color: #BBBBBB;
+    }
+    #page-content{
+      color: #262626;
+    }
+    #page-content .page-content-item{
+        width: 94%;
+        margin:0 auto;
+        /* box-shadow: 0px 1px 34px 2px rgba(0, 0, 0, 0.08); */
+        box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .page-content-item .item-header{
+        display: flex;
+        justify-content: space-between;
+        height: 55px;
+        line-height: 55px;
+        padding-left: 25px;
+        padding-right: 18px;
+    }
+    .page-content-item .item-header .item-header-left{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .item-header-left .num{
+        margin-right:27px;
+    }
+    .item-header-left .education-name{
+      width: 200px;
+      text-align: left;
+    }
+    .page-content-item .item-list{
+        display: flex;
+        justify-content: flex-start;
+        font-size: 14px;
+        text-align: left;
+        padding-left: 25px;
+        padding-right: 20px;
+        padding-top:19px;
+        padding-bottom: 21px;
+    }
+    .page-content-item .item-list .item-list-left{
+        margin-right: 24px;
+    }
+    .page-content-item .blank{
+        height: 1px;
+        background: #F4F4F4;
+        width: 100%;
+    }
+    .grey{
+      color: #888888;
+      display: inline-block;
+      padding-right: 4px;
+    }
+    .item-text{
+      margin-top: 10px;
+    }
+    .principal{
+      display: inline-block;
+      width: 60px;
+    }
+    .item-title{
+      display: flex;
+    }
+    /* 侧滑框 */
+    .sideslip-menu {
+            width: 295px;
+            height: 100%;
+            position: absolute;
+            top: 0px;
+            right: -295px;
+            background: #fff;
+            z-index: 102;
+            display: none;
+        }
+        .sideslip-menu .menu-list{
+            padding-top: 20px;
+        }
+        .sideslip-menu .menu-list .menu-list-item{
+            height: 54px;
+            line-height: 54px;
+            padding:8px 5px 0px 6px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .menu-list-item .lable-text{
+            text-align: left;
+        }
+        .menu-list-item .proInp{
+            text-align: right;
+        }
+        .date-sideslip{
+            position: absolute;
+            right:15px;
+            top:13px;
+        }
+        .butt{
+            display: flex;
+            padding: 280px 21px 24px 20px;
+            /* position: absolute;
+            right: 0px;
+            bottom: 0px; */
+            
+        }
+        .reset{
+            width: 120px;
+            height: 40px;
+            color: #0493F3;
+            line-height: 40px;
+            text-align: center;
+            border: solid 1px #0493F3;
+            border-radius: 4px;
+            
+        }
+        .comit{
+            width: 120px;
+            height: 40px;
+            color: #fff;
+            background: #0493F3;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 4px;
+            margin-left:14px ;
+        }
+        /* 遮罩层 */
+        #fade{
+            /* display: none; */
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:100;
+            -moz-opacity: 0.8;
+            opacity:.60;/*透明度*/
+            filter: alpha(opacity=88);
+            display: none;
+        }
+        .empty{
+            line-height:200px;
+            width:100%;
+            text-align: center;
+            font-size: 16px;
+            color: #BBBBBB;
+        }
+  </style>
+</head>
+
+<body>
+  <!--页面主结构开始-->
+  <div id="app" class="mui-views">
+    <div class="mui-view">
+      <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+      </div>
+    </div>
+  </div>
+  <!--页面主结构结束-->
+  <!--单页面开始-->
+  <div id="mui-content" class="mui-page" style="background: #fff;">
+    <!--页面标题栏开始-->
+    
+    <!--页面标题栏结束-->
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+      <div id="ALL" class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <div class="scroll-li">
+            <div class="view-content">
+              <!-- <div class="info-bar-content">
+                <div class="search-bar">
+                  <div class="search-item">
+                    <div class="search-icon">
+                      <img src="../../../img/commom/search1@2x.png"/>
+                    </div>
+                    <div class="search-input">
+                      <div class="mui-input-row" style="text-align: left">
+                        <input id="search_input" value="" type="search" style="width: 90%;" placeholder="请输入工程名称">
+                        <span class="mui-icon mui-icon-close delete-icon1" onclick="deleteDate('search_input')"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <div class="view-content-item" style="line-height: 53.5px;">
+                <div id="openFactor" style="display: flex;justify-content: space-between;">
+                  <div class="view-title search-tip">
+                    <img src="../../../img/fujin-icon.png"
+                        style="width: 13px;height: 14px;line-height: 14px;vertical-align:middle;margin-top: -2px"/>
+                    <span id="label" style="line-height: 16px;">记录清单</span><span id="num"
+                                                                                style="color: #337BFC;font-weight:bold;margin-left: 10px;">0</span>
+                  </div>
+                  <div class="issues-total-right screen_quality" style="position: relative;top:4px;">
+                      <img src="../../../img/commom/factor.png" style="width: 13px;height: 16px;" alt="">
+                  </div>
+                  <!-- 	<div id="toOverview">
+                          <img src="../../../img/overview-tubiao.png" style="width: 16px;height: 16px;line-height: 16px;vertical-align:middle;" />
+                          <span id="label" style="display:inline-block;line-height: 16px;color: #337BFC;font-weight:bold;">概览图表</span>
+                      </div> -->
+                </div>
+              </div>
+              <!-- <div id="no-data" style="display: none;padding:50px 0;">暂无数据</div> -->
+              <div id="page-content">
+                  <!-- <div class="page-content-item">
+                      <div class="item-header">
+                          <div class="item-header-left">
+                              <div class="num">1</div>
+                              <div class="education-name">安全教育名称</div>
+                          </div>
+                          <div class="item-header-right"><span class="mui-icon mui-icon-arrowright" style="color: #0493F3;font-size: 20px;"></span></div>
+                      </div>
+                      <div class="blank"></div>
+                      <div class="item-list">
+                              <div class="item-list-left">
+                                  <div><span class="grey">项目负责:</span><span class="principal">李斯基</span></div>
+                                  <div class="item-text"><span class="grey">填写人:</span><span class="realName">李斯基</span></div>
+                              </div>
+                              <div class="item-list-right">
+                                  <div><span class="grey">培训类型:</span><span class="trainType">公司安全教育</span></div>
+                                  <div class="item-text"><span class="grey">检查日期:</span><span class="checkDate">2020-01-11</span></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div> -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- 侧滑菜单 -->
+    <div class="sideslip-menu">
+      <div class="menu-list">
+          <div class="mui-input-row input-row-item menu-list-item">
+              <label class="lable-text" style="white-space: nowrap;">安全教育名称</label>
+              <input type="text" class="mui-input-clear proInp educaName" style="width:160px;" placeholder="请输入安全教育名称">
+          </div>
+          <div class="mui-input-row input-row-item menu-list-item">
+            <label class="lable-text">培训类型</label>
+            <input type="text" class="mui-input-clear proInp detailCheckProject" style="width:160px;" placeholder="请选择培训类型">
+          </div>
+          <div class="mui-input-row input-row-item menu-list-item">
+              <label class="lable-text" style="white-space: nowrap;">项目负责人</label>
+              <input type="text" class="mui-input-clear proInp detailCheckContent" style="width:160px;" placeholder="请输入项目负责人">
+          </div>
+          <div class="mui-input-row input-row-item menu-list-item">
+              <label class="lable-text">填写人</label>
+              <input type="text" class="mui-input-clear proInp createByName" style="width:160px;" placeholder="请书写填写人员">
+          </div>
+          <div class="mui-input-row input-row-item menu-list-item">
+            <label class="lable" style="white-space: nowrap;">检查开始时间</label>
+                <input type="text" readonly="readonly" class=" recordInp  dateSelect-fill startCreateTime" style="width:100px;text-align: right;margin-right: 18px;" placeholder="2021-04-19"/>
+                <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;margin-bottom:10px;margin-right: 4px;" alt=""></span>
+          </div> 
+          <div class="mui-input-row input-row-item menu-list-item">
+          <label class="lable" style="white-space: nowrap;">检查结束时间</label>
+              <input type="text" readonly="readonly" class=" recordInp  dateSelect-fill endCreateTime" style="width:100px;text-align: right;margin-right: 18px;" placeholder="2021-04-19"/>
+              <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;margin-bottom:10px;margin-right: 4px;" alt=""></span>
+          </div> 
+          <!-- <div class="mui-input-row input-row-item menu-list-item" style="position: relative;">
+              <label class="lable-text">检查日期</label>
+              <input type="text" 
+                  class="mui-input-clear proInp  dateSelect-fill startCreateTime"  placeholder="开始日期" style="width:78px;"/>
+              <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;margin-bottom:10px;margin-right: 4px;" alt=""></span>
+          </div> -->
+      </div>
+      <div class="butt">
+          <div class="reset">重置</div>
+          <div class="comit comit-ques ">确认</div>
+          
+      </div>
+    </div>
+    <!-- 侧滑菜单遮罩层 -->
+    <div id="fade"></div>
+      <!--页面主内容区结束-->
+  </div>
+
+</body>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/qualityControl/qualityControl.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<script src="../../../js/common.js"></script>
+
+
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<!--<script src="../../../js/vconsole.min.js"></script>-->
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/mui.previewimage.js"></script>
+<script>
+  //  var vConsole = new VConsole();
+    mui.init({});
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var arrTrainTy = [' ','班前教育','项目部安全教育','公司安全教育','其他']
+    var projectInfo = JSON.parse(localStorage.getItem('projectInfo') || "{}")
+    var trainTypeNum = -1;
+    mui.plusReady(function () {
+        var self = plus.webview.currentWebview()
+        var type = 'get';
+        var params = {
+          projectName:projectInfo.prjName,
+          column: 'createTime',
+          order: 'desc',
+          field: 'id,,,trainPlanName,trainType_dictText,projectName,projectLeaderFullname,trainContent,inputFullname,inputDate,action',
+          pageNo: 1,
+          pageSize: 20
+        }  
+        var url = config.urls.baseUrl + config.actions.getEducationRecordList
+        getProject(url,params,type,function(data){
+          if(data.success){
+            console.log(JSON.stringify(data))
+            data = data.result.records
+            $("#num").html(data.length)
+            $("#page-content").empty($(".page-content-item"))
+            getRecordList(data)
+            $(".item-header").each(function(index){
+              $(this).on('tap',function(e){
+                var extras = {dataIndex:data[index]}
+                  app.openPage("./educationRecord.html", {
+                                titleNView: {
+                                  titleText: '检查记录',
+                                  autoBackButton: true,										
+                                }
+                              },extras);
+              })
+            })
+          }else{
+            app.toast('网络异常,请稍后再试')
+          }
+        })
+        self.setStyle({
+                        titleNView:{
+                            buttons:[{
+                                float:'right',
+                                width:'60',
+                                fontSize:'25',
+                                text:'＋',
+                                onclick:function(){
+                                  var extras = {}
+                                  app.openPage("./addSafetyRecord.html", {
+                                                titleNView: {
+                                                  titleText: '检查记录',
+                                                  autoBackButton: true,										
+                                                }
+                                              },extras);
+                                    
+                                }
+                            }]
+                        }
+                    })  
+        
+    })
+    function getRecordList(data){
+      var str = ''
+      var listDetail = null;
+      for(var i=0;i<data.length;i++){
+        console.log(JSON.stringify(data[i].trainTime))
+        if(data[i].trainTime != '' && data[i].trainTime != null && data[i].trainTime != undefined){
+          data[i].trainTime = data[i].trainTime.split(' ')[0]
+        }
+        if(data[i].trainType){
+          data[i].trainType = arrTrainTy[data[i].trainType.substring(1,2)]
+        }
+        listDetail = `
+        <div class="page-content-item">
+                        <div class="item-header">
+                            <div class="item-header-left">
+                                <div class="num">${i+1}</div>
+                                <div class="education-name text-ellipsis" >${data[i].educationName}</div>
+                            </div>
+                            <div class="item-header-right"><span class="mui-icon mui-icon-arrowright" style="color: #0493F3;font-size: 20px;"></span></div>
+                        </div>
+                        <div class="blank"></div>
+                        <div class="item-list">
+                                <div class="item-list-left">
+                                    <div class="item-title"><span class="grey" style="white-space: nowrap;">项目负责:</span><span class="principal text-ellipsis">${data[i].projectLeaderFullname}</span></div>
+                                    <div class="item-text"><span class="grey">填写人:</span><span class="realName">${data[i].inputFullname}</span></div>
+                                </div>
+                                <div class="item-list-right">
+                                    <div class="item-title"><span class="grey" style="white-space: nowrap;">培训类型:</span><span class="trainType text-ellipsis">${data[i].trainType}</span></div>
+                                    <div class="item-text"><span class="grey">检查日期:</span><span class="checkDate">${data[i].trainTime}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        `
+        str = str + listDetail
+      }
+      $("#page-content").append(str)
+    }
+    // 遮罩层和侧滑菜单开启
+    $(".screen_quality").on('tap', function (e) {
+        $(".sideslip-menu").css('display','block')
+        $(".sideslip-menu").animate({
+            right:'0px'
+        },400)
+        $("#fade").css('display','block')
+    });
+    //重置按钮
+    $(".reset").on('tap',function(){
+        reset()
+    })
+    function reset(){
+        $(".educaName").val('')
+        $(".detailCheckProject").val('')
+        $(".detailCheckContent").val('')
+        $(".createByName").val('')
+        $(".startCreateTime").val('')
+        $(".endCreateTime").val('')
+    }
+    // 遮罩层和侧滑菜单关闭
+    $("#fade").on('tap',function(){
+        reset()
+        $(".sideslip-menu").animate({
+                right:'-295px'
+            },0)
+        $(".sideslip-menu").css('display','none')
+        $("#fade").css('display','none')
+
+    })
+    //侧滑框选择日期
+    getDatePicker($(".startCreateTime"),$(".startCreateTime"))
+    getDatePicker($(".endCreateTime"),$(".endCreateTime"))
+    //侧滑框确认
+    $(".comit").on('tap',function(){
+        var params = {
+          column: 'createTime',
+          order: 'desc',
+          field: 'id,,,trainPlanName,trainType_dictText,projectName,projectLeaderFullname,trainContent,inputFullname,inputDate,action',
+          pageNo: 1,
+          pageSize: 20
+        }
+        var screenListData = {
+            projectName:projectInfo.prjName,//项目名称
+            educationName:$(".educaName").val(),//安全教育名称
+            trainType:trainTypeNum,//检查类别
+            projectLeaderFullname:$(".detailCheckContent").val(),//项目负责人 
+            inputFullname:$(".createByName").val(),//检查人
+            startCreateTime:$(".startCreateTime").val(),//开始时间
+            endCreateTime:$(".endCreateTime").val(),//结束时间
+        }
+        params.projectName = screenListData.projectName
+        if($(".educaName").val() != ''){
+          params.educationName = screenListData.educationName
+        }
+        if(trainTypeNum != '-1'){
+          params.trainType = screenListData.trainType
+        }
+        if($(".detailCheckContent").val() != ''){
+          params.projectLeaderFullname = screenListData.projectLeaderFullname
+        }
+        if($(".createByName").val() != ''){
+          params.inputFullname = screenListData.inputFullname
+        }
+        if($(".startCreateTime").val() != ''){
+          params.startCreateTime = screenListData.startCreateTime
+        }
+        if($(".endCreateTime").val() != ''){
+          params.endCreateTime = screenListData.endCreateTime
+        }
+        var type = 'get'
+        var url = config.urls.baseUrl + config.actions.getEducationRecordList
+        app.showLoader()
+        getProject(url,params,type,function(data){
+          console.log(JSON.stringify(data))
+          if(data.success){
+            if(data.result.records && data.result.records.length == 0){
+                $("#num").html(data.length)
+                $("#page-content").html("<div class='empty'>暂无数据</div>")
+              }else{
+                data = data.result.records
+                $("#num").html(data.length)
+                $("#page-content").empty($(".page-content-item"))
+                getRecordList(data)
+              }
+            reset()
+            $(".sideslip-menu").animate({
+                    right:'-295px'
+                },0)
+            $(".sideslip-menu").css('display','none')
+            $("#fade").css('display','none')
+            $(".item-header").each(function(index){
+              $(this).on('tap',function(e){
+                var extras = {dataIndex:data[index]}
+                  app.openPage("./educationRecord.html", {
+                                titleNView: {
+                                  titleText: '记录详情',
+                                  autoBackButton: true,										
+                                }
+                              },extras);
+              })
+            })
+          }
+        })
+    })
+    $(".detailCheckProject").on('tap',function(){
+                var picker = new mui.PopPicker();
+                picker.setData([
+                    {value:'01',text:'班前教育'},
+                    {value:'02',text:'项目部安全教育'},
+                    {value:'03',text:'公司安全教育'},
+                    {value:'04',text:'其他'},
+                ]);
+                picker.show(function (selectItems) {
+                  $(".detailCheckProject").val(selectItems[0].text)
+                    trainTypeNum = selectItems[0].value
+                })
+    })
+
+    window.addEventListener('reload', function(event) {
+        location.reload();
+    });
+</script>

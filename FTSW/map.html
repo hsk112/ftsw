@@ -1,0 +1,3863 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>地图</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet"/>
+    <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet"/>
+
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/common.css" rel="stylesheet"/>
+    <style>
+        .mui-popover {
+            height: 100px;
+            width: 100px;
+        }
+
+        .mapboxgl-ctrl.mapboxgl-ctrl-group {
+            bottom: 45%;
+            left: 10px;
+            position: fixed;
+        }
+
+        .mui-scroll {
+            /* background: url(../img/temp_dt.png) no-repeat center; */
+            background-size: 100% 100%;
+            height: 100%;
+            width: 100%;
+        }
+
+        .search-bar {
+            background: none;
+            height: 80px;
+            line-height: 80px;
+        }
+
+        .search-input .mui-input-row .mui-input-clear ~ .mui-icon-clear {
+            top: 12px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .search-item-now {
+            background: #FFFFFF;
+            height: 40px;
+            width: 80%;
+            margin-left: 5%;
+            position: relative;
+            top: 50%;
+            border-radius: 5px;
+        }
+
+
+        .many-icon-now {
+            height: 40px;
+            width: 70%;
+            margin-left: 39%;
+            position: relative;
+            margin-top: 25px;
+
+        }
+
+        .search-input {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .search-icon img {
+            top: 30%;
+        }
+
+
+        .select-icon {
+            width: 10%;
+            height: 27px;
+            line-height: 27px;
+            float: left;
+        }
+
+        .select-icon img {
+            width: 14px;
+            position: relative;
+            top: 30%;
+        }
+
+        .add_btn {
+            position: fixed;
+            width: 70px;
+            bottom: 35%;
+            right: 0;
+            z-index: 100;
+            text-align: right;
+        }
+
+        .add_btn img {
+            width: 70px;
+        }
+
+        .location_btn {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            left: 5%;
+            top: 105px;
+            z-index: 7;
+            text-align: center;
+            border-radius: 5px;
+            background: #FFFFFF;
+        }
+
+        .location_btn img {
+            width: 20px;
+            margin-top: 10px;
+        }
+
+        .level_btn {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 50%;
+            right: 10px;
+            z-index: 100;
+            text-align: center;
+            border-radius: 5px;
+            background: #FFFFFF;
+        }
+
+        .level_btn img {
+            width: 30px;
+            margin-top: 10px;
+        }
+
+        .popobtn {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bottom-item-father {
+            /*padding: 10px 19px 19px 19px;*/
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            height: 250px;
+            width: 100%;
+            bottom: 0;
+            z-index: 100;
+            text-align: left;
+        }
+
+        .bottom-item {
+            padding: 10px 19px 19px 19px;
+            background: #FFFFFF;
+            position: fixed;
+            height: 250px;
+            width: 100%;
+            bottom: 0;
+            z-index: 100;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            text-align: left;
+        }
+
+        .bottom-item-title {
+
+            font-size: 18px;
+            color: rgba(22, 21, 21, 1);
+            font-weight: bold;
+        }
+
+        .bottom-item-info {
+            font-size: 14px;
+            color: rgba(25, 21, 21, 1);
+            line-height: 21px;
+            height: 21px;
+            padding: 18px 0px;
+        }
+
+        .bottom-item-btn {
+            height: 200px;
+            margin-top: 50px;
+        }
+
+        .bottom-item-btn .item {
+            width: 100%;
+            float: left;
+            text-align: center;
+            padding: 0 14px;
+
+        }
+
+        .bottom-item-btn .item div {
+            border: 1px solid #337BFC;
+            border-radius: 20px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .triangle-down {
+        }
+
+        .mui_rank {
+            position: absolute;
+            top: 0px;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+
+        }
+
+        .small-icon-img {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+        }
+
+        .spacing {
+            width: 3px;
+
+        }
+
+        .div-spacing {
+            background-color: white;
+            width: 40px;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .mark{
+            /*z-index: 9998;*/
+            z-index: 9;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .mark2{
+            /*z-index: 9998;*/
+            z-index: 8;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 90%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        /*复选框样式*/
+        .tui-checkbox:checked {
+            background:#1673ff
+        }
+        .tui-checkbox {
+            width:22px;
+            height:22px;
+            background-color:#ffffff;
+            border:solid 1px #0493F3;
+            -webkit-border-radius:50%;
+            border-radius:50%;
+            font-size:0.8rem;
+            margin:0;
+            padding:0;
+            position:relative;
+            display:inline-block;
+            vertical-align:top;
+            cursor:default;
+            -webkit-appearance:none;
+            -webkit-user-select:none;
+            user-select:none;
+            -webkit-transition:background-color ease 0.1s;
+            transition:background-color ease 0.1s;
+        }
+        .tui-checkbox:checked::after {
+            content:'';
+            top:5px;
+            left:5px;
+            position:absolute;
+            background:transparent;
+            border:#fff solid 2px;
+            border-top:none;
+            border-right:none;
+            height:5px;
+            width:9px;
+            -moz-transform:rotate(-45deg);
+            -ms-transform:rotate(-45deg);
+            -webkit-transform:rotate(-45deg);
+            transform:rotate(-45deg);
+        }
+
+        .tui-checkbox2:checked {
+            background:#1673ff
+        }
+        .tui-checkbox2 {
+            width:22px;
+            height:22px;
+            background-color:#ffffff;
+            border:solid 1px #0493F3;
+            -webkit-border-radius:50%;
+            border-radius:50%;
+            font-size:0.8rem;
+            margin:0;
+            padding:0;
+            position:relative;
+            display:inline-block;
+            vertical-align:top;
+            cursor:default;
+            -webkit-appearance:none;
+            -webkit-user-select:none;
+            user-select:none;
+            -webkit-transition:background-color ease 0.1s;
+            transition:background-color ease 0.1s;
+        }
+        .tui-checkbox2:checked::after {
+            content:'';
+            top:5px;
+            left:5px;
+            position:absolute;
+            background:transparent;
+            border:#fff solid 2px;
+            border-top:none;
+            border-right:none;
+            height:5px;
+            width:9px;
+            -moz-transform:rotate(-45deg);
+            -ms-transform:rotate(-45deg);
+            -webkit-transform:rotate(-45deg);
+            transform:rotate(-45deg);
+        }
+
+        /*地图放大放小样式*/
+        .mapboxgl-ctrl.mapboxgl-ctrl-group {
+            bottom: 20%;
+            /*left: 10px;*/
+            margin-left: 87%;
+            position: fixed;
+        }
+
+
+        /*地图图标样式说明*/
+        .location_style {
+            position: fixed;
+            width: 105px;
+            /*height: 245px;*/
+            left: 5%;
+            top: 160px;
+            z-index: 100;
+            text-align: center;
+            border-radius: 5px;
+            background-color: rgba(255,255,255,0.7);
+        }
+
+        #device-icon-wrapper {
+            position: fixed;
+            width: 105px;
+            left: 5%;
+            top: 160px;
+            z-index: 2;
+            text-align: center;
+            border-radius: 5px;
+            /*background-color: rgba(255,255,255,0.7);*/
+        }
+
+        .location_style img {
+            /*width: 0px;*/
+            height: 30px;
+            margin-top: 11px;
+            /*flex-grow: 2;*/
+        }
+        .location_style span {
+            /*flex-grow: 2;*/
+            line-height: 45px;
+            text-align: left;
+        }
+        .device_icon{
+            display: flex;
+            height: 40px;
+            margin-left: 3%;
+        }
+
+        .table-d table{ background: black}
+        .table-d table td{ background:#FFF;height: 40px}
+
+
+        /*	搜索结果*/
+        #search-result-container {
+            display: none;
+            background-color: white;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 8;
+        }
+        .search_ul {
+            color: #262626;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: left;
+        }
+        .search-result-li {
+            display: flex;
+            padding: 20px 0;
+            margin: 0 20px;
+            border-bottom: 1px solid #EDEDED;
+        }
+        .search-result-li-content {
+            width: calc(100vw - 60px);
+            padding: 0px 10px;
+        }
+        .search-result-li-addr {
+            color: #888888;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .overLineEllipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            display: block;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-navbar">
+        </div>
+        <div class="mui-pages">
+        </div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--右侧栏内容-->
+
+<div id="leftLan1" class="side1" style="position:fixed;z-index: 10;width:250px;height: 100%;right:-250px;">
+    <div id="mui-left-lan" class="mui-scroll-wrapper" style="height:100%;background-color: white;color: black;width: 250px;">
+        <!--侧栏具体展示内容-->
+        <p style="padding: 5px 20px;margin-bottom: 5px;"></p>
+        <!--筛选内容-->
+        <div class="mui-scroll" style="display: flex;flex-direction: column ;height: 1050px">
+            <div style="margin-bottom: 10px;height: 100px;display: flex;flex-direction: column ;">
+
+                <div style="border-left:3px solid #0493F3;color: #0493F3; font-size: 18px;padding-left: 10px;text-align: left;width:50%;margin: 10px;font-weight: bold">
+                    显示筛选
+                </div>
+
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox" id="psjg" type="checkbox" name="checkbox" value=""  />
+                                <span id="psjg-str" style="color: #0493F3">排水监管</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox psjg" id="wsgw" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-wsgw">污水管网</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox psjg" id="ysgw" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-ysgw">雨水管网</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox psjg" id="jlgw" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-jlgw">截流管网</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox psjg" id="psh" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-psh">排水户</span>
+                            </div>
+                        </div>
+<!--                        <div style="display: flex; margin: 3%;margin-left: 11%;">-->
+<!--                            <div>-->
+<!--                                <input class="tui-checkbox psjg" id="psxq" type="checkbox" name="checkbox" value=""  />-->
+<!--                                <span id="text-psxq">排水小区</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox" id="hhgl" type="checkbox" name="checkbox" value=""  />
+                                <span id="hhgl-str" style="color: #0493F3">河湖管理</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox hhgl" id="hd" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-hd">河道</span>
+                            </div>
+                            <div style="margin-left: 24%;">
+                                <input class="tui-checkbox hhgl" id="hp" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-hp">湖泊</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox hhgl" data-status="disabled" id="pd" type="checkbox" name="checkbox" value=""  disabled/>
+                                <span style="color: silver">碧道</span>
+                            </div>
+                            <div style="margin-left: 24%;">
+                                <input class="tui-checkbox hhgl" id="pk" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-pk">排口</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox hhgl" id="zk" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-zk">闸门</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox" id="fhpl" type="checkbox" name="checkbox" value=""  />
+                                <span id="fhpl-str" style="color: #0493F3">防洪排涝</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox fhpl" id="jsfx" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-jsfx">积水风险</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox fhpl" id="yjsj" type="checkbox" name="checkbox" value=""  disabled/>
+                                <span  style="color: silver">应急事件</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox" id="gcxx" type="checkbox" name="checkbox" value=""  />
+                                <span id="gcxx-str" style="color: #0493F3">工程信息</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox gcxx" id="stbc" type="checkbox" name="checkbox" value=""/>
+                                <span id="text-stbc">水土保持</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox" id="jcyj" type="checkbox" name="checkbox" value=""  />
+                                <span id="jcyj-str" style="color: #0493F3">监测预警</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox jcyj" id="wsxt" type="checkbox" name="checkbox" value="" />
+                                <span>污水系统</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox jcyj" id="ysxt" type="checkbox" name="checkbox" value="" />
+                                <span>雨水系统</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox jcyj" id="hhxt" type="checkbox" name="checkbox" value="" />
+                                <span>河湖系统</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox jcyj" id="jlxt" type="checkbox" name="checkbox" value="" />
+                                <span>截流系统</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox jcyj" id="gsxt" type="checkbox" name="checkbox" value="" />
+                                <span>供水系统</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox jcyj" id="sk" type="checkbox" name="checkbox" value="" />
+                                <span>水库</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox jcyj" id="jsd" type="checkbox" name="checkbox" value="" />
+                                <span>积水点</span>
+                            </div>
+                            <div style="margin-left: 17%;">
+                                <input class="tui-checkbox jcyj" id="yl" type="checkbox" name="checkbox" value="" />
+                                <span>雨量</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox jcyj" id="jsgd" type="checkbox" name="checkbox" value="" />
+                                <span>建设工地</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox jcyj" id="jcyj-psxq" type="checkbox" name="checkbox" value="" />
+                                <span>排水小区</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox" id="yjzy" type="checkbox" name="checkbox" value=""  />
+                                <span id="yjzy-str" style="color: #0493F3">应急资源</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox yjzy" id="xcry" type="checkbox" name="checkbox" value=""  disabled/>
+                                <span  style="color: silver">现场人员</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox yjzy" id="fhck" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-fhck">防洪仓库</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox yjzy" id="yjcl" type="checkbox" name="checkbox" value=""  disabled/>
+                                <span  style="color: silver">应急车辆</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input class="tui-checkbox yjzy" id="bxzx" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-bxzx">避险中心</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input class="tui-checkbox yjzy" id="rkfb" type="checkbox" name="checkbox" value=""  />
+                                <span id="text-rkfb">人口分布</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div>
+                    <div style="display: flex;">
+                        <div style="flex-grow: 1">
+                            <button style="margin-left: 20%" id="often-btn" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">设为常用</button>
+                        </div>
+                        <div style="flex-grow: 1">
+                            <button id="redo" type="button" class="mui-btn mui-btn-primary mui-btn-outlined">重置</button>
+                        </div>
+                        <div style="flex-grow: 1">
+                            <button style="margin-right: 28%" id="searchByFactor" type="button" class="mui-btn mui-btn-primary">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--分隔-->
+        </div>
+
+    </div>
+</div>
+<div id="leftLan2" class="side2" style="position:fixed;z-index: 10;width:250px;height: 100%;right:-250px;">
+    <div class="mui-scroll" style="height:100%;background-color: white;color: black;width: 250px;">
+        <!--侧栏具体展示内容-->
+        <p style="padding: 5px 20px;margin-bottom: 5px;"></p>
+        <!--筛选内容-->
+        <div style="display: flex;flex-direction: column ;">
+            <div style="margin-bottom: 10px;height: 100px;display: flex;flex-direction: column ;">
+
+                <div style="border-left:3px solid #0493F3;color: #0493F3; font-size: 18px;padding-left: 10px;text-align: left;width:50%;margin: 10px;font-weight: bold">
+                    地图配置
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex;justify-content: space-around; margin: 3%;margin-left: 3%;">
+                            <div>
+                                <img id="map1" style="width: 75%;height: 60px" src="img/map/map_white_check@2x.png">
+                            </div>
+                            <div>
+                                <img id="map2" style="width: 75%;height: 60px" src="img/map/map_black@2x.png">
+                            </div>
+                        </div>
+                        <div style="display: flex;align-items: center;justify-content: center;;margin: 3%;">
+                            <div style="flex-grow: 1;">
+                                <span>地图</span>
+                            </div>
+                            <div style="flex-grow: 1;">
+                                <span>卫星</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div style="display: flex;flex-direction: column ;">
+                        <div style="display: flex;justify-content: space-around; margin: 3%;margin-left: 3%;">
+                            <div>
+                                <img id="boundary" class="tui-checkbox4" style="width: 75%;height: 42px" src="img/map/boundary@2x.png">
+                            </div>
+                            <div>
+                                <img id="land" class="tui-checkbox4" style="width: 75%;height: 42px" src="img/map/land@2x.png">
+                            </div>
+                            <div>
+                                <img id="line" class="tui-checkbox4" style="width: 75%;height: 42px" src="img/map/line@2x.png">
+                            </div>
+                            <div>
+                                <img id="road" class="tui-checkbox4" style="width: 75%;height: 42px" src="img/map/road@2x.png">
+                            </div>
+                        </div>
+                        <div style="display: flex;align-items: center;justify-content: center;;margin: 3%;">
+                            <div style="flex-grow: 1;">
+                                <span>边界</span>
+                            </div>
+                            <div style="flex-grow: 1;">
+                                <span>道路</span>
+                            </div>
+                            <div style="flex-grow: 1;">
+                                <span>等高线</span>
+                            </div>
+                            <div style="flex-grow: 1;">
+                                <span>绿地</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #dddddd;width: 90%;margin: 5%;margin-top: 3%;"></div>
+                <div class="info-bar-content-item isShow">
+                    <div class="map-tui-checkbox2" style="display: flex;flex-direction: column ;">
+                        <div id="tui-checkbox3" style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input id="jdsq" class="tui-checkbox2" type="radio" name="checkbox" value="jdsq"  />
+                                <span>街道社区</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input id="lyfq" class="tui-checkbox2" type="radio" name="checkbox" value="lyfq"  />
+                                <span>流域分区</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input id="ssfq" class="tui-checkbox2" type="radio" name="checkbox" value="ssfq"  />
+                                <span>水所分区</span>
+                            </div>
+                            <div style="margin-left: 10%;">
+                                <input id="wsfq" class="tui-checkbox2" type="radio" name="checkbox" value="wsfq"  />
+                                <span>污水分区</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; margin: 3%;margin-left: 11%;">
+                            <div>
+                                <input id="ysfq" class="tui-checkbox2" type="radio" name="checkbox" value="ysfq"  />
+                                <span>雨水分区</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!--分隔-->
+        </div>
+
+    </div>
+</div>
+<!-- 遮罩 -->
+<div class="mark" ></div>
+<div class="mark2" ></div>
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+    <!--页面标题栏开始-->
+    <!--页面标题栏结束-->
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+    <div class="mui-scroll">
+                <div id="map" class="mapboxgl-map"
+                     style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;">
+                </div>
+                <!-- 底部弹窗 -->
+                <!-- 水闸 -->
+                <div id="title-zk" style="display: none;z-index: 9">
+                    <div id="bottom-zk" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 270px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-zk" style="margin-right: 5px;">
+                            <img id="info_icon-zk" style="width: 31px;" src="img/map/gate.png">
+                        </span>
+                            <span id="name-zk" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">香蜜湖水闸</span>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">类别:</div>
+                                <div id="style-zk" style="color: #444444;margin-left: 5%;">水闸</div>
+                            </div>
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">材料:</div>
+                                <div id="material-zk" style="color: #444444;margin-left: 5%;">无</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;width: 40%">运维单位:</div>
+                                <div id='operation-zk' style="color: #444444;flex-grow: 6">香蜜湖水所</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-zk"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 液位 -->
+                <div id="title-yw" style="display: none;z-index:9">
+                    <div id="bottom-yw" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 210px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-yw" style="margin-right: 5px;">
+                            <img id="info_icon-yw" style="width: 31px;" src="img/map/level.png">
+                        </span>
+                            <span id="name-yw" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">笋岗西路和梅岗路交叉口</span>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">液位:</div>
+                                <div id="height-yw" style="color: #444444;margin-left: 5%;">0.7m</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-yw"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 流量 -->
+                <div id="title-ll" style="display: none;z-index:9">
+                    <div id="bottom-ll" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 270px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-ll" style="margin-right: 5px;">
+                            <img id="info_icon-ll" style="width: 31px;" src="img/map/flow.png">
+                        </span>
+                            <span id="name-ll" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">笋岗西路和梅岗路交叉口</span>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">瞬时流量:</div>
+                                <div id="ll-ll" style="color: #444444;margin-left: 5%;">0.7L/s</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">液位:</div>
+                                <div id="height-ll" style="color: #444444;margin-left: 5%;">0.7m</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-ll"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 雨量 -->
+                <div id="title-yl" style="display: none;z-index: 9">
+                    <div id="bottom-yl" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 210px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-yl" style="margin-right: 5px;">
+                            <img id="info_icon-yl" style="width: 31px;" src="img/map/rainfall.png">
+                        </span>
+                            <span id="name-yl" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">笋岗西路和梅岗路交叉口</span>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">雨量:</div>
+                                <div id="height-yl" style="color: #444444;margin-left: 5%;">0.7m</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-yl"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 视频 -->
+                <div id="title-sp" style="display: none;z-index: 9">
+                    <div id="bottom-sp" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 170px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-sp" style="margin-right: 5px;">
+                            <img id="info_icon-sp" style="width: 31px;" src="img/map/video.png">
+                        </span>
+                            <span id="name-sp" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">视频站</span>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-sp"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 水位 -->
+                <div id="title-sw" style="display: none">
+                    <div id="bottom-sw" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 210px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-sw" style="margin-right: 5px;">
+                            <img id="info_icon-sw" style="width: 31px;" src="img/map/water.png">
+                        </span>
+                            <span id="name-sw" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">新洲河(景田)水位站</span>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">水位:</div>
+                                <div id="height-sw" style="color: #444444;margin-left: 5%;">6.70m</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-sw"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 水质 -->
+                <div id="title-sz" style="display: none">
+                    <div id="bottom-sz" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 150px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-sz" style="margin-right: 5px;">
+                            <img id="info_icon-sz" style="width: 31px;" src="img/map/quality.png">
+                        </span>
+                            <span id="name-sz" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">萝岗西路和梅岗路交叉口</span>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-sz"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 泵站 -->
+                <div id="title-lz" style="display: none">
+                    <div id="bottom-lz" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 210px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-lz" style="margin-right: 5px;">
+                            <img id="info_icon-lz" style="width: 31px;" src="img/map/rain.png">
+                        </span>
+                            <span id="name-lz" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">香蜜湖泵站</span>
+                        </div>
+                        <div style="display: flex;margin:30px 10px 10px 10px;">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">名称:</div>
+                                <div id="type-name-lz" style="color: #444444;margin-left: 5%;">排水泵站</div>
+                            </div>
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">规格:</div>
+                                <div style="color: #444444;margin-left: 5%;">无</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-lz"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 排水户 -->
+                <div id="title-psh" style="display: none">
+                    <div id="bottom-psh" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 300px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-psh" style="margin-right: 5px;">
+                            <img id="info_icon-psh" style="width: 31px;" src="img/map/sewerage.png">
+                        </span>
+                            <span id="name-psh" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">华富街道</span>
+                        </div>
+                        <div style="display: flex;margin: 10px">
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">类别:</div>
+                                <div style="color: #444444;margin-left: 5%;">排水户</div>
+                            </div>
+                            <div style="display: flex;flex-grow: 1">
+                                <div style="color: #888888;">总量:</div>
+                                <div style="color: #444444;margin-left: 5%;">15641</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;flex-direction: column">
+                            <div style="display: flex;margin-left: 10px">
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">医疗卫生类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">3</div>
+                                </div>
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">工业类 </div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">2514</div>
+                                </div>
+                            </div>
+                            <div style="display: flex;margin: 10px 0px 0px 10px">
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">工程建设类 </div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">2514</div>
+                                </div>
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">科研类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">3</div>
+                                </div>
+                            </div>
+                            <div style="display: flex;margin: 10px 0px 0px 10px">
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">汽车服务类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">3</div>
+                                </div>
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">餐饮类 </div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">2514</div>
+                                </div>
+                            </div>
+                            <div style="display: flex;margin: 10px 0px 0px 10px">
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">畜牧养殖类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">3</div>
+                                </div>
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">垃圾收集处理类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">2514</div>
+                                </div>
+                            </div>
+                            <div style="display: flex;margin: 10px 0px 0px 10px">
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">住宿服务类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">3</div>
+                                </div>
+                                <div style="display: flex;flex-grow: 1;width: 50%">
+                                    <div style="color:#444444;flex-grow: 1">洗涤类</div>
+                                    <div style="color:#444444;margin-left: 5%;flex-grow: 1">2514</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 仓库 -->
+                <div id="title-ck" style="display: none">
+                    <div id="bottom-ck" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 270px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-ck" style="margin-right: 5px;">
+                            <img id="info_icon-ck" style="width: 31px;" src="img/map/warehouse.png">
+                        </span>
+                            <span id="name-ck" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">三沙仓库</span>
+                        </div>
+                        <div style="display: flex;margin:40px 10px 10px 10px;">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">类别:</div>
+                                <div id="style-ck" style="color: #444444;flex-grow: 6">防汛仓库</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">所在位置: :</div>
+                                <div id="address-ck" style="color: #444444;flex-grow: 6">福通路下沙欣欣学校通道</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-ck"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 避险 -->
+                <div id="title-bx" style="display: none">
+                    <div id="bottom-bx" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 370px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-bx" style="margin-right: 5px;">
+                            <img id="info_icon-bx" style="width: 31px;" src="img/map/risk.png">
+                        </span>
+                            <span id="name-bx" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">福田体育中心</span>
+                        </div>
+                        <div style="display: flex;margin:40px 10px 10px 10px;">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">类别:</div>
+                                <div style="color: #444444;flex-grow: 6">避险中心</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">所在位置:</div>
+                                <div id="address-bx" style="color: #444444;flex-grow: 6">福通路下沙欣欣学校通道</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">联系人: </div>
+                                <div id="contact-bx" style="color: #444444;flex-grow: 6">李三</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">联系方式: </div>
+                                <div id="phone-bx" style="color: #444444;flex-grow: 6">13515548877</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-bx"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 积水 -->
+                <div id="title-js"style="display: none">
+                    <div id="bottom-js" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 370px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-js" style="margin-right: 5px;">
+                            <img id="info_icon-js" style="width: 31px;" src="img/map/stagnant.png">
+                        </span>
+                            <span id="name-js" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                        </div>
+                        <div style="display: flex;margin:40px 10px 10px 10px;">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">积水深度: </div>
+                                <div id="height-js" style="color: #444444;flex-grow: 6">0.88m</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">需要人数: </div>
+                                <div id="need-people-js" style="color: #444444;flex-grow: 6">2</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">已到人数:  </div>
+                                <div id="now-people-js" style="color: #444444;flex-grow: 6">2</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">详细地址:  </div>
+                                <div id="address-js" style="color: #444444;flex-grow: 6">福通路下沙欣欣学校通道</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-jsfx"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 排放口 -->
+                <div id="title-pfk" style="display: none">
+                    <div id="bottom-pfk" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 270px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-pfk" style="margin-right: 5px;">
+                            <img id="info_icon-pfk" style="width: 31px;" src="img/map/outlet.png">
+                        </span>
+                            <span id="name-pfk" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">YSL120488219212</span>
+                        </div>
+                        <div style="display: flex;margin:40px 10px 10px 10px;">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">类别: </div>
+                                <div id="style-pfk" style="color: #444444;flex-grow: 6">排放口</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">尺寸(mm)：</div>
+                                <div id="size-pfk" style="color: #444444;flex-grow: 6">1700</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-pfk"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 水库 -->
+                <div style="display: none">
+                    <div id="bottom-sk" class="bottom-item" style="bottom:0px;display: flex;flex-direction: column;height: 320px">
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-sk" style="margin-right: 5px;">
+                            <img id="info_icon-sk" style="width: 31px;" src="img/map/reservoir.png">
+                        </span>
+                            <span id="name-sk" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">香蜜湖水库</span>
+                        </div>
+                        <div style="display: flex;margin:40px 10px 10px 10px;">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">类别: </div>
+                                <div style="color: #444444;flex-grow: 6">水库</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">总库容(m³):</div>
+                                <div style="color: #444444;flex-grow: 6">171.39</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;margin: 20px 10px 10px 10px">
+                            <div style="display: flex;width: 100%">
+                                <div style="color: #888888;flex-grow: 1">运维单位: </div>
+                                <div style="color: #444444;flex-grow: 6">香蜜湖水所</div>
+                            </div>
+                        </div>
+                        <div class="bottom-item-btn" >
+                            <div class="item" id="more-sk"  style="width: 100%;padding: 0 30px">
+                                <div style="background: #337BFC;color: #fff;">更多</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 更多详情 -->
+                <!-- 积水风险点 -->
+                <div id="father-bottomjsfx" class="bottom-item-father" style="display: none">
+                    <div id="bottomjsfx" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column">
+                        <div style="text-align: center">
+                            <img class="down_black" id="down_black_jsfx" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                        </div>
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-js-1" style="margin-right: 5px;">
+                            <img id="info_icon-js-1" style="width: 31px;" src="img/map/stagnant.png">
+                        </span>
+                            <span  id="name-jsfx" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                        </div>
+                        <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                            <a  class="mui-control-item   mui-active" href="#selectItem1">
+                                详细情况
+                            </a>
+                            <a class="mui-control-item" href="#selectItem2">
+                                运维维护
+                            </a>
+                        </div>
+                        <div style="border: 5px solid #F4F4F4"></div>
+                        <div id="selectItem1" class="mui-slider-item mui-control-content mui-active">
+                            <div style="display: flex;flex-direction: column">
+                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                <img  style="width: 150px" src="img/map/map_black@2x.png"/>
+                            </div>
+                            <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                <div style="flex-grow: 1;color: #262626">类别</div>
+                                <div style="flex-grow: 1;text-align: right;color: #262626">积水风险点</div>
+                            </div>
+                            <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                <div style="flex-grow: 1;color: #262626">地址</div>
+                                <div id="jsfx-address" style="flex-grow: 1;text-align: right;color: #262626">福荣路下沙欣欣学校通道</div>
+                            </div>
+                            <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                <div style="flex-grow: 1;color: #262626">积水深度</div>
+                                <div id="jsfx-sd" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                            </div>
+                            <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                <div style="flex-grow: 1;color: #262626">运维单位</div>
+                                <div id="jsfx-yw" style="flex-grow: 1;text-align: right;color: #262626">香蜜所</div>
+                            </div>
+                            <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                <div style="flex-grow: 1;color: #262626">联系人</div>
+                                <div id="jsfx-lx" style="flex-grow: 1;text-align: right;color: #262626">李四</div>
+                            </div>
+                            <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                <div style="flex-grow: 1;color: #262626">联系方式</div>
+                                <div id="jsfx-phone" style="flex-grow: 1;text-align: right;color: #262626">18980880000</div>
+                            </div>
+                            </div>
+                        </div>
+                        <div id="selectItem2" class="mui-slider-item mui-control-content ">
+                            <div style="display: flex;flex-direction: column">
+                                <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                    <img  style="width: 150px" src="img/map/pfk.png"/>
+                                </div>
+                                <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                            </div>
+<!--                            <div style="display: flex;flex-direction: column">-->
+<!--                            <div style="text-align: center;padding: 10px 10px 20px 10px;">-->
+<!--                                <img  style="width: 150px" src="img/map/map_black@2x.png"/>-->
+<!--                            </div>-->
+<!--                            <li class="mui-table-view-cell mui-collapse mui-active">-->
+
+<!--                                <img style="width: 10px;margin-top: 1%;" src="img/map/arrowRightBlue.png">-->
+<!--                                <a  style="color: #262626;float: right;margin-right: 50%;">1 巡检列表信息</a>-->
+
+<!--                                <div class="mui-collapse-content" >-->
+<!--                                    <div style="display: flex;flex-direction: column">-->
+<!--                                        <div style="display: flex;padding: 10px 0px 10px 0px;">-->
+<!--                                            <div style="display: flex;width: 50%">-->
+<!--                                                <div style="font-size: 12px;"> 巡检人:</div>-->
+<!--                                                <div style="font-size: 12px;">张一三</div>-->
+<!--                                            </div>-->
+<!--                                            <div style="display:flex;width: 50%">-->
+<!--                                                <div style="font-size: 12px;">联系电话:</div>-->
+<!--                                                <div style="font-size: 12px;">13512005488</div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div style="display: flex;padding: 10px 0px 10px 0px;">-->
+<!--                                            <div style="font-size: 12px;">巡检日期:</div>-->
+<!--                                            <div style="font-size: 12px;">2021-08-02</div>-->
+<!--                                        </div>-->
+<!--                                        <div style="display: flex;padding: 10px 0px 10px 0px;">-->
+<!--                                            <div style="font-size: 12px;width: 40%">巡检说明:</div>-->
+<!--                                            <div style="font-size: 12px;">这是很多说明说明说明说明说明说明说明说说明说明说明说明说明说明说明说明说。</div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li class="mui-table-view-cell mui-collapse mui-active">-->
+<!--                                <img style="width: 10px;margin-top: 1%;" src="img/map/arrowRightBlue.png">-->
+<!--                                <a style="color: #262626;float: right;margin-right: 50%;">1 养护列表信息</a>-->
+<!--                                <div class="mui-collapse-content">-->
+<!--                                    <div>h1. Heading</div>-->
+<!--                                    <h2>h2. Heading</h2>-->
+<!--                                    <h3>h3. Heading</h3>-->
+<!--                                    <h4>h4. Heading</h4>-->
+<!--                                    <h5>h5. Heading</h5>-->
+<!--                                    <h6>h6. Heading</h6>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li class="mui-table-view-cell mui-collapse mui-active">-->
+<!--                                <img style="width: 10px;margin-top: 1%;" src="img/map/arrowRightBlue.png">-->
+<!--                                <a style="color: #262626;float: right;margin-right: 60%;">1 工单信息</a>-->
+<!--                                <div class="mui-collapse-content">-->
+<!--                                    <div>h1. Heading</div>-->
+<!--                                    <h2>h2. Heading</h2>-->
+<!--                                    <h3>h3. Heading</h3>-->
+<!--                                    <h4>h4. Heading</h4>-->
+<!--                                    <h5>h5. Heading</h5>-->
+<!--                                    <h6>h6. Heading</h6>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- 泵站 -->
+                <div id="father-bottomlz" class="bottom-item-father" style="display: none">
+                    <div id="bottomlz" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                        <div style="text-align: center">
+                            <img class="down_black" id="down_black_lz" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                        </div>
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-js-lz" style="margin-right: 5px;">
+                            <img id="info_icon-js-lz" style="width: 31px;" src="img/map/rain.png">
+                        </span>
+                            <span id="name-js-lz" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                        </div>
+                        <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                            <a  class="mui-control-item   mui-active" href="#lzItem1">
+                                详细情况
+                            </a>
+                            <a class="mui-control-item" href="#lzItem2">
+                                运维维护
+                            </a>
+                            <a class="mui-control-item" href="#lzItem3">
+                                健康信息
+                            </a>
+                        </div>
+                        <div style="border: 5px solid #F4F4F4"></div>
+                        <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                            <div style="position: relative;height: 150%" class="mui-scroll">
+                                <div id="lzItem1" class="mui-slider-item mui-control-content mui-active">
+                                    <div style="display: flex;flex-direction: column;">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/pz.png"/>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">名称</div>
+                                            <div id="lz-mc" style="flex-grow: 1;text-align: right;color: #262626">凤塘泵站</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="width: 30%;color: #262626">地址</div>
+                                            <div id="lz-address" style="width: 70%;text-align: right;color: #262626">福荣路下沙欣欣学校通道</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">服务面积</div>
+                                            <div id="lz-mz" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">最低控制水位</div>
+                                            <div id="lz-sw" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">警戒水位</div>
+                                            <div id="lz-jj" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">水泵台数</div>
+                                            <div id="lz-ts" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div id="lz-ps-mc" style="flex-grow: 1;color: #262626">排水能力（污）</div>
+                                            <div id="lz-ps" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">运维单位</div>
+                                            <div id="lz-yw" style="flex-grow: 1;text-align: right;color: #262626">深圳市水务局</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系人</div>
+                                            <div id="lz-lx" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系方式</div>
+                                            <div id="lz-phone" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="lzItem2" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/pz.png"/>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                    </div>
+                                </div>
+                                <div id="lzItem3" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/pz.png"/>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- 排口-->
+                <div id="father-bottompfk" class="bottom-item-father" style="display: none">
+                    <div id="bottompfk" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                        <div style="text-align: center">
+                            <img class="down_black" id="down_black_pfk" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                        </div>
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-js-pfk" style="margin-right: 5px;">
+                            <img id="info_icon-js-pfk" style="width: 31px;" src="img/map/outlet.png">
+                        </span>
+                            <span id="name-js-pfk" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                        </div>
+                        <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                            <a  class="mui-control-item   mui-active" href="#pfkItem1">
+                                详细情况
+                            </a>
+                            <a class="mui-control-item" href="#pfkItem2">
+                                运维维护
+                            </a>
+                            <a class="mui-control-item" href="#pfkItem3">
+                                健康信息
+                            </a>
+                        </div>
+                        <div style="border: 5px solid #F4F4F4"></div>
+                        <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                            <div style="position: relative;height: 150%" class="mui-scroll">
+                                <div id="pfkItem1" class="mui-slider-item mui-control-content mui-active">
+                                    <div style="display: flex;flex-direction: column;">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/pfk.png"/>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">编号</div>
+                                            <div id="pfk-type" style="flex-grow: 1;text-align: right;color: #262626">排口</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">尺寸(mm)</div>
+                                            <div id="pfk-sc" style="flex-grow: 1;text-align: right;color: #262626">1700</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">出流形式</div>
+                                            <div id="pfk-cl" style="flex-grow: 1;text-align: right;color: #262626">常水位淹没</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">运维单位</div>
+                                            <div id="pfk-yw" style="flex-grow: 1;text-align: right;color: #262626">深圳市水务局</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系人</div>
+                                            <div id="pfk-lx" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系方式</div>
+                                            <div id="pfk-phone" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="pfkItem2" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/pfk.png"/>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                    </div>
+                                </div>
+                                <div id="pfkItem3" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/pfk.png"/>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- 水闸 -->
+                <div id="father-bottomsz" class="bottom-item-father" style="display: none">
+                    <div id="bottomsz" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                        <div style="text-align: center">
+                            <img class="down_black" id="down_black_sz" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                        </div>
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-js-sz" style="margin-right: 5px;">
+                            <img id="info_icon-js-sz" style="width: 31px;" src="img/map/gate.png">
+                        </span>
+                            <span id="name-js-sz" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                        </div>
+                        <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                            <a  class="mui-control-item   mui-active" href="#szItem1">
+                                详细情况
+                            </a>
+                            <a class="mui-control-item" href="#szItem2">
+                                运维维护
+                            </a>
+                            <a class="mui-control-item" href="#szItem3">
+                                健康信息
+                            </a>
+                        </div>
+                        <div style="border: 5px solid #F4F4F4"></div>
+                        <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                            <div style="position: relative;height: 150%" class="mui-scroll">
+                                <div id="szItem1" class="mui-slider-item mui-control-content mui-active">
+                                    <div style="display: flex;flex-direction: column;">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/map_black@2x.png"/>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">名称</div>
+                                            <div id="zk-type" style="flex-grow: 1;text-align: right;color: #262626">排放口</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">地址</div>
+                                            <div id="zk-address" style="flex-grow: 1;text-align: right;color: #262626">皇岗河河口</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">规模</div>
+                                            <div id="zk-km" style="flex-grow: 1;text-align: right;color: #262626">4</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">净高(m)</div>
+                                            <div id="zk-jg" style="flex-grow: 1;text-align: right;color: #262626">4</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">净宽(m)</div>
+                                            <div id="zk-jk" style="flex-grow: 1;text-align: right;color: #262626">3</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">闸门材质</div>
+                                            <div id="zk-cj" style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">建设时间</div>
+                                            <div id="zk-js" style="flex-grow: 1;text-align: right;color: #262626">2003-01-01</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="width: 30%;color: #262626">运维单位</div>
+                                            <div id="zk-yw" style="width: 70%;text-align: right;color: #262626">深圳市中日通环保工程技...</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系人</div>
+                                            <div id="zk-lxr" style="flex-grow: 1;text-align: right;color: #262626">张三</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系方式</div>
+                                            <div id="zk-phone" style="flex-grow: 1;text-align: right;color: #262626">130300300</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="szItem2" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/map_black@2x.png"/>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                    </div>
+                                </div>
+                                <div id="szItem3" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <img  style="width: 150px" src="img/map/map_black@2x.png"/>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- 水质 -->
+                <div class="bottom-item-father" id="father-bottomWQ" style="display: none">
+                    <div id="bottomWQ" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                            <div style="text-align: center">
+                                <img class="down_black" id="down_black_wq" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                            </div>
+                            <div class="bottom-item-title" style="display: flex">
+                            <span id="bottom-icon-js-wq" style="margin-right: 5px;">
+                                <img id="info_icon-js-wq" style="width: 31px;" src="img/map/quality.png">
+                            </span>
+                                <span id="name-xq-wq" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                            </div>
+                            <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                                <a  class="mui-control-item   mui-active" href="#wqItem1">
+                                    监测详情
+                                </a>
+                                <a class="mui-control-item" href="#wqItem2">
+                                    运维维护
+                                </a>
+                                <a class="mui-control-item" href="#wqItem3">
+                                    健康信息
+                                </a>
+                            </div>
+                            <div style="border: 5px solid #F4F4F4"></div>
+                            <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                                <div style="position: relative;height: 150%" class="mui-scroll">
+                                    <div id="wqItem1" class="mui-slider-item mui-control-content mui-active">
+                                        <div style="display: flex;flex-direction: column;">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <div class="mui-slider">
+                                                    <div class="mui-slider-group">
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/sz.png"/></a></div>
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/sz.png"/></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="new-data-time" style="padding: 0 30px 10px 30px">最新数据时间:2021-06-16 17:00:00</div>
+                                            <div class="table-d">
+                                            </div>
+                                            <div style="border: 5px solid #F4F4F4"></div>
+                                            <div class="time-slot" style="padding: 10px 30px 10px 30px;font-size: 15px">2021-05-16 17:00:00 ~ 2021-06-16 17:00:00</div>
+                                            <div style=" width: 300px; height: 200px; margin-left: 30px; margin-top: 10px;">
+                                                <div id="line-container-sz" style=" width: 300px; height: 200px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="wqItem2" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/sz.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                    <div id="wqItem3" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/map_black@2x.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 视频 -->
+                <div id="father-bottomsp" class="bottom-item-father" style="display: none">
+                    <div id="bottomsp" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column">
+                        <div style="text-align: center">
+                            <img class="down_black" id="down_black_sp"  style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                        </div>
+                        <div class="bottom-item-title" style="display: flex">
+                        <span id="bottom-icon-js-sp" style="margin-right: 5px;">
+                            <img id="info_icon-js-sp" style="width: 31px;" src="img/map/video.png">
+                        </span>
+                            <span id="name-js-sp" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">视频</span>
+                        </div>
+                        <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                            <a  class="mui-control-item   mui-active" href="#spItem1">
+                                详细情况
+                            </a>
+                            <a class="mui-control-item" href="#spItem2">
+                                运维维护
+                            </a>
+                        </div>
+                        <div style="border: 5px solid #F4F4F4"></div>
+                        <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                            <div style="position: relative;height: 150%" class="mui-scroll">
+                                <div id="spItem1" class="mui-slider-item mui-control-content mui-active">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <video controls="" autoplay="" name="media" width="100%" height="50%">
+                                                <source src="http://10.18.75.103:8080/files/11.MP4" type="video/mp4">
+                                            </video>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">运维单位</div>
+                                            <div style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系人</div>
+                                            <div style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                        <div style="display: flex;padding: 10px 20px 10px 20px;">
+                                            <div style="flex-grow: 1;color: #262626">联系方式</div>
+                                            <div style="flex-grow: 1;text-align: right;color: #262626">无</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="spItem2" class="mui-slider-item mui-control-content ">
+                                    <div style="display: flex;flex-direction: column">
+                                        <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                            <video controls="" autoplay="" name="media" width="100%" height="50%">
+                                                <source src="http://10.18.75.103:8080/files/11.MP4" type="video/mp4">
+                                            </video>
+                                        </div>
+                                        <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- 水位 -->
+                <div class="bottom-item-father" id="father-bottomsw" style="display: none">
+                    <div id="bottomsw" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                            <div style="text-align: center">
+                                <img class="down_black" id="down_black_sw" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                            </div>
+                            <div class="bottom-item-title" style="display: flex">
+                            <span id="bottom-icon-js-sw" style="margin-right: 5px;">
+                                <img id="info_icon-js-sw" style="width: 31px;" src="img/map/water.png">
+                            </span>
+                                <span id="name-xq-sw" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                            </div>
+                            <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                                <a  class="mui-control-item   mui-active" href="#swItem1">
+                                    监测详情
+                                </a>
+                                <a class="mui-control-item" href="#swItem2">
+                                    运维维护
+                                </a>
+                            </div>
+                            <div style="border: 5px solid #F4F4F4"></div>
+                            <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                                <div style="position: relative;height: 150%" class="mui-scroll">
+                                    <div id="swItem1" class="mui-slider-item mui-control-content mui-active">
+                                        <div style="display: flex;flex-direction: column;">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <div class="mui-slider">
+                                                    <div class="mui-slider-group">
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/sw.png"/></a></div>
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/sw.png"/></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="new-data-time" style="padding: 0 30px 10px 30px">最新数据时间:2021-06-16 17:00:00</div>
+                                            <div class="table-d">
+                                            </div>
+                                            <div style="border: 5px solid #F4F4F4"></div>
+                                            <div class="time-slot" style="padding: 10px 30px 10px 30px;font-size: 15px">2021-05-16 17:00:00 ~ 2021-06-16 17:00:00</div>
+                                            <div style=" width: 300px; height: 200px; margin-left: 30px; margin-top: 10px;">
+                                                <div id="line-container-sw" style=" width: 300px; height: 200px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="swItem2" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/sw.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 液位 -->
+                <div class="bottom-item-father" id="father-bottomyw" style="display: none">
+                    <div id="bottomyw" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                            <div style="text-align: center">
+                                <img  class="down_black" id="down_black_yw" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                            </div>
+                            <div class="bottom-item-title" style="display: flex">
+                            <span id="bottom-icon-js-yw" style="margin-right: 5px;">
+                                <img id="info_icon-js-yw" style="width: 31px;" src="img/map/level.png">
+                            </span>
+                                <span id="name-xq-yw" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                            </div>
+                            <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                                <a  class="mui-control-item   mui-active" href="#ywItem1">
+                                    监测详情
+                                </a>
+                                <a class="mui-control-item" href="#ywItem2">
+                                    运维维护
+                                </a>
+                            </div>
+                            <div style="border: 5px solid #F4F4F4"></div>
+                            <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                                <div style="position: relative;height: 150%" class="mui-scroll">
+                                    <div id="ywItem1" class="mui-slider-item mui-control-content mui-active">
+                                        <div style="display: flex;flex-direction: column;">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <div class="mui-slider">
+                                                    <div class="mui-slider-group">
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/yw.png"/></a></div>
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/yw.png"/></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="new-data-time" style="padding: 0 30px 10px 30px">最新数据时间:2021-06-16 17:00:00</div>
+                                            <div class="table-d">
+                                            </div>
+                                            <div style="border: 5px solid #F4F4F4"></div>
+                                            <div class="time-slot" style="padding: 10px 30px 10px 30px;font-size: 15px">2021-05-16 17:00:00 ~ 2021-06-16 17:00:00</div>
+                                            <div style=" width: 300px; height: 200px; margin-left: 30px; margin-top: 10px; ">
+                                                <div id="line-container-yw" style=" width: 300px; height: 200px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="ywItem2" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/yw.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 流量 -->
+                <div class="bottom-item-father" id="father-bottomll" style="display: none">
+                    <div id="bottomll" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                            <div style="text-align: center">
+                                <img class="down_black" id="down_black_ll" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                            </div>
+                            <div class="bottom-item-title" style="display: flex">
+                            <span id="bottom-icon-js-ll" style="margin-right: 5px;">
+                                <img id="info_icon-js-ll" style="width: 31px;" src="img/map/flow.png">
+                            </span>
+                                <span id="name-xq-ll" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                            </div>
+                            <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                                <a  class="mui-control-item   mui-active" href="#llItem1">
+                                    监测详情
+                                </a>
+                                <a class="mui-control-item" href="#llItem2">
+                                    运维维护
+                                </a>
+                                <a class="mui-control-item" href="#llItem3">
+                                    健康信息
+                                </a>
+                            </div>
+                            <div style="border: 5px solid #F4F4F4"></div>
+                            <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                                <div style="position: relative;height: 150%" class="mui-scroll">
+                                    <div id="llItem1" class="mui-slider-item mui-control-content mui-active">
+                                        <div style="display: flex;flex-direction: column;">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <div class="mui-slider">
+                                                    <div class="mui-slider-group">
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/sz.png"/></a></div>
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/sz.png"/></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="new-data-time" style="padding: 0 30px 10px 30px">最新数据时间:2021-06-16 17:00:00</div>
+                                            <div class="table-d">
+                                            </div>
+                                            <div style="border: 5px solid #F4F4F4"></div>
+                                            <div class="time-slot" style="padding: 10px 30px 10px 30px;font-size: 15px">2021-05-16 17:00:00 ~ 2021-06-16 17:00:00</div>
+                                            <div style=" width: 300px; height: 200px; margin-left: 30px; margin-top: 10px;">
+                                                <div id="line-container-ll" style=" width: 300px; height: 200px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="llItem2" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/sz.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                    <div id="llItem3" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/map_black@2x.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 雨量 -->
+                <div class="bottom-item-father" id="father-bottomyl" style="display: none">
+                    <div id="bottomyl" class="bottom-item" style="z-index: 1000;">
+                        <div style="display: flex;flex-direction: column;">
+                            <div style="text-align: center">
+                                <img class="down_black" id="down_black_yl" style="width: 18px;height: 10px" src="img/map/down_black.png"/>
+                            </div>
+                            <div class="bottom-item-title" style="display: flex">
+                            <span id="bottom-icon-js-yl" style="margin-right: 5px;">
+                                <img id="info_icon-js-yl" style="width: 31px;" src="img/map/rainfall.png">
+                            </span>
+                                <span id="name-xq-yl" style="font-size: 18px;font-weight: bold;color: #161515;margin-top: 4px">下沙一号通道</span>
+                            </div>
+                            <div  class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                                <a  class="mui-control-item   mui-active" href="#ylItem1">
+                                    监测详情
+                                </a>
+                                <a class="mui-control-item" href="#ylItem2">
+                                    运维维护
+                                </a>
+                            </div>
+                            <div style="border: 5px solid #F4F4F4"></div>
+                            <div class="mui-scroll-wrapper bottom-scroll" style="position:absolute;margin-top: 34%;">
+                                <div style="position: relative;height: 150%" class="mui-scroll">
+                                    <div id="ylItem1" class="mui-slider-item mui-control-content mui-active">
+                                        <div style="display: flex;flex-direction: column;">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <div class="mui-slider">
+                                                    <div class="mui-slider-group">
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/yl.png"/></a></div>
+                                                        <div class="mui-slider-item"><a href="#"><img  style="width: 150px" src="img/map/yl.png"/></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="new-data-time" style="padding: 0 30px 10px 30px">最新数据时间:2021-06-16 17:00:00</div>
+                                            <div class="table-d">
+                                            </div>
+                                            <div style="border: 5px solid #F4F4F4"></div>
+                                            <div class="time-slot" style="padding: 10px 30px 10px 30px;font-size: 15px">2021-05-16 17:00:00 ~ 2021-06-16 17:00:00</div>
+                                            <div style=" width: 300px; height: 200px; margin-left: 30px; margin-top: 10px;">
+                                                <div id="line-container-yl" style=" width: 300px; height: 200px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="ylItem2" class="mui-slider-item mui-control-content ">
+                                        <div style="display: flex;flex-direction: column">
+                                            <div style="text-align: center;padding: 10px 10px 20px 10px;">
+                                                <img  style="width: 150px" src="img/map/yl.png"/>
+                                            </div>
+                                            <div style="color: #262626;text-align: center;margin: 10px;">暂无数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location_btn" id="location_btn">
+                    <img id="location-btn-icon" src="img/map/location_black2x.png"/>
+                </div>
+
+                <div id="device-icon-wrapper" class="mui-scroll-wrapper" style="display: none;height: 0px">
+                    <div class="location_style mui-scroll" style="display: flex;flex-direction: column ;height: 0px">
+                        <div id="device-jlgw" class="device_icon" style="display: none">
+                            <img src="img/map/closure.png"/>
+                            <span>截流管网</span>
+                        </div>
+                        <div id="device-dbjc" class="device_icon" style="display:none;">
+                            <img src="img/map/dam.png"/>
+                            <span>大坝监测</span>
+                        </div>
+                        <div id="device-yw" class="device_icon" style="display: none">
+                            <img src="img/map/level.png"/>
+                            <span>液位</span>
+                        </div>
+                        <div id="device-ll" class="device_icon" style="display:none;">
+                            <img src="img/map/flow.png"/>
+                            <span>流量</span>
+                        </div>
+                        <div id="device-zk" class="device_icon" style="display:none;">
+                            <img src="img/map/gate.png"/>
+                            <span>闸口</span>
+                        </div>
+                        <div id="device-pk" class="device_icon" style="display: none">
+                            <img src="img/map/outlet.png"/>
+                            <span>排口</span>
+                        </div>
+                        <div id="device-sz" class="device_icon" style="display: none">
+                            <img src="img/map/quality.png"/>
+                            <span>水质</span>
+                        </div>
+                        <div id="device-ysgw" class="device_icon" style="display: none">
+                            <img src="img/map/rain.png"/>
+                            <span>雨水管网</span>
+                        </div>
+                        <div id="device-yl" class="device_icon" style="display: none">
+                            <img src="img/map/rainfall.png"/>
+                            <span>雨量</span>
+                        </div>
+                        <div id="device-sk" class="device_icon" style="display: none">
+                            <img src="img/map/reservoir.png"/>
+                            <span>水库</span>
+                        </div>
+                        <div id="device-bxzx" class="device_icon" style="display: none">
+                            <img src="img/map/risk.png"/>
+                            <span>避险中心</span>
+                        </div>
+                        <div id="device-wsgw" class="device_icon" style="display: none">
+                            <img src="img/map/sewage.png"/>
+                            <span>污水管网</span>
+                        </div>
+                        <div id="device-psh" class="device_icon" style="display: none">
+                            <img src="img/map/sewerage.png"/>
+                            <span>排水户</span>
+                        </div>
+                        <div id="device-jsfx" class="device_icon" style="display: none">
+                            <img src="img/map/stagnant.png"/>
+                            <span>积水风险</span>
+                        </div>
+                        <div id="device-sp" class="device_icon" style="display: none">
+                            <img src="img/map/video.png"/>
+                            <span>视频</span>
+                        </div>
+                        <div id="device-fhck" class="device_icon" style="display: none">
+                            <img src="img/map/warehouse.png"/>
+                            <span>防洪仓库</span>
+                        </div>
+                        <div id="device-sw" class="device_icon" style="display: none">
+                            <img src="img/map/water.png"/>
+                            <span>水位</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="search-bar">
+                    <div class="search-item-now" style="display:flex;">
+                        <div class="search-icon" id="searchIcon">
+                            <img src="img/commom/search1@2x.png"/>
+                        </div>
+                        <div class="search-input">
+                            <div class="mui-input-row" style="text-align: left;">
+                                <input id="searchInput" type="text" style="width: 90%;" class="mui-input-clear"
+                                       placeholder="请输入要搜索的内容">
+                            </div>
+                        </div>
+                        <div class="select-icon" id="select-icon">
+                            <img id="moreFactor" src="img/map/select@2x.png" style="left: 150%"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="many-icon" >
+                    <div class="many-icon-now" style="display:flex;">
+                        <div class="div-spacing" id="div1">
+                            <img id="img1" class="small-icon-img" src="img/map/often_black@2x.png">
+                        </div>
+                        <div class="spacing"></div>
+                        <div class="div-spacing" id='div2'>
+                            <img id="img2" class="small-icon-img" src="img/map/update_black@2x.png">
+                        </div>
+                        <div class="spacing"></div>
+                        <div class="div-spacing" id="div3">
+                            <img id="img3" class="small-icon-img" src="img/map/clean_black@2x.png">
+                        </div>
+                        <div class="spacing"></div>
+                        <div class="div-spacing" id="div4">
+                            <img id="img4" class="small-icon-img" src="img/map/config_black@2x.png">
+                        </div>
+                        <div class="spacing"></div>
+                        <div class="div-spacing a-spacing">
+                            <img id="a" class="small-icon-img"
+                                 style="width: 10px;height: 10px;position: absolute;left: 50%;top: 50%;margin-top: -5px;margin-left: -5px;"
+                                 src="img/map/right_arrow@2x.png">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 搜索显示结果 -->
+                <div id="search-result-container" class="mui-scroll-wrapper" style="width: 80%;margin-left: 5%;">
+                    <ul id="search_ul" class="search_ul">
+<!--                        <li class="search-result-li">-->
+<!--                            <div style="padding-top: 2px;">-->
+<!--                                <img src="img/local.png" alt="" style="width: 13px; height: 15px;">-->
+<!--                            </div>-->
+<!--                            <div class="search-result-li-content">-->
+<!--                                <div class="overLineEllipsis" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width: 80%;">深圳登喜路国际大酒店(宝安店)</div>-->
+<!--                            </div>-->
+
+<!--                        </li>-->
+<!--                        <li class="search-result-li">-->
+<!--                            <div style="padding-top: 2px;">-->
+<!--                                <img src="img/local.png" alt="" style="width: 13px; height: 15px;">-->
+<!--                            </div>-->
+<!--                            <div class="search-result-li-content">-->
+<!--                                <div class="overLineEllipsis" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width: 80%;">深圳登喜路国际大酒店(宝安店)深圳登喜路国际大酒店深圳登喜路国际大酒店</div>-->
+<!--                            </div>-->
+
+<!--                        </li>-->
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!--页面主内容区结束-->
+    </div>
+
+    <!-- 图层 -->
+    <div id="levelPopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+        <div class="mui-popover-arrow"></div>
+        <div class="popobtn ws_btn">
+            <input type="checkbox" id="ws" class="map_view_type" style="margin: 0 auto;" checked/>
+            <span style="display: inline-block;">污水</span>
+        </div>
+        <div class="popobtn ys_btn">
+            <input type="checkbox" id="ys" class="map_view_type" style="margin: 0 auto;" checked/>
+            <span style="display: inline-block;">雨水</span>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+<script src="js/s4.js"></script>
+<script src="js/smutils.js"></script>
+<script src="js/byte&string.js"></script>
+<script src="js/ajaxhook.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.view.js"></script>
+<script src="js/mui.locker.js"></script>
+<script src="js/common.js"></script>
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/position.js"></script>
+<script src="js/paishuihu.js"></script>
+<script src="js/home_map.js"></script>
+<script src="js/map/echarts.min.js"></script>
+ <script src="js/vconsole.min.js"></script>
+<script type="text/javascript">
+    // var vConsole = new VConsole();
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+    //初始化单页的区域滚动
+    mui('#mui-left-lan').scroll();
+    mui('#device-icon-wrapper').scroll();
+    mui('.mui-scroll-wrapper').scroll();
+    mui('.bottom-scroll').scroll();
+
+    mui.init({swipeBack: false});
+    var flag = false;
+    var Point = {};//选中坐标
+
+
+    var map1_taggle = true
+    var map2_taggle = true
+    var line_taggle = true
+    var road_taggle = true
+    var land_taggle = true
+    var boundary_taggle = true
+    var location_btn_taggle = true
+    var img1_taggle = true
+
+    // 初始化地图容器
+    const MobileContainer = window['mobile-lib'].MobileContainer;
+    const mobileContainer = new MobileContainer({
+        serverUrl: config.urls.serverDomain,
+        options: {minZoom: 10},
+        style: 'color',
+        initCallback: () => {
+        }
+    });
+    const layerSelections = window['mobile-lib'].layerSelections;
+    const mapData = window['mobile-lib'].MapData({
+        serverUrl: config.urls.serverDomain,
+        style: 'color'
+    });
+
+    mobileContainer.on('load', () => {
+        mobileContainer.enableCenterAddress(true);
+        mobileContainer.showAnnotation(true);
+        mobileContainer.switchBackground('vec')
+        // mobileContainer.setSelection([{ NAME:'OTHER_MONITOR',TONE: 1}])
+
+        // mobileContainer.selectRegion('雨水分区');
+        // mobileContainer.selectBaseLayer(['等高线','绿地'])
+        // mobileContainer.selectBaseLayer('绿地')
+        // mobileContainer.setSelection([{NAME:'ps_discharger'}])
+
+    });
+
+
+
+
+    //点击定位点
+
+    var monitor_req_param = {
+        monitorId: '',
+        monitorPointValueStr:'',
+        name:''
+    }
+
+    mobileContainer.on('showInfo', data => {
+        $('#title-zk').hide();
+        $('#title-ck').hide();
+        $('#title-bx').hide();
+        $('#title-pfk').hide();
+        $('#title-js').hide();
+        $('#title-lz').hide();
+        $("#title-sz").hide();
+        $("#title-yw").hide();
+        $("#title-sw").hide();
+        $("#title-yl").hide();
+        $("#title-sp").hide();
+        $("#title-ll").hide();
+        console.log(JSON.stringify(data.info))
+        var key = data.info.key
+        var MONITOR_POINTS = null
+        //zk
+        if(key=='DEVICE_POINT_WAGA'){
+            getWaterGateInfo(data.info.GUID,function (data) {
+                console.log(JSON.stringify(data.result))
+                var material = data.result.material
+                var type;
+                switch (material) {
+                    case 1:
+                        type="铸铁"
+                        break;
+                    case 2:
+                        type= "钢砼"
+                        break;
+                    case 3:
+                        type="复合材料"
+                        break;
+                    case null:
+                        type="无"
+                        break;
+                    default:
+                        ;
+                }
+                $('#name-zk').text(data.result.wagaSlnm)
+                $('#material-zk').text(type)
+                $('#operation-zk').text(data.result.operatorName)
+                $('#name-js-sz').text(data.result.wagaSlnm)
+                // $('#zk-type').text(data.result.wagaSlnm)
+                $('#zk-address').text(data.result.wagaPrps)
+                $('#zk-km').text(data.result.wagaPrsc)
+                $('#zk-jg').text(data.result.wagaHigh)
+                $('#zk-jk').text(data.result.wagaWidt)
+                $('#zk-cj').text(type)
+                $('#zk-js').text(data.result.completeDate.substring(0,11))
+                $('#zk-yw').text(data.result.operatorName)
+                $('#zk-lxr').text(data.result.operatorContact)
+                $('#zk-phone').text(data.result.operatorPersonPhone)
+                $('#title-zk').show();
+
+            })
+        }
+        //仓库
+        if(key=='EGY_WH'){
+            getWhInfo(data.info.GUID,function (data) {
+                console.log(JSON.stringify(data.result))
+
+                $('#name-ck').text(data.result.whName)
+                $('#style-ck').text(data.result.whType_dictText)
+                $('#address-ck').text(data.result.whAdrees)
+                $('#title-ck').show();
+            })
+        }
+        //避险
+        if(key=='SANC_INFO'){
+            $('#name-bx').text(data.info.SANC_NAME)
+            $('#address-bx').text(data.info.SANC_ADDRESS)
+            $('#contact-bx').text(data.info.SANC_CONTACT)
+            $('#phone-bx').text(data.info.SANC_PHONE)
+            $('#title-bx').show()
+        }
+        //pfk
+        if(key=='DEVICE_POINT_INFO'&&data.info.POINT_CODE=='041008'){
+            getOutFallInfo(data.info.GUID,function (data) {
+                console.log(JSON.stringify(data))
+                $('#name-pfk').text(data.result.expNo)
+                $('#name-js-pfk').text(data.result.expNo)
+                $('#size-pfk').text(data.result.connPipeSpec)
+                $('#pfk-sc').text(data.result.connPipeSpec==null?'无':data.result.connPipeSpec)
+                // $('#pfk-type').text(data.result.expNo)
+                $('#pfk-phone').text(data.result.operatorContactPhoneNumber)
+                $('#pfk-lx').text(data.result.operatorContactPerson)
+                $('#pfk-yw').text(data.result.operatorName)
+                $('#pfk-cl').text(data.result.reveiveType=='1'?'常水位淹没':'无')
+                $('#title-pfk').show();
+            })
+        }
+        //jsfx 积水风险
+        if(key=='DEVICE_FLOOD'&&data.info.FLOOD_CLASS=='0'&&data.info.MONITOR_SECODE_OBJECT_TYPE==null){
+            $('#name-js').text(data.info.FLOOD_NAME);
+            $("#address-js").text(data.info.FLOOD_ADDRESS);
+            $("#title-js").show();
+            getFloodInfo(data.info.GUID,function (data) {
+                console.log(JSON.stringify(data.result))
+                $('#name-jsfx').text(data.result.floodName)
+                $('#jsfx-address').text(data.result.floodAddress)
+                $('#jsfx-lx').text(data.result.stationPersonName)
+                $('#jsfx-phone').text(data.result.stationPersonPhone)
+                $('#jsfx-yw').text(data.result.stationName)
+            })
+        }
+        if(key=='DEVICE_POINT_INFO'&&data.info.SYS_TYPE=='3'&&data.info.POINT_CODE!='041008'&&typeof(data.info.MONITOR_POINTS) == "undefined"){
+            $('#name-lz').text(data.info.POINT_NAME);
+            if(data.info.POINT_TYPE=='7'){
+                $('#type-name-lz').text('污水泵站');
+                getPumpInfo(data.info.GUID,function (data) {
+                    console.log(JSON.stringify(data.result))
+                    $('#lz-mz').text(data.result.serviceArea)
+                    $('#lz-yw').text(data.result.operatorName)
+                    $('#lz-mc').text(data.result.pointName)
+                    $('#name-js-lz').text(data.result.pointName)
+                    $('#lz-address').text(data.result.pointAddress)
+                    $('#lz-jj').text(data.result.minLevel)
+                    $('#lz-lx').text(data.result.person)
+                    $('#lz-phone').text(data.result.tel)
+                    $('#lz-ts').text(data.result.psNum)
+                    $('#lz-ps').text(data.result.designSewer)
+                    $('#lz-sw').text(data.result.warnningLevel)
+                    $('#lz-ps-mc').text('排水能力（污）')
+                })
+            }else if(data.info.POINT_TYPE=='9'){
+                $('#type-name-lz').text('污水处理厂');
+                getSewtfInfo(data.info.GUID,function (data) {
+                    console.log(JSON.stringify(data.result))
+                })
+            }
+            $('#info_icon-lz').attr('src', 'img/map/sewage.png')
+            $('#info_icon-js-lz').attr('src', 'img/map/sewage.png')
+            $("#title-lz").show();
+            console.log('进入污水')
+        }
+        if(key=='DEVICE_POINT_INFO'&&data.info.SYS_TYPE=='2'&&data.info.POINT_CODE!='041008'&&typeof(data.info.MONITOR_POINTS) == "undefined"){
+            $('#name-lz').text(data.info.POINT_NAME);
+            if(data.info.POINT_TYPE=='7'){
+                $('#type-name-lz').text('雨水泵站');
+                getPumpInfo(data.info.GUID,function (data) {
+                    console.log(JSON.stringify(data.result))
+                    $('#lz-mz').text(data.result.serviceArea)
+                    $('#lz-yw').text(data.result.operatorName)
+                    $('#lz-mc').text(data.result.pointName)
+                    $('#name-js-lz').text(data.result.pointName)
+                    $('#lz-address').text(data.result.pointAddress)
+                    $('#lz-jj').text(data.result.minLevel)
+                    $('#lz-lx').text(data.result.person)
+                    $('#lz-phone').text(data.result.tel)
+                    $('#lz-ts').text(data.result.psNum)
+                    $('#lz-ps').text(data.result.designStorm)
+                    $('#lz-sw').text(data.result.warnningLevel)
+                    $('#lz-ps-mc').text('排水能力（雨）')
+                })
+            }
+            $('#info_icon-lz').attr('src', 'img/map/rain.png')
+            $('#info_icon-js-lz').attr('src', 'img/map/rain.png')
+            $("#title-lz").show();
+            console.log('进入雨水')
+        }
+        if(key=='DEVICE_POINT_INFO'&&data.info.SYS_TYPE=='4'&&data.info.POINT_CODE!='041008'&&typeof(data.info.MONITOR_POINTS) == "undefined"){
+            $('#name-lz').text(data.info.POINT_NAME);
+            if(data.info.POINT_TYPE=='7'){
+                $('#type-name-lz').text('截流泵站');
+                getPumpInfo(data.info.GUID,function (data) {
+                    console.log(JSON.stringify(data.result))
+                    $('#lz-mz').text(data.result.serviceArea)
+                    $('#lz-yw').text(data.result.operatorName)
+                    $('#lz-mc').text(data.result.pointName)
+                    $('#name-js-lz').text(data.result.pointName)
+                    $('#lz-address').text(data.result.pointAddress)
+                    $('#lz-jj').text(data.result.minLevel)
+                    $('#lz-lx').text(data.result.person)
+                    $('#lz-phone').text(data.result.tel)
+                    $('#lz-ts').text(data.result.psNum)
+                    $('#lz-ps').text(data.result.designSewer)
+                    $('#lz-sw').text(data.result.warnningLevel)
+                    $('#lz-ps-mc').text('排水能力（污）')
+                })
+            }
+            $('#info_icon-lz').attr('src', 'img/map/closure.png')
+            $('#info_icon-js-lz').attr('src', 'img/map/closure.png')
+            $("#title-lz").show();
+            console.log('进入截流')
+        }
+        //水质
+        if(key=='DEVICE_POINT_INFO'&&data.info.POINT_CODE=='040516'&&typeof(data.info.MONITOR_POINTS) != "undefined"){
+            MONITOR_POINTS = data.info.MONITOR_POINTS;
+			var MONITOR_POINTSJson = JSON.parse(MONITOR_POINTS)
+            monitor_req_param.monitorId = MONITOR_POINTSJson[0].monitorId
+            monitor_req_param.monitorPointValueStr = MONITOR_POINTSJson[0].monitorPointValue
+            monitor_req_param.name = data.info.POINT_NAME
+            $('#name-sz').text(data.info.POINT_NAME);
+            $("#title-sz").show();
+            console.log('进入水质')
+        }
+        //液位
+        if(key=='DEVICE_POINT_INFO'&&data.info.POINT_CODE=='040501'&&typeof(data.info.MONITOR_POINTS) != "undefined"&&JSON.parse(data.info.MONITOR_POINTS)[0].monitorPointValue.length<2){
+            MONITOR_POINTS = data.info.MONITOR_POINTS;
+            // console.log(JSON.parse(data.info.MONITOR_POINTS)[0].monitorPointValue.length)
+            var MONITOR_POINTSJson = JSON.parse(MONITOR_POINTS)
+            monitor_req_param.monitorId = MONITOR_POINTSJson[0].monitorId
+            monitor_req_param.monitorPointValueStr = MONITOR_POINTSJson[0].monitorPointValue
+            monitor_req_param.name = MONITOR_POINTSJson[0].monitorName
+            $('#name-yw').text(MONITOR_POINTSJson[0].monitorName);
+            $('#height-yw').text(MONITOR_POINTSJson[0].monitorPointValue[0].num+'m');
+            $("#title-yw").show();
+            console.log('进入液位')
+        }
+
+        //流量
+        if(key=='DEVICE_POINT_INFO'&&data.info.POINT_CODE=='040501'&&typeof(data.info.MONITOR_POINTS) != "undefined"&&JSON.parse(data.info.MONITOR_POINTS)[0].monitorPointValue.length>1){
+            MONITOR_POINTS = data.info.MONITOR_POINTS;
+            // console.log(JSON.parse(data.info.MONITOR_POINTS)[0].monitorPointValue.length)
+            var MONITOR_POINTSJson = JSON.parse(MONITOR_POINTS)
+            monitor_req_param.monitorId = MONITOR_POINTSJson[0].monitorId
+            monitor_req_param.monitorPointValueStr = MONITOR_POINTSJson[0].monitorPointValue
+            monitor_req_param.name = MONITOR_POINTSJson[0].monitorName
+            $('#name-ll').text(MONITOR_POINTSJson[0].monitorName);
+            $('#height-ll').text(MONITOR_POINTSJson[0].monitorPointValue[1].num+'m');
+            $('#ll-ll').text(MONITOR_POINTSJson[0].monitorPointValue[0].num+'L/s');
+            $("#title-ll").show();
+            console.log('进入流量')
+        }
+
+        //水位
+        if(key=='DEVICE_PS_SECTION'||(key=='DEVICE_FLOOD'&&data.info.MONITOR_SECODE_OBJECT_TYPE!=null)){
+            MONITOR_POINTS = data.info.MONITOR_POINTS;
+            var MONITOR_POINTSJson = JSON.parse(MONITOR_POINTS)
+            monitor_req_param.monitorId = MONITOR_POINTSJson[0].monitorId
+            monitor_req_param.monitorPointValueStr = MONITOR_POINTSJson[0].monitorPointValue
+            monitor_req_param.name = MONITOR_POINTSJson[0].monitorName
+            $('#name-sw').text(MONITOR_POINTSJson[0].monitorName);
+            $('#height-sw').text(MONITOR_POINTSJson[0].monitorPointValue[0].num+'m');
+            $("#title-sw").show();
+            console.log('进入水位')
+        }
+        //雨量
+        if(key=='DEVICE_POINT_INFO'&&data.info.SYS_TYPE=='2'&&data.info.POINT_CODE=='041012'&&typeof(data.info.MONITOR_POINTS) != "undefined"){
+            MONITOR_POINTS = data.info.MONITOR_POINTS;
+            var MONITOR_POINTSJson = JSON.parse(MONITOR_POINTS)
+            monitor_req_param.monitorId = MONITOR_POINTSJson[0].monitorId
+            monitor_req_param.monitorPointValueStr = MONITOR_POINTSJson[0].monitorPointValue
+            monitor_req_param.name = MONITOR_POINTSJson[0].monitorName
+            $('#name-yl').text(MONITOR_POINTSJson[0].monitorName);
+            $('#height-yl').text(MONITOR_POINTSJson[0].monitorPointValue[0].num+'mm');
+            $("#title-yl").show();
+            console.log('进入雨量')
+        }
+
+
+        //视频
+        if(key=='DEVICE_POINT_INFO'&&data.info.SYS_TYPE=='2'&&data.info.POINT_CODE=='043000'&&typeof(data.info.MONITOR_POINTS) != "undefined"){
+            MONITOR_POINTS = data.info.MONITOR_POINTS;
+            var MONITOR_POINTSJson = JSON.parse(MONITOR_POINTS)
+            monitor_req_param.monitorId = MONITOR_POINTSJson[0].monitorId
+            monitor_req_param.monitorPointValueStr = MONITOR_POINTSJson[0].monitorPointValue
+            monitor_req_param.name = MONITOR_POINTSJson[0].monitorName
+            $('#name-sp').text(MONITOR_POINTSJson[0].monitorName);
+            // $('#height-sp').text(MONITOR_POINTSJson[0].monitorPointValue[0].num+'mm');
+            $("#title-sp").show();
+            console.log('进入视频')
+        }
+
+        
+        clearGlobalItem();
+
+    });
+
+    var containerID =null;
+    //点击更多
+    $(".item").on('tap', function () {
+        var this_id =  $(this).attr('id');
+        var father_id = $('#'+this_id+'').parent().parent().parent().parent().attr('id');
+        $('#'+father_id+'').hide()
+        //水质 bottomWQ
+        var subStr = this_id.substring(5,this_id.length)
+		console.log(subStr)
+        // $('.mark2').css('bottom', '10%');
+        switch (subStr) {
+            case 'sz':
+                $('#father-bottomWQ').show()
+                $('#bottomWQ').css('height', '90%');
+                $('#father-bottomWQ').css('height', '90%');
+                $('#name-xq-wq').text(monitor_req_param.name)
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                lineInit('line-container-sz',EchartsData.vectorId26,'CODcr(mg/L)')
+                containerID = 'line-container-sz'
+                $('.mark2').fadeIn();
+                break;
+
+            case 'yw':
+                $('#father-bottomyw').show()
+                $('#bottomyw').css('height', '90%');
+                $('#father-bottomyw').css('height', '90%');
+                $('#name-xq-yw').text(monitor_req_param.name)
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                lineInit('line-container-yw',EchartsData.vectorId55,'液位(m)')
+                containerID = 'line-container-yw'
+                $('.mark2').fadeIn();
+                break;
+            //流量
+            case 'll':
+                $('#father-bottomll').show()
+                $('#bottomll').css('height', '90%');
+                $('#father-bottomll').css('height', '90%');
+                $('#name-xq-ll').text(monitor_req_param.name)
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                lineInit('line-container-ll',EchartsData.vectorId32,'液位(m)')
+                containerID = 'line-container-ll'
+                $('.mark2').fadeIn();
+                break;
+            case 'sw':
+                $('#father-bottomsw').show()
+                $('#bottomsw').css('height', '90%');
+                $('#father-bottomsw').css('height', '90%');
+                $('#name-xq-sw').text(monitor_req_param.name)
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                lineInit('line-container-sw',EchartsData.vectorId56,'水位(m)')
+                containerID = 'line-container-sw'
+                $('.mark2').fadeIn();
+                break;
+            case 'yl':
+                $('#father-bottomyl').show()
+                $('#bottomyl').css('height', '90%');
+                $('#father-bottomyl').css('height', '90%');
+                $('#name-xq-yl').text(monitor_req_param.name)
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                lineInit('line-container-yl',EchartsData.vectorId58,'雨量(mm)')
+                containerID = 'line-container-yl'
+                $('.mark2').fadeIn();
+                break;
+            //视频
+            case 'sp':
+                $('#father-bottomsp').show()
+                $('#bottomsp').css('height', '90%');
+                $('#father-bottomsp').css('height', '90%');
+                $('#name-xq-sp').text(monitor_req_param.name)
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                // comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                // monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                // lineInit('line-container-yl',EchartsData.vectorId58,'雨量(mm)')
+                // containerID = 'line-container-yl'
+                $('.mark2').fadeIn();
+                break;
+            //水闸
+            case 'zk':
+                $('#father-bottomsz').show()
+                $('#bottomsz').css('height', '90%');
+                $('#father-bottomsz').css('height', '90%');
+                // $('#name-xq-sz').text(monitor_req_param.name)
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                // comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                // monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                // lineInit('line-container-yl',EchartsData.vectorId58,'雨量(mm)')
+                // containerID = 'line-container-yl'
+                $('.mark2').fadeIn();
+                break;
+            //排放口
+            case 'pfk':
+                $('#father-bottompfk').show()
+                $('#bottompfk').css('height', '90%');
+                $('#father-bottompfk').css('height', '90%');
+                // $('#name-xq-sz').text(monitor_req_param.name)
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                // comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                // monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                // lineInit('line-container-yl',EchartsData.vectorId58,'雨量(mm)')
+                // containerID = 'line-container-yl'
+                $('.mark2').fadeIn();
+                break;
+            //积水风险
+            case 'jsfx':
+                $('#father-bottomjsfx').show()
+                $('#bottomjsfx').css('height', '90%');
+                $('#father-bottomjsfx').css('height', '90%');
+                // $('#name-xq-sz').text(monitor_req_param.name)
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                // comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                // monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                // lineInit('line-container-yl',EchartsData.vectorId58,'雨量(mm)')
+                // containerID = 'line-container-yl'
+                $('.mark2').fadeIn();
+                break;
+            //
+            case 'lz':
+                $('#father-bottomlz').show()
+                $('#bottomlz').css('height', '90%');
+                $('#father-bottomlz').css('height', '90%');
+                // $('#name-xq-sz').text(monitor_req_param.name)
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[0]))
+                // console.log(JSON.stringify(monitor_req_param.monitorPointValueStr[1]))
+                // comeback(handleEchartsData(monitor_req_param.monitorId,monitor_req_param.monitorPointValueStr))
+                // monitorPointValueData(monitor_req_param.monitorPointValueStr)
+                // lineInit('line-container-yl',EchartsData.vectorId58,'雨量(mm)')
+                // containerID = 'line-container-yl'
+                $('.mark2').fadeIn();
+                break;
+            default:
+                app.toast("开发中")
+                ;
+        }
+        console.log('进入更多')
+    })
+
+    //echarts 数据
+    var EchartsData = {
+        vectorId29: '',
+        vectorId26: '',
+        vectorId31: '',
+        vectorId32: '',
+        vectorId55: '',
+        vectorId56: '',
+        vectorId58: '',
+        timeData:'',
+    }
+
+    function comeback(callback){
+        console.log(1)
+        callback;
+
+    }
+
+    function handleEchartsData(monitorId,Arr) {
+
+        var param = {
+            monitorId: monitorId,
+            vectorId: '',
+            startTime:  getLastFormatDate(),
+            endTime: getNowFormatDate(),
+            valueWay: '按小时',
+            valueType: '平均值'
+        }
+
+        console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        console.log(JSON.stringify(Arr))
+
+
+        for (let i = 0; i <Arr.length; i++) {
+            switch (Arr[i].content) {
+                case '氨氮':
+                    param.vectorId = '29'
+                    getProcessLineDate(param,function (data) {
+                        XValueData('29',data.result.data)
+                    })
+                    break;
+                case 'CODcr':
+                    param.vectorId = '26'
+                    getProcessLineDate(param,function (data) {
+                        XValueData('26',data.result.data)
+                    })
+                    break;
+                case '总磷':
+                    param.vectorId = '31'
+                    getProcessLineDate(param,function (data) {
+                        XValueData('31',data.result.data)
+                    })
+                    break;
+                case '瞬时流量':
+                    param.vectorId = '32'
+                    getProcessLineDate(param,function (data) {
+                        XValueData('32',data.result.data)
+                    })
+                    break;
+                case '液位':
+                    param.vectorId = '55'
+                    getProcessLineDate(param,function (data) {
+                        XValueData('55',data.result.data)
+                    })
+                    break;
+                case '水位':
+                    param.vectorId = '56'
+                    getProcessLineDate(param,function (data) {
+                        console.log(JSON.stringify(data))
+                        XValueData('56',data.result.data)
+                    })
+                    break;
+                case '雨量':
+                    param.vectorId = '58'
+                    getProcessLineDate(param,function (data) {
+                        console.log(JSON.stringify(data))
+                        XValueData('58',data.result.data)
+                    })
+                    break;
+                default:
+                    ;
+            }
+        }
+
+    }
+
+    //遍历数据
+    function XValueData(num,data) {
+        var timeArr = new Array()
+        var valueArr = new Array()
+
+        for (let i = 0; i < data.length; i++) {
+            timeArr.push(timestampToTime(data[i].watchTime))
+            valueArr.push(data[i].value)
+        }
+        EchartsData.timeData = timeArr
+
+        switch (num) {
+            case '29':
+                EchartsData.vectorId29 = valueArr
+                break;
+            case '26':
+                EchartsData.vectorId26 = valueArr
+                break;
+            case '31':
+                EchartsData.vectorId31 = valueArr
+                break;
+            case '32':
+                EchartsData.vectorId32 = valueArr
+                break;
+            case '55':
+                EchartsData.vectorId55 = valueArr
+                break;
+            case '56':
+                EchartsData.vectorId56 = valueArr
+                break;
+            case '58':
+                EchartsData.vectorId58 = valueArr
+                break;
+            default:
+                ;
+        }
+
+    }
+
+    //监测类型数组
+    function monitorPointValueData(arr){
+
+        $('.new-data-time').text('最新数据时间:'+arr[0].time)
+        $('.time-slot').text(getLastFormatDate()+' ~ '+getNowFormatDate())
+        var len = arr.length;
+        var html = '<table width="300" style="margin-left: 30px" border="0" cellspacing="1" cellpadding="0">\n' +
+            '                                                    <tr>\n' +
+            '                                                        <td width="100" style="background: #EDEDED"></td>\n' +
+            '                                                        <td width="100" style="background: #EDEDED;text-align: center;color: #262626FF">设备名称</td>\n' +
+            '                                                        <td width="100" style="background: #EDEDED;text-align: center;color: #262626FF">数据</td>\n' +
+            '                                                    </tr>\n'
+        for(let i=0;i<len;i++){
+
+            var checkId = null;
+            switch (arr[i].content) {
+                case '氨氮':
+                    checkId = 'vectorId29'
+                    break;
+                case 'CODcr':
+                    checkId = 'vectorId26'
+                    break;
+                case '总磷':
+                    checkId = 'vectorId31'
+                    break;
+                case '瞬时流量':
+                    checkId = 'vectorId32'
+                    break;
+                case '液位':
+                    checkId = 'vectorId55'
+                    break;
+                case '水位':
+                    checkId = 'vectorId56'
+                    break;
+                case '雨量':
+                    checkId = 'vectorId58'
+                    break;
+                default:
+                    ;
+            }
+            console.log(checkId)
+
+            if (i==0){
+                html +=        '                                                    <tr>\n' +
+                    '                                                        <td style="text-align: center"><input  id="'+checkId+'" class="tui-checkbox mon-checkbox" type="checkbox" name="checkbox1" value="" onclick="a()"  checked/></td>\n' +
+                    '                                                        <td style="text-align: center;color: #262626FF">监测'+arr[i].content+'</td>\n' +
+                    '                                                        <td style="text-align: center;color: #262626FF">'+arr[i].num+arr[i].unit + '</td>\n' +
+                    '                                                    </tr>\n'
+
+            }else {
+                html += '                                                    <tr>\n' +
+                    '                                                        <td style="text-align: center"><input id="'+checkId+'" class="tui-checkbox mon-checkbox" type="checkbox" name="checkbox2" onclick="a()"  value=""  /></td>\n' +
+                    '                                                        <td style="text-align: center;color: #262626FF">监测' + arr[i].content + '</td>\n' +
+                    '                                                        <td style="text-align: center;color: #262626FF">' + arr[i].num + arr[i].unit + '</td>\n' +
+                    '                                                    </tr>\n'
+            }
+        }
+        html +=   '                                                </table>'
+        $('.table-d').html(html)
+
+    }
+
+
+    var checkMonArr = new Array();
+    function a(){
+        checkMonArr = []
+        var lastId =  null
+		  var new_this_id =  $(this).attr('id');
+		  console.log(new_this_id)
+        $('.mon-checkbox').each(function () {
+            var this_id =  $(this).attr('id');
+            lastId = this_id
+			console.log(this_id)
+            var this_state = $('#'+this_id+'').prop('checked')
+			console.log(this_id+this_state)
+            if(this_state){
+                checkMonArr.push(this_id)
+            }
+        })
+        if (checkMonArr.length==0){
+            checkMonArr.push(lastId)
+            $('#'+lastId+'').prop('checked',true);
+        }
+		console.log(JSON.stringify(checkMonArr))
+       checkMonArr =  unique(checkMonArr);
+        checkLineInit(checkMonArr)
+        console.log(JSON.stringify(checkMonArr))
+        console.log("================")
+    }
+
+    //选择lineinit()
+    function checkLineInit(checkArr) {
+
+
+        var paramArr = new Array()
+        for (let i = 0; i <checkArr.length ; i++) {
+            var param =  {
+                name: '',
+                type: 'line',
+                showSymbol: false,
+                data: ''
+            }
+            switch (checkArr[i]) {
+                case 'vectorId29':
+                    param.name = '氨氮(mg/L)'
+                    param.data = EchartsData.vectorId29
+                    break;
+                case 'vectorId26':
+                    param.name = 'CODcr(mg/L)'
+                    param.data = EchartsData.vectorId26
+                    break;
+                case 'vectorId31':
+                    param.name = '总磷(mg/L)'
+                    param.data = EchartsData.vectorId31
+                    break;
+                case 'vectorId32':
+                    param.name = '瞬时流量(mg/L)'
+                    param.data = EchartsData.vectorId32
+                    break;
+                case 'vectorId55':
+                    param.name = '液位(m)'
+                    param.data = EchartsData.vectorId55
+                    break;
+                case 'vectorId56':
+                    param.name = '水位(m)'
+                    param.data = EchartsData.vectorId56
+                    break;
+                case 'vectorId58':
+                    param.name = '雨量(mm)'
+                    param.data = EchartsData.vectorId58
+                    break;
+                default:
+                    ;
+            }
+            paramArr.push(param)
+
+        }
+		console.log(JSON.stringify(paramArr))
+
+        var dom = document.getElementById(containerID);
+        var myChart = echarts.init(dom);
+        myChart.clear();
+        var app = {};
+        var option;
+        option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: EchartsData.timeData
+
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: paramArr
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+
+    }
+
+    //去掉重复值数组
+    function unique(arr) {
+        var result = [], hash = {};
+        for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+            if (!hash[elem]) {
+                result.push(elem);
+                hash[elem] = true;
+            }
+        }
+        return result;
+    }
+
+
+    //向下图标
+    $(".down_black").on('tap', function () {
+        var this_id =  $(this).attr('id');
+        console.log(this_id)
+        var father_id = $('#'+this_id+'').parent().parent().parent().parent().attr('id');
+        console.log(father_id)
+        $('#'+father_id+'').hide()
+        $('.mark2').fadeOut();
+
+        console.log("向下")
+    })
+
+
+    function lineInit(name,arrData,unitName) {
+
+
+        var dom = document.getElementById(name);
+        var myChart = echarts.init(dom);
+        myChart.clear();
+        var app = {};
+        var option;
+        option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: EchartsData.timeData
+
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: unitName,
+                    type: 'line',
+                    showSymbol: false,
+                    data: arrData
+                }
+            ]
+        };
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    }
+
+
+
+
+    mobileContainer.on('click', data => {
+
+        $('#title-zk').hide();
+        $('#title-ck').hide();
+        $('#title-bx').hide();
+        $('#title-pfk').hide();
+        $('#title-js').hide();
+        $('#title-lz').hide();
+        $('#title-sz').hide();
+        $('#title-yw').hide();
+        $("#title-sw").hide();
+        $("#title-yl").hide();
+        $("#title-sp").hide();
+        $("#title-ll").hide();
+        // $('#')
+        clearGlobalItem();
+    });
+
+    //搜索框
+    function setInputData(data){
+        var html ='';
+        for (let i = 0; i <data.length ; i++) {
+            html +='   <li class="search-result-li" id="input-title'+(i+1)+'">\n' +
+                '                            <div style="padding-top: 2px;">\n' +
+                '                                <img src="img/local.png" alt="" style="width: 13px; height: 15px;">\n' +
+                '                            </div>\n' +
+                '                            <div class="search-result-li-content">\n' +
+                '                                <div class="overLineEllipsis" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width: 80%;">'+data[i].name+'</div>\n' +
+                '                                <input id="guid'+(i+1)+'" value="'+data[i].guid+'" style="display: none">' +
+                '                                <input id="table'+(i+1)+'" value="'+data[i].table+'" style="display: none">' +
+                '                            </div>\n' +
+                '\n' +
+                '                        </li>'
+        }
+        $('#search_ul').html(html)
+    }
+
+    $('.search_ul').on('tap','.search-result-li',function () {
+        var num = $(this).attr('id').substring(11,$(this).attr('id').length)
+        var guid = $("#guid"+num+'').val()
+        var table = $("#table"+num+'').val()
+        $('#search-result-container').hide()
+        mobileContainer.showSearchMarker({table:table,guid:guid})
+    })
+
+    mui.plusReady(function () {
+        console.log("进入地图页面.........")
+        console.log(localStorage.getItem("often-device-arr"))
+        console.log(localStorage.getItem("confirm-device-arr"))
+        console.log(localStorage.getItem("mobile-container-arr"))
+        if(localStorage.getItem("confirm-device-arr")!=''&&localStorage.getItem("confirm-device-arr")!=null){
+            var  confirm_device_arr = localStorage.getItem("confirm-device-arr").split(',');
+            var readyArr =[];
+            var len1 = 0
+            for (var i = 0; i <  confirm_device_arr.length; i++) {
+                $('#'+confirm_device_arr[i]).prop('checked',true)
+
+                if(confirm_device_arr[i]=='wsgw'||confirm_device_arr[i]=='ysgw'||confirm_device_arr[i]=='jlgw'||confirm_device_arr[i]=='psh'){
+                    $('#psjg').prop('checked',true)
+                }else if(confirm_device_arr[i]=='hd'||confirm_device_arr[i]=='hp'||confirm_device_arr[i]=='pk'||confirm_device_arr[i]=='zk'){
+                    $('#hhgl').prop('checked',true)
+                }else if (confirm_device_arr[i]=='jsfx'){
+                    $('#fhpl').prop('checked',true)
+                }else if (confirm_device_arr[i]=='stbc'){
+                    $('#gcxx').prop('checked',true)
+                }else if (confirm_device_arr[i]=='wsxt'||confirm_device_arr[i]=='ysxt'||confirm_device_arr[i]=='hhxt'||confirm_device_arr[i]=='jlxt'||
+                    confirm_device_arr[i]=='gsxt'||confirm_device_arr[i]=='sk'||confirm_device_arr[i]=='jsd'||confirm_device_arr[i]=='yl'||
+                    confirm_device_arr[i]=='jsgd'||confirm_device_arr[i]=='psxq'){
+                    $('#jcyj').prop('checked',true)
+                    $('#device-yw').css('display','flex');
+                    $('#device-ll').css('display','flex');
+                    $('#device-sz').css('display','flex');
+                    $('#device-sw').css('display','flex');
+                    $('#device-sz').css('display','flex');
+                    $('#device-sp').css('display','flex');
+                    len1 = 5
+
+                }else if (confirm_device_arr[i]=='fhck'||confirm_device_arr[i]=='bxzx'||confirm_device_arr[i]=='rkfb'){
+                    $('#yjzy').prop('checked',true)
+                }
+
+
+                var device_id = confirm_device_arr[i];
+                $('#device-'+device_id).css('display','flex');
+
+
+                commonDevice(confirm_device_arr[i],readyArr)
+            }
+            var len =len1>0?len1*80+'px':(confirm_device_arr.length)*80+'px'
+            var css = {
+                height: len.toString()
+            }
+            $('.location_style').css(css)
+            mobileContainer.setSelection(readyArr)
+        }
+
+
+    })
+
+
+    //时间戳转YYYY-MM-DD
+    function timestampToTime(timestamp) {
+        //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var date = new Date(timestamp);
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        h = date.getHours() + ':';
+        m = date.getMinutes() + '0:';
+        s = date.getSeconds()+'0';
+        return Y+M+D+h+m+s;
+    }
+
+    //获取当前时间 2021-06-01 13:00:00
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + '00'
+            + seperator2 + '00';
+        return currentdate;
+    }
+    //获取上个月 2021-05-01 13:00:00
+    function getLastFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() ;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + '00'
+            + seperator2 + '00';
+        return currentdate;
+    }
+
+
+    //搜索框监听
+    $("#searchInput").on('input', debounce((e) => {
+        if($("#searchInput").val().trim()!=""){
+            var name = $("#searchInput").val()
+            getBigData(name,function (data) {
+                console.log(JSON.stringify(data.data[0].name))
+                if(data.data[0]!=''){
+                    setInputData(data.data[0].name)
+                    $('#search-result-container').show()
+                }
+            })
+        }
+
+    }, 600))
+
+    // $("#searchInput").focus(function () {
+    //     $("#bottom-item").hide()
+    // }).blur(function () {
+    //     $("#bottom-item").fadeIn()
+    // })
+    //
+    // $("#searchInput").keypress(function (even) {
+    //
+    // });
+
+    //地图搜索返回结果
+    mobileContainer.on('searchResults', data => {
+        console.log(JSON.stringify(data))
+        mobileContainer.flyTo(data.features[0].geometry.coordinates);
+        if (!data.features || data.features.length < 1) app.toast('在显示区域内搜索不到相关数据')
+    });
+
+    /*map迭代内容*/
+    //图片监听
+    var if_fade = 0;
+    $("#a").click(function () {
+        if (if_fade == 0) {
+            $('.a-spacing').css({
+                'background-color': 'white',
+                'width': '40px',
+                'position': 'relative',
+                'border-radius': '5px',
+                'left': '63%'
+            })
+            $('#a').attr('src', 'img/map/drop.png')
+            if_fade = 1
+        } else if (if_fade == 1) {
+            $('.a-spacing').css({
+                'background-color': 'white',
+                'width': '40px',
+                'position': 'relative',
+                'border-radius': '5px',
+                'left': '0'
+            })
+            $('#a').attr('src', 'img/map/right_arrow@2x.png')
+            if_fade = 0
+        }
+        $("#div1").fadeToggle();
+        $("#div2").fadeToggle();
+        $("#div3").fadeToggle();
+        $("#div4").fadeToggle();
+    })
+
+
+    //侧栏点击显示
+    $("#moreFactor").on('tap', function () {
+        $('.mark').fadeIn();
+        $('.side1').css('right', 0);
+    })
+
+    // 点击页面遮罩和侧栏消失
+    $('.mark').click(function () {
+        $('.mark').fadeOut();
+        $('.side1').css('right', -270);
+    })
+
+
+    //记住复选框点击切换
+    var toggle = true;
+
+
+
+
+    $("#div4").on('tap', function () {
+
+        $('.mark').fadeIn();
+        $('.side2').css('right', 0);
+    })
+
+
+    function setTime4() {
+        mobileContainer.selectBaseLayer('');
+        mobileContainer.selectRegion('');
+    }
+    //clean
+    var div3_toggle = true;
+    $("#img3").on('tap',function () {
+        $('.tui-checkbox').prop('checked',false)
+
+        //左侧小图标
+        $('.device_icon').hide()
+        //图层配置的
+        $('.tui-checkbox2').prop('checked',false)
+        // mobileContainer.selectRegion();
+        $("#boundary").attr("src", "img/map/boundary@2x.png")
+        boundary_taggle = true;
+        $("#road").attr("src", "img/map/road@2x.png")
+        road_taggle = true;
+        $("#line").attr("src", "img/map/line@2x.png")
+        line_taggle = true;
+        $("#land").attr("src", "img/map/land@2x.png")
+        land_taggle = true;
+        // mobileContainer.selectBaseLayer()
+
+        console.log('进入清除')
+        mobileContainer.setSelection('');
+        mobileContainer.enableCenterAddress(true);
+        mobileContainer.showAnnotation(true);
+        mobileContainer.switchBackground('vec')
+      
+
+        $('#yjzy-str').text('应急资源(0)')
+        $('#jcyj-str').text('监测预警(0)')
+        $('#gcxx-str').text('工程信息(0)')
+        $('#fhpl-str').text('防洪排涝(0)')
+        $('#hhgl-str').text('河湖管理(0)')
+        $('#psjg-str').text('排水监管(0)')
+        console.log('进入清除')
+        // mobileContainer.setSelection();
+        if(div3_toggle) {
+            $("#img3").attr("src", "img/map/clean_blue@2x.png")
+            // mobileContainer.setSelection();
+            setTimeout(selectTime,2000)
+        }
+    })
+
+    function selectTime() {
+        $("#img3").attr("src", "img/map/clean_black@2x.png")
+        $("#img1").attr("src", "img/map/often_black@2x.png")
+        img1_taggle = true
+        var css = {
+            height: '0px'
+        }
+        $('.location_style').css(css)
+        $("#location-btn-icon").attr("src", "img/map/location_black2x.png")
+        location_btn_taggle = true;
+        $('#device-icon-wrapper').hide()
+    }
+
+    //重载
+    var div2_toggle =true;
+    $("#img2").on('tap',function () {
+        if(div2_toggle) {
+            $("#img2").attr("src", "img/map/update_blue@2x.png")
+            setTimeout(selectTime2,2000)
+        }
+    })
+
+    function selectTime2() {
+        $("#img2").attr("src", "img/map/update_black@2x.png")
+    }
+
+
+    //设置常用的
+
+    function selectTime3(arr){
+        mobileContainer.enableCenterAddress(true);
+        mobileContainer.showAnnotation(true);
+        mobileContainer.switchBackground('vec')
+        mobileContainer.setSelection(arr)
+    }
+
+    $("#img1").on('tap',function () {
+        if (img1_taggle) {
+            $("#img1").attr("src", "img/map/often_blue@2x.png")
+            $('.device_icon').hide()
+            var arr_str = localStorage.getItem("often-device-arr")
+            var often_arr = arr_str.split(",");
+            var m_arr = [];
+            for (let i = 0; i <often_arr.length ; i++) {
+                var device_id = often_arr[i];
+                $('#device-'+device_id).css('display','flex');
+
+                commonDevice(device_id,m_arr)
+                mobileContainer.setSelection('')
+                mobileContainer.switchBackground('vec')
+
+                setTimeout(selectTime3(m_arr),2000)
+
+            }
+            var len = (often_arr.length)*40+'px'
+            var css = {
+                height: len.toString()
+            }
+            $('.location_style').css(css)
+
+
+            img1_taggle = false;
+        } else {
+            $('.device_icon').hide()
+            $('.location_style').css('height','0px');
+            $("#img1").attr("src", "img/map/often_black@2x.png")
+            mobileContainer.setSelection('')
+            img1_taggle = true;
+        }
+    })
+
+    $("#map1").on('tap', function () {
+        $("#map1").attr("src", "img/map/map_white_check@2x.png")
+        $("#map2").attr("src", "img/map/map_black@2x.png")
+        mobileContainer.switchBackground('vec')
+    })
+
+    $("#map2").on('tap', function () {
+        $("#map2").attr("src", "img/map/map_black_check@2x.png")
+        $("#map1").attr("src", "img/map/map_white@2x.png")
+        mobileContainer.switchBackground('img')
+    })
+
+    var selectBaseArr = []
+    $("#boundary").on('tap', function () {
+        if (boundary_taggle) {
+            $("#boundary").attr("src", "img/map/boundary_check@2x.png")
+            boundary_taggle = false;
+            selectBaseArr.push('边界')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+        } else {
+            $("#boundary").attr("src", "img/map/boundary@2x.png")
+            removeByValue(selectBaseArr,'边界')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            boundary_taggle = true;
+        }
+    })
+
+
+    $("#land").on('tap', function () {
+        if (land_taggle) {
+            $("#land").attr("src", "img/map/land_check@2x.png")
+            selectBaseArr.push('道路')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            land_taggle = false;
+        } else {
+            $("#land").attr("src", "img/map/land@2x.png")
+            removeByValue(selectBaseArr,'道路')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            land_taggle = true;
+        }
+    })
+
+    $("#line").on('tap', function () {
+        if (line_taggle) {
+            $("#line").attr("src", "img/map/line_check@2x.png")
+            selectBaseArr.push('等高线')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            line_taggle = false;
+        } else {
+            $("#line").attr("src", "img/map/line@2x.png")
+            removeByValue(selectBaseArr,'等高线')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            line_taggle = true;
+        }
+    })
+
+
+    $("#road").on('tap', function () {
+        if (road_taggle) {
+            $("#road").attr("src", "img/map/road_check@2x.png")
+            selectBaseArr.push('绿地')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            road_taggle = false;
+
+        } else {
+            $("#road").attr("src", "img/map/road@2x.png")
+            removeByValue(selectBaseArr,'绿地')
+            mobileContainer.selectBaseLayer(selectBaseArr)
+            road_taggle = true;
+        }
+    })
+
+
+    $('#location_btn').on('tap',function () {
+        if (location_btn_taggle) {
+            $("#location-btn-icon").attr("src", "img/map/location_blue@2x.png")
+            location_btn_taggle = false;
+            $('#device-icon-wrapper').show()
+        } else {
+            $("#location-btn-icon").attr("src", "img/map/location_black2x.png")
+            location_btn_taggle = true;
+            $('#device-icon-wrapper').hide()
+        }
+    })
+
+    /*筛选逻辑*/
+
+    //删除数组指定的元素
+    function removeByValue(arr, val) {
+        for(var i = 0; i < arr.length; i++) {
+            if(arr[i] == val) {
+                arr.splice(i, 1);
+                break;
+            }
+        }
+    }
+    //重复代码提取
+    function addOrRemoveArr(this_id,str1,str2,str3){
+        var arr=[];
+        var this_state = $('#'+this_id+'').prop('checked')
+        if(this_state){
+            $('#text-'+this_id+'').css("color","#0493F3");
+            arr.push(this_id)
+            // $('#text-'+this_id+'').css("color","black");
+            // removeByValue(arr,this_id)
+        }else {
+            // $('#text-'+this_id+'').css("color","#0493F3");
+            // arr.push(this_id)
+            $('#text-'+this_id+'').css("color","black");
+            removeByValue(arr,this_id)
+        }
+        $('.'+str1).each(function () {
+            if ($(this).attr('id')!=this_id) {
+                var state = $(this).prop('checked')
+                if (state) {
+                    arr.push($(this).attr('id'))
+                }
+            }
+        })
+        var len = arr.length
+        if(len==0){
+            $('#'+str1).prop('checked',false)
+            $('#'+str2).text(str3+'(0)')
+        }else{
+            $('#'+str1).prop('checked',true)
+            $('#'+str2).text(str3+'('+len+')')
+        }
+    }
+
+    function allSelectSameCode(isTrue,str1,str2,str3,num){
+        if (isTrue){
+            // $('.'+str1).prop('checked',false)
+            // $('#'+str2).text(str3+'(0)')
+            $('.'+str1).prop('checked',true)
+            $('#'+str2).text(str3+'('+num+')')
+
+            $('#pd').prop('checked',false)
+            $('#yjsj').prop('checked',false)
+            $('#xcry').prop('checked',false)
+            $('#yjcl').prop('checked',false)
+        }else {
+            // $('.'+str1).prop('checked',true)
+            // $('#'+str2).text(str3+'('+num+')')
+            $('.'+str1).prop('checked',false)
+            $('#'+str2).text(str3+'(0)')
+        }
+    }
+
+    $('input[type=checkbox][name=checkbox]').change(function() {
+        console.log("进入单选框事件")
+        var class_name_str = $(this).attr('class')
+        var name_str = class_name_str.substring(13,class_name_str.length)
+
+        switch (name_str) {
+            case 'psjg':
+                console.log('进入')
+                var this_id = $(this).attr('id');
+                addOrRemoveArr(this_id,"psjg","psjg-str","排水监管");
+                break;
+            case 'hhgl':
+                var this_id = $(this).attr('id')
+                addOrRemoveArr(this_id,"hhgl","hhgl-str","河湖管理")
+                break;
+            case 'fhpl':
+                var this_id = $(this).attr('id')
+                addOrRemoveArr(this_id,"fhpl","fhpl-str","防洪排涝")
+                break;
+            case 'gcxx':
+                var this_id = $(this).attr('id')
+                addOrRemoveArr(this_id,"gcxx","gcxx-str","工程信息")
+                break;
+            case 'jcyj':
+                var this_id = $(this).attr('id')
+                addOrRemoveArr(this_id,"jcyj","jcyj-str","监测预警")
+                break;
+            case 'yjzy':
+                var this_id = $(this).attr('id')
+                addOrRemoveArr(this_id,"yjzy","yjzy-str","应急资源")
+                break;
+            default:
+                ;
+        }
+
+        var this_id = $(this).attr('id');
+
+        switch (this_id) {
+            case 'psjg':
+                console.log('进入2')
+                var isTrue =  this.checked;
+                allSelectSameCode(isTrue,"psjg","psjg-str","排水监管",4);
+                break;
+            case 'hhgl':
+                var isTrue =  this.checked;
+                allSelectSameCode(isTrue,"hhgl","hhgl-str","河湖管理",4);
+                break;
+            case 'fhpl':
+                var isTrue =  this.checked;
+                allSelectSameCode(isTrue,"fhpl","fhpl-str","防洪排涝",1);
+                break;
+            case 'gcxx':
+                var isTrue =  this.checked;
+                allSelectSameCode(isTrue,"gcxx","gcxx-str","工程信息",1);
+                break;
+            case 'jcyj':
+                var isTrue =  this.checked;
+                allSelectSameCode(isTrue,"jcyj","jcyj-str","监测预警",10)
+                break;
+            case 'yjzy':
+                var isTrue =  this.checked;
+                allSelectSameCode(isTrue,"yjzy","yjzy-str","应急资源",3)
+                break;
+            default:
+                ;
+        }
+
+    })
+
+    //重置按钮
+    $('#redo').on('tap',function () {
+        $('.tui-checkbox').prop('checked',false)
+        $('#yjzy-str').text('应急资源(0)')
+        $('#jcyj-str').text('监测预警(0)')
+        $('#gcxx-str').text('工程信息(0)')
+        $('#fhpl-str').text('防洪排涝(0)')
+        $('#hhgl-str').text('河湖管理(0)')
+        $('#psjg-str').text('排水监管(0)')
+        // localStorage.setItem("often-device-arr",null)
+        localStorage.setItem("confirm-device-arr",null)
+        localStorage.setItem("mobile-container-arr",null)
+    })
+
+    //设为常用按钮
+    var oftenDeviceArr = []
+    $('#often-btn').on('tap',function () {
+        oftenDeviceArr = []
+        $('.tui-checkbox').each(function () {
+            var class_name_str = $(this).attr('class')
+            if(class_name_str.length>12){
+                var state = $(this).prop('checked')
+                if(state){
+                    oftenDeviceArr.push($(this).attr('id'))
+                }
+            }
+        })
+        localStorage.setItem("often-device-arr",oftenDeviceArr.toString())
+        app.toast("设置成功");
+    })
+    //确认按钮
+    var confirmArr = [];
+    var  mobileContainerArr = [];
+    $('#searchByFactor').on('tap',function () {
+        confirmArr = []
+        $('.tui-checkbox').each(function () {
+            var class_name_str = $(this).attr('class')
+            if(class_name_str.length>12){
+                var state = $(this).prop('checked')
+                if(state){
+                    confirmArr.push($(this).attr('id'))
+                }
+            }
+        })
+
+        localStorage.setItem("confirm-device-arr",confirmArr.toString())
+        $('.device_icon').hide()
+
+        mobileContainerArr = []
+        var len1 = 0;
+        for (let i = 0; i < confirmArr.length; i++) {
+            var device_id = confirmArr[i];
+            $('#device-'+device_id).css('display','flex');
+
+            if (device_id=='wsxt'||device_id=='ysxt'||device_id=='hhxt'||device_id=='jlxt'||
+                device_id=='gsxt'||device_id=='sk'||device_id=='jsd'||device_id=='yl'||
+                device_id=='jsgd'||device_id=='psxq'){
+                $('#device-yw').css('display','flex');
+                $('#device-ll').css('display','flex');
+                $('#device-sz').css('display','flex');
+                $('#device-sw').css('display','flex');
+                $('#device-sz').css('display','flex');
+                $('#device-sp').css('display','flex');
+                len1 = 5
+            }
+
+
+
+            commonDevice(device_id,mobileContainerArr)
+
+        }
+        var len = len1>0?len1*80+'px':(confirmArr.length)*80+'px'
+        var css = {
+            height: len.toString()
+        }
+        $('.location_style').css(css)
+
+        $('.mark').fadeOut();
+        $('.side1').css('right', -270);
+
+
+        //确认加载地图信息
+        localStorage.setItem("mobile-container-arr",mobileContainerArr.toString())
+        console.log(mobileContainerArr.toString())
+        mobileContainer.setSelection(mobileContainerArr)
+
+    })
+
+    //提取公共代码
+    function commonDevice(this_id,arr) {
+        switch (this_id) {
+            case 'zk':
+                arr.push({ NAME:'DEVICE_POINT_WAGA' })
+                break;
+            case 'pk':
+                arr.push({ NAME: 'DEVICE_SPECIAL_POINT', POINT_CODE: '041008' })
+                break;
+            case 'fhck':
+                arr.push({ NAME:'EGY_WH'})
+                break;
+            case 'bxzx':
+                arr.push({ NAME:'SANC_INFO'})
+                break;
+            case 'jsfx':
+                arr.push({ NAME:'DEVICE_FLOOD',FLOOD_CLASS:'0'})
+                break;
+            case 'wsgw':
+                arr.push({NAME:'DEVICE_PS_LINE', LINE_TYPE:3},{NAME:'DEVICE_POINT_INFO', SYS_TYPE:3})
+                break;
+            case 'ysgw':
+                arr.push({NAME:'DEVICE_PS_LINE', LINE_TYPE:2},{NAME:'DEVICE_POINT_INFO', SYS_TYPE:2})
+                break;
+            case 'jlgw':
+                arr.push({NAME:'DEVICE_PS_LINE', LINE_TYPE:4},{NAME:'DEVICE_POINT_INFO', SYS_TYPE:4})
+                break;
+            case 'stbc':
+                arr.push({NAME:'GIS_WATER_PROTECT'},{NAME:'device_project'})
+                break;
+            case 'hd':
+                arr.push({ NAME: 'DEVICE_PS_RIVER_RODE' }, { NAME: 'GIS_RIVER_NAME' }, { NAME: 'DEVICE_PS_SECTION'})
+                break;
+            case 'hp':
+                arr.push({NAME:'DEVICE_PS_LK'})
+                break;
+            case 'psxq':
+                arr.push({NAME:'DISCHARGER_TYPE'})
+                break;
+            case 'psh':
+                arr.push({NAME:'ps_discharger'})
+                break;
+            case 'rkfb':
+                arr.push({NAME:'BUILDING_POPULATION'})
+                break;
+            case 'wsxt':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 1})
+                break;
+            case 'ysxt':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 2})
+                break;
+            case 'hhxt':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 3})
+                break;
+            case 'jlxt':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 4})
+                break;
+            case 'gsxt':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 5})
+                break;
+            case 'sk':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 6})
+                break;
+            case 'jsd':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 7})
+                break;
+            case 'yl':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 8})
+                break;
+            case 'jsgd':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 9})
+                break;
+            case 'jcyj-psxq':
+                arr.push({ NAME:'OTHER_MONITOR',TONE: 10})
+                break;
+            default:
+                ;
+        }
+    }
+
+
+    function arrTranslate(){
+
+    }
+
+    //地图配置社区
+    $('input[type=radio][name=checkbox]').change(function() {
+        mobileContainer.selectRegion(null);
+        switch (this.value) {
+            case 'jdsq':
+                mobileContainer.selectRegion('街道社区');
+                break;
+            case 'lyfq':
+                mobileContainer.selectRegion('流域分区');
+                break;
+            case 'ssfq':
+                mobileContainer.selectRegion('水所分区');
+                break;
+            case 'wsfq':
+                mobileContainer.selectRegion('污水分区');
+                break;
+            case 'ysfq':
+                mobileContainer.selectRegion('雨水分区');
+                break;
+            default:
+                ;
+        }
+    });
+
+
+    // 点击页面遮罩和侧栏消失
+    $('.mark').click(function () {
+        $('.mark').fadeOut();
+        $('.side2').css('right', -270);
+    })
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

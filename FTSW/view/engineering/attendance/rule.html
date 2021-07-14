@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/statistics.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/attendance/calendar.css" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<div class="clock_text" style="height: 300px;display:flex;flex-direction: column ;">
+			<span style="color: #010101;font-family: SimSun;font-weight: 900;margin-left: 18px;margin-top: 15px;margin-bottom:15px;font-size: 19px">考勤地址</span>
+			<div>
+				<img src="../../../img/loc_icon.png" style="width:12.5px;height: 18.5px;margin-right: 10px;margin-left: 18px">
+				<span id="address" style="font-size: 14px"></span>
+			</div>
+			<div class="mapboxgl-map" id="map"
+				 style="margin-top: 15px;margin-left: 18px;margin-right:18px;width: 90%;height: 200px">
+			</div>
+		</div>
+		<div style="height: 5px;background: #F4F4F4"></div>
+		<div class="clock_text" style="height: 80px;display:flex;flex-direction: column ;">
+			<span style="color: #010101;font-family: SimSun;font-weight: 900;margin-left: 18px;margin-top: 15px;margin-bottom:15px;font-size: 19px">在岗日期</span>
+			<div style="display: flex;align-items: center">
+				<img src="../../../img/calendar.png" style="width:18.5px;height: 18.5px;margin-right: 10px;margin-left: 18px">
+				<span id="duty-time" style="font-size: 14px"></span>
+			</div>
+		</div>
+		<div style="height: 5px;background: #F4F4F4"></div>
+
+
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/vconsole.min.js"></script>
+	<script src="../../../js/attendance/rule.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/position.js"></script>
+	<script type="text/javascript">
+		// var vConsole = new VConsole()
+		function test() {
+			console.log('js load ...');
+		}
+		test();
+		mui.init({
+			swipeBack: false
+		})
+		let params = {
+			projectId: '',
+			year: '',
+			month: '',
+			pageNo: 1,
+			pageSize: 100,
+		};
+		var myProjectId = {
+
+		};
+
+		var fitToRegionObject = {
+			NAME: 'DEVICE_RE_AREA'
+		}
+
+		var fitToRegionArr = new Array();
+
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({serverUrl: config.urls.serverDomain,options:{minZoom:10},style:'color',initCallback: ()=>{}});
+		const layerSelections = window['mobile-lib'].layerSelections;
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain,
+			style:'color'
+		});
+
+		mobileContainer.on('load', () => {
+			// mobileContainer.enableCenterAddress(true);
+			// mobileContainer.setQuery({ NAME: 'ps_discharger' });//加载排水户
+			// mobileContainer.showAnnotation(true);
+            // mobileContainer.fitToRegion({},
+			// [[[[114.04660945043395,22.50945921541583],[114.04761083842357,22.508063341269605],[114.04876395184624,22.510612328838477],[114.0475804933285,22.511735097176626],[114.04603289373324,22.5118564775358],[114.04660945043395,22.50945921541583]]]])
+		});
+
+
+
+
+
+
+
+
+
+
+
+		var myProjectId = {
+			userName:'',
+			projectId: ''
+		}
+
+		mui.plusReady(function() {
+
+			var self = plus.webview.currentWebview();
+			myProjectId.userName = self.userName
+			myProjectId.projectId = self.projectId
+			console.log(JSON.stringify(self))
+			getProjectAttendanceInfoMain();
+			getLocMain()
+        plus.geolocation.getCurrentPosition(function (position) {
+            var point = [position.coords.longitude, position.coords.latitude];
+            var Lon = point[0]; //获取经度
+            var Lat = point[1]; //获取纬度
+            console.log(Lon, Lat);
+            mobileContainer.markAddress(Lon,Lat);
+        }, function (e) {
+            mui.toast("位置信息获取失败");
+        }, {enableHighAccuracy: true, provider: 'system'});
+		});
+
+		function getProjectAttendanceInfoMain(){
+
+			var paramInfo = {
+				projectId: localStorage.getItem("projectInfo").prjId,
+				projectName: localStorage.getItem("projectInfo").prjName
+			}
+			getProjectAttendanceInfo(paramInfo,function (data) {
+				if (data.success) {
+					console.log("考勤信息" + JSON.stringify(data.result))
+					var startTime = data.result.records[0].dutyStartTime
+					startTime = startTime.substring(0,11);
+					var endTime = data.result.records[0].dutyEndTime
+					endTime = endTime.substring(0,11);
+					$('#address').text(data.result.records[0].attendAddr)
+					$('#duty-time').text(startTime+" - "+endTime)
+
+				}
+			})
+		}
+
+
+		function getLocMain(param) {
+
+			getLoc(myProjectId,function (data) {
+                if (data.success){
+					var attGeoJson = JSON.parse(data.result[0].attendGeoJson)
+					fitToRegionArr.push(attGeoJson[0].geometry.coordinates)
+                	console.log(JSON.stringify(attGeoJson[0].geometry.coordinates))
+					mobileContainer.setSelection([{ NAME:'GIS_POI' },{ NAME:'GIS_BUILDING' }])
+					mobileContainer.fitToRegion({},fitToRegionArr)
+				}
+			})
+		}
+
+		var getLoc = function(param, callback) {
+			var url = config.urls.baseUrl + config.actions.getLoc;
+			console.log(JSON.stringify(param));
+			$.ajax(url, {
+				data: param,
+				// data: "",
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					console.log("=====================================")
+					console.log(JSON.stringify(data))
+					// app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						// app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					console.log(type)
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+
+
+	</script>
+
+</html>

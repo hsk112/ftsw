@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>排水户-排口</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.item-position-select{
+			background: url(../../img/commom/map.png) no-repeat center;
+			width: 100%;
+			height: 112px;
+			line-height: 112px;
+			color: #FFFFFF;
+			font-size: 16px;
+			text-align: center;
+			border-radius: 5px;
+			background-size: 100%;
+		}
+		.paish .info-bar-content-item .item-title {
+			padding: 15px 0;
+
+		}
+
+		.paish .info-bar-content-item {
+			height: 226px;
+		}
+		.item-test {
+			position: relative;
+			margin-bottom: 0.5rem;
+			padding: 0.5rem 0 0;
+			border: 1px solid #EEEEEE;
+		}
+		.item-test1 {
+			position: relative;
+			margin-bottom: 10px;
+			padding: 0.5rem 0 0;
+			border: 1px solid #EEEEEE;
+		}
+		.item-test2 {
+			position: relative;
+			margin-bottom: 0.5rem;
+			padding: 0.5rem 0 0;
+			border: 1px solid #EEEEEE;
+		}
+		.item-test-item {
+			margin-bottom: 0.5rem;
+			text-align: left;
+			color: #999999;
+			font-size: 1rem;
+			margin-left: 10px;
+		}
+		.item-test-delete {
+			position: absolute;
+			right: 8px;
+			top: 4px;
+			color: #B1B1B1;
+			font-size: 28px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<div style="position:fixed;top:0;left:0;z-index: 99;width:100%;background: #ffffff;">
+				<ol class="steps">
+					<li class="step-active">
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">基本信息</div>
+						</div>
+					</li>
+					<li class="step-active">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">证照信息</div>
+						</div>
+					</li>
+					<li class="step-active">
+						<div class="step-line"></div>
+						<div class="step-content">
+							<div class="step-num"></div>
+							<div class="step-text">排口信息</div>
+						</div>
+					</li>
+				</ol>
+				<div style="height: 5px;background: #F4F4F4;"></div>
+			</div>
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">排水户登记</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content" style="height: 100vh">
+				<div class="mui-scroll-wrapper" style="margin-top: 90px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="bar-title">
+								排水构筑物信息
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title psgzw">
+										地图选择排水构筑物
+									</div>
+									<div id="add1" class="mui-input-row item-input" style="margin-bottom: 13px;  ">
+										<div id="item-position1" class="item-position-select">
+											点击选择所在位置
+										</div>
+									</div>
+									<!--									<div class="item-test" style="display: block" >-->
+									<!--										<div class="item-test1" ><span style="margin-right: 1.5rem;">a</span><span>a2</span></div>-->
+									<!--										<div class="item-test1" >b</div>-->
+									<!--										<div class="item-test1" >c</div>-->
+									<!--										<div class="item-test1" >d</div>-->
+									<!--									</div>-->
+									<div id="add-psgzw" class="add-title" style="text-align: left;">
+										<img src="../../img/commom/add@2x.png" style="width: 14px;margin-right: 5px;">
+										<span class="add-device" style="color: #337BFC;">选择排水构筑物</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="scroll-li">
+							<div class="bar-title">
+								接驳管信息
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title pcg">
+										地图选择接驳管
+									</div>
+									<div id="add2" class="mui-input-row item-input" style="margin-bottom: 13px;">
+										<div id="item-position2" class="item-position-select">
+											点击选择所在位置
+										</div>
+									</div>
+									<div id="add-psg" class="add-title" style="text-align: left;">
+										<img src="../../img/commom/add@2x.png" style="width: 14px;margin-right: 5px;">
+										<span style="color: #337BFC;">选择接驳管</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="scroll-li">
+							<div class="bar-title">
+								接驳井情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<!-- <div class="item-test2" data-id="point_info_356242" data-num="3"><div class="item-test-item" id= "itManhole">接驳井编号: C24YS890</div><div class="item-test-item">接入管数: 无</div><div class="item-test-item">井盖尺寸(mm): 无</div><div class="item-test-item">井盖材质: 无</div><div class="item-test-item">井深(m): 无</div><div class="item-test-delete">×</div></div> -->
+									<div class="item-title jcj">
+										地图选择接驳井
+									</div>
+									<div id="add3" class="mui-input-row item-input" style="margin-bottom: 13px;">
+										<div id="item-position3" class="item-position-select">
+											点击选择所在位置
+										</div>
+									</div>
+									<div id="add-jcj" class="add-title" style="text-align: left;">
+										<img src="../../img/commom/add@2x.png" style="width: 14px;margin-right: 5px;">
+										<span style="color: #337BFC;">选择接驳井</span>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 90px;margin-bottom: 10px;">
+									<div class="item-title">
+										审核人<span style="color: red;">*</span>
+									</div>
+									<input id="approverUsername" style="display: none;" />
+									<div class="mui-input-row item-input">
+										<input id="approverFullname" required="true" type="text" readonly="readonly" class="" value="" placeholder="请选择审批人">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="bottom-btn">
+							<div class="btn-item" id="step_save">
+								<div style="color: #337BFC;">暂存</div>
+							</div>
+							<div class="btn-item" id="next_step">
+								<div style="background: #337BFC;color: #fff;">提交审核</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		var self;
+
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+
+		var idName;
+		var code;
+		//添加类型 1，2，3 ;如1对应排水构筑物
+		var number;
+		var deviceName;
+		var drainageArr = [];
+		var dischargeArr = [];
+		var wellArr = [];
+		/**
+		 * 暂时写死检查井guid
+		 */
+		//var pshData = JSON.parse(globalGetItem(GlobalKey.psh));
+		var manholeGuid = ''; //pshData == null ? '' :pshData.transportWell  //pshData.transportWell;
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		/*mui.ready(function() {
+			var pshData = localStorage.getItem("ps_discharger");
+			if(pshData) {
+				pshData = JSON.parse(pshData);
+				if(pshData.approverUsername) $("#approverUsername").val(pshData.approverUsername);
+				if(pshData.approverFullname) $("#approverFullname").val(pshData.approverFullname);
+			}
+		});*/
+
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+
+			if(isSelectPsh == "true" && self.type !="add") {
+				var pshData = JSON.parse(globalGetItem(GlobalKey.psh));
+				$('#step_save').hide()
+				$('#next_step').css("width","100%")
+				if(pshData) {					
+					getPshConn(pshData.guid, function (data) {
+						// console.log(JSON.stringify(data))
+						if(data.success){
+							let obj = data.result;
+							if (obj.structures && obj.structures.length > 0) {								
+								var px = 90 + obj.structures.length * 160 + 'px';
+								$('#add-psgzw').parent().css('height', px);
+								for(let i = 0;i<obj.structure.length;i++){
+									var item = obj.structure[i];
+									 drainageArr.push(item.guid)
+										//构建物
+										var expNo = "构建物编号: " + data.result.expNo;
+										if (data.result.expNo == null) {
+											expNo = "构建物编号: 无";
+										}
+										//尺寸大小
+										var size = "尺寸(m*m*m): " + item.size;
+										if (item.size == null) {
+											size = "尺寸(m*m*m): 无";
+										}
+										//排水预处理方式
+										var treatmentMethod = "排水预处理方式: " + item.treatmentMethod;
+										if (item.treatmentMethod == null) {
+											treatmentMethod = "排水预处理方式: 无";
+										}
+										//排水预处理能力
+										var treatmentCapacity = "排水预处理能力: " + item.treatmentCapacity;
+										if (item.treatmentCapacity == null) {
+											treatmentCapacity = "排水预处理能力: 无"
+										}
+										//埋深
+										var burDepth = "埋深(m): " + item.burDepth;
+										if (item.burDepth == null) {
+											burDepth = "埋深(m): 无";
+										}
+		
+										var htmlStr = '<div class="item-test" data-id="' + item.guid + '" data-num="1">' +
+											'<div class="item-test-item">' +expNo+
+											'</div>' +
+											'<div class="item-test-item">' +burDepth+
+											'</div>' +
+											'<div id="itTreatment" class="item-test-item">' +
+											size +
+											'</div>' +
+											'<div class="item-test-item">' +
+											treatmentCapacity +
+											'</div>' +
+											'<div class="item-test-item">' +
+											treatmentMethod +
+											'</div>' +
+											'<span class="item-test-delete mui-icon mui-icon-closeempty" name="del" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+											'</div>';
+										$("#add1").hide();
+										$(".psgzw").append(htmlStr);
+								}
+							}
+							if (obj.disChargeLine && obj.disChargeLine.length > 0) {
+									var px = 90 + obj.disChargeLine.length * 136 + 'px';
+									$('#add-psg').parent().css('height', px);
+									for(let i = 0;i<obj.disChargeLine.length;i++){
+										var item = obj.disChargeLine[i]
+										dischargeArr.push(item.guid);
+										//终点管线编号
+										var ePointExpNo = "终点管线编号: " + item.ePointExpNo;
+										//console.log(ePointExpNo)
+										if (item.ePointExpNo == null) {
+											ePointExpNo = "终点管线编号:无"								
+										}
+										
+										//管线种类
+										var lineType_textValue = "管线种类: " + item.lineType_textValue;
+										if (item.lineType_textValue == null) lineType_textValue = "管线种类:无";
+										
+										//断面尺寸(mm)
+										var spec = "断面尺寸(mm): " + item.spec;
+										if (item.spec == null) {
+											spec = "断面尺寸(mm): 无"
+										}
+										//终点管线埋深(m)
+										var eDeep = "终点管线埋深(m): " + item.eDeep;
+										if (item.eDeep == null) {
+											eDeep = "终点管线埋深(m): 无"
+										}
+										//材质
+										var lineMaterial = "材质: " + item.lineMaterial_dictText;
+										if (item.lineMaterial_dictText == null) {
+											lineMaterial = "材质: 无"
+										}
+										// $(".item-test1").remove();
+								
+										var htmlStr = '<div class="item-test1" data-id="' + item.guid + '" data-num="2">' +
+											'<div class="item-test-item">'  + ePointExpNo+								
+											'</div>' +
+											'<div class="item-test-item">' +
+											'<div style="width:50%;margin-right: 20px;display:inline-block">' + lineType_textValue + '</div>' +
+											'<div style="width:40%;display:inline-block">' + lineMaterial + '</div>' +
+											'</div>' +
+											'<div id="itLine" class="item-test-item">' +
+											spec +
+											'</div>' +
+											'<div class="item-test-item">' +
+											eDeep +
+											'</div>' +
+											'<span class="item-test-delete mui-icon mui-icon-closeempty" name="del" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+											'</div>';
+								
+										$("#add2").hide();
+										$(".pcg").append(htmlStr);								
+									}
+							}
+							if (obj.transportWell && obj.transportWell.length > 0) {
+								var px = 90 + obj.transportWell.length * 160 + 'px';
+								$('#add-jcj').parent().css('height', px);
+								for(let i = 0;i<obj.transportWell.length;i++){
+										var item = obj.transportWell[i]
+										wellArr.push(item.guid);
+										var expNo = '';
+										var pointSize = '';
+										var pointDepth = '';
+										var materialType_dictText = '';
+										var pointPipes = '';
+							
+											//接驳井编号							
+											if (item.expNo == null) {
+												expNo = "接驳井编号: 无";
+											} else expNo = "接驳井编号: " + item.expNo;
+											//井盖尺寸(mm)
+							
+											//接驳井类型
+											var chamberType_dictText = "接驳井类型: " + item.chamberType_dictText;
+											if (item.chamberType_dictText == null) chamberType_dictText = "接驳井类型: 无";
+							
+											if (item.pointSize == null) {
+												pointSize = "井盖尺寸(mm): 无";
+											} else pointSize = "井盖尺寸(mm): " + item.pointSize;
+											//井深(m)
+							
+											if (item.pointDepth == null) {
+												pointDepth = "井深(m): 无";
+											} else pointDepth = "井深(m): " + item.pointDepth;
+											//井盖材质
+											if (item.materialType_dictText == null) {
+												materialType_dictText = "井盖材质: 无";
+											} else materialType_dictText = "井盖材质: " + item.materialType_dictText;
+											//接入管数
+											if (item.pointPipes == null) {
+												pointPipes = "接入管数: 无";
+											} else pointPipes = "接入管数: " + item.pointPipes;
+										
+										var htmlStr = '<div class="item-test2" data-id="' + item.guid + '" data-num="3">' +
+											'<div class="item-test-item" id= "itManhole">' + expNo +
+											// '<span style="margin-right: 20px;">' + expNo + '</span>' +
+											// '<span>' + pointPipes + '</span>' +
+											'</div>' +
+											'<div class="item-test-item">' +									
+											'<div style="width:50%;margin-right: 20px;display:inline-block">' + pointPipes + '</div>' +
+											'<div style="width:40%;display:inline-block">' + chamberType_dictText + '</div>' +
+											'</div>' +
+											'<div class="item-test-item">' +
+											pointSize +
+											'</div>' +
+											'<div class="item-test-item">' +
+											materialType_dictText +
+											'</div>' +
+											'<div class="item-test-item">' +
+											pointDepth +
+											'</div>' +
+											'<span class="item-test-delete mui-icon mui-icon-closeempty" name="del" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+											'</div>';
+										$("#add3").hide();
+										$(".jcj").append(htmlStr);
+								}
+							}
+						}
+					});	
+					if(pshData.approverUsername) $("#approverUsername").val(pshData.approverUsername);
+					if(pshData.approverFullname) $("#approverFullname").val(pshData.approverFullname);
+					}
+			}
+		});
+
+		// const pointCode = {
+		// 	检查井: '040501',
+		// 	雨水口: '040502',
+		// 	跌水井: '040503',
+		// 	水封井: '040504',
+		// 	冲洗井: '040505',
+		// 	排气井: '040506',
+		// 	沉泥井: '040507',
+		// 	泵井: '040508',
+		// 	溢流井: '040509',
+		// 	连接暗井: '040510',
+		// 	排污装置: '040511',
+		// 	倒虹井: '040512',
+		// 	阀门: '040513',
+		// 	暗沟地面岀口: '040514',
+		// 	出口闸: '040515',
+		// 	排水泵站: '040516',
+		// 	化粪池: '040517',
+		// 	隔油池: '040518',
+		// 	沉淀池: '040519',
+		// 	污水处理厂: '040520',
+		// 	压力调节塔: '040521',
+		// 	雨篦: '040522',
+		// 	污篦: '040523',
+		// 	小区污水处理站: '040524',
+		// 	接户井: '040525',
+		// 	闸阀井: '040526',
+		// 	压力井: '040527',
+		// 	拍门井: '040528',
+		// 	截流井: '040529',
+		// 	溢流堰: '040530',
+		// 	调蓄设施: '040531',
+		// 	排水户: '040532',
+		// 	沉砂池: '040533',
+
+		// 	// =======额外新增======
+		// 	接驳井: '041001',
+		// 	天面立管: '041002',
+		// 	高区立管: '041003',
+		// 	低区立管: '041004',
+		// 	未知立管: '041005',
+		// 	虚拟井: '041006',
+		// 	接户管: '041007',
+		// 	排放口: '041008',
+		// 	合流井: '041009',
+		// 	泄流井: '041010',
+		// 	雨量站: '041012',
+		// 	智慧井: '040111',
+		// 	未知点: '042000',
+
+		// 	// =======
+		// 	一般管线点: '040601',
+		// 	交叉点: '040602',
+		// 	出水口: '040603',
+		// 	进水口: '040604',
+		// 	非探测区: '040605',
+		// 	三通: '040606',
+		// 	四通: '040607',
+		// 	多通: '040608',
+		// 	变径: '040609',
+		// 	变材: '040610',
+		// 	转折点: '040611',
+		// 	变坡点: '040612',
+		// 	预留口: '040613',
+		// 	进出房点: '040614',
+		// 	井边点: '040615',
+		// 	偏心点: '040616',
+		// 	起始点: '040617',
+		// 	放水口: '040618',
+		// };
+		$("body").delegate("span[name=del]", "tap", function(e) {
+			let getId = $(this).parent().attr("data-id");
+			let num = $(this).parent().attr("data-num");
+			if (num == 1) deleteData(drainageArr, getId, 'add1');
+			if (num == 2) deleteData(dischargeArr, getId, 'add2');
+			if (num == 3) deleteData(wellArr, getId, 'add3');
+			$(this).parent().remove();
+		});
+		// console.log(JSON.stringify(manholeGuid))
+        // 接驳管,接驳井添加
+		$(".add-title,.item-position-select").on('tap', function() {
+			idName = $(this).attr('id');
+			var title = "";
+
+			if (idName == 'item-position1' || idName == 'add-psgzw') {
+				title = "排水构造物";
+				code = [
+					'040517', //沉沙池
+					'040518', //化粪池
+					'040519', //毛发收集池
+					'040533', //隔油沉沙池，
+				];
+				deviceName = 'DEVICE_POINT_INFO';
+				number = 1;
+
+			} else if (idName == 'item-position2' || idName == 'add-psg') {
+				title = "接驳管";
+				code = '';
+				deviceName = 'DEVICE_PS_LINE';
+				number = 2;
+
+			} else if (idName == 'item-position3' || idName == 'add-jcj') {
+				title = "接驳井";
+				code = ['040501'];
+				deviceName = 'DEVICE_POINT_INFO';
+				number = 3;
+			}
+
+			var extras = {
+				code: code,
+				deviceName: deviceName,
+				number: number
+			}
+			// console.log(JSON.stringify(extras))
+			app.openPage("paish_device.html", {
+				titleNView: {
+					titleText: title,
+					autoBackButton: true,
+				}
+			}, extras);
+
+		})
+
+		//数据返回处理
+		window.addEventListener('newsId', function(event) {
+			//获得事件参数
+			var guid = event.detail.id;
+			manholeGuid = event.detail.exp_no;
+			console.log(manholeGuid)
+			if (number == 1) {
+				if (drainageArr.indexOf(guid) > -1) {
+					app.toast('该设备信息已存在，请勿重复添加')
+				} else {
+					getTreatmentByGuid(guid, function(data) {
+						drainageArr.push(guid);
+						// var itNotNull = $('#itTreatment').text();
+						// if (idName == 'add-psgzw' && itNotNull != '') {
+							var px = 90 + drainageArr.length * 160 + 'px';
+							console.log(px)
+							$('#add-psgzw').parent().css('height', px);
+						// }
+						
+						var expNo;
+						var size;
+						var treatmentMethod;
+						var treatmentCapacity;
+						var burDepth;
+						
+					if (data.result.records.length > 0) {	
+						//构建物编号
+						expNo = "构建物编号: " + data.result.expNo;
+						if (data.result.expNo == null) {
+							expNo = "构建物编号: 无";
+						}
+						//尺寸大小
+						size = "尺寸(m*m*m): " + data.result.size;
+						if (data.result.size == null) {
+							size = "尺寸(m*m*m): 无";
+						}
+						//排水预处理方式
+						treatmentMethod = "排水预处理方式: " + data.result.treatmentMethod;
+						if (data.result.treatmentMethod == null) {
+							treatmentMethod = "排水预处理方式: 无";
+						}
+						//排水预处理能力
+						reatmentCapacity = "排水预处理能力: " + data.result.treatmentCapacity;
+						if (data.result.treatmentCapacity == null) {
+							treatmentCapacity = "排水预处理能力: 无"
+						}
+						//埋深
+						burDepth = "埋深(m): " + data.result.burDepth;
+						if (data.result.burDepth == null) {
+							burDepth = "埋深(m): 无";
+						}
+
+						var htmlStr = '<div class="item-test" data-id="' + guid + '" data-num="' + number + '">' +
+							'<div class="item-test-item">' +expNo+							
+							'</div>' +
+							'<div class="item-test-item">' +burDepth+
+							'</div>' +
+							'<div id="itTreatment" class="item-test-item">' +
+							size +
+							'</div>' +
+							'<div class="item-test-item">' +
+							treatmentCapacity +
+							'</div>' +
+							'<div class="item-test-item">' +
+							treatmentMethod +
+							'</div>' +
+							'<span class="item-test-delete mui-icon mui-icon-closeempty" name="del" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+							'</div>';
+						} else {
+							expNo = "构建物编号: " + manholeGuid;
+							burDepth = "埋深(m): 无";
+							size = "尺寸(m*m*m): 无";
+							treatmentCapacity = "排水预处理能力: 无";
+							treatmentMethod = "排水预处理方式: 无";
+						}	
+						$("#add1").hide();
+						$(".psgzw").append(htmlStr);
+					});
+				}
+			} else if (number == 2) {
+				if (dischargeArr.indexOf(guid) > -1) {
+					app.toast('该设备信息已存在，请勿重复添加')
+				} else {
+					getLineByGuid(guid, function(data) {
+						dischargeArr.push(guid);
+						console.log(dischargeArr)
+						var itNotNull = $('#itLine').text();
+						if (idName == 'add-psg' && itNotNull != '') {
+							var px =  90 + obj.dischargeArr.length * 136 + 'px';
+							$('#' + idName).parent().css('height', px);
+						}
+						
+						var ePointExpNo;
+						var lineType_textValue;
+						var spec;
+						var eDeep;
+						var lineMaterial;
+						
+						if (data.result.records.length > 0) {
+						//终点管线编号
+						ePointExpNo = "终点管线编号: " + data.result.ePointExpNo;
+						//console.log(ePointExpNo)
+						if (data.result.ePointExpNo == null) {
+							ePointExpNo = "终点管线编号:无"
+						}
+						
+						//管线种类
+						lineType_textValue = "管线种类: " +  data.result.lineType_textValue;
+						if ( data.result.lineType_textValue == null) lineType_textValue = "管线种类:无";
+						
+						//断面尺寸(mm)
+						spec = "断面尺寸(mm): " + data.result.spec;
+						if (data.result.spec == null) {
+							spec = "断面尺寸(mm): 无"
+						}
+						//终点管线埋深(m)
+						eDeep = "终点管线埋深(m): " + data.result.eDeep;
+						if (data.result.eDeep == null) {
+							eDeep = "终点管线埋深(m): 无"
+						}
+						//材质
+						lineMaterial = "材质: " + data.result.lineMaterial_dictText;
+						if (data.result.lineMaterial_dictText == null) {
+							lineMaterial = "材质: 无"
+						}
+						// $(".item-test1").remove();
+						// $(".item-test-delete").each(function() {
+						// 	$(this).off("click");
+						// })
+
+						var htmlStr = '<div class="item-test1" data-id="' + guid + '" data-num="' + number + '">' +
+							'<div class="item-test-item">'  + ePointExpNo+								
+							'</div>' +
+							'<div class="item-test-item">' +
+							'<div style="width:50%;margin-right: 20px;display:inline-block">' + lineType_textValue + '</div>' +
+							'<div style="width:40%;display:inline-block">' + lineMaterial + '</div>' +
+							'</div>' +
+							'<div id="itLine" class="item-test-item">' +
+							spec +
+							'</div>' +
+							'<div class="item-test-item">' +
+							eDeep +
+							'</div>' +
+							'<span class="item-test-delete mui-icon mui-icon-closeempty" name="del" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+							'</div>';
+						} else {
+							ePointExpNo = "终点管线编号: " + manholeGuid;
+							lineType_textValue = "管线种类:无";
+							lineMaterial = "材质: 无";
+							spec = "断面尺寸(mm): 无";
+							eDeep = "终点管线埋深(m): 无";
+						}
+						$("#add2").hide();
+						$(".pcg").append(htmlStr);
+					});
+				}
+			} else if (number == 3) {
+				if (wellArr.indexOf(guid) > -1) {
+					app.toast('该设备信息已存在，请勿重复添加')
+				} else {
+					getManholesByGuid(guid, function(data) {
+						//接驳井编号
+						console.log(JSON.stringify(data))
+						wellArr.push(guid);
+						console.log(guid)
+						
+						var expNo = '';
+						var pointSize = '';
+						var pointDepth = '';
+						var materialType_dictText = '';
+						var pointPipes = '';
+
+						if (data.result.records.length > 0) {
+							
+							if (data.result.records[0].expNo == null) {
+								expNo = "接驳井编号: 无";
+							} else expNo = "接驳井编号: " + data.result.records[0].expNo;
+							
+							//接驳井类型
+							var chamberType_dictText = "接驳井类型: " + data.result.chamberType_dictText;
+							if (data.result.chamberType_dictText == null) chamberType_dictText = "接驳井类型: 无";
+							
+							//井盖尺寸(mm)
+
+							if (data.result.records[0].pointSize == null) {
+								pointSize = "井盖尺寸(mm): 无";
+							} else pointSize = "井盖尺寸(mm): " + data.result.records[0].pointSize;
+							//井深(m)
+
+							if (data.result.records[0].pointDepth == null) {
+								pointDepth = "井深(m): 无";
+							} else pointDepth = "井深(m): " + data.result.records[0].pointDepth;
+							//井盖材质
+							if (data.result.records[0].materialType_dictText == null) {
+								materialType_dictText = "井盖材质: 无";
+							} else materialType_dictText = "井盖材质: " + data.result.records[0].materialType_dictText;
+							//接入管数
+							if (data.result.records[0].pointPipes == null) {
+								pointPipes = "接入管数: 无";
+							} else pointPipes = "接入管数: " + data.result.records[0].pointPipes;
+						} else {
+							expNo = "接驳井编号: " + manholeGuid;
+							pointSize = "井盖尺寸(mm): 无";
+							pointDepth = "井深(m): 无";
+							materialType_dictText = "井盖材质: 无";
+							pointPipes = "接入管数: 无";
+							chamberType_dictText = "接驳井类型: 无";
+						}
+
+						// $(".item-test2").remove();
+						// $(".item-test-delete").each(function() {
+						// 	$(this).off("click");
+						// })
+
+						var htmlStr = '<div class="item-test2" data-id="' + guid + '" data-num="' + number + '">' +
+							'<div class="item-test-item" id= "itManhole">' + expNo +
+							// '<span style="margin-right: 20px;">' + expNo + '</span>' +
+							// '<span>' + pointPipes + '</span>' +
+							'</div>' +
+									'<div class="item-test-item">' +									
+									'<div style="width:50%;margin-right: 20px;display:inline-block">' + pointPipes + '</div>' +
+									'<div style="width:40%;display:inline-block">' + chamberType_dictText + '</div>' +
+									'</div>' +
+							'<div class="item-test-item">' +
+							pointSize +
+							'</div>' +
+							'<div class="item-test-item">' +
+							materialType_dictText +
+							'</div>' +
+							'<div class="item-test-item">' +
+							pointDepth +
+							'</div>' +
+							'<span class="item-test-delete mui-icon mui-icon-closeempty" name="del" style="font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+							'</div>';
+						$("#add3").hide();
+						$(".jcj").append(htmlStr);
+						// var itNotNull = $('#itManhole').text();
+						// if (idName == 'add-jcj' && itNotNull != '') {
+							var px = 90 + wellArr.length * 160 + 'px';
+							$('#add-jcj').parent().css('height', px);
+							console.log(wellArr.length)
+						// }
+						// $(".item-test").css('display','block')
+
+						// $(".item-test-delete").each(function() {
+						// 	$(this).click(function() {
+						// 		let id = $(this).parent().attr("data-id");
+						// 		let num = $(this).parent().attr("data-num");
+						// 		if (num == 1) deleteData(drainageArr, id, 'add1');
+						// 		if (num == 2) deleteData(dischargeArr, id, 'add2');
+						// 		if (num == 3) deleteData(wellArr, id, 'add3');
+						// 		$(this).parent().remove();
+						// 	});
+						// })
+					});
+				}
+			}
+		});
+
+		//审批人
+		$("#approverFullname").on("tap", function() {
+			var extras = {
+				multiSelect: false
+			}
+			app.openPage("../commom/organ.html", {
+				titleNView: {
+					titleText: '选择审批人',
+					autoBackButton: true
+				}
+			}, extras);
+			//移除
+			window.removeEventListener('returnSelect', setApprovalUser, false);
+			// 赋值
+			window.addEventListener('returnSelect', setApprovalUser, false);
+		})
+		var setApprovalUser = function(data) {
+			$("#approverFullname").val(data.detail[0].realname);
+			$("#approverUsername").val(data.detail[0].username);
+		}
+
+		//保存
+		$("#step_save").on("tap", function(data) {
+			// let obj = {};
+			// var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+			// if (isSelectPsh == "true") {
+			// 	var pshData = JSON.parse(localStorage.getItem("ps_discharger"));
+			// 	obj.corpCode = pshData.corpCode;
+			// }
+			// var pointStr = globalGetItem(GlobalKey.point);
+			// var point = JSON.parse(pointStr);
+			// mapData.editPoint(
+			// 	point.lng,
+			// 	point.lat,
+			// 	'ps_discharger',
+			// 	obj).then(() => {
+				savePSH();
+				let psh = localStorage.getItem("ps_discharger");
+				let photoData = globalGetItem(GlobalKey.photoJSON);
+				console.log(JSON.stringify(psh));
+				console.log(JSON.stringify(photoData));
+				temporaryPSH(psh, photoData, function(data) {
+					if (data) {
+						app.toast("暂存成功");
+						// clearGlobalItem();
+							globalSetItem(GlobalKey.photoJSON, '');
+							localStorage.setItem("ps_discharger", '');
+							plus.webview.currentWebview().opener().opener().opener().opener().reload();
+							plus.webview.currentWebview().opener().opener().opener().close('none');
+							plus.webview.currentWebview().opener().opener().close('none'); //上上一个页面
+							plus.webview.currentWebview().opener().close('none'); //上一个页面
+							plus.webview.currentWebview().close('none'); //本页面
+						// app.openPage("/main.html", {
+						//     titleNView: {
+						//         titleText: '福田水务',
+						//     },
+						//     'popGesture': 'none'
+						// });
+						// popToTarget(self.returnUrl);
+					}
+				});
+			// }).catch();
+		});
+
+		//下一步
+		$("#next_step").on("tap", function() {
+			if (validateRequiredFields()) {
+				// let obj = {};
+				// var isSelectPsh = globalGetItem(GlobalKey.isSelectPsh);
+				// var pshData = JSON.parse(localStorage.getItem("ps_discharger"));
+				// if (isSelectPsh == "true") {
+				// obj.CORP_CODE = pshData.corpCode;
+				// }
+				// console.log(obj)
+				// var pointStr = globalGetItem(GlobalKey.point);
+				// var point = JSON.parse(pointStr);
+				// // mapData.editPoint(
+				// 	point.lng,
+				// 	point.lat,
+				// 	'ps_discharger',
+				// 	obj).then((data) => {
+				// 	console.log(data)
+					savePSH();
+					var ps = localStorage.getItem("ps_discharger");
+					var psh = JSON.parse(localStorage.getItem("ps_discharger"));
+					console.log(psh.smid)
+					// if (ps.smid == "" && data.result != null && data.result.length > 0 ) {
+					// 	ps.smid = data.result[0]
+					// } else
+					if(psh.smid == "" || psh.smid == undefined ||psh.smid == null){
+						app.toast("排水户缺少SMID值！")
+						return;
+					}
+					// var ps = JSON.parse(localStorage.getItem("ps_discharger"));
+					var photoJSON = globalGetItem(GlobalKey.photoJSON);
+
+					console.log("formdata："+ JSON.stringify(ps))
+					console.log("附件：", photoJSON);
+					if (self.type == 'add') {
+						addPSH(ps, photoJSON, function(data) {
+							if (data.success) {
+							app.toast("新增成功");
+							// clearGlobalItem();
+							globalSetItem(GlobalKey.photoJSON, '');
+							localStorage.setItem("ps_discharger", '');
+							plus.webview.currentWebview().opener().opener().opener().opener().reload();
+							plus.webview.currentWebview().opener().opener().opener().close('none');
+							plus.webview.currentWebview().opener().opener().close('none'); //上上一个页面
+							plus.webview.currentWebview().opener().close('none'); //上一个页面
+							plus.webview.currentWebview().close('none'); //本页面
+							} else app.toast("新增失败");
+						});
+					} else {
+						editPSH(ps, photoJSON, function(data) {
+							// console.log(JSON.stringify(data))
+							if (data.success) {
+								// popToTarget('paish_map.html');
+								
+								var infoPage = plus.webview.currentWebview().opener().opener().opener().opener();
+								if(infoPage.id == 'paish_showOne.html' || infoPage.id == 'paish_showSec.html' || infoPage.id == 'paish_showThe.html'){
+									var page1 = plus.webview.getWebviewById('paish_showOne.html')
+									var page2 = plus.webview.getWebviewById('paish_showSec.html')
+									var page3 = plus.webview.getWebviewById('paish_showThe.html')
+									mui.fire(page1, 'backShowInfo');
+									mui.fire(page2, 'backShowInfo');
+									mui.fire(page3, 'backShowInfo');
+								}else infoPage.reload()
+								
+								plus.webview.currentWebview().opener().opener().opener().close('none');
+								plus.webview.currentWebview().opener().opener().close('none'); //上上一个页面
+								plus.webview.currentWebview().opener().close('none'); //上一个页面
+								app.toast("修改成功");
+								// clearGlobalItem();
+								
+								plus.webview.currentWebview().close('none'); //本页面
+							} else{
+								
+								plus.webview.currentWebview().opener().opener().opener().opener().reload();
+								plus.webview.currentWebview().opener().opener().opener().close('none');
+								plus.webview.currentWebview().opener().opener().close('none'); //上上一个页面
+								plus.webview.currentWebview().opener().close('none'); //上一个页面
+								app.toast("修改失败");
+							} 
+						});
+					}
+
+				// }).catch();
+			}
+		});
+
+		function savePSH() {
+			var ps_dischargerStr = localStorage.getItem("ps_discharger");
+			var ps_discharger = JSON.parse(ps_dischargerStr);
+			var drainageStr = '';
+			if (drainageArr.length > 0) {
+				for(let i = 0;i<drainageArr.length;i++){
+					drainageStr += drainageArr[i]+",";
+				}
+				ps_discharger.structures = drainageStr.substring(0,drainageStr.length-1);//构筑物
+			}
+			console.log(drainageArr);
+			var dischargeStr = '';
+			if (dischargeArr.length > 0){
+				for(let i = 0;i<dischargeArr.length;i++){
+					dischargeStr += dischargeArr[i]+",";
+				}
+				ps_discharger.disChargeLine = dischargeStr.substring(0,dischargeStr.length-1);//接驳管
+			}
+			var wellStr = '';
+			if (wellArr.length > 0) {
+				for(let i = 0;i<wellArr.length;i++){
+					wellStr += wellArr[i]+",";
+				}
+				ps_discharger.transportWell = wellStr.substring(0,wellStr.length-1);//接驳井
+			}
+			console.log(drainageStr);
+			console.log(dischargeStr);
+			console.log(wellStr);
+			ps_discharger.approverUsername = $("#approverUsername").val();//审核人
+			ps_discharger.approverFullname = $("#approverFullname").val();//审核人
+			ps_discharger.inputername = app.userInfo().username;
+
+			ps_discharger.inputerfullname = app.userInfo().realname;
+			localStorage.setItem("ps_discharger", JSON.stringify(ps_discharger));
+			// return ps_discharger;
+		}
+
+		function deleteData(arr, id, dom) {
+			console.log(JSON.stringify(arr.length))
+			console.log(JSON.stringify(id))
+			console.log(JSON.stringify(dom))
+			if (arr.length === 1) {
+				$('#' + dom).parent().css('height', '220px');
+				$('#' + dom).show();
+			} else {
+				if(dom == 'add2'){
+					let px = 90 + (arr.length-1) * 136 + 'px';
+					$('#' + dom).parent().css('height', px);
+				}else{
+					let px = 90 + (arr.length-1) * 160 + 'px';
+					$('#' + dom).parent().css('height', px);
+				}
+			}
+			if (arr && arr.length > 0) {
+				for (let i = 0; i < arr.length; i++) {
+					if (arr[i] === id) {
+						arr.splice(i, 1);
+						break;
+					}
+				}
+			}
+			console.log(arr)
+		}
+	</script>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>详情</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css"/>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+  <div id="scroll-wrapper" class="" style="height: calc(100vh - 65px);">
+    <!--          <div  class="mui-slider-group" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">-->
+    <div class="mui-content-padded" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+      <div id="title" style="font-weight: bold;font-size: 18px;padding: 20px"></div>
+      <div style="width: 100%;height: 1px;background-color: #eee"></div>
+      <div id="nameTime" style="color: #B1B1B1;padding: 20px"></div>
+      <div style="width: 100%;height: 1px;background-color: #eee"></div>
+      <div id="content" style="color: black;padding: 20px">
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.picker.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/timer.js"></script>
+<script src="../../js/vconsole.min.js"></script>
+<script src="../../js/bscroll.js"></script>
+<script src="../../js/homeMessage/messageDetail.js"></script>
+<script>
+    var param = {
+        id: "",
+    }
+    mui.init({
+        swipeBack: false
+    });
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        var wvs = plus.webview.all();
+        curr.close('slide-out-right');
+    };
+    mui.plusReady(function () {
+        var self = plus.webview.currentWebview();
+        setMsgRead(self.anntId);
+        $('#title').text(self.titile);
+        $('#nameTime').text(self.sender_dictText + " " + self.sendTime);
+        $('#content').text(self.msgContent);
+    });
+
+    function setMsgRead(id) {
+        setMessageRead(id,function (data) {
+            if (data.success==true){
+                console.log("已读");
+            } else {
+                console.log("未读");
+            }
+        })
+    }
+</script>
+</html>

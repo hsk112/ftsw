@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>检查项</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.search-item {
+			    border-radius: 0px;
+			    
+			}
+			.dept_icon {
+				width: 15px;
+				margin: 0 10px;
+			}
+			.user_icon {
+				width: 15px;
+				margin: 0 10px;
+			}
+			
+			
+			.organ-table-view{
+			   position: relative;
+			   margin-top: 0;
+			   margin-bottom: 0;
+			   padding-left: 0;
+			   list-style: none;
+			   background-color: #fff;
+			}
+			.organ-table-view-cell {
+			    position: relative;
+			    overflow: hidden;
+			    padding: 13px 15px;
+			    -webkit-touch-callout: none;
+				font-size: 16px;
+				font-weight: 400;
+				color: #191515;
+			}
+			.organ-table-view-cell.organ-collapse .organ-table-view {
+			    display: none;
+			    /* margin-top: 11px; */
+			    margin-right: -15px;
+			    margin-bottom: -11px;
+			    margin-left: -15px;
+			    border: 0;
+			}
+			.organ-table-view-cell:after {
+			    position: absolute;
+			    right: 0;
+			    bottom: 0;
+			    left: 15px;
+			    height: 1px;
+			    content: '';
+			    -webkit-transform: scaleY(.5);
+			    transform: scaleY(.5);
+			    background-color: #c8c7cc;
+			}
+			
+			.organ-table-view-cell.organ-collapse > .organ-navigate-right:after, .organ-table-view-cell.organ-collapse > .organ-push-right:after {
+			    content: '\e581';
+			}
+			.organ-navigate-right:after, .organ-push-right:after {
+			    right: 15px;
+			    content: '\e583';
+			}
+
+			.organ-navigate-right:after, .organ-push-left:after, .organ-push-right:after {
+			    font-family: Muiicons;
+			    font-size: inherit;
+			    line-height: 1;
+			    position: absolute;
+			    top: 50%;
+			    display: inline-block;
+			    -webkit-transform: translateY(-50%);
+			    transform: translateY(-50%);
+			    text-decoration: none;
+			    color: #bbb;
+			    -webkit-font-smoothing: antialiased;
+			}
+			.organ-table-view-cell.organ-collapse.organ-active > .organ-navigate-right:after, .organ-table-view-cell.organ-collapse.organ-active > .organ-push-right:after {
+			    content: '\e580';
+			}
+			.organ-collapse-content {
+			    position: relative;
+			    display: none;
+			    overflow: hidden;
+			    margin: 0px -15px -11px;
+			    padding: 8px 15px;
+			    -webkit-transition: height .35s ease;
+			    -o-transition: height .35s ease;
+			    transition: height .35s ease;
+			    background: white;
+			}
+			.organ-table-view-cell > a:not(.mui-btn) {
+			    position: relative;
+			    display: block;
+			    overflow: hidden;
+			    margin: -11px -15px;
+			    padding: inherit;
+			    white-space: nowrap;
+			    text-overflow: ellipsis;  
+			    color: inherit;
+			}
+			.organ-table-view-cell.organ-collapse .organ-table-view .organ-table-view-cell {
+			    padding-left: 31px;
+			    background-position: 31px 100%;
+			}
+			.mui-ios .organ-table-view-cell {
+			    -webkit-transform-style: preserve-3d;
+			    transform-style: preserve-3d;
+			}
+			
+			.mui-table-view li{
+				margin: 0 0px 0 30px;
+			}
+			
+			.mui-checkbox input[type='checkbox']:before {
+			    right: -18px;
+			    position: absolute;
+			}
+			
+			.mui-table-view {
+			    margin-bottom: -9px;
+			}
+
+			.no-data {
+				position: absolute;
+				top: 10rem;
+				left: 50%;
+				display: inline-block;
+				font-size: 20px;
+				color: #999;
+				transform: translateX(-50%);
+			}
+			.mui-table-view-cell{
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+			}
+			.scrollSpan{
+				display: inline-block;
+				box-sizing: border-box;
+				overflow: scroll;
+				white-space: nowrap;
+				width: 70%;
+				margin-left:10px;			
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+			}
+			.mui-table-view-cell::-webkit-scrollbar {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+<!--			<header class="mui-bar mui-bar-nav common-header">-->
+<!--				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+<!--				<h1 class="mui-title">demo</h1>-->
+<!--				<div class="mui-pull-right header-btn">-->
+<!--					<img src="img/nfc@2x.png"/>-->
+<!--					<img src="img/download@2x.png"/>-->
+<!--				</div>-->
+<!--			</header>-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul id="contain-ul" class="organ-table-view" style="text-align: left">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		var checkedValues = []; //选中的人
+		var done = "";
+		var multiSelect = false;
+		var unSelect = false; //不选
+		var type = 1; //安全检查1;质量检查2;
+
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.ready(function() {
+		});
+
+		mui.plusReady(function() {
+			// exitProject('', (res) => {
+			// 	console.log(JSON.stringify(res))
+				
+			// })
+			var self = plus.webview.currentWebview();
+			multiSelect = self.multiSelect || false; //是否多选
+			unSelect = self.unSelect || false; //是否可以不选
+			type = self.type || 1;
+			self.setStyle({
+				titleNView: {
+					buttons: [{
+						float: 'right',
+						width: '100',
+						fontSize: '17',
+						text: '完成',
+						onclick: done
+					}]
+				}
+			});
+
+			mui('.organ-table-view').on('change', 'input', function() {
+				var self = plus.webview.currentWebview();
+				var count = $('input[type="checkbox"]:checked').length;
+				var value = count ? "完成(" + count + ")" : "完成";
+				self.setStyle({
+					titleNView: {
+						buttons: [{
+							float: 'right',
+							width: '100',
+							fontSize: '17',
+							text: value,
+							onclick: done
+						}]
+					}
+				});
+
+				returnCheckList();
+				
+			});
+
+			initItem();
+			
+			if (!multiSelect) { //单选的情况下，设置监听
+				$(document).on("tap",".mui-checkbox",function() {
+					//清除其他选项
+					$(".mui-checkbox").find('input[type="checkbox"]:checked').each(function() {
+						$(this).attr('checked', false);
+					});
+				});
+			}
+		})
+
+
+		//完成并返回
+		var done = function() {
+
+			returnCheckList();
+
+			if (checkedValues.length > 0) {
+				// projectInfo=JSON.parse(localStorage.getItem("projectInfo"))				
+				// if(!isEmpty(projectInfo)){
+				// 	selectProject({'prjCode':projectInfo.prjCode},(res)=>{
+				// 		console.log(JSON.stringify(res));
+				// 	})
+				// }
+				var view = plus.webview.currentWebview().opener();
+				mui.fire(view, 'returnSelect', checkedValues);
+				// mui.back();
+				plus.webview.currentWebview().close('none'); //正确
+			} else {
+				if(!unSelect){
+					app.toast("你没选择任何记录");
+				}else{
+					var view = plus.webview.currentWebview().opener();
+					mui.fire(view, 'returnSelect', '');
+					// mui.back();
+					plus.webview.currentWebview().close('none'); //正确
+					}
+			}
+		}
+
+		//组装选中的记录
+		var returnCheckList = function() {
+			checkedValues = [];
+			$('input[type="checkbox"]:checked').each(function() {
+				checkedValues.push({
+					title: $(this).parent().attr("data-title"),
+					value: $(this).parent().attr("data-value"),
+				});
+			});
+		}
+
+		var initItem = function() {
+			getCheckItem(type, function(data) {
+			 console.log(JSON.stringify(data))
+			 setCheckItem(data.result);
+			});
+		}
+		//显示
+		var setCheckItem = function(items) {
+			var itemli = "";
+			if (items || items.length > 0) {
+				for (var i = 0; i < items.length; i++) {
+					var item = items[i];
+					var level = "level_" + i;
+					var children = initChild(level, item.children);
+					itemli = itemli + '<li id="' + item.value + '"class="organ-table-view-cell organ-collapse">' +
+							'	<a class="organ-navigate-right ' + level +
+							'" href="#"><img src="../../img/commom/cItem.png" class="dept_icon"/><div class="scrollSpan">'+item.title + '</div>' +
+							'</a>' +
+							'	<div class="organ-collapse-content">' +
+							children +
+							'	</div>' +
+							'</li>';
+
+				}
+
+				$('.organ-table-view').html(itemli);
+
+				$('a[class*=level_]').on("tap", function() {
+					$(this).parent().siblings().removeClass("organ-active");
+					$(this).parent().siblings().removeClass("organ-active");
+					$(this).parent().siblings().find(".organ-collapse-content").css('display', 'none');
+					$(this).parent().siblings().find(".organ-collapse-content").find(".organ-table-view").css('display', 'none');
+
+					if ($(this).parent().hasClass("organ-active")) {
+						$(this).parent().removeClass("organ-active");
+						$(this).parent().find(".organ-collapse-content").css('display', 'none');
+						$(this).parent().find(".organ-collapse-content").find(".organ-table-view").css('display', 'none');
+					} else {
+						$(this).parent().addClass("organ-active");
+						$(this).parent().find(".organ-collapse-content:first").css('display', 'block');
+						$(this).parent().find(".organ-collapse-content:first").find(".organ-table-view:first").css('display',
+								'block');
+					}
+				});
+			} else {
+				itemli = '<div class="no-data">暂无数据</div>';
+				$('.organ-table-view').html(itemli);
+			}
+		}
+
+		var initChild = function(level, childrenItem) {			
+			if (childrenItem) {
+				var chli = "";				
+				for (var i = 0; i < childrenItem.length; i++) {
+					
+					var item = childrenItem[i];
+					// console.log(level+"------"+i+"--------"+item.title)
+					var seclevel = level + "_" + i;
+					var secChildren = "";
+					
+					if (item.children) {
+						// console.log(item.children)
+						secChildren = initChild(seclevel, item.children);						
+					}								
+					var userli = "";
+					var userul = "";
+					// console.log(item.title+item.leaf)
+					if(!item.leaf){				
+						for (var index = 0; index < item.children.length; index++) {
+							var cItem = item.children[index];
+								userli = userli + '<li ' +
+									' data-title="' + cItem.title +
+									'" data-value="' + cItem.value +
+									'" class="mui-table-view-cell mui-checkbox mui-right"><input type="checkbox"' +
+									' /><a class="" href="#"><div class="scrollSpan">'+cItem.title + '</div>' +
+									 '</a></li>';
+							
+					}
+						userul = '<ul class="mui-table-view" id="data-ul-li">' + userli + '</ul>'
+					chli = chli + '<li id="' + item.value + '"class="organ-table-view-cell organ-collapse">' +
+						'	<a class="organ-navigate-right ' + seclevel +
+						'" href="#"><img src="../../img/commom/cItem.png" class="dept_icon"/>'+
+						'<div class="scrollSpan">'+item.title + '</div></a>' +
+						'	<div class="organ-collapse-content">' +
+						secChildren + userul + '	</div>' +
+						'</li>';							
+					}
+				}
+
+				var chul = '<ul class="organ-table-view">' + chli + '</ul>'
+
+				return chul;
+			}
+			return "";
+		}
+		
+		// function exitProject(param, callback) {
+		// 	var url = config.urls.baseUrl + config.actions.exitProject;
+
+		// 	app.showLoader();
+		// 	$.ajax(url, {
+		// 		data:param,
+		// 		dataType: 'json', //服务器返回json格式数据
+		// 		type: 'GET', //HTTP请求类型
+		// 		headers: {
+		// 			// "Content-Type": "application/json",
+		// 			"Content-Type": "application/x-www-form-urlencoded",
+		// 			"X-Access-Token": app.sessionId(),
+		// 		},
+		// 		timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+		// 		success: function(data) {
+		// 			app.hideLoader();
+		// 			if (dealingWithResponseCode(data)) {
+		// 				callback(data);
+		// 				// mui.alert(data.message)
+		// 			} else {
+		// 				app.toast(data.message);
+		// 			}
+		// 		},
+		// 		error: function(xhr, type, errorThrown) {
+		// 			var res = xhr.responseText;
+		// 			res = JSON.parse(res)
+		// 			mui.alert(res.message)
+		// 			dealingWithErrorRequest(errorThrown);
+		// 			app.hideLoader();
+		// 			return callback('网络异常,请稍后再试');
+		// 		}
+		// 	});
+		// };
+		
+		// function selectProject(param, callback) {
+		// 	var url = config.urls.baseUrl + config.actions.selectProject;
+
+		// 	app.showLoader();
+		// 	$.ajax(url, {
+		// 		data:param,
+		// 		dataType: 'json', //服务器返回json格式数据
+		// 		type: 'GET', //HTTP请求类型
+		// 		headers: {
+		// 			// "Content-Type": "application/json",
+		// 			"Content-Type": "application/x-www-form-urlencoded",
+		// 			"X-Access-Token": app.sessionId(),
+		// 		},
+		// 		timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+		// 		success: function(data) {
+		// 			app.hideLoader();
+		// 			if (dealingWithResponseCode(data)) {
+		// 				callback(data);
+		// 				// mui.alert(data.message)
+		// 			} else {
+		// 				app.toast(data.message);
+		// 			}
+		// 		},
+		// 		error: function(xhr, type, errorThrown) {
+		// 			var res = xhr.responseText;
+		// 			res = JSON.parse(res)
+		// 			mui.alert(res.message)
+		// 			dealingWithErrorRequest(errorThrown);
+		// 			app.hideLoader();
+		// 			return callback('网络异常,请稍后再试');
+		// 		}
+		// 	});
+		// };
+	</script>
+
+</html>

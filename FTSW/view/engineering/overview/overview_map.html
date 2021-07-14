@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>项目管理-查找项目</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mixed.css" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+			.mapboxgl-ctrl.mapboxgl-ctrl-group{
+				bottom: 55%;
+				left: 10px;
+				position: fixed;
+			}
+			.mui-scroll {
+				/* background: url(../img/temp_dt.png) no-repeat center; */
+				background-size: 100% 100%;
+				height: 100%;
+				width: 100%;
+			}
+
+			.search-bar {
+			    background: none;
+				height: 80px;
+				line-height: 80px;
+				width: 100%;
+				position: absolute;
+				top: 0px;
+				z-index: 999;
+			}
+
+			.search-input .mui-input-row .mui-input-clear~.mui-icon-clear {
+				top: 12px;
+				width: 40px;
+				height: 40px;
+			}
+
+			.search-item {
+			    background: #FFFFFF;
+			    height: 40px;
+			    border-radius: 16px;
+				overflow: hidden;
+			}
+
+			.search-input {
+			    height: 40px;
+			    line-height: 40px;
+			}
+
+			.search-icon img {
+			    top: 30%;
+				margin-left: 18.5px;
+			}
+
+			.btn1{
+				position: fixed;
+				width: 70px;
+				bottom: 200px;
+				right: 0;
+				margin-right: 5px;
+				z-index: 100;
+				text-align: right;
+			}
+			.btn2{
+				position: fixed;
+				width: 80px;
+				bottom: 53px;
+				right: 0;
+				margin-right: 15px;
+				z-index: 100;
+				text-align: right;
+			}
+			.add_btn{
+				position: fixed;
+				width: 70px;
+				bottom: 300px;
+				right: 0;
+				margin-right: 5px;
+				z-index: 100;
+				text-align: right;
+			}
+			.add_btn img{
+				width: 70px;
+			}
+			.stat{
+				font-size: 14px;
+				font-weight: 500;
+				color: #FF5656;
+			}
+			.location_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 45%;
+				left: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.ws_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 60%;
+				right: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.ys_btn{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				bottom: 60%;
+				right: 10px;
+				z-index: 100;
+				text-align: center;
+				border-radius: 10px;
+				background: #FFFFFF;
+			}
+
+			.location_btn img{
+				width: 30px;
+				margin-top: 10px;
+			}
+
+			.bottom-item {
+				padding: 19px;
+				background: #FFFFFF;
+				position: fixed;
+				height: 180px;
+				width: 100%;
+				bottom: 0;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+				text-align: left;
+			}
+
+			.bottom-item-title {
+				font-size:18px;
+				color:rgba(22,21,21,1);
+				font-weight: bold;
+			}
+
+		/* 	.bottom-item-info{
+				font-size:14px;
+				color:rgba(25,21,21,1);
+				line-height:21px;
+				height:21px;
+				padding: 18px 0px;
+				border: 1px solid red;
+			} */
+
+			.bottom-item-btn {
+				height: 200px;
+			}
+
+			.bottom-item-btn .item{
+				width: 100%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+			}
+
+			.bottom-item-btn .item div{
+				border: 1px solid #347CFC;
+				border-radius: 20px;
+				height: 40px;
+				margin-top: 12px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+
+			#left_item{
+				padding: 15px;
+				background: #FFFFFF;
+				position: fixed;
+				bottom: 40px;
+				left:19px;
+				z-index: 100;
+				border-radius: 5px;
+				text-align: left;
+			}
+			#left_item ul li span{
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				margin-right: 10px;
+			}
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+
+			.triangle-down {
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				/*border-top: 10px solid #f02e2e;*/
+				margin-bottom: 10px;
+			}
+
+			.mui_rank {
+				position: absolute;
+				top: 0px;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				pointer-events: none;
+				background: url(../img/commom/tingwei.png) no-repeat center ;
+			}
+			.hello{
+				width: 10px;
+				height: 10px;
+				background: red;
+			}
+			.world{
+				width: 10px;
+				height: 10px;
+				background: blue;
+			}
+			.box:nth-last-child{
+				border: none;
+			}
+			.marker {width:0; height:0;}
+			
+			   .marker span {
+			     display:flex;
+			     justify-content:center;
+			     align-items:center;
+			     box-sizing:border-box;
+			     width: 15px;
+			     height: 15px;
+			     color:#fff;
+			     background: #693;
+			     border:solid 2px;
+			     border-radius: 0 70% 70%;
+			     box-shadow:0 0 2px #000;
+			     cursor: pointer;
+			     transform-origin:0 0;
+			     transform: rotateZ(-135deg);
+				 font-size: 7px;
+				 position: relative;
+				 top:-4px
+			   }
+			
+			   .marker b {transform: rotateZ(135deg)}
+			   .empty{
+			   	line-height:100px;
+			   	width:100%;
+			   	text-align: center;
+			   	font-size: 16px;
+			   	color: #BBBBBB;
+			   }
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar" id="nav-bar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<h1 class="mui-title">项目管理</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;z-index:99">
+						</div>
+						<div class="mui_rank">
+							<div class="triangle-down">
+							</div>
+						</div>
+						<div class="location_btn" id="location_btn">
+							<img src="../../../img/commom/location.png" />
+						</div>
+						<div class="btn2" id="refresh">
+							<img src="../../../img/rfIcon.png" />
+						</div>
+						<div id="left_item">
+							<ul>
+								<li style="margin-bottom:13.5px;"><span style="background-color:#FC5933;"></span>未完工</li>
+								<li><span style="background-color:#999999;"></span>已完工</li>
+							</ul>
+						</div>
+						<div class="bottom-item" style="display:none ;">
+							<div class="bottom-item-title">
+								<div id="left_title" style="float: left;    display: flex;">
+									<!-- <img id="info_icon" src="../../../img/enginering/project_map_icon.png" style="width:20px;height:24px"> -->
+									<div class="marker" style="width:auto;height:auto;margin-right:10px"><span style="transform-origin: 	50% 50%;position: relative;
+										bottom: 3px;width: 24px;background:#FC5933;
+										height: 24px;"></span></div>
+									<h1 style="display: inline-block;font-weight: bold;color: #161515;    width: 230px;overflow: scroll;white-space: nowrap;">加载中</h1>
+								</div>
+								<div id="right_title" class="stat" style="float: right;;font-weight: bold;color: #FF5656;">加载中</div>
+							</div>
+							<div id="content" class="bottom-item-info" style="margin-top: 40px;display: flex;">
+								<div id="" style="font-weight: 400;color: #888888;margin-right: 17px;">项目位置: </div>
+								<div id="location" style="    display: -webkit-box;overflow: hidden;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;flex: 1;font-weight: 400;color: #444444;">加载中</div>
+							</div>
+							<div class="bottom-item-btn">
+								<div class="item" id="toDetail">
+									<div style="color: #337BFC;">查看详情</div>
+								</div>
+							</div>
+						</div>
+						<div class="search-bar" id="searchBar">
+							<div class="search-item">
+								<div class="search-icon" id="searchIcon">
+									<img src="../../../img/commom/search1@2x.png" />
+								</div>
+								<div class="search-input">
+									<div class="mui-input-row">
+										<input id="searchInput" style="padding-right: 40px;" type="text" placeholder="请输入项目编号|项目名称">
+									</div>
+									<span class="mui-icon mui-icon-closeempty" id="clear" style="position: absolute;top:12px;right:12px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display:none  ;"></span>
+								</div>
+							</div>
+							<div id="searchBox" style="touch-action: none;position: fixed;z-index:999; top:62px;margin:0 20px;background: #FFFFFF;width: calc(100% - 40px);box-shadow: 1px 1px 23px 0px rgba(0, 0, 0, 0.06);">
+								<!-- 	<div class="box" style="width:100%;height: 70px;border-bottom: 1px solid #EDEDED;">
+										<div style="float: left;width: 15%;background: #FFFFFF;height: 70px;">
+											<img src="../../../img/commom/dz@2x.png" style="width: 20px;height: 20px;" />
+										</div>
+										<div style="width:85%;float: right;background: #FFFFFF;">
+											<div style="padding-top: 10px;font-size: 14px;font-weight: 400;color: #1A1616;line-height: 21px;text-align: left;background: #FFFFFF;">福田区保税区项目</div>
+											<div style="padding-top: 5px; font-size: 12px;font-weight: 400;color: #B2B2B2;line-height: 21px;text-align: left;background: #FFFFFF;">深圳市福田区保税区桃花路8号中天元物大厦</div>
+										</div>
+									</div> -->
+								<!-- 									<div style="height:30px;line-height:30px;">
+										<a style="font-size: 12px;margin-right: 10px;">更多搜索结果</a>
+									</div> -->
+							</div>
+
+						</div>
+					</div>
+
+					<!--页面主内容区结束-->
+				</div>
+
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/position.js"></script>
+	<script src="../../../js/overview.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var flag = true;
+		var param = {
+			pageNo: 1, //页码
+			pageSize: 10,
+			order: 'desc',
+			field: 'id,prjName,programme,conservationStatus,action',
+			column: 'createTime',
+			prjName: '',
+			username: ''
+		}
+		var projectInfo = {
+			prjId: "",
+			prjName: "",
+			prjCode: "",
+			pageCount: 1
+		}
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		mui.init({
+			swipeBack: false
+		});
+		var self2;
+		mui.plusReady(function() {
+			self2 = plus.webview.currentWebview();
+			var extras = {
+				target: self2.target,
+				targetName: self2.targetName,
+			}
+			self2.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/bgTop.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							app.openPage("projectList.html", {
+								titleNView: {
+									titleText: '项目列表',
+									autoBackButton: true,
+								}
+							},extras);
+						}
+					}],
+				}
+			});
+
+
+		});
+		var pageSize = 6;
+		var copy;
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options: {
+				minZoom: 10
+			},
+			style: 'color'
+		});
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+		const layerSelections = window['mobile-lib'].layerSelections;
+
+		mobileContainer.on('load', () => {
+			getPro(param, function(data) {
+				if (data.success) {
+					copy = data.result
+					if (data.result != null && data.result.length != 0) {
+						var keyPoint = [];
+						copy.forEach((item) => {
+							// item = removePropertyOfNull(item);
+							item.key = 'PROJECT_INFO';
+							keyPoint.push({
+								position: [item.smX, item.smY],
+								color: item.stage >= 5 ? "#999999" : '#FC5933', //大于5是已完成
+							})
+						});
+						// console.log(copy)
+						mobileContainer.showOtherPoints(copy);
+
+						mobileContainer.showPoints(keyPoint);
+					}
+				} else {
+					mui.toast("项目列表查询失败");
+				}
+			})
+			// console.log(mobileContainer.showOtherPoints)
+
+
+
+			// getCurrentPosition();
+			mobileContainer.enableCenterAddress(true);
+			mobileContainer.on('showAddress', () => {
+				console.log(flag+"----------");
+				if(flag){
+					$('#searchBox').hide();
+					setTimeout(function() {
+						$("#searchInput").trigger("blur");
+					}, 100); //延时 触发失去焦点事件.
+				}
+			})
+			// mobileContainer.setQuery([{NAME: 'PROJECT_INFO'}]); //加载项目
+			mobileContainer.showAnnotation(true);
+			// $(".bottom-item").fadeIn(); //显示底部信息
+		});
+		var removePropertyOfNull = function(obj) {
+			Object.keys(obj).forEach(item => {
+				if (!obj[item]) delete obj[item]
+			})
+			return obj;
+		}
+		var getPro = function(param, callback) {
+			var url = config.urls.baseUrl + config.actions.getPrjInfoList //conversationList;
+
+			$.ajax(url, {
+				data: param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get',
+				// async:false,//HTTP请求类型
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId()
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					console.error(JSON.stringify(xhr));
+					console.error(errorThrown);
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		}
+
+		//点击项目
+		mobileContainer.on('showInfo', data => {
+			if(flag){
+				console.log('这里是点击项目')
+				console.log(data);
+				mobileContainer.flyTo(data.feature);
+				// console.log("显示信息：" + JSON.stringify(data));
+				showMyBottomInfo(data.feature.properties)
+				// showBottomInfo(data.feature.properties.GUID);
+				// if (data.feature.properties.GUID) { //point_info_b_67951
+				// 	//显示底部信息
+				// 	showBottomInfo(data.feature.properties.GUID);
+				// } else {
+				// 	//显示底部信息
+				// }
+			}
+		});
+
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+			// return false
+			if(flag){
+				if (data) {
+					// $("#searchBox").html("");
+					$("#searchBar").show();
+					$(".bottom-item").hide(); //隐藏底部信息
+					// clearGlobalItem();
+					// mobileContainer.enableCenterAddress(true);
+					// console.log(data);
+					mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+					mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+					// console.log("点击位置：" + JSON.stringify(data.lngLat))
+					// $(".bottom-item").fadeIn();
+					$("#left_item").fadeIn();
+					$("#refresh").show();
+					$("#location_btn").show();
+					$(".mapboxgl-ctrl-group").show();
+					$("#hunjie").show();
+					$("#add").show();
+				} else {
+					app.toast('当前选择不在可选范围内，请重新选择');
+				}
+			}
+		});
+		
+		$("#clear").on("tap", function(event) {
+			$("#searchInput").val("");
+			$("#searchBox").html("");
+			setTimeout(function() {
+				$("#searchInput").trigger("blur");
+			}, 100); //延时 触发失去焦点事件.
+			$(this).hide()
+		});
+		//显示地图信息
+		// mobileContainer.on('showAddress', data => {
+
+		// 	var point = {
+		// 		'lng': data.location.lon,
+		// 		'lat': data.location.lat
+		// 	}
+
+		// });
+
+
+
+		var getCurrentPosition = function() {
+			if (mui.os.plus) {
+				app.showLoader();
+			}
+			//重新定位时重新查询项目
+			// mobileContainer.setQuery([{NAME: 'PROJECT_INFO'}]) //加载项目
+			//获取当前坐标
+			plus.geolocation.getCurrentPosition(function(position) {
+				// app.hideLoader();
+				//坐标修正
+				var point = coordtransform.gcj02towgs84(position.coords.longitude, position.coords.latitude);
+
+				var Lon = point[0]; //获取经度
+				var Lat = point[1]; //获取纬度
+
+				mobileContainer.flyTo([Lon, Lat], {
+					zoom: 12
+				});
+				console.log("当前位置信息：" + Lon + "," + Lat);
+				//查询附近1km内的所有项目
+				mapData.getFeaturesByBuffer(
+					[{
+							NAME: 'DEVICE_POINT_INFO',
+							HYBRID_TYPE: 1,
+							DEL_FLAG: 0
+						},
+						{
+							NAME: 'DEVICE_POINT_INFO',
+							HYBRID_TYPE: 2,
+							DEL_FLAG: 0
+						}
+					],
+					// [114.04950213683215, 22.514631855561593], 0.1
+					[Lon, Lat], 0.01
+				).then(res => {
+					var arr = res.features;
+					console.log("附近1km内的项目个数：" + arr.length);
+					var guidStr = "";
+					for (var i = 0; i < arr.length; i++) {
+						guidStr = guidStr + arr[i].properties.GUID + ","
+					}
+					if (guidStr.length > 0) {
+						guidStr = guidStr.substring(0, guidStr.length - 1);
+					}
+					console.log("附近1km内的项目：" + JSON.stringify(res) + ",guidList:" + guidStr);
+				});
+				mobileContainer.markAddress(Lon, Lat);
+				app.hideLoader();
+			}, function(e) {
+				app.hideLoader();
+				console.log("error:" + e.message);
+				mui.toast("位置信息获取失败，将无法获取附近项目");
+			})
+
+		}
+
+		//重新定位
+		$("#location_btn").on("tap", function() {
+			$("#searchBox").html("");
+			getCurrentPosition();
+		});
+
+		//重新加载
+		$("#refresh").on("tap", function() {
+			$("#searchBox").html("");
+			getCurrentPosition();
+		});
+
+
+		//修改后返回重新加载底部数据
+		// window.addEventListener('return', function() {
+		// 	mobileContainer.setQuery([{
+		// 		NAME: 'PROJECT_INFO'
+		// 	}]) //加载项目
+		// 	showBottomInfo(globalGetItem(GlobalKey.guid));
+		// }, false);
+
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+		//搜索框
+		$('#searchInput').on('focus', () => {
+			var inputdata = $("#searchInput").val();
+			inputdata != null && inputdata != "" ? $("#searchBox").show() : '';
+		})
+		$("#searchInput").on('input', debounce((e) => {
+			$('#searchBox').show()
+			$(".bottom-item").hide();
+			$("#left_item").hide();
+			var inputdata = $("#searchInput").val();
+			if (inputdata != null && inputdata != "") {
+				$('#clear').show();
+				var inputParam = {
+					pageNo: 1,
+					pageSize: 4,
+					appParameter: inputdata,
+				};
+				// console.log(copy);
+				// searchInfo(param);
+				mySearchInfo(inputParam);
+			} else {
+				$('#clear').hide();
+				$("#searchBox").html("");
+
+			}
+		}, 680))
+
+		function mySearchInfo(param) {
+			var text = param.appParameter;
+			var html = '';
+			// console.log('zhelishi input')
+			var filterArr = myFilter(text);
+			var newArr = []; //用于渲染
+			// console.log(filterArr);
+			newArr = filterArr.slice(param.pageSize * (param.pageNo - 1), param.pageSize * (param.pageNo));
+			var nextArr = filterArr.slice(param.pageSize * (param.pageNo), param.pageSize * (param.pageNo+1));
+			console.log(newArr)
+			if (newArr.length > 0) {
+				for (var k = 0; k < newArr.length; k++) {
+					var copyItem = newArr[k];
+					html += '<div class="box" prjName=' + copyItem.prjName + ' prjState=' + copyItem.stage + ' prjLocation=' +
+						copyItem.prjLocation + ' style="width:100%;height: 70px;border-bottom: 1px solid #EDEDED;" name=' + copyItem.smY +
+						',' + copyItem.smX + ' prjCode = ' + copyItem.prjCode + '>' +
+						'<div style="float: left;width: 15%;background: #FFFFFF;height: 70px;">' +
+						'	<img src="../../../img/commom/dz@2x.png" style="width: 20px;height: 20px;" />' +
+						'</div>' +
+						'<div style="width:85%;float: right;background: #FFFFFF;">' +
+						'	<div style="padding-top: 10px;font-size: 14px;font-weight: 400;color: #1A1616;line-height: 21px;text-align: left;background: #FFFFFF;width:90%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">' +
+						copyItem.prjName + '</div>' +
+						'	<div style="padding-top: 5px; font-size: 12px;font-weight: 400;color: #B2B2B2;line-height: 21px;text-align: left;background: #FFFFFF;width:90%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">' +
+						copyItem.prjLocation + '</div>' +
+						'</div>' +
+						'</div>';
+				};
+
+				if (param.pageNo == 1) {
+					if (newArr.length === param.pageSize && nextArr.length != 0) {
+						html += '<div style="height:30px;line-height:30px;padding-bottom:30px">' +
+							'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+							'</div>';
+					} else {
+						html += '<div style="height:30px;line-height:30px;text-align:center;width:100%">' +
+							'<a style="font-size: 12px;margin-right: 10px;">没有更多了</a>' +
+							'</div>';
+					}
+				} else {
+					if (newArr.length == param.pageSize && nextArr.length != 0) {
+						console.log(newArr.length)
+						html += '<div style="height:30px;line-height:30px;padding-bottom:30px">' +
+							'<a id="pre" name="' + param.pageNo +
+							'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+							'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+							'</div>';
+					}else if (newArr.length < param.pageSize || nextArr.length == 0) {
+						html += '<div style="height:30px;line-height:30px;padding-bottom:30px">' +
+							'<a id="pre" name="' + param.pageNo +
+							'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+							'</div>';
+					}
+
+				}
+			}
+
+			if (param.pageNo == 1 && newArr.length == 0) html += `<div class='empty'>暂无数据</div>`
+			//第二页多数据
+			// html += '<div style="height:30px;line-height:30px;">' +
+			// 		'<a id="pre" name="' + param.pageNo +
+			// 		'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+			// 		'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+			// 		'</div>';
+			// }
+			$("#searchBox").html(html);
+		}
+
+		function myFilter(text) {
+			return copy.filter((item) => {
+				// console.log(item.prjName)
+				return item.prjName.indexOf(text) > -1 || item.prjNo.indexOf(text) > -1
+			})
+		}
+
+		function searchInfo(param) {
+			param.appParameter = $("#searchInput").val();
+			getMixPageList(false, param, function(data) {
+				if (data.success) {
+					console.log("搜索结果：" + JSON.stringify(data));
+					var dataList = data.result.records
+					var html = "";
+					$("#searchBox").html("");
+					if (dataList.length == 0 && param.pageNo == 1) {
+						html = '<div style="width:100%;height: 50px;border-bottom: 1px solid #EDEDED;">' +
+							'<div style="background: #FFFFFF;">' +
+							'暂无数据' +
+							'</div>' +
+							'</div>';
+						// $("#searchBox").append(html);
+						// $("#searchBox").html(html);
+					} else {
+						for (var i = 0; i < dataList.length; i++) {
+							var guid = dataList[i].guid;
+							var addr = dataList[i].address != null ? (dataList[i].address.length > 20 ? dataList[i].address.substring(0,
+								20) + "..." : dataList[i].address) : "无";
+							var expNo = dataList[i].expNo;
+							var SmY = dataList[i].SmY != undefined ? dataList[i].SmY : 114.11111;
+							var SmX = dataList[i].SmX != undefined ? dataList[i].SmX : 22.114455;
+							console.log("====SmY:" + dataList[i].SmY + ",SmX:" + dataList[i].SmX);
+							html += '<div class="box" guid="' + expNo + '" name="' + SmY + ',' + SmX +
+								'" style="width:100%;height: 70px;border-bottom: 1px solid #EDEDED;">' +
+								'<div style="float: left;width: 15%;background: #FFFFFF;height: 70px;">' +
+								'	<img src="../../../img/commom/dz@2x.png" style="width: 20px;height: 20px;" />' +
+								'</div>' +
+								'<div style="width:85%;float: right;background: #FFFFFF;">' +
+								'	<div style="padding-top: 10px;font-size: 14px;font-weight: 400;color: #1A1616;line-height: 21px;text-align: left;background: #FFFFFF;">' +
+								expNo + '</div>' +
+								'	<div style="padding-top: 5px; font-size: 12px;font-weight: 400;color: #B2B2B2;line-height: 21px;text-align: left;background: #FFFFFF;">' +
+								addr + '</div>' +
+								'</div>' +
+								'</div>';
+							// alert(guid + addr + expNo);
+							// $("#searchBox").append(html);
+
+						}
+						if (dataList.length == pageSize) {
+							if (param.pageNo == 1) {
+								html += '<div style="height:30px;line-height:30px;">' +
+									'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+									'</div>';
+							} else {
+								html += '<div style="height:30px;line-height:30px;">' +
+									'<a id="pre" name="' + param.pageNo +
+									'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+									'<a id="more" name="' + param.pageNo + '" style="font-size: 12px;margin-right: 50px;float:right">下一页</a>' +
+									'</div>';
+							}
+
+						} else {
+							if (param.pageNo == 1) {
+								html += '<div id="nomore" style="height:30px;line-height:30px;">' +
+									'<a style="font-size: 12px;margin-right: 10px;">没有更多了</a>' +
+									'</div>';
+							} else {
+								if (dataList.length == 0) {
+									html += '<div style="width:100%;height: 60px;border-bottom: 1px solid #EDEDED;margin-bottom:20px">' +
+										'<div style="background: #FFFFFF;">' +
+										'暂无更多数据' +
+										'</div>' +
+										'</div>';
+								}
+								html += '<div style="height:30px;line-height:30px;">' +
+									'<a id="pre" name="' + param.pageNo +
+									'" style="font-size: 12px;margin-right: 10px;width:150px;float:left;">上一页</a>' +
+									'<a style="font-size: 12px;margin-right: 10px;">没有更多了</a>' +
+									'</div>';
+							}
+						}
+
+					}
+					$("#searchBox").html(html);
+				} else {
+					app.toast("未查询到任何数据");
+					$("#searchBox").html("未查询到任何数据");
+				}
+			});
+		}
+
+		function selectProject(param, callback) {
+			var url = config.urls.baseUrl + config.actions.selectProject;
+		
+			app.showLoader();
+			$.ajax(url, {
+				data: param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'GET', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					var res = xhr.responseText;
+					res = JSON.parse(res)
+					mui.alert(res.message)
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+
+		//项目详情
+		$("#toDetail").on('tap', function() {
+			// 将项目信息保存到localStorage
+			projectInfo.prjId = $(this).attr('prjId');
+			projectInfo.prjName = $(this).attr('prjName');
+			projectInfo.prjCode = $(this).attr('prjCode');
+			projectInfo.prjNo = $(this).attr('prjNo');
+			projectInfo.prjType = $(this).attr('prjType');
+			// console.log("projectInfo=" + JSON.stringify(projectInfo))
+			localStorage.setItem("projectInfo", JSON.stringify(projectInfo))
+			
+			console.log("====targetPage:" + self2.target + ",targetName:" + self2.targetName);
+			selectProject({
+				'prjCode': projectInfo.prjCode
+			}, (res) => {
+				var extras = {
+					target: self2.target,
+					targetName: self2.targetName,
+				}
+				app.openPage("overviewOne.html", {
+					titleNView: {
+						titleText: '项目概览',
+						autoBackButton: true,
+					}
+				},extras);
+			})
+
+		})
+
+		$("#searchInput").focus(function() {
+			$(".bottom-item").hide();
+			$("#left_item").hide();
+			$("#hunjie").hide();
+			$("#add").hide();
+			$("#refresh").hide();
+			$("#location_btn").hide();
+			$(".mapboxgl-ctrl-group").hide();
+		});
+		// .blur(function() {
+		// 	$("#refresh").show();
+		// 	$("#location_btn").show();
+		// 	$(".mapboxgl-ctrl-group").show();
+		// 	// $("#searchBox").html("");
+		// 	// $("#searchBox").css("z-index",-1);
+		// 	$("#left_item").show();
+		// 	$("#hunjie").show();
+		// 	$("#add").show();
+		// 	// $(this).val("");
+		// });
+		$("#searchBox").on('tap', "#more", function(e) {
+			e.stopPropagation()
+			console.log(flag+"111111111111111")
+			flag = false;
+			console.log(flag)
+			$("#location_btn").hide();
+			$(".mapboxgl-ctrl-group").hide();
+			$("#left_item").hide();
+			$("#hunjie").hide();
+			$("#add").hide();
+			var pageNo = parseInt($(this).attr("name")) + 1;
+			var param = {
+				pageNo: pageNo,
+				pageSize: 4,
+				appParameter: $("#searchInput").val(),
+			};
+			mySearchInfo(param);
+			setTimeout(function(){
+			 flag = true	
+			},1500)
+			console.log(false)
+		})
+
+		$("#searchBox").on('tap', "#pre", function() {
+			$("#location_btn").hide();
+			$(".mapboxgl-ctrl-group").hide();
+			$("#left_item").hide();
+			$("#hunjie").hide();
+			$("#add").hide();
+			var pageNo = parseInt($(this).attr("name")) - 1;
+			var param = {
+				pageNo: pageNo,
+				pageSize: 4,
+				appParameter: $("#searchInput").val(),
+			};
+			mySearchInfo(param);
+			// setTimeout(function() {
+			// 	mui.toast("加载完成");
+			// }, 1500);
+		})
+
+		$("#searchBox").on('tap', "#nomore", function() {
+			mui.toast("没有更多了");
+		})
+
+		$("#searchBox").on('tap', ".box", function() {
+			var that = $(this);
+			var itemData = {};
+			itemData.prjName = that.attr("prjName");
+			itemData.prjState = that.attr("prjState");
+			itemData.prjLocation = that.attr("prjLocation");
+			itemData.prjCode = that.attr('prjCode');
+			
+			// return false
+			setTimeout(function() {
+				var latlng = that.attr("name").split(",");
+				var lat = latlng[0];
+				var lng = latlng[1];
+				console.log(lat + "," + lng);
+				mobileContainer.flyTo([lng, lat], {
+					zoom: 16
+				});
+				showMyBottomInfo(itemData);
+				$(".bottom-item").fadeIn(); //显示底部信息
+				//通过guid查询项目信息
+				// showBottomInfo(that.attr("guid"));
+
+				$("#location_btn").show();
+				$(".mapboxgl-ctrl-group").show();
+				$("#searchBox").html("");
+				// $("#left_item").show();
+				$("#hunjie").show();
+				// $("#add").show();
+				$("#searchInput").val("");
+			}, 200)
+		});
+
+
+		$("#searchInput").keypress(function(even) {
+			$(".bottom-item").hide();
+			if (even.which == 13) {
+				var inputdata = $("#searchInput").val();
+				if (inputdata != null && inputdata != "") {
+					var param = {
+						page: 1,
+						pageSize: pageSize,
+						appParameter: inputdata,
+					};
+					searchInfo(param);
+				} else {
+					$("#searchBox").html("");
+				}
+			}
+		});
+
+		var showMyBottomInfo = function(data) {
+			if (!data.prjLocation) {
+				return false
+			};
+			console.log(JSON.stringify(data))
+			$('.bottom-item h1').text(isEmp(data.prjName));
+			$('.bottom-item #location').text(isEmp(data.prjLocation));
+			console.log('这里是地址', data.prjLoc)
+			$('.bottom-item .stat').text(parseInt(data.stage) >= 5 ? '已完成' : '未完成').css('color', parseInt(data.stage) >= 5 ?
+				'#999999' : '#FC5933');
+			$('.bottom-item .marker span').css('background', parseInt(data.stage) >= 5 ? '#999999' : '#FC5933')
+			$('#toDetail').attr('prjId', data.projectId);
+			$('#toDetail').attr('prjName', data.prjName);
+			$('#toDetail').attr('prjNo', data.prjNo);
+			$('#toDetail').attr('prjCode', data.prjCode);
+			$('#toDetail').attr('prjType', data.prjType);
+			setTimeout(() => {
+				$(".bottom-item").fadeIn(); //显示底部信息
+			}, 100)
+		}
+		/**
+		 * 显示底部项目信息
+		 * @param {Object} mixInfo
+		 */
+		var oldstate;
+		var showBottomInfo = function(guid) {
+			searchMixById(guid, function(data1) {
+				console.log(JSON.stringify(data1));
+				if (data1.success && data1.result != null) { //是项目
+					var mixInfo = data1.result;
+					//定位至项目
+					var lat = mixInfo.SmY;
+					var lng = mixInfo.SmX;
+					//保存选中项目经纬度
+					globalSetItem(GlobalKey.Lat, lng);
+					globalSetItem(GlobalKey.Lng, lat);
+					mobileContainer.markAddress(lng, lat);
+					mobileContainer.flyTo([lng, lat], {
+						zoom: 13
+					});
+					//重置底部信息
+					// console.log(mixInfo);
+					document.getElementById("info_icon").setAttribute("src", mixLevel(isEmp(mixInfo.reformState), isEmp(mixInfo.dischargerType)));
+					// $("#code").html(data.feature.properties.EXP_NO); //编号
+					$("#code").html(mixInfo.mixCode);
+					// var status = mixInfo.reformState == 1 ? "改造" : "未改造";
+					// var status =getReformState(mixInfo.reformState);
+					var mixTypeText = mixInfo.mixType == 1 ? "雨入污" : "污入雨";
+					getReformState(mixInfo.reformState, function(data) {
+						$("#right_title").html(data); //状态
+					});
+					oldstate = mixInfo.reformState
+					$("#mixType").html(mixTypeText); //混接类型
+					// $("#mixSour").html(getMixSource(mixInfo.mixSource)); //混接来源
+					getMixSource(mixInfo.mixSource, function(data) {
+						$("#mixSour").html(data);
+					})
+					$("#mixDiameter").html(mixInfo.mixDiameter); //混接管径
+					$("#mixDep").html(mixInfo.mixDepth); //混接埋深
+					// $("#mixPosition").html(getMixPosition(mixInfo.mixPosition)); //混接位置
+					getMixPosition(mixInfo.mixPosition, function(data) {
+						$("#mixPosition").html(data); //混接位置
+					})
+					var addr = mixInfo.address != null ? (mixInfo.address.length > 15 ? mixInfo.address.substring(0, 15) + "..." :
+						mixInfo.address) : "无";
+					$("#mixAddress").html(addr); //混接地点
+					// globalSetItem(GlobalKey.mixStatusText)
+					globalSetItem(GlobalKey.mix, JSON.stringify(mixInfo)); //保存项目信息
+					globalSetItem(GlobalKey.guid, guid);
+					globalSetItem(GlobalKey.isSelectMix, "true"); //是否设置项目
+					$(".bottom-item").fadeIn(); //显示底部信息
+					$("#left_item").hide();
+					$("#searchBar").hide();
+					$("#add").hide();
+					//修改标题为项目信息
+					// var self = plus.webview.currentWebview();
+					self2.setStyle({
+						titleNView: {
+							titleText: "项目信息",
+						}
+					});
+
+				} else {
+					app.toast("未查询到项目信息，该项目已不存在或网络异常，请稍后再试！");
+					$(".bottom-item").hide(); //隐藏底部信息
+					$("#left_item").fadeIn();
+					$("#searchBar").show();
+					$("#add").show();
+					//修改标题为项目信息
+					// var self = plus.webview.currentWebview();
+					self2.setStyle({
+						titleNView: {
+							titleText: "查找项目",
+						}
+					});
+				}
+			});
+		}
+
+		//只要是点击地图，就直接初始化项目信息
+		var initMix = function() {
+
+		}
+
+		// window.addEventListener('refresh1', function(e) { //执行刷新
+		// 	mobileContainer.setQuery([{
+		// 		NAME: 'PROJECT_INFO'
+		// 	}]) //加载项目
+		// 	// window.location.reload();
+
+		// 	showBottomInfo(globalGetItem(GlobalKey.guid));
+		// });
+
+		//返回
+		mui.back = function() {
+			var extras = {
+				target: self2.target,
+				targetName: self2.targetName,
+			}
+			console.log(JSON.stringify(extras))
+			app.openPage("../overview/projectList.html", {
+				titleNView: {
+					titleText: '项目概览',
+					autoBackButton: true,
+					closePage: true
+				},
+			}, extras);
+		}
+	</script>
+
+</html>

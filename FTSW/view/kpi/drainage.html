@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>排水监管</title>
+	</head>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	<link href="../../css/common.css"  rel="stylesheet" />
+	<style type="text/css">
+		.drainageNum {
+			height: 219px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		.drainageNum_h {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.drainageNum_b {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.drainageNum_hl {
+			width: 112px;
+			height: 17px;
+			font-size: 18px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #262626;
+			line-height: 24px;
+			margin-left: 19px;
+			margin-top: 17.5px;
+		}
+
+		.drainageNum_h2 {
+			width: 251px;
+			height: 16px;
+			font-size: 17px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #262626;
+			white-space: nowrap;
+			margin-top: 15px;
+			margin-bottom: 29px;
+			margin-left: 19px;
+		}
+
+		.drainageNum_hr {
+			width: 43.5px;
+			height: 11px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #0493F3;
+			line-height: 18px;
+			margin-right: 20px;
+			margin-top: 20.5px;
+		}
+
+		.drainageNum_hrn {
+			height: 11px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #0493F3;
+			line-height: 18px;
+			margin-right: 20px;
+			margin-top: 20.5px;
+			white-space: nowrap;
+		}
+
+		.to__flow__time {
+			display: flex;
+			width: 110px;
+			height: 28px;
+			justify-content: center;
+			align-items: center;
+			margin-top: 17.5px;
+		}
+
+		.to__flow__time p {
+			width: 50%;
+			text-align: center;
+			height: 100%;
+			line-height: 28px;
+			margin: 0;
+			padding: 0;
+			border: 1px solid rgba(238, 238, 238, 1);
+		}
+
+		.to__flow__time .active {
+			background-color: rgba(4, 147, 243, 1);
+			color: #fff;
+			border: 1px solid rgba(4, 147, 243, 1);
+		}
+
+		.to__time__se {
+			display: flex;
+			margin-left: 15px;
+			margin-right: 15px;
+			margin-top: 17.5px;
+			align-items: center;
+		}
+
+		.to__time__se p {
+			margin: 0;
+			padding: 0;
+			color: rgba(4, 147, 243, 1);
+		}
+
+		.to__time__se img {
+			width: 12px;
+			height: 7px;
+		}
+
+		.drainageNum_hr1 {
+			width: 42.5px;
+			height: 11px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #0493F3;
+			line-height: 18px;
+			margin-right: 20px;
+			margin-top: 20.5px;
+		}
+
+		.xq_suml,
+		.xq_sumr {
+			display: flex;
+		   justify-content: space-around; 
+			margin-top: 37px;
+			/* background-color: yellow; */
+		}
+
+		.xq_suml1,
+		.xq_sumr1 {
+			margin-top: 29px;
+		}
+
+		.xq_sumr {
+			margin-right: 31px;
+		}
+
+		.xqgwzl,
+		.xqgwqs {
+			width: 120px;
+			height: 14px;
+			font-size: 14px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #7F7F7F;
+			line-height: 24px;
+			margin-left: 31px;
+		}
+
+		.xqgwzl_num,
+		.xqgwqs_num {
+			width: 13px;
+			height: 18px;
+			font-size: 24px;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #0493F3;
+			line-height: 24px;
+			/* margin-right: 30px; */ 
+		}
+
+
+
+		#drainHousehold {
+			height: 392px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		#mainName {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			/* height: ; */
+		}
+
+		/* .names{
+		} */
+		.pshyear {
+			display: block;
+		}
+
+
+		#overflowPoint {
+			height: 328px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+
+		#hybridJunction {
+			height: 328px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		#waterQuality {
+			height: 304px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		#operation {
+			height: 532px;
+			background-color: white;
+			margin-bottom: 5px;
+		}
+
+		#main2 {
+			margin-left: 107.5px;
+			margin-top: 43px;
+		}
+
+		#title1 {
+			width: 89px;
+			height: 14px;
+			font-size: 15px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #262626;
+			line-height: 9px;
+			white-space: nowrap;
+			margin-left: 143px;
+			margin-top: 12px;
+		}
+
+		#main3 {
+			margin-left: 107.5px;
+			margin-top: 43px;
+		}
+
+		.imgs {
+			width: 9px;
+			height: 7px;
+			display: inline-block;
+			float: right;
+			margin-top: 4.5px;
+		}
+		.imgs1{
+			width: 9px;
+			height: 7px;
+			display: inline-block;
+			margin-top: 32px;
+		}
+	</style>
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!-- 排水监管开始 -->
+						<div class="drainageNum">
+
+							<div class="drainageNum_h">
+								<div class="drainageNum_hl"><span>排水监管工作</span></div>
+								<div class="drainageNum_hr"><span class="timeYear">2020</span><img
+										src="../../img/arrowDownBlue.png" alt="" class="imgs"></div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml">
+									<span class="xqgwzl">小区管网总量(km)</span>
+									<span class="xqgwzl_num pipeLength">0</span>
+								</div>
+								<div class="xq_sumr">
+									<span class="xqgwqs">小区管网清疏(km)</span>
+									<span class="xqgwqs_num objCount">0</span>
+								</div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml xq_suml1">
+									<span class="xqgwzl">小区管网测量(km)</span>
+									<span class="xqgwzl_num checkNumber">0</span>
+								</div>
+								<div class="xq_sumr xq_sumr1">
+									<span class="xqgwqs">缺陷总量(处)</span>
+									<span class="xqgwqs_num bugTotal">0</span>
+								</div>
+							</div>
+
+							<div class="drainageNum_b">
+								<div class="xq_suml xq_suml1">
+									<span class="xqgwzl">消缺量(处)</span>
+									<span class="xqgwzl_num bugDealWith">0</span>
+								</div>
+								<div class="xq_sumr xq_sumr1">
+									<span class="xqgwqs">混接点核销量(个)</span>
+									<span class="xqgwqs_num mixingPoint">0</span>
+								</div>
+							</div>
+
+						</div>
+						<!-- 排水监管结束 -->
+
+						<!-- 排水户统计开始 -->
+						<div id="drainHousehold">
+							<div class="drainageNum_h" style="margin-bottom: 10px;">
+								<div class="drainageNum_hl"><span>排水户统计</span></div>
+								<!-- <div class="drainageNum_hr1"><button style="border: none;color:#0493F3;"><span
+											class="pshyear">2021</span></button></div> -->
+							</div>
+							<div id="main" style="width:100%;height:240px;"></div>
+							<div id="mainName" style="width: 100%;height: 100px;">
+								<!-- <div class="names">
+											<span class="nameColor" style="display: inline-block;width: 8px;height: 8px;background-color: yellow;"></span>
+											<span class="name"style="font-size: 12px;">工业类</span>
+										</div> -->
+							</div>
+						</div>
+						<!-- 排水户统计结束 -->
+						<!-- 溢流点统计开始 -->
+						<div id="overflowPoint">
+							<div class="drainageNum_h" style="align-items: center;">
+								<div class="drainageNum_hl"><span>溢流点统计</span></div>
+								<div style="display: flex;">
+									<div class="to__flow__time">
+										<p :class="isYear ? 'active' : ''" @click="swicthDate()">年</p>
+										<p :class="isYear ? '' : 'active'" @click="swicthDate()">月</p>
+									</div>
+									<div class="to__time__se" @click="selectTime()">
+										<p>{{timeTxt}}</p>
+										<img src="../../img/arrowDownBlue.png" alt="">
+										<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+									</div>
+								</div>
+							</div>
+							<div id="flowChart" style="width:100%;height: 280px;">
+
+							</div>
+						</div>
+						<!-- 溢流点统计结束 -->
+
+						<!-- 混接点统计开始 -->
+						<div id="hybridJunction">
+							<div class="drainageNum_h" style="align-items: center;">
+								<div class="drainageNum_hl"><span>混接点统计</span></div>
+								<div style="display: flex;">
+									<div class="to__flow__time">
+										<p :class="isYear ? 'active' : ''" @click="swicthDate()">年</p>
+										<p :class="isYear ? '' : 'active'" @click="swicthDate()">月</p>
+									</div>
+									<div class="to__time__se" @click="selectTime()">
+										<p>{{timeTxt}}</p>
+										<img src="../../img/arrowDownBlue.png" alt="">
+										<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+									</div>
+								</div>
+							</div>
+							<div id="blendChart" style="width: 100%;height: 280px;">
+
+							</div>
+						</div>
+						<!-- 混接点统计结束 -->
+						<!-- 水质净化开始 -->
+						<div id="waterQuality">
+							<div class="drainageNum_h">
+								<div class="drainageNum_h2"><span>水质净化厂年度平均进水指标统计</span></div>
+							</div>
+							<div id="main1" style="width: 100%;height:270px;"></div>
+						</div>
+						<!-- 水质净化结束 -->
+						<!-- 水质净化厂年度统计开始 -->
+						<div id="waterQuality">
+							<div class="drainageNum_h">
+								<div class="drainageNum_h2"style="margin-top: 28px;"><span>水质净化厂年度统计</span></div>
+								<div class="drainageNum_hr" ><button style="border: none;color:#0493F3;width: 30.5px;"><span
+											class="timeYear3">2020</span></button></div><img src="../../img/arrowDownBlue.png" alt="" class="imgs1">
+								<div class="drainageNum_hrn"><button style="border: none;color:#0493F3;width: 30.5px;"><span
+											class="chang">滨河厂</span></button></div>
+											<img src="../../img/arrowDownBlue.png" alt="" class="imgs1" style="margin-left: 10px;margin-right: 2px;">
+
+							</div>
+							<div id="main6" style="width: 100%;height:270px;"></div>
+						</div>
+						<!-- 水质净化厂年度统计结束 -->
+						<!-- 运维抽查统计开始 -->
+						<div id="operation">
+							<div class="drainageNum_h">
+								<div class="drainageNum_h2"><span>运维抽查统计</span></div>
+								<button style="border: none;color:#0493F3;"><div class="drainageNum_hr"><span class="timeYears">2020</span><img
+											src="../../img/arrowDownBlue.png" alt="" class="imgs"></div></button>
+								</div>
+							<div id="main2" style="width: 160px;height:160px;"></div>
+							<div id="title1">小区抽查统计</div>
+							<div id="main3" style="width: 160px;height:160px;"></div>
+							<div id="title1">市政抽查统计</div>
+						</div>
+						<!-- 运维抽查统计结束 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/kpi/drainage.js"></script>
+	<script src="../../js/kpi/index.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/echarts.min.js"></script>
+	<script src="../../js/vue.js"></script>
+	<script src="./echarts-module/flow-chart.js"></script>
+	<script src="./echarts-module/flow-vue.js"></script>
+	<script src="./echarts-module/blend-vue.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		// 排水监管工作开始  
+		var url1 = config.urls.baseUrl+'ft-emergency/statistics/kpi/drain/work_happening' //排水监管工作
+		var url2 = config.urls.baseUrl+'ft-emergency/statistics/kpi/drain/psh_statistics' //排水户统计
+		var url3 = config.urls.baseUrl+'ft-new-device/dataStatistics/waterPurification' //水质净化厂年度平均指标统计
+		var url4 = config.urls.baseUrl+'ft-emergency/statistics/kpi/drain/spot_check_statistics' //运维抽查统计
+		var url6 = config.urls.baseUrl+'ft-emergency/statistics/kpi/drain/water_purify_statistics' //水质净化厂年度统计
+		var parmas1 = {
+			year: $('.timeYear').text()
+		};
+		getDrainage(url1, parmas1, function(data) {
+			console.log(JSON.stringify(data.result))
+			$('.pipeLength').text(data.result.pipeLength.toFixed(0)) //小区官网总量
+			$('.objCount').text(data.result.objCount.toFixed(0)) //小区官网清疏
+			$('.checkNumber').text(data.result.checkNumber.toFixed(0)) //小区管网测量
+			$('.bugTotal').text(data.result.bugTotal.toFixed(0)) //缺陷总量
+			$('.bugDealWith').text(data.result.bugDealWith.toFixed(0)) //消缺量
+			$('.mixingPoint').text(data.result.mixingPoint.toFixed(0)) //混接点核销量
+		})
+		$('.timeYear').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".timeYear").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		$('.timeYear').on('DOMNodeInserted', function() {
+			parmas1 = {
+				year: $('.timeYear').text()
+			};
+			getDrainage(url1, parmas1, function(data) {
+				console.log(JSON.stringify(data.result))
+				$('.pipeLength').text(data.result.pipeLength.toFixed(0)) //小区官网总量
+				$('.objCount').text(data.result.objCount.toFixed(0)) //小区官网清疏
+				$('.checkNumber').text(data.result.checkNumber.toFixed(0)) //小区管网测量
+				$('.bugTotal').text(data.result.bugTotal.toFixed(0)) //缺陷总量
+				$('.bugDealWith').text(data.result.bugDealWith.toFixed(0)) //消缺量
+				$('.mixingPoint').text(data.result.mixingPoint.toFixed(0)) //混接点核销量
+			})
+		})
+		// 排水监管工作结束
+
+		//排水户统计开始
+		var parmas2 = {}
+		var arr1 = []
+		var arr2 = []
+		getDrainage(url2, parmas2, function(data) {
+			console.log(JSON.stringify(data.result))
+			// var pshName=['农贸市场服务类', '居民住宅类', '美容美发', '其他', '工业类', '工程建设类', '餐饮类','医疗卫生类','科研类','汽车服务类','垃圾收集处理类','洗涤类','住宿服务类','畜禽养殖类','综合商业服务类']
+			var year = []
+			year = data.result.year
+
+			$('.pshyear').on('tap', function() {
+				var optionsYear = []
+				for (var i = 0; i < year.length; i++) {
+					optionsYear.push({
+						value: i,
+						text: year[i]
+					})
+				}
+				var picker = new mui.PopPicker();
+				picker.setData(optionsYear);
+				picker.show(function(selectItems) {
+					$(".pshyear").text(selectItems[0].text)
+					CheckTypeIndex = selectItems[0].value
+				})
+			})
+			for (var j = 0; j < data.result.data.length; j++) {
+				var arr = Object.values(data.result.data[j])[0]
+				// console.log( Array.from(arr)[1])
+				let index = year.findIndex(item => item == $(".pshyear").text()) //获取年的下标
+				arr1.push(Array.from(arr)[index]) //对应年份的数量
+			}
+			console.log(arr1)
+			var myChart = echarts.init(document.getElementById('main'));
+			option1 = {
+				// color:["#0385FF","#91CC75","#FAC858","#EE6666",'#73C0DE',"#0385FF","#91CC75","#FAC858","#EE6666",'#73C0DE',"#0385FF","#91CC75","#FAC858","#EE6666",'#73C0DE'],
+				title: {
+					subtext: '单位（个）'
+				},
+				xAxis: {
+					type: 'category',
+					// data: ['农贸市场服务类', '居民住宅类', '美容美发', '其他', '工业类', '工程建设类', '餐饮类','医疗卫生类','科研类','汽车服务类','垃圾收集处理类','洗涤类','住宿服务类','畜禽养殖类','综合商业服务类']
+				},
+				yAxis: {
+					type: 'value'
+				},
+				series: [{
+					// data: [120, 1000, 150, 80, 70, 110, 130,124,12,3,1,312,231,3,123],
+					data: arr1,
+					type: 'bar',
+					itemStyle: {
+						normal: {
+							color: function(params) {
+								var colorList = ["#0385FF", "#91CC75", "#FAC858", "#EE6666",
+									'#73C0DE', "#3BA272", "#FC8452", "#9A60B4", "#EA81CE",
+									'#80FFA5', "#00DDFF", "#37A2FF", "#FF0087", "#6991E3",
+									'#73C0DE', '#262626'
+								]
+								return colorList[params.dataIndex]
+							},
+						}
+					}
+				}],
+				// legend:{
+				//  data:['农贸市场服务类', '居民住宅类', '美容美发', '其他', '工业类', '工程建设类', '餐饮类','医疗卫生类','科研类','汽车服务类','垃圾收集处理类','洗涤类','住宿服务类','畜禽养殖类','综合商业服务类']
+				// }
+			};
+			myChart.setOption(option1);
+
+			$('.pshyear').on('DOMNodeInserted', function() {
+				for (var j = 0; j < data.result.data.length; j++) {
+					var arr = Object.values(data.result.data[j])[0]
+					// console.log( Array.from(arr)[1])
+					let index = year.findIndex(item => item == $(".pshyear").text()) //获取年的下标
+					arr2.push(Array.from(arr)[index]) //对应年份的数量
+				}
+				console.log(arr2)
+				var myChart = echarts.init(document.getElementById('main'));
+				option1 = {
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					// color:["#0385FF","#91CC75","#FAC858","#EE6666",'#73C0DE',"#0385FF","#91CC75","#FAC858","#EE6666",'#73C0DE',"#0385FF","#91CC75","#FAC858","#EE6666",'#73C0DE'],
+					title: {
+						subtext: '单位（个）'
+					},
+					xAxis: {
+						type: 'category',
+						// data: ['农贸市场服务类', '居民住宅类', '美容美发', '其他', '工业类', '工程建设类', '餐饮类','医疗卫生类','科研类','汽车服务类','垃圾收集处理类','洗涤类','住宿服务类','畜禽养殖类','综合商业服务类']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						// data: [120, 1000, 150, 80, 70, 110, 130,124,12,3,1,312,231,3,123],
+						data: arr2,
+						type: 'bar',
+						itemStyle: {
+							normal: {
+								color: function(params) {
+									var colorList = ["#0385FF", "#91CC75", "#FAC858",
+										"#EE6666", '#73C0DE', "#3BA272", "#FC8452",
+										"#9A60B4", "#EA81CE", '#80FFA5', "#00DDFF",
+										"#37A2FF", "#FF0087", "#6991E3", '#73C0DE',
+										'#262626'
+									]
+									return colorList[params.dataIndex]
+								},
+							}
+						}
+					}],
+					// legend:{
+					//  data:['农贸市场服务类', '居民住宅类', '美容美发', '其他', '工业类', '工程建设类', '餐饮类','医疗卫生类','科研类','汽车服务类','垃圾收集处理类','洗涤类','住宿服务类','畜禽养殖类','综合商业服务类']
+					// }
+				};
+				myChart.setOption(option1);
+				if (arr2.length > 0) {
+					arr2 = []
+				}
+			})
+
+		})
+		var pshName = ['农贸市场服务类', '居民住宅类', '美容美发', '其他', '工业类', '工程建设类', '餐饮类', '医疗卫生类', '科研类', '汽车服务类', '垃圾收集处理类', '洗涤类',
+			'住宿服务类', '畜禽养殖类', '综合商业服务类'
+		]
+		var pshColor = ["#0385FF", "#91CC75", "#FAC858", "#EE6666", '#73C0DE', "#3BA272", "#FC8452", "#9A60B4", "#EA81CE",
+			'#80FFA5', "#00DDFF", "#37A2FF", "#FF0087", "#6991E3", '#73C0DE', '#262626'
+		]
+		var names
+		for (var i = 0; i < pshName.length; i++) {
+			names = `
+																<div class="names">
+																	<span class="nameColor" style="display: inline-block;width: 8px;height: 8px;background-color: ${pshColor[i]};"></span>
+																	<span class="name"style="font-size: 12px;">${pshName[i]}</span>
+																</div>
+																`
+			$('#mainName').append(names)
+		}
+		//排水户统计结束
+
+		// 溢流点统计开始
+		// 溢流点统计结束
+		// 混接点统计开始
+		// 混节点统计结束
+		//水质净化厂年度平均进水统计指标开始
+		var parmas3 = {}
+		var arrYear = []
+		var ftc = []
+		var bhc = []
+		getDrainage(url3, parmas3, function(data) {
+			console.log(JSON.stringify(data.result))
+			console.log(JSON.stringify(Array.from(Object.values(data.result))[0][0].value)) //福田厂
+			console.log(JSON.stringify(Array.from(Object.values(data.result))[0][1].value))
+			console.log(JSON.stringify(Array.from(Object.values(data.result))[1][0].value)) //福田厂
+			console.log(JSON.stringify(Array.from(Object.values(data.result))[1][1].value))
+			ftc.push(Array.from(Object.values(data.result))[0][0].value)
+			bhc.push(Array.from(Object.values(data.result))[0][1].value)
+			ftc.push(Array.from(Object.values(data.result))[1][0].value)
+			bhc.push(Array.from(Object.values(data.result))[1][1].value)
+
+			console.log(Object.keys(data.result))
+			arrYear = Object.keys(data.result) //年
+			console.log("=================")
+			var myChart1 = echarts.init(document.getElementById('main1'));
+			option2 = {
+				title: {
+					subtext: '单位（mm）'
+				},
+				grid: {
+					x: 70,
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data: ['滨河厂', '福田厂']
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+					data: arrYear //年
+				},
+				yAxis: {
+					type: 'value',
+					axisLabel: {
+						// formatter: '{value}mm'
+						formatter: function(value) {
+							return parseInt(value) / 10000000 + "千万mm"
+						}
+
+					}
+				},
+				series: [{
+						name: '滨河厂',
+						type: 'line',
+						data: bhc,
+						markPoint: {
+							data: [{
+									type: 'max',
+									name: '最大值'
+								},
+								{
+									type: 'min',
+									name: '最小值'
+								}
+							]
+						},
+						// markLine: {
+						//     data: [
+						//         {type: 'average', name: '平均值'}
+						//     ]
+						// }
+					},
+					{
+						name: '福田厂',
+						type: 'line',
+						data: ftc,
+						markPoint: {
+							data: [{
+									type: 'max',
+									name: '最大值'
+								},
+								{
+									type: 'min',
+									name: '最小值'
+								}
+							]
+						},
+						// markLine: {
+						//     data: [
+						//         {type: 'average', name: '平均值'}
+						//     ]
+						// }
+					},
+
+				]
+			};
+			myChart1.setOption(option2);
+
+		})
+
+		//水质净化厂年度平均进水统计指标结束
+
+		// 运维抽查统计开始
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		var myChart3 = echarts.init(document.getElementById('main3'));
+
+		var parmas4 = {
+			year: $('.timeYears').text()
+		}
+		getDrainage(url4, parmas4, function(data) {
+			console.log(JSON.stringify(data.result.data[0].小区抽查统计))
+			console.log(JSON.stringify(data.result.data[1].市政抽查统计))
+			var option3 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b}: {c} ({d}%)"
+				},
+				color: ["#3aa1ff", "#fbb937"],
+				title: {
+					text: data.result.data[0].小区抽查统计.总数,
+					left: "center",
+					top: "50%",
+					textStyle: {
+						textAlign: "center",
+						fill: "#333",
+						fontSize: 18,
+						fontWeight: 400,
+					}
+				},
+				graphic: {
+					type: "text",
+					left: "center",
+					top: "40%",
+					style: {
+						text: "总数",
+						textAlign: "center",
+						fill: "#333",
+						fontSize: 20,
+					}
+				},
+				series: [{
+					name: '小区抽查统计',
+					type: 'pie',
+					radius: ['30%', '90%'],
+					avoidLabelOverlap: false,
+					// hoverAnimation: false,
+					label: {
+						normal: {
+							show: false,
+							position: 'center'
+						},
+
+					},
+
+					data: [{
+							value: data.result.data[0].小区抽查统计.合格,
+							name: '合格'
+						},
+						{
+							value: data.result.data[0].小区抽查统计.不合格,
+							name: '不合格'
+						},
+
+					]
+				}]
+			};
+			myChart2.setOption(option3);
+
+			var option4 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b}: {c} ({d}%)"
+				},
+				color: ["#3aa1ff", "#fbb937"],
+				title: {
+					text: data.result.data[1].市政抽查统计.总数,
+					left: "center",
+					top: "50%",
+					textStyle: {
+						textAlign: "center",
+						fill: "#333",
+						fontSize: 18,
+						fontWeight: 400,
+					}
+				},
+				graphic: {
+					type: "text",
+					left: "center",
+					top: "40%",
+					style: {
+						text: "总数",
+						textAlign: "center",
+						fill: "#333",
+						fontSize: 20,
+					}
+				},
+				series: [{
+					name: '市政抽查统计',
+					type: 'pie',
+					radius: ['30%', '90%'],
+					avoidLabelOverlap: false,
+					// hoverAnimation: false,
+					label: {
+						normal: {
+							show: false,
+							position: 'center'
+						},
+
+					},
+
+					data: [{
+							value: data.result.data[1].市政抽查统计.合格,
+							name: '合格'
+						},
+						{
+							value: data.result.data[1].市政抽查统计.不合格,
+							name: '不合格'
+						},
+
+					]
+				}]
+			};
+			myChart3.setOption(option4);
+
+		})
+
+		$('.timeYears').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 10; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".timeYears").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+
+
+		$('.timeYears').on('DOMNodeInserted', function() {
+			parmas4 = {
+				year: $('.timeYears').text()
+			};
+			// console.log("123")
+			getDrainage(url4, parmas4, function(data) {
+				// console.log(JSON.stringify(data.result.data[0].小区抽查统计))
+				// console.log(JSON.stringify(data.result.data[1].市政抽查统计))
+				var option3 = {
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b}: {c} ({d}%)"
+					},
+					color: ["#3aa1ff", "#fbb937"],
+					title: {
+						text: data.result.data[0].小区抽查统计.总数,
+						left: "center",
+						top: "50%",
+						textStyle: {
+							textAlign: "center",
+							fill: "#333",
+							fontSize: 18,
+							fontWeight: 400,
+						}
+					},
+					graphic: {
+						type: "text",
+						left: "center",
+						top: "40%",
+						style: {
+							text: "总数",
+							textAlign: "center",
+							fill: "#333",
+							fontSize: 20,
+						}
+					},
+					series: [{
+						name: '小区抽查统计',
+						type: 'pie',
+						radius: ['30%', '90%'],
+						avoidLabelOverlap: false,
+						// hoverAnimation: false,
+						label: {
+							normal: {
+								show: false,
+								position: 'center'
+							},
+
+						},
+
+						data: [{
+								value: data.result.data[0].小区抽查统计.合格,
+								name: '合格'
+							},
+							{
+								value: data.result.data[0].小区抽查统计.不合格,
+								name: '不合格'
+							},
+
+						]
+					}]
+				};
+				myChart2.setOption(option3);
+
+				var option4 = {
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b}: {c} ({d}%)"
+					},
+					color: ["#3aa1ff", "#fbb937"],
+					title: {
+						text: data.result.data[1].市政抽查统计.总数,
+						left: "center",
+						top: "50%",
+						textStyle: {
+							textAlign: "center",
+							fill: "#333",
+							fontSize: 18,
+							fontWeight: 400,
+						}
+					},
+					graphic: {
+						type: "text",
+						left: "center",
+						top: "40%",
+						style: {
+							text: "总数",
+							textAlign: "center",
+							fill: "#333",
+							fontSize: 20,
+						}
+					},
+					series: [{
+						name: '市政抽查统计',
+						type: 'pie',
+						radius: ['30%', '90%'],
+						avoidLabelOverlap: false,
+						// hoverAnimation: false,
+						label: {
+							normal: {
+								show: false,
+								position: 'center'
+							},
+
+						},
+
+						data: [{
+								value: data.result.data[1].市政抽查统计.合格,
+								name: '合格'
+							},
+							{
+								value: data.result.data[1].市政抽查统计.不合格,
+								name: '不合格'
+							},
+
+						]
+					}]
+				};
+				myChart3.setOption(option4);
+
+			})
+
+		})
+		// 运维抽查统计结束
+
+		// 水质净化厂年度统计开始
+		var myChart6 = echarts.init(document.getElementById('main6'));
+		// option6 = {
+		//     tooltip: {
+		//         trigger: 'axis',
+		//         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+		//             type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		//         }
+		//     },
+		//     grid: {
+		//         // left: '3%',
+		//         // right: '4%',
+		//         // bottom: '3%',
+		//         // containLabel: true,
+		// 		x:50
+		//     },
+		//     xAxis: [
+		//         {
+		//             type: 'category',
+		//             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+		//             axisTick: {
+		//                 alignWithLabel: true
+		//             }
+		//         }
+		//     ],
+		//     yAxis: [
+		//         {
+		//             type: 'value'
+		//         },
+		//     ],
+		//     series: [
+		//         {
+		//             name: '直接访问',
+		//             type: 'bar',
+		//             barWidth: '60%',
+		//             data: [10, 52, 200, 334, 390, 330, 220,10, 52, 200, 334, 390]
+		//         }
+		//     ]
+		// };
+		// myChart6.setOption(option6);
+		var parmas6 = {
+			year: $('.timeYear3').text()
+		}
+		var gcName = ["南园气象站", "滨河厂", "福田厂", "沙头气象站"]
+		let gnum = gcName.findIndex(item => item == $(".chang").text())
+		var shuju = []
+		getDrainage(url6, parmas6, function(data) {
+			console.log(JSON.stringify(data.result.data))
+			console.log(Object.values(data.result.data)[gnum])
+			shuju = Object.values(data.result.data)[gnum]
+			option6 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					// left: '3%',
+					// right: '4%',
+					// bottom: '3%',
+					// containLabel: true,
+					x: 70
+				},
+				xAxis: [{
+					type: 'category',
+					data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+					axisTick: {
+						alignWithLabel: true
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						// formatter: '{value}mm'
+						formatter: function(value) {
+							if (parseInt(value) > 10000000) {
+								return parseInt(value) / 10000000 + "千万mm"
+							} else {
+								return parseInt(value) + "mm"
+							}
+						}
+
+					}
+				}, ],
+				series: [{
+					name: '直接访问',
+					type: 'bar',
+					barWidth: '60%',
+					data: shuju
+				}]
+			};
+			myChart6.setOption(option6);
+
+		})
+
+
+
+
+
+
+		$('.chang').on('DOMNodeInserted', function() {
+			gnum = gcName.findIndex(item => item == $(".chang").text())
+			getDrainage(url6, parmas6, function(data) {
+				console.log(JSON.stringify(data.result.data))
+				console.log(Object.values(data.result.data)[gnum])
+				shuju = Object.values(data.result.data)[gnum]
+				option6 = {
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						// left: '3%',
+						// right: '4%',
+						// bottom: '3%',
+						// containLabel: true,
+						x: 70
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+							'12月'
+						],
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						axisLabel: {
+							// formatter: '{value}mm'
+							formatter: function(value) {
+								if (parseInt(value) > 10000000) {
+									return parseInt(value) / 10000000 + "千万mm"
+								} else {
+									return parseInt(value) + "mm"
+								}
+							}
+
+						}
+					}, ],
+					series: [{
+						name: '直接访问',
+						type: 'bar',
+						barWidth: '60%',
+						data: shuju
+					}]
+				};
+				myChart6.setOption(option6);
+
+			})
+
+		})
+		$('.timeYear3').on('DOMNodeInserted', function() {
+			parmas6 = {
+				year: $('.timeYear3').text()
+			}
+			getDrainage(url6, parmas6, function(data) {
+				console.log(JSON.stringify(data.result.data))
+				console.log(Object.values(data.result.data)[gnum])
+				shuju = Object.values(data.result.data)[gnum]
+				option6 = {
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						// left: '3%',
+						// right: '4%',
+						// bottom: '3%',
+						// containLabel: true,
+						x: 70
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
+							'12月'
+						],
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						axisLabel: {
+							// formatter: '{value}mm'
+							formatter: function(value) {
+								if (parseInt(value) > 10000000) {
+									return parseInt(value) / 10000000 + "千万mm"
+								} else {
+									return parseInt(value) + "mm"
+								}
+							}
+
+						}
+
+					}, ],
+					series: [{
+						name: '直接访问',
+						type: 'bar',
+						barWidth: '60%',
+						data: shuju
+					}]
+				};
+				myChart6.setOption(option6);
+
+			})
+
+
+
+		})
+
+
+		$(".chang").on("tap", function() {
+			console.log("dianjil")
+			var picker = new mui.PopPicker();
+			picker.setData([{
+					value: '1',
+					text: '南园气象站'
+				},
+				{
+					value: '2',
+					text: '滨河厂'
+				},
+				{
+					value: '3',
+					text: '福田厂'
+				},
+				{
+					value: '4',
+					text: '沙头气象站'
+				},
+
+			]);
+			picker.show(function(selectItems) {
+				$(".chang").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+
+		$('.timeYear3').on('tap', function() {
+			//设置年份的选择
+			var options = [];
+			var myDate = new Date();
+			var startYear = myDate.getFullYear() - 5; //起始年份
+			var endYear = myDate.getFullYear(); //结束年份
+			for (var i = startYear; i <= endYear; i++) {
+				options.push({
+					value: i,
+					text: i
+				})
+			}
+			var picker = new mui.PopPicker();
+			picker.setData(options);
+			picker.show(function(selectItems) {
+				$(".timeYear3").text(selectItems[0].text)
+				CheckTypeIndex = selectItems[0].value
+			})
+		})
+		//<button>
+		//水质净化厂年度统计结束
+	</script>
+</html>

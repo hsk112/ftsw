@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+		<title>质安监管-新增检查记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" /> 
+        <link href="../../../css/mui.picker.min.css" rel="stylesheet" />    
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+        <style>
+            .mui-page-content{
+                padding-top:44px !important;
+            }
+            .recordInp::placeholder{
+                text-align: right;
+            }
+            .recordInp{
+                text-align: right;
+                padding:10px 0 10px 15px !important;
+                position: relative;
+                top:10px;
+            }
+            .record-list{
+               padding:0 20px 0 20px;
+            }
+            .lable{
+                position: relative;
+                text-align: left;
+                padding:11px 0 11px 8px !important;
+                height: 55px;
+            }
+            .lable span{
+                position: absolute;
+                top:15px;
+                left:0px;
+                color: #DB2828;
+            }
+            .date-item{
+                position: relative;
+            }
+            .date-select{
+                position: absolute;
+                right: 0px;
+                top:10px;
+                font-size:16px;
+            }
+            .dateSelect{
+                text-align: left !important;;
+                width: 120px !important;
+                font-size:  16px !important; ;
+            }
+            .dateSelect::placeholder{
+                text-align: left;
+                font-size: 16px;
+            }
+            .dateSelect-fill{
+                text-align: left !important;;
+                width: 120px !important;
+                font-size:  16px !important; ;
+            }
+            .dateSelect-fill::placeholder{
+                text-align: left;
+                font-size: 16px;
+            }
+            .day-record{
+                position: relative;
+            }
+            .dayRecord{
+                position: absolute;
+                right: 0px;
+                top:0PX;
+            }
+            .dayRecord span{
+                font-size: 16px;
+                color: #C5C5C5;
+            }
+            /* ------------- */
+            .issues-total{
+                display: flex;
+                justify-content: space-between;
+                padding:0 16px;
+                height: 55px;
+                line-height: 55px;
+                font-size: 14px;
+            }
+            .total{
+                color:#0493F3;
+            }
+            .mui-icon-bars{
+                font-size: 14px;
+                color:#0493F3;
+            } 
+            .bar{
+                font-size: 18px;
+                color:#0493F3;
+            }  
+            /* ------------*/
+            
+            .issues-list-item{
+                padding:10px;
+                text-align: left;
+                background: #f4f4f4;
+            }
+            .issues-item-probably{
+                font-size: 14px;
+                padding-left: 20px;
+                padding-right: 27px;
+                padding-bottom: 20px;
+                padding-top:1px;
+                background: #fff;
+                border-radius: 5px;
+            }
+            .item-list{
+                margin-top:20px;
+                display: flex;
+                
+            }
+            .text-ellipsis{
+                overflow: hidden;
+                white-space:nowrap;
+                text-overflow: ellipsis;
+            }
+            .fixed{
+                color:#8C8C8C;
+                display: inline-block;
+                white-space:nowrap;
+                margin-right: 8px;
+            }
+            .dynamic{
+                color:#444444;
+            }
+            .pic{
+                
+                display: flex;
+                flex-direction:row;
+                flex-wrap:wrap;
+                overflow:hidden
+            }
+            .quesList_img>img{
+                width: 72px;
+                height: 72px;
+                border-radius: 5px;
+            }
+            .setHeight{
+                height: 72px;
+            }
+            .quesList_img{
+                margin-right: 2px;
+                margin-bottom: 2px;
+            }
+            .item-probably-bot{
+                margin-top:20px;
+                border-top: solid 0.5px #EDEDED;
+                line-height: 44px;
+                height: 44px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .corner{
+                font-size: 18px;
+                color: #C5C5C5;
+                line-height: 44px;
+            }
+            
+            .cut{
+                font-size: 14px;
+                color: #444444;
+            }
+            
+            .hidden{
+                display: none;
+            }
+            .issues-list-item{
+                background:#F4F4F4;
+            }
+            /* ----- */
+            
+            .page-bottom{
+                padding-left: 20px;
+            }
+            .remark-text{
+                height: 55px;
+                text-align: left ;
+                line-height: 55px;
+                border-top:solid 0.5px #EDEDED;
+                border-bottom: solid 0.5px #EDEDED;
+            }
+            /* ---------- */
+            .page-footer{
+                padding:0 20px 0 20px;
+            }
+            .page-footer .f-item-list{
+                height: 55px;
+                line-height: 55px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .page-footer .f-item-list input{
+                border:none;
+                text-align: right;
+            }
+            .page-footer .f-item-list input::placeholder{
+                text-align: right;
+                font-size: 16px;
+            }
+            .page-footer .dateS{
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding-right: 12px;
+            }
+            /* ------ */
+            .footer-btn{
+                height: 98px;
+                background: #F4F4F4;
+                line-height: 98px;
+            }
+            .footer-btn .btn-sub{
+                width: 335px;
+                height: 48px;
+                background: #0493F3;
+                color:#fff;
+                font-size: 18px;
+                text-align: center;
+                border-radius: 4px;
+                margin: 0 auto;
+                vertical-align:middle;
+            }
+            .issues-item{
+                margin-bottom: 20px;
+            }
+            .mui-input-row:not(:nth-child(5)){
+                border-bottom: 1px solid #EDEDED;
+                
+            }
+            .lable{
+                position: relative;
+                top: 10px;
+            }
+        </style>
+</head>
+<body>
+    <!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+        <div id="mui-content" class="mui-page">
+            <!--单页面标题开始-->
+            <!-- <header class="mui-bar mui-bar-nav common-header">
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+                <h1 class="mui-title">新增问题</h1>
+            </header> -->
+            <!--页面标题栏结束-->
+            <!-- 页面主要内容区开始 -->
+            <div class="mui-page-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div class="record-list">
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable">项目名称</label>
+                                <input type="text" class=" recordInp projectName" readonly="readonly" placeholder="这是项目名称">
+                            </div>                       
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable">项目编号</label>
+                                <input type="text" class=" recordInp projectNo" readonly="readonly" placeholder="自动填充">
+                            </div>
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable"><span>*</span>安全教育名称</label>
+                                <input type="text" class=" recordInp educationName" readonly="readonly" placeholder="教育名称">
+                            </div>
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable"><span>*</span>培训地点</label>
+                                <input type="text" class=" recordInp address" readonly="readonly" placeholder="培训地点" style="width:100px;margin-right:20px;">
+                                <span class="date-sideslipp"><img src="../../../img/local.png" style="width:18px;height:18px;position: absolute;right: 0px;top:22px;" alt=""></span>
+                            </div>
+                            <div class="mui-input-row input-row-item record-type day-record" style="border-bottom:1px solid #ededed">
+                                <label class="lable"><span>*</span>培训类别</label>
+                                <input type="text" class=" recordInp trainType" readonly="readonly" placeholder="培训类别">
+                            </div>
+                            <div class="mui-input-row input-row-item date-item">
+                                <label class="lable"><span>*</span>培训时间</label>
+                                <input type="text" readonly="readonly" class=" recordInp dateSelect trainTime" placeholder="2021-04-19"/>
+                                <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;position: absolute;right: 0px;top:22px;" alt=""></span>
+                            </div>
+                            
+                            <div class="mui-input-row input-row-item">
+                                <label class="lable">培训内容</label>
+                                <input type="text" class=" recordInp trainContent" readonly="readonly" >
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="issues-total">
+                            <div class="issues-total-left">
+                                <img src="../../../img/fujin-icon.png"
+                       style="width: 13px;height: 14px;line-height: 14px;vertical-align:middle;margin-top: -2px"/>
+                                <span class="issues-text">问题列表</span>:
+                                <span class="total">0</span>
+                            </div>  
+                            <div class="issues-total-right">
+                                <span class="mui-icon mui-icon-arrowdown top-bar hidden bar"></span>
+                                <span class="mui-icon mui-icon-arrowup bottom-bar  bar"></span>
+                            </div>
+                        </div> -->
+                        <div class="issues-list-item hidden">
+                            
+                        </div>
+                        <div class="page-middle">
+                            
+                            <div class="page-bottom">
+                                <!-- <div class="remark-text">
+                                    培训内容
+                                </div> -->
+                                <textarea disabled class="remark" name="remark" id="remark" maxlength= 300 placeholder="请输入相关描述(300以内)" style="height:144px;width:100%;border:none"></textarea>
+                            </div>
+                            <div class="page-footer">
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">附件</label>
+                                    <input type="text" class=" recordInp upfile" readonly="readonly">
+                                </div>
+                                <input id="fileType" value="" style="display:none">
+								<input id="filePath" value="" style="display:none">
+								<input id="fileId" value="" style="display:none">
+
+                                <div class="" id="fileBoxItem" style="display:none;">
+                                    <!-- <input type="hidden" name="" id="fileToken" value="" />
+                                    <div class="file-item-box" style="border:solid 0.5px #EDEDED;text-align: left;margin: 10px 0;border-radius: 5px;">
+                                        <img id="file_type" src="../../../img/commom/doc.png" style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px">
+                                        <div id="" style="display: inline-block;vertical-align: middle;margin: 12px 0 0 10px;width:70%">
+                                            <p id="file_name" style="font-weight:500;color: #191515;word-break: break-all;"></p>
+                                            <p id="file_size" style="font-weight:400;color: #191515;"></p>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">填写人</label>
+                                    <input type="text" class=" recordInp inputName" readonly="readonly" placeholder="法外狂徒">
+                                </div>
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">填写部门</label>
+                                    <input type="text" class=" recordInp inputDepartmentFullname" readonly="readonly" placeholder="质检部">
+                                </div>
+                                <div class="mui-input-row input-row-item">
+                                    <label class="lable">联系方式</label>
+                                    <input type="text" class=" recordInp inputPhone" readonly="readonly" placeholder="123456789">
+                                </div>
+                                <div class="mui-input-row input-row-item date-item">
+                                    <label class="lable" >填写日期</label>
+                                        <input type="text" readonly="readonly" class=" recordInp  dateSelect-fill inputDate" placeholder="2021-04-19"/>
+                                        <span class="date-sideslip"><img src="../../../img/cal.png" style="width:16px;height:16px;position: absolute;right: 0px;top:22px;" alt=""></span>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+
+<script src="../../../js/qualityControl/qualityControl.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/mui.previewimage.js"></script>
+<script>
+     mui.init({});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+        var arr = [' ','班前教育','项目部安全教育','公司安全教育','其他']
+        var item
+		mui.plusReady(function() {
+            // initCheckBox()
+            var self = plus.webview.currentWebview()
+            // console.log(JSON.stringify(self.dataIndex))
+            // self.dataIndex.trainType = self.dataIndex.trainType.substring(1,2)
+            // console.log(JSON.stringify(self.dataIndex.trainType))
+            self.dataIndex.trainTime = self.dataIndex.trainTime.split(' ')[0]
+            self.dataIndex.inputDate = self.dataIndex.inputDate.split(' ')[0]
+            $(".projectName").val(self.dataIndex.projectName)
+            $(".projectNo").val(self.dataIndex.projectNo)
+            $(".educationName").val(self.dataIndex.educationName)
+            $(".address").val(self.dataIndex.address)
+            $(".trainType").val(self.dataIndex.trainType)
+            $(".trainTime").val(self.dataIndex.trainTime)
+            $(".remark").val(self.dataIndex.trainContent)
+            $(".inputName").val(self.dataIndex.inputName)
+            $(".inputDepartmentFullname").val(self.dataIndex.inputDepartmentFullname)
+            $(".inputPhone").val(self.dataIndex.inputPhone)
+            $(".inputDate").val(self.dataIndex.inputDate)
+            if(self.dataIndex.attachment){
+                var type = 'get'
+                var params={
+                    groupId:self.dataIndex.attachment
+                }
+                var url = config.urls.baseUrl + config.actions.getfindFiles
+                getProject(url,params,type,function(data){
+                    console.log(JSON.stringify(data))
+                    if (data.success && data.result.length != 0 && data.result != undefined && data.result != null) {
+                        $("#fileType").val(data.result[0].uploadFile.fileType)
+                        $("#filePath").val(data.result[0].uploadFile.savePath)
+                        $("#fileId").val(data.result[0].uploadFile.id)
+                        var fileSize = data.result[0].uploadFile.fileSize
+                        var fileSizeText = ''
+                        if( fileSize > 1024 ){
+                            fileSize = fileSize/1024;
+                            fileSizeText = fileSize.toFixed(2)+'KB'
+                        }
+                        if(fileSize > 1024){
+                            fileSize = fileSize/1024;
+                            fileSizeText = fileSize.toFixed(2)+'MB'
+                        }
+                        
+                        //如果经过上面的if后fileSize还是大于1024，继续提升计量单位
+
+                        // item = JSON.parse(JSON.stringify(data.result[0]))
+                        // // let suffix = item.uploadFile.fileType.substring(1, item.uploadFile.fileType.length)
+                        var fileType = data.result[0].uploadFile.fileType;
+                        console.log(fileType)
+                        var str = '';
+                        let iconPath = '';
+                        if(fileType == '.jpg' || fileType == '.png' || fileType == '.jepg'){
+                            let url =  config.urls.baseUrl + '/sys/common/view/' + data.result[0].uploadFile.savePath;
+                            console.log('url:'+url)
+                            str = `
+                            <div id=${data.result[0].uploadFile.id} data-token=${data.result[0].fileTokens} 
+                                class="img_item" style="border:solid 0.5px #EDEDED;text-align: left;margin: 10px 0;border-radius: 5px;padding:5px 0 5px 0;">
+                                		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src= ${url} style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px"  />
+                                        <div id="" style="display: inline-block;vertical-align: middle;margin: 8px 0 0 4px;width:70%;">
+                                                <div id="file_name" style="color:#191515;word-break: break-all;font-size:14px;">${data.result[0].uploadFile.fileName}</div>
+                                                <div id="file_size" style="color: #191515;font-size:12px;">${fileSizeText}</div>
+                                            </div>
+                                </div>
+                                `
+                                // $("#reformFile").css("text-align","left")
+                                // $("#reformFile").css("height","120px")
+                        }else{
+                            switch (fileType){
+                                case '.doc':
+								case '.docx':
+									iconPath= '../../../img/commom/doc.png';
+									break;
+								case '.pdf':
+									iconPath= '../../../img/commom/pdf.png';
+									break;
+                                case '.xls':
+                                case '.xlsx':
+                                    iconPath='../../../img/commom/xlsx.png';
+                                    break;
+                                case '.rar':
+                                    iconPath='../../../img/commom/rar.png';
+                                    break;
+                                case '.zip':
+                                    iconPath='../../../img/commom/zip.png';
+                                    break;
+							    }
+                                str = `
+                                <input type="hidden" name="" id="fileToken" value="" />
+                                        <div class="file-item-box" style="border:solid 0.5px #EDEDED;text-align: left;margin: 10px 0;border-radius: 5px;">
+                                            <img id="file_type" src=${iconPath} style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px">
+                                            <div id="" style="display: inline-block;vertical-align: middle;margin: 12px 0 0 10px;width:70%">
+                                                <div id="file_name" style="color: #191515;word-break: break-all;font-size:14px;line-height:16px">${data.result[0].uploadFile.fileName}</div>
+                                                <div id="file_size" style="color: #191515;font-size:12px;">${fileSizeText}</div>
+                                            </div>
+                                        </div>
+                                `
+                            }
+                        }
+                        $("#fileBoxItem").append(str)
+                        $("#fileUploadBox").css("height", 150)
+                        $("#fileBoxItem").fadeIn()
+                        // $("#programme").val(item.fileToken)
+                        // if(data.result[0].fileToken){
+                        //     $("#fileToken").val(data.result[0].fileToken)
+                        // }
+							// let iconPath = '';
+							// switch (fileType) {
+							// 	case '.doc':
+							// 	case '.docx':
+							// 		iconPath= '../../../img/commom/doc.png';
+							// 		break;
+							// 	case '.pdf':
+							// 		iconPath= '../../../img/commom/pdf.png';
+							// 		break;
+                            //     case '.xls':
+                            //     case '.xlsx':
+                            //         iconPath='../../../img/commom/xlsx.png';
+                            //         break;
+                            //     case '.rar':
+                            //         iconPath='../../../img/commom/rar.png';
+                            //         break;
+                            //     case '.zip':
+                            //         iconPath='../../../img/commom/zip.png';
+                            //         break;
+							// }
+
+							// $("#fileUploadBox").css("height", 150)
+							// $("#fileBoxItem").fadeIn()
+							// $("#no-file").hide()
+							// // that.attr("disabled", true)
+							// $("#file_type").attr('src', iconPath)
+
+							// $("#file_name").html(item.uploadFile.fileName)
+							// $("#file_size").html(item.uploadFile.fileSize + "KB")
+							// $("#programme").val(item.fileToken)
+							// $("#fileToken").val(item.fileToken)
+                            // --------------------------------------------
+							// var fileType = data.result[0].uploadFile.fileType;
+                            // var path = data.result[0].uploadFile.savePath
+							// // var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+							// var iconPath="";
+			
+							// if (fileType == '.jpg' || fileType == '.png' || fileType == '.jepg'||
+							// 	fileType == '.pdf' || fileType == '.doc' || fileType == '.docx'||
+							// 	fileType == '.xls' || fileType == '.xlsx' || fileType == '.rar'  || fileType == '.zip') {
+							// 	switch(fileType){
+							// 		case '.doc':
+							// 		case '.docx':
+							// 			iconPath='../../../img/commom/doc.png';
+							// 			break;
+							// 		case '.pdf':
+							// 			iconPath='../../../img/commom/pdf.png';
+							// 			break;
+									// case '.xls':
+									// case '.xlsx':
+									// 	iconPath='../../../img/commom/xlsx.png';
+									// 	break;
+									// case '.rar':
+									// 	iconPath='../../../img/commom/rar.png';
+									// 	break;
+									// case '.zip':
+									// 	iconPath='../../../img/commom/zip.png';
+									// 	break;	
+							// 	}
+								
+							// 	plus.io.resolveLocalFileSystemURL(path,function(entry) {
+							// 		entry.file(function(file) {
+							// 			let fileSize = Math.floor(file.size / 1024);						
+							// 			var str = '';
+							// 			if(fileType == '.jpg' || fileType == '.png' || fileType == '.jepg'){
+							// 				str = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileTokens +
+							// 					'" class="img_item">' +
+							// 					'		<img class="img_src imgCss" data-preview-src="" data-preview-group="1" src="' + path + '" style=""  />' +
+							// 					'		<span id="closeImg" class=" myImgClose mui-icon mui-icon-closeempty" style="    font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>' +
+
+							// 					'	</div>';
+							// 					$("#reformFile").css("text-align","left")
+							// 					$("#reformFile").css("height","120px")
+							// 			}else{
+							// 				 str = `<div class="fileContent-item"` +
+							// 					` data-token="` + data.result[0].fileTokens + `"` +
+							// 					`<div style="padding:12px 0 10px 0">
+							// 									<div class="typeImg">
+							// 										<img src=${iconPath} style="width: 30px;height: 34px;"></img>
+							// 									</div>
+							// 									<div class="fileContent-item-title">
+							// 										<span class="titleSpan">` +
+                            //                                             data.result[0].uploadFile.fileType +
+							// 					`</span>
+							// 								<span class="fileSize">`+file.size+`KB</span>
+							// 							</div style="display:flex;">
+																									
+							// 						</div style="display:flex;">
+							// 					</div>`											
+							// 			}
+							// 			$("#fileId").val(data.result.uploadFile.id);
+							// 			$("#attachDiv").css("height","200px")
+							// 			$("#reformFile").append(str);
+							// 			$("#reformFile").show();
+							// 			$("#uploadBtn").attr("disabled", true);
+							// 		});
+							// 	}, function(e) {
+							// 		alert("文件获取失败:" + e.message);
+							// 	});
+							// } else {
+							// 	app.toast("文件必须为jpg、png、jpeg、rar、zip、doc、docx、pdf、xls、xlsx格式，请重新上传！");
+							// }
+                    
+                })
+            }
+        })
+        $("#fileBoxItem").on('tap',function(){
+            var fileType = $("#fileType").val();
+		    var filePath = $("#filePath").val();
+		    var fileId = $("#fileId").val();
+		    console.log("fileType:"+fileType)
+            if (fileType == ".pdf" || fileType == ".docx" || fileType == ".doc" || fileType == ".xls"|| fileType == ".xlsx") {
+                var extras = {
+                    filePath: filePath,
+                    fileId: fileId
+                };
+                // console.log(JSON.stringify(extras));
+                app.openPage("../../conservation/preview.html", {
+                    titleNView: {
+                        titleText: '文档预览',
+                        autoBackButton: true
+                    }
+                }, extras);
+            }else if (fileType == '.jpg' || fileType == '.png' || fileType == '.jepg') {
+               var extras = {
+                   filePath: filePath,
+                   fileId: fileId
+               };
+               console.log(JSON.stringify(extras));
+               app.openPage("../../mixed/preImg.html", {
+                   titleNView: {
+                       titleText: '图片预览',
+                       autoBackButton: true
+                   }
+               }, extras);
+            } else {
+                app.toast("此类型文件不支持预览");
+            } 
+		})
+        // $(document).on('tap', '.img_src', function(e) {
+        //     e.stopPropagation()
+        //     mui.previewImage();
+		// });
+        
+</script>

@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>新增质量整改表单</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css"/>
+
+
+  <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet"/>
+  <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet"/>
+
+  <style>
+    .mui-icon-arrowright {
+      color: #62666E;
+      font-weight: 100 !important;
+      width: 16px;
+      padding-top: 7px;
+    }
+
+    .content {
+      overflow: hidden;
+      height: calc(100vh - 100px);
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      margin: 0 20px;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+      margin: auto 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+      padding-right: 0;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .page-bottom {
+      display: flex;
+      padding: 0 20px;
+      height: 100px;
+      background-color: white;
+
+    }
+
+    .page-bottom button {
+      flex: 1;
+      margin-top: 30px;
+      border-radius: 5px;
+      border-color: #0493F3;
+      font-size: 16px;
+      height: 40px;
+      border-width: thin;
+    }
+
+    .btn-temp-save {
+      color: #0493F3;
+      background-color: #FFFFFF;
+      margin-right: 15px;
+    }
+
+    .btn-agree {
+      color: #FFFFFF;
+      background-color: #0493F3;
+      border: none;
+    }
+
+    .img-right-arrow {
+      width: 7px;
+      height: 12px;
+      margin-left: 5px;
+    }
+
+    .bor {
+      border: 1px dashed #E0E0E0;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .paish .mui-checkbox.mui-left label, .mui-radio.mui-left label {
+      padding: 11px 0;
+      width: 35px;
+      text-align: right;
+    }
+
+    .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    /*		单选框*/
+     
+    .radio-item {
+      width: 50%;
+    }
+
+    .radio_inline label {
+      /*width: 20%;*/
+      /*padding-left: 40px;*/
+      /*padding-right: 20px;*/
+      padding: 0;
+      width: 40px;
+      height: 22px;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+
+    .radio_inline input[type=radio] {
+      width: 15%;
+      right: auto;
+    }
+
+    /*//换个样式*/
+    .change {
+      display: flex;
+      align-items: center;
+    }
+
+    .change .mui-radio input[type='radio']:checked:before {
+      content: '\e442';
+      color: #0493F3;
+      font-size: 22px;
+    }
+
+    .mui-radio input[type=radio] {
+      top: 0;
+    }
+
+    .clear-red-star {
+      margin-left: 16px;
+    }
+
+
+    .file_item {
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+
+    .mui-btn-blue, .mui-btn-primary, input[type=submit] {
+      color: #007aff;
+      border: 1px solid #fff;
+      background-color: #fff;
+    }
+
+
+
+    .box-shadow{
+      margin-top: 5%;
+      width: 100%;
+      height: 290px;
+      background-color: #FFF;
+      box-shadow: 0 0px 10px 0 rgb(0 0 0 / 20%);
+      border-radius: 5px;
+      -moz-border-radius: 25px;
+
+    }
+
+
+
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+  <div id="scroll-wrapper-home" style="height: calc(100vh - 65px);">
+    <div class="info-bar-content">
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>项目名称：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="projectName">自动填充</span>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>项目编号：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="pjNum">自动填充</span>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>监理单位：
+        </div>
+        <div id="superviceUnitFull" class="mui-input-row item-input">
+          <span id="superviceUnitFullname">请选择监理单位</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>施工单位：
+        </div>
+        <div id="buildUnitFull" class="mui-input-row item-input">
+          <span id="buildUnitFullname">请选择施工单位</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="checkTime">请选择日期</span>
+          <img id="checkTimeImg" src="../../../img/cal.png"
+               style="width: 16px;height: 16px;margin: auto 0px auto 5px"/>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>整改单位：
+        </div>
+        <div class="item-checkbox" style="width: 60%">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;">
+              <div class="radio-item">
+                <input name="rectificationUnit" type="radio" id="rectificationUnitOne" value="1" checked>
+                <label for="rectificationUnitOne" style="margin-right: 10px;text-align: left;width: 100%">施工单位</label>
+              </div>
+              <div class="radio-item">
+                <input name="rectificationUnit" type="radio" id="rectificationUnitTwo" value="2">
+                <label for="rectificationUnitTwo" style="text-align: left;width: 100%">监理单位</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查单位：
+        </div>
+        <div id="checkUnitForm" class="mui-input-row item-input">
+          <span id="checkUnitFullname">请选择检查单位</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>检查组成员：
+        </div>
+        <input id="surveyBy" type="text" style="display: none;">
+        <input id="surveyPerson_text" readonly="readonly" required="true" type="hidden" value="">
+        <div id="survey-box" class="mui-input-row item-input" style="margin-top:12px;">
+          <input readonly="readonly" required="true" type="text"  value="" placeholder="请选择检查组成员"
+                 class="inputCss" style="width:calc(100% - 25px);">
+          <span class="mui-icon mui-icon-arrowright"></span>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>总监理工程师：
+        </div>
+        <div class="item-checkbox" style="width: 60%">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;width: 100%">
+              <div class="radio-item" style="margin-left: 5%">
+                <input name="supervisorOnduty" type="radio" id="supervisorOndutyOne" value="0" >
+                <label for="supervisorOndutyOne" style="margin-right: 10px;text-align: left;width: 100%">不在岗</label>
+              </div>
+              <div class="radio-item" style="margin-left: 15%;">
+                <input name="supervisorOnduty" type="radio" id="supervisorOndutyTwo" value="1" checked>
+                <label for="supervisorOndutyTwo" style="text-align: left;width: 100%">在岗</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>项目经理：
+        </div>
+        <div class="item-checkbox" style="width: 60%">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;width: 100%">
+              <div class="radio-item" style="margin-left: 5%">
+                <input name="managerOnduty" type="radio" id="managerOndutyOne" value="0" >
+                <label for="managerOndutyOne" style="margin-right: 10px;text-align: left;width: 100%">不在岗</label>
+              </div>
+              <div class="radio-item" style="margin-left: 15%;">
+                <input name="managerOnduty" type="radio" id="managerOndutyTwo" value="1" checked>
+                <label for="managerOndutyTwo" style="text-align: left;width: 100%">在岗</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>项目总工：
+        </div>
+        <div class="item-checkbox" style="width: 60%">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;width: 100%">
+              <div class="radio-item" style="margin-left: 5%">
+                <input name="chiefEngineerOnduty" type="radio" id="chiefEngineerOndutyOne" value="0" >
+                <label for="chiefEngineerOndutyOne" style="margin-right: 10px;text-align: left;width: 100%">不在岗</label>
+              </div>
+              <div class="radio-item" style="margin-left: 15%;">
+                <input name="chiefEngineerOnduty" type="radio" id="chiefEngineerOndutyTwo" value="1" checked>
+                <label for="chiefEngineerOndutyTwo" style="text-align: left;width: 100%">在岗</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>检查内容：
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <textarea placeholder="请输入问题描述（200字以内）" required="true" maxlength="200"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0" id="problemDesc" ></textarea>
+      </div>
+
+      <div class="info-bar-content-item" style="border-bottom: 0px solid #f7f7f7;">
+        <div class="item-title" style="width:60%;">
+          <span style="color: white">*</span>质量整改内容明细表：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="new_add" style="color: #007aff;">新增+</span>
+          <!--              <img src="../../../img/upfile@2x.png" style="width: 16px;height: 16px; margin-left: 5px;" alt="">-->
+        </div>
+      </div>
+      <div class="info-bar-content-item check-item" style="flex-direction: column">
+        <!--          <div style="width: 100%"   class="check-item-son" id="check-item-id1">-->
+        <!--              <div class="box-shadow" style="display: flex;flex-direction: column">-->
+        <!--                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--                  <div class="item-checkbox" style="width: 100%">-->
+        <!--                    <div class="mui-input-row change" style="width: 100%">-->
+        <!--                      <div class="radio_inline mui-radio" style="display: flex;width: 100%">-->
+        <!--                        <div class="radio-item" style="width: 100%">-->
+        <!--                          <input name="initialDesign" type="radio" style="right: 0px" id="initialDesignOne" value="0">-->
+        <!--                          <label for="initialDesignOne" style="margin-right: 10px;text-align: right"></label>-->
+        <!--                        </div>-->
+        <!--                      </div>-->
+        <!--                    </div>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+        <!--                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>检查项：-->
+        <!--              </div>-->
+        <!--              <div class="mui-input-row item-input" id="acceptorUsername">-->
+        <!--                <span id="acceptorName">请选择检查项</span>-->
+        <!--                <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--                <div class="item-title">-->
+        <!--                <span style="color: white">*</span>问题描述：-->
+        <!--              </div>-->
+        <!--                <div class="mui-input-row item-input">-->
+        <!--                <span id="fatherForm">自动填充</span>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>问题照片：-->
+        <!--              </div>-->
+        <!--              <div class="bor" style="text-align: right">-->
+        <!--                <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px">-->
+        <!--                  <img src="../../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">-->
+        <!--                  <span id="up" style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>-->
+        <!--                </div>-->
+        <!--                <img id="managePhoto" class="arrow-down-img" alt="1" src=""-->
+        <!--                     style="display: none;width: 80px">-->
+        <!--                &lt;!&ndash;          <img class="arrow-down-img" alt="1" src="../../../img/problemImg.png">&ndash;&gt;-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>整改要求：-->
+        <!--              </div>-->
+        <!--              <div class="mui-input-row item-input">-->
+        <!--                <input id="orderName" required="true" placeholder="请填写整改要求"/>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--              </div>-->
+        <!--          </div>-->
+        <!--          <div style="width: 100%"  class="check-item-son" id="check-item-id2">-->
+        <!--          <div class="box-shadow" style="display: flex;flex-direction: column">-->
+        <!--            <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-checkbox" style="width: 100%">-->
+        <!--                <div class="mui-input-row change" style="width: 100%">-->
+        <!--                  <div class="radio_inline mui-radio" style="display: flex;width: 100%">-->
+        <!--                    <div class="radio-item" style="width: 100%">-->
+        <!--                      <input name="initialDesign" type="radio" style="right: 0px" id="initialDesignOne" value="0">-->
+        <!--                      <label for="initialDesignOne" style="margin-right: 10px;text-align: right"></label>-->
+        <!--                    </div>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--            <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>检查项：-->
+        <!--              </div>-->
+        <!--              <div class="mui-input-row item-input" id="acceptorUsername">-->
+        <!--                <span id="acceptorName">请选择检查项</span>-->
+        <!--                <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--            <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>问题描述：-->
+        <!--              </div>-->
+        <!--              <div class="mui-input-row item-input">-->
+        <!--                <span id="fatherForm">自动填充</span>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--            <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>问题照片：-->
+        <!--              </div>-->
+        <!--              <div class="bor" style="text-align: right">-->
+        <!--                <div id="updateManagePhoto" style="display: flex;flex-direction: column;padding: 10px">-->
+        <!--                  <img src="../../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">-->
+        <!--                  <span id="up" style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>-->
+        <!--                </div>-->
+        <!--                <img id="managePhoto" class="arrow-down-img" alt="1" src=""-->
+        <!--                     style="display: none;width: 80px">-->
+        <!--                &lt;!&ndash;          <img class="arrow-down-img" alt="1" src="../../../img/problemImg.png">&ndash;&gt;-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--            <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">-->
+        <!--              <div class="item-title">-->
+        <!--                <span style="color: white">*</span>整改要求：-->
+        <!--              </div>-->
+        <!--              <div class="mui-input-row item-input">-->
+        <!--                <input id="orderName" required="true" placeholder="请填写整改要求"/>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>是否停工：
+        </div>
+        <div class="item-checkbox" style="">
+          <div class="mui-input-row change">
+            <div class="radio_inline mui-radio" style="display: flex;">
+              <div class="radio-item" style="width: 25%">
+                <input name="initialDesign" type="radio" id="initialDesignOne" value="0" checked>
+                <label for="initialDesignOne" style="margin-right: 10px;text-align: left">否</label>
+              </div>
+              <div class="radio-item" style="width: 25%">
+                <input name="initialDesign" type="radio" id="initialDesignTwo" value="1">
+                <label for="initialDesignTwo" style="text-align: left">是</label>
+              </div>
+              <div class="radio-item" style="width: 50%">
+                <input name="initialDesign" type="radio" id="initialDesignThree" value="2">
+                <label for="initialDesignThree" style="text-align: left;width: 100%">部分停工</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>整改期限：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="rectifyTime">请选择日期</span>
+          <img id="rectifyTimeImg" src="../../../img/cal.png"
+               style="width: 16px;height: 16px;margin: auto 0px auto 5px"/>
+        </div>
+      </div>
+
+      <div class="info-bar-content-item upload-file-box isShow" id="fileUploadBox">
+        <div class="item-title" >
+          <!--													<span class="red-star" id="isRequire">*</span>-->
+          <span class="clear-red-star" style="margin-left: 5px"></span>质量检查及整改文件
+          <!--												<span style="color: red;margin-left: 3px;" id="isRequire">*</span>-->
+        </div>
+        <input id="programme" type="hidden" value="" />
+        <div id="file3" class="file_item">
+          <button type="button" name="file" id="upload_file" class="file_upload mui-btn mui-btn-primary">上传文件</button>
+          <span class="btn-label" style="display: none;">只能上传.doc .docx .pdf文件!</span>
+          <img src="../../../img/upfile@2x.png" style="width: 16px;height: 16px; margin-left: 5px;" alt="">
+        </div>
+      </div>
+
+      <div class="" id="fileBoxItem" style="display: none;border-bottom: 1px solid #EDEDED;width: 90%;margin-left: 5%;">
+        <!-- 底下已经控制数据 -->
+        <input type="hidden" name="" id="fileToken" value="" />
+        <div class="file-item-box" style="background: #F4F7FE;text-align: left;margin: 10px 0;border-radius: 5px;">
+          <img id="file_type" src="../../../img/commom/doc.png" style="width: 40px;height: 45px;vertical-align: middle;margin-left:10px">
+          <div id="" style="display: inline-block;vertical-align: middle;margin: 12px 0 0 10px;width:70%">
+            <p id="file_name" style="font-weight:500;color: #191515;word-break: break-all;"></p>
+            <p id="file_size" style="font-weight:400;color: #191515;"></p>
+          </div>
+          <img class="file_close" src="../../../img/commom/close@2x.png" style="width: 20px;height: 20px; float: right;vertical-align: top;margin: 10px 10px 0 0;">
+        </div>
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title" style="width: 120px;margin-top: 8px;">
+          <span></span>新任务通知方式
+        </div>
+        <div class="mui-input-row" style="display: flex;">
+          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+          <div class="item-checkbox" style="flex: 1;">
+            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+              <label>站内消息</label>
+              <input name="notifymethod" value="message" type="checkbox" checked disabled="">
+            </div>
+          </div>
+          <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+          <div class="item-checkbox" style="flex: 1;">
+            <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+              <label>手机短信</label>
+              <input id="sms" name="sms" value="sms" type="checkbox" checked>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="info-bar-content-item">
+        <div class="item-title" style="width: 50%">
+          <span>*</span>施工、监理确认人：
+        </div>
+        <div class="mui-input-row item-input" id="investigaterFull">
+          <span id="investigaterFullname">请选择人员</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>整改负责人：
+        </div>
+        <div class="mui-input-row item-input" id="rectifierFull">
+          <span id="rectifierFullname">请选择人员</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>监理审核人：
+        </div>
+        <div class="mui-input-row item-input" id="supervisorFull">
+          <span id="supervisorFullname">请选择人员</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span>*</span>复核人：
+        </div>
+        <div class="mui-input-row item-input" id="onstructiorFull">
+          <span id="constructiorFullname">请选择人员</span>
+          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>
+        </div>
+      </div>
+
+
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写人：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="inputFullname">自动填充</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>联系方式：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="inputPhone">自动填充</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写部门：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="inputDepartmentFullname">自动填充</span>
+        </div>
+      </div>
+      <div class="info-bar-content-item">
+        <div class="item-title">
+          <span style="color: white">*</span>填写日期：
+        </div>
+        <div class="mui-input-row item-input">
+          <span id="inputDate">自动填充</span>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="page-bottom">
+        <button class="btn-agree">提交</button>
+      </div>
+    </div>
+    <!--    </div>-->
+    <!--    </div>-->
+  </div>
+</div>
+
+</body>
+
+<script src="../../../js/vconsole.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/bscroll.js"></script>
+<script src="../../../js/conservation.js"></script>
+<script src="../../../js/inspection/dailyInspection.js"></script>
+
+<script>
+    // var vConsole = new VConsole();
+
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    var userPicker = new mui.PopPicker();
+
+    var mask = mui.createMask(function () {
+        return mask.clickClose;
+    });
+
+    var operatorType = "add"
+    var isUpload = true;
+
+    let strFlowData = {
+      api:'/process/startAndSubmit',
+      processDefinitionKey: 'safety_rectify',
+      targetNodeId: null
+    }
+
+    /**
+     * strFlowData: {"api":"/process/startAndSubmit","processDefinitionKey":"project_quality_rectify","targetNodeId":null}
+        strFormData: {
+        "prjCode":"prj150",
+        "projectId":"2fb5873bd1660907506c2d4a053bcbe5",
+        "projectName":"挖地球",
+        "projectNumber":"FT2021047",
+        "superviceUnit":"100000060",
+        "superviceUnitFullname":"中国电建集团华东勘测设计研究院有限公司",
+        "buildUnit":"100000062",
+        "buildUnitFullname":"深圳市水务规划设计院股份有限公司",
+        "checkTime":"2021-06-23 11:09:46",
+        "rectifyUnitType":1,
+        "checkUnit":"100000064",
+        "checkUnitFullname":"深圳水规院投资股份有限公司",
+        "checkTeam":"liaoyubin",
+        "supervisorOnduty":1,
+        "managerOnduty":1,
+        "chiefEngineerOnduty":1,
+        "checkContent":"cs",
+        "isStop":0,
+        "rectifyTime":"2021-06-30 11:10:22",
+        "rectifyFile":"6c64ab1fc2464b83825f7c9f1deba9ab",
+        "inputerfullname":"林蔚",
+        "inputPhone":"15606080299",
+        "inputDepartmentFullname":"深圳市水务(集团)有限公司 ",
+        "inputDepartment":null,
+        "inputDate":"2021-06-23 11:08:47",
+        "notifymethod":["massage","sms"],
+        "investigater":"duzining",
+        "rectifier":"duzining",
+        "supervisor":"duzining",
+        "constructorName":"lin_w",
+        "actualFinishTime":null,
+        "projectQualityRectifyDetailList":[{"checkItemId":"b81a45cd6eb90388a55c35d684b96fb9","problems":"","problemPhoto":"4f70103c-dbe7-4f38-9690-29328ddb4d02","rectifyRequest":"","rectifyPhoto":"","rectifyComment":"","checkItemName":"项目33333333333->检查内容111111test21212121->标准18293很多时间等哈十九点"}],
+        "checkTeamFullname":"廖玉斌",
+        "investigaterFullname":"杜子宁",
+        "rectifierFullname":"杜子宁",
+        "supervisorFullname":"杜子宁",
+        "constructiorFullname":"林蔚"}
+        strAttachment: [
+        {"groupId":"6c64ab1fc2464b83825f7c9f1deba9ab",
+        "fileTokens":"8d72a1db8c74830183259c90565748bb",
+        "fieldName":"rectifyFile",
+        "tableName":"PROJECT_QUALITY_RECTIFY"}]
+      */
+
+    function uuid () {
+      var s= [];
+      var hexDigits = '0123456789abcdef';
+      for(var i =0;i<36;i++){
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10),1)
+      }
+      s[14] = '4';
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1)
+      s[8] = s[13] = s[18] = s[23] = ''
+      var uuid = s.join('')
+      return uuid
+    }
+
+    var fileParm = {
+      groupId:uuid(),
+      fileTokens:'',
+      fieldName:'rectifyFile',
+      tableName:'SAFETY_RECTIFY'
+    }
+
+    var  strAttachment = new Array()
+
+    let strFormData = {
+        prjCode:'',
+        projectId:'',
+        projectName:'',
+        projectNumber:'',
+        superviceUnit:'',
+        superviceUnitFullname:'',
+        buildUnit:'',
+        buildUnitFullname:'',
+        checkTime:'',
+        rectifyUnitType:1,
+        checkUnit:'',
+        checkUnitFullname:'',
+        checkTeam:'',
+        supervisorOnduty:1,
+        managerOnduty:1,
+        chiefEngineerOnduty:1,
+        checkContent:'',
+        isStop:0,
+        rectifyTime:'',
+        rectifyFile:uuid (),
+        inputerfullname:'',
+        inputPhone:'',
+        inputDepartmentFullname:'',
+        inputDepartment:null,
+        inputDate:'',
+        notifymethod:'',
+        investigater:'',
+        rectifier:'',
+        supervisor:'',
+        constructorName:'',
+        actualFinishTime:null,
+        projectQualityRectifyDetailList:'',
+        checkTeamFullname:'',
+        investigaterFullname:'',
+        rectifierFullname:'',
+        supervisorFullname:'',
+        constructiorFullname:''
+    }
+
+    // let strAttachment = {
+    //   groupId:'',
+    //   fileTokens:'',
+    //   fieldName:'rectifyFile',
+    //   tableName:'PROJECT_QUALITY_RECTIFY'
+    // }
+
+    let postParam = {
+        strFormData: '',
+        strFlowData: '',
+        strAttachment: ''
+    }
+
+    let checkItemParam ={
+      checkItemId:'',
+      problems:'',
+      problemPhoto:'',
+      rectifyRequest:'',
+      rectifyPhoto:'',
+      rectifyComment:'',
+      checkItemName:''
+    }
+
+
+    let param = {
+        guid: "",
+    }
+    let correlationParam = {
+        pageNo: '1',
+        pageSize: '1000',
+    }
+
+
+    var checkItemJSON = [];
+    var checkItems = [];
+
+    var ciParams = {
+      projectId: '',
+      column: 'createTime',
+      order: 'desc',
+      field: 'id,,,checkItemName,problems,checkTime,inputFullname,action',
+      pageNo: 1,
+      pageSize: 50
+    }
+
+    let MissionParam ={
+      projectId: ''
+    }
+
+    console.log("plusReady==========================================================");
+    mui.plusReady(function () {
+      var self = plus.webview.currentWebview();
+      var proTypeName = '';
+
+
+      var self = plus.webview.currentWebview();
+      projectInfo=JSON.parse(localStorage.getItem("projectInfo"))
+      strFormData.prjCode = projectInfo.prjCode
+      strFormData.projectId = projectInfo.prjId
+      strFormData.projectName = projectInfo.prjName
+      strFormData.inputerfullname = app.userInfo().personName
+      console.log(JSON.stringify(app.userInfo()))
+      strFormData.inputPhone = app.userInfo().personMobilePhone
+      strFormData.inputDepartmentFullname = app.userInfo().companyName
+      strFormData.inputDate = getNowFormatDate()
+      strFormData.constructiorFullname = app.userInfo().personName
+      strFormData.constructorName = app.userInfo().username;
+
+
+
+      ciParams.projectId =projectInfo.prjId
+      $('#projectName').text(projectInfo.prjName)
+      $('#inputFullname').text(app.userInfo().personName)
+      $('#inputDepartmentFullname').text(app.userInfo().companyName)
+      $('#inputPhone').text(app.userInfo().personMobilePhone)
+      $('#inputDate').text(getYMD())
+      $('#constructiorFullname').text(app.userInfo().personName)
+      MissionParam.projectId = projectInfo.prjId
+      setMissionDetail(MissionParam);
+
+      getQualitySecCheck(ciParams, function(data) {
+        console.log(JSON.stringify(data))
+        if (data.success) {
+          for (var i = 0; i < data.result.records.length; i++) {
+            var item = data.result.records[i];
+            checkItemJSON.push({
+              value: item.guid,
+              text: item.checkItemName
+            })
+            checkItems.push({
+              checkItemId: item.guid,
+              checkItemName: item.checkItemName,
+              problems: item.problems,
+              problemPhoto: item.checkPhoto
+            })
+          }
+        }
+      });
+
+
+
+        mui('.mui-scroll-wrapper').scroll({
+            scrollY: true, //是否竖向滚动
+            scrollX: false, //是否横向滚动
+            startX: 0, //初始化时滚动至x
+            startY: 0, //初始化时滚动至y
+            indicators: true, //是否显示滚动条
+            deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+            bounce: true //是否启用回弹
+        });
+
+    });
+
+
+    //获取当前时间
+    function getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var seperator2 = ":";
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      var hour = date.getHours()
+      var m = date.getMinutes()
+      var s = date.getSeconds()
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (m >= 0 && m <= 9) {
+        m = "0" + m;
+      }
+      if (s >= 0 && s <= 9) {
+        s = "0" + s;
+      }
+
+      var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+              + " " + hour + seperator2 + m
+              + seperator2 + s;
+      return currentdate;
+    }
+
+    function getYMD(){
+      var date = new Date();
+      var seperator1 = "-";
+      var seperator2 = ":";
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+      return currentdate;
+    }
+
+    function getHMS(){
+      var date = new Date();
+      var seperator1 = "-";
+      var seperator2 = ":";
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      var hour = date.getHours()
+      var m = date.getMinutes()
+      var s = date.getSeconds()
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+      }
+      if (m >= 0 && m <= 9) {
+        m = "0" + m;
+      }
+      if (s >= 0 && s <= 9) {
+        s = "0" + s;
+      }
+
+      var currentdate =  hour + seperator2 + m
+              + seperator2 + s;
+      return currentdate;
+    }
+
+
+    //获取项目编号
+    function setMissionDetail(param) {
+      console.log(JSON.stringify(param))
+
+      getMissionDetail(param,function (data) {
+        $('#pjNum').text(data.result.prjNo)
+        strFormData.projectNumber = data.result.prjNo
+      })
+    }
+
+
+    // 选择检查时间
+    $('#checkTime').on('tap', function () {
+      var that = $(this);
+      plusDateWithDate(function (data) {
+        var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+        that.text(now);
+        $('#checkTimeImg').hide();
+      });
+    })
+
+    // 整改期限
+    $('#rectifyTime').on('tap', function () {
+      var that = $(this);
+      plusDateWithDate(function (data) {
+        var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+        that.text(now);
+        $('#rectifyTimeImg').hide();
+      });
+    })
+
+
+    //添加检查项
+    var numS = 1
+    $('#new_add').on('tap',function () {
+      var number = $('.check-item .check-item-son').length
+      var id =  $("div[class=check-item-son]:last").attr('id')
+      addCheckItems(numS,number,id)
+    })
+
+
+    function addCheckItems(num,number,this_id){
+      var html = '  <div style="width: 100%" class="check-item-son" id="check-item-id'+num+'">\n' +
+              '              <div class="box-shadow" style="display: flex;flex-direction: column">\n' +
+              '                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">\n' +
+              '                  <div class="item-checkbox" style="width: 100%">\n' +
+              '                    <div class="mui-input-row change" style="width: 100%">\n' +
+              '                      <div class="radio_inline mui-radio" style="display: flex;width: 100%">\n' +
+              '                        <div class="radio-item" style="width: 100%;margin-left: 5%;">\n' +
+              '                          <input  class="check_item_input" name="initialDesign" type="checkbox" style="right: 0px" id="check_item_id'+num+'" value="0">\n' +
+              '                          <label for="initialDesignOne" style="margin-right: 10px;text-align: right"></label>\n' +
+              '                        </div>\n' +
+              '                      </div>\n' +
+              '                    </div>\n' +
+              '                  </div>\n' +
+              '                </div>\n' +
+              '                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">\n' +
+              '              <div class="item-title">\n' +
+              '                <span style="color: white">*</span>检查项：\n' +
+              '              </div>\n' +
+              '              <div class="mui-input-row item-input" id="check_item_div'+num+'">\n' +
+              '                <span class="check_item_span_class" id="check_item_span'+num+'">请选择检查项</span>\n' +
+              '                <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>\n' +
+              '              </div>\n' +
+              '            </div>\n' +
+              '                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">\n' +
+              '                <div class="item-title">\n' +
+              '                <span style="color: white">*</span>问题描述：\n' +
+              '              </div>\n' +
+              '                <div class="mui-input-row item-input">\n' +
+              '                <span id="problems_span'+num+'">自动填充</span>\n' +
+              '              </div>\n' +
+              '            </div>\n' +
+              '                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">\n' +
+              '              <div class="item-title">\n' +
+              '                <span style="color: white">*</span>问题照片：\n' +
+              '              </div>\n' +
+              '              <div class="bor" style="text-align: right">\n' +
+              '                <div id="updateManagePhoto'+num+'" style="display: flex;flex-direction: column;padding: 10px">\n' +
+              '                  <img src="../../../img/add-img@2x.png" style="width: 20px;height: 20px;margin: 8px auto 10px auto">\n' +
+              '                  <span id="up" style="color: #0493F3;font-size: 18px;text-align: center;margin-bottom: 8px">上传图片</span>\n' +
+              '                </div>\n' +
+              '                <img id="managePhoto'+num+'" class="arrow-down-img" alt="1" src=""\n' +
+              '                     style="display: none;width: 40px;height: 40px">\n' +
+              '                <!--          <img class="arrow-down-img" alt="1" src="../../../img/problemImg.png">-->\n' +
+              '              </div>\n' +
+              '            </div>\n' +
+              '                <div class="info-bar-content-item" style="margin: 0px 20px 0px 0px;border-bottom: 0px solid #f7f7f7;">\n' +
+              '              <div class="item-title">\n' +
+              '                <span style="color: white">*</span>整改要求：\n' +
+              '              </div>\n' +
+              '              <div class="mui-input-row item-input">\n' +
+              '                <input id="request_span'+num+'" required="true" placeholder="填写整改要求"/>\n' +
+              //隐藏数据
+              '                <input id="problemPhoto'+num+'" required="true"  value="" style="display: none"/>\n' +
+              '                <input id="checkItemName'+num+'" required="true" value="" style="display: none"/>\n' +
+              '              </div>\n' +
+              '            </div>\n' +
+              '              </div>\n' +
+              '          </div>'
+
+      numS++;
+      // if(number>0){
+      //   $("#"+this_id+'').append(html)
+      // }else {
+      $('.check-item').append(html)
+      // }
+
+
+    }
+
+
+    //监听选择检查项事件
+    $('.check-item').on('tap','.check_item_span_class',function () {
+      var that = $(this);
+      if ($(".mui-poppicker").hasClass("mui-active")) {
+        userPicker.hide();
+        return false;
+      } else {
+        if(checkItemJSON.length>0){
+          userPicker.setData(checkItemJSON);
+          console.log(JSON.stringify(checkItemJSON))
+          userPicker.show(function(items) {
+            console.log('checkItems'+JSON.stringify(checkItems))
+            for(let i = 0;i<checkItems.length;i++){
+              if(checkItems[i].checkItemId == items[0].value){
+                $(that).val(checkItems[i].checkItemName);
+                var id = $(that).attr("id");
+                $("#"+id).text(checkItems[i].checkItemId);
+                console.log(id)
+                console.log(checkItems[i].checkItemId)
+                id = id.substring(15,id.length);
+                console.log(id)
+                $("#problemPhoto"+id).val(checkItems[i].problemPhoto);
+                $("#checkItemName"+id).val(checkItems[i].checkItemName);
+                $("#problems_span"+id).text(isEmp(checkItems[i].problems));
+                // $("#checkItemId"+id).val(checkItems[i].checkItemId);
+                if (checkItems[i].problemPhoto != null && checkItems[i].problemPhoto != undefined && checkItems[i].problemPhoto != "") {
+                  findFilesByGroupId({
+                    groupId: checkItems[i].problemPhoto
+                  }, function(data) {
+                    if(data.success){
+                      if(data.result.length> 0){
+                        $("#managePhoto"+id).show();
+                        $("#updateManagePhoto"+id).hide();
+                        $("#managePhoto"+id).attr("src", config.urls.baseUrl +
+                                "sys/common/view/" +
+                                data.result[0].uploadFile.savePath);
+                      }
+                    }
+                  });
+                }
+                break;
+              }
+            }
+          });
+        }else app.toast("暂无检查项目")
+      }
+    })
+
+
+
+    var notifymethod = new Array()
+    notifymethod = ["massage", "sms"]
+    strFormData.notifymethod = notifymethod
+    //新任务通知
+    $('#sms').on('tap',function () {
+      var id =  $(this).attr('id')
+      var state = $("#"+id+'').prop('checked')
+      if(state){
+        notifymethod = ["massage"]
+        strFormData.notifymethod = notifymethod
+      }else {
+        notifymethod = ["massage", "sms"]
+        strFormData.notifymethod = notifymethod
+      }
+    })
+
+
+    //提交
+    $(".btn-agree").on('tap',function () {
+
+      //要优化
+      var isTrue = true
+      if($('#superviceUnitFullname').text()=='请选择监理单位'){
+        app.toast('请选择监理单位')
+        isTrue = false
+      }else if( $('#buildUnitFullname').text()=='请选择施工单位'){
+        app.toast('请选择施工单位')
+        isTrue = false
+      }else if($('#checkTime').text()=='请选择日期'){
+        app.toast('请选择检查日期')
+        isTrue = false
+      }else if( $('#checkUnitFullname').text()=='请选择检查单位'){
+        app.toast('请选择检查单位')
+        isTrue = false
+      }else if($('#surveyPerson_text').val()==''){
+        app.toast('请选择检查组成员')
+        isTrue = false
+      }else if($('#rectifyTime').text()=='请选择日期'){
+        app.toast('请选择整改期限日期')
+        isTrue = false
+      }else if($('#investigaterFullname').text()=='请选择人员'){
+        app.toast('请选择施工、监理人员')
+        isTrue = false
+      }else if($('#rectifierFullname').text()=='请选择人员'){
+        app.toast('请选择整改人员')
+        isTrue = false
+      }else if($('#supervisorFullname').text()=='请选择人员'){
+        app.toast('请选择监理审核人员')
+        isTrue = false
+      }
+
+
+
+      strFormData.checkTime = $('#checkTime').text() +' '+getHMS()
+      strFormData.checkTeam = $("#surveyBy").val();
+      strFormData.checkTeamFullname = $("#surveyPerson_text").val();
+      strFormData.rectifyTime = $('#rectifyTime').text()+ ' '+getHMS()
+      strFormData.checkContent = $('#problemDesc').val()
+      var projectQualityRectifyDetailList = new Array();
+
+
+      // check-item-id
+      $('.check_item_input').each(function () {
+        var id =  $(this).attr('id')
+        var state = $("#"+id+'').prop('checked')
+        if(state){
+          var new_id = id.substring(13,id.length);
+          checkItemParam.checkItemId = $('#check_item_span'+new_id).text()
+          checkItemParam.checkItemName =  $("#checkItemName"+new_id).val();
+          checkItemParam.problemPhoto =  $("#problemPhoto"+new_id).val()
+          checkItemParam.problems = $("#problems_span"+new_id).text()
+          checkItemParam.rectifyRequest = $("#request_span"+new_id).val()
+          projectQualityRectifyDetailList.push(checkItemParam)
+        }
+      })
+
+      strFormData.projectQualityRectifyDetailList = projectQualityRectifyDetailList
+
+      console.log(JSON.stringify(strFormData))
+      console.log(JSON.stringify(strAttachment))
+      console.log(JSON.stringify(strFlowData))
+
+      if(isTrue){
+        addQualityRectificationform(strFormData, strAttachment, function (data) {
+          if (data.success) {
+            app.toast("提交成功")
+            mui.fire()
+            mui.back()
+          } else {
+            app.toast("提交失败")
+          }
+        });
+      }
+
+    })
+
+
+    $('input[type=radio][name=initialDesign]').change(function() {
+      console.log($(this).attr('id'))
+      var state = $(this).prop('checked')
+      if(state){
+        strFormData.isStop = $('#'+$(this).attr('id')+'').val();
+      }
+    })
+
+
+    //项目总工
+    $('input[type=radio][name=chiefEngineerOnduty]').change(function() {
+      console.log($(this).attr('id'))
+      var state = $(this).prop('checked')
+      if(state){
+        strFormData.chiefEngineerOnduty = $('#'+$(this).attr('id')+'').val();
+      }
+    })
+
+    //项目经理
+    $('input[type=radio][name=managerOnduty]').change(function() {
+      console.log($(this).attr('id'))
+      var state = $(this).prop('checked')
+      if(state){
+        strFormData.managerOnduty = $('#'+$(this).attr('id')+'').val();
+      }
+    })
+
+    //总监理工程师
+    $('input[type=radio][name=supervisorOnduty]').change(function() {
+      console.log($(this).attr('id'))
+      var state = $(this).prop('checked')
+      if(state){
+        strFormData.supervisorOnduty = $('#'+$(this).attr('id')+'').val();
+      }
+    })
+
+    //整改单位
+    $('input[type=radio][name=rectificationUnit]').change(function() {
+      console.log($(this).attr('id'))
+      var state = $(this).prop('checked')
+      if(state){
+        strFormData.rectifyUnitType = $('#'+$(this).attr('id')+'').val();
+      }
+    })
+
+
+
+    var photoParm = {
+      groupId: '',
+      fileToken: '',
+      fieldName: 'problemPhoto',
+      tableName: 'form_base_new'
+    }
+
+    //整体图片上传（未完成的）
+    $("#updateManagePhoto").on("tap", function () {
+        // if(tmpBtnStatus=='false'){ return;}
+        plusSelectImage(function (data, path) {
+            console.log(JSON.stringify(data))
+            if (data.success) {
+                $("#managePhoto").show();
+                $("#updateManagePhoto").hide();
+                $("#managePhoto").attr("src", path);
+                photoParm.groupId = data.result.uploadFile.id;
+                submitParam.problemPhoto = data.result.uploadFile.id;
+                photoParm.fileToken = data.result.fileTokens;
+                // }
+            } else app.toast(data.message)
+        });
+    });
+
+    // 选择时间
+    $('#processingDemands').on('tap', function () {
+        var that = $(this);
+        plusDateWithDate(function (data) {
+            var now = data.getFullYear() + "-" + preZero((data.getMonth() + 1), 2) + "-" + preZero(data.getDate(), 2);
+            that.text(now);
+            $('#processingDemandsImg').hide();
+        });
+    })
+
+
+    //选择监理单位
+    $("#superviceUnitFullname").on("tap", function() {
+      var extras = {
+        multiSelect: false
+      }
+      app.openPage("../../commom/unit.html", {
+        titleNView: {
+          titleText: '选择选择监理单位',
+          autoBackButton: true
+        }
+      }, extras);
+      //移除
+      window.removeEventListener('returnSelect', superviceUnitBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', superviceUnitBack, false);
+
+    })
+
+    //监理单位回调
+    var superviceUnitBack = function(data) {
+      if(data.detail[0] != undefined){
+        $("#superviceUnitFullname").text(data.detail[0].title)
+        strFormData.superviceUnitFullname = data.detail[0].title
+        strFormData.superviceUnit = data.detail[0].value
+      }
+      //移除
+      window.removeEventListener('returnSelect', superviceUnitBack, false);
+    }
+
+    //选择施工单位
+    $("#buildUnitFullname").on("tap", function() {
+      var extras = {
+        multiSelect: false
+      }
+      app.openPage("../../commom/unit.html", {
+        titleNView: {
+          titleText: '选择施工单位',
+          autoBackButton: true
+        }
+      }, extras);
+      //移除
+      window.removeEventListener('returnSelect', buildUnitBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', buildUnitBack, false);
+
+    })
+
+    //施工单位回调
+    var buildUnitBack = function(data) {
+      if(data.detail[0] != undefined){
+        $("#buildUnitFullname").text(data.detail[0].title)
+        strFormData.buildUnitFullname = data.detail[0].title
+        strFormData.buildUnit = data.detail[0].value
+      }
+      //移除
+      window.removeEventListener('returnSelect', buildUnitBack, false);
+    }
+
+
+    //选择检查单位
+    $("#checkUnitFullname").on("tap", function() {
+      var extras = {
+        multiSelect: false
+      }
+      app.openPage("../../commom/unit.html", {
+        titleNView: {
+          titleText: '选择检查单位',
+          autoBackButton: true
+        }
+      }, extras);
+      //移除
+      window.removeEventListener('returnSelect', checkUnitBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkUnitBack, false);
+
+    })
+
+    //检查单位回调
+    var checkUnitBack = function(data) {
+      if(data.detail[0] != undefined){
+        $("#checkUnitFullname").text(data.detail[0].title)
+        strFormData.checkUnitFullname = data.detail[0].title
+        strFormData.checkUnit = data.detail[0].value
+      }
+      //移除
+      window.removeEventListener('returnSelect', checkUnitBack, false);
+    }
+
+    //检查组成员
+    $("#survey-box").on("tap", function(e) {
+      e.stopPropagation()
+      var extras = {
+        multiSelect: true,
+        // unSelect: true
+      }
+      app.openPage("../../commom/organ.html", {
+        titleNView: {
+          titleText: '选择检查组成员',
+          autoBackButton: true
+        }
+      }, extras);
+      //移除
+      window.removeEventListener('returnSelect', checkTeamBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkTeamBack, false);
+
+    })
+
+    //调查人员回调
+    var checkTeamBack = function(data) {
+      console.log('多人：'+JSON.stringify(data))
+      if(data != ""){
+        var oldVal = $("#surveyPerson_text").val();
+        var oldVal2 = $("#surveyBy").val();
+        console.log(oldVal + "===" + oldVal2)
+        console.log(JSON.stringify(data.detail)); //data.detail[0].realname
+        var v1 = oldVal.split(",")
+        var rn = '';
+        var un = '';
+        var flag=false;
+        var a=[]
+        for (let i = 0; i < data.detail.length; i++) {
+          console.log(v1.indexOf(data.detail[i].realname))
+          if (v1.indexOf(data.detail[i].realname) == -1) { //避免重复
+            rn += data.detail[i].realname + ",";
+            un += data.detail[i].username + ",";
+          }else{
+            flag=true;
+            a.push(data.detail[i].realname)
+          }
+        }
+        if(flag){
+          app.toast("已过滤重复人员【"+a.toString()+"】")
+        }
+        rn = rn.slice(0, rn.length - 1);
+        un = un.slice(0, un.length - 1);
+        console.log(oldVal)
+        console.log(rn)
+        if(rn != ""){
+          rn = oldVal != "" ? oldVal + "," + rn : rn;
+          un = oldVal2 != "" ? oldVal2 + "," + un : un;
+        }else{
+          rn = oldVal;
+          un = oldVal2;
+        }
+
+        $("#surveyPerson_text").val(rn);
+        console.log(rn + "--" + un); //data.detail[0].realname
+
+        $("#surveyBy").val(un);
+        var perArr = rn.split(",")
+        var perArr2 = un.split(",")
+        var text = "";
+        for (let i = 0; i < perArr.length; i++) {
+          if(perArr[i] != ''){
+            text +=
+                    `<div style="display:inline-block;padding:0 2px 2px 5px;background: #F4F7FE;border-radius: 10px;margin:0 5px 5px 0;">
+														<span class="surveyPerson" style="color:#337BFC">${perArr[i]}</span>
+														<span class="mui-icon mui-icon-closeempty" rname=${perArr[i]} uname=${perArr2[i]} style="color:#337BFC"></span>
+										</div>`;
+          }
+        }
+        text += `<span class="mui-icon mui-icon-arrowright" style="float: right;"></sapn>`;
+        if(perArr.length>=4){
+          var h=$("#surveyItem").height()+(perArr.length/4)*22;
+          $("#surveyItem").css("height",h)
+        }
+        $("#survey-box").html(text)
+      }
+      //移除
+      window.removeEventListener('returnSelect', checkTeamBack, false);
+    }
+
+    //删除调查人员
+    $("#survey-box").on('tap', ".mui-icon-closeempty", function(e) {
+      e.stopPropagation() //阻止时间冒泡
+      var realname = $(this).attr("rname");
+      var username = $(this).attr("uname")
+      console.log(realname + "-" + username)
+      var that=$(this)
+      // mui.confirm("确定要删除【"+realname+"】?", "提示", ['确定', '取消'], function(result) {
+      // 	if (parseInt(result.index) == 0) {
+      var oldValArr = $("#surveyPerson_text").val().split(",").filter(item => {
+        return item != realname
+      });
+      var oldVal2Arr = $("#surveyBy").val().split(",").filter(item => {
+        return item != username
+      });
+      that.parent().remove()
+      console.log(oldValArr.toString() + "----" + oldVal2Arr.toString())
+      $("#surveyPerson_text").val(oldValArr.toString())
+      $("#surveyBy").val(oldVal2Arr.toString())
+      if (oldValArr.length == 0) {
+        var text =
+                `<input readonly="readonly" required="true" type="text" value=""
+													 placeholder="请选择检查组成员" class="inputCss" style="width:90%;">
+													<span class="mui-icon mui-icon-arrowright" style="float: right;"></sapn>`;
+        $("#survey-box").html(text)
+      }
+      if(oldValArr.length<4){
+        $("#surveyItem").css("height",90)
+      }
+      // 	}
+      // })
+    })
+
+    //施工人员
+    $('#investigaterFullname').on('tap',function () {
+      var extras =null
+      app.openPage("../../commom/organ.html", {
+        titleNView: {
+          titleText: '选择人员',
+          autoBackButton: true
+        }
+      }, extras);
+
+      var checkPersonBack = function (data) {
+        console.log(JSON.stringify(data))
+        if (data.detail[0] != undefined) {
+          // console.log(JSON.stringify(data.detail[0]));
+          $("#investigaterFullname").text(data.detail[0].realname);
+          strFormData.investigaterFullname = data.detail[0].realname
+          strFormData.investigater = data.detail[0].username;
+        }
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+      }
+
+      //移除
+      window.removeEventListener('returnSelect', checkPersonBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkPersonBack, false);
+    })
+
+    //整改负责人
+    $('#rectifierFullname').on('tap',function () {
+      var extras =null
+      app.openPage("../../commom/organ.html", {
+        titleNView: {
+          titleText: '选择人员',
+          autoBackButton: true
+        }
+      }, extras);
+
+      var checkPersonBack = function (data) {
+        console.log(JSON.stringify(data))
+        if (data.detail[0] != undefined) {
+          // console.log(JSON.stringify(data.detail[0]));
+          $("#rectifierFullname").text(data.detail[0].realname);
+          strFormData.rectifierFullname = data.detail[0].realname
+          strFormData.rectifier = data.detail[0].username;
+        }
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+      }
+
+      //移除
+      window.removeEventListener('returnSelect', checkPersonBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkPersonBack, false);
+    })
+
+    //监理审核人
+    $('#supervisorFullname').on('tap',function () {
+      var extras =null
+      app.openPage("../../commom/organ.html", {
+        titleNView: {
+          titleText: '选择人员',
+          autoBackButton: true
+        }
+      }, extras);
+
+      var checkPersonBack = function (data) {
+        console.log(JSON.stringify(data))
+        if (data.detail[0] != undefined) {
+          // console.log(JSON.stringify(data.detail[0]));
+          $("#supervisorFullname").text(data.detail[0].realname);
+          strFormData.supervisorFullname = data.detail[0].realname
+          strFormData.supervisor = data.detail[0].username;
+        }
+        //移除
+        window.removeEventListener('returnSelect', checkPersonBack, false);
+      }
+
+      //移除
+      window.removeEventListener('returnSelect', checkPersonBack, false);
+      // 赋值
+      window.addEventListener('returnSelect', checkPersonBack, false);
+    })
+
+
+    strAttachment.push(fileParm)
+
+    //文件上传
+    $("#upload_file").on("tap", function() {
+      console.log("upload_file")
+      if(operatorType == "show") return;
+      if (isUpload) {
+        isUpload = false;
+        let fileSuffix = 'doc、docx、pdf、jpg、png、JPG';
+        var that = $(this);
+        plusSelectFile(fileSuffix, function(data, path) {
+          console.log(path)
+          console.log(JSON.stringify(data))
+
+          // console.log(postParam.attachment)
+          var suffix = path.substring(path.lastIndexOf(".") + 1, path.length);
+          var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+          var iconPath = "";
+          console.log(suffix)
+          switch (suffix) {
+            case 'doc':
+            case 'docx':
+              iconPath = '../../img/commom/doc.png';
+              break;
+                  // case 'xlsx':
+                  // case 'xls':
+                  // 	iconPath = '../../img/commom/xlsx.png';
+                  // 	break;
+            case 'pdf':
+              iconPath = '../../img/commom/pdf.png';
+              break;
+            case 'jpg':
+              break;
+            case 'JPG':
+              break;
+            case 'png':
+              break;
+            default:
+              app.toast("只能上传.doc .docx .pdf .jpg .png文件！")
+              return;
+          }
+          if (data.success) {
+            app.toast("文件上传成功");
+            // document.getElementById('detail2').scrollTop = 0;
+            // $("#fileUploadBox").css("height", 180)
+            // $("#soilConservationScheme").css("height", 825)
+            $("#fileBoxItem").fadeIn()
+            that.attr("disabled", true)
+            $("#file_type").attr('src', iconPath)
+            $("#file_name").html(name)
+            $("#programme").val(data.result.fileTokens)
+            $("#fileToken").val(data.result.fileTokens)
+            strFormData.rectifyFile = data.result.uploadFile.id;
+            fileParm.groupId = data.result.uploadFile.id;
+            fileParm.fileTokens = data.result.fileTokens;
+            strAttachment.push(fileParm)
+            plus.io.resolveLocalFileSystemURL(path, function(entry) {
+              entry.file(function(file) {
+                let fileSize = Math.floor(file.size / 1024);
+                console.log(file.size + "===" + fileSize)
+                $("#file_size").html(fileSize + "KB")
+                var fileProperty = {
+                  fileName: name,
+                  fileType: iconPath,
+                  fileSize: file.size,
+                  fileToken: data.result.fileTokens
+                }
+                globalSetItem(GlobalKey.fileProperty, JSON.stringify(fileProperty))
+              });
+            }, function(e) {
+              alert("文件获取失败:" + e.message);
+            });
+          } else {
+            app.toast(data.message);
+          }
+        })
+      }
+      setTimeout(function() {
+        isUpload = true
+      }, 1000)
+    });
+
+    //删除文件
+    $(document).on("tap", ".file_close", function() {
+      var that = $(this)
+      mui.confirm("移除该文件?", "提示", ['确定', '我再想想'], function(result) {
+        if (parseInt(result.index) == 0) {
+          $("#fileUploadBox").css("border-bottom", "1px solid #EDEDED")
+          $("#fileBoxItem").hide()
+          $("#upload_file").attr("disabled", false)
+          $("#fileToken").val("")
+          $("#programme").val('')
+          globalDelItem(GlobalKey.fileProperty)
+        }
+      })
+    });
+
+
+    // 点击事件
+    var initDownSelect = function() {
+      $("body").delegate("input[class=checkItemName]", "tap", function(e) {
+        var that = $(this);
+        if ($(".mui-poppicker").hasClass("mui-active")) {
+          userPicker.hide();
+          return false;
+        } else {
+          if(checkItemJSON.length>0){
+            userPicker.setData(checkItemJSON);
+            console.log(JSON.stringify(checkItemJSON))
+            userPicker.show(function(items) {
+              // console.log(JSON.stringify(checkItems))
+              for(let i = 0;i<checkItems.length;i++){
+                if(checkItems[i].checkItemId == items[0].value){
+                  $(that).val(checkItems[i].checkItemName);
+                  var id = $(that).attr("id");
+                  console.log(checkItems[i].checkItemId)
+                  id = id.substring(id.length-2,id.length);
+                  // console.log(id)
+                  $("#checkItemId"+id).val(checkItems[i].checkItemId);
+                  $("#problems"+id).val(isEmp(checkItems[i].problems));
+                  // $("#checkItemId"+id).val(checkItems[i].checkItemId);
+                  if (checkItems[i].problemPhoto != null && checkItems[i].problemPhoto != undefined && checkItems[i].problemPhoto != "") {
+                    findFilesByGroupId({
+                      groupId: checkItems[i].problemPhoto
+                    }, function(data) {
+                      if(data.success){
+                        if(data.result.length> 0){
+                          $("#problemPhoto"+id).attr("photoId",checkItems[i].problemPhoto)
+                          $("#problemPhoto"+id).html("");
+                          var html = "<img class='imgCss img_item' data-preview-src='' data-preview-group='2' src='" + config.urls.baseUrl +
+                                  "sys/common/view/" +
+                                  data.result[0].uploadFile.savePath + "' style='height:72px'>";
+                          $("#problemPhoto"+id).append(html);
+                          $("#problemPhoto"+id).next().hide()
+                        }
+                      }
+                    });
+                  }
+                  break;
+                }
+              }
+            });
+          }else app.toast("暂无检查项目")
+        }
+      })
+    }
+
+    //子页面添加：
+
+    mui.init({
+      beforeback: function() {
+        //获得父页面的webview
+        var list = plus.webview.currentWebview().opener();
+        //触发父页面的自定义事件(refresh),从而进行刷新
+        mui.fire(list, 'refresh');
+        //返回true,继续页面关闭逻辑
+        return true;
+      }
+    });
+
+
+</script>
+</html>

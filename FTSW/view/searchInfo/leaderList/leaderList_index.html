@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+	<!-- 重构后的河湖长名录页面 -->
+
+	<head>
+		<meta charset="utf-8">
+		<title>河湖长名录</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css" />
+	<link href="../../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../../css/common.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/mui.poppicker.css" />
+	<!-- 河湖长名录这个页面的css -->
+	<link href="./leaderList.css" rel="stylesheet" />
+	<style type="text/css">
+
+
+	</style>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!-- 挂载vue -->
+		<div id="vueapp">
+			<!--单页面开始-->
+			<div id="mui-content" class="mui-page">
+				<div class="mui-page-content">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<!-- 内容区域 -->
+							<van-tabs v-model="active" @click="hhxxllick" line-width="30px" title-active-color="#008CFF"
+								color="#008CFF">
+								<van-tab title="河长名录" name="1"></van-tab>
+								<van-tab title="湖长名录" name="2"></van-tab>
+							</van-tabs>
+							<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+							<div class="mui-slider-group">
+								<div v-show="active==1" style="padding-top: 10px;">
+									<div id="scroll1" style="background: #FFFFFF;padding-bottom:50px">
+										<!-- 河长名录内容区 -->
+										<div class="topsl">
+											<div class="topsl-1"><img src="../../../img/clfhhgl/hh1.png"
+													style="width: 22px;height: 22px;"><span
+													style="font-size: 16px;color: #262626; margin-left: 6px;">河流数量：</span><span
+													style="font-size: 14px; font-weight: bold;color: #0493F3;"
+													class="hlslz">0</span>
+											</div>
+											<img @click="hlscreen" class="topsl-2" src="../../../img/clfhhgl/hh2.png"
+												style="width: 22px;height: 22px;">
+										</div>
+										<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+
+										<!-- 动态内容jkfor循环出来的人 -->
+										<div v-for="(item, index) in arr1" :key="index">
+											<div class="toubu">
+												<div class="toubu-1"></div>
+												<div class="toubu-2">{{item.riverName}}</div>
+											</div>
+											<div class="hljb">
+												<div class="hljb-1">河流级别：<span
+														style="color: #262626;">{{item.riverLevelText}}</span>
+												</div>
+												<div class="hljb-2">上级河流：<span
+														style="color: #262626;">{{item.superRiver}}</span>
+												</div>
+											</div>
+											<div class="sghz">
+												<div>区级河长：<span style="color: #262626;">{{item.qujb}}</span></div>
+												<div>社区级河长：<span style="color: #262626;">{{item.sqjn}}</span></div>
+												<div>街道级河长：<span style="color: #262626;">{{item.jdjb}}</span></div>
+											</div>
+											<!-- <div v-if="arr1[index].childLevel[0].quxztj" class="fankuan" v-for="(item1, index1) in [arr1[index].childLevel[0]]" :key="index1"> -->
+											<div v-if="arr1[index].childLevel[0].quxztj" class="fankuan"
+												v-for="(item1, index1) in arr1[index].childLevel" :key="index1">
+												<div class="zfankuan" @click="ckzphedh(item1)">
+													<div class="zfankuan-1"><span
+															style="margin-right: 2px;">{{item1.personName}}</span>
+														<img v-if="item1.level==1" src="../../../img/clfhhgl/hh3.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="item1.level==2" src="../../../img/clfhhgl/hh4.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="item1.level==3" src="../../../img/clfhhgl/hh5.png"
+															style="width: 18px;height: 20px;" alt="">
+													</div>
+													<div class="zfankuan-2">...</div>
+												</div>
+												<div class="fankuan-hzjb">河长级别：<span
+														style="color: #262626;">{{item1.levelDicText}}</span></div>
+												<div class="fankuan-hzjb">相应职务：<span
+														style="color: #262626;">{{item1.personDuty}}</span></div>
+												<div class="fankuan-hzjb">联系方式：<span
+														style="color: #262626;">{{item1.personPhone}}</span></div>
+											</div>
+											<!-- 收起来的数据 -->
+											<div v-if="!arr1[index].childLevel[0].quxztj" class="fankuan">
+												<div class="zfankuan" @click="ckzphedh(arr1[index].childLevel[0])">
+													<div class="zfankuan-1"><span
+															style="margin-right: 2px;">{{arr1[index].childLevel[0].personName}}</span>
+														<img v-if="arr1[index].childLevel[0].level==1"
+															src="../../../img/clfhhgl/hh3.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="arr1[index].childLevel[0].level==2"
+															src="../../../img/clfhhgl/hh4.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="arr1[index].childLevel[0].level==3"
+															src="../../../img/clfhhgl/hh5.png"
+															style="width: 18px;height: 20px;" alt="">
+													</div>
+													<div class="zfankuan-2">...</div>
+												</div>
+												<div class="fankuan-hzjb">河长级别：<span
+														style="color: #262626;">{{arr1[index].childLevel[0].levelDicText}}</span>
+												</div>
+												<div class="fankuan-hzjb">相应职务：<span
+														style="color: #262626;">{{arr1[index].childLevel[0].personDuty}}</span>
+												</div>
+												<div class="fankuan-hzjb">联系方式：<span
+														style="color: #262626;">{{arr1[index].childLevel[0].personPhone}}</span>
+												</div>
+											</div>
+											<div @click="myxtp(index)" style="padding: 5px">
+												<img :src="item.tpimg" style="width: 9px" />
+											</div>
+											<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+
+										</div>
+									</div>
+								</div>
+								<div v-show="active==2">
+									<div style="background: #FFFFFF;padding-bottom:50px">
+										<!-- 湖长名录内容区 -->
+										<div class="topsl">
+											<div class="topsl-1"><img src="../../../img/clfhhgl/hh1.png"
+													style="width: 22px;height: 22px;"><span
+													style="font-size: 16px;color: #262626; margin-left: 6px;">湖泊(水库)数量：</span><span
+													style="font-size: 14px; font-weight: bold;color: #0493F3;"
+													class="hlslz">0</span>
+											</div>
+											<img @click="hbzsxdj" class="topsl-2" src="../../../img/clfhhgl/hh2.png"
+												style="width: 22px;height: 22px;">
+										</div>
+										<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+
+										<!-- 动态内容jkfor循环出来的人 -->
+										<div v-for="(item, index) in arr1" :key="index">
+											<div class="toubu">
+												<div class="toubu-1"></div>
+												<div class="toubu-2">{{item.riverName}}</div>
+											</div>
+											<div class="sghz">
+												<div>区级湖长：<span style="color: #262626;"> {{item.qujb}}</span></div>
+												<div>社区级湖长：<span style="color: #262626;">{{item.sqjn}}</span></div>
+												<div>街道级湖长：<span style="color: #262626;">{{item.jdjb}}</span></div>
+											</div>
+											<!-- <div v-if="arr1[index].childLevel[0].quxztj" class="fankuan" v-for="(item1, index1) in [arr1[index].childLevel[0]]" :key="index1"> -->
+											<div v-if="arr1[index].childLevel[0].quxztj" class="fankuan"
+												v-for="(item1, index1) in arr1[index].childLevel" :key="index1">
+												<div class="zfankuan" @click="ckzphedh(item1)">
+													<div class="zfankuan-1"><span
+															style="margin-right: 2px;">{{item1.personName}}</span>
+														<img v-if="item1.level==1" src="../../../img/clfhhgl/hh3.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="item1.level==2" src="../../../img/clfhhgl/hh4.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="item1.level==3" src="../../../img/clfhhgl/hh5.png"
+															style="width: 18px;height: 20px;" alt="">
+													</div>
+													<div class="zfankuan-2">...</div>
+												</div>
+												<div class="fankuan-hzjb">湖长级别：<span
+														style="color: #262626;">{{item1.levelDicText}}</span></div>
+												<div class="fankuan-hzjb">相应职务：<span
+														style="color: #262626;">{{item1.personDuty}}</span></div>
+												<div class="fankuan-hzjb">联系方式：<span
+														style="color: #262626;">{{item1.personPhone}}</span></div>
+											</div>
+											<!-- 收起来的数据 -->
+											<div v-if="!arr1[index].childLevel[0].quxztj" class="fankuan">
+												<div class="zfankuan" @click="ckzphedh(arr1[index].childLevel[0])">
+													<div class="zfankuan-1"><span
+															style="margin-right: 2px;">{{arr1[index].childLevel[0].personName}}</span>
+														<img v-if="arr1[index].childLevel[0].level==1"
+															src="../../../img/clfhhgl/hh3.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="arr1[index].childLevel[0].level==2"
+															src="../../../img/clfhhgl/hh4.png"
+															style="width: 18px;height: 20px;" alt="">
+														<img v-if="arr1[index].childLevel[0].level==3"
+															src="../../../img/clfhhgl/hh5.png"
+															style="width: 18px;height: 20px;" alt="">
+													</div>
+													<div class="zfankuan-2">...</div>
+												</div>
+												<div class="fankuan-hzjb">湖长级别：<span
+														style="color: #262626;">{{arr1[index].childLevel[0].levelDicText}}</span>
+												</div>
+												<div class="fankuan-hzjb">相应职务：<span
+														style="color: #262626;">{{arr1[index].childLevel[0].personDuty}}</span>
+												</div>
+												<div class="fankuan-hzjb">联系方式：<span
+														style="color: #262626;">{{arr1[index].childLevel[0].personPhone}}</span>
+												</div>
+											</div>
+											<div @click="myxtp(index)" style="padding: 5px">
+												<img :src="item.tpimg" style="width: 9px" />
+											</div>
+											<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+							<!-- 内容区域结束 -->
+						</div>
+					</div>
+				</div>
+				<!--单页面结束-->
+			</div>
+			<!-- 河流右侧筛选弹框 -->
+			<van-popup v-model="show1" position="right" :style="{ height: '100%',width: '70%' }">
+				<van-cell-group>
+					<van-field readonly clickable label-width="4em" label="河流名称" :value="hlname" right-icon="arrow"
+						input-align="right" placeholder="请选择河流名称" @click="showPicker = true"></van-field>
+					<van-field readonly clickable label-width="4em" label="河长级别" :value="hzldjb" right-icon="arrow"
+						input-align="right" placeholder="请选择河长级别" @click="showPicker1 = true"></van-field>
+					<van-field readonly clickable label-width="4em" label="所属街道" :value="shinjjdname" right-icon="arrow"
+						input-align="right" placeholder="请选择所属街道" @click="showPicker2 = true"></van-field>
+					<van-field readonly clickable label-width="4em" label="所属社区" :value="sqname" right-icon="arrow"
+						input-align="right" placeholder="请选所属社区" @click="showPicker3 = true"></van-field>
+				</van-cell-group>
+				<div class="twobtn">
+					<van-button class="twobtn-1" plain type="info" @click="hzczbtn">重置</van-button>
+					<van-button class="twobtn-2" @click="hzntnqr" type="info">确认</van-button>
+				</div>
+			</van-popup>
+			<!-- 湖泊右侧筛选弹框 -->
+			<van-popup v-model="show2" position="right" :style="{ height: '100%',width: '70%' }">
+				<van-cell-group>
+					<van-field readonly clickable label-width="7em" label="湖泊(水库)名称" :value="hbhlname"
+						right-icon="arrow" input-align="right" placeholder="请选择名称" @click="hbshowPicker = true">
+					</van-field>
+					<van-field readonly clickable label-width="4em" label="湖长级别" :value="hbhzldjb" right-icon="arrow"
+						input-align="right" placeholder="请选择河长级别" @click="showPicker1 = true"></van-field>
+					<van-field readonly clickable label-width="4em" label="所属街道" :value="hbshinjjdname"
+						right-icon="arrow" input-align="right" placeholder="请选择所属街道" @click="showPicker2 = true">
+					</van-field>
+					<van-field readonly clickable label-width="4em" label="所属社区" :value="hbsqname" right-icon="arrow"
+						input-align="right" placeholder="请选所属社区" @click="hbshowPicker3 = true"></van-field>
+				</van-cell-group>
+				<div class="twobtn">
+					<van-button class="twobtn-1" plain type="info" @click="hbhzczbtn">重置</van-button>
+					<van-button class="twobtn-2" @click="hbhzntnqr" type="info">确认</van-button>
+				</div>
+			</van-popup>
+			<!-- 所有湖泊水库名称选择器 -->
+			<van-popup v-model="hbshowPicker" position="bottom">
+				<van-picker show-toolbar :columns="hbList" value-key="hbhlname" @confirm="hbonConfirm"
+					@cancel="hbshowPicker = false" />
+			</van-popup>
+			<!--湖泊所属社区选择器-->
+			<van-popup v-model="hbshowPicker3" position="bottom">
+				<van-picker show-toolbar :columns="hbsqnamesz" value-key="adName" @confirm="hbonConfirm3"
+					@cancel="hbshowPicker3 = false" />
+			</van-popup>
+
+
+			<!-- ---------------上面湖泊特有选者器 -->
+			<!--所有河流名称选择器-->
+			<van-popup v-model="showPicker" position="bottom">
+				<van-picker show-toolbar :columns="hlList" value-key="hlname" @confirm="onConfirm"
+					@cancel="showPicker = false" />
+			</van-popup>
+			<!--河长级别选择器-->
+			<van-popup v-model="showPicker1" position="bottom">
+				<van-picker show-toolbar :columns="hzldjbsz" value-key="text" @confirm="onConfirm1"
+					@cancel="showPicker1 = false" />
+			</van-popup>
+			<!--所属街道选择器-->
+			<van-popup v-model="showPicker2" position="bottom">
+				<van-picker show-toolbar :columns="shinjjdsz" value-key="adName" @confirm="onConfirm2"
+					@cancel="showPicker2 = false" />
+			</van-popup>
+			<!--所属社区选择器-->
+			<van-popup v-model="showPicker3" position="bottom">
+				<van-picker show-toolbar :columns="sqnamesz" value-key="adName" @confirm="onConfirm3"
+					@cancel="showPicker3 = false" />
+			</van-popup>
+			<!--电话和河湖长牌的弹窗-->
+			<van-popup v-model="dhshowPicker3" position="bottom">
+				<div class="bdphone" @click="bddh(phone)">
+					<van-icon name="phone-o" />&nbsp;拨打&nbsp;{{phone}}
+				</div>
+				<div class="ckhzp" @click="cktpbtn(tpimgcs)"><span v-show="active==1">查看河长牌</span><span v-show="active==2">查看湖长牌</span><span v-show="false">{{tpimgcs}}</span></div>
+				<div class="quxiao" @click="xmqxbtn">取消</div>
+			</van-popup>
+			<van-dialog v-model="tushow" title="" show-cancel-button >
+			  <img style="width: 100px; height: 100px;" :src="wltpdz" />
+			</van-dialog>
+		</div>
+
+
+
+	</body>
+
+	<script src="../../../js/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/maintain.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/kpi/index.js"></script>
+	<script src="../../../js/infoQuery/leaderList.js"></script>
+	<!-- 河湖长名录接口js -->
+	<script src="../../../js/leaderList/leaderList.js"></script>
+	<!-- 河湖页面js处理文件 -->
+	<script src="./js/index.js"></script>
+	<!-- <script src="./js/1111.js"></script> -->
+	<script type="text/javascript">
+		mui.init({
+			// swipeBack: false
+		});
+
+		//初始化单页view
+		// var viewApi = mui('#app').view({
+		// 	defaultPage: '#mui-content'
+		// });
+		// 初始化单页的区域滚动
+		// mui('.mui-scroll-wrapper').scroll();
+
+		mui('.mui-scroll-wrapper').scroll({
+			// scrollY: true, //是否竖向滚动
+			// scrollX: false, //是否横向滚动
+			// startX: 0, //初始化时滚动至x
+			// startY: 0, //初始化时滚动至y
+			// indicators: true, //是否显示滚动条
+			// deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+			// bounce: true //是否启用回弹
+		});
+		// console.log("oododoeo")
+		// var showMoreNotification = false;
+		// 每一个下拉图片触发的事件，
+		// $("#moreNotification").on('tap', function() {
+		// 	// 消息通知更多点击
+		// 	if (!showMoreNotification) {
+		// 		// 未显示更多情况下
+		// 		showMoreNotification = true;
+		// 		$("#moreNotificationImg").attr("src", "../../../img/home_pack_up_icon@2x.png")
+		// 	} else {
+		// 		showMoreNotification = false;
+		// 		$("#moreNotificationImg").attr("src", "../../../img/home_more_icon@2x.png")
+		// 	}
+		// 	// addNotificationData(notificationDatas);
+		// });
+
+
+
+
+
+
+
+
+
+
+
+		mui.plusReady(function() {
+			// var item2Show = false,item3Show = false;//子选项卡是否显示标志
+			// document.getElementById("slider").addEventListener('tap', function(event) {
+			// console.log("gggg哈哈哈")
+			// if (event.detail.slideNumber === 1&&!item2Show) {
+			//   //切换到第二个选项卡
+			//   //根据具体业务，动态获得第二个选项卡内容；
+			//   var content = 'er';
+			//   //显示内容
+			//   document.getElementById("item2").innerHTML = content;
+			//   //改变标志位，下次直接显示
+			//   item2Show = true;
+			// } else if (event.detail.slideNumber === 2&&!item3Show) {
+			//   //切换到第三个选项卡
+			//   //根据具体业务，动态获得第三个选项卡内容；
+			//   var content = 'san';
+			//   //显示内容
+			//   document.getElementById("item3").innerHTML = content;
+			//   //改变标志位，下次直接显示
+			//   item3Show = true;
+			// }
+			// });
+		})
+	</script>
+
+</html>

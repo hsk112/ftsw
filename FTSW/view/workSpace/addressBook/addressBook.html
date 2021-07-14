@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <style>
+    .mui-col-xs-6 {
+      text-align: left;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-control-content .mui-loading {
+      margin-top: 50px;
+    }
+
+    .mui-table-view-cell.mui-collapse.mui-active + .www .arrow_right {
+      transform: rotate(90deg);
+      margin-left: 5px;
+    }
+
+    .mui-table-view-cell:after {
+      left: 1px;
+      /*background-color: #F4F4F4;*/
+      /*height: 10px;*/
+      height: 0;
+      background-color: white;
+    }
+
+    /*.mui-table-view-cell div{*/
+    /*  margin-bottom: 10px;*/
+    /*}*/
+
+    .mui-table-view-cell .item-first {
+      display: flex;
+      font-size: 16px;
+      color: #191515;
+      margin-top: 10px
+    }
+
+    .mui-page-content {
+      background: #F4F4F4;
+    }
+
+    .mui-table-view {
+      /*background-color: #F4F4F4;*/
+      text-align: left;
+    }
+
+    .no-data {
+      position: absolute;
+      top: 10rem;
+      left: 50%;
+      display: inline-block;
+      font-size: 20px;
+      color: #999;
+      transform: translateX(-50%);
+    }
+
+    #listTitle span {
+      padding: 0;
+      color: #888888;
+    }
+
+
+    #selectDistrict_ul span, #selectStreet_ul span, #selectCommunity_ul span,
+    #selectLakeDistrict_ul span, #selectLakeStreet_ul span, #selectLakeCommunity_ul span {
+      padding: 0;
+    }
+
+    /*.mui-table-view-cell:after{*/
+    /*  left: 4%;*/
+    /*  height: 2px;*/
+    /*  width: 92%;*/
+    /*}*/
+
+    .home-item {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 300px;
+      background: #FFFFFF
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 25%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #search_input1, #search_input2, #search_input3 {
+      margin: 0;
+      width: 90%;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      padding-left: 35px;
+    }
+
+    #search {
+      padding: 10px 0;
+      background: #F4F4F4;
+      /*border-bottom: 7px solid #F4F4F4;*/
+      position: relative;
+    }
+
+
+    #search_icon img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      left: 31px;
+      top: 19px;
+    }
+
+    #del_icon1 img, #del_icon2 img, #del_icon3 img {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 9%;
+      top: 33%;
+    }
+
+
+    #whichRiver span {
+      padding: 0;
+    }
+
+
+    #whichLake span {
+      padding: 0;
+    }
+
+    #highest {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #leader {
+      height: 50px;
+      line-height: 50px;
+    }
+
+    #details {
+      margin: 0 20px;
+    }
+
+    * {
+      touch-action: none;
+    }
+
+    /* 自定义的样式 */
+    .mui-page {
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view-cell {
+      /*margin-bottom: 10px;*/
+      font-size: 16px;
+      color: #191515;
+      /*padding: 0!important;*/
+
+      margin-left: 20px;
+      line-height: 40px;
+      /*padding-top: 12px;*/
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view-cell img {
+      margin-right: 10px;
+    }
+
+    /*.mui-table-view-cell>a:not(.mui-btn){*/
+    /*  margin: 0;*/
+    /*  padding:10px;*/
+    /*}*/
+    /*.mui-table-view-cell > a:not(.mui-btn) .mui-active {*/
+    /*  background-color: #fff;*/
+    /*}*/
+    .mui-table-view-cell.mui-active {
+      background-color: #FFFFFF;
+    }
+
+    .arrow-right-img {
+      width: 7px;
+      height: 10px;
+    }
+
+    .arrow-down-img {
+      width: 10px;
+      height: 7px;
+    }
+
+    .node0-parent {
+      border-bottom: 1px solid #f4f4f4;
+    }
+
+    .node0-sub-item {
+      border-bottom: 1px solid #f4f4f4;
+    }
+
+    .node0-sub-sub-item {
+      border-bottom: 1px solid #f4f4f4;
+    }
+
+    .node0-sub {
+      margin-left: 20px;
+    }
+
+    .node0-sub-sub {
+      margin-left: 30px;
+    }
+
+    .empty {
+      line-height: 200px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      color: #BBBBBB;
+    }
+
+
+  </style>
+</head>
+
+<body>
+<!--页面主结构开始-->
+<!--<div id="app" class="mui-views">-->
+<!--  <div class="mui-view">-->
+<!--    <div class="mui-navbar">-->
+<!--    </div>-->
+<!--    <div class="mui-pages">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="home-item" style="display: none;" id="home-item">-->
+<!--  <div class="home-item-list" id="business_item">-->
+<!--    <div class="item" id="missionUncompleted">-->
+<!--      <img src="../../../img/missionUncompleted.png">-->
+<!--      <span>待办任务</span>-->
+<!--    </div>-->
+<!--    <div class="item" id="notification">-->
+<!--      <img src="../../../img/notification.png">-->
+<!--      <span>通知公告</span>-->
+<!--    </div>-->
+<!--    <div class="item" id="directory">-->
+<!--      <img src="../../../img/directory.png">-->
+<!--      <span>通讯录</span>-->
+<!--    </div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--页面标题栏开始-->
+  <!--页面标题栏结束-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <div id="scroll1" class="mui-scroll-wrapper" style="overflow-y: scroll;height: 100vh; padding-bottom:50px">
+
+          <div style="background-color: white" id="statusBarHeight"></div>
+          <div id="search">
+            <div id="search_icon"><img src="../../../img/commom/search1@2x.png"></div>
+            <div id="del_icon1"><img src="../../../img/commom/del.png"></div>
+            <input type="text" id="search_input1" maxlength="20" value="" placeholder="请输入姓名"/>
+          </div>
+          <div class="view-content-item" style="display: flex;line-height: 53.5px;">
+            <div id="content" style="width: 100%;overflow-y: scroll;height:500px;">
+              <ul id="content-ul" class="mui-table-view">
+                <!--                  <div class='empty'>暂无数据</div>-->
+
+                <!-- 一个li start -->
+                <li class="mui-table-view-cell">
+                  <!-- 一个单位 start -->
+                  <div class="">
+
+                    <!-- 一级 start -->
+                    <div class="node0-parent" style="">
+                      <img class="arrow-down-img" alt="1" src="../../../img/arrowDownBlue.png">
+                      <span class="spanLim">华东勘测设计研究院</span>
+                    </div>
+                    <!-- 一级 end -->
+                    <!-- 二级 start -->
+                    <div class="node0-sub">
+                      <!-- 一个部门 start -->
+                      <div>
+                        <div class="node0-sub-item">
+                          <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                          <span class="spanLim">部门1</span>
+                        </div>
+                        <!-- 三级 start -->
+                        <div class="node0-sub-sub" hidden="hidden">
+                          <div class="node0-sub-sub-item">张三</div>
+                          <div class="node0-sub-sub-item">张三2</div>
+                          <div class="node0-sub-sub-item">张三3</div>
+                        </div>
+                        <!-- 三级 end -->
+                      </div>
+                      <!-- 一个部门 end -->
+                      <!-- 一个部门 start -->
+                      <div>
+                        <div class="node0-sub-item">
+                          <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                          <span class="spanLim">部门2</span>
+                        </div>
+                        <!-- 三级 start -->
+                        <div class="node0-sub-sub" hidden="hidden">
+                          <div class="node0-sub-sub-item">李四</div>
+                          <div class="node0-sub-sub-item">李四2</div>
+                        </div>
+                        <!-- 三级 end -->
+                      </div>
+                      <!-- 一个部门 end -->
+                      <!-- 一个部门 start -->
+                      <div>
+                        <div class="node0-sub-item">
+                          <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                          <span class="spanLim">部门3</span>
+                        </div>
+                        <!-- 三级 start -->
+                        <!--                          <div class="node0-sub-sub">-->
+                        <!--                            &lt;!&ndash; 空也要加这个div &ndash;&gt;-->
+                        <!--                          </div>-->
+                        <!-- 三级 end -->
+                      </div>
+                      <!-- 一个部门 end -->
+                    </div>
+                    <!-- 二级 end -->
+                  </div>
+                  <!-- 一个单位 end -->
+                </li>
+                <!-- 一个li end -->
+
+                <!-- 一个li start -->
+                <li class="mui-table-view-cell">
+                  <!-- 一个单位 start -->
+                  <div class="">
+
+                    <!-- 一级 start -->
+                    <div class="node0-parent" style="">
+                      <img class="arrow-down-img" alt="1" src="../../../img/arrowDownBlue.png">
+                      <span class="spanLim">华东勘测设计研究院1</span>
+                    </div>
+                    <!-- 一级 end -->
+                    <!-- 二级 start -->
+                    <div class="node0-sub">
+                      <!-- 一个部门 start -->
+                      <div>
+                        <div class="node0-sub-item">
+                          <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                          <span class="spanLim">部门11</span>
+                        </div>
+                        <!-- 三级 start -->
+                        <div class="node0-sub-sub" hidden="hidden">
+                          <div class="node0-sub-sub-item">张三</div>
+                          <div class="node0-sub-sub-item">张三2</div>
+                          <div class="node0-sub-sub-item">张三3</div>
+                        </div>
+                        <!-- 三级 end -->
+                      </div>
+                      <!-- 一个部门 end -->
+                      <!-- 一个部门 start -->
+                      <div>
+                        <div class="node0-sub-item">
+                          <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                          <span class="spanLim">部门2</span>
+                        </div>
+                        <!-- 三级 start -->
+                        <div class="node0-sub-sub" hidden="hidden">
+                          <div class="node0-sub-sub-item">李四</div>
+                          <div class="node0-sub-sub-item">李四2</div>
+                        </div>
+                        <!-- 三级 end -->
+                      </div>
+                      <!-- 一个部门 end -->
+                      <!-- 一个部门 start -->
+                      <div>
+                        <div class="node0-sub-item">
+                          <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                          <span class="spanLim">部门3</span>
+                        </div>
+                        <!-- 三级 start -->
+                        <!--                          <div class="node0-sub-sub">-->
+                        <!--                            &lt;!&ndash; 空也要加这个div &ndash;&gt;-->
+                        <!--                          </div>-->
+                        <!-- 三级 end -->
+                      </div>
+                      <!-- 一个部门 end -->
+                    </div>
+                    <!-- 二级 end -->
+                  </div>
+                  <!-- 一个单位 end -->
+                </li>
+                <!-- 一个li end -->
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+</body>
+
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/maintain.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<!-- <script src="../../js/timer.js"></script> -->
+<!-- <script src="../../../js/vconsole.min.js"></script> -->
+<script src="../../../js/infoQuery/leaderList.js"></script>
+<script src="../../../js/workSpace/addressBook.js"></script>
+<!-- 分页1 -->
+<script src="../../../js/bscroll.js"></script>
+
+<script>
+    mui.init({
+        swipeBack: false
+    });
+    let param = {
+        order: 'desc',
+        personName: ''
+
+    }
+    // var vConsole = new VConsole();
+    mui.back = function () {
+        var curr = plus.webview.currentWebview();
+        // var wvs = plus.webview.all();
+        // for (var i = 0, len = wvs.length-1; i < len; i++) {
+        //     let theurl = wvs[i].getURL() + '';
+        //     if (!(theurl.search('login.html') != -1 ||
+        //         theurl.search('www/main.html') != -1 ||
+        //         theurl.search('www/index.html') != -1 ||
+        //         theurl.search('/searchInfo/index.html') != -1)){
+        //         wvs[i].close('none');
+        //     }
+        // }
+        curr.close('slide-out-right');
+    }
+
+    var riverData = [];
+    var lakeData = [];
+    var isOpen = false;
+    var isLakeOpen = false;
+    var isShow = true;
+    var riverPageNo = '1';
+    var riverPageSize = '100';
+    var lakePageNo = '1';
+    var lakePageSize = '100';
+    var userPicker = new mui.PopPicker();
+    var searchRiver = [];
+    var searchLake = [];
+    var riverList = [];
+    var lakeList = [];
+    var riverResultJSON = [];
+    var lakeResultJSON = [];
+
+    var mask = mui.createMask();
+
+    //初始化单页view
+    // var viewApi = mui('#app').view({
+    //     defaultPage: '#mui-content'
+    // });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    var pickerpxtop = null;
+
+    var extras = {
+        openNum: 0
+    }
+
+    var input1 = document.getElementById("search_input1");
+    var input2 = document.getElementById("search_input2");
+    var input3 = document.getElementById("search_input3");
+
+    <!-- 分页2 -->
+    var allDataLoad = false; // 根据数量判断是否已加载完
+    var rankBox = document.getElementById("content"); // slider
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        // pullUpLoad: true
+    });
+
+    mui.plusReady(function () {
+
+        plus.navigator.setStatusBarStyle("dark");
+        var statusBarHeight = plus.navigator.getStatusbarHeight();
+        $("#statusBarHeight").css("padding-top", statusBarHeight);
+
+        $("#del_icon1").hide();
+        $("#del_icon2").hide();
+        $("#del_icon3").hide();
+        //initSelected();
+        // 初始化数据列表（河流数据）
+        //禁止选项卡自带滑动
+        //  mui('.mui-slider').slider().stopped = true;
+        var self = plus.webview.currentWebview();
+        extras.openNum = self.openNum + 1; //初始化打开页面数量
+
+        // 请求数据
+        getAddressBook(false);
+
+        // self.setStyle({
+        //     titleNView: {
+        //         backgroundImage: "../../../img/bgTopClear.png",
+        //         backgroundRepeat: 'no-repeat',
+        //         buttons: [{
+        //             float: 'right',
+        //             width: '70',
+        //             fontSize: '17',
+        //             text: '',
+        //             onclick: function() {
+        //                 // if (isShow) {
+        //                 //     isShow = false;
+        //                 //     $("#home-item").show();
+        //                 //     mask.show()
+        //                 // } else {
+        //                 //     isShow = true;
+        //                 //     $('#home-item').hide();
+        //                 //     mask.close();
+        //                 // }
+        //             }
+        //         }],
+        //     }
+        // });
+        var winHeight = window.screen.height - 135;
+        $("#content").css("height", winHeight + "px");
+
+        // var html =''
+        // var items = []; //["华东勘测设计研究院",["部门1", "部门2", "部门3"]];
+        // if(items && items.length>0){
+        //     for(i = 0;i<items.length;i++){
+        //
+        //       html += `<li class="mui-table-view-cell" style="margin-left: 20px;line-height: 20px;padding-top: 12px;background-color: #FFFFFF;">
+        //
+        //                         <div class="mui-slider-handle">
+        //                             <div class="nodeNo">${i+1}</div>
+        //                             <div  class="select-query-list-title" style="width: 80%; display: inline-block;">
+        //                                 <div class="spanLim">${items[i].text}</div>
+        //                             </div>
+        //                         </div>
+        //                     </li>`
+        //     }
+        // }else{
+        //     html +=`<div class='empty'>暂无数据js add</div>`;
+        // }
+        // $("#OA_task_1").html(html);
+
+    });
+
+    // 单位点击
+    mui("#content-ul").on('tap', '.node0-parent', function (event) {
+        event.stopPropagation();
+
+        var imgObj = event.target.previousElementSibling;
+        if (event.target.nodeName == "IMG") {
+            imgObj = event.target;
+        }
+        // console.log(imgObj);
+        if (imgObj != null) {
+            if (imgObj.alt == 1) {
+                imgObj.alt = 0;
+            } else {
+                imgObj.alt = 1;
+            }
+            if (imgObj.alt == 1) {
+                imgObj.className = "arrow-down-img";
+                imgObj.src = "../../../img/arrowDownBlue.png"
+                if (event.target.parentElement.nextElementSibling != null) {
+                    event.target.parentElement.nextElementSibling.hidden = false;
+                    var nextObj = event.target.parentElement.nextElementSibling;
+                    var isFinish = false
+                    while (!isFinish) {
+                        if (nextObj != null) {
+                            nextObj.hidden = false;
+                            nextObj = nextObj.nextElementSibling;
+                        } else {
+                            isFinish = true;
+                        }
+                    }
+
+                }
+
+            } else {
+                imgObj.className = "arrow-right-img";
+                imgObj.src = "../../../img/arrowRightBlue.png"
+                if (event.target.parentElement.nextElementSibling != null) {
+                    event.target.parentElement.nextElementSibling.hidden = true;
+                    var nextObj = event.target.parentElement.nextElementSibling;
+                    var isFinish = false
+                    while (!isFinish) {
+                        if (nextObj != null) {
+                            nextObj.hidden = true;
+                            nextObj = nextObj.nextElementSibling;
+                        } else {
+                            isFinish = true;
+                        }
+                    }
+                }
+            }
+        }
+
+    })
+
+    // 部门项点击
+    mui("#content-ul").on('tap', '.node0-sub-item', function (event) {
+        event.stopPropagation();
+
+        var imgObj = event.target.previousElementSibling;
+        if (event.target.nodeName == "IMG") {
+            imgObj = event.target;
+        }
+        //console.log(imgObj);
+        if (imgObj != null) {
+            if (imgObj.alt == 1) {
+                imgObj.alt = 0;
+            } else {
+                imgObj.alt = 1;
+            }
+            if (imgObj.alt == 1) {
+                imgObj.className = "arrow-down-img";
+                imgObj.src = "../../../img/arrowDownBlue.png"
+                if (event.target.parentElement.nextElementSibling != null) {
+                    event.target.parentElement.nextElementSibling.hidden = false;
+                }
+
+            } else {
+                imgObj.className = "arrow-right-img";
+                imgObj.src = "../../../img/arrowRightBlue.png"
+                if (event.target.parentElement.nextElementSibling != null) {
+                    event.target.parentElement.nextElementSibling.hidden = true;
+                }
+            }
+        }
+
+    })
+
+    // 用户名点击
+    mui("#content-ul").on('tap', '.node0-sub-sub-item', function (event) {
+        event.stopPropagation();
+        var pid = event.target.id;
+        console.log(pid + event.target.innerHTML);
+
+        // 跳转详情页
+        var recordInfo = {
+            // opera:"add",
+            nid: pid
+        };
+        app.openPage("addressBookDetail.html", {
+            titleNView: {
+                titleText: "通讯录详情",
+                autoBackButton: true,
+            }
+        }, recordInfo);
+
+    })
+
+    // 请求数据
+    function getAddressBook(append) {
+
+        //console.log("进入function getAddressBook")
+        getAddressBookList(param, function (data) {
+            //console.log("getNotificationList 返回数据 ========== ")
+            console.log(JSON.stringify(data.result))
+            if (data.success) {
+                // addData(data.result.records);
+                addData(data);
+            } else {
+                app.toast("通讯录列表查询失败")
+            }
+        });
+
+    }
+
+
+    // methods
+    var initDestoryData = function (data, callback) {
+        for (let key in data) {
+            if (data[key] == '' || data[key] == null) {
+                data[key] = '暂无'
+            }
+        }
+        callback(data);
+    }
+
+    function getRiver(riverName) {
+        getRiverDirectories(riverName, riverPageNo, riverPageNo, function (data) {
+            riverData = data.result.records;
+            let str0 = '';
+            let str1 = '';
+            let str2 = '';
+            if (riverData != null && riverData.length != 0) {
+                let dataLength = riverData[0].childLevel.length
+                initDestoryData(riverData[0], function (Data) {
+                    str0 =
+                        `<div class="mui-row" style="text-align: left;">
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${riverName}</span>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${Data.riverLevelText}</span>
+								</div>
+								<div class="mui-col-sm-4 mui-col-xs-4">
+									<span class="mui-table-view-cell">${Data.superRiver}</span>
+								</div>
+							</div>`;
+                    str1 =
+                        `<div id="highest" class="mui-row" style="font-weight: bold;border-top: 5px solid #F4F4F4;">
+									<div class="mui-col-sm-6 mui-col-xs-6" style="padding: 0 20px;text-align: left;">
+										<span class="mui-table-view-cell">河长职务</span>
+									</div>
+									<div class="mui-col-sm-6 mui-col-xs-6" style="padding: 0 20px;text-align: right;">
+										<span class="mui-table-view-cell">${Data.personDuty}</span>
+									</div>
+								</div>
+
+								<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+									<div class="mui-row" style="">
+										<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">河长级别：${Data.levelDicText}</div>
+											<div style="padding: 0; height: 30px; line-height: 30px; white-space: nowrap;">河长电话：${Data.personPhone}</div>
+										</div>
+										<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+											<div style="padding: 0; height: 30px; line-height: 30px;">河长姓名：${Data.personName}</div>
+										</div>
+									</div>
+								</div>`;
+                })
+
+
+                for (let i = 0; i < dataLength; i++) {
+                    initDestoryData(riverData[0].childLevel[i], function (Data) {
+                        str2 +=
+                            `<li id="streetInfo" style="background-color: #FFFFFF;	border-top: 5px solid #F4F4F4;">
+										<div id="leader" class="mui-row" style="font-weight: bold;">
+											<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;padding: 0 20px;">
+												<span class="mui-table-view-cell">河长职务</span>
+											</div>
+											<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: right;padding: 0 20px;">
+												<span class="mui-table-view-cell">${Data.personDuty}</span>
+											</div>
+										</div>
+
+										<div id="details" style="border-top: 1px solid #F4F4F4;padding-top: 10px;">
+											<div class="mui-row" style="">
+												<div class="mui-col-sm-6 mui-col-xs-6"style="text-align: left;">
+													<div style="padding: 0; height: 30px; line-height: 30px;">所属街道：${Data.streetName}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px;">河长级别：${Data.levelDicText}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px; white-space: nowrap;">河长电话：${Data.personPhone}</div>
+												</div>
+												<div class="mui-col-sm-6 mui-col-xs-6" style="text-align: left;padding-left: 30px;">
+													<div style="padding: 0; height: 30px; line-height: 30px;">所属社区：${Data.communityName}</div>
+													<div style="padding: 0; height: 30px; line-height: 30px;">河长姓名：${Data.personName}</div>
+												</div>
+											</div>
+										</div>
+									</li>`
+                    })
+
+                }
+                $('#whichRiver').html(str0);
+                $('#districtInfo').html(str1);
+                $('#streetDetail').html(str2);
+                $("#viewMore").show();
+                $("#riverOption").css("color", "#337BFC")
+                $('#streetDetail').hide();
+                $('#viewMoreText').text("查看更多")
+                $('#river_arrow_down').css("transform", "rotate(0)")
+            } else {
+                $('#loadTips1').text("暂无数据！");
+                $('#loadTips1').show();
+
+                str0 =
+                    `<div class="mui-row" style="text-align: left;">
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${riverName}</span>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${Data.riverLevelText}</span>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<span class="mui-table-view-cell">${Data.superRiver}</span>
+							</div>
+						</div>`;
+                $('#whichRiver').html(str0);
+                $('#districtInfo').html(str1);
+                $('#streetDetail').html(str2);
+                $("#viewMore").hide();
+            }
+
+        })
+
+
+    }
+
+
+    var initSelected = function () {
+        getRiverSelected(function (data) {
+            riverList = data.result.records;
+            for (let i = 0; i < riverList.length; i++) {
+                riverResultJSON[i] = {
+                    text: riverList[i].riverName,
+                    value: riverList[i].riverName
+                }
+            }
+        })
+
+        getLakeSelected(function (data) {
+            lakeList = data.result;
+            for (let i = 0; i < lakeList.length; i++) {
+                lakeResultJSON[i] = {
+                    text: lakeList[i].name,
+                    value: lakeList[i].name
+                }
+            }
+        })
+    }
+
+
+    // JQ
+    $('#search_input1').change(function () {
+        if ($('#search_input1').val().trim() != '') {
+            // console.log($('#search_input1').val());
+            $("#del_icon1").show();
+            param.personName = $('#search_input1').val().trim();
+
+            // fuzzySearch(riverPageNo, riverPageSize, $('#search_input1').val(), 1, function(data) {
+            //   searchRiver = data.result.records;
+            //   initRiver();
+            //   $("#whichRiver").hide();
+            //   $("#streetDetail").hide();
+            //   $("#viewMore").hide();
+            //   $("#riverOption").css("color","#888888")
+            // })
+        } else {
+            // app.toast("检索内容为空！")
+            $('#del_icon1').hide();
+            param.personName = "";
+        }
+        // 请求数据
+        getAddressBook(false);
+
+    })
+
+    $('#search_input2').change(function () {
+        if ($('#search_input2').val() != '') {
+            $("#del_icon2").show();
+            fuzzySearch(lakePageNo, lakePageSize, $('#search_input2').val(), 2, function (data) {
+                searchLake = data.result.records;
+                initLake();
+                $("#whichLake").hide();
+                $("#streetLakeDetail").hide();
+                $("#viewLakeMore").hide();
+                $("#lakeOption").css("color", "#888888")
+            })
+        } else {
+            app.toast("检索内容为空！")
+            $('#del_icon2').hide();
+        }
+    })
+
+    $('#search_input3').change(function () {
+        if ($('#search_input3').val() != '') {
+            $("#del_icon3").show();
+            fuzzySearch(lakePageNo, lakePageSize, $('#search_input3').val(), 2, function (data) {
+                searchLake = data.result.records;
+                initLake();
+                $("#whichLake").hide();
+                $("#streetLakeDetail").hide();
+                $("#viewLakeMore").hide();
+                $("#lakeOption").css("color", "#888888")
+            })
+        } else {
+            app.toast("检索内容为空！")
+            $('#del_icon3').hide();
+        }
+    })
+
+    $('#search_input1').on('input', function () {
+        if ($("#search_input1").val().trim() != '') {
+            $("#del_icon1").show();
+        } else {
+            $("#del_icon1").hide();
+        }
+    })
+
+    $('#search_input2').on('input', function () {
+        if ($("#search_input2").val() != '') {
+            $("#del_icon2").show();
+        } else {
+            $("#del_icon2").hide();
+        }
+    })
+
+    $('#search_input3').on('input', function () {
+        if ($("#search_input3").val() != '') {
+            $("#del_icon3").show();
+        } else {
+            $("#del_icon3").hide();
+        }
+    })
+
+    $("#del_icon1").on('tap', function () {
+        $('#search_input1').val('');
+        $("#del_icon1").hide();
+        // app.toast("检索内容为空！")
+        param.personName = ""
+        // 请求数据
+        getAddressBook(false);
+    })
+
+    $("#del_icon2").on('tap', function () {
+        $('#search_input2').val('');
+        $("#del_icon2").hide();
+        app.toast("检索内容为空！")
+    })
+
+    $("#del_icon3").on('tap', function () {
+        $('#search_input3').val('');
+        $("#del_icon3").hide();
+        app.toast("检索内容为空！")
+    })
+
+    $('#item1').on('tap', function () {
+        // getDirectories('river',riverPageNo,riverPageSize);
+        input2.blur();
+        input3.blur();
+    })
+
+    $('#item2').on('tap', function () {
+        // getDirectories('lake',lakePageNo,lakePageSize);
+        input1.blur();
+        input3.blur();
+    })
+    $('#item3').on('tap', function () {
+        // getDirectories('lake',lakePageNo,lakePageSize);
+        input1.blur();
+        input2.blur();
+    })
+
+
+    $('#viewMore').on('tap', function () {
+        isOpen = !isOpen;
+        if (isOpen) {
+            $('#streetDetail').show();
+            $('#viewMoreText').text("收起")
+            $('#river_arrow_down').css("transform", "rotate(180deg)")
+        } else {
+            $('#streetDetail').hide();
+            $('#viewMoreText').text("查看更多")
+            $('#river_arrow_down').css("transform", "rotate(0)")
+        }
+    })
+
+    $('#viewLakeMore').on('tap', function () {
+        isLakeOpen = !isLakeOpen;
+        if (isLakeOpen) {
+            $('#streetLakeDetail').show();
+            $('#viewLakeMoreText').text("收起")
+            $('#lake_arrow_down').css("transform", "rotate(180deg)")
+        } else {
+            $('#streetLakeDetail').hide();
+            $('#viewLakeMoreText').text("查看更多")
+            $('#lake_arrow_down').css("transform", "rotate(0)")
+        }
+    })
+
+    $("#missionUncompleted").on('tap', function () {
+        isShow = true;
+        $('#home-item').hide();
+        mask.close();
+    })
+
+    $("#notification").on('tap', function () {
+        app.openPage('', {
+            titleNView: {
+                titleText: '通知公告',
+                autoBackButton: true
+            }
+        }, extras);
+    })
+
+
+    //关闭遮罩层
+    $(document).on("click", ".mui-backdrop", function () {
+        isShow = true;
+        $('#home-item').hide();
+        mask.close();
+    })
+
+    window.addEventListener('backInspection', function (e) { //执行刷新
+        // location.reload();
+        // getDirectories('river',riverPageNo,riverPageSize);
+        mui('#scroll1').scroll().scrollTo(0, 0, 0);
+        mui('#contentList').scroll().scrollTo(0, 0, 0);
+    });
+
+    (function ($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+    })(mui);
+    // $('.mui-scroll-wrapper').scroll( function(ev){
+    // 	var oEvent = ev || event;
+    // 	oEvent.stopImmediatePropagation();
+    // });
+
+    function addData(data) {
+        // console.log("data.length : " + data.length)
+        // 清空界面
+        $("#content-ul").html("<div class=\"no-data\">暂无数据</div>");
+        if (data == null || data.result == undefined) return;
+
+        // var companyNameArr = [];
+        // 公司id ：公司名称
+        var companyDictIdForName = {}
+        // 公司id ： [部门]
+        var companyDictIdForDepartments = {};
+        // 公司id + 部门名称 ： [人员id]
+        var companyDictIdAndDepartmentForPerson = {};
+        // 人员id ： 姓名
+        var personDictIdForName = {};
+        if (data.result.length > 0) {
+            // let dataLength = riverData[0].childLevel.length
+
+            for (var i = 0; i < data.result.length; i++) {
+                var objTmp = data.result[i];
+                if (objTmp != null && objTmp != undefined) {
+                    //var companyId = objTmp.companyId;
+                    //console.log("objTmp.companyId : " + objTmp.companyId);
+                    var companyName = "未知单位" + (i + 1);
+                    if (objTmp.companyName != null && objTmp.companyName != undefined) {
+                        companyName = objTmp.companyName;
+                    }
+                    if (objTmp.companyId != null && objTmp.companyId != undefined) {
+                        companyDictIdForName[objTmp.companyId] = companyName
+                    }
+                    // 部门
+                    var departments = companyDictIdForDepartments[objTmp.companyId];
+                    if (departments != null && departments != undefined) {
+
+                    } else {
+                        departments = [];
+                    }
+                    var departName = "未分配部门";
+                    // java后台返回 null 处理
+                    var departNameNull = objTmp.departName + "";
+                    if (departNameNull != null && departNameNull != undefined && departNameNull != "null") {
+                        departName = objTmp.departName
+                    }
+                    var isExistDepartment = false;
+                    for (var j = 0; j < departments.length; j++) {
+                        if (departments[j] == departName) {
+                            isExistDepartment = true;
+                            break;
+                        }
+                    }
+                    if (!isExistDepartment) {
+                        departments.push(departName);
+                    }
+                    companyDictIdForDepartments[objTmp.companyId] = departments;
+
+                    // 人员ids
+                    var personKey = objTmp.companyId + departName;
+                    var persons = companyDictIdAndDepartmentForPerson[personKey];
+                    if (persons != null && persons != undefined) {
+
+                    } else {
+                        persons = [];
+                    }
+
+                    var isExistName = false;
+                    for (var j = 0; j < persons.length; j++) {
+                        //if(persons[j] == objTmp.personName) {
+                        if (persons[j] == objTmp.id) {
+                            isExistName = true;
+                            break;
+                        }
+                    }
+                    if (!isExistName) {
+                        persons.push(objTmp.id);
+                    }
+                    companyDictIdAndDepartmentForPerson[personKey] = persons;
+                    // 人员id ： 姓名
+                    // personDictIdForName
+
+                    if (objTmp.id != null && objTmp.id != undefined) {
+                        personDictIdForName[objTmp.id] = objTmp.personName;
+                    }
+                }
+
+                //companyDictIdForName[objT]
+            }
+
+
+            //  拼接li
+            var html = ''
+
+            for (var key in companyDictIdForName) {
+
+                html += ` <li class="mui-table-view-cell">
+                    <!-- 一个单位 start -->
+                <div class="">
+
+                    <!-- 一级 start -->
+                <div class="node0-parent" style="">
+                <img class="arrow-down-img" alt="1" src="../../../img/arrowDownBlue.png">
+                    <!-- 华东勘测设计研究院1 -->
+                <span class="spanLim">${companyDictIdForName[key]}</span>
+                </div>
+                    <!-- 一级 end -->
+                    <!-- 二级 start -->
+                `
+            ;
+
+                    // 二级部门
+                    var departments = companyDictIdForDepartments[key];
+                    for (var k = 0; k < departments.length; k++) {
+                      var depart = departments[k];
+                      html +=
+                `     <!-- 二级 start -->
+                <div class="node0-sub">
+                    <!-- 一个部门 start -->
+                <div>
+                <div class="node0-sub-item">
+                <img class="arrow-right-img" alt="0" src="../../../img/arrowRightBlue.png">
+                <span class="spanLim">${departments[k]}</span>
+                </div>
+                    <!-- 三级 start -->
+                <div class="node0-sub-sub" hidden="hidden">
+
+                `
+            ;
+                      // 三级
+                      var personKey = key + departments[k];
+                      var persons = companyDictIdAndDepartmentForPerson[personKey];
+                      for (var x = 0; x < persons.length; x++) {
+                        html +=
+                `
+                    <!-- 三级 start -->
+                <div class="node0-sub-sub-item" id="${persons[x]}">${personDictIdForName[persons[x]]}</div>
+                    <!-- 三级 end -->
+                `
+            ;
+                      }
+
+                      html +=
+                `
+                </div>
+                    <!-- 三级 end -->
+                </div>
+                    <!-- 一个部门 end -->
+                </div>
+                    <!-- 二级 end -->
+                `
+            ;
+
+
+                    }
+
+                    html += `
+            </div>
+                <!-- 一个单位 end -->
+            </li>`;
+            }
+
+            $("#content-ul").html(html);
+
+
+            // console.log(companyDictIdForName);
+            //console.log(companyDictIdForDepartments);
+            // console.log(companyDictIdAndDepartmentForPerson);
+        } // END if(data.result.length > 0)
+
+    }
+
+    // function dataTmp() {
+    //     var dataStr = getDataStr();
+    //
+    //     var data = JSON.parse(dataStr);
+    //     console.log('============getData2======start');
+    //    // console.log(JSON.stringify(data));
+    //     console.log('============getData2======end');
+    //     addData(data)
+    //   }
+
+    // dataTmp();
+    // function getDataStr() {
+    //   return "\n" +
+    //           "\n" +
+    //           "{\n" +
+    //           "  \"success\": true,\n" +
+    //           "  \"message\": \"操作成功!\",\n" +
+    //           "    \"result\": [\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"中国电建集团华东勘测设计研究院有限公司\",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"987654321\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"浙江省杭州市潮王路22号 \",\n" +
+    //           "        \"id\": \"d9358899f9276e168af9e2d0cffcb51b\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": null,\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"84d2be6ea0c84c46814c1ef74516b847\",\n" +
+    //           "        \"companyId\": \"100000060\",\n" +
+    //           "        \"attachmentAutograph\": \"2e3d10e258044f30a18ca43251f25034\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"7dd49ad9e8772d47783db7927a399af0\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"13635678907\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": \"zhang_z\",\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": \"0571-56628888\",\n" +
+    //           "        \"updateTime\": \"2021-03-30 17:23:12\",\n" +
+    //           "        \"avatar\": \"84d2be6ea0c84c46814c1ef74516b847\",\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"大屏\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"大屏\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"zhang_z\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-30 17:21:24\",\n" +
+    //           "        \"personEmail\": \"13635678907@136.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": \"da_p\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"中国电建集团华东勘测设计研究院有限公司\",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"0029\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"浙江省杭州市潮王路22号 \",\n" +
+    //           "        \"id\": \"94454dd7f6900e637fc68005f6f78a47\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": null,\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"f022a405fa6a4c9d95fbfaf86d0cefd4\",\n" +
+    //           "        \"companyId\": \"100000060\",\n" +
+    //           "        \"attachmentAutograph\": \"340681b136334c728b5c7f20c314c6c2\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"312daf4205873626477ab8a841f75893\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"18758585635\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": null,\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": \"0571-56628888\",\n" +
+    //           "        \"updateTime\": null,\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"周国强\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"周国强\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"yi_yh\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-25 16:51:51\",\n" +
+    //           "        \"personEmail\": \"18758585635@qq.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": \"zhougq\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"深圳市水务工程有限公司\",\n" +
+    //           "        \"activitiSync\": null,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": null,\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"深圳市罗湖区黄贝街道延芳路98号办公楼四楼、五楼\",\n" +
+    //           "        \"id\": null,\n" +
+    //           "        \"adminFlag\": null,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": null,\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"6bbe79a906534eea88140db725ed58b5\",\n" +
+    //           "        \"companyId\": \"100000002\",\n" +
+    //           "        \"attachmentAutograph\": null,\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": null,\n" +
+    //           "        \"perId\": \"d7a5c342dd94e5f7b92a5538801de62c\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": null,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"15412546254\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": null,\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": null,\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"张三儿\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"张三儿\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"li_shihong\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-25 15:58:08\",\n" +
+    //           "        \"personEmail\": \"1111111@163.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": null\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"深圳市水务(集团)有限公司 \",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 0,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"2353245123412\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"深圳市福田区深南中路万德大厦23层\",\n" +
+    //           "        \"id\": \"06100882f5fd226405e43d23ba75bbe8\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": null,\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"4a57249fbe3945ee80b0a6c15d6b0926\",\n" +
+    //           "        \"companyId\": \"100000001\",\n" +
+    //           "        \"attachmentAutograph\": \"f412d4de654e462f803940342eba0463\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"0c04199d0950f40919d83bf879bce809\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"15871468987\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": null,\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": null,\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"甘雨\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"甘雨\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"zhu_kb\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-19 10:03:07\",\n" +
+    //           "        \"personEmail\": \"25152355213@qq.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": \"gan_y\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": \"\",\n" +
+    //           "        \"companyName\": \"深圳市水务科技有限公司\",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": \"\",\n" +
+    //           "        \"experience\": \"\",\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"zhangfenshan\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"深圳市福田区深南中路1019号万德大厦705室\",\n" +
+    //           "        \"id\": \"cfbd57e739cceb8279c4d336d0dc9947\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": \"\",\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": \"100000003\",\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"26261e7a3871428a9c1aaaa29bbb7186\",\n" +
+    //           "        \"companyId\": \"100000003\",\n" +
+    //           "        \"attachmentAutograph\": \"6c0703b8780a406d8481613eb21653c9\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"5c52a3490fa592ef6c6a1d95b01c1b4c\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"15168467802\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": \"A01admin\",\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": \"2021-03-18 15:54:16\",\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"张凤山\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"张凤山\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"A01admin\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-18 15:52:39\",\n" +
+    //           "        \"personEmail\": \"1956055489@qq.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": \"\",\n" +
+    //           "        \"username\": \"zhang_fs\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": \"\",\n" +
+    //           "        \"companyName\": \"深圳市水务(集团)有限公司 \",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": \"\",\n" +
+    //           "        \"experience\": \"\",\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"linxiaoyi\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"深圳市福田区深南中路万德大厦23层\",\n" +
+    //           "        \"id\": \"a3ec2a72c1e4021139ff98be255fb75f\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": \"\",\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": \"100000001\",\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"b8bfd726f21b48d485b3b182345b93f0\",\n" +
+    //           "        \"companyId\": \"100000001\",\n" +
+    //           "        \"attachmentAutograph\": \"1720a533d0104cbe84da5599657c2985\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"b8d96702d0c89db5d029337ebb41a5bf\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": \"2021-03-17 10:42:46\",\n" +
+    //           "        \"personMobilePhone\": \"13030838682\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": \"zhu_kb\",\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": \"2021-03-10 09:50:20\",\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"林毅\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"林毅\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"zhu_kb\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-10 09:49:29\",\n" +
+    //           "        \"personEmail\": \"768434283@qq.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": \"\",\n" +
+    //           "        \"username\": \"linxiaoyi\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"深圳市水务(集团)有限公司 \",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"007993\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"深圳市福田区深南中路万德大厦23层\",\n" +
+    //           "        \"id\": \"9650af725b3f53fd67075af808023022\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": \"100000001\",\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"37043551f86c4dff8410fe864df9ff20\",\n" +
+    //           "        \"companyId\": \"100000001\",\n" +
+    //           "        \"attachmentAutograph\": \"39fb9d94dac947b2a4967f131f3859ee\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"7cb3bdfc120bbcba3b0ecdf51831ba37\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"13653618278\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": null,\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": null,\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"常老板\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"常老板\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"he_guiqiang\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-03-04 14:49:49\",\n" +
+    //           "        \"personEmail\": \"13653618278@163.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": \"chang_yc\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": \"\",\n" +
+    //           "        \"companyName\": \"中国电建集团华东勘测设计研究院有限公司\",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": \"\",\n" +
+    //           "        \"experience\": \"\",\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"202102241041\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"浙江省杭州市潮王路22号 \",\n" +
+    //           "        \"id\": \"18f885995250db94333d79dd095eebcf\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": \"华东数字\",\n" +
+    //           "        \"personHealth\": \"\",\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": \"100000060003\",\n" +
+    //           "        \"personQualification\": \"1\",\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"35c9c678ce1b4e158d7399288d6d33bd\",\n" +
+    //           "        \"companyId\": \"100000060\",\n" +
+    //           "        \"attachmentAutograph\": \"06f36b2d69214e128cf3efd472ca1c83\",\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"5d653109c658cfb2939b760c655e970b\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"18576478118\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": \"A01admin\",\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": 0,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": \"2021-03-19 10:57:46\",\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"罗彦波\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"罗彦波\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"ji_yc\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-02-24 10:41:17\",\n" +
+    //           "        \"personEmail\": \"luoyanbo@chinahd.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": \"\",\n" +
+    //           "        \"username\": \"luo_yb\"\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"中国电建集团华东勘测设计研究院有限公司\",\n" +
+    //           "        \"activitiSync\": null,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"00230\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"浙江省杭州市潮王路22号 \",\n" +
+    //           "        \"id\": null,\n" +
+    //           "        \"adminFlag\": null,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": null,\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": null,\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": \"7b6b1144aae64def81c51573744fdd2e\",\n" +
+    //           "        \"companyId\": \"100000060\",\n" +
+    //           "        \"attachmentAutograph\": null,\n" +
+    //           "        \"personJobYear\": 0,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": null,\n" +
+    //           "        \"perId\": \"bb3d06777fedfaa561456ce79de2ec51\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": null,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"18643225555\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": null,\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": \"0571-56628888\",\n" +
+    //           "        \"updateTime\": null,\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"测试小张\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"测试小张\",\n" +
+    //           "        \"personJob\": null,\n" +
+    //           "        \"createBy\": \"zhang_hx\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-01-20 08:46:55\",\n" +
+    //           "        \"personEmail\": \"x18643222229@163.com\",\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": null\n" +
+    //           "      },\n" +
+    //           "      {\n" +
+    //           "        \"personTitle\": null,\n" +
+    //           "        \"specialty\": null,\n" +
+    //           "        \"companyName\": \"深圳市东远泰建筑工程有限公司\",\n" +
+    //           "        \"activitiSync\": 1,\n" +
+    //           "        \"personSex\": 1,\n" +
+    //           "        \"employmentStatus\": null,\n" +
+    //           "        \"experience\": null,\n" +
+    //           "        \"personZipCode\": null,\n" +
+    //           "        \"dormantTime\": null,\n" +
+    //           "        \"corpCode\": \"A01\",\n" +
+    //           "        \"prjCode\": null,\n" +
+    //           "        \"uuid\": null,\n" +
+    //           "        \"personCode\": \"ft_00004\",\n" +
+    //           "        \"personRemark\": null,\n" +
+    //           "        \"password\": null,\n" +
+    //           "        \"personIndex\": null,\n" +
+    //           "        \"corporationAddress\": \"广东省深圳市福田区上步北路2009号宝源大厦7层\",\n" +
+    //           "        \"id\": \"7a675d570e2c4b2f9626bc25485096e5\",\n" +
+    //           "        \"adminFlag\": 0,\n" +
+    //           "        \"departName\": null,\n" +
+    //           "        \"personHealth\": null,\n" +
+    //           "        \"companyCode\": null,\n" +
+    //           "        \"isExpert\": 0,\n" +
+    //           "        \"personStudyProfession\": null,\n" +
+    //           "        \"personAddress\": null,\n" +
+    //           "        \"personIdentity\": \"440524196912286337\",\n" +
+    //           "        \"personDuty\": null,\n" +
+    //           "        \"personDepartmentId\": null,\n" +
+    //           "        \"personQualification\": null,\n" +
+    //           "        \"roleListStr\": null,\n" +
+    //           "        \"personPhotoId\": null,\n" +
+    //           "        \"companyId\": \"100000077\",\n" +
+    //           "        \"attachmentAutograph\": null,\n" +
+    //           "        \"personJobYear\": null,\n" +
+    //           "        \"phone\": null,\n" +
+    //           "        \"personPositional\": null,\n" +
+    //           "        \"status\": 1,\n" +
+    //           "        \"perId\": \"e189d443a30c42a9b605247b300ef848\",\n" +
+    //           "        \"personState\": null,\n" +
+    //           "        \"tempFlag\": 0,\n" +
+    //           "        \"freezeTime\": null,\n" +
+    //           "        \"personMobilePhone\": \"13502852726\",\n" +
+    //           "        \"delFlag\": 0,\n" +
+    //           "        \"personHomePhone\": null,\n" +
+    //           "        \"personInstitution\": null,\n" +
+    //           "        \"updateBy\": null,\n" +
+    //           "        \"orgCode\": null,\n" +
+    //           "        \"personType\": null,\n" +
+    //           "        \"addAccount\": null,\n" +
+    //           "        \"personNation\": null,\n" +
+    //           "        \"salt\": null,\n" +
+    //           "        \"addToExpertTank\": null,\n" +
+    //           "        \"personCompanyPhone\": null,\n" +
+    //           "        \"updateTime\": null,\n" +
+    //           "        \"avatar\": null,\n" +
+    //           "        \"personBirth\": null,\n" +
+    //           "        \"realname\": \"吴汉周\",\n" +
+    //           "        \"typeFlag\": null,\n" +
+    //           "        \"personName\": \"吴汉周\",\n" +
+    //           "        \"personJob\": \"预结算\",\n" +
+    //           "        \"createBy\": \"A01admin\",\n" +
+    //           "        \"roleIds\": null,\n" +
+    //           "        \"createTime\": \"2021-01-19 11:56:55\",\n" +
+    //           "        \"personEmail\": null,\n" +
+    //           "        \"departCode\": null,\n" +
+    //           "        \"expertType\": null,\n" +
+    //           "        \"username\": \"wuhz\"\n" +
+    //           "      }\n" +
+    //           "    ],\n" +
+    //           "  \"timestamp\": 1617179595265,\n" +
+    //           "  \"code\": 200\n" +
+    //           "}";
+    // }
+
+</script>
+
+</html>

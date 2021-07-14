@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+
+			.info-bar-title {
+				height: 40px;
+				background: #f6f4f7;
+				font-size: 15px;
+				text-align: left;
+				color: #8e8e8e;
+				line-height: 40px;
+				padding: 0 18px;
+			}
+
+			.info-bar-content-item {
+				height: 240px;
+				margin: 0px 18px;
+				/* border-bottom: 1px solid #eee; */
+			}
+
+			.info-bar-content-item .item-title {
+				text-align: left;
+				padding: 20px 0px 0px;
+				font-size: 14px;
+			}
+
+
+			.bottom-btn {
+				width: 100%;
+			}
+			/*
+			.mui-scroll-wrapper {
+			} */
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+				color: #444444;
+			}
+
+			.mui-checkbox.mui-left label {
+				padding-left: 0;
+			}
+
+			.mui-backdrop {
+				background: rgba(0, 0, 0, 0.1);
+			}
+
+			.img_item {
+				float: left;
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				margin-right: 20px;
+			}
+
+			.img_item::after {
+				clear: both;
+				content: '';
+				display: block;
+				width: 0;
+				height: 0;
+				visibility: hidden;
+			}
+
+			.img_item img {
+				width: 72px;
+				height: 72px;
+			}
+
+
+			.info-bar-content-item {
+				border: 0;
+			}
+
+			.img_close {
+				/* position: relative;
+				top: -84px;
+				left: 64px; */
+				position: absolute;
+				top: 0;
+				right:0;
+				margin:-5px -6px 0 0;
+				width:18px;
+				height: 18px;
+				line-height:18px;
+				text-align:center;
+				border-radius:50%;
+				background: #E7E7E7;
+			}
+
+			.btn-item div {
+				margin: 0;
+				border: 1px solid #337BFC;
+				height: 40px;
+				border-radius: 50px;
+			}
+
+			.in-obj {
+				color: #888;
+				font-weight: 400;
+			}
+			.obj-title{
+				font-weight: 400;
+				color: #888888;
+			}
+
+
+			span[new] {
+				display: inline-block;
+				position: relative;
+				left: -20px;
+				top: 5px;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid #999;
+				margin-right: -10px;
+			}
+
+
+		</style>
+	</head>
+
+	<body style="background: #F4F4F4;">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content" >
+				<div class="mui-scroll-wrapper" style="height: 91%;background-color: #FFFFFF;padding-bottom: 10px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div style="margin:0;">
+								<div class="scroll-li">
+									<div class="info-bar-content-item" style="width: 100%;text-align: left;margin-left:20px;height: 140px;">
+										<div class="item-title in-obj" style="margin-bottom:10px;font-weight: 400;color: #444444;">
+											签字照片
+										</div>
+										<input id="fileId" style="display: none;" />
+										<div class="photo_list" id="photo_list">
+											<!-- 底下已经控制数据 -->
+										</div>
+										<div id="photo" class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--页面主内容区结束-->
+		</div>
+		<div id="textFrame" class="scroll-li" style="display:none;width: 100%;height:100px;background: rgba(0,0,0,0.5);position: fixed;bottom: 0;z-index: 999;"></div>
+		<div id="texthtml" class="scroll-li" style="width: 100%;background: #F4F4F4;position: fixed;bottom: 0;z-index: 99;">
+			<div class="bottom-btn" style="background: #F4F4F4;width: 100%;padding: 20px 0;">
+				<div class="btn-item" style="background: #F4F4F4;">
+					<div name="submit" style="background: #337BFC;color: #fff;width: 80%;margin-left: 10%;line-height: 40px;">提交</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+	<!-- <script src="../../js/timer.js"></script> -->
+<!--	<script src="../../js/vconsole.min.js"></script>-->
+	<script>
+		// var vConsole = new VConsole();
+		//图片附件
+		var imgAttachment = [{
+			"groupId": "",
+			"fileTokens": "",
+			"fieldName": "signature_photos", //照片
+			"tableName": "attachment"
+		}];
+		var imageDataBases = '';
+		//提交参数
+		// var param ={
+		// 	guid:"",
+		// 	file:""
+		// }
+		var self;
+
+		$("body").delegate("div[name=submit]", "tap", function(e) {
+			attach();
+			//附件
+			
+			// param.file= imagefileTokens;
+			
+			// var formparams = new FormData();
+			if(imageDataBases == ''){
+				app.toast("请上传签字照片")
+			}else{
+				// for (var i in param) {
+				// 	if (param[i] != "" && param[i] != null && param[i] != undefined) { //字段为空则不提交
+				// 		formparams.append(i, param[i]);
+				// 	}
+				// }
+				// console.log("strAttachment:"+formparams.get("strAttachment"))
+				var param ={
+					guid: self.guid,
+					file: imageDataBases		
+				}
+				console.log(JSON.stringify(param))
+				uploadSignFile(param, function(data) {
+					console.log(JSON.stringify(data))
+				if(data.success){
+					app.toast("上传成功")
+					mui.fire( plus.webview.getWebviewById('proDetail.html') ,'reload1');
+					popToTarget('proDetail.html');	
+				}else app.toast("上传签字照片失败")
+				});
+			}
+
+		});
+
+		mui.init({
+			beforeback: function() {
+				//获得父页面的webview
+				var list = plus.webview.currentWebview().opener();
+				//触发父页面的自定义事件(refresh),从而进行刷新
+				mui.fire(list, 'preview');
+				//返回true,继续页面关闭逻辑
+				return true;
+			}
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		mui.plusReady(function() {
+			self = plus.webview.currentWebview();
+			console.log(self.guid)
+			//拍照
+			$("#photo").on("tap", function() {
+				var that = $(this);
+				plusSelectImage(function(data, path) {
+					// console.log(JSON.stringify(data));
+					if (data.success) {
+						plus.io.resolveLocalFileSystemURL(
+							path,
+							function(entry) {
+								entry.file(function(file) {
+									let reader = null;
+									reader = new plus.io.FileReader();
+									reader.onload = function(e) {};
+									reader.readAsDataURL(file);
+									reader.onloadend = function(e) {
+										let dataBase = e.target.result;										
+										var thisId = that.attr("id");
+										var name = "";
+										var html = '<div id="' + data.result.uploadFile.id + '" data-token="' + data.result.fileTokens + '" name="' +
+											name + '"' +'" dataBase="' + dataBase +
+											'" class="img_item" style="position:relative;">' +
+											'		<img class="img_src" src="' + path + '" style="" data-preview-src="" data-preview-group="1"  />' +
+											'		<input type="hidden" name="' + name + '" value="' + data.result.uploadFile.savePath + '">' +
+											'		<span class="img_close mui-icon mui-icon-closeempty"  name="' + data.result.uploadFile.savePath +
+											'" style="width: 16px;height: 16px;position:relative;top:-88px;left:64px;font-size: 16px;color: #888888;background: #E7E7E7;border-radius: 50%;"></span>'+
+											'	</div>';
+										that.prev().append(html);
+										var count = that.prev().children(".img_item").length;
+										if (count == 3) { //处理上传的数量
+											that.hide();
+										}
+									};
+								});
+							},
+							function(error) {
+								var code = error.code; // 错误编码
+								var message = error.message; // 错误描述信息
+								// console.log(message)
+							}
+						);	
+					} else {
+						app.toast(data.message);
+					}
+				});
+			});
+			//删除图
+			$(document).on("tap", ".img_close", function() {
+				var that = $(this)
+				mui.confirm("移除该图片?", "提示", ['确定', '取消'], function(result) {
+					if (parseInt(result.index) == 0) {
+						var count = that.parent().parent().children(".img_item").length - 1;
+						var photoObj = that.parent().parent().next();
+						// var thisId = photoObj.attr("id");
+						// var delPath = that.attr("name");
+						if (count < 3) {
+							photoObj.show();
+						}
+						that.parent().remove();
+					}
+				})
+			});
+			//图片预览
+			$(document).on('tap', '.img_src', function() {
+			    mui.previewImage();
+			});
+		});
+
+		//附件组装
+		var attach = function() {
+			var imagefileTokens = '';	
+				imageDataBases = '';
+			$("[data-token]").each(function(index) {
+				var imgID = $(this).attr("id");
+				var name = $(this).attr("name");
+				var token = $(this).attr("data-token");
+				var dataBases = $(this).attr("dataBase");
+				// console.dir(dataBases)
+				imagefileTokens = imagefileTokens + "," + token;
+				imageDataBases = imageDataBases + "," + dataBases;
+			});
+			imagefileTokens=imagefileTokens.length>0?imagefileTokens.substring(1,imagefileTokens.length):imagefileTokens;
+			imageDataBases=imageDataBases.length>0?imageDataBases.substring(1,imageDataBases.length):imageDataBases;
+			// console.log("imagefileTokens:" + imagefileTokens);
+			// imgAttachment.forEach((img, index, array) => {
+			// 	if (img.fieldName == 'signature_photos') {
+			// 		let groupId=getGroupId();
+			// 		param.attachment=groupId;
+			// 		img.groupId = groupId;
+			// 		img.fileTokens = imagefileTokens;
+			// 	}
+			// })
+		}
+		//生成groupId
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+	</script>
+
+</html>

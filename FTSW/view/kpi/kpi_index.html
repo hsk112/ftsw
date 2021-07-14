@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>kpi</title>
+	</head>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<style type="text/css">
+		.supervise {
+			color: black;
+			font-size: 16px;
+			padding-top: 9px;
+			padding-bottom: 9px;
+			float: left;
+			padding-left: 8px;
+
+		}
+
+		.superviseItem {
+			color: rgb(79, 166, 234);
+			font-size: 16px;
+			padding-top: 9px;
+			padding-bottom: 9px;
+			float: left;
+			padding-left: 26px;
+		}
+	</style>
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面主内容区开始-->
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse">
+					<a class="mui-navigate-right" href="#">
+						<p class="supervise">水务局</p>
+					</a>
+					<div class="mui-collapse-content mui-table-view-cell drainage">
+						<p class="superviseItem">排水监管</p>
+					</div>
+					<div class="mui-collapse-content mui-table-view-cell river">
+						<p class="superviseItem">河湖管理</p>
+					</div>
+					<div class="mui-collapse-content mui-table-view-cell flood">
+						<p class="superviseItem">防洪排涝</p>
+					</div>
+					<div class="mui-collapse-content mui-table-view-cell project">
+						<p class="superviseItem">工程管理</p>
+					</div>
+					<!-- <div class="mui-collapse-content mui-table-view-cell commonality">
+						<p class="superviseItem">公共服务</p>
+					</div> -->
+					<div class="mui-collapse-content mui-table-view-cell xzgl">
+						<p class="superviseItem">行政管理</p>
+					</div>
+					<div class="mui-collapse-content mui-table-view-cell quality">
+						<p class="superviseItem">质安监管</p>
+					</div>
+				</li>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">
+							<p class="supervise">运维养护</p>
+						</a>
+						<div class="mui-collapse-content mui-table-view-cell gwyw">
+							<p class="superviseItem">管网运维</p>
+						</div>
+					</li>
+				</ul>
+			</ul>
+			<!--页面主内容区结束-->
+			<!-- <button class="qianming">试一试上传</button> -->
+		</div>
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+	<script>
+		mui.init();
+
+		//排水监管
+		$(".drainage").on('tap', function() {
+			app.openPage("drainage.html", {
+				titleNView: {
+					titleText: '排水监管',
+					autoBackButton: true,
+				}
+			})
+		})
+		//防洪排涝
+		$(".flood").on('tap', function() {
+			app.openPage("flood.html", {
+				titleNView: {
+					titleText: '防洪排涝',
+					autoBackButton: true,
+				}
+			})
+		})
+		//行政管理
+		$(".xzgl").on('tap', function() {
+			app.openPage("administration.html", {
+				titleNView: {
+					titleText: '行政管理',
+					autoBackButton: true,
+				}
+			})
+		})
+		// administration
+		//河湖管理
+
+	$(".river").on('tap', function() {
+		app.openPage("river.html", {
+			titleNView: {
+				titleText: '河湖管理',
+				autoBackButton: true,
+			}
+		})
+	})
+		//管网运维
+
+		$(".gwyw").on('tap', function() {
+			app.openPage("maintain.html", {
+				titleNView: {
+					titleText: '管网运维',
+					autoBackButton: true,
+				}
+			})
+		})
+		//工程管理
+		$(".project").on('tap', function() {
+			app.openPage("project.html", {
+				titleNView: {
+					titleText: '工程管理',
+					autoBackButton: true,
+				}
+			})
+		})
+		//质安监管
+		$(".quality").on('tap', function() {
+			app.openPage("quality.html", {
+				titleNView: {
+					titleText: '质安监管',
+					autoBackButton: true,
+				}
+			})
+		})
+		
+		
+		// $('.qianming').on("tap",function(){
+		// 	app.openPage("../../signWrite.html"
+				
+		// 	);
+		// })
+</script>
+</html>

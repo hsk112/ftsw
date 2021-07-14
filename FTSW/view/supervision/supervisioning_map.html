@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>进行中</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mixed.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/supervision.css" />
+		<style>
+			#left_item{
+				padding: 15px 15px 10px 15px;
+			}
+			.marker {width:0; height:0;}
+
+			.marker span {
+			  display:flex;
+			  justify-content:center;
+			  align-items:center;
+			  box-sizing:border-box;
+			  width: 20px;
+			  height: 20px;
+			  color:#fff;
+			  background: #693;
+			  border:solid 2px;
+			  border-radius: 0 70% 70%;
+			  box-shadow:0 0 2px #000;
+			  cursor: pointer;
+			  transform-origin:0 0;
+			  transform: rotateZ(-135deg);
+			}
+
+			.marker b {transform: rotateZ(135deg)}
+			
+			.mui-backdrop {
+			    position: fixed;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			    z-index: 999;
+			    background-color: rgba(0,0,0,0.2);
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar" id="nav-bar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div id="left_item" style="height:120px;overflow-y: scroll;position: absolute;top:50%;left: 20px;z-index: 999;padding-bottom: 20px;">
+				<ul>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#43DE87;"></span>雨水检查井</li>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#F6994D;"></span>污水检查井</li>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#337BFC;"></span>雨水口</li>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#FF584C;"></span>雨水灌渠</li>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#9E1B4E;"></span>污水灌渠</li>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#FA8072;"></span>泵站</li>
+					<li style="margin-bottom:13.5px;"><span style="background-color:#234489;"></span>排水管线</li>
+					<li><span style="background-color:#999999;"></span>其他</li>
+				</ul>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div id="map" class="mapboxgl-map" style="position:absolute;left:0px;top:0px;right:0px;width:100%;height:100vh;"></div>
+						<div class="bottom-item" style="display: none;height: 180px;z-index: 100;">
+							<div class="bottom-item-title">
+								<div id="left_title" style="float: left;">
+									<!-- <img id="info_icon" src="../../img/icon1.png" style="width:20px;height:24px"> -->
+									<div class="marker" style="position: relative;top:20px;left:10px"><span style="width:20px;height:20px" id="info_icon"></span></div>
+									<h1 style="display: inline-block;font-size: 18px;font-weight: bold;color: #161616;margin-left: 30px;">编号：
+										<span id="code" style="font-size: 18px;font-weight: bold;color: #161616;"></span>
+									</h1>
+								</div>
+								<div id="right_title" class="stat" style="float: right;height:30px;line-height:30px;">
+									<img src="../../img/commom/dxj.png" id="stat">
+								</div>
+							</div>
+							<div id="content" class="bottom-item-info" style="margin-top: 40px;">
+								<p>
+									<input type="hidden" name="" id="objType" value="" />
+									<div class="row-1" style="width: 100%;">设施类型:<span id="objTypeText" class="row_span">加载中</span> </div>
+									<div class="row-1" style="text-align: right;">小区路段名称:<span class="row_span" id="areaName">加载中</span></div>
+								</p>
+							</div>
+							<div class="bottom-item-btn">
+								<div class="item" id="del" guid="" style="display: none;">
+									<div style="color: #337BFC;">删除</div>
+								</div>
+								<div class="item" id="add" style="width: 100%;" codeX="" codeY="">
+									<div style="background: #337BFC;color: #fff;">添加</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="selectItem1" style="display: block;" class="mui-slider-item mui-control-content">
+							<div id="scroll1" style="height:63px;background-color: #FFFFFF;">
+								<ul class="mui-table-view" id="selectItem1_ul">
+									<li class="mui-table-view-cell mui-collapse mui-active" style="padding: -10px;!important;" id="detail">
+										<a class="mui-navigate-r" href="#" name='liindex' id="showContent">
+											<div id="title-task" style="">
+												<div>
+													<span style="padding:20px 10px 20px 10px;">
+														<img src="../../img/commom/xl.png" class="arrow_right" style="width: 7px;" alt="">
+													</span id="obj-t">
+													<span id="objName">加载中</span>
+												</div>
+												<img src="../../img/commom/dxj.png" id="stateIcon" style="vertical-align: middle;float: right;width: 55px;height: 20px;">
+											</div>
+										</a>
+										<div id="showDetail"></div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- 		<div class="search-bar" id="searchBar" style="top:60px;position: fixed;z-index: 1000;">
+							<div class="search-item">
+								<div class="search-icon" id="searchIcon">
+									<img src="../../img/commom/search1@2x.png" />
+								</div>
+								<div class="search-input">
+									<div class="mui-input-row">
+										<input id="searchInput" type="text" placeholder="请输入设备类型">
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+
+					<!--页面主内容区结束-->
+				</div>
+			</div>
+		</div>
+	</body>
+
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/position.js"></script>
+	<script src="../../js/supervision.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var objType = []
+		var objList = []
+		var self1;
+		var deviceList = [];
+		var deviceState = [];
+		var deviceGuid = [];
+		var keyPoints = [] //{position:[114.0689174764417,22.55771647383461],color:"#F6994D"},{position:[114.0699174764417,22.55751647383461],color:"#9E1B4E"}
+		var isShow = false;
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		mui.init({
+			swipeBack: false
+		});
+		var mask = mui.createMask();
+		mui.plusReady(function() {
+
+			var OpenBottom = true;
+			pickerpxtop = new mui.PopPicker({
+				buttons: ['取消', '确定']
+			});
+			self1 = plus.webview.currentWebview();
+			// console.log(self1.objectName)
+			$("#objName").text(self1.objectName);
+			// $("#areaName").text(self1.objectName)
+			iconSrc = parseInt(self1.objState) == 0 ? "../../img/commom/dxj.png" : "../../img/commom/ywc.png"
+			$("#stateIcon").attr('src', iconSrc)
+
+			objType = self1.objType;
+			init()
+
+		});
+
+		function init() {
+			queryFacilityList({
+				taskRecordId: self1.taskRecordId,
+				objectId: self1.objectId
+			}, function(data) {
+				if (data.success) {
+					deviceList = []
+					deviceGuid = []
+					keyPoints = []
+					$("#showDetail").html('')
+					// console.log(JSON.stringify(data.result.records))
+					objList = data.result.records;
+					// console.log(JSON.stringify(objList[1]))
+					var items = data.result.records;
+					var str =
+						`	<div class="mui-collapse-content" id="content1" style="background-color: #f4f4f4;font-size: 13px;">
+								<div id="object" class="object">`;
+					var flag = true;
+					console.log(items.length)
+					if (items.length > 0) {
+						var deviceName = '';
+						var c = '';
+						for (let i = 0; i < items.length; i++) {
+							if (items[i].isHaveDefects == 0) {
+								flag = false;
+							}
+							// console.log(items[i].deviceType)
+							switch (parseInt(items[i].deviceType)) {
+								case 1:
+									c = '#43DE87';
+									break;
+								case 2:
+									c = '#F6994D';
+									break;
+								case 3:
+									c = '#337BFC';
+									break;
+								case 4:
+									c = '#FF584C';
+									break;
+								case 5:
+									c = '#9E1B4E';
+									break;
+								case 9:
+									c = '#FA8072';
+									break;
+								case 21:
+									c = '#234489';
+									break;							
+								default:
+									c = '#999999';
+							}
+							keyPoints[i] = {
+								position: [items[i].codeX, items[i].codeY],
+								color: c
+							}
+							deviceList.push(items[i].deviceNo);
+							deviceGuid.push(items[i].guid);
+
+							deviceState.push(items[i].isHaveDefects);
+							for (let t = 0; t < objType.length; t++) {
+								if (items[i].deviceType == objType[t].value) {
+									deviceName = objType[t].text;
+									break
+								} else deviceName = '无'
+							}
+							if (i % 2 == 0) {
+								if (i == items.length - 1) {
+									str +=
+										`<div class="item objItem" index=${i} guid=${items[i].guid} style="float: left;width:100%;text-align: left;">`
+								} else str +=
+									`<div class="item objItem" index=${i}  guid=${items[i].guid} style="float: left;width:50%;text-align:left">`
+								str +=
+									`<span class="item-left">巡检设施${i+1}：</span><span class="item-right">${deviceName}</span>
+									</div>`
+							} else {
+								str +=
+									`<div class="item objItem" index=${i}  guid=${items[i].guid} style="float: right;width:50%;text-align:left">
+										<span class="item-left">巡检设施${i+1}：</span><span class="item-right">${deviceName}</span>
+									</div>`
+							}
+						}
+					}
+					// <div class="item" style="float: left;width:50%;;text-align:left">
+					// 	<span class="item-left">负责人：</span><span class="item-right">${self1.principalRealName}</span>
+					// </div>
+					str +=
+						`<div class="item" style="float: left;width:50%;text-align:left">
+							<span class="item-left">截止时间：</span><span class="item-right">${self1.endTime}</span>
+						</div>
+					</div>
+					</div>`
+					// console.log(str)
+					$("#showDetail").append(str)
+					if (isShow) {
+						if (keyPoints != []) {
+							// console.log(JSON.stringify(keyPoints))
+							mobileContainer.showPoints(keyPoints);
+						}
+					}
+					if (!flag || items.length == 0) {
+						iconSrc = "../../img/commom/dxj.png"
+						$("#stateIcon").attr('src', iconSrc)
+					} else {
+						iconSrc = "../../img/commom/ywc.png"
+						$("#stateIcon").attr('src', iconSrc)
+					}
+					isShow = false
+				} else app.toast('查询失败')
+			});
+		}
+		// 初始化地图容器
+		const MobileContainer = window['mobile-lib'].MobileContainer;
+		const mobileContainer = new MobileContainer({
+			serverUrl: config.urls.serverDomain,
+			options: {
+				minZoom: 13
+			},
+			style: 'color'
+		});
+		const mapData = window['mobile-lib'].MapData({
+			serverUrl: config.urls.serverDomain
+		});
+		const layerSelections = window['mobile-lib'].layerSelections;
+
+		mobileContainer.on('load', () => {
+			app.showLoader()
+			var communityId = self1.relateObjectId
+			$(".bottom-item").hide();
+			console.log(communityId)
+			mobileContainer.enableCenterAddress(true);
+			// mobileContainer.setQuery([{NAME: 'DEVICE_PS_LINE',LINE_Type:3,DEL_FLAG:0},{NAME: 'DEVICE_POINT_INFO',SYS_TYPE:3,POINT_TYPE:1,DEL_FLAG:0}])//查询巡检设施
+			// mobileContainer.fitToRegion(
+			// 	{ NAME: 'DEVICE_RE_AREA', GUID: communityId },
+			// 	1e-7
+			// )
+
+			show(communityId)
+			// mobileContainer.setQuery(
+			// [
+			//   { NAME: 'DEVICE_POINT_INFO', POINT_TYPE: '1' },
+			//   { NAME: 'DEVICE_POINT_INFO', POINT_TYPE: '2' },
+			//   { NAME: 'DEVICE_POINT_INFO', POINT_TYPE: '7' }
+			// ],
+			// { NAME: 'DEVICE_PS_LINE' },
+			// { NAME: 'DEVICE_RE_AREA', GUID: communityId },
+			// 1e-7
+			//  )
+
+			mobileContainer.showAnnotation(true);
+			setTimeout(function() {
+				app.hideLoader()
+			}, 1000)
+		});
+
+
+		//点击任务点
+		mobileContainer.on('showInfo', data => {
+			// $('#del').hide()
+			// $('#add').show()
+			// $('#add').css("width","100%")
+			// $(".bottom-item").hide(); //显示底部信息
+			mobileContainer.flyTo(data.feature);
+			// console.log("显示信息：" + JSON.stringify(data));
+			if (data.feature.properties.GUID) { //point_info_b_67951
+				//显示底部信息
+				showBottomInfo(data.feature.geometry.coordinates, data.feature.properties);
+			} else {
+				//显示底部信息
+				// app.toast("已为您定位至最近一次选择的任务点");
+			}
+		});
+
+		//点击地图 定位
+		mobileContainer.on('click', data => {
+			if (data) {
+				$("#searchBox").html("");
+				$("#searchBar").show();
+				$(".bottom-item").hide(); //隐藏底部信息
+				$("#left_item").css("bottom", "10%")
+				mobileContainer.enableCenterAddress(true);
+				// console.log(data);
+				mobileContainer.markAddress(data.lngLat.lng, data.lngLat.lat);
+				mobileContainer.flyTo([data.lngLat.lng, data.lngLat.lat]);
+
+				console.log("点击位置：" + JSON.stringify(data.lngLat))
+				// $(".bottom-item").fadeIn();
+				$("#left_item").fadeIn();
+				$("#refresh").show();
+				$("#location_btn").show();
+				$(".mapboxgl-ctrl-group").show();
+				$("#hunjie").show();
+				$("#add").show();
+			} else {
+				app.toast('当前选择不在可选范围内，请重新选择');
+			}
+		});
+
+		//显示地图信息
+		mobileContainer.on('showAddress', data => {
+
+		});
+
+		$("body").delegate("a[name=liindex]", "tap", function(e) {
+			// e.stopPropagation()
+			var len = Math.ceil($("#object").find(".item").length / 2);
+
+			if ($("#object").is(":visible")) {
+				$("#scroll1").css("height", "63px")
+				$("#searchBar").css("top", "60px")
+			} else {
+				$("#scroll1").css("height", (63 + len * 30) + "px")
+				$("#searchBar").css("top", (60 + len * 30) + "px")
+			}
+		})
+		//重新加载
+		$("#refresh").on("tap", function() {
+			$("#searchBox").html("");
+		});
+
+		//点击巡检设施
+		$("body").delegate(".objItem", "tap", function(e) {
+			e.stopPropagation();
+			$(".bottom-item").fadeIn();
+			$('#del').show()
+			$('#add').hide()
+			$('#del').css("width", "100%")
+			var o = objList[$(this).attr("index")];
+			var lng = o.codeX;
+			var lat = o.codeY;
+			mobileContainer.flyTo([lng, lat], {
+				// zoom: 13
+			});
+			$("#code").html(o.deviceNo)
+			if (parseInt(o.isHaveDefects) == 1) $("#stat").attr("src", "../../img/commom/ywc.png")
+			$("#areaName").html(self1.objectName)
+			// console.log(JSON.stringify(o))
+			getDicTextByIdAndKey(o.deviceType, 'ZHSW.DEVICE.INPUT_OBJECT_TYPE', function(data) {
+				$('#objTypeText').text(data)
+			})
+			$('#del').attr("guid", $(this).attr("guid"))
+			// console.log(JSON.stringify(objList[$(this).attr("index")]))
+			// console.log($(this).attr("guid"))
+
+		});
+
+		//删除
+		$("#del").on("tap", function() {
+			// console.log("123", $(this).attr("GUID"));
+			let param = {
+				guids: $(this).attr("guid")
+			}
+			// console.log("param", JSON.stringify(param))
+			var btnArray = ['确定', '取消'];
+			mui.confirm("是否确定删除该巡检设施吗", '提示', btnArray, function(e) {
+				if (e.index == 0) { //索引是1的就是选择的是
+					delBatch(param, function(data) {
+						// console.log("respone:"+JSON.stringify(data))	  
+						if (data.success) {
+							setTimeout(function() {
+								app.toast("删除成功");
+								deviceList = [];
+								deviceGuid = [];
+								init();
+								// window.location.reload();
+								isShow = true;
+								$(".bottom-item").hide();
+								var list = plus.webview.currentWebview().opener();
+								mui.fire(list, 'backInspection');
+							}, 1000)
+						}
+					})
+				}
+			})
+
+		});
+
+		//添加
+		$("#add").on("tap", function() {
+			console.log($(this).attr("codeX"));
+			console.log($(this).attr("codeY"));
+						
+			let param = [{
+				checkResult: "良好",
+				deviceNo: $('#code').html(),
+				deviceType: $('#objType').val(),
+				isHaveDefects: 0,
+				objectId: self1.objectId,
+				objectName: self1.objectName,
+				taskRecordId: self1.taskRecordId,
+				codeX: $(this).attr("codeX"),
+				codeY: $(this).attr("codeY"),
+			}];
+			if(self1.localDesc && self1.localDesc != -1) param[0].address = self1.localDesc;
+			console.log("add:"+ JSON.stringify(param))
+			addBatch(JSON.stringify(param), function(data) {
+				console.log("respone:" + JSON.stringify(data))
+				if (data.success) {
+					setTimeout(function() {
+						app.toast("添加成功");
+						$(".bottom-item").hide();
+						// $('#add').hide();
+						// $('#del').show().css("width","100%");
+
+						isShow = true;
+						deviceList = [];
+						deviceGuid = [];
+						init();
+					}, 1000)
+				}
+			})
+			if (parseInt(self1.objState) == 1) {
+				var params = [];
+				params[0] = {
+					taskId: self1.taskRecordId,
+					objectId: self1.objectId,
+					isFinish: 0
+				}
+				saveInspectDetailBatch(JSON.stringify(params), function(data) {
+					self1.objState = 0;
+				});
+			}
+			var list = plus.webview.currentWebview().opener();
+			mui.fire(list, 'backInspection');
+		});
+
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+		//搜索框
+		$("#searchInput").on('input', debounce((e) => {
+			$(".bottom-item").hide();
+			$("#left_item").hide();
+			$("#searchBox").html("正在搜索...");
+			var inputdata = $("#searchInput").val();
+			if (inputdata != null && inputdata != "") {
+				var param = {
+					appParameter: inputdata,
+				};
+				searchInfo(param);
+			} else {
+				$("#searchBox").html("");
+			}
+		}, 680))
+
+		function searchInfo(param) {
+
+		}
+
+
+		/**
+		 * 显示底部信息
+		 * @param {Object} mixInfo
+		 */
+		var oldstate;
+		var showBottomInfo = function(position, param) {
+			var guid = param.GUID;
+			var type = getDeviceType(param);
+			console.log(JSON.stringify(param))
+			console.log(type)
+			if (deviceList.length == 0) {
+				$('#del').hide()
+				$('#add').show()
+				$('#add').css("width", "100%")
+			} else {
+				for (let i = 0; i < deviceList.length; i++) {
+					console.log(deviceList[i])
+					if (deviceList[i] == guid) {
+						$('#del').attr("guid", deviceGuid[i])
+						if (deviceState[i] == 1) $("#stat").attr("src", "../../img/commom/ywc.png")
+						// console.log(deviceGuid[i])
+						$('#add').hide()
+						$('#del').show()
+						$('#del').css("width", "100%")
+						break
+					} else {
+						$('#del').hide()
+						$('#add').show()
+						$('#add').css("width", "100%")
+						// console.log($('#add').attr("codeX"))
+					}
+				}
+			}
+			$('#objType').val(type)
+			$(".bottom-item").show(); //显示底部信息
+			$('#code').html(guid)
+			$("#areaName").text(self1.objectName)
+			// console.log(JSON.stringify(param))
+			var c = '';
+			switch (parseInt(type)) {
+				case 1:
+					c = '#43DE87';
+					break;
+				case 2:
+					c = '#F6994D';
+					break;
+				case 3:
+					c = '#337BFC';
+					break;
+				case 4:
+					c = '#FF584C';
+					break;
+				case 5:
+					c = '#9E1B4E';
+					break;
+				case 9:
+					c = '#FA8072';
+					break;
+				case 21:
+					c = '#234489';
+					break;
+				case 7:
+					c = '#999999';
+			}
+			$('#info_icon').css('background', c)
+
+			getDicTextByIdAndKey(type, 'ZHSW.DEVICE.INPUT_OBJECT_TYPE', function(data) {
+				$('#objTypeText').html(data)
+			})
+			var codeX = position[0] + "";
+			var codeY = position[1] + "";
+			if (codeX.indexOf(",") != -1) {
+				var xArr = codeX.split(",");
+				var yArr = codeY.split(",");
+				console.log(JSON.stringify(xArr));
+				console.log(JSON.stringify(yArr));
+				codeX = (parseFloat(xArr[0]) + parseFloat(yArr[0])) / 2;
+				codeY = (parseFloat(xArr[1]) + parseFloat(yArr[1])) / 2
+			}
+			$('#add').attr("codeX", codeX)
+			$('#add').attr("codeY", codeY)
+			$("#left_item").css("bottom", "30%")
+		}
+
+		//只要是点击地图，就直接初始化任务点信息
+		var initMix = function() {}
+
+		window.addEventListener('refresh1', function(e) { //执行刷新
+
+		});
+
+		function getDeviceType(val) {
+			let type = 7;
+			if (val.POINT_TYPE) {
+				if (val.POINT_TYPE == 1) {
+					type = val.SYS_TYPE == 2 ? 1 : val.SYS_TYPE == 3 ? 2 : 7
+				} else {
+					type = val.POINT_TYPE == 2 ? 3 : val.POINT_TYPE == 7 ? 9 : 7
+				}
+			} else {
+				type = val.LINE_TYPE == 2 ? 4 : val.LINE_TYPE == 3 ? 5 : 7
+			}
+			return type;
+		}
+
+		async function show(communityId) {
+			const pointGuidList = []
+			const lineGuidList = []
+			// re_area_2471,re_area_3  re_area_2,re_area_4
+			const pointRes = await mapData.getFeaturesByBuffer(
+				[{
+						NAME: 'DEVICE_POINT_INFO',
+						POINT_TYPE: '1'
+					},
+					{
+						NAME: 'DEVICE_POINT_INFO',
+						POINT_TYPE: '2'
+					},
+					{
+						NAME: 'DEVICE_POINT_INFO',
+						POINT_TYPE: '7'
+					}
+				], {
+					NAME: 'DEVICE_RE_AREA',
+					GUID: communityId
+				},
+				1e-7
+			)
+			app.showLoader()
+			pointRes.features.forEach(item => {
+				// app.showLoader()
+				// console.log(1111111111)
+				pointGuidList.push(item.properties.GUID)
+			})
+			const lineRes = await mapData.getFeaturesByBuffer({
+					NAME: 'DEVICE_PS_LINE'
+				}, {
+					NAME: 'DEVICE_RE_AREA',
+					GUID: communityId
+				},
+				1e-7
+			)
+			lineRes.features.forEach(item => {
+				// app.showLoader()
+				// console.log(2222222222)
+				lineGuidList.push(item.properties.GUID)
+			})
+			app.hideLoader()
+			setTimeout(async () => {
+				app.showLoader()
+				// console.log(333333)
+				await mobileContainer.setQuery(
+					[{
+							NAME: 'DEVICE_POINT_INFO',
+							GUID: pointGuidList
+						},
+						{
+							NAME: 'DEVICE_PS_LINE',
+							GUID: lineGuidList
+						}
+					]
+				)
+				await mobileContainer.fitToRegion({
+					NAME: 'DEVICE_RE_AREA',
+					GUID: communityId
+				})
+				app.hideLoader()
+				// console.log(44444444)
+			}, 0)
+			if (keyPoints != []) {
+				// console.log(JSON.stringify(keyPoints))
+				mobileContainer.showPoints(keyPoints);
+			}
+			app.hideLoader()
+		}
+	</script>
+
+</html>

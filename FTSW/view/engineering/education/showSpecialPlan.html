@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>查看专项教育计划</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+		width: 16px;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		
+		.uploadBtn{
+			padding-top: 2px;
+			display: inline-block;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 400;
+			color: #FFFFFF;
+			width: 83px;
+			height: 26px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.tip{
+			width: 70%;
+			text-align: left;
+			vertical-align: bottom;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			margin-left: 20px;
+		}
+		.fileContent{
+			padding:20px 0;
+			margin:0 20px;
+			border-bottom: 1px solid #eeeeee;
+		}
+		.fileContent-item{
+			width: 100%;
+			min-height: 60px;
+			background: #F4F7FE;
+			border-radius: 10px;
+			margin-bottom: 10px;
+		}
+		.fileContent-item:last-child{
+			margin-bottom: 0px;
+		}
+		.typeImg{
+			width: 30px;
+			height: 34px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.fileContent-item-title{
+			width: calc(100% - 80px);
+			height: 34px;
+			display: inline-block;
+			text-align: left;
+			margin-left: 10px;
+		}
+		.titleSpan{
+			width: 100%;
+			word-break: break-all;
+			font-size: 14px;
+			font-weight: 500;
+			color: #191515;
+			line-height: 14px;
+			display: block;		
+		}
+		.fileSize{
+			font-size: 12px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 14px;
+		}
+		textarea::-webkit-input-placeholder{
+            color:#B1B1B1;			
+			font-size: 16px;
+			font-weight: 400;
+		}
+		.img_item {
+			float: left;
+			text-align: left;
+			width: 72px;
+			height: 72px;
+			margin-right: 20px;
+			margin-top: 10px;
+		}
+		
+		.img_item::after {
+			clear: both;
+			content: '';
+			display: block;
+			width: 0;
+			height: 0;
+			visibility: hidden;
+		}
+		
+		.img_item img {
+			width: 72px;
+			height: 72px;
+		}
+		.img_item .img_close {
+			display: inline-block;
+			background-color: #1da1f2;
+			color: #FFF;
+		}
+		.empty{
+			line-height:40px;
+			width:100%;
+			text-align: left;
+			font-size: 16px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目名称
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="projectName" readonly="true" type="text" class="inputCss" value="" placeholder="请输入项目名称" maxlength="100">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										项目编号
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="projectNo" readonly="true" type="text" class="inputCss" value="" placeholder="自动填充" maxlength="500">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										安全教育名称
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="educationName" required="true" readonly="true" type="text" class="inputCss" value="" placeholder="请输入安全教育名称"
+										 maxlength="50">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										地点
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="address" required="true" type="text" class="inputCss" value="" placeholder="请输入地点" maxlength="50"
+										 readonly="true">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										培训类型
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="trainType" readonly="true" type="text" value="" placeholder="请选择培训类型" class="inputCss" >
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										培训时间
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="trainTime" class="inputCss" readonly="true" required="true" type="text" class="mui-input-clear"
+										 placeholder="请选择培训时间" style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 120px;">
+									<div class="item-title">
+										培训内容
+									</div>
+									<div class="mui-input-row item-input">
+										<textarea id="trainContent" type="text" readonly="true" maxlength="2000" rows="2" placeholder="请输入培训内容,不超过2000字"
+										 style="border:none;padding-left: 0;width: calc(100% - 25px);"></textarea>
+										<span class="mui-icon mui-icon-closeempty" id="clear" style="position: relative;top: -50px;line-height:16px;width:16px;height:16px;font-size: 16px; color:#FFFFFF;border-radius: 50%;background:#999999;display: none;"></span>
+									</div>
+								</div>
+								<div class="info-bar-content-item" id="attachDiv" style="height: 80px;">
+									<div class="item-title">
+										附件
+									</div>
+									<div class='empty' id="empty">无</div>
+									<!-- <input id="PhotoInput" style="display: none;" /> -->
+									<!-- <div class="img_list" id="img_list">
+										
+									</div> -->
+									<!-- 	<div id="photo" class="img_item">
+										<img class="img_src" id="img_src" src="../../../img/commom/pz@2x.png" style="" />
+									</div> -->
+								</div>
+								<div class="fileContent" id="reformFile" style="display: none;">
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputFullname" type="text" class="inputCss" readonly="true" value="" placeholder="请输入填写人">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										联系方式
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputPhone" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										填写部门
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDepartmentFullname" readonly="true" type="text" class="inputCss" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border: none;">
+									<div class="item-title">
+										填写日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputDate" class="inputCss" type="text" readonly="true" placeholder="请选择填写日期" style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/conservation.js"></script>
+	<script src="../../../js/education.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/uploadimage.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/mui.previewimage.js"></script>
+
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		mui.init({swipeBack:false});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var opt = "add"; //操作类型
+		var id = "";
+		var flag = false;
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+			//界面元素控制
+			initView();
+
+			plus.webview.currentWebview().setStyle({
+				softinputMode: "adjustResize" // 弹出软键盘时自动改变webview的高度
+			});
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					plus.webview.currentWebview().setStyle({
+						height: originalHeight + 75
+					});
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			var self = plus.webview.currentWebview();
+			querySEByGuid(self.planId, function(data) {
+				console.log(JSON.stringify(data))
+				if (data.success) {
+					var item = data.result;
+					$("#projectName").val(isEmp(self.projectName))
+
+					$("#projectNo").val(isEmp(self.projectNo))
+
+					$("#educationName").val(isEmp(item.educationName))
+
+					$("#address").val(isEmp(item.address))
+
+					getDicTextByIdAndKey(item.trainType, "SAFE_TRAIN_TYPE", function(data) {
+						$("#trainType").val(isEmp(data))
+					})
+
+					$("#trainTime").val(isEmp(item.trainTime).substring(0, 10))
+
+					$("#trainContent").val(isEmp(item.trainContent))
+
+					$("#inputFullname").val(isEmp(item.inputFullname))
+
+					$("#inputPhone").val(isEmp(item.inputPhone))
+
+					$("#inputDepartmentFullname").val(isEmp(item.inputDepartmentFullname))
+
+					$("#inputDate").val(isEmp(item.inputDate).substring(0,10))
+
+					if (item.attachment != null && item.attachment != undefined && item.attachment != "") {
+
+						findFilesByGroupId({
+
+							groupId: item.attachment
+
+						}, function(data) {
+
+							if (data.success) {
+
+								if (data.result.length > 0) {
+
+									var str = '';
+
+									if (data.result[0].uploadFile.fileType == '.png' || data.result[0].uploadFile.fileType == '.jepg' || data
+										.result[0].uploadFile.fileType == '.jpg') {
+										// console.log(JSON.stringify(data.result[0]))
+
+										str = "<img class='imgCss img_item' data-preview-src='' data-preview-group='1' src='" + config.urls.baseUrl +
+
+											"sys/common/view/" +
+
+											data.result[0].uploadFile.savePath + "'>";
+
+										$("#reformFile").css("height", "130px");
+
+									} else {
+
+										str = `<div class="fileContent-item"` +
+
+											` data-token="` + data.result[0].fileToken + `"` +
+
+											`<div style="padding:12px 0 10px 0">
+
+																<div class="typeImg">`
+
+										if (data.result[0].uploadFile.fileType == '.pdf') {
+
+											str += `<img src="../../../img/commom/pdf.png" style="width: 30px;height: 34px;"></img>`;
+
+										}  else if (data.result[0].uploadFile.fileType == '.xls' || data.result[0].uploadFile.fileType == '.xlsx') {
+
+											str += `<img src="../../../img/commom/xlsx.png" style="width: 30px;height: 34px;"></img>`
+
+										} else if (data.result[0].uploadFile.fileType == '.rar') {
+
+											str += `<img src="../../../img/commom/rar.png" style="width: 30px;height: 34px;"></img>`
+
+										} else if (data.result[0].uploadFile.fileType == '.zip') {
+
+											str += `<img src="../../../img/commom/zip.png" style="width: 30px;height: 34px;"></img>`
+
+										}else {
+
+											str += `<img src="../../../img/commom/doc.png" style="width: 30px;height: 34px;"></img>`
+
+										}
+
+										str +=
+											`</div>
+
+																<div class="fileContent-item-title">
+
+																	<span class="titleSpan">` +
+
+											data.result[0].uploadFile.fileName + `</span>
+
+																					<span class="fileSize">` + data.result[
+												0].uploadFile.fileSize + "KB" +
+
+											`</span>
+
+																				</div>										
+
+																			</div>
+
+																		</div>`
+
+									}
+
+									$("#attachDiv").css("height", "30px");
+
+									$("#attachDiv").css("border", "none");
+
+									$("#reformFile").html(str);
+
+									$("#empty").hide()
+
+									$("#reformFile").show();
+
+								}
+
+							} else app.toast("附件查询失败")
+
+						});
+
+					}
+				} else app.toast('查询专项教育计划信息失败')
+			});
+			// var item ={
+			// 	address: "物流大厦",
+			// 	attachment: "90cfd272ba57452688b06fdce13978b3",
+			// 	corpCode: null,
+			// 	createBy: null,
+			// 	createTime: null,
+			// 	delFlag: 0,
+			// 	educationName: "安全教育测试",
+			// 	guid: "fe4c96ee74c9e4c551dfd0fdb1e35355",
+			// 	inputDate: null,
+			// 	inputDepartment: null,
+			// 	inputDepartmentFullname: null,
+			// 	inputFullname: null,
+			// 	inputName: null,
+			// 	inputPhone: null,
+			// 	prjCode: "prj60",
+			// 	projectId: "08db030329cc54a6b324a1d0aca5883e",
+			// 	projectLeaderFullname: "易佑涵",
+			// 	projectName: "今晚打狮子",
+			// 	projectNo: "FT2020044",
+			// 	trainContent: '111111111111111',
+			// 	trainTime: "2020-12-10 16:49:15",
+			// 	trainType: "02",
+			// 	trainType_dictText: "项目部安全教育",
+			// 	updateBy: null,
+			// 	updateTime: null
+			// }
+
+			//图片预览
+			$(document).on('tap', '.imgCss', function() {
+				mui.previewImage();
+			});
+
+		}
+	</script>
+
+</html>

@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>子工单1</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="../../../css/mui.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.picker.min.css" rel="stylesheet"/>
+  <link href="../../../css/mui.poppicker.css" rel="stylesheet"/>
+  <link href="../../../css/common.css" rel="stylesheet"/>
+  <link href="../../../css/ps.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css"/>
+
+  <style>
+    .mui-icon-arrowright {
+      color: #62666E;
+      font-weight: 100 !important;
+      width: 16px;
+      padding-top: 7px;
+    }
+
+    /* 滚动指示器 */
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+      border-bottom: 1px solid #FFFFFF;
+    }
+
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after {
+      /*color: #007aff;*/
+      border-bottom: 2px solid #007aff;
+      background: 0 0;
+      content: '';
+      width: 24px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .content {
+      overflow: hidden;
+      height: calc(100vh - 100px);
+    }
+
+    .mui-table-view:before {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .mui-table-view:after {
+      height: 0;
+      background-color: #FFFFFF;
+    }
+
+    .info-bar-content-item {
+      font-size: 14px;
+      padding: 10px 0;
+      margin: 0 20px;
+    }
+
+    .info-bar-content-item .item-title {
+      text-align: left;
+      color: #888888;
+      padding: 0;
+    }
+
+    .info-bar-content-item .item-input {
+      text-align: right;
+      color: #161515;
+      padding-right: 0;
+    }
+
+    .mui-checkbox.mui-left label {
+      font-size: 14px;
+    }
+
+    .page-bottom {
+      display: flex;
+      padding: 0 20px;
+      height: 100px;
+      background-color: #F4F4F4;
+
+    }
+
+    .page-bottom button {
+      flex: 1;
+      margin-top: 30px;
+      border-radius: 5px;
+      border-color: #0493F3;
+      font-size: 16px;
+      height: 40px;
+      border-width: thin;
+    }
+
+    .btn-temp-save {
+      color: #0493F3;
+      background-color: #FFFFFF;
+      margin-right: 15px;
+    }
+
+    .btn-agree {
+      color: #FFFFFF;
+      background-color: #0493F3;
+      border: none;
+    }
+
+    .img-right-arrow {
+      width: 7px;
+      height: 12px;
+      margin-left: 5px;
+    }
+
+    .bor {
+      border: 1px dashed #E0E0E0;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    * {
+      touch-action: none;
+    }
+
+    /*  审批流程 */
+    .approval-flow-container {
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+
+    .approval-flow-first-left-operator {
+      flex: 3;
+      padding: 10px;
+      margin-top: 20px;
+      color: #999999;
+      font-size: 14px
+    }
+
+    .approval-flow-first-left-operator-username {
+      color: black;
+      font-weight: bold
+    }
+
+    .approval-flow-first-line-top {
+      background-color: white;
+      height: 33px;
+      width: 1px;
+      margin: 0 auto 0 auto;
+    }
+
+    .approval-flow-first-line-circle {
+      width: 7px;
+      height: 7px;
+      background-color: #0493F3;
+      border-radius: 3.5px;
+      margin: 5px auto 5px auto
+    }
+
+    .approval-flow-first-line-bottom {
+      background-color: #0493F3;
+      /*height: 80%;*/
+      height: calc(100% - 40px);
+      width: 1px;
+      margin: 0 auto 0 auto;
+    }
+
+    .approval-flow-first-right-container {
+      padding: 10px;
+      margin: 10px;
+      background-color: #FFF;
+      box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      -moz-border-radius: 25px;
+      flex: 16
+    }
+
+    .approval-flow-first-right-status-container {
+      display: flex;
+      flex: 1;
+      text-align: left;
+      align-items: center;
+    }
+
+    .approval-flow-first-right-status-node {
+      padding: 10px;
+      flex: 1;
+      font-size: 14px;
+      color: black;
+      font-weight: bold
+    }
+
+    .approval-flow-first-right-status {
+      text-align: right;
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      color: #29CC85
+    }
+
+    .approval-flow-first-right-content-container {
+      text-align: start;
+      flex: 1;
+      padding: 0 10px 10px 10px;
+      color: black;
+      font-size: 14px;
+      min-height: 75px
+    }
+
+    .approval-flow-first-right-content {
+      text-align: left;
+      padding-right: 10px;
+      font-size: 14px;
+      color: #999999
+    }
+
+    .approval-flow-first-right-date {
+      color: black;
+      padding: 5px 10px;
+      font-size: 14px;
+      text-align: left
+    }
+
+    .approval-flow-middle-circle-img {
+      width: 13px;
+      height: 13px;
+      text-align: center;
+    }
+
+    .empty {
+      line-height: 200px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      color: #BBBBBB;
+      /*background: #f4f4f4;*/
+    }
+
+  </style>
+</head>
+<body style="margin: 0;">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <div class="mui-navbar">
+    </div>
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page ps" style="background-color: #ffffff;">
+  <div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted"
+       style="color: #888888;z-index: 100;background-color: #FFFFFF;">
+    <a id="item1" class="mui-control-item mui-active" href="#selectItem1" style="text-align: center;">
+      工单详情
+    </a>
+    <a id="item2" class="mui-control-item " href="#selectItem2" style="text-align: center;;">
+      审批流程
+    </a>
+  </div>
+  <div style="background-color: #F4F4F4;height: 5px"></div>
+  <div id="scroll-wrapper" class="" style="height: calc(100vh - 65px);">
+    <div class="mui-content-padded" style="width: 100%; transform: translate3d(0px, 0px, 0px) translateZ(0px);">
+      <!--    <div id="basicInfo" class="mui-slider-item mui-control-content mui-active"-->
+      <!--         style="position: relative;border-bottom: none!important;">-->
+      <!--      <div style="height:100px; display: none;" tabindex="0" id="top"></div>-->
+      <!--    <div id="detail1" class="content">-->
+      <div id="selectItem1" class="info-bar-content mui-control-content mui-active mui-slider-item">
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>工单名称：
+          </div>
+          <div class="mui-input-row item-input">
+            <input id="orderName" placeholder="" readonly="readonly"></input>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>工单编号：
+          </div>
+          <div class="mui-input-row item-input">
+            <input id="orderNo" placeholder="" readonly="readonly"></input>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>问题类型：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="machineNo" readonly="readonly"></span>
+            <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>工单来源：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="orderSource" readonly="readonly"></span>
+            <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>问题等级：
+          </div>
+          <div class="mui-input-row" style="display: flex;">
+            <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+            <div class="item-checkbox" style="flex: 1;">
+              <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                <label>一般</label>
+                <input id="notifymethod" name="notifymethod" value="message" type="checkbox" disabled="">
+              </div>
+            </div>
+            <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+            <div class="item-checkbox" style="flex: 1;">
+              <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                <label>紧急</label>
+                <input id="sms" name="sms" value="sms" type="checkbox" disabled="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>相关工单：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="correlationOrder" readonly="readonly">请选择</span>
+            <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>父级工单：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="problemLevel" readonly="readonly">自动填入</span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white" readonly="readonly">*</span>设施类型：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="discoveryTime" readonly="readonly">请选择</span>
+            <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>发现地点：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="discoveryPerson" readonly="readonly">自动填入</span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>问题描述：
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+        <textarea id="problemDesc" placeholder="" readonly maxlength="300"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0"
+                  readonly="readonly"></textarea>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>问题照片：
+          </div>
+          <div style="text-align: right">
+            <img class="arrow-down-img" alt="1" src="../../../img/problemImg.png"
+                 style="border-radius: 10px;width: 100px;height: 100px">
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>受理人：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="problemDescription" readonly="readonly">请选择</span>
+            <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title" style="width: 120px;">
+            <span style="color: white">*</span>受理部门：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="completedTime" readonly="readonly"></span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>要求完成时间：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="processingDemands" readonly="readonly">请选择时间</span>
+            <!--          <img src="../../../img/cal.png" style="width: 16px;height: 16px;margin: auto 0px auto 5px"/>-->
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>补充要求：
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+        <textarea id="suppleRequire" readonly placeholder="" maxlength="500"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0"></textarea>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>处理结果及建议：
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+        <textarea id="advise" readonly placeholder="" maxlength="500"
+                  style="min-height: 100px;text-align: start;border: none;color: #191515;font-size: 14px;padding: 15px 0"></textarea>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>处理照片：
+          </div>
+          <div style="text-align: right">
+            <img class="arrow-down-img" alt="1" src="../../../img/problemImg.png"
+                 style="border-radius: 10px;width: 100px;height: 100px">
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>派单人：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="receivedPerson" readonly="readonly"></span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>联系方式：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="fillInPerson" readonly="readonly"></span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>派单部门：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="phone" readonly="readonly"></span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span style="color: white">*</span>填写日期：
+          </div>
+          <div class="mui-input-row item-input">
+            <span id="fillInDate" readonly="readonly"></span>
+          </div>
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title" style="width: 120px;margin-top: 8px;">
+            <span></span>新任务通知方式
+          </div>
+          <div class="mui-input-row" style="display: flex;">
+            <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+            <div class="item-checkbox" style="flex: 1;">
+              <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;padding-bottom: 0px;">
+                <label>站内消息</label>
+                <input id="notifymethod2" name="notifymethod" value="message" type="checkbox" checked disabled="">
+              </div>
+            </div>
+            <!--                     width: 60%;text-align: right;padding-left: 20px; -->
+            <div class="item-checkbox" style="flex: 1;">
+              <div class="mui-input-row mui-checkbox mui-left" style="width: 100%;">
+                <label>手机短信</label>
+                <input id='sms2' name="sms" value="sms" type="checkbox" disabled="">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="info-bar-content-item">
+          <div class="item-title">
+            <span>*</span>结果复核：
+          </div>
+          <input id="approverUsername" style="display: none;"/>
+          <div class="mui-input-row item-input">
+            <span id="approverFullname" readonly="readonly"></span>
+            <!--          <img src="../../../img/arrow-right-gray.png" class="img-right-arrow"/>-->
+          </div>
+        </div>
+      </div>
+      <div id="selectItem2" class="mui-control-content mui-slider-item" style="padding: 10px">
+        <div style="background-color: #ffffff;">
+          <div id="taskComment" class="mui-table-view" style="background: #FFFFFF; ">
+            <div class="empty">暂无数据</div>
+          </div>
+          <div id="taskComment-TEST" class="mui-table-view" style="background: #FFFFFF; display: none;">
+
+            <!-- div1 start -->
+            <div class="approval-flow-container">
+              <!--处理人 start -->
+              <div class="approval-flow-first-left-operator">
+                <span>处理人</span>
+                <span class="approval-flow-first-left-operator-username">张三丰1</span>
+              </div>
+              <!--处理人 end -->
+              <!--线条-->
+              <div style="flex: 1;">
+                <div class="approval-flow-first-line-top"></div>
+                <div class="approval-flow-first-line-circle" style="display: block"></div>
+                <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+                <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img"
+                     style="display: none"/>
+                <div class="approval-flow-first-line-bottom"></div>
+              </div>
+              <!--详情-->
+              <div class="approval-flow-first-right-container">
+                <div class="approval-flow-first-right-status-container">
+                  <span class="approval-flow-first-right-status-node ">填写表单1</span>
+                  <span class="approval-flow-first-right-status">已同意1</span>
+                </div>
+                <div
+                  class="approval-flow-first-right-content-container">
+                  <span class="approval-flow-first-right-content">审批意见1:</span>
+                  挺好的，这是审批意见这是审批意见
+                  见这是审批意见这是审审批意见这见
+                  是审审批意见这是审审批意。
+                  是审审批意见这是审审批意。
+                  是审审批意见这是审审批意。
+                  是审审批意见这是审审批意。
+                  是审审批意见这是审审批意。
+                  是审审批意见这是审审批意。
+                  是审审批意见这是审审批意。
+                </div>
+                <div class="approval-flow-first-right-date">2021-11-17 15:23:29</div>
+              </div>
+            </div>
+            <!-- div1 end -->
+            <!-- div2 start -->
+            <div class="approval-flow-container">
+              <!--处理人-->
+              <div class="approval-flow-first-left-operator">
+                <span>处理人</span>
+                <span class="approval-flow-first-left-operator-username">张三丰</span>
+              </div>
+              <!--线条-->
+              <div style="flex: 1;text-align: center">
+                <div class="approval-flow-first-line-top" style="background-color: #0493F3;"></div>
+                <div class="approval-flow-first-line-circle" style="display: none;"></div>
+
+                <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+                <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img"
+                     style="display: inline-block"/>
+                <div class="approval-flow-first-line-bottom" style="background-color: #EEEEEE;"></div>
+              </div>
+              <!--详情-->
+              <div class="approval-flow-first-right-container">
+                <div class="approval-flow-first-right-status-container">
+                  <span class="approval-flow-first-right-status-node">填写表单</span>
+                  <span class="approval-flow-first-right-status">已同意</span>
+                </div>
+                <div class="approval-flow-first-right-content-container">
+                  <span class="approval-flow-first-right-content">审批意见:</span>无
+                </div>
+                <div class="approval-flow-first-right-date">2021-11-17 15:23:29</div>
+              </div>
+            </div>
+            <!-- div2 end -->
+
+            <!-- div3 start -->
+            <div class="approval-flow-container">
+              <!--处理人-->
+              <div class="approval-flow-first-left-operator">
+                <span>处理人</span>
+                <span class="approval-flow-first-left-operator-username">张三丰</span>
+              </div>
+              <!--线条-->
+              <div style="flex: 1;text-align: center">
+                <div class="approval-flow-first-line-top" style="background-color: #EEEEEE;"></div>
+                <div class="approval-flow-first-line-circle" style="background-color: #DDEEFA;"></div>
+                <div class="approval-flow-first-line-bottom" style="background-color: #EEEEEE;display: block;"></div>
+              </div>
+              <!--详情-->
+              <div class="approval-flow-first-right-container">
+                <div class="approval-flow-first-right-status-container">
+                  <span class="approval-flow-first-right-status-node">填写订单</span>
+                  <span clas="approval-flow-first-right-status" style="color:#999999">待审核</span>
+                </div>
+              </div>
+            </div>
+            <!-- div3 end -->
+            <!-- div4 start -->
+            <div class="approval-flow-container">
+              <!--处理人-->
+              <div class="approval-flow-first-left-operator">
+                <span>处理人</span>
+                <span class="approval-flow-first-left-operator-username">张三丰</span>
+              </div>
+              <!--线条-->
+              <div style="flex: 1;text-align: center">
+                <div class="approval-flow-first-line-top" style="background-color: #EEEEEE;"></div>
+                <div class="approval-flow-first-line-circle" style="background-color: #DDEEFA;"></div>
+                <div class="approval-flow-first-line-bottom" style="background-color: #EEEEEE;display: none"></div>
+              </div>
+              <!--详情-->
+              <div class="approval-flow-first-right-container">
+                <div class="approval-flow-first-right-status-container">
+                  <span class="approval-flow-first-right-status-node">填写订单</span>
+                  <span clas="approval-flow-first-right-status" style="color:#999999">待审核</span>
+                </div>
+              </div>
+            </div>
+            <!-- div4 end -->
+          </div>
+        </div>
+
+
+      </div>
+      <!--    </div>-->
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/mui.view.js"></script>
+<script src="../../../js/mui.locker.js"></script>
+<script src="../../../js/mui.picker.min.js"></script>
+<script src="../../../js/mui.picker.js"></script>
+<script src="../../../js/mui.poppicker.js"></script>
+<script src="../../../js/mui.previewimage.js"></script>
+<script src="../../../js/numberBox.js"></script>
+
+<script src="../../../js/app.js"></script>
+<script src="../../../js/config.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/helper.js"></script>
+<script src="../../../js/uploadimage.js"></script>
+<script src="../../../js/s4.js"></script>
+<script src="../../../js/smutils.js"></script>
+<script src="../../../js/byte&string.js"></script>
+<script src="../../../js/ajaxhook.min.js"></script>
+<script src="../../../js/mui.zoom.js"></script>
+<script src="../../../js/bscroll.js"></script>
+
+
+<script src="../../../js/vconsole.min.js"></script>
+
+<script src="../../../js/workSpace/normalForm.js"></script>
+<script>
+    // var vConsole = new VConsole();
+
+    var isTest = false;
+
+    if (!isTest) {
+        mui.init({
+            swipeBack: false,
+            gestureConfig: {
+                swipe: true, //默认为true
+            }
+        });
+    }
+
+
+    // var rankBox = document.getElementById("detail1"); // slider
+    var rankBox = document.getElementById("scroll-wrapper");
+    var cBScroll = new BScroll(rankBox, {
+        click: true, // 主要控制非button元素的点击事件
+        probeType: 3,
+        pullUpLoad: true
+    });
+
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#mui-content'
+    });
+
+    var userPicker = new mui.PopPicker();
+
+    console.log("normalForm.html==========================================================");
+    let param = {
+        guid: "",
+    }
+    console.log("plusReady==========================================================");
+    mui.plusReady(function () {
+        var winHeight = window.screen.height;
+
+        console.log("height==========================================================");
+        $("#detail1").height(winHeight - 130);
+        // $("#detail2").height(winHeight - 130);
+        // $("#detail3").height(winHeight - 130);
+        // $("#detail4").height(winHeight - 130);
+        //禁止选项卡自带滑动，手动监听
+        // console.log("slider==========================================================");
+        // mui('.mui-slider').slider().stopped = true;
+
+        initView();
+        // console.log("initView==========================================================");
+
+    });
+    //界面元素控制
+    var initView = function () {
+        console.log("initView==========================================================");
+        self = plus.webview.currentWebview();
+        console.log("子工单详情")
+        console.log(JSON.stringify(self))
+        $('#orderName').val(self.formName)
+        $('#orderNo').val(self.formCode)
+        $('#machineNo').text(self.problemType_dictText)
+        $('#orderSource').text(self.formSource_dictText)
+        if (self.problemLevel_dictText == '一般') {
+            $('#notifymethod').attr("checked", true);
+        } else if (self.problemLevel_dictText == '紧急') {
+            $('#sms').attr("checked", true);
+        }
+        if (self.relatedOrder != null) {
+            $('#correlationOrder').text(self.relatedOrder)
+        } else {
+            $('#correlationOrder').text("")
+        }
+        $('#problemLevel').text(self.fatherForm)
+        $('#discoveryTime').text(self.objType_dictText)
+        if (self.foundAddr != null) {
+            $('#discoveryPerson').text(self.foundAddr)
+        } else {
+            $('#discoveryPerson').text("")
+        }
+        $('#problemDesc').text(self.problemDesc)
+        $('#problemDescription').text(self.acceptorName)
+        $('#completedTime').text(self.accepteDepartName)
+        $('#processingDemands').text(self.deadline)
+        $('#problemDesc').text(self.problemDesc)
+        if (self.suppleRequire != null) {
+            $('#suppleRequire').text(self.suppleRequire)
+        } else {
+            $('#suppleRequire').text("")
+        }
+        if (self.advise != null) {
+            $('#advise').text(self.advise)
+        } else {
+            $('#advise').text("")
+        }
+        $('#receivedPerson').text(self.createBy)
+        $('#fillInPerson').text(self.phoneNum)
+        $('#phone').text(self.accepteDepartName)
+        $('#fillInDate').text(self.createTime)
+        $('#approverFullname').text(self.resAuditorName)
+        if (self.notifymethod.length > 1) {
+            $('#sms2').attr("checked", true);
+            $('#notifymethod2').attr("checked", true);
+        }
+        param.guid = self.guid;
+        console.log('guid:' + param.guid);
+        // 调用审批流程接口
+        getApprovalFlow(param.guid);
+
+        getImg(self.problemPhoto, function (data) {
+            console.log('itemFormImgData:' + JSON.stringify(data));
+            if (data != null) {
+            }
+        })
+
+    }
+
+    // $('#item1').on('tap', function () {
+    //     console.log("点击了item1");
+    //     $("#selectItem1").show();
+    //     $("#selectItem2").hide();
+    // })
+    //
+    // $('#item2').on('tap', function () {
+    //     console.log("点击了item2");
+    //     $("#selectItem1").hide();
+    //     $("#selectItem2").show();
+    // })
+    // 获取图片
+    function getImg(id, callback) {
+        findFilesByGroupId({groupId: id}, function (data) {
+            if (data.success == true) {
+                callback(data.result);
+            } else {
+                mui.toast("图片获取失败")
+            }
+        })
+    }
+
+    function getApprovalFlow(paramGuid) {
+        getTaskCommentNormalForm(paramGuid, function (data) {
+            // console.log("=== getApprovalFlow start ===")
+            // console.log(JSON.stringify(data));
+            // console.log("=== getApprovalFlow end ===")
+            if (data.success) {
+                addApprovalProcessData(data.result);
+            }
+        });
+    }
+
+    function addApprovalProcessData(approvalDatas) {
+        var approvalStr = '';
+        console.log("==addApprovalProcessData==")
+        if (approvalDatas != null) {
+            var endList = approvalDatas.taskListEnd;
+            var ingList = approvalDatas.taskListIng;
+            var unLastEnd = '<div class="left-line-bottom-blue"></div>';
+            var lastEnd = '<div class="left-line-bottom-gray"></div>';
+
+            // 用于修改线条颜色
+            var bgMainColorCss = 'style="background-color: #0493F3;"'
+            var bgEEEColorCss = 'style="background-color: #EEEEEE;"'
+            var displayBlock = 'style="display: block;"'
+            var displayInlineBlock = 'style="display: inline-block;"'
+            var displayNone = 'style="display: none;"'
+            var endListLen = endList.length;
+
+            for (let i = 0; i < endListLen; i++) {
+                approvalStr +=
+                    `<!-- div1 start -->
+                    <div class="approval-flow-container">
+                        <!--处理人 start -->
+                    <div class="approval-flow-first-left-operator">
+                    <span>处理人</span>
+                    <span class="approval-flow-first-left-operator-username">${endList[i].assigneeFullname}</span>
+                    </div>
+                        <!--处理人 end -->
+                        <!--线条-->
+                    <div style="flex: 1;">
+                        <!--只有一条数据时 ，是第一个，也是最后一个，顶部线不要画-->
+                    <div class="approval-flow-first-line-top" ${(i == (endListLen - 1)) ? ((endListLen == 1?"":bgMainColorCss)) : ""}></div>
+                    <div class="approval-flow-first-line-circle" ${(i == (endListLen - 1)) ? displayNone : displayBlock}></div>
+                        <!-- 已同意的最后一个要显示图片,其他已同意的显示上边的背景圆-->
+                    <img src="../../../img/approval-circle.png" class="approval-flow-middle-circle-img" ${(i == (endListLen - 1)) ? displayInlineBlock : displayNone} style="display: none"/>
+                    <div class="approval-flow-first-line-bottom" ${(i == (endListLen - 1)) ? bgEEEColorCss : ""}></div>
+                    </div>
+                        <!--详情-->
+                    <div class="approval-flow-first-right-container">
+                    <div class="approval-flow-first-right-status-container">
+                    <span class="approval-flow-first-right-status-node ">${endList[i].nodeName}</span>
+                    <span class="approval-flow-first-right-status">${endList[i].handleType}</span>
+                    </div>
+                    <div
+                    class="approval-flow-first-right-content-container">
+                    <span class="approval-flow-first-right-content">审批意见:</span>
+                        ${(endList[i].taskComment == null || endList[i].taskComment.length == 0 ? "无意见" : endList[i].taskComment)}
+                    </div>
+                    <div class="approval-flow-first-right-date">${endList[i].endTime}</div>
+                    </div>
+                    </div>
+                        <!-- div1 end -->
+                    `
+            ;
+
+                    }
+                    var ingListLen = ingList.length;
+                    var bgEEEColorDisplayBlock = 'style="background-color: #EEEEEE;display: block;"'
+                    var bgEEEColorDisplayNone = 'style="background-color: #EEEEEE;display: none;"'
+                    for (let i = 0; i < ingListLen; i++) {
+                      approvalStr +=
+
+                `<!-- div3 start -->
+                <div class="approval-flow-container">
+                    <!--处理人-->
+                <div class="approval-flow-first-left-operator">
+                <span>处理人</span>
+                <span class="approval-flow-first-left-operator-username">${ingList[i].assigneeName}</span>
+                </div>
+                    <!--线条-->
+                <div style="flex: 1;text-align: center">
+                <div class="approval-flow-first-line-top" style="background-color: #EEEEEE;"></div>
+                <div class="approval-flow-first-line-circle" style="background-color: #DDEEFA;"></div>
+                    <!--最后一个隐藏-->
+                <div class="approval-flow-first-line-bottom" ${(i == (ingListLen - 1)) ? bgEEEColorDisplayNone : bgEEEColorDisplayBlock}></div>
+                </div>
+                    <!--详情-->
+                <div class="approval-flow-first-right-container">
+                <div class="approval-flow-first-right-status-container">
+                <span class="approval-flow-first-right-status-node">${ingList[i].nodeName}</span>
+                <span clas="approval-flow-first-right-status" style="color:#999999">${ingList[i].handleType}</span>
+                </div>
+                </div>
+                </div>
+                    <!-- div3 end -->
+                `
+            ;
+                    }
+
+                  } else {
+                    approvalStr = '<div class="empty">暂无数据</div>'
+                  }
+                  $("#taskComment").html(approvalStr);
+                }
+
+                // 测试区
+                function flowTmpData() {
+                  console.log("==flowTmpData==")
+                  // param:{"guid":"0dcc31a1bfdd40a09c79c68b584fe161"}
+                  var dataStr =
+                `
+                {"businessKey":"0dcc31a1bfdd40a09c79c68b584fe161",
+                "taskListEnd":[
+                {"nodeName":"填写表单","assigneeFullname":"ceshi","assigneeName":"cwh01","handleType":"已提交","taskComment":"","handleCode":"submit","startTime":"2020-12-16 16:45:47","endTime":"2020-12-16 16:45:47","nodeId":"UserTask_0"}
+                ],
+                "taskListIng":[
+                {"nodeName":"施工、监理人确认","assigneeFullname":"ceshi","assigneeName":"cwh01","handleType":"处理中","startTime":"2020-12-16 16:45:47","nodeId":"UserTask_1"}
+                ]}`
+            ;
+                  var data = JSON.parse(dataStr);
+                  addApprovalProcessData(data);
+                }
+                if(isTest){
+                  flowTmpData();
+                }
+
+</script>
+
+</html>

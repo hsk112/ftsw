@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>新增质量整改</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.img_item{
+			text-align: left;
+			width: 72px;
+			height: 100px;
+			float: left;
+			margin-right: 20px;
+		}
+		.img_item img{
+			width: 72px;
+			height: 72px;
+		}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 999;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			width: 90%;
+			float: left;
+			text-align: center;
+			padding: 0 14px;
+			margin-left: 5%;
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 20px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 16px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+		<!-- 	<div class="item" id="save">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">暂存</div>
+			</div> -->
+			<div class="item" id="next_step">
+				<div style="background: #337BFC;color: #fff">下一步</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn2" style="display: none;">
+			<div class="item" id="back">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">返回</div>
+			</div>
+			<div class="item" id="next">
+				<div style="background: #337BFC;color: #fff">下一页</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">排水户登记</h1>
+    </header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li" style="padding-bottom: 20px;">
+							<div class="bar-title">
+								基本情况
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										项目名称<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="prjName" required="true" type="text" class="mui-input-clear" value="" placeholder="请输入项目名称" class="inputCss"
+										 style="width:90%;">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										项目类型<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="prjType" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="prjType_text" readonly="readonly" required="true" type="text" class="mui-input-clear" value=""
+										 placeholder="请选择项目类型" class="inputCss" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										项目来源<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="prjSource" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="prjSource_text" required="true" readonly type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请选择项目来源" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										项目性质<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="prjCharacter" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="prjCharacter_text" required="true" readonly type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请选择项目性质" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										所属行业<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<input id="industry" type="text" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="industry_text" required="true" readonly type="text" class="mui-input-clear inputCss" value=""
+										 placeholder="请选择所属行业" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										当前状态
+									</div>
+									<input id="conservationStatus" type="text" value="0" style="display: none;">
+									<div class="mui-input-row item-input">
+										<input id="conservationStatus_text" readonly="readonly" required="true" type="text" class="inputCss" value="新开工"
+										 placeholder="请选择当前状态" style="width:90%;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										项目所在位置
+									</div>
+									<input type="hidden" name="" id="smx" value="" />
+									<input type="hidden" name="" id="smy" value="" />
+									<input type="hidden" name="" id="prjLocationStreet" value="" />
+									<input type="hidden" name="" id="prjLocationDistrict" value="福田区" />
+									<div class="mui-input-row item-input">
+										<input id="prjLocation" type="text" class="mui-input-clear" value="" placeholder="请输入具体位置" style="width:90%;"
+										 class="inputCss">
+										<img id="toLocation" src="../../../img/nearIcon.png" style="width: 16px;height: 15px;line-height: 15px;vertical-align:middle;margin-right: 10px" />
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>建设单位</span>
+										<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="constructionUnit" class="mui-input-clear inputCss" required="true" class="mui-input-clear"
+										 placeholder="请输入建设单位">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>建设单位联系人</span>
+										<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="conContacts" class="mui-input-clear inputCss" required="true" class="mui-input-clear" placeholder="请输入建设单位联系人">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>电子邮箱</span>
+										<span style="color: red;margin-left: 3px;">*</span>
+										<span id="email_error" class="err-show" style="color: red;float: right;display:none">邮箱格式不合法！</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="email" class="mui-input-clear inputCss" required="true" class="mui-input-clear" onkeyup="validata_email(this)"
+										 placeholder="请输入建设单位电子邮箱">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>施工单位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="buildUnit" class="mui-input-clear inputCss" class="mui-input-clear" placeholder="请输入施工单位">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>施工单位联系人</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="buildContacts" class="mui-input-clear inputCss" class="mui-input-clear" placeholder="请输入施工单位联系人">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>监理单位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="supervisoryUnit" class="mui-input-clear inputCss" class="mui-input-clear" placeholder="请输入监理单位">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>监理单位联系人</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="supervisoryContacts" class="mui-input-clear inputCss" class="mui-input-clear" placeholder="请输入监理单位联系人">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>主体设计单位</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="designUnit" class="mui-input-clear inputCss" class="mui-input-clear" placeholder="请输入主体设计单位">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>主体设计单位联系人</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="designContacts" class="mui-input-clear inputCss" class="mui-input-clear" placeholder="请输入主体设计单位联系人">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										项目开工时间<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="startDate" class="inputCss" required="true" readonly="readonly" type="text" class="mui-input-clear"
+										 placeholder="请选择项目开工时间" style="width: 90%;">
+										<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										计划完工时间<span style="color: red;margin-left: 3px;">*</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="planEndDate" class="inputCss" required="true" readonly="readonly" type="text" class="mui-input-clear"
+										 placeholder="请选择项目计划完工时间" style="width: 90%;">
+										<!-- <span id="planEndDate_text" class="mui-icon mui-icon-arrowright"></sapn> -->
+										<img src="../../../img/commom/time.png" style="width: 20px;height: 20px;float: right;margin-top: 8px;">
+									</div>
+								</div>
+								<div class="info-bar-content-item isShow">
+									<div class="item-title">
+										<span>防止责任范围面积</span>
+										<span id="error3" class="err-show" style="color: red;float: right;display:none">格式不合法！</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="preventionArea" class="mui-input-clear inputCss" onblur="isErrFun(this)" onkeyup="format_input_num(3,this)"
+										 class="mui-input-clear" placeholder="请输入防止责任范围面积">
+									</div>
+								</div>
+
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>土建投资（万元）</span>
+										<span id="error1" class="err-show" style="color: red;float: right;display:none">格式不合法！</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="civilInvestment" min="0" class="mui-input-clear inputCss" onblur="isErrFun(this)" onkeyup="format_input_num(1,this)"
+										 placeholder="请输入土建投资（万元）" style="width: 90%;">
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span>总投资（万元）</span>
+										<span id="error2" class="err-show" style="color: red;float: right;display:none">格式不合法！</span>
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="totalInvestment" onblur="isErrFun(this)" onkeyup="format_input_num(2,this)" class="mui-input-clear inputCss"
+										 placeholder="请输入总投资（万元）" style="width: 90%;">
+									</div>
+								</div>
+								<div id="bottom-div" style="height: 100px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.picker.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/conservation.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/uploadimage.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<script src="../../../js/mui.zoom.js"></script>
+	<script src="../../../js/mui.previewimage.js"></script>
+
+	<script src="../../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+
+		mui.init({
+		swipeBack:false
+	});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var self;
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+		var userPicker = new mui.PopPicker();
+		mui.plusReady(function() {
+
+			initView()
+			// 点击事件
+			initDownSelect();
+			//获取暂存信息
+			showData()
+
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) { //resizeHeight<originalHeight证明窗口被挤压了
+					// plus.webview.currentWebview().setStyle({
+					// 	height: originalHeight + 75
+					// });
+					$("#scroll-content").css("margin","0")
+					$("#bottom-item-btn").hide()
+				}else{
+					// $("#scroll-content").css("margin-bottom","100px")
+					$("#bottom-item-btn").show()
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+			self = plus.webview.currentWebview();
+			console.log(self.isEdit)
+			if(self.isEdit){//是否查看项目
+				$("#bottom-item-btn").hide()
+				$("#toLocation").hide()
+				$("#bottom-item-btn2").show()
+				$("input").css("backgroundColor","white")
+				$("input").attr('disabled','disabled')
+			}
+
+			//日期选择
+			$("#startDate,#planEndDate").on("tap", function() {
+				var that = $(this);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					var date1 = d.getFullYear() + "-" + preZero((d.getMonth() + 1), 2) + "-" + preZero(d.getDate(), 2)
+					plus.nativeUI.pickTime(function(e) {
+						var d2 = e.date;
+						var time = preZero(d2.getHours(), 2) + ":" + preZero(d2.getMinutes(), 2) + ":" + preZero(d2.getSeconds(),
+							2)
+						that.val(date1 + " " + time)
+					}, function(e) {
+						that.val("");
+					}, {
+						title: "请选择时间"
+					});
+				}, function(e) {
+					that.val("");
+				}, {
+					title: "请选择日期"
+				});
+				plusDate(function(data) {
+					that.val(data)
+				}, 1);
+			})
+
+		}
+
+		//只允许小数
+		function clearNoNum(obj) {
+			obj.value = obj.value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符
+			obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是.
+			obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的.
+			obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+		}
+
+		// 点击事件
+		var initDownSelect = function() {
+			//项目类型
+			$("#prjType_text").on("tap", function() {
+				var that = $(this);
+				getDictItems('project_type', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#prjType_text").val(items[0].text);
+							$("#prjType").val(items[0].value);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+			})
+
+			//选择项目所在位置
+			$("#toLocation").on("tap", function() {
+				var extras = {}
+				app.openPage("selectLocation.html", {
+					titleNView: {
+						titleText: '项目位置选择',
+						autoBackButton: true,
+					}
+				}, extras);
+				//移除
+				window.removeEventListener('reloadAddress', reloadAddress, false);
+				// 赋值
+				window.addEventListener('reloadAddress', reloadAddress, false);
+			});
+			//重新加载
+			var reloadAddress = function(data) {
+				console.log("地点选择后回调的参数：" + JSON.stringify(data.detail));
+				$("#prjLocation").val(data.detail.address)
+				$("#smx").val(data.detail.lng)
+				$("#smy").val(data.detail.lat)
+				$("#prjLocationStreet").val(data.detail.street)
+			}
+
+			//项目性质
+			$("#prjCharacter_text").on("tap", function() {
+				var that = $(this);
+				getDictItems('project_character', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					//普通示例
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#prjCharacter").val(items[0].value);
+							$("#prjCharacter_text").val(items[0].text);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+			})
+
+			//项目来源
+			$("#prjSource_text").on("tap", function() {
+				var that = $(this);
+				getDictItems('project_source', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					//普通示例
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#prjSource").val(items[0].value);
+							$("#prjSource_text").val(items[0].text);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}
+				})
+			})
+			//项目状态
+			// $("#conservationStatus_text").on("tap", function() {
+			// 	var that = $(this);
+			// 	getDictItems('project_status', function(data) {
+			// 		if (206 != parseInt(data.code)) {
+			// 			app.toast(data.message);
+			// 			return;
+			// 		}
+			// 		var resultJSON = [];
+			// 		for (var i = 0; i < data.result.length; i++) {
+			// 			var item = data.result[i];
+			// 			resultJSON.push({
+			// 				text: item.text,
+			// 				value: item.value
+			// 			})
+			// 		}
+			// 		//普通示例
+			// 		if ($(".mui-poppicker").hasClass("mui-active")) {
+			// 			userPicker.hide();
+			// 			return false;
+			// 		} else {
+			// 			userPicker.setData(resultJSON);
+			// 			userPicker.show(function(items) {
+			// 				$("#conservationStatus").val(items[0].value);
+			// 				$("#conservationStatus_text").val(items[0].text);
+			// 			});
+			// 		}
+			// 	})
+			// })
+
+			//所属行业
+			$("#industry_text").on("tap", function() {
+				var that = $(this);
+				getDictItems('project_industry', function(data) {
+					if (206 != parseInt(data.code)) {
+						app.toast(data.message);
+						return;
+					}
+					var resultJSON = [];
+					for (var i = 0; i < data.result.length; i++) {
+						var item = data.result[i];
+						resultJSON.push({
+							text: item.text,
+							value: item.value
+						})
+					}
+					if ($(".mui-poppicker").hasClass("mui-active")) {
+						userPicker.hide();
+						return false;
+					} else {
+						userPicker.setData(resultJSON);
+						userPicker.show(function(items) {
+							$("#industry_text").val(items[0].text);
+							$("#industry").val(items[0].value);
+						});
+					}
+				})
+			})
+		}
+
+		//暂存
+		$("#save").on("tap", function(event) {
+			saveProForm()
+			app.showLoaderWithMsg("正在暂存中，请稍后...")
+			setTimeout(function() {
+				app.hideLoader()
+				app.toast("暂存成功！")
+				mui.confirm("是否继续?", "提示", ['下一步', '取消', '返回列表'], function(result) {
+					if (parseInt(result.index) == 0) { //下一步
+						if (validateRequiredFields()) {
+							if (myValidate()) {
+								app.openPage("addProject_stepTwo.html", {
+									titleNView: {
+										titleText: '新增项目',
+										autoBackButton: true,
+									}
+								}, {});
+							}
+						}
+					} else if (parseInt(result.index) == 1) { //取消
+
+					} else if (parseInt(result.index) == 2) { //返回列表
+						plus.webview.currentWebview().close('none');
+					}
+				})
+			}, 1000)
+		})
+
+
+		//提交
+		$("#next_step").on("tap", function(event) {
+			if (validateRequiredFields()) {
+				//自定义校验
+				if (myValidate()) {
+					//组装表单数据
+					saveProForm();
+					app.showLoaderWithMsg("正在跳转...")
+					setTimeout(function() {
+						app.hideLoader()
+						app.openPage("addProject_stepTwo.html", {
+							titleNView: {
+								titleText: '新增项目',
+								autoBackButton: true,
+							}
+						}, {});
+					}, 1000)
+				}
+			}
+
+		});
+		//重新加载
+		var reloadAddress = function(data) {
+			window.location.reload();
+		}
+		//自定义校验
+		var myValidate = function() {
+			//校验图片是否上传
+			let errArr = $('.err-show:visible');
+			console.log($(errArr[0]).html() + "," + errArr.length);
+			if (errArr.length != 0) { //自定义校验
+				let info = $(errArr[0]).prev().html();
+				app.toast("请正确填写【" + info + "】字段");
+				return false;
+			}
+			return true;
+		}
+
+		//组装项目表单
+		function saveProForm() {
+			var pro_form1 = null;
+			var pro_form_data = localStorage.getItem("pro_form_data");
+			if (pro_form_data == null) {
+				pro_form1 = pro_form;
+			} else {
+				pro_form1 = JSON.parse(pro_form_data)
+			}
+			pro_form1.prjName = $("#prjName").val();;
+			pro_form1.prjSource = $("#prjSource").val();
+			pro_form1.prjType = $("#prjType").val();
+			pro_form1.prjCharacter = $("#prjCharacter").val();
+			pro_form1.industry = $("#industry").val();
+			pro_form1.conservationStatus = $("#conservationStatus").val();
+			pro_form1.prjLocationDistrict = $("#prjLocationDistrict").val();
+			pro_form1.prjLocationStreet = $("#prjLocationStreet").val();
+			pro_form1.prjLocation = $("#prjLocation").val();
+			pro_form1.smx = $("#smx").val();
+			pro_form1.smy = $("#smy").val();
+			pro_form1.constructionUnit = $("#constructionUnit").val();
+			pro_form1.conContacts = $("#conContacts").val();
+			pro_form1.email = $("#email").val();
+			pro_form1.buildUnit = $("#buildUnit").val();
+			pro_form1.buildContacts = $("#buildContacts").val();
+			pro_form1.supervisoryUnit = $("#supervisoryUnit").val();
+			pro_form1.supervisoryContacts = $("#supervisoryContacts").val();
+			pro_form1.designUnit = $("#designUnit").val();
+			pro_form1.designContacts = $("#designContacts").val();
+			pro_form1.startDate = $("#startDate").val();
+			pro_form1.planEndDate = $("#planEndDate").val();
+			pro_form1.preventionArea = $("#preventionArea").val();
+			pro_form1.totalInvestment = $("#totalInvestment").val();
+			pro_form1.civilInvestment = $("#civilInvestment").val();
+			// pro_form.checkPlan = $("#checkPlan").val();
+
+			localStorage.setItem("pro_form_data", JSON.stringify(pro_form1));
+			console.log("oneStep=======" + localStorage.getItem("pro_form_data"));
+			return true;
+		}
+
+		function showData() {
+			var pro_form1 = null;
+			var self = plus.webview.currentWebview();
+			console.log(self.isEdit)
+			if(self.isEdit){//查看项目
+				pro_form1 = JSON.parse(self.proData);
+			}else{//新增
+				var pro_form_data = localStorage.getItem("pro_form_data");
+				if (pro_form_data == null) {
+					pro_form1 = pro_form;
+				} else {
+					pro_form1 = JSON.parse(pro_form_data)
+				}
+			}
+			console.log(pro_form1)
+			$("#prjName").val(pro_form1.prjName);;
+			$("#prjSource").val(pro_form1.prjSource);
+			getDicTextByIdAndKey(pro_form1.prjSource, 'project_source', function(data) {
+				if (data != '无') {
+					$("#prjSource_text").val(data)
+				}
+			});
+			$("#prjType").val(pro_form1.prjType)
+			getDicTextByIdAndKey(pro_form1.prjType, 'project_type', function(data) {
+				if (data != '无') {
+					$("#prjType_text").val(data)
+				}
+			});
+			$("#prjCharacter").val(pro_form1.prjCharacter); //
+			getDicTextByIdAndKey(pro_form1.prjCharacter, 'project_character', function(data) {
+				if (data != '无') {
+					$("#prjCharacter_text").val(data)
+				}
+			});
+			$("#industry").val(pro_form1.industry);
+			getDicTextByIdAndKey(pro_form1.industry, 'project_industry', function(data) {
+				if (data != '无') {
+					$("#industry_text").val(data)
+				}
+			});
+			// $("#conservationStatus").val(pro_form.conservationStatus);
+			// getDicTextByIdAndKey(pro_form.conservationStatus, 'project_status', function(data) {
+			// 	if (data != '无') {
+			// 		$("#conservationStatus_text").val(data)
+			// 	}
+			// });
+			// $("#prjLocationDistrict").val(pro_form1.prjLocationDistrict);
+			$("#prjLocationStreet").val(pro_form1.prjLocationStreet);
+			$("#prjLocation").val(pro_form1.prjLocation);
+			$("#smx").val(pro_form1.smx);
+			$("#smy").val(pro_form1.smy);
+			$("#constructionUnit").val(pro_form1.constructionUnit);
+			$("#conContacts").val(pro_form1.conContacts);
+			$("#email").val(pro_form1.email);
+			$("#buildUnit").val(pro_form1.buildUnit);
+			$("#buildContacts").val(pro_form1.buildContacts);
+			$("#supervisoryUnit").val(pro_form1.supervisoryUnit);
+			$("#supervisoryContacts").val(pro_form1.supervisoryContacts);
+			$("#designUnit").val(pro_form1.designUnit);
+			$("#designContacts").val(pro_form1.designContacts);
+			$("#startDate").val(pro_form1.startDate);
+			$("#planEndDate").val(pro_form1.planEndDate);
+			$("#preventionArea").val(pro_form1.preventionArea);
+			$("#totalInvestment").val(pro_form1.totalInvestment);
+			$("#civilInvestment").val(pro_form1.civilInvestment);
+			// $("#checkPlan").val(pro_form.checkPlan);
+
+		}
+
+		// 对Date的扩展，将 Date 转化为指定格式的String
+		// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+		// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+		// 例子：
+		// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+		// (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+		// email验证
+		function validata_email(obj) {
+			var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+			console.log(reg.test(obj.value))
+			if (obj.value != null && !reg.test(obj.value)) {
+				$("#email_error").show();
+				obj.focus()
+			} else {
+				$("#email_error").hide();
+			}
+		}
+		// 格式化限制数字文本框输入
+		function format_input_num(num, obj) {
+			var reg = /^(\d*)(\.(\d+))?$/g;
+			if (obj.value != null && !reg.test(obj.value)) {
+				$("#error" + num).show();
+			} else {
+				$("#error" + num).hide();
+			}
+
+		}
+
+		//校验不通过焦点重置
+		function isErrFun(obj) {
+			console.log($(obj).parent().prev().find(".err-show").is(":visible"))
+			if ($(obj).parent().prev().find(".err-show").is(":visible")) {
+				obj.focus();
+			}
+		}
+	</script>
+
+</html>

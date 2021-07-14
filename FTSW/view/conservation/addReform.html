@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-新增整改文件</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style>
+			.mui-popover {
+			height: 300px;
+		}
+		.mui-content {
+			padding: 10px;
+		}
+		.bar-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #888888;
+		}
+		.item-title{
+			font-size: 14px;
+			font-weight: 400;
+			color: #444444;
+		}
+	.mui-icon-arrowright{
+		color:#62666E;
+		font-weight: 100 !important;
+		width: 16px;
+	}
+	.inputCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #1A1616;
+		height: 30px;
+	}
+	.checkBoxCss{
+		font-size: 16px;
+		font-weight: 400;
+		color: #000000;
+	}
+		.bottom-item-btn {
+			height: 100px;
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			background: #f2f2f2;
+			bottom: 0px;
+			padding-top: 30px;
+		}
+		.bottom-item-btn .item {
+			/*width: 90%;*/
+			/*margin-left:5%;*/
+			text-align: center;
+			padding: 0 20px;
+
+		}
+
+		.bottom-item-btn .item div {
+			border: 1px solid #337BFB;
+			border-radius: 5px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 18px;
+		}
+		.file-item-box ul li{
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			margin: 0;
+
+		}
+		.mui-table-view:after{ height:0}
+		.mui-table-view:before{ height:0}
+		.mui-table-view-cell:after{ height:0}
+		.mui-table-view-cell:before{ height:0}
+		.mui-table-view::-webkit-scrollbar {
+			display: none;
+		}
+		.mui-table-view-cell{
+			width: 100%;
+			text-align: left;
+		}
+		.file_upload{
+			padding: 3px 0;
+			width: 90px;
+			background: #337BFC;
+			border: 1px solid #337BFC;
+			border-radius: 26px;
+		}
+		.btn-label{
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			line-height: 14px;
+		}
+		.file-name{
+			width: 85%;
+			margin-left: 5px;
+			box-sizing: border-box;
+			overflow: scroll;
+			color: blue;
+			float: left;
+			white-space: nowrap;
+		}
+		.file-name{
+			display: inline-block;
+		}
+		.file_close{
+			float: right;
+		}
+		
+		.uploadBtn{
+			padding-top: 4px;
+			display: inline-block;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 400;
+			color: #0493F3;
+			/*width: 76px;*/
+			height: 26px;
+			/*background: #337BFC;*/
+			border: none;
+			border-radius: 26px;
+		}
+		.tip{
+			width: 70%;
+			text-align: left;
+			vertical-align: bottom;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: 400;
+			color: #B1B1B1;
+			margin-left: 20px;
+		}
+		.fileContent{
+			/*padding:20px 0;*/
+			padding: 5px 0;
+			margin:0 20px;
+			border-bottom: 1px solid #eeeeee;
+		}
+		.fileContent-item{
+			width: 100%;
+			min-height: 60px;
+			background: #F4F7FE;
+			border-radius: 10px;
+			margin-bottom: 10px;
+		}
+		.fileContent-item:last-child{
+			margin-bottom: 0px;
+		}
+		.typeImg{
+			width: 30px;
+			height: 34px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.fileContent-item-title{
+			width: calc(100% - 90px);
+			height: 34px;
+			display: inline-block;
+			text-align: left;
+			margin-left: 10px;
+		}
+		.titleSpan{
+			width: 100%;
+			word-break: break-all;
+			font-size: 14px;
+			font-weight: 500;
+			color: #191515;
+			line-height: 14px;
+			display: block;		
+		}
+		.fileSize{
+			font-size: 12px;
+			font-weight: 400;
+			color: #191515;
+			line-height: 14px;
+		}
+		.removeFile{
+			width: 18px;
+			height: 18px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.signDetail{
+			padding:30px 10px !important;
+/* 			font-size: 16px;
+			font-weight: 400;
+			color: #B1B1B1; */
+			line-height: 14px;
+		}
+		.input-email{
+			border-bottom:5px solid #F4F4F4;
+		}
+		.input-email:last-child{
+			border-bottom:none;
+		}
+		.addDiv{
+			width: 100%;
+			height: 40px;
+			text-align: center;
+			margin: 30px 0
+		}
+		.addBtn{
+			/* margin-left: 10%; */
+			/*width:80%;*/
+			line-height: 30px;
+			font-size: 16px;
+			font-weight: normal;
+			color: #0493F3;
+			border-radius: 40px;
+			background: #FFFFFF;
+			border: none;
+		}
+		.mui-input-row .mui-input-clear~.mui-icon-clear{
+			top:20px
+		}
+	/*	自定义样式	*/
+			.paish .info-bar-content-item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				height: 55px;
+			}
+			.paish .info-bar-content-item .item-title {
+				width: 90px;
+				padding: 0;
+			}
+			input[type=text] {
+				margin-bottom: 0;
+				/*text-align: right;*/
+			}
+			.red-star {
+				color: red;
+				margin-right: 3px;
+			}
+			.paish .mui-input-row {
+				float: none;
+				text-align: right;
+			}
+			.delPersonDiv {
+				background-color: transparent;
+				height:35px;
+				width: 44px;
+				position: absolute;
+				right: -10px;
+				top: 12px;
+				z-index: 10;
+			}
+			.upload-file-container
+			{
+				width: 90px;display: flex;justify-content: flex-end;align-items: center;
+			}
+	</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-item-btn" id="bottom-item-btn">
+			<!-- <div class="item" id="hold">
+				<div style="background: #fff;color:#337BFC ;border:1px solid #337BFC">暂存</div>
+			</div> -->
+			<div class="item" id="submit">
+				<div style="background: #0493F3;color: #fff">提交</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page paish">
+			<!--页面标题栏开始-->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="scroll-content" class="mui-scroll-wrapper" style="margin-bottom: 100px;">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="info-bar-content">
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span class="red-star">*</span>项目名称
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="prjName" readonly="true" type="text" value="" placeholder="由监督检查记录表回填" class="inputCss" style="text-align: right;" />
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span class="red-star">*</span>整改文件
+									</div>
+									<input style="display: none;" placeholder="请上传整改文件" id="fileId" required="true" />
+									<div class="upload-file-container" style="">
+										<button class="uploadBtn" id="uploadBtn">上传文件</button>
+											<img src="../../img/file_upload_icon.png" style="width: 14px; height: 13px;" alt="">
+											<span class="tip" style="display: none;">仅允许上传word 、pdf！</span>
+									</div>
+								</div>
+								<div class="fileContent" id="reformFile" style="display: none;">
+					<!-- 				<div class="fileContent-item" data-token="b40ef3f11851ff4e65ee9d9846a0d4ca">
+										<div style="padding:12px 0 10px 0">
+
+											<div class="typeImg">
+
+												<img src=../../img/commom/pdf.png style="width: 30px;height: 34px;"></img>
+
+											</div>
+
+											<div class="fileContent-item-title">
+
+												<span class="titleSpan">6e44ad546d8b4085b088358297dfb1f9.pdf</span>
+
+												<span class="fileSize">366268KB</span>
+
+											</div>
+
+											<div class="removeFile">
+
+												<img src="../../img/commom/del.png" style="width: 18px;height: 18px;"></img>
+
+											</div>
+
+										</div>
+
+									</div> -->
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title" style="width: 140px;">
+										<span class="red-star">*</span>要求完成日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="comDate" class="inputCss" readonly="true" type="text" class="mui-input-clear" placeholder="由监督检查记录表回填"
+										 style="width: 90%;text-align: right;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="">
+									<div class="item-title" style="margin-left: 10px;">
+										发送方式
+									</div>
+									<div class="item-checkbox" style="display: flex;justify-content: space-between;">
+										<div class="mui-input-row mui-checkbox mui-left" style="width: auto;">
+											<label class="checkBoxCss" style="width: auto;">邮箱</label>
+											<input name="1" value="1" type="checkbox" disabled="true" checked="">
+										</div>
+										<div class="mui-input-row mui-checkbox mui-left" style="width: auto">
+											<label class="checkBoxCss" style="padding-right: 0;width: auto;">短信</label>
+											<input name="1" value="0" type="checkbox" checked disabled="true">
+										</div>
+									</div>
+								</div>
+<!--								<div style="height: 5px;background: #F4F4F4;"></div>-->
+								<div class="fileContent" style="padding-bottom: 0;min-height:280px;border:none" id="signPersonExtend">
+									<div class="person" id="row_1">
+										<div class="item-title" style="text-align: left;display: flex;justify-content: space-between;align-items: center;">
+											<div><span class="red-star">*</span>签收人员1</div>
+											<div style="position: relative; height: 30px;">
+												<button class="addBtn" id="addBtn" style="padding: 0 15px;width: 100%">添加</button>
+												<img src="../../img/addobject.png" alt="" style="width: 12px;height: 12px;position: absolute;top: 9px;right: 0;">
+											</div>
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="inputCss signDetail mui-input-clear" id="personName1" name="personName" required="true" type="text"
+											 onblur="format_input(1,this)" onkeyup="format_input(1,this)" placeholder="请输入姓名" style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;" />
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="inputCss signDetail mui-input-clear" id="corpName1" name="corpName" required="true" type="text"
+											 onblur="format_input(2,this)" onkeyup="format_input(2,this)" placeholder="请输入单位名称" style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;" />
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="inputCss signDetail mui-input-clear" id="personPhonum1" name="personPhonum" required="true"
+											 type="text" onblur="format_phone(this)" placeholder="请输入联系方式" style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;" />
+										</div>
+										<div class="mui-input-row item-input input-email" style="margin-bottom: 20px;">
+											<input class="inputCss signDetail mui-input-clear" id="personMail1" name="personMail" required="true" type="text"
+											 onblur="format_email(this)" placeholder="请输入电子邮箱" style="margin-bottom: 0px;border:none;" />
+										</div>
+									</div>
+								</div>
+								<div class="fileContent" style="padding-bottom: 0;border:none" id="signPerson">
+
+								</div>
+<!--								<div class="addDiv">-->
+<!--									<button class="addBtn" id="addBtn">添加</button>-->
+<!--								</div>-->
+								<div style="height: 1px;background: #EDEDED;"></div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span class="red-star">*</span>发送日期
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="sendDate" required="true" class="inputCss" readonly="true" type="text" placeholder="请选择发送日期" style="width:calc(100% - 25px);text-align: right;">
+										<img src="../../img/commom/time.png" style="width:16px;height:16px"></img>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span class="red-star">*</span>当前状态
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="conservationStatus_dictText" required="true" type="text" maxlength="10" readonly="true" class="inputCss"
+										 placeholder="由监督检查记录表回填" style="width:calc(100% - 25px);text-align: right;">
+										<span class="mui-icon mui-icon-arrowright"></sapn>
+									</div>
+								</div>
+								<div class="info-bar-content-item">
+									<div class="item-title">
+										<span class="red-star">*</span>填写人
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputByName" required="true" readonly="true" type="text" class="inputCss" style="text-align: right;" value="" placeholder="请输入填写人">
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="border:none">
+									<div class="item-title">
+										<span class="red-star">*</span>联系方式
+									</div>
+									<div class="mui-input-row item-input">
+										<input id="inputByPhone" required="true" readonly="true" type="text" class="inputCss" style="text-align: right;" value="" placeholder="请输入联系方式">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/common.js"></script>	
+	<script src="../../js/conservation.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<script src="../../js/vconsole.min.js"></script>
+	<script>
+		// var vConsole = new VConsole();
+		var isTest = false //true // false;
+		mui.init({
+			beforeback: function() {
+				if(!isTest) {
+					//获得父页面的webview
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'reload1');
+				}
+
+				//返回true,继续页面关闭逻辑
+				return true;
+			}
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		var isUpload = true;
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		var opt = "add"; //操作类型
+		var id = "";
+		var flag = true;
+		var userPicker = new mui.PopPicker();
+		var addSubPersonCount = 1;
+		mui.plusReady(function() {
+			//界面元素控制
+			initView();
+
+			// 点击事件
+			initDownSelect();
+			//初始化回调
+			// initCallback();
+
+			// 初始化选项框状态
+			initCheckBox();
+
+			var originalHeight = document.documentElement.clientHeight || document.body.clientHeight;
+			window.onresize = function() {
+				var resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				//软键盘弹起与隐藏  都会引起窗口的高度发生变化
+				if (resizeHeight * 1 < originalHeight * 1) {
+					$("#scroll-content").css("margin", "0")
+					$("#bottom-item-btn").hide()
+				} else {
+					$("#scroll-content").css("margin-bottom", "100px")
+					$("#bottom-item-btn").show()
+				}
+			}
+		});
+
+		//界面元素控制
+		var initView = function() {
+
+			self = plus.webview.currentWebview();
+
+			var date = new Date();
+			var now = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+
+			$("#prjName").val(self.projectName == 'null' ? '' : self.projectName);
+			$("#comDate").val(self.comDate == 'null' ? '' : self.comDate);
+			$("#sendDate").val(now);
+			getDicTextByIdAndKey(self.conservationStatus, "conservation_status", function(data) {
+				$("#conservationStatus_dictText").val(data);
+			})
+
+			// $("#conservationStatus_dictText").val('整改中');
+			$("#inputByName").val(app.userInfo().realname);
+			$("#inputByPhone").val(app.userInfo().personMobilePhone);
+
+			if (self.checkPeopleNum) {
+				addSubPersonCount = parseInt(self.checkPeopleNum);
+				var str = '';
+
+				$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) + 310 * (addSubPersonCount - 1) +
+					'px');
+				for (let i = 0; i < parseInt(self.checkPeopleNum); i++) {
+					if (i != 0) {
+						//签收人员${i+1}
+						str += `<div class = "person" style="position: relative;" id = "row_` + (i + 1) +
+							`">
+<div class="delPersonDiv" ></div>
+										<div class="item-title" style="text-align: left;" class="morePerson">
+											<span class="red-star">*</span>签收人员
+											<img class="delPerson" src="../../img/commom/del.png" style="float: right;width: 18px;height: 18px"></img>
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="inputCss signDetail mui-input-clear" name = "personName" required="true"  value=""
+											type="text" onblur="format_input(1,this)" onkeyup="format_input(1,this)" placeholder="请输入姓名"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>	
+										</div>
+										<div class="mui-input-row item-input">
+										<input class="inputCss signDetail mui-input-clear" name = "corpName" required="true" value=""
+										type="text" onblur="format_input(2,this)" onkeyup="format_input(2,this)" placeholder="请输入单位名称"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>		
+										</div>
+										<div class="mui-input-row item-input">
+										<input class="inputCss signDetail mui-input-clear" name = "personPhonum" required="true" value=""
+										type="text" onblur="format_phone(this)" placeholder="请输入联系方式"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+										</div>
+										<div class="mui-input-row item-input input-email" style="margin-bottom: 20px;">
+										<input class="inputCss signDetail mui-input-clear" name = "personMail" required="true" value=""
+										type="text" onblur="format_email(this)" placeholder="请输入电子邮箱"  style="margin-bottom: 0px;border:none;"/>
+										</div>					
+									</div>`
+					}
+				}
+				$("#signPerson").append(str);
+				$('#signPerson .input-email').each(function(index) {
+					if (index == addSubPersonCount - 1) {
+						$(this).css("border", "none")
+					} else {
+						$(this).css("border-bottom", "5px solid #F4F4F4")
+					}
+				});
+				if (addSubPersonCount >= 9999) {
+					$("#addBtn").attr("disabled", true)
+				}
+			}
+
+
+
+			/*
+			function showData(data) {
+				var reFormDataStr = JSON.parse(localStorage.getItem("reFormData"));
+				if (reFormDataStr != null) {
+					var reformFile = globalGetItem(GlobalKey.reformFile)
+					if (reformFile != null && reformFile != undefined && reformFile != "") {
+						var file = JSON.parse(reformFile)
+						// console.log(JSON.stringify(data.result[0].uploadFile))
+						var str = `<div class="fileContent-item"` +
+							` data-token="` + file.fileToken + `"` +
+							`<div style="padding:12px 0 10px 0">
+												<div class="typeImg">
+													<img src="../../img/commom/pdf.png" style="width: 30px;height: 34px;"></img>
+												</div>
+												<div class="fileContent-item-title">
+													<span class="titleSpan">` +
+							file.fileName + `</span>
+													<span class="fileSize">` + file.fileSize + "KB" +
+							`</span>
+												</div>
+												<div class="removeFile">
+													<img src="../../img/commom/del.png" style="width: 18px;height: 18px;"></img>
+												</div>											
+											</div>
+										</div>`
+						$("#fileId").val(file.fileToken);
+						$("#reformFile").append(str);
+						$("#reformFile").show();
+						$("#uploadBtn").attr("disabled", true);
+					}
+
+					if (reFormDataStr.wsConservationFileDetailList != null) {
+						var item = reFormDataStr.wsConservationFileDetailList;
+						console.log(JSON.stringify(reFormDataStr))
+						addSubPersonCount = item.length;
+						var str = '';
+						// console.log(item.length)
+						$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) + 290 * (addSubPersonCount - 1) +
+							'px');
+						for (let i = 0; i < item.length; i++) {
+							if (i == 0) {
+								// console.log(JSON.stringify(item[i].personPhonum))
+								$("#personName1").val(item[i].personName);
+								$("#corpName1").val(item[i].corpName);
+								$("#personPhonum1").val(item[i].personPhonum);
+								$("#personMail1").val(item[i].personMail);
+							} else {
+								// 签收人员${i+1}
+								str += `<div class = "person" style="position: relative;" id = "row_` + (i + 1) +
+									`">
+<div class="delPersonDiv" ></div>
+										<div class="item-title" style="text-align: left;" class="morePerson">
+											<span class="red-star">*</span>签收人员
+											<img class="delPerson" src="../../img/commom/del.png" style="float: right;width: 18px;height: 18px"></img>
+										</div>
+										<div class="mui-input-row item-input">
+											<input class="inputCss signDetail mui-input-clear" name = "personName" required="true"  value="${item[i].personName}"
+											type="text" onblur="format_input(1,this)" onkeyup="format_input(1,this)" placeholder="请输入姓名"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>	
+										</div>
+										<div class="mui-input-row item-input">
+										<input class="inputCss signDetail mui-input-clear" name = "corpName" required="true" value="${item[i].corpName}"
+										type="text" onblur="format_input(2,this)" onkeyup="format_input(2,this)" placeholder="请输入单位名称"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>		
+										</div>
+										<div class="mui-input-row item-input">
+										<input class="inputCss signDetail mui-input-clear" name = "personPhonum" required="true" value="${item[i].personPhonum}"
+										type="text" onblur="format_phone(this)" placeholder="请输入联系方式"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+										</div>
+										<div class="mui-input-row item-input input-email" style="margin-bottom: 20px;">
+										<input class="inputCss signDetail mui-input-clear" name = "personMail" required="true" value="${item[i].personMail}"
+										type="text" onblur="format_email(this)" placeholder="请输入电子邮箱"  style="margin-bottom: 0px;border:none;"/>
+										</div>					
+									</div>`
+							}
+						}
+						$("#signPerson").append(str);
+						$('#signPerson .input-email').each(function(index) {
+							if (index == addSubPersonCount - 1) {
+								$(this).css("border", "none")
+							} else {
+								$(this).css("border-bottom", "5px solid #F4F4F4")
+							}
+						});
+						if (addSubPersonCount >= 9999) {
+							$("#addBtn").attr("disabled", true)
+						}
+					}
+				}
+			}// showData end
+
+			//*/
+
+			//默认填写
+			//日期选择
+			// $("#comDate").on("tap", function() {
+			// 	var that = $(this);
+			// 	plusDate(function(data) {
+			// 		that.val(data);
+			// 	}, 2);
+			// })
+		}
+
+
+
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".info-bar-content-item").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if ($(this).is(':checked')) {
+						$(this).parent().siblings().find(":checkbox").each(function() {
+							$(this).prop("checked",false)
+						});
+					}
+				});
+			});
+		}
+
+		// 点击事件
+		var initDownSelect = function() {
+
+		}
+
+		//添加签收人员
+		$("#addBtn").on("tap", function(event) {
+			event.stopPropagation()
+			if (flag) {
+				addSubPersonCount++;
+				// $("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) + 310 + 'px')
+				// 签收人员${addSubPersonCount}
+// 				var str = `<div class = "person" style="position: relative; border-top: 5px solid rgb(244, 244, 244); padding-top: 20px;" id = "row_` + addSubPersonCount +
+// 					`">
+// <div class="delPersonDiv" ></div>
+// 						<div class="item-title" style="text-align: left; " class="morePerson">
+// 							<span class="red-star">*</span>签收人员${addSubPersonCount}
+// 							<img class="delPerson" src="../../img/commom/del.png" style="float: right;width: 18px;height: 18px"></img>
+// 						</div>
+// 						<div class="mui-input-row item-input">
+// 							<input class="inputCss signDetail mui-input-clear" name = "personName" required="true" type="text" onblur="format_input(1,this)" onkeyup="format_input(1,this)" placeholder="请输入姓名"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+// 						</div>
+// 						<div class="mui-input-row item-input">
+// 						<input class="inputCss signDetail mui-input-clear" name = "corpName" required="true" type="text" onblur="format_input(2,this)" onkeyup="format_input(2,this)" placeholder="请输入单位名称"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+// 						</div>
+// 						<div class="mui-input-row item-input">
+// 						<input class="inputCss signDetail mui-input-clear" name = "personPhonum" required="true" type="text" onblur="format_phone(this)" placeholder="请输入联系方式"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+// 						</div>
+// 						<div class="mui-input-row item-input input-email" style="margin-bottom: 20px;">
+// 						<input class="inputCss signDetail mui-input-clear" name = "personMail" required="true" type="text" onblur="format_email(this)" placeholder="请输入电子邮箱"  style="margin-bottom: 0px;border:none;"/>
+// 						</div>
+// 					</div>`
+
+			//	$("#signPerson").append(str);
+
+
+				// $('#signPerson .input-email').each(function(index) {
+				// 	if (index == addSubPersonCount - 1) {
+				// 		$(this).css("border", "none")
+				// 	} else {
+				// 		$(this).css("border-bottom", "5px solid #F4F4F4")
+				// 	}
+				// });
+				$("#signPerson").append(createSubPersonWithIndex(addSubPersonCount))
+				// 平板适配
+				padCheckCss();
+
+				if (addSubPersonCount >= 9999) {
+					$("#addBtn").attr("disabled", true)
+				}
+			}
+		});
+		function createSubPersonWithIndex(index) {
+			$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) + 310 + 'px')
+			var str = `<div class = "person" style="position: relative; border-top: 5px solid rgb(244, 244, 244); padding-top: 20px;" id = "row_` + addSubPersonCount +
+					`">
+<div class="delPersonDiv" ></div>
+						<div class="item-title" style="text-align: left; " class="morePerson">
+							<span class="red-star">*</span>签收人员${index}
+							<img class="delPerson" src="../../img/commom/del.png" style="float: right;width: 18px;height: 18px"></img>
+						</div>
+						<div class="mui-input-row item-input">
+							<input class="inputCss signDetail mui-input-clear" name = "personName" required="true" type="text" onblur="format_input(1,this)" onkeyup="format_input(1,this)" placeholder="请输入姓名"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+						</div>
+						<div class="mui-input-row item-input">
+						<input class="inputCss signDetail mui-input-clear" name = "corpName" required="true" type="text" onblur="format_input(2,this)" onkeyup="format_input(2,this)" placeholder="请输入单位名称"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+						</div>
+						<div class="mui-input-row item-input">
+						<input class="inputCss signDetail mui-input-clear" name = "personPhonum" required="true" type="text" onblur="format_phone(this)" placeholder="请输入联系方式"  style="margin-bottom: 0px;border:none;border-bottom:1px solid #eee;"/>
+						</div>
+						<div class="mui-input-row item-input input-email" style="margin-bottom: 20px;">
+						<input class="inputCss signDetail mui-input-clear" name = "personMail" required="true" type="text" onblur="format_email(this)" placeholder="请输入电子邮箱"  style="margin-bottom: 0px;border:none;"/>
+						</div>
+					</div>`
+			return str;
+
+		}
+
+
+		//移除签收人员
+		// 扩大删除区域
+		$("body").delegate("div[class=delPersonDiv]", "tap", function(e){
+			if (flag) {
+				$(this).parent().remove();
+				addSubPersonCount--;
+				$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) - 310 + 'px')
+
+				if (addSubPersonCount < 9999) {
+					$("#addBtn").attr("disabled", false)
+				}
+				if(addSubPersonCount > 1) {
+					// 重新生成子签收人员 ，因为索引可能不连贯
+					// 高度清0
+					$("#signPerson").css("height",'0px');
+					$("#signPerson").empty();
+					for(var i = 2; i <= addSubPersonCount; i++) {
+						$("#signPerson").append(createSubPersonWithIndex(i))
+					}
+				}
+			}
+		})
+		// 这个是小的删除区域
+		// $("body").delegate("img[class=delPerson]", "tap", function(e) {
+		// 	if (flag) {
+		// 		$(this).parent().parent().remove();
+		// 		addSubPersonCount--;
+		// 		$("#signPerson").css("height", Number($("#signPerson").css("height").replace("px", '')) - 310 + 'px')
+		//
+		// 			// $('#signPerson img').each(function(index) {
+		// 			// 	$(this).parent().html(
+		// 			// 			`<span class="red-star">*</span> `+`签收人员` + (index + 2) +`
+		// 			// 		<img class="delPerson" src="../../img/commom/del.png" style="float: right;width: 18px;height: 18px"></img>`
+		// 			// 	)
+		// 			// });
+		//
+		//
+		// 		$('#signPerson .input-email').each(function(index) {
+		// 			if (index == addSubPersonCount - 1) {
+		// 				$(this).css("border", "none")
+		// 			} else {
+		// 				$(this).css("border-bottom", "5px solid #F4F4F4")
+		// 			}
+		// 		});
+		// 		if (addSubPersonCount < 9999) {
+		// 			$("#addBtn").attr("disabled", false)
+		// 		}
+		// 	}
+		// });
+
+		//上传整改文件
+		$("#uploadBtn").on("tap", function(event) {
+			event.stopPropagation();
+			if (isUpload) {
+				isUpload = false;
+				let fileSuffix = 'doc、docx、pdf';
+				if (flag) {
+					plusSelectFile(fileSuffix,function(data, path) {
+						if (data.success) {
+							var fileType = data.result.uploadFile.fileType;
+							var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+							var iconPath = "";
+
+							if (fileType == '.pdf' || fileType == '.doc' || fileType == '.docx') {
+								switch (fileType) {
+									case '.doc':
+									case '.docx':
+										iconPath = '../../img/commom/doc.png';
+										break;
+									case '.pdf':
+										iconPath = '../../img/commom/pdf.png';
+										break;
+								}
+								app.toast("文件上传成功");
+
+								plus.io.resolveLocalFileSystemURL(path, function(entry) {
+									entry.file(function(file) {
+										let fileSize = Math.floor(file.size / 1024);
+										var reformFile = {
+											fileName: name,
+											fileType: iconPath,
+											fileSize: file.size,
+											fileToken: data.result.fileTokens
+										}
+										
+										globalSetItem(GlobalKey.reformFile, JSON.stringify(reformFile))
+										var str = `<div class="fileContent-item"` +
+										` data-path="` + data.result.uploadFile.savePath + `"` +
+											` data-token="` + data.result.fileTokens + `">` +
+											`<div style="padding:12px 0 10px 0">
+														<div class="typeImg">
+															<img src=${iconPath} style="width: 30px;height: 34px;"></img>
+														</div>
+														<div class="fileContent-item-title">
+															<span class="titleSpan">` +
+											name +
+											`</span>
+															<span class="fileSize">` + file.size +
+											`KB</span>
+														</div>
+														<div class="removeFile">
+															<img src="../../img/commom/del.png" style="width: 18px;height: 18px;"></img>
+														</div>											
+													</div>
+												</div>`
+										// console.log(str)
+										$("#fileId").val(data.result.uploadFile.id);
+										$("#reformFile").append(str);
+										$("#reformFile").show();
+										$("#uploadBtn").attr("disabled", true);
+									});
+								}, function(e) {
+									alert("文件获取失败:" + e.message);
+								});
+							} else {
+								app.toast("仅允许上传word、pdf！");
+							}
+						} else {
+							app.toast(data.message);
+						}
+					})
+				}
+			}
+			setTimeout(function() {
+				isUpload = true
+			}, 1000)
+		});
+
+		//移除整改文件
+		$("body").delegate("div[class=removeFile]", "tap", function(e) {
+			if (flag) {
+				var that = $(this)
+				var btnArray = ['确定', '取消']; //注意这里的顺序是先否再是
+				mui.confirm("是否确定移除该文件？", '提示', btnArray, function(e) {
+					if (e.index == 0) {
+						$("#fileId").val('');
+						$(that).parent().parent().hide();
+						console.log($(that).parent().parent().attr("class"))
+						$(that).parent().remove();
+						$("#uploadBtn").attr("disabled", false);
+						globalDelItem(GlobalKey.reformFile)
+						$("#reformFile").hide();
+					}
+				})
+			}
+		});
+
+		//暂存
+		$("#hold").on("tap", function(event) {
+			if (flag) {
+				saveReform();
+				app.toast("暂存成功")
+				// plus.webview.currentWebview().close('none');
+				mui.fire(plus.webview.getWebviewById('proDetail.html'), 'reload1');
+				popToTarget('proDetail.html');
+			} else {
+				app.toast("请按要求填写表单！")
+			}
+		});
+		//提交
+		$("#submit").on("tap", function(event) {
+			setTimeout(function() {
+				if(isTest) {
+					setupInit();
+				}
+				if (flag) {
+					if ($("#fileId").val().length == 0) {
+						app.toast("请上传整改文件12")
+					} else if (validateRequiredFields()) {
+						if(!isTest) {
+							saveReform();
+						}
+
+						var reformDate = JSON.parse(localStorage.getItem("reFormData"));
+						var attachmentJSON = JSON.parse(localStorage.getItem("fileAttachment"));
+
+						// var  i = 1;
+						// if(i == 1) {
+						// 	console.log("提交整改文件")
+						// 	return;
+						// }
+
+						addReform(reformDate, attachmentJSON, function(data) {
+							// app.toast("新增成功");
+							clearGlobalItem();
+							localStorage.removeItem("reFormData")
+							localStorage.removeItem("fileAttachment")
+							mui.fire(plus.webview.getWebviewById('proDetail.html'), 'reload1');
+							
+							var extras ={
+								fileId : $("[data-token]").first().attr("data-token"),
+								filePath : $("[data-path]").first().attr("data-path")
+							}
+							// popToTarget('proDetail.html');
+							app.openPage("./submitted.html", {
+								titleNView: {
+									titleText: '整改文件',
+									autoBackButton: true
+								}
+							},extras);
+						});
+					}
+				}
+			}, 500)
+
+		});
+
+
+		//生成groupId
+		function getGroupId() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+		//组装表单
+		function saveReform() {
+
+			// var reFormDataStr = localStorage.getItem("reFormData");		
+			var reFormDataStr = {
+				projectName: '', //项目名称
+				superviseFile: '', //整改文件groupId
+				comDate: '', //要求完成日期
+				notifymethod: [], //发送方式
+				sendDate: '', //发送日期
+				conservationStatus_dictText: '', //当前状态
+				inputer: '', //填写人
+				phonum: '', //填写人联系方式
+				wsConservationFileDetailList: [], //签收人员
+				attachment: '', //整改文件groupId
+				superviseId: '' //整改id
+			}
+			var fileTokens = $("[data-token]").first().attr("data-token");
+			var groupId = getGroupId();
+			reFormDataStr.projectName = $('#prjName').val(); //项目名称
+			reFormDataStr.superviseFile = groupId; //整改文件groupId
+			reFormDataStr.comDate = $('#comDate').val(); //要求完成日期
+			reFormDataStr.notifymethod = ["email", "msg"], //发送方式
+				reFormDataStr.sendDate = $('#sendDate').val(); //发送日期
+			wsConservationFileDetailList: []; //签收人员
+			reFormDataStr.conservationStatus_dictText = $('#conservationStatus_dictText').val(); //当前状态
+			reFormDataStr.inputer = $('#inputByName').val(); //填写人
+			reFormDataStr.phonum = $('#inputByPhone').val(); //填写人联系方式
+			$(".person").each(function() {
+				var id = $(this).attr("id");
+				var personName = $(this).find("input[name=personName]").val();
+				var corpName = $(this).find("input[name=corpName]").val();
+				var personPhonum = $(this).find("input[name=personPhonum]").val();
+				var personMail = $(this).find("input[name=personMail]").val();
+				var persons = {
+					id: id,
+					personName: personName,
+					corpName: corpName,
+					personPhonum: personPhonum,
+					personMail: personMail
+				}
+				reFormDataStr.wsConservationFileDetailList.push(persons);
+			})
+			reFormDataStr.attachment = groupId; //整改文件groupId
+			reFormDataStr.superviseId = plus.webview.currentWebview().superviseId; //整改id
+
+			var fileAttachmentStr = [{
+				groupId: groupId,
+				fileTokens: fileTokens,
+				fieldName: "superviseFile",
+				tableName: "WS_CONSERVATION_FILE"
+			}]
+
+			localStorage.setItem("fileAttachment", JSON.stringify(fileAttachmentStr));
+			localStorage.setItem("reFormData", JSON.stringify(reFormDataStr));
+
+			// console.log(JSON.stringify(localStorage.getItem("fileAttachment")));
+			return true;
+		}
+
+		// 对Date的扩展，将 Date 转化为指定格式的String
+		// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+		// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+		// 例子：
+		// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+		// (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+
+		Date.prototype.Format = function(fmt) {
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds() // 毫秒
+			};
+			if (/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" +
+					o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+
+		function format_input(type, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length >= 32) {
+				obj.value = obj.value.slice(0, 32);
+				obj.focus();
+				var t = type == 1 ? '姓名' : '单位名称';
+				app.toast(t + "不可大于32个字！")
+				flag = false;
+			} else {
+				flag = true;
+			}
+		}
+
+		function format_phone(obj) {
+			var phone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+
+			if (obj.value == '') {
+				// obj.focus();
+				app.toast("联系方式不能为空！")
+			} else if (!phone.test(obj.value)) {
+				obj.focus();
+				app.toast("请输入正确的联系方式格式！")
+				flag = false;
+			} else {
+				flag = true;
+			}
+		}
+
+		function format_email(obj) {
+			var email = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+			// console.log(obj.value.length) 
+			// console.log(!email.test(obj.value)) 
+			if (obj.value == '') {
+				// obj.focus();
+				app.toast("电子邮箱不能为空！")
+			} else if (obj.value.length >= 32 || !email.test(obj.value)) {
+				obj.focus();
+				app.toast("电子邮箱格式不正确或者长度超过32个字符！")
+				flag = false;
+			} else {
+				flag = true;
+			}
+		}
+
+		mui.back(function() {
+			localStorage.setItem("fileAttachment", '');
+			localStorage.setItem("reFormData", '');
+			mui.close();
+		})
+
+		// 平板样式调整
+		function padCheckCss() {
+			// screenWidth:1024
+			const screenWidth = document.documentElement.clientWidth;
+			// screenHeight:1366
+			const screenHeight = document.documentElement.clientHeight;
+			if(screenWidth > 1000) {
+				//  判断为平板
+				// === 字体大小 ===
+				// 平板字体 ，是App字体 + 4px ；
+				setupDynamicCss('body', 'font-size', 20)
+				setupDynamicCss('.paish .info-bar-content-item .item-title', 'font-size', 18)
+				setupDynamicCss('.item-title', 'font-size', 18)
+
+				setupDynamicCss('.inputCss', 'font-size', 20)
+				setupDynamicCss('.uploadBtn', 'font-size', 18)
+				setupDynamicCss('.paish .mui-checkbox.mui-left label, .mui-radio.mui-left label','font-size', 20)
+
+				//
+
+				// // === 宽、高 ===
+				setupDynamicCss('.paish .info-bar-content-item .item-title', 'width', 200)
+				setupDynamicCss('upload-file-container', 'width', 200)
+
+			}
+		}
+		function setupDynamicCss(pTarget,pAttr, pVal)
+		{
+			$(pTarget).css(pAttr, pVal + 'px');
+		}
+
+		padCheckCss();
+
+		// 测试区
+		function setupInit() {
+			// 整改文件
+			$("#fileId").val("kioiew23ooi3kl3");
+			//发送日期
+			$('#sendDate').val("2021-03-25 00:00:00");
+			$('#conservationStatus_dictText').val("整改中");
+			$("#inputByName").val("ceshiss");
+			$("#inputByPhone").val('19955458266');
+
+		}
+
+	</script>
+
+</html>

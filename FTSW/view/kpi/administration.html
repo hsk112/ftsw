@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<!-- 行政管理页面 -->
+
+	<head>
+		<meta charset="utf-8">
+		<title>行政管理</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/common.css" rel="stylesheet" />
+	<link rel="stylesheet" type="" href="../../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css" />
+	<!-- 行政管理页面css -->
+	<link href="./css/administration.css" rel="stylesheet" />
+	<style type="text/css">
+
+	</style>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="vueapp">
+			<div id="mui-content" class="mui-page">
+				<div class="mui-page-content">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<!-- 内容区域 -->
+							<div>
+								<div class="xzspt">行政审批情况统计</div>
+								<div class="xztop">
+									<div class="twoxz">
+										<div class="to__flow__time" style="margin-right: 10px;">
+											<p :class="isYear ? 'active' : ''" @click="swicthDate(1)">年</p>
+											<p :class="isYear ? '' : 'active'" @click="swicthDate(1)">月</p>
+										</div>
+										<div class="to__time__se" @click="selectTime(1)">
+											<p>{{timeTxt}}</p>
+											<img src="../../img/arrowDownBlue.png" alt="">
+											<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+										</div>
+									</div>
+									<div class="qbxzdys" @click="showPicker = true"><span
+											class="wzxx lxwzqd">全部</span><img style="width: 12px; height: 7px;"
+											src="../../img/arrowDownBlue.png" alt=""></div>
+								</div>
+								<div class="slgwz">
+									<div class="slgwz-1"><span
+											style="font-size: 11px;color: #7F7F7F;margin-right:20px ;">受理数(个)</span><span
+											class="slgwz-1-1 sldnum">0</span></div>
+									<div class="slgwz-2"><span
+											style="font-size: 11px;color: #7F7F7F;margin-left: 43px;margin-right: 20px;">办结数(个)</span><span
+											class="slgwz-1-1 bjnum">0</span></div>
+								</div>
+								<div id="main" style="width: 100%;height: 280px;">
+								</div>
+								<div style="width: 100%;height: 5px;background: #f4f4f4;"></div>
+								<div>
+									<div class="sbjctj">
+										<div class="sbtopwz">水保检查统计</div>
+										<div class="twoxz">
+											<div class="to__flow__time" style="margin-right: 10px;">
+												<p :class="isYear1 ? 'active' : ''" @click="swicthDate(2)">年</p>
+												<p :class="isYear1 ? '' : 'active'" @click="swicthDate(2)">月</p>
+											</div>
+											<div class="to__time__se" @click="selectTime(2)">
+												<p>{{timeTxt1}}</p>
+												<img src="../../img/arrowDownBlue.png" alt="">
+												<!-- <img src="../../img/arrowUpBlue.png" alt=""> -->
+											</div>
+										</div>
+									</div>
+									<div class="slgwz">
+										<div class="slgwz-1"><span
+												style="font-size: 11px;color: #7F7F7F;margin-right:20px ;">项目总数(个)</span><span
+												class="slgwz-1-1 xmzsnum">0</span></div>
+										<div class="slgwz-2"><span
+												style="font-size: 11px;color: #7F7F7F;margin-left: 43px;margin-right: 20px;">检查人数总数(个)</span><span
+												class="slgwz-1-1 jcrszsnum">0</span></div>
+									</div>
+									<div class="slgwz-1" style="display: flex;justify-content: flex-start;padding-left: 5%;margin-top: 5px;"><span
+											style="font-size: 11px;color: #7F7F7F;margin-right:20px ;">发送整改总数(个)</span><span
+											class="slgwz-1-1 fszgnum">0</span></div>
+											<div id="main1" style="width: 100%;height: 280px;"></div>
+								</div>
+
+
+
+
+
+								<!-- 内容区域结束 -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--行政审批内容选择器-->
+			<van-popup v-model="showPicker" position="bottom">
+				<van-picker show-toolbar :columns="sqnamesz" value-key="name" @confirm="onConfirm"
+					@cancel="showPicker = false" />
+			</van-popup>
+		</div>
+
+		<!--单页面结束-->
+	</body>
+	<script src="../../js/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/echarts.min.js"></script>
+	<script src="../../js/kpi/index.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<!-- 接口js -->
+	<script src="../../js/kpi/administration.js"></script>
+	<!-- 行政管理页面处理js -->
+	<script src="./floodjs/administration.js"></script>
+
+
+
+	<script type="text/javascript">
+		mui.init();
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+	</script>
+
+</html>

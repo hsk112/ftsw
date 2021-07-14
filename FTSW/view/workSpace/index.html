@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>工作台</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+  <link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+
+
+  <link href="../../css/common.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/mui.picker.min.css" rel="stylesheet" />
+  <style>
+    .home-item {
+      /* height: 280px; */
+      height: 100%;
+      /* border-bottom: 6px solid #f6f4f7; */
+    }
+
+    .home-item-title {
+      font-size: 19px;
+      width: 100%;
+      height: 20px;
+      text-align: left;
+      padding: 25px 23px;
+      color: #191515;
+      font-weight: bold;
+    }
+
+    .home-item-title .span-bg {
+      width: 78px;
+      height: 12px;
+      background: rgba(219, 232, 255, 1);
+      margin-top: -10px;
+    }
+
+
+    .home-item-list {
+      width: 100%;
+      margin-top: 23px;
+      height: 77px;
+      /* height: 107px; */
+    }
+
+    .home-item-list .item {
+      width: 32%;
+      float: left;
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      /* border-bottom: 2px solid #EEEEEE; */
+
+    }
+
+    .home-item-list .item img {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mui-icon-forward:before {
+      content: '';
+    }
+
+    .mui-icon-forward::after {
+      content: '\e470';
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+  <div class="mui-view">
+    <!-- 			<div class="mui-navbar">
+    </div> -->
+    <div class="mui-pages">
+    </div>
+  </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="mui-content" class="mui-page">
+  <!--底部导航栏-->
+  <!--页面主内容区开始-->
+  <div class="mui-page-content">
+    <div class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <div class="home-item">
+          <div class="home-item-list" id="business_item">
+            <div class="item" id="missionUncompleted">
+              <img src="../../img/missionUncompleted.png">
+              <span>待办任务</span>
+            </div>
+            <div class="item" id="notification">
+              <img src="../../img/notification.png">
+              <span>通知公告</span>
+            </div>
+            <div class="item" id="directory">
+              <img src="../../img/directory.png">
+              <span>通讯录</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--页面主内容区结束-->
+</div>
+
+</body>
+
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.view.js"></script>
+<script src="../../js/mui.locker.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/maintain.js"></script>
+<script src="../../js/s4.js"></script>
+<script src="../../js/smutils.js"></script>
+<script src="../../js/byte&string.js"></script>
+<script src="../../js/ajaxhook.min.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<!-- <script src="../../js/timer.js"></script> -->
+<script src="../../js/vconsole.min.js"></script>
+
+<script type="text/javascript">
+    mui.init({
+        swipeBack: false
+    });
+    mui.plusReady(function() {
+        initExtras();
+    });
+
+    var initExtras = function() {
+        let all = plus.webview.all();
+        extras.startNum = all.length;
+    }
+
+    var extras = {
+        openNum: 0
+    }
+
+    // $("#missionUncompleted").on('tap', function() {
+    //     app.openPage('missionUncompleted/missionUncompleted.html', {
+    //         titleNView: {
+    //             titleText: '任务待办',
+    //             autoBackButton: true
+    //         }
+    //     },extras);
+    // })
+    //
+    // $("#notification").on('tap', function() {
+    //     app.openPage('notification/notification.html', {
+    //         titleNView: {
+    //             titleText: '通知公告',
+    //             autoBackButton: true
+    //         }
+    //     },extras);
+    // })
+    //
+    // $("#directory").on('tap', function() {
+    //     app.openPage('addressBook/addressBook.html', {
+    //         titleNView: {
+    //             titleText: '通讯录',
+    //             autoBackButton: true
+    //         }
+    //     },extras);
+    // })
+</script>
+
+
+</html>

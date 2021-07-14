@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>巡检任务详情-单个巡检</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.css" rel="stylesheet" />
+		<link href="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.css" rel="stylesheet" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			.mui-col-xs-6 {
+				text-align: left;
+			}
+
+			.mui-table-view-cell.mui-collapse.mui-active .arrow_right {
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+
+			.mui-slider {
+				height: 100vh;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 2px solid #337BFC;
+				color: #337BFC;
+			}
+
+			.mui-table-view-cell.mui-collapse.mui-active+.www .arrow_right {
+				transform: rotate(90deg);
+				margin-left: 5px;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-bottom: 0;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				border-bottom: 0;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active+.titleleft {
+				border-bottom: solid 2px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 43px;
+			}
+
+			.mui-scroll {
+				background: #FFFFFF;
+			}
+
+			.task-ul {
+				padding: 0;
+			}
+
+			.task-li {
+				border-bottom: 5px solid #F4F4F4;
+				height: 110px;
+				padding: 0 20px;
+			}
+
+			.task-item {
+				height: 36px;
+				/* line-height: 50px; */
+				/* padding: 0 5px; */
+			}
+
+			.task-item-btn {
+				width: 50%;
+				float: left;
+				text-align: right;
+				white-space: nowrap;
+				padding: 0 0 0 5px;
+			}
+
+			.task-item-btn span {
+				padding: 5px 15px;
+				border: 1px solid #337BFC;
+				color: #337BFC;
+				border-radius: 21px;
+				font-size: 12px;
+			}
+
+			.task-item-title {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+
+			.task-item-title span {
+				text-align: left;
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.task-item-tip {
+				color: #989898;
+				font-size: 10px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: left;
+			}
+
+			.task-item-running {
+				color: #FF5656;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-finished {
+				color: #29CC85;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item-ischange {
+				color: #FF7800;
+				font-size: 14px;
+				text-align: right;
+				/* margin-right: 20px; */
+			}
+
+			.task-item_status {
+				position: absolute;
+				top: 8px;
+				right: 20px;
+			}
+
+			.bottom-item {
+				/* padding: 19px; */
+				background: #FFFFFF;
+				width: 100%;
+				z-index: 100;
+				border-top-left-radius: 30px;
+				border-top-right-radius: 30px;
+			}
+
+			.bottom-item-title {
+
+				font-size: 18px;
+				color: rgba(22, 21, 21, 1);
+				font-weight: bold;
+			}
+
+			.bottom-item-info {
+				font-size: 14px;
+				color: rgba(25, 21, 21, 1);
+				line-height: 21px;
+				height: 21px;
+				padding: 18px 0px;
+			}
+
+			.bottom-item-btn {
+				height: 50px;
+				margin-top: 20px;
+			}
+
+			.bottom-item-btn .item {
+				width: 50%;
+				float: left;
+				text-align: center;
+				padding: 0 14px;
+
+			}
+
+			.bottom-item-btn .item div {
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+			}
+
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+			}
+
+			.inspection_dialog {
+				background: rgba(0, 0, 0, 0.3);
+				width: 100vw;
+				height: 100vh;
+				position: fixed;
+				left: 0;
+				top: 0;
+				text-align: left;
+				z-index: 10;
+			}
+
+			.inspection_dialog_title {
+				text-align: center;
+				margin-bottom: 0px;
+			}
+
+			.item-title {
+				margin-bottom: 5px;
+			}
+
+			.info-bar-content {
+				position: fixed;
+				left: 10vw;
+				top: 50%;
+				bottom: 0;
+				margin-top: -280px;
+				width: 80vw;
+				height: 510px;
+				background: #fff;
+				padding: 15px;
+				z-index: 999;
+			}
+
+			.mui-radio.mui-left {
+				display: inline-block;
+				width: 30%;
+			}
+
+			.mui-radio.mui-left label {
+				line-height: 8px;
+			}
+
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 0;
+			}
+
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				font-size: 24px;
+			}
+
+			.mui-radio.mui-left label {
+				padding-left: 20px;
+			}
+
+			input[type=text] {
+				/*margin-top: 10px;*/
+				border-radius: 5px;
+			}
+
+			.item1 {
+				position: absolute;
+				top: 8px;
+				right: 95px;
+				text-align: center;
+				line-height: 26px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.item2 {
+				position: absolute;
+				top: 8px;
+				right: 5px;
+				text-align: center;
+				line-height: 26px;
+				vertical-align: bottom;
+				padding: 0 14px;
+				border: 1px solid #337BFC;
+				border-radius: 20px;
+				height: 26px;
+				font-size: 12px;
+			}
+
+			.in-obj {
+				font-weight: 400;
+				color: #888888;
+				margin-right: 7px;
+				font-size: 14px;
+			}
+
+			.obj-title {
+				color: #444444;
+			}
+
+			.object {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin: 8px 0;
+			}
+
+			.mui-table-view-cell.mui-active {
+				background: #fff;
+			}
+
+			.li-item-pull {
+				background: #f4f4f4;
+				margin-bottom: 3px;
+			}
+
+			.mui-table-view-cell.mui-active .mui-collapse-content.li-item-pull {
+				background: #eee;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active.titleright {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .lb {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active .dt {
+				border-bottom: solid 3px #337BFC;
+				display: inline-block;
+				font-weight: bold;
+			}
+
+			.icon-css {
+				display: inline-block;
+				padding: 8px 0 0;
+				vertical-align: top;
+			}
+
+			.task_title {
+				display: inline-block;
+				padding: 8px 0;
+				color: #191515;
+				font-size: 16px;
+				font-weight: bold;
+				width: 70%;
+				word-break: break-all;
+				white-space: pre-wrap;
+				vertical-align: top;
+			}
+
+			.sec-line {
+				color: #878787;
+			}
+
+			.obj-title {
+				color: #444444;
+			}
+
+			.fanwei {
+				white-space: nowrap;
+				display: inline-block;
+				width: 280px;
+				margin-left: 0px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: left
+			}
+
+			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+				border-top: 0
+			}
+
+			.mui-input-row .mui-input-clear~.mui-icon-clear {
+				top: 20px;
+			}
+
+			.color888 {
+				color: #888888;
+			}
+
+			.ibh {
+				display: inline-block;
+				line-height: 28px;
+			}
+
+
+			input[type="radio"] {
+				opacity: 0;
+				/* display: inline-block; */
+				position: relative;
+				z-index: 5;
+				width: 20px;
+				height: 20px;
+			}
+
+			span[new] {
+				display: inline-block;
+				position: relative;
+				left: -20px;
+				top: 5px;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid #E3E3E3;
+				margin-right: -10px;
+			}
+
+			input:checked+span[new] {
+				background-color: #337bfc;
+				border: 1px solid #337bfc;
+			}
+
+			input:checked+span[new]::after {
+				position: absolute;
+				content: "";
+				width: 5px;
+				height: 10px;
+				top: 3px;
+				left: 6px;
+				border: 2px solid #fff;
+				border-top: none;
+				border-left: none;
+				transform: rotate(45deg)
+			}
+
+			.marker {
+				width: 0;
+				height: 0;
+			}
+
+			.marker span {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				box-sizing: border-box;
+				width: 30px;
+				height: 30px;
+				color: #fff;
+				background: #693;
+				border: solid 2px;
+				border-radius: 0 70% 70%;
+				box-shadow: 0 0 2px #000;
+				cursor: pointer;
+				transform-origin: 0 0;
+				transform: rotateZ(-135deg);
+			}
+
+			.marker b {
+				transform: rotateZ(135deg)
+			}
+
+
+			
+.list::-webkit-scrollbar { display: none; }
+.list { display: flex;
+	/*border-top: 1px solid #eee; */
+	/*border-bottom: 1px solid #eee; */
+	overflow-y: hidden;}
+.content {
+	/*padding: .5rem 1rem; */
+	padding: 0;
+	line-height: 1.5; flex: 0 0 calc(100vw); font-size: 1rem; color: inherit; background-color: #fff;
+	box-shadow: 0 1px #fff, 0 -1px #fff; position: relative;
+}
+.space { flex: 0 0 4rem; }
+.button { border: 0; padding: 0; font-size: 1rem; color: #fff; width: 4rem; height: 60px; position: absolute; right: 0; outline: 0; }
+[data-type="danger"] {  }
+[data-type="warning"] { background-color: #f59b00; }
+/* 自动右边缘定位 */
+.scroll-snap { scroll-snap-type: x mandatory; }
+.scroll-snap .space { scroll-snap-align: end; }
+.scroll-snap .content { scroll-snap-align: start; }
+
+		/*	2021-05-26hgshh新添加样式*/
+			.task-status-container {
+				color: #FF5656;
+				font-size: 16px;
+				font-weight: bold;
+				display: flex;
+				align-items: center;
+			}
+			.task-status-left-seperator {
+				display: inline-block;
+				width: 2px;
+				background-color: #FF5656;
+				height: 16px;
+				margin-right: 10px;
+				vertical-align: bottom;
+			}
+			.buttons-container {
+				display: flex;
+
+			}
+			.buttons-container div {
+				border-radius: 5px;
+				border: 1px solid #0493F3;
+				padding: 0 10px;
+				height: 26px;
+				font-size: 13px;
+			}
+			.pause-task-btn {
+				background: #0493F3;
+				margin-right:10px;
+				color: #ffffff;
+			}
+			.stop-task-btn {
+				background: #fff;
+				color: rgba(4, 147, 243, 1);
+			}
+			.task-info {
+				text-align: left;
+				padding-left: 10px;
+			}
+			.task-info h4 {
+				font-size: 16px;
+				margin: 10px 0 20px 0;
+			}
+			.task-info p {
+				color: #8C8C8C;
+				font-size: 13px;
+			}
+			.add-fault-container {
+				text-align: right;
+				color: #0493F3;
+				font-size: 13px;
+				/*padding: 10px 0;*/
+				height: 40px;
+				line-height: 40px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			.add-fault-container img {
+				width: 12px;
+				height: 12px;
+				margin-left: 7px;
+				/*margin-top: 2px;*/
+			}
+			.mui-table-view-cell {
+				padding: 0;
+			}
+			.mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+			}
+			.mui-table-view-cell:after {
+				height: 0;
+				background-color: white;
+			}
+			.mui-table-view:after {
+				height: 0;
+				background-color: white;
+			}
+			.content .liCss {
+				background-color: white;
+				/*0,1,34,2*/
+				box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.08);
+				border-radius: 5px;
+				min-height: 75px;
+				margin: 10px 5px;
+			}
+		/*	箭头颜色 */
+			.mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after
+			{
+				color: #0493F3;
+			}
+			.content .liCss a {
+				position:relative;
+				width: 100%;
+				height: 75px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				color: #262626;
+			}
+			.content .liCss a img {
+				width: 12px;
+				height: 7px;
+				margin-right: 16px;
+				margin-left: 10px;
+			}
+			.mui-table-view-cell.mui-collapse.mui-active {
+				margin-top: 10px;
+			}
+			.li-content-num {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				color: #FFFFFF;
+				background: #354052;
+				border-radius: 50%;
+				text-align:center;
+				line-height:16px;
+				margin: 0 11px 0 16px;
+			}
+			.panel-title {
+				border-bottom:1px solid #EDEDED;
+				display: flex;
+				justify-content: space-around;
+			}
+			.panel-container {
+				margin: 0 15px;
+			}
+			.panel-info-container {
+				padding:15px 0;
+				border-bottom:1px solid #EDEDED;
+				display: flex;
+				justify-content: space-between;
+				width: calc(100vw - 70px);
+			}
+			.panel-info-num {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				border: 1px solid #354052;
+				border-radius: 50%;
+				text-align:center;
+				line-height:16px;
+			}
+			.panel-info {
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+				width:calc(100% - 16px);
+			}
+			.panel-info-left {
+				display: flex;
+				align-items: center;
+				width: calc(100vw - 140px);
+			}
+			.panel-info-right {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				width: 70px;
+			}
+
+			.left-delete-handQx {
+				width: 70px;padding-left:20px;text-align:center;
+			}
+			.collapse-title-cover {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+				background-color: transparent;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.collapse-info-show {
+				display: block;
+			}
+			.collapse-info-hide {
+				display: none
+			}
+
+
+		/*	弹窗样式*/
+			.mask-title {
+				color: #262626;
+				font-size: 18px;
+				font-weight: bold;
+				padding: 20px;
+			}
+			.mask-content-container {
+				margin: 0 20px;
+			}
+			.mask-content-container input {
+				text-align: right;
+				padding: 0;
+				border: none;
+			}
+			.mask-content-item {
+				display: flex;
+				justify-content: space-between;
+				height: 55px;
+				line-height: 55px;
+				border-bottom: 1px solid #EDEDED;
+			}
+			.mask-content-item-left {
+				display: flex;
+				align-items: center;
+				width: 110px;
+			}
+			.mask-content-item-right {
+				color: #8C8C8C;
+			}
+
+			.mask-red {
+				color: red;
+				margin-top: 5px;
+				margin-right: 5px;
+			}
+			.mask-btns-container {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				border-top: 1px solid #EDEDED;
+				line-height: 55px;
+				height: 55px;
+			}
+			.mask-cancel-btn {
+				width:50%;
+				height: 100%;
+				font-size:18px;
+				color: #262626;
+				border-width:0;
+			}
+			.mask-confirm-btn {
+				width:50%;
+				height: 100%;
+				border-width:0;
+				font-size:18px;
+				color:#0493F3;
+				font-weight: 500;
+				border-left: 1px solid #EDEDED;
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+			}
+			/*	2021-05-31 hgshh新增*/
+			.paish .info-bar-content-item {
+				height: 55px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 16px;
+				margin: 0;
+			}
+			.paish .info-bar-content-item .item-left-title {
+				color: #262626;
+				font-size: 16px;
+				display: flex;
+				align-items: center;
+				/*width: 110px;*/
+			}
+			.paish .info-bar-content-item .item-right-info {
+				display: flex;
+				align-items: center;
+			}
+			.paish .info-bar-content-item .item-right-info input {
+				margin-bottom: 0;
+				padding: 10px 0px;
+				text-align: right;
+				border: none;
+				font-size: 14px;
+				color: #262626;
+				margin-right: 10px;
+			}
+
+			.paish .info-bar-content-item .item-right-info .right-arrow {
+				/*margin-left: 10px;*/
+				width: 7px;
+				height: 12px;
+			}
+			.red-dot {
+				color: red;
+				margin-top: 5px;
+				margin-right: 5px;
+			}
+			/*	检查内容*/
+
+			.collapse-info-container {
+				width: calc(100vw - 40px);
+				margin-left: 15px;
+				border-top: 1px solid #EDEDED;
+				padding-top: 10px;
+			}
+
+			.check-content-title {
+				display: flex;
+				/*justify-content: space-around;*/
+				align-items: center;
+				height: 44px;
+				font-size: 14px;
+				font-weight: bold;
+				color: #262626;
+				margin: 0px 20px;
+				border-bottom: 1px solid #ededed;
+
+			}
+
+
+			.panel-info-left {
+				font-size: 14px;
+				display: flex;
+				align-items: center;
+			}
+			.panel-info-left-num {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				line-height:16px;
+				border: 1px solid #354052;
+				border-radius: 50%;
+				text-align:center;
+				margin-right: 4px;
+			}
+			.panel-info-left-info {
+				/*计算：左右margin共：40，左数字16，marign-right:4;右侧80，*/
+				width: calc(100vw - 140px);
+				text-align: left;
+			}
+			.panel-info-right {
+				width: 80px;
+				font-size: 14px;
+			}
+			.load-picture-holder {
+				width: 72px;
+				height: 72px;
+				border: 1px dashed #C5C5C5;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				color: #0493F3;
+				font-size: 16px;
+			}
+			.load-picture-holder .add-icon {
+				font-size: 30px;
+				margin-bottom: 10px;
+			}
+			.img_close1 {
+				width: 20px;
+				height: 20px;
+				font-size: 20px;
+				position:relative;
+				/*-88*/
+				top:-75px;
+				/*64*/
+				left:50px;
+				color: #888888;
+				background: #E7E7E7;border-radius: 50%;
+			}
+
+			.paish .info-bar-content-item .item-title
+			{
+				padding: 0;
+			}
+			.img_item{
+				text-align: left;
+				width: 72px;
+				height: 72px;
+				/*height: 100px;*/
+				float: left;
+				/*margin-right: 20px;*/
+			}
+			.img_item img{
+				width: 72px;
+				height: 72px;
+			}
+			.delete-icon {
+				position: absolute;
+				top: 8px;
+				right: 10px;
+				z-index: 10;
+				display: none;
+				line-height: 16px;
+				width: 16px;
+				height: 16px;
+				font-size: 16px;
+				color: #FFFFFF;
+				border-radius: 50%;
+				background: #999999;
+			}
+
+			.check-content-container {
+				line-height: 21px;
+			}
+
+			.bottom-buttons-container {
+				border-top: 1px solid #ededed;
+				padding: 15px;
+
+			}
+			.bottom-btn-info-not-change {
+				background: #0493F3;
+				/*padding:10px;*/
+				border: 1px solid #0493F3;
+				border-radius: 4px;
+				/*margin-right:5px;*/
+				color: #ffffff;
+				font-size: 18px;
+				text-align: center;
+				line-height: 48px;
+				height: 48px;
+			}
+			.bottom-btn-change-container {
+				display: flex;
+			}
+			.bottom-btn-change-container div {
+				width: 50%;
+				background: #0493F3;
+				color: #fff;
+				border-radius: 4px;
+				border: 1px solid #0493F3;
+				height: 48px;
+				line-height: 48px;
+				font-size: 18px;
+			}
+			#cancel {
+				margin-right: 15px;
+				background: #FFFFFF;
+				color: #0493F3;
+			}
+
+			.item-show {
+				display: block;
+			}
+			.item-hide {
+				display: none;
+			}
+			.select-status {
+				direction:rtl;margin-bottom: 0;padding: 0; margin-right: 10px;
+			}
+		/*	输入数值*/
+			.mui-numbox {
+				position: relative;
+				display: inline-block;
+				overflow: hidden;
+				/*width: 200px;*/
+				/*height: 35px;*/
+				height: 30px;
+				/*padding: 0 40px;*/
+				padding: 0;
+				vertical-align: top;
+				vertical-align: middle;
+				border: solid 1px white;
+				border-radius: 3px;
+				background-color: #efeff4;
+				/*background-color: white;*/
+				/*top: 10px;*/
+				/*left: -18%;*/
+
+			}
+			.mui-numbox [class*=numbox-btn] {
+				width: 0;
+			}
+			.mui-numbox .mui-numbox-input {
+				text-align: right;
+				border: none !important;
+				/*border-right: none !important;*/
+			}
+			#submitBatch {
+				background-color: #0493F3;
+				height: 48px;
+				color: white;
+				line-height: 48px;
+				margin: 15px;
+				border-radius: 4px;
+			}
+
+
+		</style>
+
+	</head>
+	<!--页面主结构开始-->
+	<div id="app" class="mui-views">
+		<div class="mui-view">
+			<div class="mui-navbar">
+			</div>
+			<div class="mui-pages">
+			</div>
+		</div>
+	</div>
+	<!--页面主结构结束-->
+	<!--单页面开始-->
+	<div id="mui-content" class="mui-page paish" style="background: white;">
+		<!--页面标题栏开始-->
+		<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">巡检管理</h1>
+				<div class="mui-pull-right header-btn">
+					<img src="../img/nfc@2x.png" />
+					<img src="../img/download@2x.png" />
+				</div>
+			</header> -->
+		<!--页面标题栏结束-->
+		<!--页面主内容区开始-->
+		<div>
+			<div style="padding:25px 20px 0 20px;">
+				<div style="display: flex;justify-content: space-between;">
+					<div class="task-status-container">
+						<span class="task-status-left-seperator"></span>
+						<span id="taskStatus">待巡检</span>
+					</div>
+					<div class="buttons-container" style="display: none;">
+<!--						在外层的列表操作 -->
+						<div onclick="location.reload();" class="pause-task-btn">暂停任务</div>
+						<div id="stop-task-btn" class="stop-task-btn">结束巡检</div>
+					</div>
+				</div>
+				<div class="task-info">
+<!--					花园小区 -->
+					<h4 id="taskName">单个巡检-临时巡检</h4>
+					<p>编号：<span id="taskNum">编号12333</span></p>
+					<p>巡检范围：<span id="taskLocalDesc"></span></p>
+					<p>截止时间: <span id="taskEndTime"> 2020-07-08</span></p>
+					<div class="add-fault-container" style="display: none;">
+						<div id="add-fault-tap" style="display: flex; align-items: center;">
+							<div style="height: 100%;">新增缺陷</div>
+							<img src="./../../img/addobject.png" alt="" >
+						</div>
+					</div>
+				</div>
+			</div>
+<!--			面板列表 -->
+			<div>
+				<div class="list" id="123">
+<!--					<button class="button"  ternid='123' onclick="termdelete('123')">-->
+<!--						<img src="./../../img//delete.png" alt="" width="34" height="34">-->
+<!--					</button>-->
+					<ul class="mui-table-view content" id="ul-panel">
+						<li class="mui-table-view-cell liCss" style="display: none;" >
+							<div class="mui-slider-right mui-disabled" style="">
+								<!-- 删除后期做-->
+								<a class="mui-btn mui-btn-blue left-delete-handQx" data-status="1234"
+								   style="">删除</a>
+							</div>
+							<div class="mui-slider-handle">
+								<div class="">
+									<a class="" href="#" style="position: relative;">
+										<div><span class="li-content-num">1</span>面板1</div>
+										<div style="margin-right: 38px;">
+											<!-- point_info_sz_30-->
+										</div>
+										<div class="collapse-title-cover">
+											<img src="../../img/isopen.png" alt="0">
+										</div>
+									</a>
+									<div class="collapse-info-hide">
+										<div class="collapse-info-container" style="">
+											<div class="panel-title">
+												<span style="width: calc(100% - 80px);">检查内容</span>
+												<span style="width: 80px;text-align: right;">检查结果</span>
+											</div>
+
+											<!-- scroll-li 2 start -->
+											<div class="scroll-li check-content-container">
+												<div class="">
+
+
+
+													<div class="info-bar-content-item" >
+														<div class="item-left-title">
+															<div class="panel-info-left">
+																<span class="panel-info-left-num">6</span>
+																<div class="mui-ellipsis panel-info-left-info">井盖是否标识错误或不清晰</div>
+															</div>
+														</div>
+														<div class="item-right-info">
+															<div id="inputType1"  class="mui-numbox" style="width: 100%;" data-numbox-step='0.01' data-numbox-min='0.00'
+																 data-numbox-max='999999.00'>
+																<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+<!--																readonly -->
+																<input class="mui-numbox-input" onchange="inputObjChanged('inputType1',2)"  type="number" id="input-type-1-input" />
+																<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+															</div>
+<!--															<input id="input-66" readonly="" type="text" value="" placeholder="请输入数值">-->
+<!--															<select name="" class="select-status" id="select-status-1">-->
+<!--																<option value="1">好</option>-->
+<!--																<option value="2" selected>不好</option>-->
+<!--															</select>-->
+															<img src="../../img/arrow-right-gray.png" class="right-arrow" name="arrowimg"  alt="">
+														</div>
+													</div>
+													<div class="info-bar-content-item" >
+														<div class="item-left-title">
+															<div class="panel-info-left">
+																<span class="panel-info-left-num">7</span>
+																<div class="mui-ellipsis panel-info-left-info">是否存在混接、冒溢、高是否缺失、损坏、修复</div>
+															</div>
+														</div>
+														<div class="item-right-info">
+															<input id="input-7" readonly="readonly" type="text" value="完好" placeholder="请选择">
+															<img src="../../img/arrow-right-gray.png" class="right-arrow" name="arrowimg" alt="">
+														</div>
+													</div>
+
+												</div>
+											</div>
+											<!-- scroll-li 2 end -->
+										</div>
+										<!-- 提交-->
+										<div style="border-top: 1px solid #EDEDED; line-height: 82px; height: 82px;">
+											<div id="submitBatch1">提交</div>
+										</div>
+										<div class="bottom-buttons-container" style="display: none">
+											<div id="bottom-btn-info-not-change" class="bottom-btn-info-not-change" style="display: block;">信息修改</div>
+											<div id="bottom-btn-change-container-ex" style="display: none;">
+												<div class="bottom-btn-change-container">
+													<div id="cancel">取消</div>
+													<div id="ok">确认</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+
+<!--					<s class="space"></s>-->
+				</div>
+			</div>
+
+<!--			弹窗 test start -->
+			<div style="display: none;background-color: yellow;padding: 20px 0;">
+				<div style="background-color: white; margin: 0 20px;border-radius: 5px;color:#262626;font-size: 16px;">
+					<div class="mask-title">结束巡检</div>
+					<div class="mask-content-container">
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>巡检名称</div>
+							</div>
+							<div class="mask-content-item-right">
+								<input id="inspection-name" type="text" required="true" placeholder="请输入巡检名称" value="" />
+							</div>
+						</div>
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>对象数量</div>
+							</div>
+							<div class="mask-content-item-right">
+								<input id="object-num" type="text" required="true" placeholder="请输入对象数量" value="" />
+							</div>
+						</div>
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>巡检类型</div>
+							</div>
+							<div class="mask-content-item-right">
+								<input id="inspection-type" type="text" required="true" placeholder="请选择巡检类型" value="" />
+							</div>
+						</div>
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>巡检单位</div>
+							</div>
+							<div class="mask-content-item-right">
+								<input id="inspection-uni" type="text" required="true" placeholder="请输入巡检单位" value="" />
+							</div>
+						</div>
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>巡检人</div>
+							</div>
+							<div class="mask-content-item-right">
+								<input id="inspection-person" type="text" required="true" placeholder="请输入巡检人" value="" />
+							</div>
+						</div>
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>巡检日期</div>
+							</div>
+							<div class="mask-content-item-right">
+								<input id="inspection-date" type="text" required="true" placeholder="请输入选择巡检日期" value="" />
+							</div>
+						</div>
+						<div class="mask-content-item">
+							<div class="mask-content-item-left">
+								<div class="mask-red">*</div>
+								<div>整体评价</div>
+							</div>
+							<div class="mask-content-item-right"></div>
+						</div>
+						<div class="">
+							<textarea id="monitorDevelopmentRemarks" required="true" rows="3" type="text" class="" value="" style="margin-left: 10px;margin-bottom: 0;height: 138px;border: none;padding-left: 0;"
+									  placeholder="请输入评价（300字以内）" maxlength="300" onkeyup="format_input('整体评价',300,this)"></textarea>
+						</div>
+
+					</div>
+					<div class="mask-btns-container" style="">
+						<button id="dialog_hidden"  class="mask-cancel-btn">取消</button>
+						<button id="dialog_submit" onclick="finishInspectionOCL()" class="mask-confirm-btn">提交</button>
+					</div>
+				</div>
+			</div>
+			<!--			弹窗 test end -->
+		</div>
+
+	</div>
+	<!--页面主内容区结束-->
+
+
+
+
+
+	</body>
+
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/position.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/inspect.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script src="../../js/timer.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.picker.js"></script>
+	<script src="../../js/vconsole.min.js"></script>
+	<script src="../../js/bscroll.js"></script>
+	<script src="../../js/numberBox.js"></script>
+
+	<script>
+
+		var isTest = false;
+
+		var paramTaskId = ""
+		var paramTaskFinish = 0
+		var paramTaskEndTime = "截止时间：无"
+		var paramTaskLocalDesc = "无"
+		var paramObjectid = ""
+		var paramObjectName = ""
+		var paramObjectGuid = ""
+
+		var inspectionSingleObj = {};
+		// 对应inspectionSingleObj对象中 inspectRecordDetails数组的索引 ，修改值
+		var resultDictIndexForValue = {};
+
+		var panelInfoChange = false
+
+		// 弹窗1 ===
+		var mask = mui.createMask(function () {
+			return mask.clickClose;
+		});
+		mask.clickClose = false;
+
+		function maskClose() {
+			mask.clickClose = true;
+			mask.close();
+		}
+
+		function maskShow() {
+			mask.clickClose = false;
+			mask.show();
+		}
+		var cBScroll = null;
+		//var rankBox = document.getElementById("scroll-container"); // slider
+		// var cBScroll = new BScroll(rankBox, {
+		// 	click: true, // 主要控制非button元素的点击事件
+		// 	probeType: 3,
+		// });
+
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			// pageurl = self.objectid
+			paramTaskId = self.taskId;
+			paramTaskFinish = self.taskFinish
+			paramTaskEndTime = self.taskEndTime
+			paramTaskLocalDesc = self.taskLocalDesc
+			paramObjectid = self.objectid;
+			paramObjectName = self.taskname;
+			paramObjectGuid = self.objectGuid;
+			initTopInfo();
+
+			self.setStyle({
+				titleNView: {
+					// backgroundImage:"../../img/bgTop.png",
+					// backgroundRepeat:'no-repeat',
+					titleText: self.taskname,
+				}
+			});
+			getDetailInfo()
+		});
+		function initTopInfo() {
+			// 默认只读
+			showInfo(true);
+			$('#submitBatch').css('display', 'none')
+
+			$('#taskNum').text(paramObjectid)
+			$('#taskLocalDesc').text(paramTaskLocalDesc);
+			$('#taskEndTime').text(paramTaskEndTime);
+			$('#taskName').text(paramObjectName)
+			$('#taskStatus').text((paramTaskFinish == 1?'已完成':'待巡检'))
+			if(paramTaskFinish == 1) {
+				$('.task-status-left-seperator').css('background','#29CC85');
+				$('#taskStatus').css('color', '#29CC85')
+				$('#submitBatch').css('display', 'none')
+			}else{
+				showInfo(false)
+				$('.task-status-left-seperator').css('background','#FF5656');
+				$('#taskStatus').css('color', '#FF5656')
+				$('#submitBatch').css('display', 'block')
+			}
+
+		}
+
+		// 某一项的选择改变
+		function selectObjChanged(objValue, objIndex) {
+			console.log('objIndex:' + objIndex)
+			console.log('objValue:' + objValue)
+			resultDictIndexForValue[objIndex] = objValue
+		}
+		// 某一项的输入改变
+		function inputObjChanged(objIndex, floatNo) {
+			// var buildLandArea = mui("#buildLandArea").numbox().getValue()
+			// mui("#buildLandArea").numbox().setValue(getFloat(buildLandArea,4))
+			var realValue = getFloat(mui("#inputObj"+objIndex).numbox().getValue(),floatNo)
+					// mui("#inputObj"+objIndex).numbox().getValue()
+			resultDictIndexForValue[objIndex] = realValue
+			mui("#inputObj"+objIndex).numbox().setValue(realValue)
+
+			// inputObj${j + 1}
+			//mui("#inputObj"+obj).numbox().setValue(12.43)
+
+		}
+		var getFloat = function(number, n) {
+			n = n ? parseInt(n) : 0;
+			if (n <= 0) {
+				return Math.round(number);
+			}
+			number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n); //四舍五入
+			number = Number(number).toFixed(n); //补足位数
+			return number;
+		}
+
+		function showInfo(showOnly) {
+			if(showOnly) {
+				$('img[name=arrowimg]').addClass('item-hide')
+				$('.select-status').attr('disabled', true)
+			}else{
+				$('img[name=arrowimg]').removeClass('item-hide')
+				$('.select-status').attr('disabled', false)
+			}
+		}
+
+		// https://zhswtest.hdec.com/ecidi-cmp/ft-inspect/inspect/detail/query/list?_
+		// t=1622774079&taskId=104f1ac94bc541f4d35859503c1e302b&pageNo=1&pageSize=10000
+		function getDetailInfo() {
+			getInspectInspectDetailQueryList({
+				taskId: paramTaskId,
+				pageNo: 1,
+				pageSize: 10000
+			}, function(data){
+				getDetailInfoReturnData(data);
+			});
+		}
+		function getDetailInfoReturnData(data){
+			// console.log("test getInspectInspectDetailQueryList start")
+			// console.log(JSON.stringify(data))
+			// console.log("test getInspectInspectDetailQueryList end")
+			var hideCss = 'style="display:none;"'
+			// 面板内容
+			//var len = data.result.records.length;
+			var htmlStr = ''
+			var obj = null;
+			for (let i = 0; i < data.result.records.length; i++) {
+				 var objTmp = data.result.records[i];
+				if(objTmp == null) continue;
+				if(objTmp.objectId == paramObjectGuid) {
+					inspectionSingleObj = objTmp
+					obj = objTmp
+					break;
+				};
+			}
+		//	console.log('obj:' + JSON.stringify(obj) )
+			if (obj != null) {
+
+				// var obj = data.result.records[i];
+				//if(obj == null) continue;
+				//if(obj.objectId != paramObjectGuid) continue;
+
+				var subCheckContent = '';
+				var i = 0;
+
+				for(let j = 0; j < obj.inspectRecordDetails.length; j++) {
+
+					var contentObj = obj.inspectRecordDetails[j];
+					var subCheckContentRightStr = ''
+					// insType,1是选择项，取 resultId ；2是数字(小数点后两位)，取 resultContent
+					var insType = contentObj.insType
+					// if(isTest) {
+					// 	insType = (j > 0? 1:2)
+					// }
+					// if(insType == 1) {
+					// 	var selectOptionStr = '<select name="" onchange="selectObjChanged(this.value,'+j+')" class="select-status" >';
+					// 	for(let k = 0; k < contentObj.resultEnums.length; k++) {
+					// 		selectOptionStr += `<option value="${contentObj.resultEnums[k].guid}" ${contentObj.resultEnums[k].isDefault == 1? 'selected':''} >${contentObj.resultEnums[k].resultName}</option>`;
+					// 	}
+					// 	selectOptionStr += '</select>';
+					// 	subCheckContentRightStr = selectOptionStr
+					// }else{
+					// 	subCheckContentRightStr = `
+					// 	<div id="inputObj${j}"  class="mui-numbox" style="width: 100%;"
+					// 		data-numbox-step='0.01' data-numbox-min='0.00' data-numbox-max='999999.00'>
+					// 		<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+					// 			<!-- readonly -->
+					// 		<input class="mui-numbox-input" onchange="inputObjChanged('${j}',2)"  type="number" />
+					// 		<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					// 	</div>
+					// 	`;
+					//
+					// }
+					if(insType == 1) {
+						var selectOptionStr = '<select name="" onchange="selectObjChanged(this.value,'+j+')" class="select-status" >';
+						var selectedItemId = contentObj.resultId
+						// 可能会没有 resultEnums
+						if(contentObj.resultEnums) {
+							if(!selectedItemId) {
+								if(contentObj.resultEnums && contentObj.resultEnums.length > 0) {
+									selectedItemId = contentObj.resultEnums[0].guid
+								}
+								else{
+									console.log('contentObj.resultEnums is null')
+								}
+							}
+							for(let k = 0; k < contentObj.resultEnums.length; k++) {
+								// ${contentObj.resultId ==contentObj.resultEnums[k].guid?'selected':''
+								selectOptionStr += `<option value="${contentObj.resultEnums[k].guid}" ${selectedItemId ==contentObj.resultEnums[k].guid? 'selected':''} >${contentObj.resultEnums[k].resultName}</option>`;
+							}
+						}
+
+						selectOptionStr += '</select>';
+						resultDictIndexForValue[j] = selectedItemId
+						subCheckContentRightStr = selectOptionStr
+
+					}else{
+						var inputContent = contentObj.resultContent
+						if(!inputContent) {
+							inputContent = "0.00"
+						}
+						resultDictIndexForValue[j] = inputContent
+						subCheckContentRightStr = `
+						<div id="inputObj${j}"  class="mui-numbox" style="width: 100%;"
+							data-numbox-step='0.01' data-numbox-min='0.00' data-numbox-max='999999.00'>
+							<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+								<!-- readonly -->
+							<input class="mui-numbox-input" onchange="inputObjChanged('${j}',2)" placeholder="0.00" value="${inputContent}"  type="number" />
+							<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+						`;
+					}
+
+					subCheckContent += `
+						<!-- scroll-li 2 start -->
+						<div class="">
+							<div class="info-bar-content-item" >
+								<div class="item-left-title">
+									<div class="panel-info-left">
+										<span class="panel-info-left-num">${j + 1}</span>
+										<div class="mui-ellipsis panel-info-left-info">${contentObj.contentName}</div>
+									</div>
+								</div>
+								<div class="item-right-info">
+									`+subCheckContentRightStr+`
+									<img src="../../img/arrow-right-gray.png" class="right-arrow" name="arrowimg" ${insType == 2? hideCss:''}  alt="">
+								</div>
+							</div>
+						</div>
+						<!-- scroll-li 2 end -->
+					`;
+				}
+				htmlStr += `
+            		<li class="mui-table-view-cell liCss" >
+						<div class="mui-slider-right mui-disabled" style="display:none;">
+							<!-- 删除后期做-->
+							<a class="mui-btn mui-btn-blue left-delete-handQx" data-status="1234"
+							   style="">删除</a>
+						</div>
+						<div class="mui-slider-handle">
+							<div class="">
+								<a class="" href="#" style="position: relative;">
+									<div><span class="li-content-num">${i + 1}</span>${obj.objectName}</div>
+									<div style="margin-right: 38px;">
+										<!-- point_info_sz_30-->
+									</div>
+									<div class="collapse-title-cover">
+										<img src="../../img/isopen.png" alt="0">
+									</div>
+								</a>
+								<div class="collapse-info-hide">
+									<div class="collapse-info-container" style="">
+										<div class="panel-title">
+											<span style="width: calc(100% - 80px);">检查内容</span>
+											<span style="width: 80px;text-align: right;">检查结果</span>
+										</div>
+										<!-- scroll-li start -->
+										<div class="scroll-li check-content-container">
+										`+subCheckContent+`
+										</div>
+										<!-- scroll-li end -->
+									</div>
+									<!-- 提交-->
+									<div style="border-top: 1px solid #EDEDED; line-height: 82px; height: 82px; ${paramTaskFinish==1?'display: none;':'display: block;'}">
+										<div id="submitBatch" onclick="submitBatchOCL()">提交</div>
+									</div>
+									<div class="bottom-buttons-container" style="display: none">
+										<div id="bottom-btn-info-not-change" class="bottom-btn-info-not-change" style="display: block;">信息修改</div>
+										<div id="bottom-btn-change-container-ex" style="display: none;">
+											<div class="bottom-btn-change-container">
+												<div id="cancel">取消</div>
+												<div id="ok">确认</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				`;
+			}
+
+			$('#ul-panel').html(htmlStr);
+
+		}
+
+
+
+		// 信息修改
+		$("#bottom-btn-info-not-change").on("tap", function(event) {
+			 // console.log('信息修改')
+			$(this).css('display','none');
+			$('#bottom-btn-change-container-ex').css('display','block')
+			showInfo(false)
+		})
+		// 信息修改 - 取消
+		$("#cancel").on("tap", function(event) {
+			//console.log('信息修改 - 取消')
+			$('#bottom-btn-info-not-change').css('display','block');
+			$('#bottom-btn-change-container-ex').css('display','none')
+			showInfo(true)
+		})
+		// 信息修改 - 确认
+		$("#ok").on("tap", function(event) {
+			// console.log('信息修改 - 确认')
+			$('#bottom-btn-info-not-change').css('display','block');
+			$('#bottom-btn-change-container-ex').css('display','none')
+			showInfo(true)
+		})
+		// 信息修改 - 提交 - 这个没有调用
+		$("#submitBatch").on("tap", function(event) {
+			 console.log('信息修改 - 提交')
+			console.log(resultDictIndexForValue);
+			submitBatchOCL()
+
+			// $('#bottom-btn-info-not-change').css('display','block');
+			// $('#bottom-btn-change-container-ex').css('display','none')
+			// showInfo(true)
+		})
+		// 提交到服务器
+		function submitBatchOCL() {
+			// console.log('信息修改 - 提交')
+			// console.log(resultDictIndexForValue);
+			if(inspectionSingleObj.inspectRecordDetails != null) {
+				var inspectRecordDetails = inspectionSingleObj.inspectRecordDetails;
+				for(key in resultDictIndexForValue) { // key就是索引
+					if(inspectRecordDetails.length > key) {
+						var detailsObj = inspectRecordDetails[key]
+						// // insType,1是选择项，取 resultId ；2是数字(小数点后两位)，取 resultContent
+						if(resultDictIndexForValue[key]) {
+							if(detailsObj.insType == 1) {
+								detailsObj.resultId = resultDictIndexForValue[key];
+								// if(!detailsObj.resultSelectChange) {
+								// 	detailsObj.resultSelectChange = true
+								// }
+
+								//detailsObj.resultContent = ""
+							}else{
+								//detailsObj.resultId = ""
+								detailsObj.resultContent = resultDictIndexForValue[key];
+								// if(!detailsObj.resultSelectChange) {
+								// 	detailsObj.resultSelectChange = true
+								// }
+							}
+						}
+
+
+						detailsObj.isObjectFinish = "1"
+						// if(!detailsObj.fileList0) {
+						// 	detailsObj.fileList0 = []
+						// }
+						// if(!detailsObj.fileList1) {
+						// 	detailsObj.fileList1 = []
+						// }
+						// if(!detailsObj.fileList2) {
+						// 	detailsObj.fileList2 = []
+						// }
+					}
+					// console.log(key)
+					// console.log(resultDictIndexForValue[key])
+				}
+
+				// 参数格式 ： {"data": "[{}]"}
+				//var param = {data: inspectRecordDetails}
+				// 接口里面会封装 data , 这里param传JSON字符串
+				// console.log('参数数组：' + JSON.stringify(inspectRecordDetails))
+				getInspectsaveInspectDetailBatch(JSON.stringify(inspectRecordDetails), function(data) {
+					console.log('巡检提交返回 start ')
+					console.log(JSON.stringify(data))
+					console.log('巡检提交返回 end ')
+					if (data.success) {
+						app.toast("巡检成功");
+						var ws2 = plus.webview.getWebviewById('view/inspection/inspection.html')
+						mui.fire(ws2,'reloadInspectList')
+						//关闭页面
+						setTimeout(function() {
+							// app.hideLoader();
+							plus.webview.currentWebview().close('none');
+						}, 2000)
+					} else {
+						app.toast("数据异常")
+					}
+
+				});
+			}
+
+		}
+
+		//结束巡检
+		$("#stop-task-btn").on("tap", function(event) {
+			// console.log('stop-task-btn')
+			showInputInfo();
+		})
+			// 新增缺陷
+		$("#add-fault-tap").on("tap", function(event) {
+			// console.log('新增缺陷')
+			let extras={ type:"inspect-add"}
+			app.openPage("inspect_add_defect.html", {
+				titleNView: {
+					titleText: '新增缺陷',
+					autoBackButton: true,
+				}
+			},extras);
+		})
+
+		// 弹窗2==
+		// 结束巡检弹窗
+		function showInputInfo() {
+			maskShow();
+			addProxyCoverView();
+		}
+
+		// 弹窗3==
+		// assignUserId 负责人id ，
+		function addProxyCoverView() {
+			// $("#assignUserRealName").val(isEmp(self.assignUserRealName))
+			// $("#assignUserId").val(self.assignUserId)
+			// 先清空
+			$(".mui-backdrop").empty();
+			var html = `
+
+<div style="background-color: transparent;margin-top: calc(50vh - 250px);">
+    <div id="mask-scroll-container" style="height: 500px;background-color: white; margin: 0 20px;border-radius: 5px;color:#262626;font-size: 16px;">
+    	<div>
+            <div class="mask-title">结束巡检</div>
+            <div id="mask-scroll-content-container" class="mask-scroll-content-container" style="height: calc(500px - 116px);overflow: hidden">
+                <div class="mask-content-container">
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>巡检名称</div>
+						</div>
+						<div class="mask-content-item-right">
+							<input id="inspection-name" type="text" required="true" placeholder="请输入巡检名称" value="" />
+						</div>
+					</div>
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>对象数量</div>
+						</div>
+						<div class="mask-content-item-right">
+							<input id="object-num" type="text" required="true" placeholder="请输入对象数量" value="" />
+						</div>
+					</div>
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>巡检类型</div>
+						</div>
+						<div class="mask-content-item-right">
+							<input id="inspection-type" type="text" required="true" placeholder="请选择巡检类型" value="" />
+						</div>
+					</div>
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>巡检单位</div>
+						</div>
+						<div class="mask-content-item-right">
+							<input id="inspection-uni" type="text" required="true" placeholder="请输入巡检单位" value="" />
+						</div>
+					</div>
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>巡检人</div>
+						</div>
+						<div class="mask-content-item-right">
+							<input id="inspection-person" type="text" required="true" placeholder="请输入巡检人" value="" />
+						</div>
+					</div>
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>巡检日期</div>
+						</div>
+						<div class="mask-content-item-right">
+							<input id="inspection-date" type="text" required="true" placeholder="请输入选择巡检日期" value="" />
+						</div>
+					</div>
+					<div class="mask-content-item">
+						<div class="mask-content-item-left">
+							<div class="mask-red">*</div>
+							<div>整体评价</div>
+						</div>
+						<div class="mask-content-item-right"></div>
+					</div>
+					<div class="">
+						<textarea id="monitorDevelopmentRemarks" required="true" rows="3" type="text" class="" value="" style="margin-left: 10px;margin-bottom: 0;height: 138px;border: none;padding-left: 0;"
+								  placeholder="请输入评价（300字以内）" maxlength="300" onkeyup="format_input('整体评价',300,this)"></textarea>
+					</div>
+				</div>
+			</div>
+            <div class="mask-btns-container" style="">
+                <button id="dialog_hidden" onclick="cancelfinishInspectionOCL()" class="mask-cancel-btn">取消</button>
+                <button id="dialog_submit" onclick="finishInspectionOCL()" class="mask-confirm-btn">提交</button>
+           </div>
+        </div>
+    </div>
+</div>
+			`;
+
+			$(".mui-backdrop").append(html);
+			var rankBox = document.getElementById("mask-scroll-content-container"); // slider
+			cBScroll = new BScroll(rankBox, {
+				click: true, // 主要控制非button元素的点击事件
+				probeType: 3,
+			});
+		}
+
+
+		// 检查内容删除
+		mui("#ul-panel").on('tap', '.left-delete-handQx', function (event) {
+			event.stopPropagation();
+			var index = $(this).attr('data-status');
+			console.log("index:" + index);
+
+		})
+		// 面板点击折叠 - 原折叠方法与左滑冲突 ，需自定义
+		mui("#ul-panel").on('tap','.collapse-title-cover',function(event){
+			event.stopPropagation();
+
+			console.log('面板点击折叠')
+
+			var imgObj = event.target.lastElementChild
+			if(event.target.nodeName == "IMG") {
+				imgObj = event.target;
+			}
+
+			if(imgObj != null) {
+				if(imgObj.alt == 1) {
+					imgObj.alt = 0;
+				}else{
+					imgObj.alt = 1;
+				}
+				if(imgObj.alt == 1) {
+					//imgObj.className = "arrow-down-img";
+					imgObj.src = "../../img/isclose.png"
+
+					var nextObj = event.target.parentElement.nextElementSibling;
+					if(nextObj != null) {
+						nextObj.className = "collapse-info-show";
+						// nextObj.hidden = false;
+						// // 只有一级 ，可以不用循环
+						// var isFinish = false
+						// while(!isFinish) {
+						// 	if(nextObj != null) {
+						// 		nextObj.hidden = false;
+						// 		nextObj = nextObj.nextElementSibling;
+						// 	}else{
+						// 		isFinish = true;
+						// 	}
+						// }
+					}
+
+				}else{
+					//imgObj.className = "arrow-right-img";
+					imgObj.src = "../../img/isopen.png"
+					var nextObj = event.target.parentElement.nextElementSibling;
+					if(nextObj != null) {
+						nextObj.className = "collapse-info-hide";
+						// nextObj.hidden = true;
+						// //
+						// var isFinish = false
+						// while(!isFinish) {
+						// 	if(nextObj != null) {
+						// 		nextObj.hidden = true;
+						// 		nextObj = nextObj.nextElementSibling;
+						// 	}else{
+						// 		isFinish = true;
+						// 	}
+						// }
+					}
+				}
+			}
+
+		})
+		// 弹窗 - 提交结束巡检
+		function finishInspectionOCL() {
+			console.log('结束巡检');
+			let extras={ backCnt:"1"}
+			if(isTest) {
+				app.openPage("../inspection/addok.html", {
+					titleNView: {
+						titleText: '结束巡检',
+						autoBackButton: true,
+					}
+				},extras);
+				return;
+			}
+			if (validateRequiredFields()) {
+				console.log('结束巡检 - 必填项检测');
+			}
+			maskClose();
+		}
+		// 弹窗 - 取消结束巡检
+		function cancelfinishInspectionOCL() {
+			console.log('取消 - 结束巡检');
+			maskClose();
+		}
+		function format_input(t, num, obj) {
+			if (/^\s+$/gi.test(obj.value)) {
+				obj.value = '';
+			}
+			if (obj.value.length > num) {
+				obj.value = obj.value.slice(0, num);
+				app.toast(t + "不可大于" + num + "个字！")
+			}
+		}
+
+		// function format_input(type, num, obj) {
+		// 	if (/^\s+$/gi.test(obj.value)) {
+		// 		obj.value = '';
+		// 	}
+		// 	var t;
+		// 	//var num;
+		// 	switch (type) {
+		// 		case 1:
+		// 			t = '整体评价';
+		// 			num = 20;
+		// 			break
+		// 		case 2:
+		// 			t = '建设单位';
+		// 			num = 20;
+		// 			break
+		// 		case 3:
+		// 			t = '建设单位联系人';
+		// 			num = 20;
+		// 			break
+		// 		case 4:
+		// 			t = '施工单位';
+		// 			num = 20;
+		// 			break
+		// 		case 5:
+		// 			t = '施工单位联系人';
+		// 			num = 20;
+		// 			break
+		// 		case 6:
+		// 			t = '监理单位';
+		// 			num = 20;
+		// 			break
+		// 		case 7:
+		// 			t = '监理单位联系人';
+		// 			num = 20;
+		// 			break
+		// 		case 8:
+		// 			t = '主体设计单位';
+		// 			num = 20;
+		// 			break
+		// 		case 9:
+		// 			t = '主体设计单位联系人';
+		// 			num = 20;
+		// 		case 10:
+		// 			t = '审批文号'; // 批复文号
+		// 			num = 20;
+		// 			break
+		// 		case 11:
+		// 			t = '审批部门';
+		// 			num = 20;
+		// 			break
+		// 	}
+		//
+		// 	if (obj.value.length > num) {
+		// 		obj.value = obj.value.slice(0, num);
+		// 		// obj.focus();
+		// 		app.toast(t + "不可大于" + num + "个字！")
+		// 	}
+		// }
+
+
+		function termdelete(id){
+			alert(1)
+			console.log(id)
+			//发送删除请求
+			$("#"+id).remove();
+		}
+		// 测试区
+
+		function testGetDetailInfoReturnData()
+		{
+			// 0cb5b6ad2e2d4fce91e57d7e849a3693
+		//	paramObjectGuid = '0cb5b6ad2e2d4fce91e57d7e849a3693'
+			var dataStr1 = `
+			{"success":true,"message":"查询成功","result":{"records":[{"taskRecordId":"104f1ac94bc541f4d35859503c1e302b","objectName":"富宝物流","relateObjectId":"re_area_2","objectId":"dc6ed3dd3111455a9ccdbb4611240095","objectType":"22","createBug":null,"commuId":null,"commuName":null,"streetId":"440304010","localDesc":null,"codeX":114.05371050803341859136708080768585205078125,"codeY":22.5045228069149487737377057783305644989013671875,"isPhoto":null,"isObjectFinish":null,"inspectRecordDetails":[{"guid":"5296cc8e44d021c6de24b5d2f1ac5c7e","taskRecordId":"104f1ac94bc541f4d35859503c1e302b","resultContentType":null,"bugId":null,"result":null,"objectId":"dc6ed3dd3111455a9ccdbb4611240095","contentId":"85055e9f756a46d48fe506231ced84c5","contentName":"小区整体设施检查","standard":null,"method":"0","insType":"1","bugType":null,"maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":null,"resultName":null,"attachment":null,"objectName":"富宝物流","relateObjectId":"re_area_2","objectType":"22","createBug":"0","commuId":null,"commuName":null,"localDesc":null,"codeX":114.05371050803341859136708080768585205078125,"codeY":22.5045228069149487737377057783305644989013671875,"isPhoto":null,"isObjectFinish":"0","resultEnums":[{"guid":"5fe2aa3977fb5b7d77fd17d05e9ddd79","createBy":"yang_m","createTime":"2021-04-14 15:18:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"317a643da9ec42b8b8a18e6e42fb4dec","resultName":"好","sorting":null,"isDefault":1},{"guid":"8189fdc88120c237443b3be72f9897d0","createBy":"yang_m","createTime":"2021-04-14 15:18:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"317a643da9ec42b8b8a18e6e42fb4dec","resultName":"不好","sorting":null,"isDefault":0}]},{"guid":"353845a17a1ede22c1ce47de9ab93507","taskRecordId":"104f1ac94bc541f4d35859503c1e302b","resultContentType":null,"bugId":null,"result":null,"objectId":"dc6ed3dd3111455a9ccdbb4611240095","contentId":"aab2466e24294687afdf4b84bde5d0b0","contentName":"杨慕","standard":null,"method":"0","insType":"1","bugType":null,"maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":null,"resultName":null,"attachment":null,"objectName":"富宝物流","relateObjectId":"re_area_2","objectType":"22","createBug":"0","commuId":null,"commuName":null,"localDesc":null,"codeX":114.05371050803341859136708080768585205078125,"codeY":22.5045228069149487737377057783305644989013671875,"isPhoto":null,"isObjectFinish":"0","resultEnums":[{"guid":"cc51daf9f1577c46b7816bbe7cf39881","createBy":"yang_m","createTime":"2021-04-23 11:50:42","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"44fce4ee8efe41d9a913750f8818566c","resultName":"test1","sorting":null,"isDefault":1},{"guid":"16826d06cfccc509fc485e535f4d289e","createBy":"yang_m","createTime":"2021-04-23 11:50:42","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"44fce4ee8efe41d9a913750f8818566c","resultName":"test2","sorting":null,"isDefault":0}]}]},{"taskRecordId":"104f1ac94bc541f4d35859503c1e302b","objectName":"万乘简易仓","relateObjectId":"re_area_1","objectId":"0cb5b6ad2e2d4fce91e57d7e849a3693","objectType":"22","createBug":null,"commuId":"440304010005","commuName":null,"streetId":"440304010","localDesc":null,"codeX":114.051166009678837554019992239773273468017578125,"codeY":22.50403370146081982738905935548245906829833984375,"isPhoto":null,"isObjectFinish":null,"inspectRecordDetails":[{"guid":"3fc7c4e0376ca65c4248e39138632a02","taskRecordId":"104f1ac94bc541f4d35859503c1e302b","resultContentType":null,"bugId":null,"result":null,"objectId":"0cb5b6ad2e2d4fce91e57d7e849a3693","contentId":"f33ae514e8854f4abe4865fe635db67a","contentName":"小区整体设施检查","standard":null,"method":"0","insType":"1","bugType":null,"maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":null,"resultName":null,"attachment":null,"objectName":"万乘简易仓","relateObjectId":"re_area_1","objectType":"22","createBug":"0","commuId":"440304010005","commuName":null,"localDesc":null,"codeX":114.051166009678837554019992239773273468017578125,"codeY":22.50403370146081982738905935548245906829833984375,"isPhoto":null,"isObjectFinish":"0","resultEnums":[{"guid":"5fe2aa3977fb5b7d77fd17d05e9ddd79","createBy":"yang_m","createTime":"2021-04-14 15:18:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"317a643da9ec42b8b8a18e6e42fb4dec","resultName":"好","sorting":null,"isDefault":1},{"guid":"8189fdc88120c237443b3be72f9897d0","createBy":"yang_m","createTime":"2021-04-14 15:18:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"317a643da9ec42b8b8a18e6e42fb4dec","resultName":"不好","sorting":null,"isDefault":0}]},{"guid":"4a855e22e979718cfa07c0f5105c3704","taskRecordId":"104f1ac94bc541f4d35859503c1e302b","resultContentType":null,"bugId":null,"result":null,"objectId":"0cb5b6ad2e2d4fce91e57d7e849a3693","contentId":"1326287f04934c49a8602c048349c451","contentName":"杨慕","standard":null,"method":"0","insType":"1","bugType":null,"maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":null,"resultName":null,"attachment":null,"objectName":"万乘简易仓","relateObjectId":"re_area_1","objectType":"22","createBug":"0","commuId":"440304010005","commuName":null,"localDesc":null,"codeX":114.051166009678837554019992239773273468017578125,"codeY":22.50403370146081982738905935548245906829833984375,"isPhoto":null,"isObjectFinish":"0","resultEnums":[{"guid":"cc51daf9f1577c46b7816bbe7cf39881","createBy":"yang_m","createTime":"2021-04-23 11:50:42","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"44fce4ee8efe41d9a913750f8818566c","resultName":"test1","sorting":null,"isDefault":1},{"guid":"16826d06cfccc509fc485e535f4d289e","createBy":"yang_m","createTime":"2021-04-23 11:50:42","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"44fce4ee8efe41d9a913750f8818566c","resultName":"test2","sorting":null,"isDefault":0}]}]}]},"timestamp":1622774075716,"code":200}
+			`;
+			var dataStr = `
+			{"success":true,"message":"查询成功","code":200,"result":{"records":[{"taskRecordId":"269b61492de7ff4b5f8c30e202199574","objectName":"福星泵站","relateObjectId":"ps_pump_1","objectId":"c106c56eca4543e48b0e8fdcca80c6ea","objectType":"7","createBug":null,"commuId":"re_area_2230","commuName":null,"streetId":"440304004","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":null,"inspectRecordDetails":[{"guid":"c0c8255be0178a22306267ed163ff16e","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"a3b0e03046024458882e027f951c7d83","contentName":"闸阀门（启闭机）是否启闭正常","standard":"","method":"0","insType":"1","bugType":"aaf5d300b466511038e188204805ad42","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"0d0acd536c3219330208b4523926b282","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"0d0acd536c3219330208b4523926b282","createBy":"yang_m","createTime":"2021-06-01 09:45:50","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"99d7dad7397842ad863948dd07e93bdf","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"83acbca890caa1946e7c2e54d02e5087","createBy":"yang_m","createTime":"2021-06-01 09:45:50","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"99d7dad7397842ad863948dd07e93bdf","resultName":"损坏","sorting":null,"isDefault":0},{"guid":"b26430aef47dc027c3559428bb4a9bd0","createBy":"yang_m","createTime":"2021-06-01 09:45:50","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"99d7dad7397842ad863948dd07e93bdf","resultName":"生锈","sorting":null,"isDefault":0},{"guid":"d587a07ffbbcb13cdaed9e4e19a92f04","createBy":"yang_m","createTime":"2021-06-01 09:45:50","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"99d7dad7397842ad863948dd07e93bdf","resultName":"启闭困难","sorting":null,"isDefault":0}]},{"guid":"382c443c9f5cb964a9c33b274f38653b","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"ee0e6fbf09344897b2b943c2ac620955","contentName":"排水泵机运行是否正常、有无异响","standard":"","method":"0","insType":"1","bugType":"1d8aa6fd9ff19af8677c48832a22894b","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"bb73d5532a042341075e6df7a9bba8e2","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"bb73d5532a042341075e6df7a9bba8e2","createBy":"yang_m","createTime":"2021-06-01 09:44:12","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"78851b896cb3458ab708790f72d40f96","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"33d6b3f5955fdd10b36aea4656ad64af","createBy":"yang_m","createTime":"2021-06-01 09:44:12","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"78851b896cb3458ab708790f72d40f96","resultName":"泵机无法启动","sorting":null,"isDefault":0},{"guid":"129708c835cefdc1f3a4d24ddf83579e","createBy":"yang_m","createTime":"2021-06-01 09:44:12","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"78851b896cb3458ab708790f72d40f96","resultName":"运行有异响","sorting":null,"isDefault":0},{"guid":"e27409b4e1e7dd89b5cff78e966daa27","createBy":"yang_m","createTime":"2021-06-01 09:44:12","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"78851b896cb3458ab708790f72d40f96","resultName":"运行参数不稳定","sorting":null,"isDefault":0},{"guid":"1209c36f64d298d6e3264c8678078320","createBy":"yang_m","createTime":"2021-06-01 09:44:12","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"78851b896cb3458ab708790f72d40f96","resultName":"引水设备损坏","sorting":null,"isDefault":0}]},{"guid":"9c4a83df95f6096856e8189b9efe4e84","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"c6e3d595e5854b4eb92febf0e59fddc4","contentName":"设备运行电流、电压是否正常","standard":"","method":"0","insType":"1","bugType":"75346f8b29f37600fd2fc7798e275b70","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"ab7296be7ade398e771d6fc2246b8cf3","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"ab7296be7ade398e771d6fc2246b8cf3","createBy":"yang_m","createTime":"2021-06-01 09:43:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"e88c6202e68e4f158d213d540af0d220","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"ba46a87cb6e62752012fe21b3fcb9798","createBy":"yang_m","createTime":"2021-06-01 09:43:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"e88c6202e68e4f158d213d540af0d220","resultName":"-电流、电压不稳定","sorting":null,"isDefault":0},{"guid":"fd82fd64f113266beaaa5034326e0fb6","createBy":"yang_m","createTime":"2021-06-01 09:43:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"e88c6202e68e4f158d213d540af0d220","resultName":"电流、电压超载（或不足）","sorting":null,"isDefault":0}]},{"guid":"661eaa169c5b395695a42f92ab7b72af","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"0945dcfa95b84caab5c92880a384cd12","contentName":"控制柜启动按钮是否正常、元器件有无损坏","standard":null,"method":"0","insType":"1","bugType":"74b82919ce7f9fc0901469bb3e2f66d8","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"1983f2056e77fba11f30972118331cb8","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"1983f2056e77fba11f30972118331cb8","createBy":"yang_m","createTime":"2021-06-01 09:42:40","updateBy":"yang_m","updateTime":"2021-06-01 09:43:11","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"688b3cab9c514e0eb0518a4999cb4876","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"713041a7ae2f65d2750f05c3d8f9cee1","createBy":"yang_m","createTime":"2021-06-01 09:42:40","updateBy":"yang_m","updateTime":"2021-06-01 09:43:11","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"688b3cab9c514e0eb0518a4999cb4876","resultName":"按钮失灵","sorting":null,"isDefault":0},{"guid":"f617990b870bf610cec7b583546a4027","createBy":"yang_m","createTime":"2021-06-01 09:42:40","updateBy":"yang_m","updateTime":"2021-06-01 09:43:11","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"688b3cab9c514e0eb0518a4999cb4876","resultName":"元器件损坏","sorting":null,"isDefault":0}]},{"guid":"a4c1040ec86c472e8e630cc6f98190f8","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"81f7732a9e7b446fb8c68d5b631835f1","contentName":"限流设施是否运行正常","standard":null,"method":"0","insType":"1","bugType":"a47934c4b8bb36a33e0185c9385b260c","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"e4dac9dd12e4476e9a6d67e34922c116","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"e4dac9dd12e4476e9a6d67e34922c116","createBy":"yang_m","createTime":"2021-06-01 09:35:29","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"54a6214071d94cdaa9ed1eaa77223d1e","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"e54f8fff0d8168285c49c413b26b5258","createBy":"yang_m","createTime":"2021-06-01 09:35:29","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"54a6214071d94cdaa9ed1eaa77223d1e","resultName":"垃圾挂堵","sorting":null,"isDefault":0},{"guid":"60e6ec1123a0b65a4313363358a540ed","createBy":"yang_m","createTime":"2021-06-01 09:35:29","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"54a6214071d94cdaa9ed1eaa77223d1e","resultName":"破损","sorting":null,"isDefault":0},{"guid":"e449874ac3be69c0bbbaf20ef6064192","createBy":"yang_m","createTime":"2021-06-01 09:35:29","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"54a6214071d94cdaa9ed1eaa77223d1e","resultName":"运转不灵活","sorting":null,"isDefault":0}]},{"guid":"b5acd96c4aaf33411e450993aca85336","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"41b3bc8256ea498d94726bda0e18af5b","contentName":"电线、电缆有无漏电破损","standard":null,"method":"0","insType":"1","bugType":"5ed381e62ec8e996a998a6139fe50406","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"2dfe47aa2833928ba0ecd9a65dda81dd","resultName":"无破损漏电","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"2dfe47aa2833928ba0ecd9a65dda81dd","createBy":"yang_m","createTime":"2021-06-01 09:40:29","updateBy":"yang_m","updateTime":"2021-06-01 09:43:01","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"35002dbd825c4fc99696c92cb1b121a2","resultName":"无破损漏电","sorting":null,"isDefault":1},{"guid":"c5087cebd1b663db8d72e0d3523dd1c1","createBy":"yang_m","createTime":"2021-06-01 09:40:29","updateBy":"yang_m","updateTime":"2021-06-01 09:43:01","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"35002dbd825c4fc99696c92cb1b121a2","resultName":"有破损漏电","sorting":null,"isDefault":0},{"guid":"8f6cb80cacbe4022829174d1c52c5ddf","createBy":"yang_m","createTime":"2021-06-01 09:40:29","updateBy":"yang_m","updateTime":"2021-06-01 09:43:01","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"35002dbd825c4fc99696c92cb1b121a2","resultName":"电线电缆老化严重","sorting":null,"isDefault":0}]},{"guid":"7a6ac587d6d5e9c76e1e702cf6aa1871","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"38f17b7eef944582b3444560821045c9","contentName":"格栅有无损坏、生锈、结垢","standard":"","method":"0","insType":"1","bugType":"532d9ba06e805ef2e92d091be9e6e236","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"ceec39ba09b731a6352607cb7d6c6884","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"ceec39ba09b731a6352607cb7d6c6884","createBy":"yang_m","createTime":"2021-06-01 09:44:44","updateBy":"yang_m","updateTime":"2021-06-01 09:45:20","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"d2fd0377a40a4c749ed6978638804185","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"3f3132c0d3a9a30133e40e9ad84b2cb0","createBy":"yang_m","createTime":"2021-06-01 09:44:44","updateBy":"yang_m","updateTime":"2021-06-01 09:45:20","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"d2fd0377a40a4c749ed6978638804185","resultName":"损坏","sorting":null,"isDefault":0},{"guid":"9610506a1f8ef82a88a4d433941b860c","createBy":"yang_m","createTime":"2021-06-01 09:44:44","updateBy":"yang_m","updateTime":"2021-06-01 09:45:20","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"d2fd0377a40a4c749ed6978638804185","resultName":"生锈","sorting":null,"isDefault":0},{"guid":"830b33aa8162393c289a92e3d829967c","createBy":"yang_m","createTime":"2021-06-01 09:44:44","updateBy":"yang_m","updateTime":"2021-06-01 09:45:20","corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"d2fd0377a40a4c749ed6978638804185","resultName":"结垢","sorting":null,"isDefault":0}]},{"guid":"1e83458a4587ca54cfeb2ef2127aed73","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"7717a79a19f34820991d91d217d2c55b","contentName":"起重设备是否使用正常","standard":"","method":"0","insType":"1","bugType":"4d455df4eba31d672f02b3ce90a55629","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"2371bab244e32b32f709a1648c6f739b","resultName":"无异常","attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"1","resultEnums":[{"guid":"2371bab244e32b32f709a1648c6f739b","createBy":"yang_m","createTime":"2021-06-01 09:46:20","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"7fdd535ff12a411fbb8d89d3b6afb575","resultName":"无异常","sorting":null,"isDefault":1},{"guid":"09174ac9569e03b8deb152223d9d92ae","createBy":"yang_m","createTime":"2021-06-01 09:46:20","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"7fdd535ff12a411fbb8d89d3b6afb575","resultName":"损坏","sorting":null,"isDefault":0},{"guid":"6c4772ffee7044c6c1fa02f9e32e94b9","createBy":"yang_m","createTime":"2021-06-01 09:46:20","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"7fdd535ff12a411fbb8d89d3b6afb575","resultName":"锈蚀","sorting":null,"isDefault":0}]},{"guid":"d9a6adfb64e02537cc20042365e70bda","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"c106c56eca4543e48b0e8fdcca80c6ea","contentId":"14d1e273bc554bffb3d3c3a31240ad08","contentName":"其他","standard":null,"method":"0","insType":"1","bugType":"28679d72b10bce0cf6ae53fe19dd8605","maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":null,"resultName":null,"attachment":null,"objectName":"福星泵站","relateObjectId":"ps_pump_1","objectType":"7","createBug":"0","commuId":"re_area_2230","commuName":"福星泵站","localDesc":null,"codeX":114.07555718003788,"codeY":22.532243729467545,"isPhoto":null,"isObjectFinish":"0","resultEnums":null}]},{"taskRecordId":"269b61492de7ff4b5f8c30e202199574","objectName":"万乘简易仓","relateObjectId":"re_area_1","objectId":"0cb5b6ad2e2d4fce91e57d7e849a3693","objectType":"22","createBug":null,"commuId":"440304010005","commuName":null,"streetId":"440304010","localDesc":null,"codeX":114.05116600967884,"codeY":22.50403370146082,"isPhoto":null,"isObjectFinish":null,"inspectRecordDetails":[{"guid":"5996f660f96d62f9f21cb9089c94fa48","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"0cb5b6ad2e2d4fce91e57d7e849a3693","contentId":"f33ae514e8854f4abe4865fe635db67a","contentName":"小区整体设施检查","standard":null,"method":"0","insType":"1","bugType":null,"maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"5fe2aa3977fb5b7d77fd17d05e9ddd79","resultName":"好","attachment":null,"objectName":"万乘简易仓","relateObjectId":"re_area_1","objectType":"22","createBug":"0","commuId":"440304010005","commuName":null,"localDesc":null,"codeX":114.05116600967884,"codeY":22.50403370146082,"isPhoto":null,"isObjectFinish":"0","resultEnums":[{"guid":"5fe2aa3977fb5b7d77fd17d05e9ddd79","createBy":"yang_m","createTime":"2021-04-14 15:18:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"317a643da9ec42b8b8a18e6e42fb4dec","resultName":"好","sorting":null,"isDefault":1},{"guid":"8189fdc88120c237443b3be72f9897d0","createBy":"yang_m","createTime":"2021-04-14 15:18:35","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"317a643da9ec42b8b8a18e6e42fb4dec","resultName":"不好","sorting":null,"isDefault":0}]},{"guid":"cbff85f1ce7225384895b6ca56d4764e","taskRecordId":"269b61492de7ff4b5f8c30e202199574","resultContentType":null,"bugId":null,"result":null,"objectId":"0cb5b6ad2e2d4fce91e57d7e849a3693","contentId":"1326287f04934c49a8602c048349c451","contentName":"杨慕","standard":null,"method":"0","insType":"1","bugType":null,"maxValue":"","minValue":"","defaultValue":"","resultContent":null,"resultId":"cc51daf9f1577c46b7816bbe7cf39881","resultName":"test1","attachment":null,"objectName":"万乘简易仓","relateObjectId":"re_area_1","objectType":"22","createBug":"0","commuId":"440304010005","commuName":null,"localDesc":null,"codeX":114.05116600967884,"codeY":22.50403370146082,"isPhoto":null,"isObjectFinish":"0","resultEnums":[{"guid":"cc51daf9f1577c46b7816bbe7cf39881","createBy":"yang_m","createTime":"2021-04-23 11:50:42","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"44fce4ee8efe41d9a913750f8818566c","resultName":"test1","sorting":null,"isDefault":1},{"guid":"16826d06cfccc509fc485e535f4d289e","createBy":"yang_m","createTime":"2021-04-23 11:50:42","updateBy":null,"updateTime":null,"corpCode":"A01","prjCode":null,"delFlag":0,"contentId":"44fce4ee8efe41d9a913750f8818566c","resultName":"test2","sorting":null,"isDefault":0}]}]}]},"timestamp":1623306929698}
+			`;
+			var data = JSON.parse(dataStr);
+			getDetailInfoReturnData(data);
+		}
+		if(isTest) {
+
+			paramTaskId = "269b61492de7ff4b5f8c30e202199574"
+			paramTaskFinish = 0
+			paramTaskEndTime = '2021-06-11'.split(' ')[0]
+			paramTaskLocalDesc = "无"
+			paramObjectid = "ps_pump_1"
+			paramObjectName = "福星泵站"
+			paramObjectGuid = 'c106c56eca4543e48b0e8fdcca80c6ea'
+			//paramObjectName
+			initTopInfo();
+			testGetDetailInfoReturnData();
+		}
+	</script>
+</html>

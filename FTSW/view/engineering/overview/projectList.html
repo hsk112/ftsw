@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>项目概览列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../../css/common.css" rel="stylesheet" />
+		<style>
+			.view-content-item {
+				height: auto;
+				margin: 0px 20px;
+			}
+
+			.view-content-item .view-title {
+				font-size: 14px;
+				color: #444444;
+				text-align: left;
+				/* padding: 20px 0px 20px 0; */
+
+			}
+
+			#label {
+				font-size: 14px;
+				font-weight: 500;
+				color: #1A1616;
+			}
+
+
+			#OA_task_1 .mui-table-view-cell .span2,.span1,.span4 {
+				font-size: 16px;
+				font-weight: 500;
+				color: #191515;
+				line-height: 24px;
+				display: inline-block;
+				box-sizing: border-box;
+				overflow: scroll;
+				white-space: nowrap;
+				/* border: 1px solid red; */
+			}
+
+			.mui-table-view-cell::-webkit-scrollbar {
+				display: none;
+			}
+			.content {
+				width: 100%;
+				background: #FFFFFF;
+			}
+
+			.ulCss{
+				width: 100%;
+				padding:0 20px;
+				margin: 0;
+			}
+
+			.ulCss .liCss{
+				list-style-type:none;
+				width:100%;
+				border-bottom: 1px solid #DEDEDE;
+				display: inline-block;
+				height: auto;
+				padding:20px 0
+			}
+
+			.ulCss .liCss .span1{
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+				width:20px;
+				line-height: 18px;
+				vertical-align: top;
+				display: inline-block;
+			}
+
+			.ulCss .liCss .span2{
+				font-size: 16px;
+				font-weight: 400;
+				color: #191515;
+				line-height: 18px;
+				width: calc(100% - 80px);
+				display: inline-block;
+				vertical-align: top;
+				word-break: break-all;
+				text-align: left;
+				margin-left:20px;
+			}
+
+			.mui-dtpicker-header {
+				height: 50px;
+			}
+
+			.mui-dtpicker-header button {
+				border: none;
+				background-color: white;
+				color: #0493F3;
+				font-size: 16px;
+			}
+
+			.mui-dtpicker-header button:first-child {
+				/*margin-right: 73%;*/
+				position: absolute;
+				left: 0;
+				color: #262626;
+
+			}
+
+			/* 弹窗日期样式修改 */
+			.mui-dtpicker {
+				background-color: white;
+			}
+
+			.mui-dtpicker-title {
+				display: none;
+			}
+
+			.mui-dtpicker .mui-picker {
+				background-color: white;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">缺陷管理列表</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div id="ALL" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="scroll-li">
+							<div class="view-content">
+								<div class="info-bar-content">
+									<div class="search-bar">
+										<div class="search-item">
+											<div class="search-icon">
+												<img src="../../../img/commom/search1@2x.png" />
+											</div>
+											<div class="search-input">
+												<div class="mui-input-row" style="text-align: left">
+													<input id="search_input" value="" type="text" style="width: 90%;" placeholder="请输入项目名称">
+													<!-- <span class="mui-icon mui-icon-close delete-icon1" onclick="deleteDate('search_input')"></span> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="view-content-item" style="line-height: 53.5px;">
+									<div id="openFactor" style="display: flex;justify-content: space-between;">
+										<div class="view-title search-tip">
+											<img src="../../../img/fujin-icon.png" style="width: 16px;height: 15px;line-height: 15px;vertical-align:middle;margin-right: 10px" />
+											<span id="label" style="line-height: 16px;">项目总量</span><span id="num" style="color: #337BFC;font-weight:bold;margin-left: 10px;">0</span>
+										</div>
+										<div id="dateSelect" class="view-title search-tip" style="">
+											<input id="selDate" readonly="readonly" value=""
+												   style="color:black;width: 85px;font-size: 15px; border: none;margin-left: 20px;background-color: transparent;line-height: 30px;"/>
+											<img src="../../../img/blackdown.png" style="width: 12px;height: 12px;" alt="">
+										</div>
+									<!-- 	<div id="toOverview">
+											<img src="../../../img/overview-tubiao.png" style="width: 16px;height: 16px;line-height: 16px;vertical-align:middle;" />
+											<span id="label" style="display:inline-block;line-height: 16px;color: #337BFC;font-weight:bold;">概览图表</span>
+										</div> -->
+									</div>
+								</div>
+
+								<div id="content">
+									<ul>
+										<li class="mui-table-view-cell" style="background: #ffffff;">
+											<div id="" style="margin: 5px 0;padding: 0;display: flex;justify-content: space-between;">
+												<span class="span2" style="text-align:center;display:inline-block;width:30%;font-weight: 400;">项目名称</span>
+<!--												<span class="span4" style="text-align:center;font-weight: 400;">考勤率</span>-->
+												<span class="span2" style="text-align:center;display:inline-block;width:30%;margin-left:20px;font-weight: 400;">操作</span>
+											</div>
+										</li>
+									</ul>
+									<ul id="OA_task_1" class="mui-table-view">
+										<!-- <li class="mui-table-view-cell">
+											<div id="" style="margin: 10px 0;padding: 0;display: flex;justify-content: space-between;">
+												<span class="span2" style="display:inline-block;width:30%;font-weight: 500;color: #191515;margin-left: 15px;">HJD-2D312...</span>
+												<span class="span4">未完工</span>
+												<span class="span2" style="display:inline-block;width:30%;margin-left:10px;font-weight: 500;color: #191515;">格特图地点打开就封ID</span>
+											</div>
+										</li> -->
+
+									</ul>
+								</div>
+								<div id="no-data" style="display: none;padding:50px 0;">暂无数据</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+	</body>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+	<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+	<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/mui.view.js"></script>
+	<script src="../../../js/mui.locker.js"></script>
+	<script src="../../../js/mui.picker.min.js"></script>
+	<script src="../../../js/mui.poppicker.js"></script>
+	<script src="../../../js/jquery.min.js"></script>
+
+
+	<script src="../../../js/config.js"></script>
+	<script src="../../../js/common.js"></script>
+	<script src="../../../js/app.js"></script>
+	<script src="../../../js/overview.js"></script>
+	<script src="../../../js/helper.js"></script>
+	<script src="../../../js/s4.js"></script>
+	<script src="../../../js/smutils.js"></script>
+	<script src="../../../js/byte&string.js"></script>
+	<script src="../../../js/ajaxhook.min.js"></script>
+	<!-- <script src="../../../js/vconsole.min.js"></script> -->
+	<script>
+		// var vConsole = new VConsole();
+		//列表全局参数
+		var param = {
+			pageNo: 1, //页码
+			pageSize: 10,
+			order: 'desc',
+			field: 'id,prjName,programme,conservationStatus,action',
+			column: 'createTime',
+			prjName: '',
+			username: ''
+		}
+
+		var paramData = {
+			minStartTime:'',
+			maxStartTime:'',
+			prjName:''
+		}
+
+		var projectInfo = {
+			prjId: "",
+			prjName: "",
+			prjCode: "",
+			pageCount: 1
+		}
+		var copyData = [];
+		var inputState = false;
+		var sum = 0; //总数
+		var self;
+		mui.init({
+			/* 21/6/1
+			// 0818 上拉加载
+			pullRefresh: {
+				container: '#ALL', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+				//下拉刷新
+				down: {
+					style: 'circle',
+					auto: true,
+					callback: function() {
+						console.log("触发刷新")
+						page = 1;
+						pulldownRefresh();
+					}
+				},				
+				//上拉加载
+				// up: {
+				// 	// auto: true, // 可选,默认false.自动上拉加载一次
+				// 	height: 50, //触发上拉加载拖动距离
+				// 	contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+				// 	contentnomore: '暂无更多数据', //可选，请求完毕若没有更多数据时显示的提醒内容；
+				// 	callback: function() {
+				// 		upLoadMore();
+				// 	} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				// }
+
+			},
+
+			 */
+			swipeBack:false
+		});
+
+		/* 21/6/1
+		// //下拉刷新
+		function pulldownRefresh() {
+			$("#OA_task_1").empty();
+			param.pageNo = 1;
+			$("#num").html(0)
+			param.prjName = ''
+			// getCount()
+			mixSearch(true, false, function(data) {
+				if (data.length < param.pageSize) {
+					//不再执行上拉
+					console.log("暂无更多数据")
+					app.toast("已加载完所有项目")
+					mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#ALL').pullRefresh().disablePullupToRefresh();
+				} else {
+					console.log("有数据")
+					mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+				}
+			})
+			//激活上拉
+			mui('#ALL').pullRefresh().refresh(true);
+			mui('#ALL').pullRefresh().endPulldown(true);
+		}
+		// //上拉加载
+		function upLoadMore() {
+			mixSearch(false, true, function(data) {
+				if (data.length < param.pageSize) {
+					//不再执行上拉
+					console.log("===暂无更多数据")
+					app.toast("已加载完所有项目")
+					mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#ALL').pullRefresh().disablePullupToRefresh();
+
+				} else {
+					console.log("有数据")
+					mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+				}
+			});
+		}
+
+        */
+
+		(function ($) {
+			$(".mui-scroll-wrapper").scroll({});
+		})(mui);
+
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+		//初始化单页的区域滚动
+		//注意：列表的自动滑动属性会影响滑动效果，必须注释掉
+		// mui('.mui-scroll-wrapper').scroll();
+
+		mui.plusReady(function() {
+			param.username = app.userInfo().personName;
+			self = plus.webview.currentWebview();
+			if (self.pageCount != undefined) {
+				projectInfo.pageCount = self.pageCount + 1;
+			}
+
+			//时间选择框
+			var curr = new Date();
+			currentYear = curr.getFullYear();
+			currentMonth = curr.getMonth() + 1;
+			dtPicker = new mui.DtPicker({
+				type: 'month',
+				beginDate: new Date(2020, 00), //设置开始日期
+				endDate: new Date(currentYear, currentMonth - 1), //设置结束日期
+			});
+
+			var newDate = new Date(currentYear, currentMonth, 0).Format('yyyy-MM-dd');
+			console.log(newDate)
+			var minStartTime ='';
+			var maxEndTime = '';
+			var monthStr = currentMonth;
+			if (monthStr<10){
+				monthStr = '0'+monthStr;
+				minStartTime = currentYear + '-'+monthStr+"-01 00:00:00";
+				maxEndTime = newDate + " 23:59:59";
+			}else {
+				minStartTime = currentYear + '-'+monthStr+"-01 00:00:00";
+				maxEndTime = newDate + " 23:59:59";
+			}
+			var yeaStr =  currentYear + '年' + monthStr + '月'
+
+
+            $('#selDate').val(yeaStr)
+
+
+			paramData.minStartTime = minStartTime
+			paramData.maxStartTime = maxEndTime
+
+			getPrjInformationListMain(paramData);
+
+
+				
+			self.setStyle({
+				titleNView: {
+					backgroundImage: "../../../img/enginering/map-icon.png",
+					backgroundRepeat: 'no-repeat',
+					buttons: [{
+						float: 'right',
+						width: '70',
+						height: '50',
+						fontSize: '17',
+						text: '',
+						onclick: function() {
+							var extras={
+								target:self.target,
+								targetName:self.targetName
+							}
+							var extras = {menuAuth: getSubMenuAuthWithID("gcjg")}
+							console.log("====targetPage:" + JSON.stringify(extras));
+							app.openPage("index.html", {
+								titleNView: {
+									titleText: '现场考核',
+									autoBackButton: true,
+								}
+							},extras);
+						}
+					}],
+				}
+			});
+
+			/* 21/6/1
+			exitProject('', (res) => {
+				// console.log(res)
+			})
+
+			//设置附近的混接点个数
+			// $("#num").html(num);
+			// mixSearch();
+			//其他页面回来时进行刷新
+			window.addEventListener('refresh', function(e) {
+				// window.location.reload();
+				$("#OA_task_1").empty();
+				param.pageNo = 1;
+				$("#num").html(0)
+				param.prjName = ''
+				mixSearch(false, false, function(data) {
+					app.toast("已获取最新数据")
+				})
+				//激活上拉
+				// mui('#ALL').pullRefresh().refresh(true);
+				// mui('#ALL').pullRefresh().endPulldown(true);
+			})
+
+			 */
+
+		});
+
+
+		// 选择日期
+		$("#selDate").click(function () { // selDate , dateSelect
+			dtPicker.show(function (selectItems) {
+				var y = selectItems.y.text; //获取选择的年
+				var m = selectItems.m.text; //获取选择的月
+				var date = y + "年" + m + "月";
+				Year = y;
+				$("#selDate").val(date);
+
+
+				var newDate = new Date(y, m, 0).Format('yyyy-MM-dd');
+				console.log(newDate)
+				var minStartTime ='';
+				var maxEndTime = '';
+				var monthStr = m;
+
+				minStartTime = y + '-'+monthStr+"-01 00:00:00";
+				maxEndTime = newDate + " 23:59:59";
+
+				console.log(minStartTime);
+				console.log(maxEndTime)
+
+
+				paramData.minStartTime = minStartTime
+				paramData.maxStartTime = maxEndTime
+
+
+				getPrjInformationListMain(paramData)
+			})
+		});
+
+		var text = document.querySelector("#search_input");
+		text.addEventListener('input', function () {
+			var docName = this.value
+			paramData.prjName = '*'+docName+'*'
+			getPrjInformationListMain(paramData)
+		})
+
+
+
+		/* 21/6/1
+		//返回页面刷新
+		window.addEventListener('return', function() {
+			// window.location.reload();
+			$("#OA_task_1").empty();
+			param.pageNo = 1;
+			$("#num").html(0)
+			param.prjName = ''
+			mixSearch(false, false, function(data) {
+				app.toast("已获取最新数据")
+			})
+			//激活上拉
+			mui('#ALL').pullRefresh().refresh(true);
+			mui('#ALL').pullRefresh().endPulldown(true);
+			window.scrollTo(0, 0);
+		}, false);
+		*/
+
+		/**
+		 * @param fn {Function}   实际要执行的函数
+		 * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+		 * @return {Function}     返回一个“去弹跳”了的函数
+		 */
+		/* 21/6/1
+		function debounce(fn, delay) {
+			// 定时器，用来 setTimeout
+			var timer
+			// 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+			return function() {
+				// 保存函数调用时的上下文和参数，传递给 fn
+				var context = this
+				var args = arguments
+				// 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+				clearTimeout(timer)
+				// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+				// 再过 delay 毫秒就执行 fn
+				timer = setTimeout(function() {
+					fn.apply(context, args)
+				}, delay)
+			}
+		}
+		//搜索框
+		$("#search_input").on('input', debounce((e) => {
+			param.pageNo = 1;
+			$("#OA_task_1").empty();
+			$("#num").html(0)
+			if ($("#search_input").val() != "") {
+				inputState = true;
+				console.log("*" + $("#search_input").val() + "*")
+				param.prjName = "*" + $("#search_input").val() + "*";
+			} else {
+				inputState = false;
+				param.prjName = ''
+				// mui('#ALL').pullRefresh().endPullupToRefresh(false); //参数为false代表还有更多数据了。
+				mui('#ALL').pullRefresh().refresh(true);
+				mui('#ALL').pullRefresh().endPulldown(true);
+			}
+			mixSearch(false, false, function(data) {
+				console.log(JSON.stringify(data))
+				if (data.length == 0) {
+					$("#no-data").fadeIn();
+					$("#num").html(0);
+					mui('#ALL').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+					mui('#ALL').pullRefresh().disablePullupToRefresh();
+				}
+			})
+		}, 600))
+		*/
+
+
+		function getPrjInformationListMain(param) {
+			console.log(JSON.stringify(param))
+			getPrjInformationList(param,function (data) {
+				if (data.success) {
+					console.log("项目" + JSON.stringify(data.result))
+					console.log("=====" + data.result.records)
+					getListData(data.result.records);
+				}
+			})
+		}
+
+
+		function getListData(data){
+			console.log("进入动态数据中")
+			$("#no-data").hide()
+			var li = "";
+			var index = $("#OA_task_1").find("li").length;
+			for (var i = 0; i < data.length; i++) {
+				console.log("进入===========")
+				var dataJson = JSON.stringify(data[i]);
+				// console.log(JSON.stringify(data[i].stage))
+				index++;
+				var color = data[i].stage < 5 ? "#FF5656" : "#29CC85";
+				var statusText = data[i].stage < 5 ? "未完工" : "已完工";
+				let textColor ='#337BFC';
+				li +=
+						`<li class="mui-table-view-cell"  guid=${data[i].guid} prjName=${data[i].prjName}  prjCode=${data[i].prjCode} prjNo=${data[i].prjNo} prjType=${data[i].prjType}>
+											<div id="" style="margin: 10px 0;padding: 0;display: flex;justify-content: space-between;">
+												<span class="span2" style="display:inline-block;width:30%;font-weight: 500;color: #BCBCBC;text-align:left">${data[i].prjName}</span>
+
+												<span class="span2" style="display:inline-block;width:30%;margin-left:10px;font-weight: 500;color: #337BFC;">查看</span>
+											</div>
+										</li>`;
+				// li +=
+				// 	`<li class="liCss" id=${data[i].guid} name=${data[i].prjName}><span class="span1">${index}</span><span class="span2" style="color:${color}">${data[i].prjName}</span><a class="look" style="display:none;">查看</a><div style="display:none">${dataJson}</div></li>`;
+			}
+			// console.log("===" + li)
+
+			$("#OA_task_1").html(li);
+
+
+			if(data.length == 0) $("#no-data").show();
+			$("#num").html(data.length);
+			$("#OA_task_1").css("margin-bottom", "20px");
+		}
+
+		/**
+		 * 查询列表数据
+		 * @param {Object} isLoading 是否显示加载框
+		 * @param {Object} append 是否追加
+		 * @param {Object} callback
+		 */
+
+		/* 21/6/1
+		function mixSearch(isLoading, append, callback) {
+			// console.log(JSON.stringify(param))
+			$("#no-data").hide();
+			if(inputState){
+				console.log($("#search_input").val());
+				console.log(copyData);
+				let filterArr = copyData.filter((item)=>{
+					console.log(item.prjName.indexOf($("#search_input").val()))
+					return item.prjName.indexOf($("#search_input").val())>=0;
+				});
+				console.log(filterArr)
+				getListData(filterArr,append,callback)
+				return false
+			}
+			getProjectListByRole(param, isLoading, function(data) {
+				if (data.success) {
+					if (data.result != null && data.result.length != 0) {
+						copyData = data.result;
+						getListData(data.result, append);
+						callback(data.result);
+						// console.log(111)
+						// var oldNum=$("#num").html();
+						// $("#num").html(parseInt(oldNum)+data.result.records.length);
+					} else if ($("#list").find("li").length == 0) {
+						$("#no-data").fadeIn();
+						$("#num").html(0);
+					}
+				} else {
+					mui.toast("项目列表查询失败");
+				}
+			})
+		}
+
+		function exitProject(param, callback) {
+			var url = config.urls.baseUrl + config.actions.exitProject;
+
+			app.showLoader();
+			$.ajax(url, {
+				data:'',
+				dataType: 'json', //服务器返回json格式数据
+				type: 'GET', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					// var res = xhr.responseText;
+					// res = JSON.parse(res)
+					// mui.alert(res.message)
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+
+		function selectProject(param, callback) {
+			var url = config.urls.baseUrl + config.actions.selectProject;
+
+			app.showLoader();
+			$.ajax(url, {
+				data:param,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'GET', //HTTP请求类型
+				headers: {
+					// "Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
+					"X-Access-Token": app.sessionId(),
+				},
+				timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+				success: function(data) {
+					app.hideLoader();
+					if (dealingWithResponseCode(data)) {
+						callback(data);
+						// mui.alert(data.message)
+					} else {
+						app.toast(data.message);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					var res = xhr.responseText;
+					res = JSON.parse(res)
+					mui.alert(res.message)
+					dealingWithErrorRequest(errorThrown);
+					app.hideLoader();
+					return callback('网络异常,请稍后再试');
+				}
+			});
+		};
+
+		function getListData(data, append) {	
+			var li = "";
+			var index = $("#OA_task_1").find("li").length;
+			for (var i = 0; i < data.length; i++) {
+				var dataJson = JSON.stringify(data[i]);
+				// console.log(JSON.stringify(data[i].stage))
+				index++;
+				var color = data[i].stage < 5 ? "#FF5656" : "#29CC85";
+				var statusText = data[i].stage < 5 ? "未完工" : "已完工";
+				let textColor ='#337BFC';
+				li +=
+					`<li class="mui-table-view-cell"  prjId=${data[i].projectId} prjName=${data[i].prjName}  prjCode=${data[i].prjCode} prjNo=${data[i].prjNo} prjType=${data[i].prjType}>
+											<div id="" style="margin: 10px 0;padding: 0;display: flex;justify-content: space-between;">
+												<span class="span2" style="display:inline-block;width:30%;font-weight: 500;color: #BCBCBC;text-align:left">${data[i].prjName}</span>
+
+												<span class="span2" style="display:inline-block;width:30%;margin-left:10px;font-weight: 500;color: #337BFC;">查看</span>
+											</div>
+										</li>`;
+				// li +=
+				// 	`<li class="liCss" id=${data[i].guid} name=${data[i].prjName}><span class="span1">${index}</span><span class="span2" style="color:${color}">${data[i].prjName}</span><a class="look" style="display:none;">查看</a><div style="display:none">${dataJson}</div></li>`;
+			}
+			// console.log(append + "===" + li)
+			if (append) {
+				$("#OA_task_1").append(li);
+			} else {
+				$("#OA_task_1").html(li);
+			}
+			param.pageNo++;
+	
+			if(index == 0) $("#no-data").fadeIn();
+			$("#num").html(index);
+			$("#OA_task_1").css("margin-bottom", "20px");
+			//加载完数据，结束转雪花进度条的“正在刷新...”过程
+			// mui('#ALL').pullRefresh().endPulldown();
+			//加载完数据，结束转雪花进度条的“正在加载...”过程
+			// mui('#ALL').pullRefresh().endPullupToRefresh();
+		}
+
+		 */
+
+		$("#OA_task_1").on('tap', '.mui-table-view-cell', function() {
+			// 将项目信息保存到localStorage
+			console.log($(this).attr('guid'))
+			projectInfo.prjId = $(this).attr('guid');
+			projectInfo.prjName = $(this).attr('prjName');
+			projectInfo.prjCode = $(this).attr('prjCode');
+			projectInfo.prjNo = $(this).attr('prjNo');
+			projectInfo.prjType = $(this).attr('prjType');
+			console.log("projectInfo=" + JSON.stringify(projectInfo))
+			console.log("进入工程")
+
+			localStorage.setItem("projectInfo", JSON.stringify(projectInfo))
+
+			console.log("====targetPage:" + self.target + ",targetName:" + self.targetName);
+
+			app.openPage("project_index.html", {
+				titleNView: {
+					titleText: $(this).attr('prjName'),
+					autoBackButton: true,
+				}
+			}, projectInfo);
+
+
+
+			/*
+			projectInfo.prjId = $(this).attr('prjId');
+			projectInfo.prjName = $(this).attr('prjName');
+			projectInfo.prjCode = $(this).attr('prjCode');
+			projectInfo.prjNo = $(this).attr('prjNo');
+			projectInfo.prjType = $(this).attr('prjType');
+			// console.log("projectInfo=" + JSON.stringify(projectInfo))
+			localStorage.setItem("projectInfo", JSON.stringify(projectInfo))
+
+			console.log("====targetPage:" + self.target + ",targetName:" + self.targetName);
+			selectProject({'prjCode':projectInfo.prjCode},(res)=>{
+				console.log(JSON.stringify(res));
+				// return false 
+				app.openPage(self.target, {
+					titleNView: {
+						titleText: self.targetName,
+						autoBackButton: true,
+					}
+				}, projectInfo);
+			})
+
+			 */
+			
+		})
+
+		/* 21/6/1
+		//概览图表
+		$("#toOverview").on('tap', function() {
+			app.openPage("index.html", {
+				titleNView: {
+					titleText: "项目概览",
+					autoBackButton: true,
+				}
+			}, {});
+		})
+
+		//查看
+		$("#OA_task_1").on('tap', '.look', function(e) {
+			e.stopPropagation()
+
+		})
+
+		 */
+
+		/* 21/6/1
+
+		window.addEventListener('refresh1', function(e) { //执行刷新
+			// location.reload();
+			$("#list").empty();
+			param.pageNo = 1;
+			$("#num").html(0)
+			param.prjName = ''
+			mixSearch(false, false, function(data) {
+				app.toast("已获取最新数据")
+			})
+			//激活上拉
+			// mui('#ALL').pullRefresh().refresh(true);
+			// mui('#ALL').pullRefresh().endPulldown(true);
+		});
+
+		 */
+
+
+		/*21/06/1
+
+		//处理页面返回
+		mui.back = function() {
+			console.log("要关闭的页面数：" + projectInfo.pageCount)
+			// var wvs = plus.webview.all();
+
+			var curr = plus.webview.currentWebview();
+			var wvs = plus.webview.all();
+				for (var i = 0, len = wvs.length-1; i < len; i++) {
+					//关闭除setting页面外的其他页面
+					// console.log(i+wvs[i].getURL())
+					let theurl = wvs[i].getURL() + '';
+					if (!(theurl.search('login.html') != -1 ||
+						theurl.search('www/main.html') != -1 ||
+						theurl.search('www/index.html') != -1 ||
+						theurl.search('/engineering/index.html') != -1)){
+						// plus.webview.close(wvs[i]);
+						// // console.log(i)
+						wvs[i].close('none');
+					}
+				}
+
+			// console.log(curr.getURL())
+			curr.close('slide-out-right');
+				// curr.hide()
+				// curr.close();
+
+			// } else {
+			// 	plus.runtime.quit();
+			// }
+			// for (var i = wvs.length-1; i > 0 ; i--) {
+			// 	let theurl = wvs[i].getURL() + '';
+			// 	console.log(i+"theurl:"+theurl);
+				// 判断wvs[i]是否是我们需要关闭的页面
+				// if (
+				// 	theurl.search('overview/overviewOne.html') != -1 ||
+				// 	theurl.search('quality/index.html') != -1 ||
+				// 	theurl.search('security/index.html') != -1 ||
+				// 	theurl.search('education/index.html') != -1 ||
+				// 	theurl.search('attendance/month.html') != -1 ||
+				// 	theurl.search('overview/projectList.html') != -1 ||
+				// 	theurl.search('overview/overview_map.html') != -1
+				// ) {
+				// 	//先隐藏再关闭页面
+				// 	console.log("webview" + i + ": " + theurl);
+				// 	wvs[i].hide('none');
+				// 	wvs[i].close();
+				// }
+			// }
+		}
+		
+		 */
+	</script>
+
+</html>

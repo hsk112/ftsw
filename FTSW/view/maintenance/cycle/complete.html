@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../../css/common.css" rel="stylesheet" />
+    <link href="../../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../../css/mui.imageviewer.css" />
+    <style>
+        .to__open {
+            width: 100%;
+            /* height: 100%; */
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .icon__xz {
+            width: 18px;
+            height: 19px;
+            margin-right: 10px;
+        }
+
+        .to__open .icon__open {
+            width: 12px;
+            height: 6px;
+            margin-left: auto;
+        }
+
+        .to__node {
+            padding-top: 1px;
+            padding-bottom: 10px;
+            background-color: rgba(244, 244, 244, 1);
+        }
+
+        .to__node__list {
+            width: calc(100% - 20px);
+            margin: auto;
+            background-color: #fff;
+            text-align: left;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .to__node__list p {
+            color: rgba(68, 68, 68, 1);
+            margin: 0;
+            font-size: 16px;
+            padding-bottom: 10px;
+        }
+
+        .to__node__list span {
+            color: rgba(140, 140, 140, 1);
+            font-size: 16px;
+        }
+
+        .to__img__list {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .to__node__list img {
+            width: 80px;
+            height: 80px;
+            border-radius: 6px;
+            margin-right: 15px;
+        }
+
+        .to__list__remark p:first-child {
+            padding: 10px 0;
+            color: rgba(140, 140, 140, 1);
+            border-bottom: 1px solid rgba(244, 244, 244, 1);
+        }
+
+        .to__list__remark textarea {
+            border: none;
+            padding: 0;
+            height: 120px;
+            padding-top: 10px;
+        }
+
+        .to__list__remark textarea::placeholder {
+            color: rgba(38, 38, 38, 1);
+        }
+
+        .info-bar-content-item-x {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0 20px;
+            padding: 5px 0;
+            border-bottom: 1px solid #EDEDED;
+        }
+
+        .info-bar-content-item-x .item-title {
+            text-align: left;
+            padding: 10px 0;
+            color: #444444;
+            display: inline-block;
+            vertical-align: top;
+            font-size: 17px;
+            /* line-height: 20px; */
+        }
+
+        .info-bar-content-item-x .item-title:first-child {
+            width: 40%;
+        }
+
+        .info-bar-content-item-x .item-title:last-child {
+            margin-left: auto;
+        }
+
+        .info-bar-content-item-x .item-input {
+            display: inline-block;
+            width: 60%;
+            padding-right: 20px;
+        }
+
+        .info-bar-content-item-x .item-input input {
+            border: none;
+            padding: 0;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 400;
+            color: #191515;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+        <div id="mui-content" class="mui-page paish">
+            <!--页面标题栏开始-->
+            <!--<header class="mui-bar mui-bar-nav common-header">-->
+            <!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+            <!--<h1 class="mui-title">缺陷管理</h1>-->
+            <!--</header>-->
+            <!--页面标题栏结束-->
+            <!--页面主内容区开始-->
+            <div class="mui-page-content">
+                <div class="mui-scroll-wrapper" id="scroll">
+                    <div class="mui-scroll">
+                        <div class="scroll-li">
+                            <div class="info-bar-content">
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title">
+                                        工作包名称
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.workPackageName}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title">
+                                        记录编号
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.logNo}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title">
+                                        养护类型
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.maintTypeDetail | toTypeFn}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title">
+                                        养护单位
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.maintDepartmentName}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title">
+                                        负责人
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.personInChargeName}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item" style="height: 57px">
+                                    <div class="item-title" style="float: left;width: 30%;font-size: 17px">
+                                        任务日期
+                                    </div>
+                                    <div class="mui-input-row item-input"
+                                        style="float: right;width: 65%;height:70%;padding: 4.5px 0px 0px 0px;">
+                                        <div class="mui-row task-item" style="display: flex; align-items: center;text-align: right;">
+                                            <div class="mui-col-xs-10 task-item-title" style="font-size: 14px;">
+                                                {{detailJson.startTime}}~{{detailJson.endTime}}
+                                            </div>
+                                            <div class="mui-col-xs-2" style="line-height: 43px;text-align: right;">
+                                                <img src="../../../img/cal.png" style="width: 14px;height: 14px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="to__open" @click="showMoreFn()">
+                                        <img class="icon__xz" src="../../../img/ylgl/icon__xz.png" alt="">
+                                        <div>养护对象明细：<span
+                                                style="color: rgba(4, 147, 243, 1);">{{detailList.length}}</span></div>
+                                        <template>
+                                            <img v-if="!showMore" class="icon__open" src="../../../img/isopen.png"
+                                                alt="">
+                                            <img v-else class="icon__open" src="../../../img/isclose.png" alt="">
+                                        </template>
+                                    </div>
+                                </div>
+                                <!-- 展开节点 -->
+                                <div class="to__node" v-if="showMore">
+                                    <div class="to__node__list" v-for="(item, index) in detailList" :key="index">
+                                        <p><span>养护对象：</span>{{item.maintObjName}}</p>
+                                        <p><span>养护内容：</span>{{item.maintContent}}</p>
+                                        <p><span>养护频次：</span>{{item.maintFrequency}}</p>
+                                        <div>
+                                            <span>图片：</span>
+                                            <div class="to__img__list">
+                                                <img data-preview-src="" data-preview-group="1"
+                                                    v-for="(imgs, idx) in item.imgList" :key="idx" :src="imgs" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="to__list__remark">
+                                            <p>备注：</p>
+                                            <textarea readonly :placeholder="item.remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title">
+                                        填写人
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.inputeName || '无'}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title" style="float: left;width: 50%;font-size: 17px">
+                                        填写部门
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.inputDepartment || '无'}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title" style="float: left;width: 50%;font-size: 17px">
+                                        联系方式
+                                    </div>
+                                    <div class="item-title">
+                                        {{detailJson.contactInfo}}
+                                    </div>
+                                </div>
+                                <div class="info-bar-content-item-x">
+                                    <div class="item-title" style="float: left;width: 50%;font-size: 17px">
+                                        填写日期
+                                    </div>
+                                    <div class="mui-input-row item-input"
+                                        style="float: right;width: 45%;height:70%;padding: 4.5px 0px 0px 0px;">
+                                        <div class="mui-row task-item" style="display: flex;align-items: center;text-align: right;">
+                                            <div class="mui-col-xs-10 task-item-title" style="font-size: 14px;">
+                                                {{detailJson.inputeTime}}
+                                            </div>
+                                            <div class="mui-col-xs-2" style="line-height: 43px;text-align: right;">
+                                                <img src="../../../img/cal.png" style="width: 14px;height: 14px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--页面主内容区结束-->
+            </div>
+        </div>
+        <script src="../../../js/jquery.min.js"></script>
+        <script src="../../../js/mui.min.js"></script>
+        <script src="../../../js/mui.view.js"></script>
+        <script src="../../../js/vue.js"></script>
+        <script src="../../../js/app.js"></script>
+        <script src="../../../js/config.js"></script>
+        <script src="../../../js/mui.zoom.js"></script>
+        <script src="../../../js/mui.previewimage.js"></script>
+        <script type="text/javascript">
+            var myVue = new Vue({
+                el: '#mui-content',
+                data: function () {
+                    return {
+                        detailJson: {}, //数据详情
+                        detailList: [], //养护对象明细
+                        showMore: false,
+                        guid: '',
+                    }
+                },
+                filters: {
+                    toTypeFn: function (type) {
+                        if (type) {
+                            return type == 1 ? '周期性保养' : type == 2 ? '绿化' : '其他';
+                        } else {
+                            return '--';
+                        }
+                    }
+                },
+                methods: {
+                    getData() {
+                        app.showLoader();
+                        var url = config.urls.baseUrl + 'ft-device/maintain/tasks/task_details';
+                        var param = {
+                            guid: this.guid
+                        };
+                        console.log(this.guid);
+                        let _that = this;
+                        $.ajax(url, {
+                            data: param,
+                            dataType: 'json', //服务器返回json格式数据
+                            type: 'get', //HTTP请求类型
+                            headers: {
+                                "X-Access-Token": app.sessionId(),
+                            },
+                            timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+                            success: function (data) {
+                                app.hideLoader();
+                                console.log(JSON.stringify(data));
+                                if (data.code == 200 && data.result) {
+                                    _that.detailJson = data.result;
+                                    if (data.result.objList) {
+                                        _that.detailList = data.result.objList;
+                                        _that.getImg();
+                                    }
+                                }
+                            },
+                            error: function (xhr, type, errorThrown) {
+                                app.hideLoader();
+                                console.log('网络错误' + app.sessionId());
+                            }
+                        });
+                    },
+                    //获取图片
+                    getImg() {
+                        var url = config.urls.baseUrl + 'file/cmpFileGroup/findFilesByGroupId';
+                        for (let i = 0; i < this.detailList.length; i++) {
+                            let _that = this;
+                            console.log(this.detailList[i].attachment);
+                            $.ajax(url, {
+                                data: {
+                                    groupId: this.detailList[i].attachment,
+                                },
+                                dataType: 'json', //服务器返回json格式数据
+                                type: 'get', //HTTP请求类型
+                                headers: {
+                                    "X-Access-Token": app.sessionId(),
+                                },
+                                timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+                                success: function (data) {
+                                    console.log(JSON.stringify(data));
+                                    let img = [];
+                                    for (let j = 0; j < data.result.length; j++) {
+                                        img.push('https://zhswtest.hdec.com/ecidi-cmp/sys/common/view/' + data.result[j].uploadFile.savePath);
+                                    }
+                                    _that.detailList[i].imgList = img;
+                                },
+                                error: function (xhr, type, errorThrown) {
+                                    app.hideLoader();
+                                    console.log('网络错误' + app.sessionId());
+                                }
+                            });
+                        }
+                    },
+                    showMoreFn() {
+                        this.showMore = !this.showMore;
+                        // this.getImg();
+                    }
+                },
+                created: function () {
+                    let _that = this;
+                    mui.plusReady(function () {
+                        var self = plus.webview.currentWebview();
+                        _that.guid = self.menuAuth; //JSON.stringify(self.nid);
+                        _that.getData();
+                    });
+                },
+                mounted: function () {
+                    //初始化单页的区域滚动
+                    mui('.mui-scroll-wrapper').scroll();
+                    // 初始化previewImage
+                    mui.previewImage();
+                }
+            })
+            mui.init();
+        </script>
+</body>
+
+</html>

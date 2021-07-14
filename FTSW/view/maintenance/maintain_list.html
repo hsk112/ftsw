@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>任务信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style type="text/css">
+			.mui-segmented-control {
+				background: #FFFFFF;
+				font-size: 16px;
+				font-weight: 400;
+				height: 50px;
+				border: none;
+			}
+
+			.mui-active {
+				font-size: 16px;
+				font-weight: bold;
+				color: #337BFC !important;
+			}
+
+			.tabItem {
+				background: #FFFFFF;
+				color: #888888;
+				line-height: 50px;
+				border: none;
+			}			
+			#barBorder {
+				position: fixed;
+				top: 47px;
+				z-index: 99;
+				width: 25px;
+				height: 3px;
+				background-color: #337BFC;
+				margin-left: 9.5%;
+			}			
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		
+		<div id="mui-content" class="mui-page" style="height: calc(100% - 100px);overflow: auto;">
+			<div class="mui-segmented-control" style="position: fixed;z-index: 99;">
+				<a class="mui-control-item mui-active page1" href="#m_all" style="background: #FFFFFF;color: #888888;line-height: 50px;border:none">全部</a>
+				<a class="mui-control-item page2" href="#m_notStart" style="background: #FFFFFF;color: #888888;line-height: 50px;border:none">未开始</a>
+				<a class="mui-control-item page3" href="#m_ing" style="background: #FFFFFF;color: #888888;line-height: 50px;border:none">进行中</a>
+				<a class="mui-control-item page4" href="#m_end" style="background: #FFFFFF;color: #888888;line-height: 50px;border:none">已完成</a>			
+			</div>
+			
+			<div id="barBorder"></div>
+			<div style="position: fixed;top: 50px;z-index: 99;width:100%;height: 3.5px;background-color: #f2f2f2;"></div>			
+		</div>
+		
+		<script type="text/javascript" src="http://39.98.190.45/supermap/mapbox-gl-enhance.js"></script>
+		<script type="text/javascript" src="http://39.98.190.45/supermap/iclient-mapboxgl.min.js"></script>
+		<script src="http://39.98.190.45/mobile-lib/mobile-lib.umd.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.view.js"></script>
+		<script src="../../js/mui.locker.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/maintain.js"></script>
+		<script src="../../js/helper.js"></script>	
+		<script src="../../js/vconsole.min.js"></script>
+		<script type="text/javascript">
+			// var vConsole = new VConsole();
+			
+			$(".page1").on("tap", function() {
+				document.getElementById("barBorder").style.marginLeft = "9.5%";
+				document.getElementById("bottom-item-btn").style.display = 'inherit';
+			});
+			$(".page2").on("tap", function() {
+				document.getElementById("barBorder").style.marginLeft = "34%";
+				document.getElementById("bottom-item-btn").style.display = 'inherit';
+			});
+			$(".page3").on("tap", function() {
+				document.getElementById("barBorder").style.marginLeft = "59%";
+				document.getElementById("bottom-item-btn").style.display = 'none';
+			});
+			$(".page4").on("tap", function() {
+				document.getElementById("barBorder").style.marginLeft = "84%";
+				document.getElementById("bottom-item-btn").style.display = 'none';
+			});			
+		</script>
+	</body>
+
+</html>

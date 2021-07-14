@@ -1,0 +1,70 @@
+.home-item {
+	background: #F4F4F4;
+	/* padding: 10px; */
+	font-size: 14px;
+	font-weight: 400;
+	color: #888888;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.select-item {
+	float: right;
+	color: #337BFC;
+}
+
+/*项目概览图标-单个*/
+.span-title {
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #7F7F7F;
+	line-height: 14px;
+}
+
+.span-icon1 {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: 5px;
+	border: 1px solid #337BFC;
+	background-color: #337BFC;
+}
+
+.span-icon2 {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: 5px;
+	border: 1px solid #FFBB00;
+	background-color: #FFBB00;
+}
+
+.span1_1 {
+	color: #337BFC;
+	border: 1px solid #337BFC;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	border-radius: 50%;
+}
+
+.span1_2 {
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #191515;
+	line-height: 14px;
+}
+
+.span1_3 {
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #888888;
+	line-height: 14px;
+}
+
+/*顶部遮罩蒙版共用样式*/
+

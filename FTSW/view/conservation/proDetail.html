@@ -1,0 +1,780 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>水保检查-监督检查-项目详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.imageviewer.css" />
+		<style type="text/css">
+			.mui-segmented-control {
+				background: #FFFFFF;
+				font-size: 16px;
+				font-weight: 400;
+				height: 50px;
+				/* border: none; */
+			}
+
+			.mui-active {
+				font-size: 16px;
+				font-weight: bold;
+				color: #0493F3 !important;
+				border-bottom: 2px solid #0493F3 !important;
+			}
+
+			.mainPage {
+				width: 100%;
+				background: #FFFFFF;
+			}
+
+			.ulCss {
+				width: 100%;
+				padding: 0 20px;
+				margin: 0;
+			}
+
+			.liCss {
+				list-style-type: none;
+				width: 100%;
+				/*border-bottom: 1px solid #DEDEDE;*/
+				/*display: inline-block;*/
+				height: auto;
+				padding: 20px 0;
+				display: flex;
+				justify-content: space-between;
+
+
+			}
+
+			.span1 {
+				font-size: 14px;
+				font-weight: 400;
+				color: #191515;
+				width: 20px;
+				line-height: 18px;
+				vertical-align: top;
+				display: inline-block;
+			}
+
+			.span2 {
+				font-size: 16px;
+				font-weight: 400;
+				color: #191515;
+				line-height: 18px;
+				/*width: calc(50% - 60px);*/
+				display: inline-block;
+				vertical-align: top;
+				word-break: break-all;
+			}
+			.span3 {
+				font-size: 16px;
+				font-weight: 400;
+				color: #191515;
+				line-height: 18px;
+				/*width:calc(40% - 20px);*/
+				display: inline-block;
+				vertical-align: top;
+				word-break: break-all;
+			}
+			.span4 {
+				width: 20px !important;
+				height: 16px !important;
+				line-height: 18px;
+				vertical-align: top;
+				margin-left: 10px;
+				display: inline-block;
+			}
+
+			.span5{
+				font-size:16px;
+				text-align:right;
+				font-weight:400;
+				width:50px;
+				line-height: 18px;
+			}
+			.span6{
+				font-size:16px;
+				display: inline-block;
+				font-weight:400;
+				width:50px;
+				line-height: 18px;
+			}
+			.bottom-item-btn {
+				height: 55px;
+				width: 100%;
+				z-index: 99;
+				margin-top: 5px;
+				background: white;
+				display: flex;
+				align-items: center;
+
+				/*position: fixed;*/
+				/*background: #f2f2f2;*/
+				/*bottom: 0px;*/
+				/*padding-top: 30px;*/
+				/*padding-left: 5%;*/
+			}
+
+			.bottom-item-btn .item {
+				/*width: 90%;*/
+				width: 100%;
+				text-align: center;
+				/*padding: 0 14px;*/
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+			}
+
+			.bottom-item-btn .item div {
+				margin-left: 10px;
+				/*border: 1px solid #337BFB;*/
+				/*border-radius: 20px;*/
+				height: 40px;
+				line-height: 40px;
+				font-size: 16px;
+				color: #0493F3;
+				font-weight: normal;
+			}
+			.empty{
+				line-height:200px;
+				width:100%;
+				text-align: center;
+				font-size: 16px;
+				color: #BBBBBB;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<div id="mui-content" class="mui-page" style="height: calc(100% - 100px);overflow: auto;">
+			<!-- <div class="mui-segmented-control" style="position: fixed;z-index: 99;"> -->
+			<div class="mui-slider" id="slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="position: fixed;z-index: 99;">
+					<a class="mui-control-item mui-active" id="page1" href="#scene" style="font-weight: normal;background: #FFFFFF;color: #888888;line-height: 50px;">现场检查纪录</a>
+					<a class="mui-control-item" id="page2" href="#reform" style="font-weight: normal;background: #FFFFFF;color: #888888;line-height: 50px;">整改文件</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6" style="color: #0493F3; height: 2px; position: fixed;z-index: 100;top: 50px;
+							background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 42%,
+							 rgb(51, 123, 252) 42.1%, rgb(51, 123, 252) 50%, rgb(51, 123, 252) 57%, rgba(0, 0, 0, 0) 57.1%,
+							 rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);"></div>
+				<div style="position: fixed;top: 50px;z-index: 99;width:100%;height: 3.5px;background-color: #f2f2f2;"></div>
+				<div class="mui-slider-group">
+					<div id="scene" class="mui-slider-item mui-control-content mui-active" style="border-bottom: none!important;">
+						<div style="height:53.5px" tabindex="0" id="top"></div>
+						<div id="detail1" style="overflow-y: auto;background-color: #FFFFFF;">
+							<div class="mainPage">
+								<ul class="ulCss" id="list1">
+									<!-- 									<li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span2">现场检查纪录</span>
+										 <img  src="../../img/commom/upload.png" class="span4"/>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span2">现场检查纪录</span>
+										 <img  src="../../img/commom/upload.png" class="span4"/>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span2">现场检查纪录</span>
+										 <img  src="../../img/commom/upload.png" class="span4"/>
+									 </li>	
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span2">现场检查纪录</span>
+										 <img  src="../../img/commom/upload.png" class="span4"/>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span2">现场检查纪录</span>
+										 <img  src="../../img/commom/upload.png" class="span4"/>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">10</span>
+										 <span class="span2">现场检查纪录</span>
+										 <img  src="../../img/commom/upload.png" class="span4"/>
+									 </li> -->
+								</ul>
+							</div>
+						</div>
+						<div class="bottom-item-btn" id="bottom-item-btn">
+							<div class="item" style="position: relative;">
+								<img src="../../img/add_water_save_record.png" style="width: 16px; height: 16px;" alt="">
+								<div id="addBtn" style="">新增记录</div>
+								<div id="addBtnExtend" style="height: 100%; width:80%; background-color: transparent;position: absolute;top: 0;text-align: center"></div>
+							</div>
+						</div>
+					</div>
+					<div id="reform" class="mui-slider-item mui-control-content" style="border-bottom: none!important;">
+						<div style="height:53.5px"></div>
+						<div id="detail2" style="overflow-y: auto;background-color: #FFFFFF">
+							<div class="mainPage">
+								<ul class="ulCss" id="list2">
+									<!-- 								<li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span4">整改文件</span>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span4">整改文件</span>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span4">整改文件</span>
+									 </li>	
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span4">整改文件</span>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">1</span>
+										 <span class="span4">整改文件</span>
+									 </li>
+									 <li class="liCss">
+										 <span class="span1">10</span>
+										 <span class="span4">整改文件</span>
+									 </li>	 -->
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="http://gd.wiseom.cn/supermap/mapbox-gl-enhance.js"></script>
+		<script type="text/javascript" src="http://gd.wiseom.cn/supermap/iclient-mapboxgl.min.js"></script>
+		<script src="http://gd.wiseom.cn/mobile-lib/mobile-lib.umd.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.view.js"></script>
+		<script src="../../js/mui.locker.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+
+		<script src="../../js/uploadimage.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/conservation.js"></script>
+		<script src="../../js/helper.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+		<script src="../../js/mui.previewimage.js"></script>
+		<script src="../../js/s4.js"></script>
+		<script src="../../js/smutils.js"></script>
+		<script src="../../js/byte&string.js"></script>
+		<script src="../../js/ajaxhook.min.js"></script>
+		<!-- <script src="../../js/vconsole.min.js"></script> -->
+		<script type="text/javascript">
+
+			//  测试环境
+			var isTest = false;  // true; // false
+
+			// var vConsole = new VConsole();
+			var page = 1;
+			var count = 10;
+			var projectId = '';
+			var page2 = 1;
+			var count2 = 10;
+			var listData1 = [];
+			var listData2 = [];
+			var begin = true;
+			var signFileObj;
+			var firstListData = {};// 添加检查记录时传入，填充信息
+			//初始化单页view
+			var viewApi = mui('#app').view({
+				defaultPage: '#mui-content'
+			});
+
+			if(!isTest) {
+				mui.init({
+					// pullRefresh: {
+					// 	container: '#slider',
+					// 	down: {
+					// 		style: 'circle',
+					// 		callback: pulldownRefresh
+					// 	},
+					// 	up: {
+					// 		auto: true,
+					// 		height: 300,
+					// 		contentrefresh: '正在加载...',
+					// 		callback: pullupRefresh
+					// 	}
+					// },
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'refresh1');
+						//返回true,继续页面关闭逻辑
+						return true;
+					},
+					gestureConfig: {
+						swipe: true, //默认为true
+					},
+					swipeBack: false
+				});
+			}
+
+
+			// function pullupRefresh() {
+			// 	var activeId = $("#slider").find(".mui-active").first().attr("id")
+			// 	if (activeId == 'page1') {
+			// 		initData(function(result) {
+			// 			if (page < result.pages) {
+			// 				page++;
+			// 				mui('#slider').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+			// 			} else {
+			// 				app.toast("没有更多数据了。")
+			// 				// mui('#slider').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+			// 			}
+			// 		});
+			// 	} else {
+			// 		// if(begin){
+			// 		// 	begin = false;
+			// 		// 	page2 = 2;							
+			// 		// }	
+			// 		initData2(function(result) {	
+			// 			console.log("page2:"+page2)
+			// 			console.log("pages:"+result.pages)
+			// 			if (page2 < result.pages) {
+			// 				page2 ++;
+			// 				mui('#slider').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+			// 			} else {
+			// 				app.toast("没有更多数据了。")
+			// 				// mui('#slider').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+			// 			}						
+			// 		});
+			// 	}
+
+			// }
+
+
+			// /**
+			//  * 下拉刷新具体业务实现
+			//  */
+			// function pulldownRefresh() {
+			// 	var activeId = $("#slider").find(".mui-active").first().attr("id")
+			// 	if (activeId == 'page1') {
+			// 		page = 1;
+			// 		$("#list1").empty();
+			// 		listData1 = [];
+			// 		initData(function() {
+			// 			mui('#slider').pullRefresh().endPulldownToRefresh();
+			// 			mui('#slider').pullRefresh().endPullupToRefresh(false);
+			// 		});
+			// 	} else {
+			// 		page2 = 1;
+			// 		$("#list2").empty();
+			// 		listData2 = [];
+			// 		initData2(function() {
+			// 			mui('#slider').pullRefresh().endPulldownToRefresh();
+			// 			mui('#slider').pullRefresh().endPullupToRefresh(false);
+			// 		});
+			// 	}
+			// }
+
+			var sliderEl = document.getElementById("slider");
+			sliderEl.classList.add('mui-slider'); //页面代码先不加mui-slider保证mui不自动初始化，然后再手动加上mui-slider。接着自己手动初始化
+			mui(sliderEl).slider({
+				bounce: false
+			});
+
+			mui.plusReady(function() {
+				getSignFile();
+				var self = plus.webview.currentWebview();
+				var winHeight = window.screen.height;
+				// console.log(winHeight)
+				// $("#detail1").height(winHeight - 230);
+				// $("#detail2").height(winHeight - 130);
+				initData();	
+			});
+
+			window.addEventListener('return', function() {
+				window.location.reload();
+				window.scrollTo(0, 0);
+			}, false);
+
+
+
+			// 现场检查记录 - 新增纪录 - 把列表中的第一条数据传递过去
+			$("#addBtnExtend").on("tap", function() {
+				// if(isTest) {
+				// 	console.log('==新增现场检查纪录 test==')
+				// 	return;
+				// }
+				//新增现场检查纪录,与查看同一界面 ，查看可以修改
+				var extras = {
+					conservationType: 1,
+					projectId: plus.webview.currentWebview().projectId,
+					proName: plus.webview.currentWebview().proName,
+					firstListDataObj: firstListData
+				}
+				console.log('==新增现场检查纪录==' + JSON.stringify(extras))
+				app.openPage("./stepOne.html", {
+					titleNView: {
+						titleText: '新增现场检查纪录',
+						autoBackButton: true,
+					}
+				}, extras);
+			});
+			//查看现场检查记录 - 与新增同一界面 ，带数据 ，查看不可以修改 、不可以输入
+			$("body").delegate("span[class=span6]", "tap", function(e) {
+				e.stopPropagation()
+
+				var extras = {
+					conservationType: 2,
+					data: listData1[parseInt($(this).attr("index"))],
+					projectId: plus.webview.currentWebview().projectId,
+					proName: plus.webview.currentWebview().proName,
+				}
+				console.log("查看现场检查纪录:" + JSON.stringify(extras))
+				if(isTest) {
+					return;
+				}
+				// ./show_stepOne.html
+				app.openPage("./stepOne.html", {
+					titleNView: {
+						titleText: '查看现场检查纪录',
+						autoBackButton: true
+					}
+				}, extras);
+			});
+
+			// 整改文件 查看/发送(就是新增)
+			$("body").delegate("div[class=span5]", "tap", function(e) {
+				e.stopPropagation()
+
+				//新增整改文件
+				if(parseInt($(this).attr("reformReportStatus")) == 0){
+
+					if(isTest) {
+						// console.log('==新增整改文件==')
+						console.log("新增整改文件")
+						return;
+					}
+
+					// 列表返回的检查人数可能大于1 ， 改为默认是1
+					var checkPeopleNumDefault = 1 ; // $(this).attr("checkPeopleNum")
+
+					var extras = {
+						projectName: plus.webview.currentWebview().proName,
+						conservationStatus: $(this).attr("conservationStatus"),
+						superviseId: $(this).parent().attr("guid"),
+						comDate: $(this).attr("comDate"),
+						checkPeopleNum: checkPeopleNumDefault  //$(this).attr("checkPeopleNum")
+					}
+					console.log(JSON.stringify(extras))
+					app.openPage("./addReform.html", {
+						titleNView: {
+							titleText: '整改文件',
+							autoBackButton: true
+						}
+					}, extras);					
+				}else{
+					if(isTest) {
+						console.log("查看整改文件")
+						return;
+					}
+					// console.log("查看整改文件")
+					//查看整改文件
+					var extras = {
+						superviseId: $(this).parent().attr("guid"),
+						conservationStatus: $(this).attr("conservationStatus")
+					}
+					// console.log(JSON.stringify(extras))
+					app.openPage("./showReform.html", {
+						titleNView: {
+							titleText: '查看整改文件',
+							autoBackButton: true
+						}
+					}, extras);
+				}
+			});
+			
+
+			
+			$("body").delegate("li[class=liCss]", "tap", function(e) {
+				e.stopPropagation()
+				var title = $(this).attr("title")
+				var name = $(this).attr("name")
+				var extras = {}
+				if(name == 'history'){
+					extras.projectId = $(this).attr("projectId")
+					extras.guid = $(this).attr("guid")
+				}else{
+					if($(this).attr("reformReportStatus") == 1){
+						extras.guid = $(this).attr("guid")
+					}else {
+						app.toast("请先发送整改文件")
+						return
+						}
+				}
+
+				app.openPage("./preview.html", {
+					titleNView: {
+						titleText: title,
+						autoBackButton: true
+					}
+				}, extras);
+
+			
+			});
+
+			$("body").delegate("img[class=span4]", "tap", function(e) {
+				e.stopPropagation();
+				var extras = {
+					guid: $(this).attr("guid"),
+					returnUrl: 'proDetail.html'
+				}
+				app.openPage("./uploadImg.html", {
+					titleNView: {
+						titleText: '上传签字照片',
+						autoBackButton: true
+					}
+				},extras);
+				// plus.webview.currentWebview().close('none'); //关闭
+			});
+
+			mui(".mui-slider-group").on('swipeleft', '.mui-slider-item', function() {
+				// console.log('swipeleft')
+				scrollTop();
+			})
+
+			mui(".mui-slider-group").on('swiperight', '.mui-slider-item', function() {
+				// console.log('swiperight')
+				scrollTop();
+			})
+
+			//回到顶部
+			function scrollTop() {
+				var myDiv1 = document.getElementById('detail1');
+				var myDiv2 = document.getElementById('detail2');
+				myDiv1.scrollTop = 0;
+				myDiv2.scrollTop = 0;
+			}
+			mui(".mui-segmented-control").on('tap', '.mui-control-item', function() {
+				scrollTop();
+			});
+
+			function addData(data) {
+				var li = "";
+				var li2 = "";
+				// console.log(JSON.stringify(data))
+				if(data.length > 0) {
+					firstListData = data[0];// 新增记录时传入 ，填充数据
+				}
+
+				for (var i = 0; i < data.length; i++) {					
+					var item = data[i];
+					var dateIndex = (page - 1) * count + i
+					var flag = false;
+					Object.keys(signFileObj).forEach(key =>{
+						if(key == item.signatureReturn && signFileObj[key].length != 0){
+							flag = true;
+						}
+					})
+					var separator = "";
+					if(i < (data.length - 1)) {
+						separator = "style=\"border-bottom: 1px solid #F4F4F4;\"";
+					}
+					li = li +
+						`<li class="liCss" `+separator+` groupId=${data[i].signatureReturn} name="history" title="`+(i+1)+`现场检查记录" guid=${data[i].guid} projectId=${data[i].projectId}>
+							 <div><span class="span1">${i+1}</span>
+							 <span class="span2">${data[i].checkDate.slice(0,10)}</span></div>
+							 <span class="span3">${isEmp(data[i].conservationStatus_dictText)}</span>
+							 <span class="span6" style="width:50px;text-align:right" index=${i}>查看</span>`
+							 // if(!flag){
+								//  li +=  `<img src="../../img/commom/upload.png" class="span4" guid=${data[i].guid} />`;
+							 // }						
+						 li +=  `</li>`;
+					li2 +=
+							`<li class="liCss" `+separator+` groupId=${data[i].signatureReturn} reformReportStatus=${data[i].reformReportStatus} name="reform"  title="`+(i+1)+`整改文件"  guid=${data[i].guid}>
+								 <div><span class="span1">${i+1}</span>
+								 <span class="span2">${data[i].checkDate.slice(0,10)}</span></div>
+								 <span class="span3">${isEmp(data[i].conservationStatus_dictText)}</span>
+								 <div class="span5" style="width:50px;display:inline-block;float:right" 
+								 comDate=${data[i].comDate}
+								 conservationStatus=${data[i].conservationStatus}
+								 checkPeopleNum=${data[i].checkPeopleNum}
+								 reformReportStatus=${data[i].reformReportStatus}>${data[i].reformReportStatus == 0?'发送':'查看'}</div>
+							</li>`		
+		
+				}
+				$("#list1").append(li);
+				$("#list2").append(li2);
+				// 动态生成的标签，需要重新计算样式
+				padCheckCss()
+			}
+
+			// function addData2(data) {
+			// 	var li2 = "";
+			// 	// console.log("page2:"+page2)
+			// 	// console.log(count)
+			// 	// for (var i = 0; i < data.length; i++) {
+			// 	for (var i = 0; i < 10; i++) {
+			// 		var item = data[i];
+			// 		var dateIndex = (page - 1) * count + i
+
+			// 		li2 +=
+			// 			`<li class="liCss" groupId="8daf261e18d3453caf699674e7f331d3"  name=`+(i+1)+`整改文件>
+			// 				 <span class="span1">${i+1}</span>
+			// 				 <span class="span4">整改文件</span>
+			// 			</li>`
+			// 	}
+			// 	$("#list2").append(li2);
+
+			// 	// $("#list2").each(function() {
+			// 	// 	$(this).click(function() {
+			// 	// 		var extras = {
+			// 	// 			filePath: "ecidi/c8a2173b2f23471d825f47e9e242771f.pdf",
+			// 	// 			fileId: "0a9847fd306f2f09f8f37d8a4ea07872"
+			// 	// 		}
+			// 	// 		app.openPage("./preview.html", {
+			// 	// 			titleNView: {
+			// 	// 				titleText: '文档预览',
+			// 	// 				autoBackButton: true
+			// 	// 			}
+			// 	// 		}, extras);
+			// 	// 	});
+			// 	// });
+			// }
+
+			var initData = function(callback) {
+				// console.log(page)
+				getSceneList({
+				pageNo: page, //页码
+				pageSize:20,
+				projectId: plus.webview.currentWebview().projectId,
+				order: 'desc',
+				field: 'id,,,projectId,soilErosionLevel_dictText,soilErosionRiskLevel_dictText,rectifyRequired,comDate,checkPeopleNum,checkDate,conservationStatus_dictText,signatureReturn,superviseReportStatus,reformReportStatus,action',
+				column: 'createTime',
+			}, function(data) {
+					console.log("===== initData load start ========")
+					console.log(JSON.stringify(data));
+					console.log("===== initData load end ========")
+				if (data.success) {
+					console.log(JSON.stringify(data.result.records.length))
+					if (data.result.records.length!= 0) {
+						listData1 = listData1.concat(data.result.records);
+						addData(data.result.records);
+					} else {
+						$("#list1").html("<div class='empty'>暂无数据</div>");
+						$("#list2").html("<div class='empty'>暂无数据</div>");
+					}
+				} else {
+					mui.toast("项目列表查询失败");
+				}
+				});
+			}
+			var getSignFile = function(callback) {
+					getSignFileMap(function(data) {
+						console.log("===== getSignFile load start ========")
+						console.log(JSON.stringify(data));
+						console.log("===== getSignFile load end ========")
+
+						signFileObj = data;
+						// console.log(JSON.stringify(signFileObj))
+					})	
+			}
+			
+			window.addEventListener('reload1', function(e) { //执行刷新
+			console.log(111111111)
+				signFileObj = '';
+				listData1 = [];
+				$("#list1").html('');
+				$("#list2").html('');
+				getSignFile();
+				initData();
+			});
+
+			// 平板样式调整
+			function padCheckCss() {
+				// screenWidth:1024
+				const screenWidth = document.documentElement.clientWidth;
+				// screenHeight:1366
+				const screenHeight = document.documentElement.clientHeight;
+				if(screenWidth > 1000) {
+					//  判断为平板
+					// === 字体大小 ===
+					// 平板字体 ，是App字体 + 4px ；
+					setupDynamicCss('body', 'font-size', 20)
+					setupDynamicCss('.mui-active', 'font-size', 20)
+					setupDynamicCss('.mui-segmented-control', 'font-size', 20)
+					setupDynamicCss('#page1', 'font-size', 20)
+					setupDynamicCss('#page2', 'font-size', 20)
+
+					setupDynamicCss('.span1', 'font-size', 18)
+					setupDynamicCss('.span2', 'font-size', 20)
+					setupDynamicCss('.span3', 'font-size', 20)
+					setupDynamicCss('.span5', 'font-size', 20)
+					setupDynamicCss('.span6', 'font-size', 20)
+					setupDynamicCss('.bottom-item-btn .item div', 'font-size', 20)
+
+					//
+
+					// // === 宽、高 ===
+
+				}
+			}
+			function setupDynamicCss(pTarget,pAttr, pVal)
+			{
+				$(pTarget).css(pAttr, pVal + 'px');
+			}
+
+			padCheckCss();
+
+			// 测试区
+			function  getSignFileTmp() {
+				var dataStr = "{\"3feee5adccdf4287ae63ff7a31cc369c\":[],\"beedb5551de545948e4c61e0b0ee848e\":[],\"a9f28da123ac4f6c8e683a1abe8ca292\":[],\"d5c10019b97245f499ba46bb94242b84\":[],\"d9d7e6a65a3244dda754c5411dd2efc8\":[\"906c30514ee76f1a5ddc6fc64e5a74e7\"],\"62b4658dfaed40de805effff3331c20f\":[],\"3c2128e2035b40488ca864fa06f2876b\":[],\"07c67fe340c1478581dacc192b3a6e97\":[],\"aceb1b12fc6b4205803a33db113fe70a\":[],\"1367b9ec3f2e437fbc1e4d48477a1dd2\":[\"5d49f319d2d433e291e0591feb9d9250\"],\"c0a7c979f00c4dfb81cd13c18eaf3116\":[],\"42311bbe5518489d819424ab27423a33\":[],\"9eb88f3f43a2448bb13631b8f1e78068\":[\"ef17c2780fca02951a0b3af9e1b5f6b5\"],\"da73fa93ac154c4bb9ac0b44f3c0b2af\":[],\"7c479fc3021242d2a556e579a48f951a\":[],\"9f2b527394fa4a458f9ecf28f780fbde\":[],\"fadb6b74f9784eeb9890fd8e306f1f86\":[],\"846541e68ccb4ab093010ffcd89f641e\":[],\"0bcc44995cae453e8068027e80f8e47a\":[],\"b4bdf09c3df94309ba1b25c30a6d5a14\":[],\"b79b223594cc405a828a1b1429af8837\":[],\"e15d5dd671014b8ebbcdd2d317de9118\":[],\"b18457e544c94211a4fc86f231c55af9\":[],\"69d5a5b9488b4c48b1648f1c0641b099\":[],\"4d3e835988444df1be262dde8108b0b9\":[],\"fea15d349dc0496e81e114fbedb16ebb\":[],\"03b5b4fdf7ed442eae638960f0bfa900\":[\"bf0eee864a310b9900087b195904f40b\"],\"ad84f170140d4776b015daa8e9048188\":[],\"96e2ef65ac7c4408a39d884691815c32\":[],\"53e24325804348fe96a92fc7a986715a\":[],\"797ab73453d541c6910202f18460dfdc\":[],\"f6f47e3b48604123888ef79bc96e4a69\":[],\"e68b8cb593c24d52b26fe4e0c7c7f618\":[],\"0ca173fc578346298fd9c01987bdfc0f\":[],\"abed5509fcfc4bc58e3cec35f325a319\":[],\"6dfc1c71bbf84b1c87b78be06256579b\":[],\"4ff79693db1545edb396b3953cef5bc3\":[],\"859666567bfb4b6e81cc72c112792cbb\":[],\"f90eedfe84614568a0f2ce2694e6a708\":[],\"cfe9ea82434043eaa638cc9617ce4211\":[],\"b0cc85c721bb4347a9bab21bbbf53a0f\":[],\"8ffb968997744d6083050c5dddcd8334\":[],\"7844d58d067c4584a8f2ef582cfcaa0d\":[],\"ab637564fb6949e49ba25f9b39be9399\":[],\"18c0cb8627544f9e901048e745126214\":[],\"95f242717b0840f093d723c48fcb4354\":[],\"519ec814dbaa4114a35c6c5375dc2064\":[],\"746a0809da2e455aaf23695fb050ac10\":[],\"efc2100a38ec46a7b3494fdd264094d5\":[],\"876f64c3ccf943d087cff9bfa901ec90\":[],\"c4cc314c1f10419795ef2ca47f32bc67\":[],\"22b25394c9514f448b05caf46bc6b887\":[],\"8dabc4d0a2834f0da6824afb5a356d50\":[],\"aa94cc52d0024811ab59612ab9714d39\":[],\"685bf0cec8524f328893a2d85e32f84a\":[],\"eaabeee192f04989a4d65835faef97c0\":[],\"fe69296ee2bb403489d09a6505a4238a\":[],\"4ea04eeffdea4314affa8d7863d59428\":[],\"7d8dbed9e79447e2a91e0ea9bffd471e\":[],\"05332c7f625d4c2ab6b285b8edceac91\":[\"ca6839d1077e585761a4c0616c7e7c43\"],\"dfcdf547c91741b0bf77eb3f8d438018\":[],\"065f5399ab2048fca8b578128a6231d1\":[],\"a93c1ca796d045fbac437784a7f7b141\":[],\"7629a097a5ea4aee9a1f44524075c85c\":[],\"af5660ca7137428e94fd8721e65bd63b\":[],\"ec9a0b421b5643a2b25ed179e55b7224\":[\"66ba42d04f3e554d2261c0245d23b66a\"],\"604b4745cb09452a82dd7247155d8835\":[],\"827c2a9d180148e7915cc06acf01baf0\":[],\"85859782745f44ccb4116fb484691e7e\":[],\"2c361f0356cf4f3685fe5abca14d39e0\":[],\"b8e1393ed6134e8f8ccb478409492e5d\":[],\"c8a0143cba40480088b9fc3cc875fb9a\":[],\"a95a3e5202ae44f0bd57fe0e49015a3a\":[],\"82125d305d6f496e83fe7b15520e0d76\":[],\"e1e274f31f754cb888eccf395369fcfb\":[],\"8e1ea53d48c94a46a0d7575f16dc2960\":[],\"2d95de08359142bcb34e98fd63b6568d\":[],\"be05e40357564061855991af1fa30437\":[],\"132b2ff7758b4695956212b63e523391\":[],\"c48007867add4bd58f01dbbc4a527a59\":[],\"848b01b022ef4931b19bc990a08240ac\":[],\"755eb12eea0644698f46c0af85abe14d\":[\"00895e5dd4054ff0240044a1a15983b2\"],\"154a759b7ce3475b8ccd2c6d8193bb49\":[],\"8dbc1c9390084f37b5a18c0a7c85f8e5\":[],\"ad845149cecd4dfa9b0478e747fabdac\":[\"9bf6ed3e78a06de4b3771927d243237a\"],\"63e5cc3ffcaa480e984eb6318340357a\":[],\"00f262d56656413489b840915da55e51\":[],\"f06f4d6e0747435d97db7c9354074b1a\":[],\"8d426096e1564c099f50c8757c42b9e7\":[]}";
+				var data = JSON.parse(dataStr);
+				//getSignFile	Map(function(data) {
+				// 	console.log("===== getSignFile load start ========")
+				// 	console.log(JSON.stringify(data));
+				// 	console.log("===== getSignFile load end ========")
+
+					signFileObj = data;
+					// console.log(JSON.stringify(signFileObj))
+				//})
+			}
+			function initDataTmp() {
+				getSignFileTmp();
+				//var self = plus.webview.currentWebview();
+				var winHeight = window.screen.height;
+				// console.log(winHeight)
+				// $("#detail1").height(winHeight - 230);
+				// $("#detail2").height(winHeight - 130);
+
+				//var dataStr = "{\"success\":true,\"message\":\"操作成功!\",\"result\":{\"records\":[{\"soilSituation\":\"\",\"gritChamberSituation\":\"\",\"inputDepart\":\"深圳市福田区水务局.华东数字\",\"isExistDfhcs\":\"0\",\"otherConservationSituation\":\"\",\"isToldDfhcs\":\"0\",\"checkSituation_dictText\":\"未完工\",\"corpCode\":\"A01\",\"prjCode\":null,\"signatureReturn\":\"aa94cc52d0024811ab59612ab9714d39\",\"monitorDevelopment_dictText\":\"自行开展水土保持监测工作\",\"superviseReportStatus\":\"0\",\"projectProgress\":\"\",\"gritChamberIsDam\":null,\"isToldSoil\":\"0\",\"constrDrawingDesign\":\"0\",\"checkSituation\":\"0\",\"reformReportStatus_dictText\":\"已发送\",\"soilErosionRiskLevel_dictText\":\"一级\",\"overflowSituation\":\"\",\"rectifySituation\":\"\",\"caseSource\":null,\"fenceSituation\":\"\",\"soilErosionHarm\":\"\",\"soilErosionLevel\":\"0\",\"fenceConstruct\":\"\",\"guid\":\"9ec8e8166fd43dd4288b98293a2b9a98\",\"monitorCorp\":\"\",\"projectId\":\"0b858861a5cc1196e5c3490e56481cca\",\"gritChamberIsOverflow\":null,\"checkPeopleNum\":1,\"teamRules\":\"0\",\"drainageDitchSituation\":\"\",\"lastCheckRequired\":\"\",\"delFlag\":0,\"monitorDevelopmentRemarks\":\"\",\"conservationWeather_dictText\":\"晴\",\"conservationWeather\":\"0\",\"drainageDitchUnpassReason\":\"\",\"coverConstruct\":\"\",\"updateBy\":\"cao_xs\",\"superviseReportStatus_dictText\":\"新开工\",\"initialDesign\":\"0\",\"monitorCorpId\":null,\"reformReportStatus\":\"1\",\"comDate\":\"2021-03-26 00:00:00\",\"monitorDevelopment\":\"0\",\"soilErosionRiskLevel\":\"0\",\"conservationStatus\":\"2\",\"gritChamberConstruct\":\"\",\"rectifyRequired\":\"要求\",\"updateTime\":\"2021-03-26 14:14:11\",\"phonenum\":\"18011808576\",\"checkDate\":\"2021-03-25 00:00:00\",\"createBy\":\"曹锡森\",\"isExistSoil\":\"0\",\"conservationStatus_dictText\":\"已过整改期\",\"createTime\":\"2021-03-25 00:00:00\",\"fenceIsDam\":null,\"drainageDitchIsPass\":null,\"drainageDitchIsDam\":null,\"soilErosionLevel_dictText\":\"轻度\",\"coverIsDam\":null,\"clearDuty\":\"0\",\"drainageDitchConstruct\":\"\",\"deepFillHighCutSlope\":\"\",\"coverSituation\":\"\"},{\"soilSituation\":\"\",\"gritChamberSituation\":\"\",\"inputDepart\":\"深圳市福田区水务局.华东数字\",\"isExistDfhcs\":\"0\",\"otherConservationSituation\":\"\",\"isToldDfhcs\":\"0\",\"checkSituation_dictText\":\"已完成水土保持设施验收，未备案\",\"corpCode\":\"A01\",\"prjCode\":null,\"signatureReturn\":\"95f242717b0840f093d723c48fcb4354\",\"monitorDevelopment_dictText\":\"未开展水土保持监测工作\",\"superviseReportStatus\":\"0\",\"projectProgress\":\"\",\"gritChamberIsDam\":null,\"isToldSoil\":\"0\",\"constrDrawingDesign\":\"0\",\"checkSituation\":\"4\",\"reformReportStatus_dictText\":\"未发送\",\"soilErosionRiskLevel_dictText\":\"三级\",\"overflowSituation\":\"\",\"rectifySituation\":\"\",\"caseSource\":\"0\",\"fenceSituation\":\"\",\"soilErosionHarm\":\"\",\"soilErosionLevel\":\"2\",\"fenceConstruct\":\"\",\"guid\":\"9d9d8e0148588a43a2a843294d9d807b\",\"monitorCorp\":\"\",\"projectId\":\"0b858861a5cc1196e5c3490e56481cca\",\"gritChamberIsOverflow\":null,\"checkPeopleNum\":1,\"teamRules\":\"0\",\"drainageDitchSituation\":\"\",\"lastCheckRequired\":\"\",\"delFlag\":0,\"monitorDevelopmentRemarks\":\"\",\"conservationWeather_dictText\":\"晴\",\"conservationWeather\":\"0\",\"drainageDitchUnpassReason\":\"\",\"coverConstruct\":\"\",\"updateBy\":\"cao_xs\",\"superviseReportStatus_dictText\":\"新开工\",\"initialDesign\":\"0\",\"monitorCorpId\":null,\"reformReportStatus\":\"0\",\"comDate\":\"2021-03-26 00:00:00\",\"monitorDevelopment\":\"2\",\"soilErosionRiskLevel\":\"2\",\"conservationStatus\":\"2\",\"gritChamberConstruct\":\"\",\"rectifyRequired\":\"123\",\"updateTime\":\"2021-03-26 14:14:11\",\"phonenum\":\"18011808576\",\"checkDate\":\"2021-03-25 00:00:00\",\"createBy\":\"曹锡森\",\"isExistSoil\":\"0\",\"conservationStatus_dictText\":\"已过整改期\",\"createTime\":\"2021-03-25 00:00:00\",\"fenceIsDam\":null,\"drainageDitchIsPass\":null,\"drainageDitchIsDam\":null,\"soilErosionLevel_dictText\":\"重度\",\"coverIsDam\":null,\"clearDuty\":\"0\",\"drainageDitchConstruct\":\"\",\"deepFillHighCutSlope\":\"\",\"coverSituation\":\"\"}],\"total\":2,\"size\":20,\"current\":1,\"orders\":[],\"hitCount\":false,\"searchCount\":true,\"pages\":1},\"timestamp\":1618818071105,\"code\":200}";
+				var dataStr = `
+				{"success":true,"message":"操作成功!","result":{"records":[{"soilSituation":null,"gritChamberSituation":null,"inputDepart":"深圳市福田区水务局.华东数字","isExistDfhcs":"0","otherConservationSituation":null,"isToldDfhcs":"1","checkSituation_dictText":"已完成水土保持设施验收，未备案","corpCode":"A01","prjCode":null,"slopesType":null,"signatureReturn":"aa14c0d044cb45adbdaf260e168255e2","monitorDevelopment_dictText":"委托第三方监测单位开展水土保持监测工作","superviseReportStatus":"0","projectProgress":null,"gritChamberIsDam":null,"isToldSoil":"1","constrDrawingDesign":"0","checkSituation":"4","slopesHeight":null,"reformReportStatus_dictText":"未发送","soilErosionRiskLevel_dictText":"轻微","overflowSituation":null,"hazardRatings_dictText":"红","hazardRatings":"0","rectifySituation":null,"projectCatchmentArea":null,"caseSource":"0","fenceSituation":null,"soilErosionHarm":null,"soilErosionLevel":null,"fenceConstruct":null,"guid":"7c41a517fa87787b53bd7e15a8f26302","monitorCorp":"2","projectId":"1e4a95c592f74247805a229c78c2f7bd","gritChamberIsOverflow":null,"checkPeopleNum":2,"teamRules":"0","drainageDitchSituation":null,"lastCheckRequired":null,"delFlag":0,"monitorDevelopmentRemarks":null,"conservationWeather_dictText":"阴","conservationWeather":"2","drainageDitchUnpassReason":null,"coverConstruct":null,"updateBy":"sun_wt","dumpingSite":null,"superviseReportStatus_dictText":"新开工","initialDesign":"0","monitorCorpId":null,"reformReportStatus":"0","comDate":"2021-06-02 14:29:16","monitorDevelopment":"1","soilErosionRiskLevel":"1","conservationStatus":"2","gritChamberConstruct":null,"rectifyRequired":"23","updateTime":"2021-06-08 14:29:26","phonenum":"13666666666","projectLandfillVolume":null,"checkDate":"2021-06-03 14:28:45","exposedArea":null,"createBy":"孙悟天","isExistSoil":"0","conservationStatus_dictText":"已过整改期","createTime":"2021-06-08 14:29:17","fenceIsDam":null,"drainageDitchIsPass":null,"drainageDitchIsDam":null,"soilErosionLevel_dictText":null,"coverIsDam":null,"clearDuty":"0","drainageDitchConstruct":null,"deepFillHighCutSlope":null,"coverSituation":null}],"total":1,"size":20,"current":1,"orders":[],"hitCount":false,"searchCount":true,"pages":1},"timestamp":1623143838538,"code":200}
+				`;
+				var data = JSON.parse(dataStr);
+
+				//console.log(JSON.stringify(data.result.records.length))
+				if (data.result.records.length!= 0) {
+					listData1 = listData1.concat(data.result.records);
+					addData(data.result.records);
+				} else {
+					$("#list1").html("<div class='empty'>暂无数据</div>");
+					$("#list2").html("<div class='empty'>暂无数据</div>");
+				}
+			}
+			if(isTest) {
+				initDataTmp();
+			}
+
+		</script>
+	</body>
+
+</html>

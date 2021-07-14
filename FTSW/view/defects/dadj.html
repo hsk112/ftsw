@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>签章登记</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/common.css" rel="stylesheet" />
+		<style>
+			.mui-page {
+				font-size: 14px;
+			}
+
+			.mui-popover {
+				height: 300px;
+			}
+
+			.mui-content {
+				padding: 10px;
+			}
+
+			.item-title {
+				color: #888888;
+				margin: 20px 0;
+			}
+
+			.img_item {
+				text-align: left;
+				width: 72px;
+				height: 100px;
+				float: left;
+				margin-right: 20px;
+			}
+
+			.img_item img {
+				width: 72px;
+				height: 72px;
+			}
+
+			.info-bar-content-item {
+				border: 0;
+			}
+
+			.btn-item {
+				width: 85%;
+				float: left;
+				margin: 0 7%;
+			}
+
+			.fj_qz_img_close {
+				position: absolute;
+
+			}
+
+			.img_close {
+				position: relative;
+				top: -84px;
+				left: 64px;
+			}
+
+			.btn-item div {
+				margin: 0 auto;
+				border: 1px solid #337BFC;
+				width: 85%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 50px;
+			}
+
+			#fj_qz_photo {
+				margin-bottom: 50px;
+			}
+		</style>
+		<style>
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+
+				100% {
+					opacity: 1;
+				}
+			}
+
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+
+				100% {
+					opacity: 1;
+				}
+			}
+
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+
+				100% {
+					opacity: 0;
+				}
+			}
+
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+
+				100% {
+					opacity: 0;
+				}
+			}
+
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+			.empty{
+				line-height:50px;
+				width:100%;
+				text-align: left;
+				padding-left: 20px;
+				font-size: 16px;
+				color: #BBBBBB;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="mui-content" class="mui-page">
+			<!--页面标题栏开始-->
+			<!-- <header class="mui-bar mui-bar-nav common-header">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">排水户登记</h1>
+			</header> -->
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+
+						<div class="scroll-li">
+							<div class="bar-title">
+								排水设施清疏验收表
+							</div>
+							<div class="info-bar-content">
+
+								<div class="info-bar-content-item" style="height: 130px;width: 55%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										运营单位
+									</div>
+									<input id="yy_qs_PhotoInput" style="display: none;" />
+									<div class="yy_qs_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="yy_qs_photo" class="img_item">
+										<!-- <img data-preview-src="" class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 130px;width: 35%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										物业单位
+									</div>
+									<input id="wy_qs_PhotoInput" style="display: none;" />
+									<div class="wy_qs_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="wy_qs_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="width: 90%;display:inline-block;text-align: left;margin-left:0;">
+									<div class="item-title">
+										第三方监管单位
+									</div>
+									<input id="dsf_qs_PhotoInput" style="display: none;" />
+									<div class="dsf_qs_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="dsf_qs_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div class="scroll-li">
+							<div class="bar-title">
+								排水设施检测验收表
+							</div>
+							<div class="info-bar-content">
+
+								<div class="info-bar-content-item" style="height: 130px;width: 55%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										运营单位
+									</div>
+									<input id="yy_jc_PhotoInput" style="display: none;" />
+									<div class="yy_jc_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="yy_jc_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="height: 130px;width: 35%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										物业单位
+									</div>
+									<input id="wy_jc_PhotoInput" style="display: none;" />
+									<div class="wy_jc_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="wy_jc_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="width: 90%;display:inline-block;text-align: left;margin-left:0;">
+									<div class="item-title">
+										第三方监管单位
+									</div>
+									<input id="dsf_jc_PhotoInput" style="display: none;" />
+									<div class="dsf_jc_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="dsf_jc_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div class="scroll-li">
+							<div class="bar-title">
+								修复内容确认单
+							</div>
+							<div class="info-bar-content">
+
+								<div class="info-bar-content-item" style="width: 55%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										运营单位
+									</div>
+									<input id="yy_xf_PhotoInput" style="display: none;" />
+									<div class="yy_xf_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="yy_xf_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="width: 35%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										监理单位
+									</div>
+									<input id="jl_xfPhotoInput" style="display: none;" />
+									<div class="jl_xf_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="jl_xf_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+
+								<div class="info-bar-content-item" style="width: 55%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										物业单位
+									</div>
+									<input id="wy_xfPhotoInput" style="display: none;" />
+									<div class="wy_xf_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="wy_xf_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="width: 35%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										第三方监管单位
+									</div>
+									<input id="dsf_xfPhotoInput" style="display: none;" />
+									<div class="dsf_xf_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="dsf_xf_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="scroll-li">
+							<div class="bar-title">
+								修复内容清单与计价表
+							</div>
+							<div class="info-bar-content">
+								<div class="info-bar-content-item" style="width: 55%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										运营单位
+									</div>
+									<input id="yy_qd_PhotoInput" style="display: none;" />
+									<div class="yy_qd_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="yy_qd_photo" class="img_item">
+										<!-- <img data-preview-src="" class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+								<div class="info-bar-content-item" style="width: 35%;display:inline-block;    text-align: left;margin-left:0;">
+									<div class="item-title">
+										造价咨询单位
+									</div>
+									<input id="zj_qd_PhotoInput" style="display: none;" />
+									<div class="zj_qd_img_list">
+										<!-- 底下已经控制数据 -->
+										<!-- <div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div>
+										<div class="img_item">
+											<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+											<div class="img_close">移除</div>
+										</div> -->
+									</div>
+									<div id="zj_qd_photo" class="img_item">
+										<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+										<div class="empty">无</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="scroll-li" >
+							<div class="bar-title">
+								附件
+							</div>
+							<div class="info-bar-content-item" style="width: 90%;display:inline-block;text-align: left;margin-left:0;">
+								<div class="item-title">
+									签字页附件
+								</div>
+								<input id="fj_qz_PhotoInput" style="display: none;" />
+								<div class="fj_qz_img_list" class="img_item">
+									<!-- 底下已经控制数据 -->
+									<!-- <div class="img_item">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+										<div class="img_close">移除</div>
+									</div> -->
+									<!-- <div class="img_item">
+										<img class="img_src" src="../../img/commom/pz@2x.png" style="" />
+										<div class="img_close">移除</div>
+									</div> -->
+								</div>
+								<div id="fj_qz_photo" class="img_item">
+									<!-- <img class="img_src" src="../../img/commom/pz@2x.png" style="" /> -->
+									<div class="empty">无</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bottom-btn" style="position: fixed;width: 100%;z-index: 15;bottom: 0px;background: #F4F4F4;padding: 10px 0;">
+					<div class="btn-item" id="dadj_submit" style="">
+						<div style="background: #337BFC;color: #fff;">登记签章</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+
+		<!--拍照须知-->
+		<div id="middlePopover" class="mui-popover" style="text-align: left;background: #FFFFFF;">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="background: #FFFFFF;">
+						<li class="mui-table-view-cell"><a href="#">现场图片拍照须知:</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">1、如手机有水印功能，请开启：【设置】->【水印】</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">2、平视图：手机正面对着门面，要能够看清楚整个门面及门面上面的排水户名称</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">3、楼栋图：手机仰视拍摄排水户所在的楼栋</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">4、方位图：手机竖直沿排水户所在街道的某一个方向拍摄</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#" style="white-space:initial">5、门牌图：如果有门牌挂牌，正门拍摄</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+
+
+	</body>
+
+	<script src="../../js/newmui.min.js"></script>
+	<script src="../../js/mui.view.js"></script>
+	<script src="../../js/mui.locker.js"></script>
+	<script src="../../js/mui.picker.min.js"></script>
+	<script src="../../js/mui.poppicker.js"></script>
+	<script src="../../js/mui.zoom.js"></script>
+	<script src="../../js/mui.previewimage.js"></script>
+
+	<script src="../../js/app.js"></script>
+	<script src="../../js/config.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/paishuihu.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/helper.js"></script>
+	<script src="../../js/uploadimage.js"></script>
+	<script src="../../js/s4.js"></script>
+	<script src="../../js/smutils.js"></script>
+	<script src="../../js/byte&string.js"></script>
+	<script src="../../js/ajaxhook.min.js"></script>
+	<script>
+		var self;
+		mui.init({
+
+		});
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#mui-content'
+		});
+
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+
+		mui.plusReady(function() {
+			// 获取传入数据
+			// window.addEventListener('refresh', function(e){//执行刷新
+			//     location.reload();
+			// });
+			self = plus.webview.currentWebview();
+
+			if(self.isClose && self.isClose == 1){
+				setTimeout(function(){
+			    	self.opener().close('none');					
+				},1000)
+
+			}
+
+			// 获取数据
+			initGetUrl();
+
+			//初始化回调
+			initCallback();
+
+			// 初始化选项框状态
+			initCheckBox();
+
+			mui.previewImage();
+
+		});
+
+
+		var h;
+		// 初始化选项框状态
+		var initCheckBox = function() {
+			$(".info-bar-content-item").find(":checkbox").each(function() {
+				$(this).click(function() {
+					if ($(this).is(':checked')) {
+						$(this).parent().siblings().find(":checkbox").each(function() {
+							$(this).prop("checked",false)
+						});
+					}
+				});
+			});
+		}
+		window.addEventListener('aaa', function(e) { //执行刷新
+			location.reload();
+		});
+		var initGetUrl = function() {
+			var findFilesByGroupId = function(param, callback) {
+				if (param.groupId) {
+					var url = config.urls.baseUrl + config.actions.findFilesByGroupId;
+
+					app.showLoader();
+					$.ajax(url, {
+						data: param,
+						// data: "",
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						headers: {
+							// "Content-Type": "application/json",
+							"Content-Type": "application/x-www-form-urlencoded",
+							"X-Access-Token": app.sessionId(),
+							// "X-Access-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTg5Mjk1MDYsInVzZXJuYW1lIjoiY3doMDEifQ.f1H4CpN_us8XRDI-Nxdpfsw4Xc6eku1tVFmicLM1syw"
+						},
+						timeout: config.settings.requestTimeOut, //超时时间设置为10秒；
+						success: function(data) {
+							app.hideLoader();
+							if (dealingWithResponseCode(data)) {
+								callback(data);
+							} else {
+								app.toast(data.message);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							dealingWithErrorRequest(errorThrown);
+							app.hideLoader();
+							return callback('网络异常,请稍后再试');
+						}
+					});
+				}
+			}
+			//排水设施清疏验收表
+			//拍照  运营单位-
+			findFilesByGroupId({
+				groupId: self.dredgeRun
+			}, function(data) {
+				if (data.result.length > 0) {
+					dredgeRunfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img  data-preview-src="" data-preview-group="1" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+						data.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".yy_qs_img_list").append(html);
+
+					var count = $(".yy_qs_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#yy_qs_photo").hide();
+					}
+				}
+			});
+
+			//拍照  物业单位-
+			findFilesByGroupId({
+				groupId: self.dredgePmc
+			}, function(data) {
+				if (data.result.length > 0) {
+					dredgePmcfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img  data-preview-src="" data-preview-group="1" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+						data.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".wy_qs_img_list").append(html);
+
+					var count = $(".wy_qs_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#wy_qs_photo").hide();
+					}
+				}
+			});
+
+
+			//拍照  第三方-
+			findFilesByGroupId({
+				groupId: self.dredgeSupervision
+			}, function(data) {
+				if (data.result.length > 0) {
+					dredgeSupervisionfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="1"  class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".dsf_qs_img_list").append(html);
+
+					var count = $(".dsf_qs_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#dsf_qs_photo").hide();
+					}
+				}
+			});
+
+			//排水设施检测验收表
+			//拍照  运营单位-
+			findFilesByGroupId({
+				groupId: self.checkRun
+			}, function(data) {
+				if (data.result.length > 0) {
+					checkRunfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="2" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".yy_jc_img_list").append(html);
+
+					var count = $(".yy_jc_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#yy_jc_photo").hide();
+					}
+				}
+			});
+
+
+
+			//拍照  物业单位-
+			findFilesByGroupId({
+				groupId: self.checkPmc
+			}, function(data) {
+				if (data.result.length > 0) {
+					checkPmcfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="2" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".wy_jc_img_list").append(html);
+
+					var count = $(".wy_jc_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#wy_jc_photo").hide();
+					}
+				}
+			});
+
+
+			//拍照  第三方-
+			findFilesByGroupId({
+				groupId: self.checkSupervision
+			}, function(data) {
+				if (data.result.length > 0) {
+					checkSupervisionfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="2" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".dsf_jc_img_list").append(html);
+
+					var count = $(".dsf_jc_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#dsf_jc_photo").hide();
+					}
+				}
+			});
+
+
+
+			//修复内容确认
+			//拍照  运营单位-
+			findFilesByGroupId({
+				groupId: self.fixRun
+			}, function(data) {
+				if (data.result.length > 0) {
+					fixRunfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="3" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".yy_xf_img_list").append(html);
+					console.log(html)
+					var count = $(".yy_xf_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#yy_xf_photo").hide();
+					}
+				}
+			});
+
+			//拍照  监理单位-
+			findFilesByGroupId({
+				groupId: self.fixJianli
+			}, function(data) {
+				// console.log(JSON.stringify(data.result))
+				if (data.result.length > 0) {
+					fixJianlifileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="3" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".jl_xf_img_list").append(html);
+
+					var count = $(".jl_xf_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#jl_xf_photo").hide();
+					}
+				}
+			});
+
+			//拍照  物业单位-
+			findFilesByGroupId({
+				groupId: self.fixSupervision
+			}, function(data) {
+				if (data.result.length > 0) {
+					fixSupervisionfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="3" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".wy_xf_img_list").append(html);
+
+					var count = $(".wy_xf_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#wy_xf_photo").hide();
+					}
+				}
+			});
+
+			//拍照  第三方监管单位-
+			findFilesByGroupId({
+				groupId: self.fixPmc
+			}, function(data) {
+				if (data.result.length > 0) {
+					fixPmcfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img data-preview-src="" data-preview-group="3" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' + data
+						.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".dsf_xf_img_list").append(html);
+
+					var count = $(".dsf_xf_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#dsf_xf_photo").hide();
+					}
+				}
+			});
+
+
+			//修复内容清单与计价表
+			//拍照  运营单位-
+			findFilesByGroupId({
+				groupId: self.priceRun
+			}, function(data) {
+				if (data.result.length > 0) {
+					priceRunfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img  data-preview-src="" data-preview-group="4" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+						data.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".yy_qd_img_list").append(html);
+
+					var count = $(".yy_qd_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#yy_qd_photo").hide();
+					}
+				}
+			});
+
+			//拍照  造价咨询单位-
+			findFilesByGroupId({
+				groupId: self.priceConsult
+			}, function(data) {
+				if (data.result.length > 0) {
+					priceConsultfileToken = data.result[0].fileToken
+					var html = '<div id="' + data.result[0].uploadFile.id + '" data-token="' + data.result[0].fileToken +
+						'" class="img_item">' +
+						'		<img  data-preview-src="" data-preview-group="4" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+						data.result[0].uploadFile.savePath + '" style=""  />' +
+						'	</div>';
+					$(".zj_qd_img_list").append(html);
+
+					var count = $(".zj_qd_img_list").children(".img_item").length;
+					if (count >= 1) { //处理上传的数量
+						$("#zj_qd_photo").hide();
+					}
+				}
+			});
+
+
+			//附件
+			//签字
+			findFilesByGroupId({
+				groupId: self.signature
+			}, function(data) {
+				var html = '';
+				if (data.result.length > 0) {
+					for (let i = 0; i < data.result.length; i++) {
+						html += '<div id="' + data.result[i].uploadFile.id + '" data-token="' + data.result[i].fileToken +
+							'" class="img_item" style="margin-right:30px;">' +
+							'		<img data-preview-src="" data-preview-group="5" class="img_src" src="' + config.urls.domain + '/ecidi-cmp/sys/common/view/' +
+							data.result[i].uploadFile.savePath + '" style=""  />' +
+							'	</div>';
+					}
+					// signaturefileToken = data.result[0].fileToken
+
+					$(".fj_qz_img_list").append(html);
+
+					var count = $(".fj_qz_img_list").children(".img_item").length;
+					if (count > 0) {
+						h = 150
+						if (count > 3) {
+							h = 250
+							if (count > 6) {
+								h = 350
+							}
+						}
+					}
+					console.log(h)
+					$(".fj_qz_img_list").css("height", h + "px")
+					if (count >= 1) { //处理上传的数量
+						$("#fj_qz_photo").hide();
+					}
+				}
+
+			});
+
+		}
+
+			//提交
+			$(document).on("tap", "#dadj_submit", function() {
+				// console.log(self.communityId)
+				var extras = {
+					archId: self.archId,
+					communityId: self.communityId, //动态获取文件url地址
+					dredgeRun: self.dredgeRun, //动态获取文件url地址
+					dredgePmc: self.dredgePmc, //动态获取文件url地址
+					checkRun: self.checkRun, //动态获取文件url地址
+					checkPmc: self.checkPmc, //动态获取文件url地址
+					dredgeSupervision: self.dredgeSupervision, //动态获取文件url地址
+					checkSupervision: self.checkSupervision, //动态获取文件url地址
+					fixRun: self.fixRun, //动态获取文件url地址
+					fixJianli: self.fixJianli, //动态获取文件url地址
+					fixSupervision: self.fixSupervision, //动态获取文件url地址
+					fixPmc: self.fixPmc, //动态获取文件url地址
+					priceRun: self.priceRun, //动态获取文件url地址
+					priceConsult: self.priceConsult, //动态获取文件url地址
+					signature: self.signature, //动态获取文件url地址
+				}
+				app.openPage("dadjedit.html", {
+					titleNView: {
+						titleText: '登记签章',
+						autoBackButton: true,
+					}
+				}, extras);
+			});
+
+
+		//生成groupid
+		function groupid() {
+			return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0,
+					v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+		}
+
+
+		// 回调函数
+		var initCallback = function() {
+
+		}
+		
+		window.addEventListener("reload1",function(){
+			initGetUrl();
+		})
+	</script>
+
+</html>
